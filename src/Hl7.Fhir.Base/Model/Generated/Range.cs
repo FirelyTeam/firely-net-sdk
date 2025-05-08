@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Range"; } }
+    public override string TypeName => "Range";
 
     /// <summary>
     /// Low limit.

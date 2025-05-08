@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Composition"; } }
+    public override string TypeName => "Composition";
 
     /// <summary>
     /// Set of codes used to value Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition.attester"; } }
+      public override string TypeName => "Composition.attester";
 
       /// <summary>
       /// personal | professional | legal | official.
@@ -185,6 +185,7 @@ namespace Hl7.Fhir.Model
       [Binding("CompositionAttestationMode")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> ModeElement
       {
         get
@@ -419,7 +420,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition.relatesTo"; } }
+      public override string TypeName => "Composition.relatesTo";
 
       /// <summary>
       /// replaces | transforms | signs | appends.
@@ -601,7 +602,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition.event"; } }
+      public override string TypeName => "Composition.event";
 
       /// <summary>
       /// Code(s) that apply to the event being documented.
@@ -610,6 +611,7 @@ namespace Hl7.Fhir.Model
       [Binding("DocumentEventType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -665,6 +667,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
         get
@@ -811,7 +814,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Composition.section"; } }
+      public override string TypeName => "Composition.section";
 
       /// <summary>
       /// Label for section (e.g. for ToC).
@@ -984,6 +987,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Entry
       {
         get
@@ -1038,6 +1042,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("section", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
       {
         get
@@ -1496,6 +1501,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","Device","Patient","RelatedPerson")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
       get
@@ -1607,6 +1613,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("attester", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
     {
       get
@@ -1662,6 +1669,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatesTo", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Composition.RelatesToComponent> RelatesTo
     {
       get
@@ -1689,6 +1697,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("event", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Composition.EventComponent> Event
     {
       get
@@ -1716,6 +1725,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("section", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
     {
       get

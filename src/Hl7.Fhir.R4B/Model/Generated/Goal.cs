@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Goal"; } }
+    public override string TypeName => "Goal";
 
     /// <summary>
     /// Codes that reflect the current state of a goal and whether the goal is still being targeted.
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Goal.target"; } }
+      public override string TypeName => "Goal.target";
 
       /// <summary>
       /// The parameter whose value is being tracked.
@@ -346,6 +346,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -444,6 +445,7 @@ namespace Hl7.Fhir.Model
     [Binding("GoalCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -584,6 +586,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("target", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Goal.TargetComponent> Target
     {
       get
@@ -723,6 +726,7 @@ namespace Hl7.Fhir.Model
     [References("Condition","Observation","MedicationStatement","NutritionOrder","ServiceRequest","RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Addresses
     {
       get
@@ -750,6 +754,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -778,6 +783,7 @@ namespace Hl7.Fhir.Model
     [Binding("GoalOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCode
     {
       get
@@ -807,6 +813,7 @@ namespace Hl7.Fhir.Model
     [References("Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> OutcomeReference
     {
       get

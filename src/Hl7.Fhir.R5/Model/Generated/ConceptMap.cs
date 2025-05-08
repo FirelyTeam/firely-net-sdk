@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ConceptMap"; } }
+    public override string TypeName => "ConceptMap";
 
     /// <summary>
     /// The type of a ConceptMap mapping property value.
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.property"; } }
+      public override string TypeName => "ConceptMap.property";
 
       /// <summary>
       /// Identifies the property on the mappings, and when referred to in the $translate operation.
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.additionalAttribute"; } }
+      public override string TypeName => "ConceptMap.additionalAttribute";
 
       /// <summary>
       /// Identifies this additional attribute through this resource.
@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group"; } }
+      public override string TypeName => "ConceptMap.group";
 
       /// <summary>
       /// Source system where concepts to be mapped are defined.
@@ -1015,6 +1015,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("element", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> Element
       {
         get
@@ -1207,7 +1208,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element"; } }
+      public override string TypeName => "ConceptMap.group.element";
 
       /// <summary>
       /// Identifies element being mapped.
@@ -1379,6 +1380,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("target", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent> Target
       {
         get
@@ -1564,7 +1566,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element.target"; } }
+      public override string TypeName => "ConceptMap.group.element.target";
 
       /// <summary>
       /// Code that identifies the target element.
@@ -1779,6 +1781,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("property", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.MappingPropertyComponent> Property
       {
         get
@@ -1806,6 +1809,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dependsOn", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> DependsOn
       {
         get
@@ -1833,6 +1837,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("product", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
       {
         get
@@ -2074,7 +2079,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element.target.property"; } }
+      public override string TypeName => "ConceptMap.group.element.target.property";
 
       /// <summary>
       /// Reference to ConceptMap.property.code.
@@ -2253,7 +2258,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element.target.dependsOn"; } }
+      public override string TypeName => "ConceptMap.group.element.target.dependsOn";
 
       /// <summary>
       /// A reference to a mapping attribute defined in ConceptMap.additionalAttribute.
@@ -2492,7 +2497,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.unmapped"; } }
+      public override string TypeName => "ConceptMap.group.unmapped";
 
       /// <summary>
       /// use-source-code | fixed | other-map.
@@ -2958,6 +2963,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3302,6 +3308,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -3370,6 +3377,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -3398,6 +3406,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -3657,6 +3666,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -3684,6 +3694,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -3711,6 +3722,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -3738,6 +3750,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -3765,6 +3778,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -3792,6 +3806,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -3819,6 +3834,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConceptMap.PropertyComponent> Property
     {
       get
@@ -3846,6 +3862,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("additionalAttribute", InSummary=true, Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConceptMap.AdditionalAttributeComponent> AdditionalAttribute
     {
       get
@@ -3929,6 +3946,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("group", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConceptMap.GroupComponent> Group
     {
       get

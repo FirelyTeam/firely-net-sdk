@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductAuthorization"; } }
+    public override string TypeName => "MedicinalProductAuthorization";
 
     /// <summary>
     /// Authorization in areas within a country
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductAuthorization.jurisdictionalAuthorization"; } }
+      public override string TypeName => "MedicinalProductAuthorization.jurisdictionalAuthorization";
 
       /// <summary>
       /// The assigned number for the marketing authorization.
@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -132,6 +133,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("jurisdiction", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
       {
         get
@@ -365,7 +367,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductAuthorization.procedure"; } }
+      public override string TypeName => "MedicinalProductAuthorization.procedure";
 
       /// <summary>
       /// Identifier for this procedure.
@@ -454,6 +456,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("application", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent> Application
       {
         get
@@ -611,6 +614,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -666,6 +670,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("country", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Country
     {
       get
@@ -693,6 +698,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("jurisdiction", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -988,6 +994,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("jurisdictionalAuthorization", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent> JurisdictionalAuthorization
     {
       get

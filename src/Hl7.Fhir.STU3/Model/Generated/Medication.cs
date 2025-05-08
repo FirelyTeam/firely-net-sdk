@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Medication"; } }
+    public override string TypeName => "Medication";
 
     /// <summary>
     /// A coded concept defining if the medication is in active use
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication.ingredient"; } }
+      public override string TypeName => "Medication.ingredient";
 
       /// <summary>
       /// The product contained.
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication.package"; } }
+      public override string TypeName => "Medication.package";
 
       /// <summary>
       /// E.g. box, vial, blister-pack.
@@ -365,6 +365,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("content", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Medication.ContentComponent> Content
       {
         get
@@ -392,6 +393,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("batch", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Medication.BatchComponent> Batch
       {
         get
@@ -538,7 +540,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication.package.content"; } }
+      public override string TypeName => "Medication.package.content";
 
       /// <summary>
       /// The item in the package.
@@ -702,7 +704,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication.package.batch"; } }
+      public override string TypeName => "Medication.package.batch";
 
       /// <summary>
       /// Identifier assigned to batch.
@@ -1090,6 +1092,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("ingredient", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Medication.IngredientComponent> Ingredient
     {
       get
@@ -1143,6 +1146,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("image", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
       get

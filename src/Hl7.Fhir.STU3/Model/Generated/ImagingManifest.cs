@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImagingManifest"; } }
+    public override string TypeName => "ImagingManifest";
 
     /// <summary>
     /// Study identity of the selected instances
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingManifest.study"; } }
+      public override string TypeName => "ImagingManifest.study";
 
       /// <summary>
       /// Study instance UID.
@@ -158,6 +158,7 @@ namespace Hl7.Fhir.Model
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
         get
@@ -185,6 +186,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("series", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent> Series
       {
         get
@@ -351,7 +353,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingManifest.study.series"; } }
+      public override string TypeName => "ImagingManifest.study.series";
 
       /// <summary>
       /// Series instance UID.
@@ -403,6 +405,7 @@ namespace Hl7.Fhir.Model
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
         get
@@ -430,6 +433,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("instance", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent> Instance
       {
         get
@@ -577,7 +581,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingManifest.study.series.instance"; } }
+      public override string TypeName => "ImagingManifest.study.series.instance";
 
       /// <summary>
       /// SOP class UID of instance.
@@ -926,6 +930,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("study", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> Study
     {
       get

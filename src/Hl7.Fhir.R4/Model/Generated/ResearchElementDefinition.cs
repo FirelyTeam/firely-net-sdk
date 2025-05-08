@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ResearchElementDefinition"; } }
+    public override string TypeName => "ResearchElementDefinition";
 
     /// <summary>
     /// The possible types of research elements (E.g. Population, Exposure, Outcome).
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchElementDefinition.characteristic"; } }
+      public override string TypeName => "ResearchElementDefinition.characteristic";
 
       /// <summary>
       /// What code or expression defines members?.
@@ -144,6 +144,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("usageContext", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.UsageContext> UsageContext
       {
         get
@@ -836,6 +837,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1264,6 +1266,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1332,6 +1335,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("comment", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> CommentElement
     {
       get
@@ -1377,6 +1381,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1405,6 +1410,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1664,6 +1670,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -1691,6 +1698,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -1718,6 +1726,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -1745,6 +1754,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -1772,6 +1782,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -1799,6 +1810,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -1826,6 +1838,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("library", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
     {
       get
@@ -1956,6 +1969,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("characteristic", InSummary=true, Order=410)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent> Characteristic
     {
       get

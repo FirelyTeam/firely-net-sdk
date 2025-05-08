@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RiskEvidenceSynthesis"; } }
+    public override string TypeName => "RiskEvidenceSynthesis";
 
     /// <summary>
     /// What sample size was involved?
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis.sampleSize"; } }
+      public override string TypeName => "RiskEvidenceSynthesis.sampleSize";
 
       /// <summary>
       /// Description of sample size.
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis.riskEstimate"; } }
+      public override string TypeName => "RiskEvidenceSynthesis.riskEstimate";
 
       /// <summary>
       /// Description of risk estimate.
@@ -553,6 +553,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("precisionEstimate", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RiskEvidenceSynthesis.PrecisionEstimateComponent> PrecisionEstimate
       {
         get
@@ -775,7 +776,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis.riskEstimate.precisionEstimate"; } }
+      public override string TypeName => "RiskEvidenceSynthesis.riskEstimate.precisionEstimate";
 
       /// <summary>
       /// Type of precision estimate.
@@ -1071,7 +1072,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis.certainty"; } }
+      public override string TypeName => "RiskEvidenceSynthesis.certainty";
 
       /// <summary>
       /// Certainty rating.
@@ -1080,6 +1081,7 @@ namespace Hl7.Fhir.Model
       [Binding("QualityOfEvidenceRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Rating
       {
         get
@@ -1107,6 +1109,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -1134,6 +1137,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("certaintySubcomponent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RiskEvidenceSynthesis.CertaintySubcomponentComponent> CertaintySubcomponent
       {
         get
@@ -1280,7 +1284,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskEvidenceSynthesis.certainty.certaintySubcomponent"; } }
+      public override string TypeName => "RiskEvidenceSynthesis.certainty.certaintySubcomponent";
 
       /// <summary>
       /// Type of subcomponent of certainty rating.
@@ -1316,6 +1320,7 @@ namespace Hl7.Fhir.Model
       [Binding("CertaintySubcomponentRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Rating
       {
         get
@@ -1343,6 +1348,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -1522,6 +1528,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1797,6 +1804,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1865,6 +1873,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1892,6 +1901,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1920,6 +1930,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2097,6 +2108,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -2124,6 +2136,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -2151,6 +2164,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -2178,6 +2192,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -2205,6 +2220,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -2232,6 +2248,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -2451,6 +2468,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("certainty", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RiskEvidenceSynthesis.CertaintyComponent> Certainty
     {
       get

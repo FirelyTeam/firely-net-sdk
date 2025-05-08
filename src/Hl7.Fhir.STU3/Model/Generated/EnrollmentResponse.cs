@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EnrollmentResponse"; } }
+    public override string TypeName => "EnrollmentResponse";
 
     /// <summary>
     /// Business Identifier.
@@ -69,6 +69,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get

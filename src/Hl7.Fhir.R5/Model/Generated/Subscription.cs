@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Subscription"; } }
+    public override string TypeName => "Subscription";
 
     /// <summary>
     /// Codes to represent how much resource content to send in the notification payload.
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription.filterBy"; } }
+      public override string TypeName => "Subscription.filterBy";
 
       /// <summary>
       /// Allowed Resource (reference to definition) for this Subscription filter.
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription.parameter"; } }
+      public override string TypeName => "Subscription.parameter";
 
       /// <summary>
       /// Name (key) of the parameter.
@@ -665,6 +665,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -818,6 +819,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
       get
@@ -955,6 +957,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("filterBy", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Subscription.FilterByComponent> FilterBy
     {
       get
@@ -1051,6 +1054,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parameter", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Subscription.ParameterComponent> Parameter
     {
       get

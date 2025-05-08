@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CodeableConcept"; } }
+    public override string TypeName => "CodeableConcept";
 
     /// <summary>
     /// Code defined by a terminology system.
@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("coding", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Coding
     {
       get

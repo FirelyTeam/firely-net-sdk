@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DiagnosticReport"; } }
+    public override string TypeName => "DiagnosticReport";
 
     /// <summary>
     /// The status of the diagnostic report as a whole.
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport.performer"; } }
+      public override string TypeName => "DiagnosticReport.performer";
 
       /// <summary>
       /// Type of performer.
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport.image"; } }
+      public override string TypeName => "DiagnosticReport.image";
 
       /// <summary>
       /// Comment about the image (e.g. explanation).
@@ -482,6 +482,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -511,6 +512,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ProcedureRequest","ReferralRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -761,6 +763,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", InSummary=true, Order=180, FiveWs="who.witness")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent> Performer
     {
       get
@@ -790,6 +793,7 @@ namespace Hl7.Fhir.Model
     [References("Specimen")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
       get
@@ -819,6 +823,7 @@ namespace Hl7.Fhir.Model
     [References("Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Result
     {
       get
@@ -848,6 +853,7 @@ namespace Hl7.Fhir.Model
     [References("ImagingStudy","ImagingManifest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy
     {
       get
@@ -875,6 +881,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("image", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> Image
     {
       get
@@ -944,6 +951,7 @@ namespace Hl7.Fhir.Model
     [Binding("AdjunctDiagnosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> CodedDiagnosis
     {
       get
@@ -971,6 +979,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("presentedForm", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> PresentedForm
     {
       get

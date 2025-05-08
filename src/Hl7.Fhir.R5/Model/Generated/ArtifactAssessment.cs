@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ArtifactAssessment"; } }
+    public override string TypeName => "ArtifactAssessment";
 
     /// <summary>
     /// Possible values for the workflow status of the comment or assessment, typically used to coordinate workflow around the process of accepting and rejecting changes and comments on the artifact.
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ArtifactAssessment.content"; } }
+      public override string TypeName => "ArtifactAssessment.content";
 
       /// <summary>
       /// comment | classifier | rating | container | response | change-request.
@@ -352,6 +352,7 @@ namespace Hl7.Fhir.Model
       [Binding("EvidenceCertaintyRating")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
         get
@@ -433,6 +434,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUri> PathElement
       {
         get
@@ -478,6 +480,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedArtifact", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
       {
         get
@@ -546,6 +549,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("component", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> Component
       {
         get
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1108,6 +1113,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("content", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> Content
     {
       get

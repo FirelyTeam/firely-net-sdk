@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Substance"; } }
+    public override string TypeName => "Substance";
 
     /// <summary>
     /// A code to indicate if the substance is actively used.
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Substance.ingredient"; } }
+      public override string TypeName => "Substance.ingredient";
 
       /// <summary>
       /// Optional amount (concentration).
@@ -259,6 +259,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -371,6 +372,7 @@ namespace Hl7.Fhir.Model
     [Binding("SubstanceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -534,6 +536,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("ingredient", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Substance.IngredientComponent> Ingredient
     {
       get

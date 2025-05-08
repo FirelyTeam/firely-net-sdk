@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Meta"; } }
+    public override string TypeName => "Meta";
 
     /// <summary>
     /// Version specific identifier.
@@ -200,6 +200,7 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement
     {
       get
@@ -264,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Security
     {
       get
@@ -292,6 +294,7 @@ namespace Hl7.Fhir.Model
     [Binding("Tags")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Tag
     {
       get

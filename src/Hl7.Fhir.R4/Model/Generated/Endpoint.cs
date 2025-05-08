@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Endpoint"; } }
+    public override string TypeName => "Endpoint";
 
     /// <summary>
     /// The status of the endpoint.
@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -282,6 +283,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
       get
@@ -336,6 +338,7 @@ namespace Hl7.Fhir.Model
     [Binding("PayloadType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> PayloadType
     {
       get
@@ -364,6 +367,7 @@ namespace Hl7.Fhir.Model
     [Binding("MimeType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement
     {
       get
@@ -451,6 +455,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("header", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> HeaderElement
     {
       get

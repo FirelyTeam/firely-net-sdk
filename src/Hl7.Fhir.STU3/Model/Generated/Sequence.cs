@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Sequence"; } }
+    public override string TypeName => "Sequence";
 
     /// <summary>
     /// Type for quality report
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence.referenceSeq"; } }
+      public override string TypeName => "Sequence.referenceSeq";
 
       /// <summary>
       /// Chromosome containing genetic finding.
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence.variant"; } }
+      public override string TypeName => "Sequence.variant";
 
       /// <summary>
       /// Start position of the variant on the  reference sequence.
@@ -1073,7 +1073,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence.quality"; } }
+      public override string TypeName => "Sequence.quality";
 
       /// <summary>
       /// indel | snp | unknown.
@@ -1942,7 +1942,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Sequence.repository"; } }
+      public override string TypeName => "Sequence.repository";
 
       /// <summary>
       /// directlink | openapi | login | oauth | other.
@@ -2366,6 +2366,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2641,6 +2642,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("variant", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Sequence.VariantComponent> Variant
     {
       get
@@ -2709,6 +2711,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("quality", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Sequence.QualityComponent> Quality
     {
       get
@@ -2777,6 +2780,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("repository", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Sequence.RepositoryComponent> Repository
     {
       get
@@ -2806,6 +2810,7 @@ namespace Hl7.Fhir.Model
     [References("Sequence")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Pointer
     {
       get

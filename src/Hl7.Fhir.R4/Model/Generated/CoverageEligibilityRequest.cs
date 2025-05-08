@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CoverageEligibilityRequest"; } }
+    public override string TypeName => "CoverageEligibilityRequest";
 
     /// <summary>
     /// A code specifying the types of information being requested.
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest.supportingInfo"; } }
+      public override string TypeName => "CoverageEligibilityRequest.supportingInfo";
 
       /// <summary>
       /// Information instance identifier.
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest.insurance"; } }
+      public override string TypeName => "CoverageEligibilityRequest.insurance";
 
       /// <summary>
       /// Applicable coverage.
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest.item"; } }
+      public override string TypeName => "CoverageEligibilityRequest.item";
 
       /// <summary>
       /// Applicable exception or supporting information.
@@ -598,6 +598,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("supportingInfoSequence", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> SupportingInfoSequenceElement
       {
         get
@@ -698,6 +699,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -833,6 +835,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("diagnosis", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent> Diagnosis
       {
         get
@@ -862,6 +865,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
         get
@@ -1141,7 +1145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityRequest.item.diagnosis"; } }
+      public override string TypeName => "CoverageEligibilityRequest.item.diagnosis";
 
       /// <summary>
       /// Nature of illness or problem.
@@ -1252,6 +1256,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1350,6 +1355,7 @@ namespace Hl7.Fhir.Model
     [Binding("EligibilityRequestPurpose")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> PurposeElement
     {
       get
@@ -1607,6 +1613,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("supportingInfo", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent> SupportingInfo
     {
       get
@@ -1634,6 +1641,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("insurance", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent> Insurance
     {
       get
@@ -1661,6 +1669,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent> Item
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Provenance"; } }
+    public override string TypeName => "Provenance";
 
     /// <summary>
     /// How an entity was used in an activity.
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Provenance.agent"; } }
+      public override string TypeName => "Provenance.agent";
 
       /// <summary>
       /// How the agent participated.
@@ -155,6 +155,7 @@ namespace Hl7.Fhir.Model
       [Binding("ProvenanceAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
         get
@@ -374,7 +375,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Provenance.entity"; } }
+      public override string TypeName => "Provenance.entity";
 
       /// <summary>
       /// revision | quotation | source | instantiates | removal.
@@ -454,6 +455,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("agent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
       {
         get
@@ -594,6 +596,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Target
     {
       get
@@ -690,6 +693,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("policy", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> PolicyElement
     {
       get
@@ -764,6 +768,7 @@ namespace Hl7.Fhir.Model
     [Binding("ProvenanceReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Authorization
     {
       get
@@ -820,6 +825,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -903,6 +909,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("agent", InSummary=true, Order=190, FiveWs="FiveWs.who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
     {
       get
@@ -930,6 +937,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("entity", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Provenance.EntityComponent> Entity
     {
       get
@@ -957,6 +965,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("signature", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Signature> Signature
     {
       get

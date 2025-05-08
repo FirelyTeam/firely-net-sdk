@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the MetadataResource was approved by publisher.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.Date? ApprovalDateElement { get; set; }
 
     /// <summary>
@@ -72,41 +73,49 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the MetadataResource was last reviewed by the publisher.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.Date? LastReviewDateElement { get; set; }
 
     /// <summary>
     /// When the MetadataResource is expected to be used.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.Period? EffectivePeriod { get; set; }
 
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.CodeableConcept> Topic { get; set; }
 
     /// <summary>
     /// Who authored the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Author { get; set; }
 
     /// <summary>
     /// Who edited the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Editor { get; set; }
 
     /// <summary>
     /// Who reviewed the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Reviewer { get; set; }
 
     /// <summary>
     /// Who endorsed the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Endorser { get; set; }
 
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact { get; set; }
 
   }
@@ -148,6 +157,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -155,6 +165,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -162,6 +173,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -169,6 +181,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -176,6 +189,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -183,6 +197,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -229,6 +244,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -236,6 +252,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -243,6 +260,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -250,6 +268,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -257,6 +276,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -264,6 +284,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -310,6 +331,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -317,6 +339,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Citation does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -324,6 +347,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -331,6 +355,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -338,6 +363,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -345,6 +371,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -391,6 +418,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -398,6 +426,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -405,6 +434,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -412,6 +442,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -419,6 +450,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -426,6 +458,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -472,6 +505,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -479,6 +513,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -486,6 +521,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -493,6 +529,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -500,6 +537,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -507,6 +545,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -553,6 +592,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -560,6 +600,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -567,6 +608,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -574,6 +616,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -581,6 +624,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -588,6 +632,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -634,6 +679,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -641,6 +687,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -648,6 +695,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -655,6 +703,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -662,6 +711,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -669,6 +719,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -715,6 +766,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource EvidenceReport does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -722,6 +774,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource EvidenceReport does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -729,6 +782,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -736,6 +790,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -743,6 +798,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -750,6 +806,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -796,6 +853,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -803,6 +861,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -810,6 +869,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -817,6 +877,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -824,6 +885,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -831,6 +893,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -877,6 +940,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -884,6 +948,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -891,6 +956,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -898,6 +964,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -905,6 +972,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -912,6 +980,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -958,6 +1027,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -965,6 +1035,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -972,6 +1043,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -979,6 +1051,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -986,6 +1059,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -993,6 +1067,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -1039,6 +1114,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -1049,6 +1125,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// MedicationKnowledge.Author is incompatible with IMetadataResource.author.
     /// </remarks>
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -1056,6 +1133,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("MedicationKnowledge.Author is incompatible with IMetadataResource.author.");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -1063,6 +1141,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -1070,6 +1149,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -1077,6 +1157,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -1123,6 +1204,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -1130,6 +1212,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -1137,6 +1220,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -1144,6 +1228,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -1151,6 +1236,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -1158,6 +1244,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -1204,6 +1291,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -1211,6 +1299,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -1218,6 +1307,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -1225,6 +1315,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -1232,6 +1323,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -1239,6 +1331,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -1285,6 +1378,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -1292,6 +1386,7 @@ namespace Hl7.Fhir.Model
       set => Topic = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -1299,6 +1394,7 @@ namespace Hl7.Fhir.Model
       set => Author = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -1306,6 +1402,7 @@ namespace Hl7.Fhir.Model
       set => Editor = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -1313,6 +1410,7 @@ namespace Hl7.Fhir.Model
       set => Reviewer = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -1320,6 +1418,7 @@ namespace Hl7.Fhir.Model
       set => Endorser = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -1366,6 +1465,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -1373,6 +1473,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -1380,6 +1481,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -1387,6 +1489,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -1394,6 +1497,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -1401,6 +1505,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
@@ -1447,6 +1552,7 @@ namespace Hl7.Fhir.Model
       set => EffectivePeriod = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
@@ -1454,6 +1560,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
@@ -1461,6 +1568,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
@@ -1468,6 +1576,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
@@ -1475,6 +1584,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
@@ -1482,6 +1592,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {

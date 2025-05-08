@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MeasureReport"; } }
+    public override string TypeName => "MeasureReport";
 
     /// <summary>
     /// The status of the measure report.
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group"; } }
+      public override string TypeName => "MeasureReport.group";
 
       /// <summary>
       /// Pointer to specific group from Measure.
@@ -265,6 +265,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("population", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> Population
       {
         get
@@ -320,6 +321,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("stratifier", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> Stratifier
       {
         get
@@ -523,7 +525,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.population"; } }
+      public override string TypeName => "MeasureReport.group.population";
 
       /// <summary>
       /// Pointer to specific population from Measure.
@@ -670,6 +672,7 @@ namespace Hl7.Fhir.Model
       [References("MeasureReport")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SubjectReport
       {
         get
@@ -901,7 +904,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier"; } }
+      public override string TypeName => "MeasureReport.group.stratifier";
 
       /// <summary>
       /// Pointer to specific stratifier from Measure.
@@ -977,6 +980,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("stratum", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> Stratum
       {
         get
@@ -1123,7 +1127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum"; } }
+      public override string TypeName => "MeasureReport.group.stratifier.stratum";
 
       /// <summary>
       /// The stratum value, e.g. male.
@@ -1160,6 +1164,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("component", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.ComponentComponent> Component
       {
         get
@@ -1187,6 +1192,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("population", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
       {
         get
@@ -1380,7 +1386,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.component"; } }
+      public override string TypeName => "MeasureReport.group.stratifier.stratum.component";
 
       /// <summary>
       /// Pointer to specific stratifier component from Measure.
@@ -1606,7 +1612,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.population"; } }
+      public override string TypeName => "MeasureReport.group.stratifier.stratum.population";
 
       /// <summary>
       /// Pointer to specific population from Measure.
@@ -1753,6 +1759,7 @@ namespace Hl7.Fhir.Model
       [References("MeasureReport")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SubjectReport
       {
         get
@@ -1976,6 +1983,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2434,6 +2442,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("group", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
     {
       get
@@ -2463,6 +2472,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupplementalData
     {
       get
@@ -2492,6 +2502,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> EvaluatedResource
     {
       get

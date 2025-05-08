@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "HealthcareService"; } }
+    public override string TypeName => "HealthcareService";
 
     /// <summary>
     /// Times the Service Site is available
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "HealthcareService.availableTime"; } }
+      public override string TypeName => "HealthcareService.availableTime";
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun.
@@ -84,6 +84,7 @@ namespace Hl7.Fhir.Model
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
         get
@@ -390,7 +391,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "HealthcareService.notAvailable"; } }
+      public override string TypeName => "HealthcareService.notAvailable";
 
       /// <summary>
       /// Reason presented to the user explaining why time not available.
@@ -558,6 +559,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -682,6 +684,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -710,6 +713,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
       get
@@ -739,6 +743,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Location
     {
       get
@@ -915,6 +920,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -944,6 +950,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
     {
       get
@@ -972,6 +979,7 @@ namespace Hl7.Fhir.Model
     [Binding("ServiceProvisionConditions")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
     {
       get
@@ -1067,6 +1075,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("programName", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ProgramNameElement
     {
       get
@@ -1113,6 +1122,7 @@ namespace Hl7.Fhir.Model
     [Binding("ServiceCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
     {
       get
@@ -1141,6 +1151,7 @@ namespace Hl7.Fhir.Model
     [Binding("ReferralMethod")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
     {
       get
@@ -1209,6 +1220,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("availableTime", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> AvailableTime
     {
       get
@@ -1236,6 +1248,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("notAvailable", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> NotAvailable
     {
       get
@@ -1306,6 +1319,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get

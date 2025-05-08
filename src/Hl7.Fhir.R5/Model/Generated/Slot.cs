@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Slot"; } }
+    public override string TypeName => "Slot";
 
     /// <summary>
     /// The free/busy status of the slot.
@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -134,6 +135,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
       get
@@ -162,6 +164,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
       get
@@ -190,6 +193,7 @@ namespace Hl7.Fhir.Model
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
       get
@@ -218,6 +222,7 @@ namespace Hl7.Fhir.Model
     [Binding("appointment-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> AppointmentType
     {
       get

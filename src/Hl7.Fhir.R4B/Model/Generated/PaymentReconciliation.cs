@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "PaymentReconciliation"; } }
+    public override string TypeName => "PaymentReconciliation";
 
     /// <summary>
     /// Settlement particulars
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PaymentReconciliation.detail"; } }
+      public override string TypeName => "PaymentReconciliation.detail";
 
       /// <summary>
       /// Business identifier of the payment detail.
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PaymentReconciliation.processNote"; } }
+      public override string TypeName => "PaymentReconciliation.processNote";
 
       /// <summary>
       /// display | print | printoper.
@@ -807,6 +807,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1207,6 +1208,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("detail", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent> Detail
     {
       get
@@ -1261,6 +1263,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("processNote", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> ProcessNote
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SupplyDelivery"; } }
+    public override string TypeName => "SupplyDelivery";
 
     /// <summary>
     /// Status of the supply delivery.
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyDelivery.suppliedItem"; } }
+      public override string TypeName => "SupplyDelivery.suppliedItem";
 
       /// <summary>
       /// Amount dispensed.
@@ -317,6 +317,7 @@ namespace Hl7.Fhir.Model
     [References("SupplyRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -346,6 +347,7 @@ namespace Hl7.Fhir.Model
     [References("SupplyDelivery","Contract")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -582,6 +584,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Receiver
     {
       get

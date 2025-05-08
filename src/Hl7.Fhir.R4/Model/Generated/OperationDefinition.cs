@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "OperationDefinition"; } }
+    public override string TypeName => "OperationDefinition";
 
     /// <summary>
     /// Whether an operation is a normal operation or a query.
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition.parameter"; } }
+      public override string TypeName => "OperationDefinition.parameter";
 
       /// <summary>
       /// Name in Parameters.parameter.name or in URL.
@@ -360,6 +360,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("targetProfile", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Canonical> TargetProfileElement
       {
         get
@@ -473,6 +474,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("referencedFrom", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.OperationDefinition.ReferencedFromComponent> ReferencedFrom
       {
         get
@@ -500,6 +502,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("part", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Part
       {
         get
@@ -798,7 +801,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition.parameter.binding"; } }
+      public override string TypeName => "OperationDefinition.parameter.binding";
 
       /// <summary>
       /// required | extensible | preferred | example.
@@ -992,7 +995,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition.parameter.referencedFrom"; } }
+      public override string TypeName => "OperationDefinition.parameter.referencedFrom";
 
       /// <summary>
       /// Referencing parameter.
@@ -1184,7 +1187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationDefinition.overload"; } }
+      public override string TypeName => "OperationDefinition.overload";
 
       /// <summary>
       /// Name of parameter to include in overload.
@@ -1192,6 +1195,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("parameterName", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> ParameterNameElement
       {
         get
@@ -1744,6 +1748,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1812,6 +1817,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1840,6 +1846,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2074,6 +2081,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ResourceType>> ResourceElement
     {
       get
@@ -2327,6 +2335,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parameter", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Parameter
     {
       get
@@ -2354,6 +2363,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("overload", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> Overload
     {
       get

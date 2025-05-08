@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EvidenceVariable"; } }
+    public override string TypeName => "EvidenceVariable";
 
     /// <summary>
     /// Logical grouping of characteristics.
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable.characteristic"; } }
+      public override string TypeName => "EvidenceVariable.characteristic";
 
       /// <summary>
       /// Label for internal linking.
@@ -221,6 +221,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -559,6 +560,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("timeFromEvent", Order=170)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.EvidenceVariable.TimeFromEventComponent> TimeFromEvent
       {
         get
@@ -914,7 +916,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable.characteristic.definitionByTypeAndValue"; } }
+      public override string TypeName => "EvidenceVariable.characteristic.definitionByTypeAndValue";
 
       /// <summary>
       /// Expresses the type of characteristic.
@@ -951,6 +953,7 @@ namespace Hl7.Fhir.Model
       [Binding("DefinitionMethod")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Method
       {
         get
@@ -1219,7 +1222,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable.characteristic.definitionByCombination"; } }
+      public override string TypeName => "EvidenceVariable.characteristic.definitionByCombination";
 
       /// <summary>
       /// all-of | any-of | at-least | at-most | statistical | net-effect | dataset.
@@ -1311,6 +1314,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("characteristic", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> Characteristic
       {
         get
@@ -1454,7 +1458,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable.characteristic.timeFromEvent"; } }
+      public override string TypeName => "EvidenceVariable.characteristic.timeFromEvent";
 
       /// <summary>
       /// Human readable description.
@@ -1503,6 +1507,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -1765,7 +1770,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceVariable.category"; } }
+      public override string TypeName => "EvidenceVariable.category";
 
       /// <summary>
       /// Description of the grouping.
@@ -1975,6 +1980,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2360,6 +2366,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2428,6 +2435,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -2455,6 +2463,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2713,6 +2722,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -2740,6 +2750,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -2767,6 +2778,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -2794,6 +2806,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -2821,6 +2834,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -2889,6 +2903,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("characteristic", InSummary=true, Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> Characteristic
     {
       get
@@ -2958,6 +2973,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EvidenceVariable.CategoryComponent> Category
     {
       get

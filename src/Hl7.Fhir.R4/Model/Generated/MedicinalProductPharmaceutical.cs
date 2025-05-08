@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductPharmaceutical"; } }
+    public override string TypeName => "MedicinalProductPharmaceutical";
 
     /// <summary>
     /// Characteristics e.g. a products onset of action
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical.characteristics"; } }
+      public override string TypeName => "MedicinalProductPharmaceutical.characteristics";
 
       /// <summary>
       /// A coded characteristic.
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration"; } }
+      public override string TypeName => "MedicinalProductPharmaceutical.routeOfAdministration";
 
       /// <summary>
       /// Coded expression for the route.
@@ -394,6 +394,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("targetSpecies", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent> TargetSpecies
       {
         get
@@ -613,7 +614,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies"; } }
+      public override string TypeName => "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies";
 
       /// <summary>
       /// Coded expression for the species.
@@ -648,6 +649,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("withdrawalPeriod", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.WithdrawalPeriodComponent> WithdrawalPeriod
       {
         get
@@ -772,7 +774,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod"; } }
+      public override string TypeName => "MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod";
 
       /// <summary>
       /// Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk.
@@ -986,6 +988,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1068,6 +1071,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductIngredient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Ingredient
     {
       get
@@ -1097,6 +1101,7 @@ namespace Hl7.Fhir.Model
     [References("DeviceDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Device
     {
       get
@@ -1124,6 +1129,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("characteristics", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent> Characteristics
     {
       get
@@ -1151,6 +1157,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("routeOfAdministration", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent> RouteOfAdministration
     {
       get

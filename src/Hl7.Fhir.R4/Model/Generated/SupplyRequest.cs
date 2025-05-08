@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SupplyRequest"; } }
+    public override string TypeName => "SupplyRequest";
 
     /// <summary>
     /// Status of the supply request.
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest.parameter"; } }
+      public override string TypeName => "SupplyRequest.parameter";
 
       /// <summary>
       /// Item detail.
@@ -284,6 +284,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -480,6 +481,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parameter", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent> Parameter
     {
       get
@@ -606,6 +608,7 @@ namespace Hl7.Fhir.Model
     [References("Organization","HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Supplier
     {
       get
@@ -634,6 +637,7 @@ namespace Hl7.Fhir.Model
     [Binding("SupplyRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
       get
@@ -663,6 +667,7 @@ namespace Hl7.Fhir.Model
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Procedure"; } }
+    public override string TypeName => "Procedure";
 
     /// <summary>
     /// The people who performed the procedure
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Procedure.performer"; } }
+      public override string TypeName => "Procedure.performer";
 
       /// <summary>
       /// Type of performance.
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Procedure.focalDevice"; } }
+      public override string TypeName => "Procedure.focalDevice";
 
       /// <summary>
       /// Kind of change to device.
@@ -444,6 +444,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -471,6 +472,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
       get
@@ -516,6 +518,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
       get
@@ -563,6 +566,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -592,6 +596,7 @@ namespace Hl7.Fhir.Model
     [References("Procedure","Observation","MedicationAdministration")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -884,6 +889,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Procedure.PerformerComponent> Performer
     {
       get
@@ -940,6 +946,7 @@ namespace Hl7.Fhir.Model
     [Binding("ProcedureReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
       get
@@ -969,6 +976,7 @@ namespace Hl7.Fhir.Model
     [References("Condition","Observation","Procedure","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
       get
@@ -997,6 +1005,7 @@ namespace Hl7.Fhir.Model
     [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
       get
@@ -1053,6 +1062,7 @@ namespace Hl7.Fhir.Model
     [References("DiagnosticReport","DocumentReference","Composition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Report
     {
       get
@@ -1081,6 +1091,7 @@ namespace Hl7.Fhir.Model
     [Binding("ProcedureComplication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Complication
     {
       get
@@ -1110,6 +1121,7 @@ namespace Hl7.Fhir.Model
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ComplicationDetail
     {
       get
@@ -1138,6 +1150,7 @@ namespace Hl7.Fhir.Model
     [Binding("ProcedureFollowUp")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
     {
       get
@@ -1165,6 +1178,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1192,6 +1206,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("focalDevice", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> FocalDevice
     {
       get
@@ -1221,6 +1236,7 @@ namespace Hl7.Fhir.Model
     [References("Device","Medication","Substance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> UsedReference
     {
       get
@@ -1249,6 +1265,7 @@ namespace Hl7.Fhir.Model
     [Binding("ProcedureUsed")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> UsedCode
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DeviceMetric"; } }
+    public override string TypeName => "DeviceMetric";
 
     /// <summary>
     /// Describes the operational status of the DeviceMetric.
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceMetric.calibration"; } }
+      public override string TypeName => "DeviceMetric.calibration";
 
       /// <summary>
       /// unspecified | offset | gain | two-point.
@@ -513,6 +513,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -804,6 +805,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("calibration", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration
     {
       get

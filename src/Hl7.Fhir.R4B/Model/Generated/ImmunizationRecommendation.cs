@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImmunizationRecommendation"; } }
+    public override string TypeName => "ImmunizationRecommendation";
 
     /// <summary>
     /// Vaccine administration recommendations
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation.recommendation"; } }
+      public override string TypeName => "ImmunizationRecommendation.recommendation";
 
       /// <summary>
       /// Vaccine  or vaccine group recommendation applies to.
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
       [Binding("VaccineCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> VaccineCode
       {
         get
@@ -138,6 +139,7 @@ namespace Hl7.Fhir.Model
       [Binding("VaccineCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ContraindicatedVaccineCode
       {
         get
@@ -194,6 +196,7 @@ namespace Hl7.Fhir.Model
       [Binding("ImmunizationRecommendationReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ForecastReason
       {
         get
@@ -221,6 +224,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dateCriterion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> DateCriterion
       {
         get
@@ -388,6 +392,7 @@ namespace Hl7.Fhir.Model
       [References("Immunization","ImmunizationEvaluation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
       {
         get
@@ -417,6 +422,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
       {
         get
@@ -734,7 +740,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation.recommendation.dateCriterion"; } }
+      public override string TypeName => "ImmunizationRecommendation.recommendation.dateCriterion";
 
       /// <summary>
       /// Type of date.
@@ -904,6 +910,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1030,6 +1037,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("recommendation", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> Recommendation
     {
       get

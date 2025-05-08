@@ -64,6 +64,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
       get

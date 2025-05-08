@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubscriptionTopic"; } }
+    public override string TypeName => "SubscriptionTopic";
 
     /// <summary>
     /// FHIR RESTful interaction codes used for SubscriptionTopic trigger.
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic.resourceTrigger"; } }
+      public override string TypeName => "SubscriptionTopic.resourceTrigger";
 
       /// <summary>
       /// Text representation of the resource trigger.
@@ -320,6 +320,7 @@ namespace Hl7.Fhir.Model
       [Binding("MethodCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
       {
         get
@@ -589,7 +590,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic.resourceTrigger.queryCriteria"; } }
+      public override string TypeName => "SubscriptionTopic.resourceTrigger.queryCriteria";
 
       /// <summary>
       /// Rule applied to previous resource state.
@@ -961,7 +962,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic.eventTrigger"; } }
+      public override string TypeName => "SubscriptionTopic.eventTrigger";
 
       /// <summary>
       /// Text representation of the event trigger.
@@ -1200,7 +1201,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic.canFilterBy"; } }
+      public override string TypeName => "SubscriptionTopic.canFilterBy";
 
       /// <summary>
       /// Description of this filter parameter.
@@ -1375,6 +1376,7 @@ namespace Hl7.Fhir.Model
       [Binding("SubscriptionTopicFilterBySearchModifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>> ModifierElement
       {
         get
@@ -1577,7 +1579,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionTopic.notificationShape"; } }
+      public override string TypeName => "SubscriptionTopic.notificationShape";
 
       /// <summary>
       /// URL of the Resource that is the focus (main) resource in a notification shape.
@@ -1628,6 +1630,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("include", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> IncludeElement
       {
         get
@@ -1673,6 +1676,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("revInclude", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> RevIncludeElement
       {
         get
@@ -1871,6 +1875,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1980,6 +1985,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFrom", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromElement
     {
       get
@@ -2191,6 +2197,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2259,6 +2266,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2287,6 +2295,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2504,6 +2513,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("resourceTrigger", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubscriptionTopic.ResourceTriggerComponent> ResourceTrigger
     {
       get
@@ -2531,6 +2541,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("eventTrigger", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubscriptionTopic.EventTriggerComponent> EventTrigger
     {
       get
@@ -2558,6 +2569,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("canFilterBy", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubscriptionTopic.CanFilterByComponent> CanFilterBy
     {
       get
@@ -2585,6 +2597,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("notificationShape", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent> NotificationShape
     {
       get

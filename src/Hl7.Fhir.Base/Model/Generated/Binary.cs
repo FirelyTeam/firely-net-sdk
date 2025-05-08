@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Binary"; } }
+    public override string TypeName => "Binary";
 
     /// <summary>
     /// MimeType of the binary content.

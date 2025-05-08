@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MeasureReport"; } }
+    public override string TypeName => "MeasureReport";
 
     /// <summary>
     /// The status of the measure report
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group"; } }
+      public override string TypeName => "MeasureReport.group";
 
       /// <summary>
       /// What group of the measure.
@@ -168,6 +168,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("population", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> Population
       {
         get
@@ -236,6 +237,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("stratifier", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> Stratifier
       {
         get
@@ -401,7 +403,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.population"; } }
+      public override string TypeName => "MeasureReport.group.population";
 
       /// <summary>
       /// Population identifier as defined in the measure.
@@ -669,7 +671,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier"; } }
+      public override string TypeName => "MeasureReport.group.stratifier";
 
       /// <summary>
       /// What stratifier of the group.
@@ -703,6 +705,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("stratum", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> Stratum
       {
         get
@@ -830,7 +833,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum"; } }
+      public override string TypeName => "MeasureReport.group.stratifier.stratum";
 
       /// <summary>
       /// The stratum value, e.g. male.
@@ -880,6 +883,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("population", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
       {
         get
@@ -1067,7 +1071,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MeasureReport.group.stratifier.stratum.population"; } }
+      public override string TypeName => "MeasureReport.group.stratifier.stratum.population";
 
       /// <summary>
       /// Population identifier as defined in the measure.
@@ -1592,6 +1596,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("group", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
     {
       get

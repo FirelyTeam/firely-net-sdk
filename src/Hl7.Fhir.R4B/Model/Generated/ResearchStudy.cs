@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ResearchStudy"; } }
+    public override string TypeName => "ResearchStudy";
 
     /// <summary>
     /// Codes that convey the current status of the research study.
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.arm"; } }
+      public override string TypeName => "ResearchStudy.arm";
 
       /// <summary>
       /// Label for study arm.
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.objective"; } }
+      public override string TypeName => "ResearchStudy.objective";
 
       /// <summary>
       /// Label for the objective.
@@ -558,6 +558,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -628,6 +629,7 @@ namespace Hl7.Fhir.Model
     [References("PlanDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Protocol
     {
       get
@@ -657,6 +659,7 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -782,6 +785,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchStudyCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -810,6 +814,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchStudyFocus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
     {
       get
@@ -838,6 +843,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConditionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
     {
       get
@@ -865,6 +871,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -892,6 +899,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -920,6 +928,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
     {
       get
@@ -948,6 +957,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Location
     {
       get
@@ -1018,6 +1028,7 @@ namespace Hl7.Fhir.Model
     [References("Group")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Enrollment
     {
       get
@@ -1129,6 +1140,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Site
     {
       get
@@ -1183,6 +1195,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1210,6 +1223,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("arm", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.ArmComponent> Arm
     {
       get
@@ -1237,6 +1251,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("objective", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> Objective
     {
       get

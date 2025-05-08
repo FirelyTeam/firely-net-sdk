@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ExtendedContactDetail"; } }
+    public override string TypeName => "ExtendedContactDetail";
 
     /// <summary>
     /// The type of contact.
@@ -97,6 +97,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
       get
@@ -124,6 +125,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get

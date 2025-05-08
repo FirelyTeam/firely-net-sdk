@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImmunizationRecommendation"; } }
+    public override string TypeName => "ImmunizationRecommendation";
 
     /// <summary>
     /// Vaccine administration recommendations
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation.recommendation"; } }
+      public override string TypeName => "ImmunizationRecommendation.recommendation";
 
       /// <summary>
       /// Date recommendation created.
@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dateCriterion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> DateCriterion
       {
         get
@@ -302,6 +303,7 @@ namespace Hl7.Fhir.Model
       [References("Immunization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
       {
         get
@@ -331,6 +333,7 @@ namespace Hl7.Fhir.Model
       [References("Observation","AllergyIntolerance")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
       {
         get
@@ -591,7 +594,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation.recommendation.dateCriterion"; } }
+      public override string TypeName => "ImmunizationRecommendation.recommendation.dateCriterion";
 
       /// <summary>
       /// Type of date.
@@ -769,7 +772,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImmunizationRecommendation.recommendation.protocol"; } }
+      public override string TypeName => "ImmunizationRecommendation.recommendation.protocol";
 
       /// <summary>
       /// Dose number within sequence.
@@ -1058,6 +1061,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1114,6 +1118,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("recommendation", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> Recommendation
     {
       get

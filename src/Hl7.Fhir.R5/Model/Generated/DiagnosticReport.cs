@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DiagnosticReport"; } }
+    public override string TypeName => "DiagnosticReport";
 
     /// <summary>
     /// The status of the diagnostic report.
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport.supportingInfo"; } }
+      public override string TypeName => "DiagnosticReport.supportingInfo";
 
       /// <summary>
       /// Supporting information role code.
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DiagnosticReport.media"; } }
+      public override string TypeName => "DiagnosticReport.media";
 
       /// <summary>
       /// Comment about the image or data (e.g. explanation).
@@ -489,6 +489,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -518,6 +519,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -589,6 +591,7 @@ namespace Hl7.Fhir.Model
     [Binding("DiagnosticServiceSection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -771,6 +774,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Organization","CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
       get
@@ -800,6 +804,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Organization","CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ResultsInterpreter
     {
       get
@@ -829,6 +834,7 @@ namespace Hl7.Fhir.Model
     [References("Specimen")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
       get
@@ -858,6 +864,7 @@ namespace Hl7.Fhir.Model
     [References("Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Result
     {
       get
@@ -885,6 +892,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -914,6 +922,7 @@ namespace Hl7.Fhir.Model
     [References("GenomicStudy","ImagingStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Study
     {
       get
@@ -941,6 +950,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("supportingInfo", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DiagnosticReport.SupportingInfoComponent> SupportingInfo
     {
       get
@@ -968,6 +978,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("media", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent> Media
     {
       get
@@ -1065,6 +1076,7 @@ namespace Hl7.Fhir.Model
     [Binding("AdjunctDiagnosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ConclusionCode
     {
       get
@@ -1092,6 +1104,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("presentedForm", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> PresentedForm
     {
       get

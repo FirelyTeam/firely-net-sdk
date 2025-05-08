@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ExampleScenario"; } }
+    public override string TypeName => "ExampleScenario";
 
     /// <summary>
     /// Individual involved in exchange
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.actor"; } }
+      public override string TypeName => "ExampleScenario.actor";
 
       /// <summary>
       /// ID or acronym of the actor.
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.instance"; } }
+      public override string TypeName => "ExampleScenario.instance";
 
       /// <summary>
       /// ID or acronym of the instance.
@@ -644,6 +644,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("version", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.VersionComponent> Version
       {
         get
@@ -671,6 +672,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("containedInstance", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent> ContainedInstance
       {
         get
@@ -932,7 +934,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.instance.version"; } }
+      public override string TypeName => "ExampleScenario.instance.version";
 
       /// <summary>
       /// ID or acronym of the version.
@@ -1229,7 +1231,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.instance.containedInstance"; } }
+      public override string TypeName => "ExampleScenario.instance.containedInstance";
 
       /// <summary>
       /// Key of contained instance.
@@ -1421,7 +1423,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process"; } }
+      public override string TypeName => "ExampleScenario.process";
 
       /// <summary>
       /// Label for procss.
@@ -1594,6 +1596,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("step", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.StepComponent> Step
       {
         get
@@ -1778,7 +1781,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process.step"; } }
+      public override string TypeName => "ExampleScenario.process.step";
 
       /// <summary>
       /// Sequential number of the step.
@@ -1920,6 +1923,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("alternative", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.AlternativeComponent> Alternative
       {
         get
@@ -2164,7 +2168,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process.step.operation"; } }
+      public override string TypeName => "ExampleScenario.process.step.operation";
 
       /// <summary>
       /// Kind of action.
@@ -2730,7 +2734,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process.step.alternative"; } }
+      public override string TypeName => "ExampleScenario.process.step.alternative";
 
       /// <summary>
       /// Label for alternative.
@@ -2821,6 +2825,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("step", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.StepComponent> Step
       {
         get
@@ -3000,6 +3005,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3344,6 +3350,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -3412,6 +3419,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -3440,6 +3448,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -3590,6 +3599,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("actor", Order=260, FiveWs="FiveWs.who")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExampleScenario.ActorComponent> Actor
     {
       get
@@ -3617,6 +3627,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instance", Order=270, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent> Instance
     {
       get
@@ -3644,6 +3655,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("process", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> Process
     {
       get

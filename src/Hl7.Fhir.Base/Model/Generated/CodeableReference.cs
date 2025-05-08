@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CodeableReference"; } }
+    public override string TypeName => "CodeableReference";
 
     /// <summary>
     /// Reference to a concept (by class).

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Signature"; } }
+    public override string TypeName => "Signature";
 
     /// <summary>
     /// Indication of the reason the entity signed the object(s).
@@ -74,6 +74,7 @@ namespace Hl7.Fhir.Model
     [Binding("SignatureType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Type
     {
       get

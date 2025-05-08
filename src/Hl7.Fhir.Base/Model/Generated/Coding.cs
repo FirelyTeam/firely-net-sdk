@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Coding"; } }
+    public override string TypeName => "Coding";
 
     /// <summary>
     /// Identity of the terminology system.

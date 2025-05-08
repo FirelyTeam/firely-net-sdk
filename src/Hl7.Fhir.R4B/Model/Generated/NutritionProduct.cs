@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "NutritionProduct"; } }
+    public override string TypeName => "NutritionProduct";
 
     /// <summary>
     /// Codes identifying the lifecycle stage of a product.
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct.nutrient"; } }
+      public override string TypeName => "NutritionProduct.nutrient";
 
       /// <summary>
       /// The (relevant) nutrients in the product.
@@ -140,6 +140,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("amount", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Ratio> Amount
       {
         get
@@ -264,7 +265,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct.ingredient"; } }
+      public override string TypeName => "NutritionProduct.ingredient";
 
       /// <summary>
       /// The ingredient contained in the product.
@@ -299,6 +300,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("amount", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Ratio> Amount
       {
         get
@@ -423,7 +425,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct.productCharacteristic"; } }
+      public override string TypeName => "NutritionProduct.productCharacteristic";
 
       /// <summary>
       /// Code specifying the type of characteristic.
@@ -588,7 +590,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionProduct.instance"; } }
+      public override string TypeName => "NutritionProduct.instance";
 
       /// <summary>
       /// The amount of items or instances.
@@ -622,6 +624,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -965,6 +968,7 @@ namespace Hl7.Fhir.Model
     [Binding("NutritionProductCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1021,6 +1025,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get
@@ -1048,6 +1053,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("nutrient", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent> Nutrient
     {
       get
@@ -1075,6 +1081,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("ingredient", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent> Ingredient
     {
       get
@@ -1103,6 +1110,7 @@ namespace Hl7.Fhir.Model
     [Binding("AllergenClass")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> KnownAllergen
     {
       get
@@ -1130,6 +1138,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("productCharacteristic", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionProduct.ProductCharacteristicComponent> ProductCharacteristic
     {
       get
@@ -1183,6 +1192,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

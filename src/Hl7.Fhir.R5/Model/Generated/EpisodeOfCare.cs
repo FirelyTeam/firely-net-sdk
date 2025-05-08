@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EpisodeOfCare"; } }
+    public override string TypeName => "EpisodeOfCare";
 
     /// <summary>
     /// The status of the episode of care.
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare.statusHistory"; } }
+      public override string TypeName => "EpisodeOfCare.statusHistory";
 
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare.reason"; } }
+      public override string TypeName => "EpisodeOfCare.reason";
 
       /// <summary>
       /// What the reason value should be used for/as.
@@ -346,6 +346,7 @@ namespace Hl7.Fhir.Model
       [Binding("reason-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Value
       {
         get
@@ -474,7 +475,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare.diagnosis"; } }
+      public override string TypeName => "EpisodeOfCare.diagnosis";
 
       /// <summary>
       /// The medical condition that was addressed during the episode of care.
@@ -483,6 +484,7 @@ namespace Hl7.Fhir.Model
       [Binding("condition-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Condition
       {
         get
@@ -629,6 +631,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -699,6 +702,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("statusHistory", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> StatusHistory
     {
       get
@@ -727,6 +731,7 @@ namespace Hl7.Fhir.Model
     [Binding("EpisodeOfCareType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -754,6 +759,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EpisodeOfCare.ReasonComponent> Reason
     {
       get
@@ -781,6 +787,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("diagnosis", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> Diagnosis
     {
       get
@@ -893,6 +900,7 @@ namespace Hl7.Fhir.Model
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
     {
       get
@@ -950,6 +958,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CareTeam
     {
       get
@@ -979,6 +988,7 @@ namespace Hl7.Fhir.Model
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
       get

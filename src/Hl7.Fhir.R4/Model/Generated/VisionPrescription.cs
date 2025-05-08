@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "VisionPrescription"; } }
+    public override string TypeName => "VisionPrescription";
 
     /// <summary>
     /// A coded concept listing the eye codes.
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VisionPrescription.lensSpecification"; } }
+      public override string TypeName => "VisionPrescription.lensSpecification";
 
       /// <summary>
       /// Product to be supplied.
@@ -335,6 +335,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("prism", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> Prism
       {
         get
@@ -634,6 +635,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=170)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -989,7 +991,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VisionPrescription.lensSpecification.prism"; } }
+      public override string TypeName => "VisionPrescription.lensSpecification.prism";
 
       /// <summary>
       /// Amount of adjustment.
@@ -1174,6 +1176,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1414,6 +1417,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("lensSpecification", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> LensSpecification
     {
       get

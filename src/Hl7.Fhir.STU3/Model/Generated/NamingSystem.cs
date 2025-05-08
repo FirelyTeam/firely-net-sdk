@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "NamingSystem"; } }
+    public override string TypeName => "NamingSystem";
 
     /// <summary>
     /// Identifies the purpose of the naming system.
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NamingSystem.uniqueId"; } }
+      public override string TypeName => "NamingSystem.uniqueId";
 
       /// <summary>
       /// oid | uuid | uri | other.
@@ -701,6 +701,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -837,6 +838,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -865,6 +867,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -933,6 +936,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("uniqueId", Order=210)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> UniqueId
     {
       get

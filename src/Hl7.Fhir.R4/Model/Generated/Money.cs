@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Money"; } }
+    public override string TypeName => "Money";
 
     /// <summary>
     /// Currency codes from ISO 4217 (see https://www.iso.org/iso-4217-currency-codes.html)

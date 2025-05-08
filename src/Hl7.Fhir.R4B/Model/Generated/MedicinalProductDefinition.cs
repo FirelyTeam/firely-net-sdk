@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductDefinition"; } }
+    public override string TypeName => "MedicinalProductDefinition";
 
     /// <summary>
     /// A product specific contact, person (in a role), or an organization
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.contact"; } }
+      public override string TypeName => "MedicinalProductDefinition.contact";
 
       /// <summary>
       /// Allows the contact to be classified, for example QPPV, Pharmacovigilance Enquiry Information.
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.name"; } }
+      public override string TypeName => "MedicinalProductDefinition.name";
 
       /// <summary>
       /// The full product name.
@@ -312,6 +312,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("namePart", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductDefinition.NamePartComponent> NamePart
       {
         get
@@ -339,6 +340,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("countryLanguage", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductDefinition.CountryLanguageComponent> CountryLanguage
       {
         get
@@ -501,7 +503,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.name.namePart"; } }
+      public override string TypeName => "MedicinalProductDefinition.name.namePart";
 
       /// <summary>
       /// A fragment of a product name.
@@ -679,7 +681,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.name.countryLanguage"; } }
+      public override string TypeName => "MedicinalProductDefinition.name.countryLanguage";
 
       /// <summary>
       /// Country code for where this name applies.
@@ -889,7 +891,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.crossReference"; } }
+      public override string TypeName => "MedicinalProductDefinition.crossReference";
 
       /// <summary>
       /// Reference to another product, e.g. for linking authorised to investigational product.
@@ -1051,7 +1053,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.operation"; } }
+      public override string TypeName => "MedicinalProductDefinition.operation";
 
       /// <summary>
       /// The type of manufacturing operation e.g. manufacturing itself, re-packaging.
@@ -1113,6 +1115,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Organization
       {
         get
@@ -1305,7 +1308,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductDefinition.characteristic"; } }
+      public override string TypeName => "MedicinalProductDefinition.characteristic";
 
       /// <summary>
       /// A code expressing the type of characteristic.
@@ -1461,6 +1464,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1720,6 +1724,7 @@ namespace Hl7.Fhir.Model
     [Binding("SNOMEDCTRouteCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Route
     {
       get
@@ -1843,6 +1848,7 @@ namespace Hl7.Fhir.Model
     [Binding("SpecialMeasures")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialMeasures
     {
       get
@@ -1898,6 +1904,7 @@ namespace Hl7.Fhir.Model
     [Binding("ProductClassification")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Classification
     {
       get
@@ -1925,6 +1932,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("marketingStatus", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
       get
@@ -1953,6 +1961,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicinalProductPackageType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> PackagedMedicinalProduct
     {
       get
@@ -1981,6 +1990,7 @@ namespace Hl7.Fhir.Model
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
       get
@@ -2009,6 +2019,7 @@ namespace Hl7.Fhir.Model
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Impurity
     {
       get
@@ -2038,6 +2049,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
     {
       get
@@ -2067,6 +2079,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> MasterFile
     {
       get
@@ -2094,6 +2107,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.ContactComponent> Contact
     {
       get
@@ -2123,6 +2137,7 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ClinicalTrial
     {
       get
@@ -2151,6 +2166,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationFormalRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Code
     {
       get
@@ -2178,6 +2194,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=330)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.NameComponent> Name
     {
       get
@@ -2205,6 +2222,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("crossReference", InSummary=true, Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.CrossReferenceComponent> CrossReference
     {
       get
@@ -2232,6 +2250,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("operation", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.OperationComponent> Operation
     {
       get
@@ -2259,6 +2278,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("characteristic", InSummary=true, Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.CharacteristicComponent> Characteristic
     {
       get

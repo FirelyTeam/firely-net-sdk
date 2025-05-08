@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "BiologicallyDerivedProduct"; } }
+    public override string TypeName => "BiologicallyDerivedProduct";
 
     /// <summary>
     /// Biologically Derived Product Category.
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct.collection"; } }
+      public override string TypeName => "BiologicallyDerivedProduct.collection";
 
       /// <summary>
       /// Individual performing collection.
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct.processing"; } }
+      public override string TypeName => "BiologicallyDerivedProduct.processing";
 
       /// <summary>
       /// Description of of processing.
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct.manipulation"; } }
+      public override string TypeName => "BiologicallyDerivedProduct.manipulation";
 
       /// <summary>
       /// Description of manipulation.
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct.storage"; } }
+      public override string TypeName => "BiologicallyDerivedProduct.storage";
 
       /// <summary>
       /// Description of storage.
@@ -1109,6 +1109,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1249,6 +1250,7 @@ namespace Hl7.Fhir.Model
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Request
     {
       get
@@ -1319,6 +1321,7 @@ namespace Hl7.Fhir.Model
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
       get
@@ -1372,6 +1375,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("processing", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent> Processing
     {
       get
@@ -1425,6 +1429,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("storage", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent> Storage
     {
       get

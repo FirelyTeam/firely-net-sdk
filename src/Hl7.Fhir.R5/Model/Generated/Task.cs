@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Task"; } }
+    public override string TypeName => "Task";
 
     /// <summary>
     /// The current status of the task.
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task.performer"; } }
+      public override string TypeName => "Task.performer";
 
       /// <summary>
       /// Type of performance.
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task.restriction"; } }
+      public override string TypeName => "Task.restriction";
 
       /// <summary>
       /// How many times to repeat.
@@ -462,6 +462,7 @@ namespace Hl7.Fhir.Model
       [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Group","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Recipient
       {
         get
@@ -608,7 +609,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task.input"; } }
+      public override string TypeName => "Task.input";
 
       /// <summary>
       /// Label for the input.
@@ -773,7 +774,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Task.output"; } }
+      public override string TypeName => "Task.output";
 
       /// <summary>
       /// Label for output.
@@ -930,6 +931,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1041,6 +1043,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1096,6 +1099,7 @@ namespace Hl7.Fhir.Model
     [References("Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -1661,6 +1665,7 @@ namespace Hl7.Fhir.Model
     [Binding("TaskPerformerType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> RequestedPerformer
     {
       get
@@ -1716,6 +1721,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", InSummary=true, Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Task.PerformerComponent> Performer
     {
       get
@@ -1772,6 +1778,7 @@ namespace Hl7.Fhir.Model
     [Binding("TaskReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -1801,6 +1808,7 @@ namespace Hl7.Fhir.Model
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Insurance
     {
       get
@@ -1828,6 +1836,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1857,6 +1866,7 @@ namespace Hl7.Fhir.Model
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> RelevantHistory
     {
       get
@@ -1910,6 +1920,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("input", Order=400)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Task.InputComponent> Input
     {
       get
@@ -1937,6 +1948,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("output", Order=410)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Task.OutputComponent> Output
     {
       get

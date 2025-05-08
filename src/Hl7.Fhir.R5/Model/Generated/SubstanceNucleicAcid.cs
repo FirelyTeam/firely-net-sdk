@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstanceNucleicAcid"; } }
+    public override string TypeName => "SubstanceNucleicAcid";
 
     /// <summary>
     /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceNucleicAcid.subunit"; } }
+      public override string TypeName => "SubstanceNucleicAcid.subunit";
 
       /// <summary>
       /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts.
@@ -280,6 +280,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("linkage", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent> Linkage
       {
         get
@@ -307,6 +308,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("sugar", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent> Sugar
       {
         get
@@ -545,7 +547,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceNucleicAcid.subunit.linkage"; } }
+      public override string TypeName => "SubstanceNucleicAcid.subunit.linkage";
 
       /// <summary>
       /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified.
@@ -837,7 +839,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceNucleicAcid.subunit.sugar"; } }
+      public override string TypeName => "SubstanceNucleicAcid.subunit.sugar";
 
       /// <summary>
       /// The Substance ID of the sugar or sugar-like component that make up the nucleotide.
@@ -1198,6 +1200,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("subunit", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent> Subunit
     {
       get

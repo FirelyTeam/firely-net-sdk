@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "TestReport"; } }
+    public override string TypeName => "TestReport";
 
     /// <summary>
     /// The current status of the test report.
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.participant"; } }
+      public override string TypeName => "TestReport.participant";
 
       /// <summary>
       /// test-engine | client | server.
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.setup"; } }
+      public override string TypeName => "TestReport.setup";
 
       /// <summary>
       /// A setup operation or assert that was executed.
@@ -468,6 +468,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestReport.SetupActionComponent> Action
       {
         get
@@ -577,7 +578,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.setup.action"; } }
+      public override string TypeName => "TestReport.setup.action";
 
       /// <summary>
       /// The operation to perform.
@@ -737,7 +738,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.setup.action.operation"; } }
+      public override string TypeName => "TestReport.setup.action.operation";
 
       /// <summary>
       /// pass | skip | fail | warning | error.
@@ -989,7 +990,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.setup.action.assert"; } }
+      public override string TypeName => "TestReport.setup.action.assert";
 
       /// <summary>
       /// pass | skip | fail | warning | error.
@@ -1122,6 +1123,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("requirement", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestReport.RequirementComponent> Requirement
       {
         get
@@ -1288,7 +1290,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.setup.action.assert.requirement"; } }
+      public override string TypeName => "TestReport.setup.action.assert.requirement";
 
       /// <summary>
       /// Link or reference to the testing requirement.
@@ -1402,7 +1404,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.test"; } }
+      public override string TypeName => "TestReport.test";
 
       /// <summary>
       /// Tracking/logging name of this test.
@@ -1492,6 +1494,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestReport.TestActionComponent> Action
       {
         get
@@ -1639,7 +1642,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.test.action"; } }
+      public override string TypeName => "TestReport.test.action";
 
       /// <summary>
       /// The operation performed.
@@ -1799,7 +1802,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.teardown"; } }
+      public override string TypeName => "TestReport.teardown";
 
       /// <summary>
       /// One or more teardown operations performed.
@@ -1807,6 +1810,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestReport.TeardownActionComponent> Action
       {
         get
@@ -1916,7 +1920,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestReport.teardown.action"; } }
+      public override string TypeName => "TestReport.teardown.action";
 
       /// <summary>
       /// The teardown operation performed.
@@ -2342,6 +2346,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("participant", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestReport.ParticipantComponent> Participant
     {
       get
@@ -2395,6 +2400,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("test", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestReport.TestComponent> Test
     {
       get

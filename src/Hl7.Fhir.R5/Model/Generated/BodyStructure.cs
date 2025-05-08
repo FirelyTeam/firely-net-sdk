@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "BodyStructure"; } }
+    public override string TypeName => "BodyStructure";
 
     /// <summary>
     /// Included anatomic location(s)
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BodyStructure.includedStructure"; } }
+      public override string TypeName => "BodyStructure.includedStructure";
 
       /// <summary>
       /// Code that represents the included structure.
@@ -140,6 +140,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("bodyLandmarkOrientation", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> BodyLandmarkOrientation
       {
         get
@@ -169,6 +170,7 @@ namespace Hl7.Fhir.Model
       [References("ImagingSelection")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SpatialReference
       {
         get
@@ -197,6 +199,7 @@ namespace Hl7.Fhir.Model
       [Binding("BodyStructureQualifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
       {
         get
@@ -381,7 +384,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BodyStructure.includedStructure.bodyLandmarkOrientation"; } }
+      public override string TypeName => "BodyStructure.includedStructure.bodyLandmarkOrientation";
 
       /// <summary>
       /// Body ]andmark description.
@@ -390,6 +393,7 @@ namespace Hl7.Fhir.Model
       [Binding("bodyLandmarkOrientationLandmarkDescription")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> LandmarkDescription
       {
         get
@@ -418,6 +422,7 @@ namespace Hl7.Fhir.Model
       [Binding("bodyLandmarkOrientationClockFacePosition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ClockFacePosition
       {
         get
@@ -445,6 +450,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("distanceFromLandmark", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> DistanceFromLandmark
       {
         get
@@ -473,6 +479,7 @@ namespace Hl7.Fhir.Model
       [Binding("bodyLandmarkOrientationSurfaceOrientation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> SurfaceOrientation
       {
         get
@@ -638,7 +645,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark"; } }
+      public override string TypeName => "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark";
 
       /// <summary>
       /// Measurement device.
@@ -647,6 +654,7 @@ namespace Hl7.Fhir.Model
       [Binding("DeviceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Device
       {
         get
@@ -674,6 +682,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> Value
       {
         get
@@ -793,6 +802,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -888,6 +898,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("includedStructure", Order=120)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> IncludedStructure
     {
       get
@@ -915,6 +926,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("excludedStructure", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> ExcludedStructure
     {
       get
@@ -983,6 +995,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
       get

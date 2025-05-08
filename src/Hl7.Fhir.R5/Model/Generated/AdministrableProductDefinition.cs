@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "AdministrableProductDefinition"; } }
+    public override string TypeName => "AdministrableProductDefinition";
 
     /// <summary>
     /// Characteristics e.g. a product's onset of action
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition.property"; } }
+      public override string TypeName => "AdministrableProductDefinition.property";
 
       /// <summary>
       /// A code expressing the type of characteristic.
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition.routeOfAdministration"; } }
+      public override string TypeName => "AdministrableProductDefinition.routeOfAdministration";
 
       /// <summary>
       /// Coded expression for the route.
@@ -451,6 +451,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("targetSpecies", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent> TargetSpecies
       {
         get
@@ -670,7 +671,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition.routeOfAdministration.targetSpecies"; } }
+      public override string TypeName => "AdministrableProductDefinition.routeOfAdministration.targetSpecies";
 
       /// <summary>
       /// Coded expression for the species.
@@ -706,6 +707,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("withdrawalPeriod", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent> WithdrawalPeriod
       {
         get
@@ -830,7 +832,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod"; } }
+      public override string TypeName => "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod";
 
       /// <summary>
       /// The type of tissue for which the withdrawal period applies, e.g. meat, milk.
@@ -1045,6 +1047,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1117,6 +1120,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> FormOf
     {
       get
@@ -1200,6 +1204,7 @@ namespace Hl7.Fhir.Model
     [References("ManufacturedItemDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ProducedFrom
     {
       get
@@ -1228,6 +1233,7 @@ namespace Hl7.Fhir.Model
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
       get
@@ -1324,6 +1330,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent> Property
     {
       get
@@ -1351,6 +1358,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("routeOfAdministration", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent> RouteOfAdministration
     {
       get

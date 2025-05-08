@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Money"; } }
+    public override string TypeName => "Money";
 
     /// <summary>
     /// Numerical value (with implicit precision).

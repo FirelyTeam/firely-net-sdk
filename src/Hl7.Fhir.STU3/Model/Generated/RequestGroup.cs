@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RequestGroup"; } }
+    public override string TypeName => "RequestGroup";
 
     /// <summary>
     /// Proposed actions, if any
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestGroup.action"; } }
+      public override string TypeName => "RequestGroup.action";
 
       /// <summary>
       /// User-visible label for the action (e.g. 1. or A.).
@@ -249,6 +249,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -276,6 +277,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("documentation", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
       {
         get
@@ -303,6 +305,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("condition", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestGroup.ConditionComponent> Condition
       {
         get
@@ -330,6 +333,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedAction", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestGroup.RelatedActionComponent> RelatedAction
       {
         get
@@ -387,6 +391,7 @@ namespace Hl7.Fhir.Model
       [References("Patient","Person","Practitioner","RelatedPerson")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Participant
       {
         get
@@ -679,6 +684,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestGroup.ActionComponent> Action
       {
         get
@@ -1110,7 +1116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestGroup.action.condition"; } }
+      public override string TypeName => "RequestGroup.action.condition";
 
       /// <summary>
       /// applicability | start | stop.
@@ -1422,7 +1428,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestGroup.action.relatedAction"; } }
+      public override string TypeName => "RequestGroup.action.relatedAction";
 
       /// <summary>
       /// What action this is related to.
@@ -1654,6 +1660,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1683,6 +1690,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Definition
     {
       get
@@ -1712,6 +1720,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1741,6 +1750,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
       get
@@ -2076,6 +2086,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -2103,6 +2114,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("action", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RequestGroup.ActionComponent> Action
     {
       get

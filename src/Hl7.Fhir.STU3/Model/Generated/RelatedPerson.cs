@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RelatedPerson"; } }
+    public override string TypeName => "RelatedPerson";
 
     /// <summary>
     /// A human identifier for this person.
@@ -69,6 +69,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
       get
@@ -220,6 +222,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -330,6 +333,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Address> Address
     {
       get
@@ -357,6 +361,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("photo", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Photo
     {
       get

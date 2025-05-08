@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Measure"; } }
+    public override string TypeName => "Measure";
 
     /// <summary>
     /// Population criteria group
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure.group"; } }
+      public override string TypeName => "Measure.group";
 
       /// <summary>
       /// Meaning of the group.
@@ -152,6 +152,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("population", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Measure.PopulationComponent> Population
       {
         get
@@ -179,6 +180,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("stratifier", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Measure.StratifierComponent> Stratifier
       {
         get
@@ -344,7 +346,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure.group.population"; } }
+      public override string TypeName => "Measure.group.population";
 
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation.
@@ -566,7 +568,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure.group.stratifier"; } }
+      public override string TypeName => "Measure.group.stratifier";
 
       /// <summary>
       /// Meaning of the stratifier.
@@ -667,6 +669,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("component", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Measure.ComponentComponent> Component
       {
         get
@@ -833,7 +836,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure.group.stratifier.component"; } }
+      public override string TypeName => "Measure.group.stratifier.component";
 
       /// <summary>
       /// Meaning of the stratifier component.
@@ -1055,7 +1058,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Measure.supplementalData"; } }
+      public override string TypeName => "Measure.supplementalData";
 
       /// <summary>
       /// Meaning of the supplemental data.
@@ -1090,6 +1093,7 @@ namespace Hl7.Fhir.Model
       [Binding("MeasureDataUsage")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Usage
       {
         get
@@ -1356,6 +1360,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1743,6 +1748,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1811,6 +1817,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1839,6 +1846,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2098,6 +2106,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -2125,6 +2134,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -2152,6 +2162,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -2179,6 +2190,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -2206,6 +2218,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -2233,6 +2246,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -2260,6 +2274,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("library", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
     {
       get
@@ -2401,6 +2416,7 @@ namespace Hl7.Fhir.Model
     [Binding("MeasureType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -2619,6 +2635,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("definition", InSummary=true, Order=460)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Markdown> DefinitionElement
     {
       get
@@ -2705,6 +2722,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("group", Order=480)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Measure.GroupComponent> Group
     {
       get
@@ -2732,6 +2750,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("supplementalData", Order=490)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> SupplementalData
     {
       get

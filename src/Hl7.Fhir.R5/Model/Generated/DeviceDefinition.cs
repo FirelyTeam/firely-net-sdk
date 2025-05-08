@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DeviceDefinition"; } }
+    public override string TypeName => "DeviceDefinition";
 
     /// <summary>
     /// Device Production Identifier in UDI
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.udiDeviceIdentifier"; } }
+      public override string TypeName => "DeviceDefinition.udiDeviceIdentifier";
 
       /// <summary>
       /// The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdiction provided in the DeviceDefinition.udiDeviceIdentifier.
@@ -314,6 +314,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("marketDistribution", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent> MarketDistribution
       {
         get
@@ -479,7 +480,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.udiDeviceIdentifier.marketDistribution"; } }
+      public override string TypeName => "DeviceDefinition.udiDeviceIdentifier.marketDistribution";
 
       /// <summary>
       /// Begin and end dates for the commercial distribution of the device.
@@ -657,7 +658,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.regulatoryIdentifier"; } }
+      public override string TypeName => "DeviceDefinition.regulatoryIdentifier";
 
       /// <summary>
       /// basic | master | license.
@@ -969,7 +970,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.deviceName"; } }
+      public override string TypeName => "DeviceDefinition.deviceName";
 
       /// <summary>
       /// A name that is used to refer to the device.
@@ -1162,7 +1163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.classification"; } }
+      public override string TypeName => "DeviceDefinition.classification";
 
       /// <summary>
       /// A classification or risk class of the device model.
@@ -1198,6 +1199,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("justification", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> Justification
       {
         get
@@ -1325,7 +1327,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.conformsTo"; } }
+      public override string TypeName => "DeviceDefinition.conformsTo";
 
       /// <summary>
       /// Describes the common type of the standard, specification, or formal guidance.
@@ -1388,6 +1390,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("version", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> VersionElement
       {
         get
@@ -1433,6 +1436,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("source", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> Source
       {
         get
@@ -1598,7 +1602,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.hasPart"; } }
+      public override string TypeName => "DeviceDefinition.hasPart";
 
       /// <summary>
       /// Reference to the part.
@@ -1773,7 +1777,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.packaging"; } }
+      public override string TypeName => "DeviceDefinition.packaging";
 
       /// <summary>
       /// Business identifier of the packaged medication.
@@ -1874,6 +1878,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("distributor", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent> Distributor
       {
         get
@@ -1901,6 +1906,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("udiDeviceIdentifier", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent> UdiDeviceIdentifier
       {
         get
@@ -1928,6 +1934,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("packaging", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent> Packaging
       {
         get
@@ -2128,7 +2135,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.packaging.distributor"; } }
+      public override string TypeName => "DeviceDefinition.packaging.distributor";
 
       /// <summary>
       /// Distributor's human-readable name.
@@ -2179,6 +2186,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> OrganizationReference
       {
         get
@@ -2303,7 +2311,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.version"; } }
+      public override string TypeName => "DeviceDefinition.version";
 
       /// <summary>
       /// The type of the device version, e.g. manufacturer, approved, internal.
@@ -2525,7 +2533,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.property"; } }
+      public override string TypeName => "DeviceDefinition.property";
 
       /// <summary>
       /// Code that specifies the property being represented.
@@ -2687,7 +2695,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.link"; } }
+      public override string TypeName => "DeviceDefinition.link";
 
       /// <summary>
       /// The type indicates the relationship of the related device to the device instance.
@@ -2847,7 +2855,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.material"; } }
+      public override string TypeName => "DeviceDefinition.material";
 
       /// <summary>
       /// A relevant substance that the device contains, may contain, or is made of.
@@ -3083,7 +3091,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.guideline"; } }
+      public override string TypeName => "DeviceDefinition.guideline";
 
       /// <summary>
       /// The circumstances that form the setting for using the device.
@@ -3091,6 +3099,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("useContext", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.UsageContext> UseContext
       {
         get
@@ -3159,6 +3168,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedArtifact", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
       {
         get
@@ -3186,6 +3196,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("indication", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Indication
       {
         get
@@ -3213,6 +3224,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("contraindication", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Contraindication
       {
         get
@@ -3240,6 +3252,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("warning", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Warning
       {
         get
@@ -3500,7 +3513,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.correctiveAction"; } }
+      public override string TypeName => "DeviceDefinition.correctiveAction";
 
       /// <summary>
       /// Whether the corrective action was a recall.
@@ -3735,7 +3748,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDefinition.chargeItem"; } }
+      public override string TypeName => "DeviceDefinition.chargeItem";
 
       /// <summary>
       /// The code or reference for the charge item.
@@ -3823,6 +3836,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("useContext", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.UsageContext> UseContext
       {
         get
@@ -4021,6 +4035,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -4048,6 +4063,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("udiDeviceIdentifier", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent> UdiDeviceIdentifier
     {
       get
@@ -4075,6 +4091,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("regulatoryIdentifier", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent> RegulatoryIdentifier
     {
       get
@@ -4171,6 +4188,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("deviceName", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent> DeviceName
     {
       get
@@ -4239,6 +4257,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("classification", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent> Classification
     {
       get
@@ -4266,6 +4285,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("conformsTo", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent> ConformsTo
     {
       get
@@ -4293,6 +4313,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("hasPart", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent> HasPart
     {
       get
@@ -4320,6 +4341,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("packaging", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent> Packaging
     {
       get
@@ -4347,6 +4369,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("version", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent> Version
     {
       get
@@ -4375,6 +4398,7 @@ namespace Hl7.Fhir.Model
     [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
     {
       get
@@ -4402,6 +4426,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("shelfLifeStorage", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ProductShelfLife> ShelfLifeStorage
     {
       get
@@ -4429,6 +4454,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("languageCode", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> LanguageCode
     {
       get
@@ -4456,6 +4482,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent> Property
     {
       get
@@ -4511,6 +4538,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=270, FiveWs="FiveWs.source")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
       get
@@ -4538,6 +4566,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("link", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent> Link
     {
       get
@@ -4565,6 +4594,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -4592,6 +4622,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("material", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent> Material
     {
       get
@@ -4620,6 +4651,7 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceProductionIdentifierInUDI")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>> ProductionIdentifierInUDIElement
     {
       get
@@ -4717,6 +4749,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("chargeItem", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent> ChargeItem
     {
       get

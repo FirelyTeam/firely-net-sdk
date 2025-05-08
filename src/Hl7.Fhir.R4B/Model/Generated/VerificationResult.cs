@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "VerificationResult"; } }
+    public override string TypeName => "VerificationResult";
 
     /// <summary>
     /// The validation status of the target
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VerificationResult.primarySource"; } }
+      public override string TypeName => "VerificationResult.primarySource";
 
       /// <summary>
       /// Reference to the primary source.
@@ -154,6 +154,7 @@ namespace Hl7.Fhir.Model
       [Binding("primary-source-type")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -182,6 +183,7 @@ namespace Hl7.Fhir.Model
       [Binding("communication-method")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> CommunicationMethod
       {
         get
@@ -305,6 +307,7 @@ namespace Hl7.Fhir.Model
       [Binding("push-type-available")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> PushTypeAvailable
       {
         get
@@ -524,7 +527,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VerificationResult.attestation"; } }
+      public override string TypeName => "VerificationResult.attestation";
 
       /// <summary>
       /// The individual or organization attesting to information.
@@ -1001,7 +1004,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "VerificationResult.validator"; } }
+      public override string TypeName => "VerificationResult.validator";
 
       /// <summary>
       /// Reference to the organization validating information.
@@ -1218,6 +1221,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Target
     {
       get
@@ -1245,6 +1249,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("targetLocation", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> TargetLocationElement
     {
       get
@@ -1429,6 +1434,7 @@ namespace Hl7.Fhir.Model
     [Binding("validation-process")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
     {
       get
@@ -1591,6 +1597,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("primarySource", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent> PrimarySource
     {
       get
@@ -1644,6 +1651,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("validator", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent> Validator
     {
       get

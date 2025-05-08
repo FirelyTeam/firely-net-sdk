@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Dosage"; } }
+    public override string TypeName => "Dosage";
 
     /// <summary>
     /// Amount of medication administered
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Dosage.doseAndRate"; } }
+      public override string TypeName => "Dosage.doseAndRate";
 
       /// <summary>
       /// The kind of dose or rate specified.
@@ -362,6 +362,7 @@ namespace Hl7.Fhir.Model
     [Binding("AdditionalInstruction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
     {
       get
@@ -566,6 +567,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("doseAndRate", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> DoseAndRate
     {
       get

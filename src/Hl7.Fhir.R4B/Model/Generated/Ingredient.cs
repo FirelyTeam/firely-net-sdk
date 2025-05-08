@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Ingredient"; } }
+    public override string TypeName => "Ingredient";
 
     /// <summary>
     /// The way in which this manufacturer is associated with the ingredient. For example whether it is a possible one (others allowed), or an exclusive authorized one for this ingredient. Note that this is not the manufacturing process role.
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient.manufacturer"; } }
+      public override string TypeName => "Ingredient.manufacturer";
 
       /// <summary>
       /// allowed | possible | actual.
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient.substance"; } }
+      public override string TypeName => "Ingredient.substance";
 
       /// <summary>
       /// A code or full resource that represents the ingredient substance.
@@ -314,6 +314,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Ingredient.StrengthComponent> Strength
       {
         get
@@ -441,7 +442,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient.substance.strength"; } }
+      public override string TypeName => "Ingredient.substance.strength";
 
       /// <summary>
       /// The quantity of substance in the unit of presentation.
@@ -629,6 +630,7 @@ namespace Hl7.Fhir.Model
       [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
         get
@@ -656,6 +658,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("referenceStrength", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent> ReferenceStrength
       {
         get
@@ -878,7 +881,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Ingredient.substance.strength.referenceStrength"; } }
+      public override string TypeName => "Ingredient.substance.strength.referenceStrength";
 
       /// <summary>
       /// Relevant reference substance.
@@ -984,6 +987,7 @@ namespace Hl7.Fhir.Model
       [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
         get
@@ -1212,6 +1216,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductDefinition","AdministrableProductDefinition","ManufacturedItemDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> For
     {
       get
@@ -1268,6 +1273,7 @@ namespace Hl7.Fhir.Model
     [Binding("IngredientFunction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Function
     {
       get
@@ -1336,6 +1342,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("manufacturer", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent> Manufacturer
     {
       get

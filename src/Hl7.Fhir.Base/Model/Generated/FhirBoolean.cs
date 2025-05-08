@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "boolean"; } }
+    public override string TypeName => "boolean";
 
     /// Must conform to the pattern "true|false"
     public const string PATTERN = @"true|false";

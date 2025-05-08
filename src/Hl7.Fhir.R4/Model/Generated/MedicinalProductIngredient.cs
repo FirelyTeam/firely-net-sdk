@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductIngredient"; } }
+    public override string TypeName => "MedicinalProductIngredient";
 
     /// <summary>
     /// A specified substance that comprises this ingredient
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient.specifiedSubstance"; } }
+      public override string TypeName => "MedicinalProductIngredient.specifiedSubstance";
 
       /// <summary>
       /// The specified substance.
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("strength", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
         get
@@ -321,7 +322,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient.specifiedSubstance.strength"; } }
+      public override string TypeName => "MedicinalProductIngredient.specifiedSubstance.strength";
 
       /// <summary>
       /// The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item.
@@ -475,6 +476,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("country", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
         get
@@ -502,6 +504,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("referenceStrength", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> ReferenceStrength
       {
         get
@@ -721,7 +724,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength"; } }
+      public override string TypeName => "MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength";
 
       /// <summary>
       /// Relevant reference substance.
@@ -849,6 +852,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("country", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
         get
@@ -1030,7 +1034,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductIngredient.substance"; } }
+      public override string TypeName => "MedicinalProductIngredient.substance";
 
       /// <summary>
       /// The ingredient substance.
@@ -1065,6 +1069,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
         get
@@ -1280,6 +1285,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get
@@ -1307,6 +1313,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("specifiedSubstance", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> SpecifiedSubstance
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Practitioner"; } }
+    public override string TypeName => "Practitioner";
 
     /// <summary>
     /// Certification, licenses, or training pertaining to the provision of care
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Practitioner.qualification"; } }
+      public override string TypeName => "Practitioner.qualification";
 
       /// <summary>
       /// An identifier for this qualification for the practitioner.
@@ -85,6 +85,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -324,6 +325,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -392,6 +394,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
       get
@@ -419,6 +422,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -446,6 +450,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Address> Address
     {
       get
@@ -556,6 +561,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("photo", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Photo
     {
       get
@@ -583,6 +589,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("qualification", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Practitioner.QualificationComponent> Qualification
     {
       get
@@ -611,6 +618,7 @@ namespace Hl7.Fhir.Model
     [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
     {
       get

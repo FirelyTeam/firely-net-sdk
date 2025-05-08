@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Age"; } }
+    public override string TypeName => "Age";
 
     protected internal override Base DeepCopyInternal()
     {

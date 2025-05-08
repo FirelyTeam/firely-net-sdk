@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "AuditEvent"; } }
+    public override string TypeName => "AuditEvent";
 
     /// <summary>
     /// Indicator for type of action performed during the event that generated the event
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.agent"; } }
+      public override string TypeName => "AuditEvent.agent";
 
       /// <summary>
       /// Agent role in the event.
@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
         get
@@ -436,6 +437,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("policy", Order=110, FiveWs="why")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUri> PolicyElement
       {
         get
@@ -535,6 +537,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditPurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfUse
       {
         get
@@ -833,7 +836,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.agent.network"; } }
+      public override string TypeName => "AuditEvent.agent.network";
 
       /// <summary>
       /// Identifier for the network access point of the user device.
@@ -1025,7 +1028,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.source"; } }
+      public override string TypeName => "AuditEvent.source";
 
       /// <summary>
       /// Logical source location within the enterprise.
@@ -1102,6 +1105,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditEventSourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Type
       {
         get
@@ -1249,7 +1253,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.entity"; } }
+      public override string TypeName => "AuditEvent.entity";
 
       /// <summary>
       /// Specific instance of object.
@@ -1393,6 +1397,7 @@ namespace Hl7.Fhir.Model
       [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
         get
@@ -1543,6 +1548,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("detail", Order=130, FiveWs="context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
       {
         get
@@ -1822,7 +1828,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.entity.detail"; } }
+      public override string TypeName => "AuditEvent.entity.detail";
 
       /// <summary>
       /// Name of the property.
@@ -2035,6 +2041,7 @@ namespace Hl7.Fhir.Model
     [Binding("AuditEventSubType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Subtype
     {
       get
@@ -2230,6 +2237,7 @@ namespace Hl7.Fhir.Model
     [Binding("AuditPurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfEvent
     {
       get
@@ -2257,6 +2265,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("agent", Order=160, FiveWs="who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
     {
       get
@@ -2311,6 +2320,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("entity", Order=180, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
     {
       get

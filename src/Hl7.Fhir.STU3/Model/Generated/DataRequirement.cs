@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DataRequirement"; } }
+    public override string TypeName => "DataRequirement";
 
     /// <summary>
     /// What codes are expected
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement.codeFilter"; } }
+      public override string TypeName => "DataRequirement.codeFilter";
 
       /// <summary>
       /// The code-valued attribute of the filter.
@@ -156,6 +156,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueCode", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Code> ValueCodeElement
       {
         get
@@ -201,6 +202,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueCoding", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> ValueCoding
       {
         get
@@ -228,6 +230,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueCodeableConcept", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ValueCodeableConcept
       {
         get
@@ -412,7 +415,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement.dateFilter"; } }
+      public override string TypeName => "DataRequirement.dateFilter";
 
       /// <summary>
       /// The date-valued attribute of the filter.
@@ -625,6 +628,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("profile", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> ProfileElement
     {
       get
@@ -670,6 +674,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("mustSupport", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> MustSupportElement
     {
       get
@@ -715,6 +720,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("codeFilter", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
     {
       get
@@ -742,6 +748,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateFilter", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
     {
       get

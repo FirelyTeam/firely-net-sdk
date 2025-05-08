@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Annotation"; } }
+    public override string TypeName => "Annotation";
 
     /// <summary>
     /// Individual responsible for the annotation.

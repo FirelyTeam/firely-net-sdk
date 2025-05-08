@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Evidence"; } }
+    public override string TypeName => "Evidence";
 
     /// <summary>
     /// Evidence variable such as population, exposure, or outcome
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.variableDefinition"; } }
+      public override string TypeName => "Evidence.variableDefinition";
 
       /// <summary>
       /// A text description or summary of the variable.
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -434,7 +435,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.statistic"; } }
+      public override string TypeName => "Evidence.statistic";
 
       /// <summary>
       /// Description of content.
@@ -483,6 +484,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -697,6 +699,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("attributeEstimate", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent> AttributeEstimate
       {
         get
@@ -724,6 +727,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("modelCharacteristic", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Evidence.ModelCharacteristicComponent> ModelCharacteristic
       {
         get
@@ -1000,7 +1004,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.statistic.sampleSize"; } }
+      public override string TypeName => "Evidence.statistic.sampleSize";
 
       /// <summary>
       /// Textual description of sample size for statistic.
@@ -1049,6 +1053,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -1356,7 +1361,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.statistic.attributeEstimate"; } }
+      public override string TypeName => "Evidence.statistic.attributeEstimate";
 
       /// <summary>
       /// Textual description of the attribute estimate.
@@ -1405,6 +1410,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -1552,6 +1558,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("attributeEstimate", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent> AttributeEstimate
       {
         get
@@ -1774,7 +1781,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.statistic.modelCharacteristic"; } }
+      public override string TypeName => "Evidence.statistic.modelCharacteristic";
 
       /// <summary>
       /// Model specification.
@@ -1836,6 +1843,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("variable", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Evidence.VariableComponent> Variable
       {
         get
@@ -1863,6 +1871,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("attributeEstimate", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Evidence.AttributeEstimateComponent> AttributeEstimate
       {
         get
@@ -2025,7 +2034,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.statistic.modelCharacteristic.variable"; } }
+      public override string TypeName => "Evidence.statistic.modelCharacteristic.variable";
 
       /// <summary>
       /// Description of the variable.
@@ -2104,6 +2113,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueCategory", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ValueCategory
       {
         get
@@ -2131,6 +2141,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueQuantity", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> ValueQuantity
       {
         get
@@ -2158,6 +2169,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueRange", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Range> ValueRange
       {
         get
@@ -2342,7 +2354,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Evidence.certainty"; } }
+      public override string TypeName => "Evidence.certainty";
 
       /// <summary>
       /// Textual description of certainty.
@@ -2391,6 +2403,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -2513,6 +2526,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("subcomponent", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Evidence.CertaintyComponent> Subcomponent
       {
         get
@@ -2749,6 +2763,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2971,6 +2986,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -3121,6 +3137,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -3148,6 +3165,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -3175,6 +3193,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -3202,6 +3221,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -3229,6 +3249,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -3256,6 +3277,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -3365,6 +3387,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -3392,6 +3415,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("variableDefinition", Order=290)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent> VariableDefinition
     {
       get
@@ -3473,6 +3497,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("statistic", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Evidence.StatisticComponent> Statistic
     {
       get
@@ -3500,6 +3525,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("certainty", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Evidence.CertaintyComponent> Certainty
     {
       get

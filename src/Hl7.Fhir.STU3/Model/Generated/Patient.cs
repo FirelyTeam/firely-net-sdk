@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Patient"; } }
+    public override string TypeName => "Patient";
 
     /// <summary>
     /// The type of link between this patient resource and another patient resource.
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient.contact"; } }
+      public override string TypeName => "Patient.contact";
 
       /// <summary>
       /// The kind of relationship.
@@ -120,6 +120,7 @@ namespace Hl7.Fhir.Model
       [Binding("ContactRelationship")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Relationship
       {
         get
@@ -173,6 +174,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("telecom", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ContactPoint> Telecom
       {
         get
@@ -518,7 +520,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient.animal"; } }
+      public override string TypeName => "Patient.animal";
 
       /// <summary>
       /// E.g. Dog, Cow.
@@ -728,7 +730,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient.communication"; } }
+      public override string TypeName => "Patient.communication";
 
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health.
@@ -907,7 +909,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Patient.link"; } }
+      public override string TypeName => "Patient.link";
 
       /// <summary>
       /// The other patient or related person resource that the link refers to.
@@ -1079,6 +1081,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1147,6 +1150,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
       get
@@ -1174,6 +1178,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -1312,6 +1317,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Address> Address
     {
       get
@@ -1394,6 +1400,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("photo", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Photo
     {
       get
@@ -1421,6 +1428,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Patient.ContactComponent> Contact
     {
       get
@@ -1474,6 +1482,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("communication", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Patient.CommunicationComponent> Communication
     {
       get
@@ -1503,6 +1512,7 @@ namespace Hl7.Fhir.Model
     [References("Organization","Practitioner")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
     {
       get
@@ -1558,6 +1568,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("link", InSummary=true, IsModifier=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
     {
       get

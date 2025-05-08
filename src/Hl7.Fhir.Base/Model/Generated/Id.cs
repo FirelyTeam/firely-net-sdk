@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "id"; } }
+    public override string TypeName => "id";
 
     /// Must conform to the pattern "[A-Za-z0-9\-\.]{1,64}"
     public const string PATTERN = @"[A-Za-z0-9\-\.]{1,64}";

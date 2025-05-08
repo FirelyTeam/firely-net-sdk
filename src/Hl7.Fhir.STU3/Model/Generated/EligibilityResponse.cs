@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EligibilityResponse"; } }
+    public override string TypeName => "EligibilityResponse";
 
     /// <summary>
     /// Details by insurance coverage
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse.insurance"; } }
+      public override string TypeName => "EligibilityResponse.insurance";
 
       /// <summary>
       /// Updated Coverage details.
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("benefitBalance", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.EligibilityResponse.BenefitsComponent> BenefitBalance
       {
         get
@@ -287,7 +288,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse.insurance.benefitBalance"; } }
+      public override string TypeName => "EligibilityResponse.insurance.benefitBalance";
 
       /// <summary>
       /// Type of services covered.
@@ -554,6 +555,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("financial", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.EligibilityResponse.BenefitComponent> Financial
       {
         get
@@ -814,7 +816,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse.insurance.benefitBalance.financial"; } }
+      public override string TypeName => "EligibilityResponse.insurance.benefitBalance.financial";
 
       /// <summary>
       /// Deductable, visits, benefit amount.
@@ -1025,7 +1027,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EligibilityResponse.error"; } }
+      public override string TypeName => "EligibilityResponse.error";
 
       /// <summary>
       /// Error code detailing processing issues.
@@ -1134,6 +1136,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1465,6 +1468,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("insurance", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EligibilityResponse.InsuranceComponent> Insurance
     {
       get
@@ -1519,6 +1523,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("error", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent> Error
     {
       get

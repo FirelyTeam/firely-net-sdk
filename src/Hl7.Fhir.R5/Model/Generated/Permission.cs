@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Permission"; } }
+    public override string TypeName => "Permission";
 
     /// <summary>
     /// Codes identifying the lifecycle stage of a product.
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission.justification"; } }
+      public override string TypeName => "Permission.justification";
 
       /// <summary>
       /// The regulatory grounds upon which this Permission builds.
@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentRegulatoryBasis")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Basis
       {
         get
@@ -192,6 +193,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Evidence
       {
         get
@@ -319,7 +321,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission.rule"; } }
+      public override string TypeName => "Permission.rule";
 
       /// <summary>
       /// deny | permit.
@@ -369,6 +371,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("data", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Permission.DataComponent> Data
       {
         get
@@ -396,6 +399,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("activity", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Permission.ActivityComponent> Activity
       {
         get
@@ -424,6 +428,7 @@ namespace Hl7.Fhir.Model
       [Binding("PermissionUsageLimits")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Limit
       {
         get
@@ -589,7 +594,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission.rule.data"; } }
+      public override string TypeName => "Permission.rule.data";
 
       /// <summary>
       /// Explicit FHIR Resource references.
@@ -597,6 +602,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("resource", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Permission.ResourceComponent> Resource
       {
         get
@@ -624,6 +630,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("security", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Security
       {
         get
@@ -651,6 +658,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Period> Period
       {
         get
@@ -839,7 +847,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission.rule.data.resource"; } }
+      public override string TypeName => "Permission.rule.data.resource";
 
       /// <summary>
       /// instance | related | dependents | authoredby.
@@ -1016,7 +1024,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Permission.rule.activity"; } }
+      public override string TypeName => "Permission.rule.activity";
 
       /// <summary>
       /// Authorized actor(s).
@@ -1026,6 +1034,7 @@ namespace Hl7.Fhir.Model
       [References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Actor
       {
         get
@@ -1054,6 +1063,7 @@ namespace Hl7.Fhir.Model
       [Binding("ProcessingActivityAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
         get
@@ -1082,6 +1092,7 @@ namespace Hl7.Fhir.Model
       [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Purpose
       {
         get
@@ -1291,6 +1302,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("date", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirDateTime> DateElement
     {
       get
@@ -1431,6 +1443,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("rule", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Permission.RuleComponent> Rule
     {
       get

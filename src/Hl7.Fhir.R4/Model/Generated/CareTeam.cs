@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CareTeam"; } }
+    public override string TypeName => "CareTeam";
 
     /// <summary>
     /// Indicates the status of the care team.
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CareTeam.participant"; } }
+      public override string TypeName => "CareTeam.participant";
 
       /// <summary>
       /// Type of involvement.
@@ -126,6 +126,7 @@ namespace Hl7.Fhir.Model
       [Binding("CareTeamParticipantRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
         get
@@ -365,6 +366,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -435,6 +437,7 @@ namespace Hl7.Fhir.Model
     [Binding("CareTeamCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -585,6 +588,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("participant", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CareTeam.ParticipantComponent> Participant
     {
       get
@@ -613,6 +617,7 @@ namespace Hl7.Fhir.Model
     [Binding("CareTeamReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
       get
@@ -642,6 +647,7 @@ namespace Hl7.Fhir.Model
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
       get
@@ -671,6 +677,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ManagingOrganization
     {
       get
@@ -698,6 +705,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -725,6 +733,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EpisodeOfCare"; } }
+    public override string TypeName => "EpisodeOfCare";
 
     /// <summary>
     /// The status of the episode of care.
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare.statusHistory"; } }
+      public override string TypeName => "EpisodeOfCare.statusHistory";
 
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EpisodeOfCare.diagnosis"; } }
+      public override string TypeName => "EpisodeOfCare.diagnosis";
 
       /// <summary>
       /// Conditions/problems/diagnoses this episode of care is for.
@@ -520,6 +520,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -590,6 +591,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("statusHistory", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> StatusHistory
     {
       get
@@ -618,6 +620,7 @@ namespace Hl7.Fhir.Model
     [Binding("EpisodeOfCareType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -645,6 +648,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("diagnosis", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> Diagnosis
     {
       get
@@ -757,6 +761,7 @@ namespace Hl7.Fhir.Model
     [References("ReferralRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
     {
       get
@@ -814,6 +819,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Team
     {
       get
@@ -843,6 +849,7 @@ namespace Hl7.Fhir.Model
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
       get

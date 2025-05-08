@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DocumentReference"; } }
+    public override string TypeName => "DocumentReference";
 
     /// <summary>
     /// Relationships to other documents
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference.relatesTo"; } }
+      public override string TypeName => "DocumentReference.relatesTo";
 
       /// <summary>
       /// replaces | transforms | signs | appends.
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference.content"; } }
+      public override string TypeName => "DocumentReference.content";
 
       /// <summary>
       /// Where to access the document.
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentReference.context"; } }
+      public override string TypeName => "DocumentReference.context";
 
       /// <summary>
       /// Context of the document  content.
@@ -432,6 +432,7 @@ namespace Hl7.Fhir.Model
       [References("Encounter","EpisodeOfCare")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Encounter
       {
         get
@@ -460,6 +461,7 @@ namespace Hl7.Fhir.Model
       [Binding("DocumentEventType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Event
       {
         get
@@ -597,6 +599,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Related
       {
         get
@@ -837,6 +840,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -977,6 +981,7 @@ namespace Hl7.Fhir.Model
     [Binding("DocumentC80Class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1075,6 +1080,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
       get
@@ -1158,6 +1164,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatesTo", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> RelatesTo
     {
       get
@@ -1227,6 +1234,7 @@ namespace Hl7.Fhir.Model
     [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
     {
       get
@@ -1254,6 +1262,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("content", InSummary=true, Order=230)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DocumentReference.ContentComponent> Content
     {
       get

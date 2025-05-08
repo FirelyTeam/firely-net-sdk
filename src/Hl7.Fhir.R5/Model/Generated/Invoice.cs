@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Invoice"; } }
+    public override string TypeName => "Invoice";
 
     /// <summary>
     /// Codes identifying the lifecycle stage of an Invoice.
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice.participant"; } }
+      public override string TypeName => "Invoice.participant";
 
       /// <summary>
       /// Type of involvement in creation of this Invoice.
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Invoice.lineItem"; } }
+      public override string TypeName => "Invoice.lineItem";
 
       /// <summary>
       /// Sequence number of line item.
@@ -387,6 +387,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("priceComponent", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MonetaryComponent> PriceComponent
       {
         get
@@ -544,6 +545,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -847,6 +849,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("participant", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Invoice.ParticipantComponent> Participant
     {
       get
@@ -930,6 +933,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("lineItem", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Invoice.LineItemComponent> LineItem
     {
       get
@@ -957,6 +961,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("totalPriceComponent", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MonetaryComponent> TotalPriceComponent
     {
       get
@@ -1077,6 +1082,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

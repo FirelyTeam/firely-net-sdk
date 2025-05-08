@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Citation"; } }
+    public override string TypeName => "Citation";
 
     /// <summary>
     /// A human-readable display of the citation
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.summary"; } }
+      public override string TypeName => "Citation.summary";
 
       /// <summary>
       /// Format for display of the citation.
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.classification"; } }
+      public override string TypeName => "Citation.classification";
 
       /// <summary>
       /// The kind of classifier (e.g. publication type, keyword).
@@ -284,6 +284,7 @@ namespace Hl7.Fhir.Model
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
         get
@@ -408,7 +409,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.statusDate"; } }
+      public override string TypeName => "Citation.statusDate";
 
       /// <summary>
       /// Classification of the status.
@@ -628,7 +629,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.relatesTo"; } }
+      public override string TypeName => "Citation.relatesTo";
 
       /// <summary>
       /// How the Citation resource relates to the target artifact.
@@ -665,6 +666,7 @@ namespace Hl7.Fhir.Model
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetClassifier
       {
         get
@@ -838,7 +840,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact"; } }
+      public override string TypeName => "Citation.citedArtifact";
 
       /// <summary>
       /// May include DOI, PMID, PMCID, etc.
@@ -846,6 +848,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -873,6 +876,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedIdentifier", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> RelatedIdentifier
       {
         get
@@ -968,6 +972,7 @@ namespace Hl7.Fhir.Model
       [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
       {
         get
@@ -995,6 +1000,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("statusDate", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactStatusDateComponent> StatusDate
       {
         get
@@ -1022,6 +1028,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("title", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactTitleComponent> Title
       {
         get
@@ -1049,6 +1056,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("abstract", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactAbstractComponent> Abstract
       {
         get
@@ -1102,6 +1110,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatesTo", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactRelatesToComponent> RelatesTo
       {
         get
@@ -1129,6 +1138,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("publicationForm", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormComponent> PublicationForm
       {
         get
@@ -1156,6 +1166,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("webLocation", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactWebLocationComponent> WebLocation
       {
         get
@@ -1183,6 +1194,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("classification", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactClassificationComponent> Classification
       {
         get
@@ -1236,6 +1248,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -1607,7 +1620,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.version"; } }
+      public override string TypeName => "Citation.citedArtifact.version";
 
       /// <summary>
       /// The version number or other version identifier.
@@ -1782,7 +1795,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.statusDate"; } }
+      public override string TypeName => "Citation.citedArtifact.statusDate";
 
       /// <summary>
       /// Classification of the status.
@@ -2002,7 +2015,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.title"; } }
+      public override string TypeName => "Citation.citedArtifact.title";
 
       /// <summary>
       /// The kind of title.
@@ -2011,6 +2024,7 @@ namespace Hl7.Fhir.Model
       [Binding("TitleType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -2223,7 +2237,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.abstract"; } }
+      public override string TypeName => "Citation.citedArtifact.abstract";
 
       /// <summary>
       /// The kind of abstract.
@@ -2503,7 +2517,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.part"; } }
+      public override string TypeName => "Citation.citedArtifact.part";
 
       /// <summary>
       /// The kind of component.
@@ -2723,7 +2737,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.relatesTo"; } }
+      public override string TypeName => "Citation.citedArtifact.relatesTo";
 
       /// <summary>
       /// How the cited artifact relates to the target artifact.
@@ -2760,6 +2774,7 @@ namespace Hl7.Fhir.Model
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetClassifier
       {
         get
@@ -2936,7 +2951,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.publicationForm"; } }
+      public override string TypeName => "Citation.citedArtifact.publicationForm";
 
       /// <summary>
       /// The collection the cited article or artifact is published in.
@@ -3079,6 +3094,7 @@ namespace Hl7.Fhir.Model
       [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
       {
         get
@@ -3620,7 +3636,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.publicationForm.publishedIn"; } }
+      public override string TypeName => "Citation.citedArtifact.publicationForm.publishedIn";
 
       /// <summary>
       /// Kind of container (e.g. Periodical, database, or book).
@@ -3655,6 +3671,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -3946,7 +3963,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.publicationForm.periodicRelease"; } }
+      public override string TypeName => "Citation.citedArtifact.publicationForm.periodicRelease";
 
       /// <summary>
       /// Internet or Print.
@@ -4224,7 +4241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.publicationForm.periodicRelease.dateOfPublication"; } }
+      public override string TypeName => "Citation.citedArtifact.publicationForm.periodicRelease.dateOfPublication";
 
       /// <summary>
       /// Date on which the issue of the journal was published.
@@ -4651,7 +4668,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.webLocation"; } }
+      public override string TypeName => "Citation.citedArtifact.webLocation";
 
       /// <summary>
       /// Code the reason for different URLs, e.g. abstract and full-text.
@@ -4824,7 +4841,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.classification"; } }
+      public override string TypeName => "Citation.citedArtifact.classification";
 
       /// <summary>
       /// The kind of classifier (e.g. publication type, keyword).
@@ -4860,6 +4877,7 @@ namespace Hl7.Fhir.Model
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
         get
@@ -5029,7 +5047,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.classification.whoClassified"; } }
+      public override string TypeName => "Citation.citedArtifact.classification.whoClassified";
 
       /// <summary>
       /// Person who created the classification.
@@ -5360,7 +5378,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.contributorship"; } }
+      public override string TypeName => "Citation.citedArtifact.contributorship";
 
       /// <summary>
       /// Indicates if the list includes all authors and/or contributors.
@@ -5409,6 +5427,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("entry", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent> Entry
       {
         get
@@ -5436,6 +5455,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("summary", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent> Summary
       {
         get
@@ -5583,7 +5603,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.contributorship.entry"; } }
+      public override string TypeName => "Citation.citedArtifact.contributorship.entry";
 
       /// <summary>
       /// A name associated with the person.
@@ -5699,6 +5719,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -5726,6 +5747,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("affiliationInfo", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryAffiliationInfoComponent> AffiliationInfo
       {
         get
@@ -5753,6 +5775,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("address", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Address> Address
       {
         get
@@ -5780,6 +5803,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("telecom", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ContactPoint> Telecom
       {
         get
@@ -5808,6 +5832,7 @@ namespace Hl7.Fhir.Model
       [Binding("ArtifactContributionType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ContributionType
       {
         get
@@ -5862,6 +5887,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("contributionInstance", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryContributionInstanceComponent> ContributionInstance
       {
         get
@@ -6261,7 +6287,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.contributorship.entry.affiliationInfo"; } }
+      public override string TypeName => "Citation.citedArtifact.contributorship.entry.affiliationInfo";
 
       /// <summary>
       /// Display for the organization.
@@ -6351,6 +6377,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -6494,7 +6521,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.contributorship.entry.contributionInstance"; } }
+      public override string TypeName => "Citation.citedArtifact.contributorship.entry.contributionInstance";
 
       /// <summary>
       /// The specific contribution.
@@ -6668,7 +6695,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation.citedArtifact.contributorship.summary"; } }
+      public override string TypeName => "Citation.citedArtifact.contributorship.summary";
 
       /// <summary>
       /// Either authorList or contributorshipStatement.
@@ -6970,6 +6997,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -7286,6 +7314,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -7354,6 +7383,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -7382,6 +7412,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -7599,6 +7630,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -7626,6 +7658,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -7653,6 +7686,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -7680,6 +7714,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -7707,6 +7742,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("summary", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Citation.SummaryComponent> Summary
     {
       get
@@ -7734,6 +7770,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("classification", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Citation.ClassificationComponent> Classification
     {
       get
@@ -7761,6 +7798,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -7789,6 +7827,7 @@ namespace Hl7.Fhir.Model
     [Binding("CitationStatusType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
     {
       get
@@ -7816,6 +7855,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("statusDate", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Citation.StatusDateComponent> StatusDate
     {
       get
@@ -7843,6 +7883,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatesTo", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Citation.RelatesToComponent> RelatesTo
     {
       get

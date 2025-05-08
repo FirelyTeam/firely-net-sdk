@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "BodySite"; } }
+    public override string TypeName => "BodySite";
 
     /// <summary>
     /// Bodysite identifier.
@@ -69,6 +69,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -165,6 +166,7 @@ namespace Hl7.Fhir.Model
     [Binding("BodySiteQualifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
     {
       get
@@ -233,6 +235,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("image", Order=140, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
       get

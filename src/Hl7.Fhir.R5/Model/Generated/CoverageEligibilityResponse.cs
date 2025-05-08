@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CoverageEligibilityResponse"; } }
+    public override string TypeName => "CoverageEligibilityResponse";
 
     /// <summary>
     /// A code specifying the types of information being requested.
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse.event"; } }
+      public override string TypeName => "CoverageEligibilityResponse.event";
 
       /// <summary>
       /// Specific event.
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse.insurance"; } }
+      public override string TypeName => "CoverageEligibilityResponse.insurance";
 
       /// <summary>
       /// Insurance information.
@@ -415,6 +415,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent> Item
       {
         get
@@ -580,7 +581,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse.insurance.item"; } }
+      public override string TypeName => "CoverageEligibilityResponse.insurance.item";
 
       /// <summary>
       /// Benefit classification.
@@ -643,6 +644,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -902,6 +904,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("benefit", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent> Benefit
       {
         get
@@ -971,6 +974,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuthSupporting")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> AuthorizationSupporting
       {
         get
@@ -1367,7 +1371,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse.insurance.item.benefit"; } }
+      public override string TypeName => "CoverageEligibilityResponse.insurance.item.benefit";
 
       /// <summary>
       /// Benefit classification.
@@ -1578,7 +1582,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CoverageEligibilityResponse.error"; } }
+      public override string TypeName => "CoverageEligibilityResponse.error";
 
       /// <summary>
       /// Error code detailing processing issues.
@@ -1614,6 +1618,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("expression", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> ExpressionElement
       {
         get
@@ -1751,6 +1756,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1822,6 +1828,7 @@ namespace Hl7.Fhir.Model
     [Binding("EligibilityResponsePurpose")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> PurposeElement
     {
       get
@@ -1896,6 +1903,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("event", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.EventComponent> Event
     {
       get
@@ -2163,6 +2171,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("insurance", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent> Insurance
     {
       get
@@ -2258,6 +2267,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("error", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent> Error
     {
       get

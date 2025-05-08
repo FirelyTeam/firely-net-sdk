@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Goal"; } }
+    public override string TypeName => "Goal";
 
     /// <summary>
     /// Indicates whether the goal has been met and is still being targeted
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Goal.target"; } }
+      public override string TypeName => "Goal.target";
 
       /// <summary>
       /// The parameter whose value is being tracked.
@@ -369,6 +369,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -440,6 +441,7 @@ namespace Hl7.Fhir.Model
     [Binding("GoalCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -717,6 +719,7 @@ namespace Hl7.Fhir.Model
     [References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Addresses
     {
       get
@@ -744,6 +747,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -772,6 +776,7 @@ namespace Hl7.Fhir.Model
     [Binding("GoalOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCode
     {
       get
@@ -801,6 +806,7 @@ namespace Hl7.Fhir.Model
     [References("Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> OutcomeReference
     {
       get

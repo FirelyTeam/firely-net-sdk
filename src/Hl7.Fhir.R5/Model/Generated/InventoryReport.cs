@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "InventoryReport"; } }
+    public override string TypeName => "InventoryReport";
 
     /// <summary>
     /// The status of the InventoryReport.
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryReport.inventoryListing"; } }
+      public override string TypeName => "InventoryReport.inventoryListing";
 
       /// <summary>
       /// Location of the inventory items.
@@ -230,6 +230,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InventoryReport.ItemComponent> Item
       {
         get
@@ -392,7 +393,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryReport.inventoryListing.item"; } }
+      public override string TypeName => "InventoryReport.inventoryListing.item";
 
       /// <summary>
       /// The inventory category or classification of the items being reported.
@@ -591,6 +592,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -852,6 +854,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("inventoryListing", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> InventoryListing
     {
       get
@@ -879,6 +882,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

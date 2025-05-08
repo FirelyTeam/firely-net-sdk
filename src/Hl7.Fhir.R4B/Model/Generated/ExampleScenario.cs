@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ExampleScenario"; } }
+    public override string TypeName => "ExampleScenario";
 
     /// <summary>
     /// The type of actor - system or human.
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.actor"; } }
+      public override string TypeName => "ExampleScenario.actor";
 
       /// <summary>
       /// ID or acronym of the actor.
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.instance"; } }
+      public override string TypeName => "ExampleScenario.instance";
 
       /// <summary>
       /// The id of the resource for referencing.
@@ -578,6 +578,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("version", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.VersionComponent> Version
       {
         get
@@ -605,6 +606,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("containedInstance", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent> ContainedInstance
       {
         get
@@ -805,7 +807,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.instance.version"; } }
+      public override string TypeName => "ExampleScenario.instance.version";
 
       /// <summary>
       /// The identifier of a specific version of a resource.
@@ -997,7 +999,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.instance.containedInstance"; } }
+      public override string TypeName => "ExampleScenario.instance.containedInstance";
 
       /// <summary>
       /// Each resource contained in the instance.
@@ -1185,7 +1187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process"; } }
+      public override string TypeName => "ExampleScenario.process";
 
       /// <summary>
       /// The diagram title of the group of operations.
@@ -1358,6 +1360,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("step", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.StepComponent> Step
       {
         get
@@ -1539,7 +1542,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process.step"; } }
+      public override string TypeName => "ExampleScenario.process.step";
 
       /// <summary>
       /// Nested process.
@@ -1547,6 +1550,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("process", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> Process
       {
         get
@@ -1641,6 +1645,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("alternative", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.AlternativeComponent> Alternative
       {
         get
@@ -1803,7 +1808,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process.step.operation"; } }
+      public override string TypeName => "ExampleScenario.process.step.operation";
 
       /// <summary>
       /// The sequential number of the interaction.
@@ -2444,7 +2449,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExampleScenario.process.step.alternative"; } }
+      public override string TypeName => "ExampleScenario.process.step.alternative";
 
       /// <summary>
       /// Label for alternative.
@@ -2535,6 +2540,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("step", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExampleScenario.StepComponent> Step
       {
         get
@@ -2714,6 +2720,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2989,6 +2996,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -3016,6 +3024,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -3044,6 +3053,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -3153,6 +3163,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("actor", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExampleScenario.ActorComponent> Actor
     {
       get
@@ -3180,6 +3191,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instance", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent> Instance
     {
       get
@@ -3207,6 +3219,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("process", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> Process
     {
       get
@@ -3234,6 +3247,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("workflow", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> WorkflowElement
     {
       get

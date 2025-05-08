@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RegulatedAuthorization"; } }
+    public override string TypeName => "RegulatedAuthorization";
 
     /// <summary>
     /// The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RegulatedAuthorization.case"; } }
+      public override string TypeName => "RegulatedAuthorization.case";
 
       /// <summary>
       /// Identifier by which this case can be referenced.
@@ -193,6 +193,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("application", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> Application
       {
         get
@@ -369,6 +370,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -398,6 +400,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductDefinition","BiologicallyDerivedProduct","NutritionProduct","PackagedProductDefinition","ManufacturedItemDefinition","Ingredient","SubstanceDefinition","DeviceDefinition","ResearchStudy","ActivityDefinition","PlanDefinition","ObservationDefinition","Practitioner","Organization","Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -494,6 +497,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
     {
       get
@@ -615,6 +619,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("indication", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Indication
     {
       get
@@ -670,6 +675,7 @@ namespace Hl7.Fhir.Model
     [Binding("RegulatedAuthorizationBasis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Basis
     {
       get
@@ -755,6 +761,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
     {
       get

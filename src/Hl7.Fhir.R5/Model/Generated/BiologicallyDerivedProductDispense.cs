@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "BiologicallyDerivedProductDispense"; } }
+    public override string TypeName => "BiologicallyDerivedProductDispense";
 
     /// <summary>
     /// BiologicallyDerivedProductDispense Status Codes
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProductDispense.performer"; } }
+      public override string TypeName => "BiologicallyDerivedProductDispense.performer";
 
       /// <summary>
       /// Identifies the function of the performer during the dispense.
@@ -288,6 +288,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -317,6 +318,7 @@ namespace Hl7.Fhir.Model
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -346,6 +348,7 @@ namespace Hl7.Fhir.Model
     [References("BiologicallyDerivedProductDispense")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -528,6 +531,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.PerformerComponent> Performer
     {
       get
@@ -719,6 +723,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

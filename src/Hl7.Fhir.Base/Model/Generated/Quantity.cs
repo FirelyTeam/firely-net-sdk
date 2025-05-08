@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Quantity"; } }
+    public override string TypeName => "Quantity";
 
     /// <summary>
     /// How the Quantity should be understood and represented.

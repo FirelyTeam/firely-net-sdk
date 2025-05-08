@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "PractitionerRole"; } }
+    public override string TypeName => "PractitionerRole";
 
     /// <summary>
     /// Times the Service Site is available
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PractitionerRole.availableTime"; } }
+      public override string TypeName => "PractitionerRole.availableTime";
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun.
@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
         get
@@ -393,7 +394,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PractitionerRole.notAvailable"; } }
+      public override string TypeName => "PractitionerRole.notAvailable";
 
       /// <summary>
       /// Reason presented to the user explaining why time not available.
@@ -561,6 +562,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -712,6 +714,7 @@ namespace Hl7.Fhir.Model
     [Binding("PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
     {
       get
@@ -740,6 +743,7 @@ namespace Hl7.Fhir.Model
     [Binding("PractitionerSpecialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
       get
@@ -769,6 +773,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Location
     {
       get
@@ -798,6 +803,7 @@ namespace Hl7.Fhir.Model
     [References("HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
     {
       get
@@ -825,6 +831,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -852,6 +859,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("availableTime", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PractitionerRole.AvailableTimeComponent> AvailableTime
     {
       get
@@ -879,6 +887,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("notAvailable", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PractitionerRole.NotAvailableComponent> NotAvailable
     {
       get
@@ -949,6 +958,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get

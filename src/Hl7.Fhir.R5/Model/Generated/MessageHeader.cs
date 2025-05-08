@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MessageHeader"; } }
+    public override string TypeName => "MessageHeader";
 
     /// <summary>
     /// The kind of response to a message.
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader.destination"; } }
+      public override string TypeName => "MessageHeader.destination";
 
       /// <summary>
       /// Actual destination address or Endpoint resource.
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader.source"; } }
+      public override string TypeName => "MessageHeader.source";
 
       /// <summary>
       /// Actual source address or Endpoint resource.
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageHeader.response"; } }
+      public override string TypeName => "MessageHeader.response";
 
       /// <summary>
       /// Bundle.identifier of original message.
@@ -968,6 +968,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("destination", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
     {
       get
@@ -1161,6 +1162,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
       get

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "HealthcareService"; } }
+    public override string TypeName => "HealthcareService";
 
     /// <summary>
     /// Specific eligibility requirements required to use the service
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "HealthcareService.eligibility"; } }
+      public override string TypeName => "HealthcareService.eligibility";
 
       /// <summary>
       /// Coded value for the eligibility.
@@ -242,6 +242,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -340,6 +341,7 @@ namespace Hl7.Fhir.Model
     [References("HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> OfferedIn
     {
       get
@@ -368,6 +370,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -396,6 +399,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -424,6 +428,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
       get
@@ -453,6 +458,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Location
     {
       get
@@ -629,6 +635,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExtendedContactDetail> Contact
     {
       get
@@ -658,6 +665,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
     {
       get
@@ -686,6 +694,7 @@ namespace Hl7.Fhir.Model
     [Binding("ServiceProvisionConditions")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
     {
       get
@@ -713,6 +722,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("eligibility", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HealthcareService.EligibilityComponent> Eligibility
     {
       get
@@ -741,6 +751,7 @@ namespace Hl7.Fhir.Model
     [Binding("Program")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Program
     {
       get
@@ -769,6 +780,7 @@ namespace Hl7.Fhir.Model
     [Binding("ServiceCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
     {
       get
@@ -797,6 +809,7 @@ namespace Hl7.Fhir.Model
     [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
     {
       get
@@ -825,6 +838,7 @@ namespace Hl7.Fhir.Model
     [Binding("ReferralMethod")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
     {
       get
@@ -893,6 +907,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("availability", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Availability> Availability
     {
       get
@@ -922,6 +937,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get

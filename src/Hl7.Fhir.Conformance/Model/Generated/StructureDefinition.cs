@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "StructureDefinition"; } }
+    public override string TypeName => "StructureDefinition";
 
     /// <summary>
     /// Defines the type of structure that a definition is describing.
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition.mapping"; } }
+      public override string TypeName => "StructureDefinition.mapping";
 
       /// <summary>
       /// Internal id when this mapping is used.
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition.context"; } }
+      public override string TypeName => "StructureDefinition.context";
 
       /// <summary>
       /// fhirpath | element | extension.
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition.snapshot"; } }
+      public override string TypeName => "StructureDefinition.snapshot";
 
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition).
@@ -673,6 +673,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("element", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
       {
         get
@@ -781,7 +782,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureDefinition.differential"; } }
+      public override string TypeName => "StructureDefinition.differential";
 
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition).
@@ -789,6 +790,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("element", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
       {
         get
@@ -931,6 +933,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1279,6 +1282,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1347,6 +1351,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1375,6 +1380,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1529,6 +1535,7 @@ namespace Hl7.Fhir.Model
     [Binding("StructureDefinitionKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Keyword
     {
       get
@@ -1598,6 +1605,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("mapping", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> Mapping
     {
       get
@@ -1710,6 +1718,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("context", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.StructureDefinition.ContextComponent> Context
     {
       get
@@ -1737,6 +1746,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contextInvariant", InSummary=true, Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ContextInvariantElement
     {
       get

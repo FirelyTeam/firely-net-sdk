@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ResearchStudy"; } }
+    public override string TypeName => "ResearchStudy";
 
     /// <summary>
     /// Additional names for the study
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.label"; } }
+      public override string TypeName => "ResearchStudy.label";
 
       /// <summary>
       /// primary | official | scientific | plain-language | subtitle | short-title | acronym | earlier-title | language | auto-translated | human-use | machine-use | duplicate-uid.
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.associatedParty"; } }
+      public override string TypeName => "ResearchStudy.associatedParty";
 
       /// <summary>
       /// Name of associated party.
@@ -328,6 +328,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Period> Period
       {
         get
@@ -356,6 +357,7 @@ namespace Hl7.Fhir.Model
       [Binding("ResearchStudyPartyOrganizationType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
         get
@@ -565,7 +567,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.progressStatus"; } }
+      public override string TypeName => "ResearchStudy.progressStatus";
 
       /// <summary>
       /// Label for status or state (e.g. recruitment status).
@@ -784,7 +786,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.recruitment"; } }
+      public override string TypeName => "ResearchStudy.recruitment";
 
       /// <summary>
       /// Estimated total number of participants to be enrolled.
@@ -1069,7 +1071,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.comparisonGroup"; } }
+      public override string TypeName => "ResearchStudy.comparisonGroup";
 
       /// <summary>
       /// Allows the comparisonGroup for the study and the comparisonGroup for the subject to be linked easily.
@@ -1230,6 +1232,7 @@ namespace Hl7.Fhir.Model
       [References("EvidenceVariable")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> IntendedExposure
       {
         get
@@ -1461,7 +1464,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.objective"; } }
+      public override string TypeName => "ResearchStudy.objective";
 
       /// <summary>
       /// Label for the objective.
@@ -1698,7 +1701,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchStudy.outcomeMeasure"; } }
+      public override string TypeName => "ResearchStudy.outcomeMeasure";
 
       /// <summary>
       /// Label for the outcome.
@@ -1748,6 +1751,7 @@ namespace Hl7.Fhir.Model
       [Binding("ResearchStudyObjectiveType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -2015,6 +2019,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2165,6 +2170,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("label", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.LabelComponent> Label
     {
       get
@@ -2194,6 +2200,7 @@ namespace Hl7.Fhir.Model
     [References("PlanDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Protocol
     {
       get
@@ -2223,6 +2230,7 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -2250,6 +2258,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -2416,6 +2425,7 @@ namespace Hl7.Fhir.Model
     [Binding("StudyDesign")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> StudyDesign
     {
       get
@@ -2444,6 +2454,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchStudyFocusType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Focus
     {
       get
@@ -2472,6 +2483,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConditionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
     {
       get
@@ -2500,6 +2512,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
     {
       get
@@ -2528,6 +2541,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
     {
       get
@@ -2665,6 +2679,7 @@ namespace Hl7.Fhir.Model
     [References("Location","ResearchStudy","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Site
     {
       get
@@ -2692,6 +2707,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -2720,6 +2736,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchStudyClassifiers")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Classifier
     {
       get
@@ -2747,6 +2764,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("associatedParty", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.AssociatedPartyComponent> AssociatedParty
     {
       get
@@ -2774,6 +2792,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("progressStatus", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.ProgressStatusComponent> ProgressStatus
     {
       get
@@ -2854,6 +2873,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("comparisonGroup", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.ComparisonGroupComponent> ComparisonGroup
     {
       get
@@ -2881,6 +2901,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("objective", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> Objective
     {
       get
@@ -2908,6 +2929,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("outcomeMeasure", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchStudy.OutcomeMeasureComponent> OutcomeMeasure
     {
       get
@@ -2937,6 +2959,7 @@ namespace Hl7.Fhir.Model
     [References("EvidenceReport","Citation","DiagnosticReport")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Result
     {
       get

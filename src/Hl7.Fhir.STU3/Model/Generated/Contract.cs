@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Contract"; } }
+    public override string TypeName => "Contract";
 
     /// <summary>
     /// This value set contract specific codes for status.
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.agent"; } }
+      public override string TypeName => "Contract.agent";
 
       /// <summary>
       /// Contract Agent Type.
@@ -217,6 +217,7 @@ namespace Hl7.Fhir.Model
       [Binding("ContractActorRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
         get
@@ -346,7 +347,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.signer"; } }
+      public override string TypeName => "Contract.signer";
 
       /// <summary>
       /// Contract Signatory Role.
@@ -411,6 +412,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("signature", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Signature> Signature
       {
         get
@@ -554,7 +556,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.valuedItem"; } }
+      public override string TypeName => "Contract.valuedItem";
 
       /// <summary>
       /// Contract Valued Item Type.
@@ -1032,7 +1034,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.term"; } }
+      public override string TypeName => "Contract.term";
 
       /// <summary>
       /// Contract Term Number.
@@ -1189,6 +1191,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Topic
       {
         get
@@ -1217,6 +1220,7 @@ namespace Hl7.Fhir.Model
       [Binding("ContractAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
         get
@@ -1245,6 +1249,7 @@ namespace Hl7.Fhir.Model
       [Binding("ContractActionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
       {
         get
@@ -1273,6 +1278,7 @@ namespace Hl7.Fhir.Model
       [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
         get
@@ -1300,6 +1306,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("agent", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Contract.TermAgentComponent> Agent
       {
         get
@@ -1368,6 +1375,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valuedItem", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Contract.TermValuedItemComponent> ValuedItem
       {
         get
@@ -1395,6 +1403,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("group", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Contract.TermComponent> Group
       {
         get
@@ -1733,7 +1742,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.term.agent"; } }
+      public override string TypeName => "Contract.term.agent";
 
       /// <summary>
       /// Contract Term Agent Subject.
@@ -1771,6 +1780,7 @@ namespace Hl7.Fhir.Model
       [Binding("ContractActorRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
         get
@@ -1898,7 +1908,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.term.valuedItem"; } }
+      public override string TypeName => "Contract.term.valuedItem";
 
       /// <summary>
       /// Contract Term Valued Item Type.
@@ -2376,7 +2386,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.friendly"; } }
+      public override string TypeName => "Contract.friendly";
 
       /// <summary>
       /// Easily comprehended representation of this Contract.
@@ -2495,7 +2505,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.legal"; } }
+      public override string TypeName => "Contract.legal";
 
       /// <summary>
       /// Contract Legal Text.
@@ -2614,7 +2624,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Contract.rule"; } }
+      public override string TypeName => "Contract.rule";
 
       /// <summary>
       /// Computable Contract Rules.
@@ -2862,6 +2872,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -2891,6 +2902,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Topic
     {
       get
@@ -2920,6 +2932,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Authority
     {
       get
@@ -2949,6 +2962,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Domain
     {
       get
@@ -3004,6 +3018,7 @@ namespace Hl7.Fhir.Model
     [Binding("ContractSubtype")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
     {
       get
@@ -3032,6 +3047,7 @@ namespace Hl7.Fhir.Model
     [Binding("ContractAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
     {
       get
@@ -3060,6 +3076,7 @@ namespace Hl7.Fhir.Model
     [Binding("ContractActionReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
     {
       get
@@ -3142,6 +3159,7 @@ namespace Hl7.Fhir.Model
     [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
     {
       get
@@ -3169,6 +3187,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("agent", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.AgentComponent> Agent
     {
       get
@@ -3196,6 +3215,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("signer", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.SignatoryComponent> Signer
     {
       get
@@ -3223,6 +3243,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("valuedItem", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.ValuedItemComponent> ValuedItem
     {
       get
@@ -3250,6 +3271,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("term", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.TermComponent> Term
     {
       get
@@ -3306,6 +3328,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("friendly", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent> Friendly
     {
       get
@@ -3333,6 +3356,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("legal", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.LegalLanguageComponent> Legal
     {
       get
@@ -3360,6 +3384,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("rule", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> Rule
     {
       get

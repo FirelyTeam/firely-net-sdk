@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Dosage"; } }
+    public override string TypeName => "Dosage";
 
     /// <summary>
     /// The order of the dosage instructions.
@@ -152,6 +152,7 @@ namespace Hl7.Fhir.Model
     [Binding("AdditionalInstruction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
     {
       get

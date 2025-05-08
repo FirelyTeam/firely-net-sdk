@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Appointment"; } }
+    public override string TypeName => "Appointment";
 
     /// <summary>
     /// The free/busy status of an appointment.
@@ -3042,7 +3042,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment.participant"; } }
+      public override string TypeName => "Appointment.participant";
 
       /// <summary>
       /// Role of participant in the appointment.
@@ -3051,6 +3051,7 @@ namespace Hl7.Fhir.Model
       [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -3373,7 +3374,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment.recurrenceTemplate"; } }
+      public override string TypeName => "Appointment.recurrenceTemplate";
 
       /// <summary>
       /// The timezone of the occurrences.
@@ -3518,6 +3519,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("occurrenceDate", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Date> OccurrenceDateElement
       {
         get
@@ -3641,6 +3643,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("excludingDate", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Date> ExcludingDateElement
       {
         get
@@ -3686,6 +3689,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("excludingRecurrenceId", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> ExcludingRecurrenceIdElement
       {
         get
@@ -3980,7 +3984,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment.recurrenceTemplate.weeklyTemplate"; } }
+      public override string TypeName => "Appointment.recurrenceTemplate.weeklyTemplate";
 
       /// <summary>
       /// Recurs on Mondays.
@@ -4527,7 +4531,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment.recurrenceTemplate.monthlyTemplate"; } }
+      public override string TypeName => "Appointment.recurrenceTemplate.monthlyTemplate";
 
       /// <summary>
       /// Recurs on a specific day of the month.
@@ -4807,7 +4811,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Appointment.recurrenceTemplate.yearlyTemplate"; } }
+      public override string TypeName => "Appointment.recurrenceTemplate.yearlyTemplate";
 
       /// <summary>
       /// Recurs every nth year.
@@ -4930,6 +4934,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -5028,6 +5033,7 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterClass")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Class
     {
       get
@@ -5056,6 +5062,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
       get
@@ -5084,6 +5091,7 @@ namespace Hl7.Fhir.Model
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
       get
@@ -5112,6 +5120,7 @@ namespace Hl7.Fhir.Model
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
       get
@@ -5167,6 +5176,7 @@ namespace Hl7.Fhir.Model
     [Binding("ApptReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -5264,6 +5274,7 @@ namespace Hl7.Fhir.Model
     [References("Appointment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
       get
@@ -5291,6 +5302,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("virtualService", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.VirtualServiceDetail> VirtualService
     {
       get
@@ -5320,6 +5332,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get
@@ -5526,6 +5539,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("requestedPeriod", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Period> RequestedPeriod
     {
       get
@@ -5555,6 +5569,7 @@ namespace Hl7.Fhir.Model
     [References("Slot")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Slot
     {
       get
@@ -5584,6 +5599,7 @@ namespace Hl7.Fhir.Model
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
       get
@@ -5693,6 +5709,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -5720,6 +5737,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("patientInstruction", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> PatientInstruction
     {
       get
@@ -5749,6 +5767,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","DeviceRequest","MedicationRequest","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -5804,6 +5823,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("participant", Order=370)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
     {
       get
@@ -5913,6 +5933,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("recurrenceTemplate", Order=400)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent> RecurrenceTemplate
     {
       get

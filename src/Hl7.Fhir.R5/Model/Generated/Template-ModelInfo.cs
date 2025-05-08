@@ -208,10 +208,7 @@ namespace Hl7.Fhir.Model
       "VisionPrescription",
     };
 
-    public static string Version
-    {
-      get { return "5.0.0"; }
-    }
+    public static string Version => "5.0.0";
 
     public static Dictionary<string,Type> FhirTypeToCsType = new Dictionary<string,Type>()
     {

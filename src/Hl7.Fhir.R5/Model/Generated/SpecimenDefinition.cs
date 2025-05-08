@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SpecimenDefinition"; } }
+    public override string TypeName => "SpecimenDefinition";
 
     /// <summary>
     /// Degree of preference of a type of conditioned specimen.
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested";
 
       /// <summary>
       /// Primary or secondary specimen.
@@ -353,6 +353,7 @@ namespace Hl7.Fhir.Model
       [Binding("RejectionCriterion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
       {
         get
@@ -380,6 +381,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("handling", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent> Handling
       {
         get
@@ -408,6 +410,7 @@ namespace Hl7.Fhir.Model
       [Binding("TestingDestination")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> TestingDestination
       {
         get
@@ -684,7 +687,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested.container"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested.container";
 
       /// <summary>
       /// The material type used for the container.
@@ -868,6 +871,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("additive", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> Additive
       {
         get
@@ -1150,7 +1154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested.container.additive"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested.container.additive";
 
       /// <summary>
       /// Additive associated with container.
@@ -1270,7 +1274,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested.handling"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested.handling";
 
       /// <summary>
       /// Qualifies the interval of temperature.
@@ -1746,6 +1750,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFromCanonical", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromCanonicalElement
     {
       get
@@ -1791,6 +1796,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFromUri", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> DerivedFromUriElement
     {
       get
@@ -2031,6 +2037,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2099,6 +2106,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2127,6 +2135,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2413,6 +2422,7 @@ namespace Hl7.Fhir.Model
     [Binding("PreparePatient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
     {
       get
@@ -2482,6 +2492,7 @@ namespace Hl7.Fhir.Model
     [Binding("SpecimenCollection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection
     {
       get
@@ -2509,6 +2520,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("typeTested", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> TypeTested
     {
       get

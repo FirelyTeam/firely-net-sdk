@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ObservationDefinition"; } }
+    public override string TypeName => "ObservationDefinition";
 
     /// <summary>
     /// Permitted data type for observation value.
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition.qualifiedValue"; } }
+      public override string TypeName => "ObservationDefinition.qualifiedValue";
 
       /// <summary>
       /// Context qualifier for the set of qualified values.
@@ -218,6 +218,7 @@ namespace Hl7.Fhir.Model
       [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
       {
         get
@@ -902,7 +903,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition.component"; } }
+      public override string TypeName => "ObservationDefinition.component";
 
       /// <summary>
       /// Type of observation.
@@ -939,6 +940,7 @@ namespace Hl7.Fhir.Model
       [Binding("ObservationDataType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
       {
         get
@@ -985,6 +987,7 @@ namespace Hl7.Fhir.Model
       [Binding("ObservationUnit")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> PermittedUnit
       {
         get
@@ -1012,6 +1015,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("qualifiedValue", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent> QualifiedValue
       {
         get
@@ -1553,6 +1557,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1621,6 +1626,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1649,6 +1655,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1907,6 +1914,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFromCanonical", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromCanonicalElement
     {
       get
@@ -1952,6 +1960,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFromUri", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> DerivedFromUriElement
     {
       get
@@ -1997,6 +2006,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("subject", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Subject
     {
       get
@@ -2051,6 +2061,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -2107,6 +2118,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
       get
@@ -2249,6 +2261,7 @@ namespace Hl7.Fhir.Model
     [References("SpecimenDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
       get
@@ -2278,6 +2291,7 @@ namespace Hl7.Fhir.Model
     [References("DeviceDefinition","Device")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Device
     {
       get
@@ -2347,6 +2361,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationUnit")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> PermittedUnit
     {
       get
@@ -2374,6 +2389,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("qualifiedValue", Order=430)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent> QualifiedValue
     {
       get
@@ -2403,6 +2419,7 @@ namespace Hl7.Fhir.Model
     [References("ObservationDefinition","Questionnaire")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> HasMember
     {
       get
@@ -2430,6 +2447,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("component", Order=450)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ObservationDefinition.ComponentComponent> Component
     {
       get

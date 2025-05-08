@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CarePlan"; } }
+    public override string TypeName => "CarePlan";
 
     /// <summary>
     /// Indicates whether the plan is currently being acted upon, represents future intentions or is now a historical record.
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan.activity"; } }
+      public override string TypeName => "CarePlan.activity";
 
       /// <summary>
       /// Results of the activity.
@@ -224,6 +224,7 @@ namespace Hl7.Fhir.Model
       [Binding("CarePlanActivityOutcome")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCodeableConcept
       {
         get
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> OutcomeReference
       {
         get
@@ -280,6 +282,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("progress", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Progress
       {
         get
@@ -518,7 +521,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CarePlan.activity.detail"; } }
+      public override string TypeName => "CarePlan.activity.detail";
 
       /// <summary>
       /// diet | drug | encounter | observation | procedure | supply | other.
@@ -609,6 +612,7 @@ namespace Hl7.Fhir.Model
       [Binding("CarePlanActivityReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
       {
         get
@@ -638,6 +642,7 @@ namespace Hl7.Fhir.Model
       [References("Condition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
       {
         get
@@ -667,6 +672,7 @@ namespace Hl7.Fhir.Model
       [References("Goal")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Goal
       {
         get
@@ -877,6 +883,7 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization","RelatedPerson","Patient","CareTeam")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Performer
       {
         get
@@ -1385,6 +1392,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1414,6 +1422,7 @@ namespace Hl7.Fhir.Model
     [References("PlanDefinition","Questionnaire")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Definition
     {
       get
@@ -1443,6 +1452,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1472,6 +1482,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
       get
@@ -1501,6 +1512,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -1615,6 +1627,7 @@ namespace Hl7.Fhir.Model
     [Binding("CarePlanCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1809,6 +1822,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Practitioner","RelatedPerson","Organization","CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
       get
@@ -1838,6 +1852,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CareTeam
     {
       get
@@ -1867,6 +1882,7 @@ namespace Hl7.Fhir.Model
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Addresses
     {
       get
@@ -1896,6 +1912,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInfo
     {
       get
@@ -1925,6 +1942,7 @@ namespace Hl7.Fhir.Model
     [References("Goal")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Goal
     {
       get
@@ -1952,6 +1970,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("activity", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CarePlan.ActivityComponent> Activity
     {
       get
@@ -1979,6 +1998,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

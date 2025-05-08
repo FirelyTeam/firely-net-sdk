@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ConceptMap"; } }
+    public override string TypeName => "ConceptMap";
 
     /// <summary>
     /// The degree of equivalence between concepts.
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group"; } }
+      public override string TypeName => "ConceptMap.group";
 
       /// <summary>
       /// Code System (if value set crosses code systems).
@@ -347,6 +347,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("element", Order=80)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> Element
       {
         get
@@ -577,7 +578,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element"; } }
+      public override string TypeName => "ConceptMap.group.element";
 
       /// <summary>
       /// Identifies element being mapped.
@@ -667,6 +668,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("target", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent> Target
       {
         get
@@ -814,7 +816,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element.target"; } }
+      public override string TypeName => "ConceptMap.group.element.target";
 
       /// <summary>
       /// Code that identifies the target element.
@@ -987,6 +989,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dependsOn", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> DependsOn
       {
         get
@@ -1014,6 +1017,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("product", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
       {
         get
@@ -1217,7 +1221,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.element.target.dependsOn"; } }
+      public override string TypeName => "ConceptMap.group.element.target.dependsOn";
 
       /// <summary>
       /// Reference to property mapping depends on.
@@ -1530,7 +1534,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConceptMap.group.unmapped"; } }
+      public override string TypeName => "ConceptMap.group.unmapped";
 
       /// <summary>
       /// provided | fixed | other-map.
@@ -2190,6 +2194,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2258,6 +2263,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2286,6 +2292,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2453,6 +2460,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("group", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConceptMap.GroupComponent> Group
     {
       get

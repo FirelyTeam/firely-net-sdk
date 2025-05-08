@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "TerminologyCapabilities"; } }
+    public override string TypeName => "TerminologyCapabilities";
 
     /// <summary>
     /// The degree to which the server supports the code search parameter on ValueSet, if it is supported.
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.software"; } }
+      public override string TypeName => "TerminologyCapabilities.software";
 
       /// <summary>
       /// A name the software is known by.
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.implementation"; } }
+      public override string TypeName => "TerminologyCapabilities.implementation";
 
       /// <summary>
       /// Describes this specific instance.
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.codeSystem"; } }
+      public override string TypeName => "TerminologyCapabilities.codeSystem";
 
       /// <summary>
       /// URI for the Code System.
@@ -531,6 +531,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("version", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent> Version
       {
         get
@@ -719,7 +720,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.codeSystem.version"; } }
+      public override string TypeName => "TerminologyCapabilities.codeSystem.version";
 
       /// <summary>
       /// Version identifier for this version.
@@ -850,6 +851,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("language", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Code> LanguageElement
       {
         get
@@ -895,6 +897,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("filter", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent> Filter
       {
         get
@@ -922,6 +925,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("property", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Code> PropertyElement
       {
         get
@@ -1140,7 +1144,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.codeSystem.version.filter"; } }
+      public override string TypeName => "TerminologyCapabilities.codeSystem.version.filter";
 
       /// <summary>
       /// Code of the property supported.
@@ -1190,6 +1194,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("op", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Code> OpElement
       {
         get
@@ -1332,7 +1337,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.expansion"; } }
+      public override string TypeName => "TerminologyCapabilities.expansion";
 
       /// <summary>
       /// Whether the server can return nested value sets.
@@ -1463,6 +1468,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("parameter", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent> Parameter
       {
         get
@@ -1685,7 +1691,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.expansion.parameter"; } }
+      public override string TypeName => "TerminologyCapabilities.expansion.parameter";
 
       /// <summary>
       /// Expansion Parameter name.
@@ -1873,7 +1879,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.validateCode"; } }
+      public override string TypeName => "TerminologyCapabilities.validateCode";
 
       /// <summary>
       /// Whether translations are validated.
@@ -2001,7 +2007,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.translation"; } }
+      public override string TypeName => "TerminologyCapabilities.translation";
 
       /// <summary>
       /// Whether the client must identify the map.
@@ -2132,7 +2138,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TerminologyCapabilities.closure"; } }
+      public override string TypeName => "TerminologyCapabilities.closure";
 
       /// <summary>
       /// If cross-system closure is supported.
@@ -2585,6 +2591,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2653,6 +2660,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2681,6 +2689,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2926,6 +2935,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("codeSystem", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent> CodeSystem
     {
       get

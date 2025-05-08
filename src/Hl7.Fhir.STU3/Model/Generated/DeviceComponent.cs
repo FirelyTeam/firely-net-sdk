@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DeviceComponent"; } }
+    public override string TypeName => "DeviceComponent";
 
     /// <summary>
     /// Different measurement principle supported by the device.
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceComponent.productionSpecification"; } }
+      public override string TypeName => "DeviceComponent.productionSpecification";
 
       /// <summary>
       /// Type or kind of production specification, for example serial number or software revision.
@@ -520,6 +520,7 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceComponentOperationalStatus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> OperationalStatus
     {
       get
@@ -616,6 +617,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("productionSpecification", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> ProductionSpecification
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Coverage"; } }
+    public override string TypeName => "Coverage";
 
     /// <summary>
     /// Additional coverage classifications
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage.class"; } }
+      public override string TypeName => "Coverage.class";
 
       /// <summary>
       /// Type of class such as 'group' or 'plan'.
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage.costToBeneficiary"; } }
+      public override string TypeName => "Coverage.costToBeneficiary";
 
       /// <summary>
       /// Cost category.
@@ -382,6 +382,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("exception", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coverage.ExemptionComponent> Exception
       {
         get
@@ -528,7 +529,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Coverage.costToBeneficiary.exception"; } }
+      public override string TypeName => "Coverage.costToBeneficiary.exception";
 
       /// <summary>
       /// Exception category.
@@ -682,6 +683,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1001,6 +1003,7 @@ namespace Hl7.Fhir.Model
     [References("Organization","Patient","RelatedPerson")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Payor
     {
       get
@@ -1028,6 +1031,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("class", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coverage.ClassComponent> Class
     {
       get
@@ -1137,6 +1141,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("costToBeneficiary", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent> CostToBeneficiary
     {
       get
@@ -1207,6 +1212,7 @@ namespace Hl7.Fhir.Model
     [References("Contract")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Contract
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EvidenceReport"; } }
+    public override string TypeName => "EvidenceReport";
 
     /// <summary>
     /// The type of relationship between reports.
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport.subject"; } }
+      public override string TypeName => "EvidenceReport.subject";
 
       /// <summary>
       /// Characteristic.
@@ -144,6 +144,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("characteristic", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent> Characteristic
       {
         get
@@ -171,6 +172,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -295,7 +297,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport.subject.characteristic"; } }
+      public override string TypeName => "EvidenceReport.subject.characteristic";
 
       /// <summary>
       /// Characteristic code.
@@ -567,7 +569,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport.relatesTo"; } }
+      public override string TypeName => "EvidenceReport.relatesTo";
 
       /// <summary>
       /// replaces | amends | appends | transforms | replacedWith | amendedWith | appendedWith | transformedWith.
@@ -748,7 +750,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EvidenceReport.section"; } }
+      public override string TypeName => "EvidenceReport.section";
 
       /// <summary>
       /// Label for section (e.g. for ToC).
@@ -854,6 +856,7 @@ namespace Hl7.Fhir.Model
       [References("Person","Device","Group","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Author
       {
         get
@@ -977,6 +980,7 @@ namespace Hl7.Fhir.Model
       [Binding("EvidenceClassifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> EntryClassifier
       {
         get
@@ -1006,6 +1010,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> EntryReference
       {
         get
@@ -1033,6 +1038,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("entryQuantity", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> EntryQuantity
       {
         get
@@ -1087,6 +1093,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("section", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> Section
       {
         get
@@ -1480,6 +1487,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1507,6 +1515,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=120, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1534,6 +1543,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedIdentifier", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> RelatedIdentifier
     {
       get
@@ -1617,6 +1627,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1644,6 +1655,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -1739,6 +1751,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1766,6 +1779,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -1793,6 +1807,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -1820,6 +1835,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -1847,6 +1863,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -1874,6 +1891,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatesTo", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent> RelatesTo
     {
       get
@@ -1901,6 +1919,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("section", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> Section
     {
       get

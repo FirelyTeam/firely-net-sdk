@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "StructureMap"; } }
+    public override string TypeName => "StructureMap";
 
     /// <summary>
     /// How the referenced structure is used in this mapping.
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.structure"; } }
+      public override string TypeName => "StructureMap.structure";
 
       /// <summary>
       /// Canonical reference to structure definition.
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group"; } }
+      public override string TypeName => "StructureMap.group";
 
       /// <summary>
       /// Human-readable label.
@@ -855,6 +855,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("input", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.InputComponent> Input
       {
         get
@@ -882,6 +883,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("rule", InSummary=true, Order=90)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
       {
         get
@@ -1086,7 +1088,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group.input"; } }
+      public override string TypeName => "StructureMap.group.input";
 
       /// <summary>
       /// Name for this instance of data.
@@ -1396,7 +1398,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group.rule"; } }
+      public override string TypeName => "StructureMap.group.rule";
 
       /// <summary>
       /// Name of the rule for internal references.
@@ -1446,6 +1448,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("source", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.SourceComponent> Source
       {
         get
@@ -1473,6 +1476,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("target", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.TargetComponent> Target
       {
         get
@@ -1500,6 +1504,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("rule", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
       {
         get
@@ -1527,6 +1532,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dependent", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.DependentComponent> Dependent
       {
         get
@@ -1768,7 +1774,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group.rule.source"; } }
+      public override string TypeName => "StructureMap.group.rule.source";
 
       /// <summary>
       /// Type or variable this rule applies to.
@@ -2484,7 +2490,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group.rule.target"; } }
+      public override string TypeName => "StructureMap.group.rule.target";
 
       /// <summary>
       /// Type or variable this rule applies to.
@@ -2658,6 +2664,7 @@ namespace Hl7.Fhir.Model
       [Binding("StructureMapTargetListMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> ListModeElement
       {
         get
@@ -2786,6 +2793,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("parameter", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.StructureMap.ParameterComponent> Parameter
       {
         get
@@ -3024,7 +3032,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group.rule.target.parameter"; } }
+      public override string TypeName => "StructureMap.group.rule.target.parameter";
 
       /// <summary>
       /// Parameter value - variable or literal.
@@ -3139,7 +3147,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "StructureMap.group.rule.dependent"; } }
+      public override string TypeName => "StructureMap.group.rule.dependent";
 
       /// <summary>
       /// Name of a rule or group to apply.
@@ -3189,6 +3197,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("variable", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> VariableElement
       {
         get
@@ -3368,6 +3377,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3685,6 +3695,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -3753,6 +3764,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -3781,6 +3793,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -3890,6 +3903,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("structure", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.StructureMap.StructureComponent> Structure
     {
       get
@@ -3917,6 +3931,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("import", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ImportElement
     {
       get
@@ -3962,6 +3977,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("group", InSummary=true, Order=260)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.StructureMap.GroupComponent> Group
     {
       get

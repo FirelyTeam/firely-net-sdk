@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "GenomicStudy"; } }
+    public override string TypeName => "GenomicStudy";
 
     /// <summary>
     /// The status of the GenomicStudy.
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy.analysis"; } }
+      public override string TypeName => "GenomicStudy.analysis";
 
       /// <summary>
       /// Identifiers for the analysis event.
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
       [Binding("GenomicStudyMethodType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> MethodType
       {
         get
@@ -181,6 +183,7 @@ namespace Hl7.Fhir.Model
       [Binding("GenomicStudyChangeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ChangeType
       {
         get
@@ -360,6 +363,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Focus
       {
         get
@@ -389,6 +393,7 @@ namespace Hl7.Fhir.Model
       [References("Specimen")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Specimen
       {
         get
@@ -457,6 +462,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -514,6 +520,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference","Observation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> RegionsStudied
       {
         get
@@ -543,6 +550,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference","Observation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> RegionsCalled
       {
         get
@@ -570,6 +578,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("input", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GenomicStudy.InputComponent> Input
       {
         get
@@ -597,6 +606,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("output", Order=190)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GenomicStudy.OutputComponent> Output
       {
         get
@@ -624,6 +634,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("performer", Order=200)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent> Performer
       {
         get
@@ -651,6 +662,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("device", Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent> Device
       {
         get
@@ -1079,7 +1091,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy.analysis.input"; } }
+      public override string TypeName => "GenomicStudy.analysis.input";
 
       /// <summary>
       /// File containing input data.
@@ -1287,7 +1299,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy.analysis.output"; } }
+      public override string TypeName => "GenomicStudy.analysis.output";
 
       /// <summary>
       /// File containing output data.
@@ -1447,7 +1459,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy.analysis.performer"; } }
+      public override string TypeName => "GenomicStudy.analysis.performer";
 
       /// <summary>
       /// The organization, healthcare professional, or others who participated in performing this analysis.
@@ -1606,7 +1618,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GenomicStudy.analysis.device"; } }
+      public override string TypeName => "GenomicStudy.analysis.device";
 
       /// <summary>
       /// Device used for the analysis.
@@ -1760,6 +1772,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1831,6 +1844,7 @@ namespace Hl7.Fhir.Model
     [Binding("GenomicStudyType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -1958,6 +1972,7 @@ namespace Hl7.Fhir.Model
     [References("ServiceRequest","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -2015,6 +2030,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Interpreter
     {
       get
@@ -2042,6 +2058,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -2151,6 +2168,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -2219,6 +2237,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("analysis", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent> Analysis
     {
       get

@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Address"; } }
+    public override string TypeName => "Address";
 
     /// <summary>
     /// The use of an address.
@@ -264,6 +264,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("line", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> LineElement
     {
       get
