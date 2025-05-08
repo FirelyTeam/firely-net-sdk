@@ -236,9 +236,12 @@ namespace Hl7.Fhir.ElementModel.Tests
             var node = b.ToTypedElement().ToScopedNode();
             var bundled = node.BundledResources();
             Assert.AreEqual(5, bundled.Count()); // one extra (a fake version agnostic version)
-            
-            Assert.AreEqual("Bundle.entry[1].resource[0]", node.Children("entry").Children("resource").Children("link").Children("other").First().Resolve()!.Location);
-            Assert.AreEqual("Bundle.entry[0].resource[0]", node.Children("entry").Children("resource").Children("link").Children("other").Skip(1).First().Resolve()!.Location);
+            var resolveFirst = node.Children("entry").Children("resource").Children("link").Children("other").First().Resolve()!;
+            var resolveSecond = node.Children("entry").Children("resource").Children("link").Children("other").Skip(1).First().Resolve()!;
+            Assert.AreEqual("Bundle.entry[1].resource[0]", resolveFirst.Location);
+            Assert.AreEqual("Patient/lol", resolveFirst.ToScopedNode().FullUrl());
+            Assert.AreEqual("Bundle.entry[0].resource[0]", resolveSecond.Location);
+            Assert.AreEqual("Patient/lol", resolveSecond.ToScopedNode().FullUrl());
         }
 
         [TestMethod]

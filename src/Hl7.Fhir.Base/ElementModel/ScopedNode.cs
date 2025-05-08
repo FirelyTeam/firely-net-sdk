@@ -220,7 +220,7 @@ namespace Hl7.Fhir.ElementModel
             if (InstanceType == "Bundle")
             {
                 var referenceEntryPairs = new List<KeyValuePair<string?, ScopedNode>>();
-                var versionedEntries = Current.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
+                var versionedEntries = this.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
                 foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").First().Value as string))
                 {
                     referenceEntryPairs.Add(new (versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First().ToScopedNode()));
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.ElementModel
                         )!
                     );
                 }
-                var unversionedEntries = Current.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
+                var unversionedEntries = this.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
                 referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string?, ScopedNode>(
                     (entry.Children("fullUrl").FirstOrDefault()?.Value as string), 
                     entry.Children("resource").First().ToScopedNode()
