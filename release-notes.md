@@ -1,3 +1,3 @@
 ## Intro:
 
-A hotfix in the MimeTypeTerminologyService to allow for the FHIR format types "xml", "json" and "ttl".
+A hotfix for a bug causing resolving to fail on local bundle references
