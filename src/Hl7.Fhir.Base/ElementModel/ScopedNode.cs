@@ -221,7 +221,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 var referenceEntryPairs = new List<KeyValuePair<string?, ScopedNode>>();
                 var versionedEntries = this.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
-                foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").First().Value as string))
+                foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").FirstOrDefault()?.Value as string))
                 {
                     referenceEntryPairs.Add(new (versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First().ToScopedNode()));
                     referenceEntryPairs.AddRange(

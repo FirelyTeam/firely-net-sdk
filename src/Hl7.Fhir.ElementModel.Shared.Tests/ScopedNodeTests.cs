@@ -212,6 +212,8 @@ namespace Hl7.Fhir.ElementModel.Tests
                 {
                     new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "a", Meta = new Meta(){VersionId = "1"}}},
                     new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "b", Meta = new Meta(){VersionId = "2"}}},
+                    new() { Resource = new Patient{Id = "c", Meta = new Meta(){VersionId = "1"}}},
+                    new() { Resource = new Patient{Id = "d" }},
                     new() { FullUrl = "exampleReferencingVersionedResource", Resource = new Patient
                     {
                         Link = [
@@ -235,13 +237,16 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var node = b.ToTypedElement().ToScopedNode();
             var bundled = node.BundledResources();
-            Assert.AreEqual(5, bundled.Count()); // one extra (a fake version agnostic version)
+            Assert.AreEqual(8, bundled.Count()); // one extra (a fake version agnostic version)
             var resolveFirst = node.Children("entry").Children("resource").Children("link").Children("other").First().Resolve()!;
             var resolveSecond = node.Children("entry").Children("resource").Children("link").Children("other").Skip(1).First().Resolve()!;
             Assert.AreEqual("Bundle.entry[1].resource[0]", resolveFirst.Location);
             Assert.AreEqual("Patient/lol", resolveFirst.ToScopedNode().FullUrl());
             Assert.AreEqual("Bundle.entry[0].resource[0]", resolveSecond.Location);
             Assert.AreEqual("Patient/lol", resolveSecond.ToScopedNode().FullUrl());
+            var entries = bundled.Where(x => x.FullUrl is null).ToArray();
+            entries[0].Resource.Children("meta").Children("versionId").Any().Should().BeTrue();
+            entries[1].Resource.Children("meta").Should().BeEmpty();
         }
 
         [TestMethod]
