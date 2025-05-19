@@ -41,12 +41,12 @@ public class DynamicDataType : DataType, IDynamicType
 
 
 /// <summary>
-/// A dynamic resource that can hold any element.
+/// A dynamic resource that can hold any element and is a domain resource.
 /// </summary>
 [Serializable]
 [DataContract]
 [FhirType("DynamicResource","http://fire.ly/fhir/StructureDefinition/DynamicResource")]
-public class DynamicResource : Resource, IDynamicType
+public class DynamicResource : DomainResource, IDynamicType
 {
     public string? DynamicTypeName { get; set; }
 
@@ -55,6 +55,27 @@ public class DynamicResource : Resource, IDynamicType
     protected internal override Base DeepCopyInternal()
     {
         var instance = new DynamicResource { DynamicTypeName = DynamicTypeName };
+        CopyToInternal(instance);
+        return instance;
+    }
+}
+
+
+/// <summary>
+/// A dynamic resource that can hold any element.
+/// </summary>
+[Serializable]
+[DataContract]
+[FhirType("DynamicInfraResource","http://fire.ly/fhir/StructureDefinition/DynamicInfraResource")]
+public class DynamicInfraResource : Resource, IDynamicType
+{
+    public string? DynamicTypeName { get; set; }
+
+    public override string TypeName => DynamicTypeName ?? base.TypeName;
+    
+    protected internal override Base DeepCopyInternal()
+    {
+        var instance = new DynamicInfraResource { DynamicTypeName = DynamicTypeName };
         CopyToInternal(instance);
         return instance;
     }
