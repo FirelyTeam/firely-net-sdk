@@ -90,6 +90,16 @@ public class ValidationTests_LowLevelApi
         assertPropertyValidationErrors(p.Meta, "tag"); // throws no errors because this code validation is not run here
     }
 
+    [TestMethod]
+    public void ValidatesInvalidListType()
+    {
+        const string prop = "profile";
+        var meta = new Meta();
+        meta.SetValue(prop, new List<FhirUri>());
+
+        assertPropertyValidationErrors(meta, prop, "PVAL127");
+    }
+
     [DataTestMethod]
     [DataRow("urn:oid:1.2.3", null)]
     [DataRow("urn:oid:datmagdusniet", CodedValidationException.LITERAL_INVALID_CODE)]
