@@ -52,11 +52,8 @@ public class FhirAttributeValidator : IPocoValidator
         // if(propertyValue is IReadOnlyCollection<IDynamicType> dtCollection && dtCollection.FirstOrDefault() is { DynamicTypeName: not null } dte)
         //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dte.DynamicTypeName)];
 
-        // if we have no allowed types attribute, we should still check against the implementing type, in case someone messed with the model (overflow)
-        if (
-            !propertyMapping.ValidationAttributes.Any(attr => attr is AllowedTypesAttribute) && 
-            !propertyMapping.PropertyType.IsInstanceOfType(propertyValue)
-        )
+        // check whether the value is assignable to the property, we'll complain in runAttributeValidation about other issues
+        if (!propertyMapping.PropertyType.IsInstanceOfType(propertyValue))
         {
             return [
                 CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context),
