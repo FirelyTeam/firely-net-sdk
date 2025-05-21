@@ -1,3 +1,3 @@
 ## Intro:
 
-A hotfix for a bug causing resolving to fail on local bundle references
+A hotfix that prevents issues when `BundledResources` is called when any of the bundle entries misses `fullUrl`
