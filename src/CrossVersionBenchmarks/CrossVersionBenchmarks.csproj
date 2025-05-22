@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+<!--        <DefineConstants>SDK6_ALPHA3</DefineConstants>-->
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Optimize>true</Optimize>
+        <Configuration>Release</Configuration>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="BenchmarkDotNet" Version="0.14.0"/>
+        <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.14.0" Condition="'$(OS)' == 'Windows_NT'"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Hl7.Fhir.R4" Version="5.11.7" Condition="!$(DefineConstants.Contains('SDK6'))" />
+        <PackageReference Include="Hl7.Fhir.R4" Version="6.0.0-alpha2" Condition="$(DefineConstants.Contains('SDK6_ALPHA2'))" />
+        <PackageReference Include="Hl7.Fhir.R4" Version="6.0.0-alpha3-20250521.1" Condition="$(DefineConstants.Contains('SDK6_ALPHA3'))" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="TestData\**\*.json;TestData\**\*.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+</Project>
