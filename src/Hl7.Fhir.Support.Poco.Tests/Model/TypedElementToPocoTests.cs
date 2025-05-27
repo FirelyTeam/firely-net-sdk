@@ -9,6 +9,7 @@
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -172,6 +173,27 @@ public class TypedElementToPocoTests
         var poco = humanName.ToPoco();
         poco.Should().BeOfType<DynamicDataType>().Which.DynamicTypeName.Should().Be("CustomHumanName");
         poco.ToTypedElement().InstanceType.Should().Be("CustomHumanName");
+    }
+
+    [TestMethod] 
+    public void RetainsPositionAnnotationsFromOriginalTypedElement()
+    {
+        var integer = ElementNode.Root(ModelInfo.ModelInspector,"Integer", value: 1);
+        integer!.AddAnnotation(new PositionInfo(1, 1));
+        
+        var poco = integer.ToPoco();
+        poco.Should().BeOfType<Integer>().Which.Value.Should().Be(1);
+        poco.Annotation<PositionInfo>().Should().NotBeNull();
+    }
+    
+    [TestMethod]
+    public void RetainsPositionAnnotationsFromOriginalSourceNode()
+    {
+        var integer = SourceNode.Valued("valueInteger", "1", []);
+        integer.AddAnnotation(new PositionInfo(1, 1));
+        var poco = integer.ToPoco(pocoType: typeof(Integer));
+        poco.Should().BeOfType<Integer>().Which.Value.Should().Be(1);
+        poco.Annotation<PositionInfo>().Should().NotBeNull();
     }
 
     private T toPoco<T>(T source) where T : Base, new()

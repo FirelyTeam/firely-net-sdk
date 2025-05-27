@@ -17,6 +17,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using ET = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel;
@@ -43,6 +45,10 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
         var newInstance = buildNewInstance(classMapping);
+        
+        // copy over the position information, if available.
+        if(node.Annotation<PositionInfo>() is {} positionInfo)
+            newInstance.AddAnnotation(positionInfo);
 
         // Capture the instance type if this is a dynamic type.
         if(newInstance is IDynamicType dt)
