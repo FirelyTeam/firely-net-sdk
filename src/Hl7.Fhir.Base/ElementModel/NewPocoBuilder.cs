@@ -45,13 +45,16 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
         var newInstance = buildNewInstance(classMapping);
-        
+
         // copy over the position information, if available.
-        if(node.Annotation<PositionInfo>() is {} positionInfo)
+        if ((node.Annotation<JsonSerializationDetails>() ?? (object?)node.Annotation<XmlSerializationDetails>() ?? node.Annotation<PositionInfo>())
+            is { } positionInfo)
+        {
             newInstance.AddAnnotation(positionInfo);
+        }
 
         // Capture the instance type if this is a dynamic type.
-        if(newInstance is IDynamicType dt)
+        if (newInstance is IDynamicType dt)
             dt.DynamicTypeName = node.InstanceType;
 
         // Value is a kind of pseudo-property, so we need to handle it separately.
@@ -59,11 +62,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         // to the used ObjectValue, if not, just set the value immediately on the DynamicPrimitive.
         if (node.Value is { } value)
         {
-            var objectValue = newInstance is DynamicPrimitive ?
-                value :
-                convertTypedElementValue(value);
+            var objectValue = newInstance is DynamicPrimitive ? value : convertTypedElementValue(value);
 
-            if(newInstance is PrimitiveType pt)
+            if (newInstance is PrimitiveType pt)
                 pt.JsonValue = objectValue;
             else
                 raiseFormatError($"{node.Name} is a primitive of type {value.GetType()}, but the target POCO is a {newInstance.GetType()}, " +
@@ -114,8 +115,8 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (mapping.Factory() is Base b) return b;
 
         throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a " +
-                       $"Base, which is required for " +
-                        $"building up POCO's dynamically.");
+                                     $"Base, which is required for " +
+                                     $"building up POCO's dynamically.");
     }
 
     private IList buildNewList(PropertyMapping? propertyMapping, Type elementType)
@@ -146,17 +147,17 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         // We "purposefully" create the suboptimal mapping anyway so our instance type is preserved.
         if (node.InstanceType is { } instanceType)
         {
-            if (instanceType == propertyClassMapping?.GetTypeName() || (instanceType == "code" && propertyClassMapping?.IsCodeOfT is true)) 
+            if (instanceType == propertyClassMapping?.GetTypeName() || (instanceType == "code" && propertyClassMapping?.IsCodeOfT is true))
                 return propertyClassMapping; // only case in which we return the propertyClassMapping.
             if (inspector.FindClassMapping(instanceType) is { } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
                 return mapping;
         }
-        
+
         // Normal case, we have a property mapping, and it's not abstract, so we can use the actual
         // type used by the POCO. The "IsPrimitive" check is a bit of a hack, and is there to avoid
         // us coming up with .NET string mappings for Extension.url and Element.id. This can go when
         // we have solved https://github.com/FirelyTeam/firely-net-sdk/issues/2963.
-        
+
         // Note the else here, since we never want to return the propertyClassMapping if we have an
         // instanceType which does not correspond to that mapping
         else if (propertyClassMapping is { NativeType.IsAbstract: false, IsPrimitive: false })
@@ -165,7 +166,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         // No useable concrete type in the property, nor in the instance type, so we need to create
         // one of our dynamic flavours. If we do have an abstract type of the property, we can use that
         // as a hint.
-        if(propertyClassMapping is not null)
+        if (propertyClassMapping is not null)
             return determineBestDynamicMappingForType(propertyClassMapping.NativeType);
 
         // Failing all that, guess what the best dynamic type is based on the instance data.
@@ -179,11 +180,11 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     /// subclass.</exception>
     private ClassMapping determineBestDynamicMappingForType(Type elementType)
     {
-        if(typeof(Resource).IsAssignableFrom(elementType))
+        if (typeof(Resource).IsAssignableFrom(elementType))
             return ClassMapping.DynamicResource;
-        if(typeof(PrimitiveType).IsAssignableFrom(elementType))
+        if (typeof(PrimitiveType).IsAssignableFrom(elementType))
             return ClassMapping.DynamicPrimitive;
-        if(typeof(DataType).IsAssignableFrom(elementType))
+        if (typeof(DataType).IsAssignableFrom(elementType))
             return ClassMapping.DynamicDataType;
 
         throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
@@ -255,7 +256,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         // So, create a list, and add both the existing and the new value. Note that assigning a list to
         // that same property only works if this element is in the overflow and we did not know it was a list
         // before. In all other cases, the indexed assignment will fail.
-        if(existing is not null)
+        if (existing is not null)
         {
             var dynamicTypeHint = existing.GetType() != convertedValue.GetType() ? typeof(Base) : existing.GetType();
             var newList = buildNewList(propertyMapping, dynamicTypeHint);
