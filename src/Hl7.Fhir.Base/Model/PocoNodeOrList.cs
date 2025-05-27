@@ -117,7 +117,11 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
             return [this];
         if (type == typeof(IResourceTypeSupplier))
             return [this];
-        return Annotations.OfType(type);
+        
+        if(Annotations.OfType(type).ToList() is {Count: > 0} annotations)
+            return annotations;
+        
+        return Poco.Annotations(type);
     }
 
     /// <inheritdoc />
