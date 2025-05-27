@@ -62,7 +62,7 @@ public static class PocoNodeExtensions
                 return true;
             }
 
-            if (scan.Child<PrimitiveNode>("id")?.Value is string s && s == identity.Id && scan.Poco.TypeName == identity.ResourceType)
+            if (scan.Child<PrimitiveNode>("id")?.Value is string s && s == identity.Id && (identity.ResourceType is null || scan.Poco.TypeName == identity.ResourceType))
             {
                 // if we encounter a resource with the correct id and type, return it
                 result = scan;
