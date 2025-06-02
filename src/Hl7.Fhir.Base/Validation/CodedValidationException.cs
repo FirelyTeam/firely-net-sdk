@@ -123,10 +123,11 @@ public class CodedValidationException : ExtendedCodedException
         long? lineNumber,
         long? position,
         OperationOutcome.IssueSeverity issueSeverity,
-        OperationOutcome.IssueType issueType) :
+        OperationOutcome.IssueType issueType,
+        string? memberName) :
         base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType)
     {
-        // Nothing
+        MemberName = memberName;
     }
 
     internal static COVE Initialize(PocoValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
@@ -134,14 +135,18 @@ public class CodedValidationException : ExtendedCodedException
         var path = context?.PathProducer.Invoke();
 
         var codedException = new COVE(
-            code,
-            message,
-            path,
-            context?.LineNumber,
-            context?.LinePosition, issueSeverity, issueType);
+            code, message, path,
+            context?.LineNumber, context?.LinePosition, 
+            issueSeverity, issueType,
+            context?.MemberName);
 
         return codedException;
     }
+    
+    /// <summary>
+    /// Name of member property on which the error was encountered.
+    /// </summary>
+    public string? MemberName { get; init; }
 
     internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null)
     {

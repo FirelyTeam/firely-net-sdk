@@ -304,7 +304,8 @@ public class BaseFhirXmlDeserializer
                 _inspector,
                 state.Path.GetInstancePath, // should this path GetPath or this?
                 lineNumber, position,
-                Settings.NarrativeValidation);
+                Settings.NarrativeValidation)
+                { MemberName = propName };
 
             state.Errors.Add(Settings.Validator.ValidateProperty(elementName, newPropValue, propMapping, context));
         }
