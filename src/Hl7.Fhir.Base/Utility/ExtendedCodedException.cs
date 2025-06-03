@@ -44,11 +44,16 @@ namespace Hl7.Fhir.Utility
         private static string formatLocationMessage(string baseMessage, string? instancePath, long? lineNumber, long? position)
         {
             string? location = null;
-
-            if(lineNumber is not null && position is not null)
-                location = $" At line {lineNumber}, position {position}";
             if (!string.IsNullOrEmpty(instancePath))
-                location = $" At {instancePath}, line {lineNumber}, position {position}";
+                location = $" At {instancePath}";
+            
+            if (lineNumber is not null && position is not null)
+            {
+                if(location is null)
+                    location = $" At line {lineNumber}, position {position}";
+                else
+                    location += $", line {lineNumber}, position {position}";
+            }
 
             return location is not null ? $"{baseMessage}{location}." : baseMessage;
         }
