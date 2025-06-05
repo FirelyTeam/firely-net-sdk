@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -130,7 +131,7 @@ public class CodedValidationException : ExtendedCodedException
         MemberName = memberName;
     }
 
-    internal static COVE Initialize(PocoValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
+    internal static COVE Initialize(PocoValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, string? memberName = null)
     {
         var path = context?.PathProducer.Invoke();
 
@@ -138,7 +139,7 @@ public class CodedValidationException : ExtendedCodedException
             code, message, path,
             context?.LineNumber, context?.LinePosition, 
             issueSeverity, issueType,
-            context?.MemberName);
+            context?.MemberName ?? memberName);
 
         return codedException;
     }
@@ -148,7 +149,7 @@ public class CodedValidationException : ExtendedCodedException
     /// </summary>
     public string? MemberName { get; init; }
 
-    internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null)
+    internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null, [CallerMemberName] string memberName = "")
     {
         bool expectedList = typeof(IList).IsAssignableFrom(expected);
         bool actualList = actual is IList;
