@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -45,7 +46,10 @@ public static class PocoValidationExtensions
 
     private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind)
     {
-        var newContext = new PocoValidationContext(instance, inspector, producer, 0, 0, kind) { ValidateObjectOnly = false };
+        IPositionInfo? info = instance.Annotation<JsonSerializationDetails>();
+        info ??= instance.Annotation<XmlSerializationDetails>();
+        
+        var newContext = new PocoValidationContext(instance, inspector, producer, info?.LineNumber, info?.LinePosition, kind) { ValidateObjectOnly = false };
         return newContext;
 
         string producer() => instance.TypeName;
