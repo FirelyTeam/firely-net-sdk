@@ -139,7 +139,7 @@ public class CodedValidationException : ExtendedCodedException
             code, message, path,
             context?.LineNumber, context?.LinePosition, 
             issueSeverity, issueType,
-            context?.MemberName ?? memberName);
+            memberName ?? context?.MemberName);
 
         return codedException;
     }
