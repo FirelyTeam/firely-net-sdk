@@ -45,7 +45,7 @@ public static class PocoValidationExtensions
 
     private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind)
     {
-        var newContext = new PocoValidationContext(instance, inspector, producer, 0, 0, kind) { ValidateObjectOnly = false };
+        var newContext = new PocoValidationContext(instance, inspector, producer, null, null, kind) { ValidateObjectOnly = false };
         return newContext;
 
         string producer() => instance.TypeName;
