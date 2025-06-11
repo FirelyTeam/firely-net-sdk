@@ -291,20 +291,19 @@ public class BaseFhirJsonDeserializer
         
         if (Settings.Validator is not null)
         {
+            var elementName = propertyMapping?.Name ?? name;
             var deserializationContext = new PocoValidationContext(
                 target,
                 _inspector,
                 state.Path.GetInstancePath,
                 line, pos,
                 Settings.NarrativeValidation
-            );
+            ) { MemberName = elementName };
 
             // If this is a FhirPrimitive, make sure we delay validation until we had the
             // chance to encounter both the `name` and `_name` property.
             if (propertyValueMapping?.Original.IsFhirPrimitive is true || forceDelayedValidation)
             {
-                var elementName = propertyMapping?.Name ?? name;
-
                 delayedValidations.ScheduleDelayedValidation(
                     elementName + PROPERTY_VALIDATION_KEY_SUFFIX,
                     () =>
