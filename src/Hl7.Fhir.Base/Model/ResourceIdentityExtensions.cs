@@ -18,7 +18,8 @@ namespace Hl7.Fhir.Model
 
             if (fullUrl is not null)
             {
-                result = r.VersionId == null ? new ResourceIdentity(fullUrl) : new ResourceIdentity(fullUrl).WithVersion(r.VersionId);
+                var identity = new ResourceIdentity(fullUrl);
+                result = (r.VersionId == null || identity.IsUrn) ? identity : identity.WithVersion(r.VersionId);
             }
             else if (r.Id is not null)
             {
