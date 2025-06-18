@@ -38,6 +38,11 @@ public record PocoValidationContext
     public ModelInspector ModelInspector { get; set; }
 
     /// <summary>
+    /// Name of the property being validated.
+    /// </summary>
+    public string? MemberName { get; set; }
+
+    /// <summary>
     /// In the context of property validation this is the POCO this property is an element of. In the context
     /// of validating an object, this should be the same as the object passed to the validation function.
     /// </summary>

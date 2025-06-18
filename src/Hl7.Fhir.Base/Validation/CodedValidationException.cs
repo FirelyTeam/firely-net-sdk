@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -123,27 +124,32 @@ public class CodedValidationException : ExtendedCodedException
         long? lineNumber,
         long? position,
         OperationOutcome.IssueSeverity issueSeverity,
-        OperationOutcome.IssueType issueType) :
+        OperationOutcome.IssueType issueType,
+        string? memberName) :
         base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType)
     {
-        // Nothing
+        MemberName = memberName;
     }
 
-    internal static COVE Initialize(PocoValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
+    internal static COVE Initialize(PocoValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, string? memberName = null)
     {
         var path = context?.PathProducer.Invoke();
 
         var codedException = new COVE(
-            code,
-            message,
-            path,
-            context?.LineNumber,
-            context?.LinePosition, issueSeverity, issueType);
+            code, message, path,
+            context?.LineNumber, context?.LinePosition, 
+            issueSeverity, issueType,
+            memberName ?? context?.MemberName);
 
         return codedException;
     }
+    
+    /// <summary>
+    /// Name of member property on which the error was encountered.
+    /// </summary>
+    public string? MemberName { get; init; }
 
-    internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null)
+    internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null, [CallerMemberName] string memberName = "")
     {
         bool expectedList = typeof(IList).IsAssignableFrom(expected);
         bool actualList = actual is IList;
