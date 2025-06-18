@@ -304,7 +304,7 @@ public static class PocoNodeExtensions
 
         return parts.Aggregate<string, IEnumerable<PocoNode>>(node, (current, part) =>
             int.TryParse(part, out var index)
-                ? current.Skip(index).FirstOrDefault() ?? Enumerable.Empty<PocoNode>()
+                ? current is PocoListNode pln ? pln[index] : current.Skip(index).FirstOrDefault() ?? Enumerable.Empty<PocoNode>()
                 : current.FlatChildren(part)
         );
     }
