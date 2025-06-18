@@ -200,7 +200,20 @@ public static class PocoNodeExtensions
     
     internal static PocoNode? GetParentResource(this PocoNodeOrList node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
 
+    /// <summary>
+    /// Gets the location of this node.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     public static string GetLocation(this PocoNode node) => ((ITypedElement)node).Location;
+
+    /// <summary>
+    /// Returns the common location of all nodes in the given collection. This only works if all nodes were originally constructed together as a collection.
+    /// </summary>
+    /// <param name="nodeList"></param>
+    /// <returns></returns>
+    public static string GetCommonLocation(this PocoListNode nodeList) =>
+        nodeList.Parent?.GetLocation() + nodeList.Name;
     
     internal static string GetLocalLocation(this PocoNode node) =>
         node.Parent is null 
@@ -291,7 +304,7 @@ public static class PocoNodeExtensions
 
         return parts.Aggregate<string, IEnumerable<PocoNode>>(node, (current, part) =>
             int.TryParse(part, out var index)
-                ? current.Skip(index).First()
+                ? current.Skip(index).FirstOrDefault() ?? Enumerable.Empty<PocoNode>()
                 : current.FlatChildren(part)
         );
     }
