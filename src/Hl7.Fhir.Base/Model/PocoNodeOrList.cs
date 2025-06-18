@@ -139,9 +139,9 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
 /// <param name="Pocos"></param>
 /// <param name="ParentNode"></param>
 /// <param name="Name"></param>
-internal record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? ParentNode, string Name) : PocoNodeOrList(Name)
+public record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? ParentNode, string Name) : PocoNodeOrList(Name)
 {
     public PocoNode this[int index] => new(Pocos[index], Parent, index, Name);
-    public override PocoNode? Parent => ParentNode as PocoNode;
+    public override PocoNode? Parent => ParentNode as PocoNode; // safe because FHIR knows no nested lists
     public override IEnumerator<PocoNode> GetEnumerator() => Pocos.Select((poco, index) => new PocoNode(poco, Parent, index, Name)).GetEnumerator();
 }
