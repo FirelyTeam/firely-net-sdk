@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Hl7.Fhir.R4")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.R4B")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.R5")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R6")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.Conformance")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.ElementModel.STU3.Tests")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.ElementModel.R4.Tests")]
