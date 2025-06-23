@@ -44,7 +44,8 @@
 		<Configurations>Debug;Release;FullDebug</Configurations>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<EnablePackageValidation>true</EnablePackageValidation>
-		<PackageValidationBaselineVersion>5.11.7</PackageValidationBaselineVersion>
+		<!-- Had to disable this for now, as it will try to fetch version 5.11.7 of R6, which we don't have yet -->
+<!--		<PackageValidationBaselineVersion>5.11.7</PackageValidationBaselineVersion>-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
@@ -66,4 +67,3 @@
 	</PropertyGroup>
 
 </Project>
-
