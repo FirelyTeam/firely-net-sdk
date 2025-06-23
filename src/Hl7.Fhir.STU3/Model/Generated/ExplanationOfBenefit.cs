@@ -136,6 +136,14 @@ namespace Hl7.Fhir.Model
     public enum ActInvoiceGroupCode
     {
       /// <summary>
+      /// Type of invoice element that is used to assist in describing an Invoice that is either submitted for adjudication or for which is returned on adjudication results.
+      ///                         Invoice elements of this type signify a grouping of one or more children (detail) invoice elements.  They do not have intrinsic costing associated with them, but merely reflect the sum of all costing for it's immediate children invoice elements.
+      ///                         The domain is only specified for an intermediate invoice element group (non-root or non-top level) for an Invoice.
+      /// (system: http://hl7.org/fhir/v3/ActCode)
+      /// </summary>
+      [EnumLiteral("_ActInvoiceInterGroupCode"), Description("ActInvoiceInterGroupCode")]
+      ActInvoiceInterGroupCode,
+      /// <summary>
       /// A grouping of invoice element groups and details including the ones specifying the compound ingredients being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
@@ -177,6 +185,14 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [EnumLiteral("PRDING"), Description("product invoice group")]
       PRDING,
+      /// <summary>
+      /// Type of invoice element that is used to assist in describing an Invoice that is either submitted for adjudication or for which is returned on adjudication results.
+      ///                         Invoice elements of this type signify a grouping of one or more children (detail) invoice elements.  They do not have intrinsic costing associated with them, but merely reflect the sum of all costing for it's immediate children invoice elements.
+      ///                         Codes from this domain reflect the type of Invoice such as Pharmacy Dispense, Clinical Service and Clinical Product.  The domain is only specified for the root (top level) invoice element group for an Invoice.
+      /// (system: http://hl7.org/fhir/v3/ActCode)
+      /// </summary>
+      [EnumLiteral("_ActInvoiceRootGroupCode"), Description("ActInvoiceRootGroupCode")]
+      ActInvoiceRootGroupCode,
       /// <summary>
       /// Clinical product invoice where the Invoice Grouping contains one or more billable item and is supported by clinical product(s).
       ///                         For example, a crutch or a wheelchair.
