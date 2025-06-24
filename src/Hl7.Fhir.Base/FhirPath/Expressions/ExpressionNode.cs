@@ -356,12 +356,12 @@ namespace Hl7.FhirPath.Expressions
     public class ChildExpression : FunctionCallExpression, Sprache.IPositionAware<ChildExpression>
     {
         public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
-                new ConstantExpression(name, TypeSpecifier.String))
+                new IdentifierExpression(name, TypeSpecifier.String))
         {
         }
 
         public ChildExpression(Expression focus, string name, ISourcePositionInfo location) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
-                new ConstantExpression(name, TypeSpecifier.String), location)
+                new IdentifierExpression(name, TypeSpecifier.String), location)
         {
         }
 
