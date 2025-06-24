@@ -131,7 +131,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
-                .Or(WhitespaceOrComments().Then(wsLeading => Lexer.Identifier.Select(i => new ConstantExpression(i).WithLeadingWS(wsLeading)).Positioned()).Select(i => new ChildExpression(focus, i)).Positioned())
+                .Or(WhitespaceOrComments().Then(wsLeading => Lexer.Identifier.Select(i => new IdentifierExpression(i).WithLeadingWS(wsLeading)).Positioned()).Select(i => new ChildExpression(focus, i)).Positioned())
                 //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 ;
         }
