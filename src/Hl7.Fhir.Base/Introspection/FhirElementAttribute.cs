@@ -132,9 +132,9 @@ namespace Hl7.Fhir.Introspection
                 var pm = ReflectionHelper.FindProperty(validationContext.ObjectType, validationContext.MemberName);
                 if (pm != null)
                 {
-                    var at = pm.GetCustomAttribute<FhirElementAttribute>();
+                    var at = pm.GetCustomAttributes<FhirElementAttribute>().Select(at => at.Name).Distinct().FirstOrDefault();
                     if (at != null)
-                        useName = at.Name;
+                        useName = at;
                 }
             }
             DotNetAttributeValidation.TryValidate(value, validationContext.IntoPath(value, useName ?? Name), result);

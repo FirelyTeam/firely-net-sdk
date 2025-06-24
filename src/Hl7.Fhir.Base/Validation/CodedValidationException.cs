@@ -10,6 +10,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
@@ -99,7 +100,8 @@ namespace Hl7.Fhir.Validation
                     var pm = ReflectionHelper.FindProperty(context.ObjectType, context.MemberName);
                     if (pm != null)
                     {
-                        var at = pm.GetCustomAttribute<FhirElementAttribute>();
+                        // note, can't work out which version of FHIR this is currently processing, therefore can't select which attribute should be applied.
+                        var at = pm.GetCustomAttributes<FhirElementAttribute>().FirstOrDefault();
                         if (at != null)
                         {
                             useName = at.Name;

@@ -91,9 +91,9 @@ namespace Hl7.Fhir.Serialization
                         // even if it does not really contain any values.
                         var useName = propMapping.Name;
                         // Use the fhir property name, not the .NET property name.
-                        var at = propMapping.NativeProperty.GetCustomAttribute<FhirElementAttribute>();
+                        var at = propMapping.NativeProperty.GetCustomAttributes<FhirElementAttribute>().Select(at => at.Name).Distinct().FirstOrDefault();
                         if (at != null)
-                            useName = at.Name;
+                            useName = at;
 
                         var nestedContext = validationContext.IntoEmptyProperty(useName);
 
