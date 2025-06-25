@@ -8,72 +8,67 @@
 
 #nullable enable
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Rest
+namespace Hl7.Fhir.Rest;
+
+internal class HttpClientRequester : IDisposable
 {
-    internal class HttpClientRequester : IDisposable
+    public Uri BaseUrl { get; private set; }
+    public HttpClient Client { get; }
+    private readonly bool _hasInternalClient;
+
+    public HttpClientRequester(Uri baseUrl, HttpMessageHandler messageHandler, bool disposeHandler = true)
     {
-        public Uri BaseUrl { get; private set; }
-        public HttpClient Client { get; private set; }
-        private readonly bool _disposeHttpClient = true;
+        BaseUrl = baseUrl;
 
-        public HttpClientRequester(Uri baseUrl, int timeout, HttpMessageHandler messageHandler, bool disposeHandler = true)
-        {
-            BaseUrl = baseUrl;
+        Client = new HttpClient(messageHandler, disposeHandler);
+        _hasInternalClient = true;
+    }
 
-            Client = new HttpClient(messageHandler, disposeHandler)
-            {
-                Timeout = TimeSpan.FromMilliseconds(timeout)
-            };
-        }
+    public HttpClientRequester(Uri baseUrl, HttpClient client)
+    {
+        BaseUrl = baseUrl;
 
-        public HttpClientRequester(Uri baseUrl, HttpClient client)
-        {
-            BaseUrl = baseUrl;
+        Client = client;
+        _hasInternalClient = false;
+    }
 
-            Client = client;
-            _disposeHttpClient = false;
-        }
+    public async Task<HttpResponseMessage> ExecuteAsync(int timeout, HttpRequestMessage message, CancellationToken ct)
+    {
+        // Only overwrite the client's timeout if it is our, created internally in the constructor.
+        if(_hasInternalClient)
+            Client.Timeout = TimeSpan.FromMilliseconds(timeout);
 
-        public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage message, CancellationToken ct)
-        {         
 #if NET6_0_OR_GREATER
-            return await Client.SendAsync(message,ct).ConfigureAwait(false);
+        return await Client.SendAsync(message,ct).ConfigureAwait(false);
 #else
             return await Client.SendAsync(message).ConfigureAwait(false);
 #endif
-        }
-
-#region IDisposable Support
-        private bool _disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing && _disposeHttpClient)
-                {
-                    // Only dispose the httpclient if was created here
-                    this.Client.Dispose();
-                }
-                _disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-#endregion
     }
 
-}
+    #region IDisposable Support
+    private bool _disposedValue = false; // To detect redundant calls
 
-#nullable restore
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing && _hasInternalClient)
+            {
+                // Only dispose the httpclient if was created here
+                this.Client.Dispose();
+            }
+            _disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+    }
+    #endregion
+}

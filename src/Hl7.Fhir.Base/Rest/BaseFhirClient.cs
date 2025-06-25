@@ -95,9 +95,8 @@ public partial class BaseFhirClient : IDisposable
     /// <param name="inspector"></param>
     /// <param name="settings"></param>
     public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
-        : this(endpoint, inspector,
-            settings ?? new(),
-            new(endpoint, (settings ?? new()).Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null))
+        : this(endpoint, inspector, settings ?? new FhirClientSettings(),
+            new HttpClientRequester(endpoint, messageHandler ?? makeDefaultHandler(), messageHandler == null))
     {
         // Nothing
     }
@@ -117,7 +116,7 @@ public partial class BaseFhirClient : IDisposable
     /// <param name="httpClient"></param>
     /// <param name="inspector"></param>
     public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)
-        : this(endpoint, inspector, settings ?? new(), new(endpoint, httpClient))
+        : this(endpoint, inspector, settings ?? new FhirClientSettings(), new HttpClientRequester(endpoint, httpClient))
     {
         // Nothing
     }
@@ -807,7 +806,7 @@ public partial class BaseFhirClient : IDisposable
             Settings,
             maybeBinaryInteraction);
 
-        using var responseMessage = await Requester.ExecuteAsync(requestMessage, cancellation).ConfigureAwait(false);
+        using var responseMessage = await Requester.ExecuteAsync(Settings.Timeout, requestMessage, cancellation).ConfigureAwait(false);
 
         return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, entryComponent: request, useBinaryProtocol: maybeBinaryInteraction);
     }
@@ -818,7 +817,7 @@ public partial class BaseFhirClient : IDisposable
 
         cancellation.ThrowIfCancellationRequested();
 
-        using var responseMessage = await Requester.ExecuteAsync(request, cancellation).ConfigureAwait(false);
+        using var responseMessage = await Requester.ExecuteAsync(Settings.Timeout, request, cancellation).ConfigureAwait(false);
 
         return await extractResourceFromHttpResponse<TResource>(expect, responseMessage, request);
     }
