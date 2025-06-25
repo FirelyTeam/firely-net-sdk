@@ -16,24 +16,40 @@ namespace Hl7.FhirPath.Expressions
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Invokee>
     {
-        public SymbolTable Symbols { get; }
+        private Invokee WrapForDebugTracer(Invokee invokee, Expression expression)
+        {
+            if (_debugTrace != null)
+            {
+                return (Closure context, IEnumerable<Invokee> arguments) => {
+                    var result = invokee(context, arguments);
+                    var focus = context.GetThat();
+                    _debugTrace(expression, focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
+                    return result;
+                };
+            }
+            return invokee;
+        }
 
-        public EvaluatorVisitor(SymbolTable symbols)
+        public SymbolTable Symbols { get; }
+        private DebugTraceDelegate _debugTrace;
+
+        public EvaluatorVisitor(SymbolTable symbols, DebugTraceDelegate debugTrace = null)
         {
             Symbols = symbols;
+            _debugTrace = debugTrace;
         }
 
 
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
-            return InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value));
+            return WrapForDebugTracer(InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value)), expression);
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            var focus = expression.Focus.ToEvaluator(Symbols);
+            var focus = expression.Focus.ToEvaluator(Symbols, _debugTrace);
             var arguments = new List<Invokee>() { focus };
-            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols)));
+            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols, _debugTrace)));
 
             // We have no real type information, so just pass object as the type
             var types = new List<Type>() { typeof(object) }; //   for the focus;
@@ -42,19 +58,19 @@ namespace Hl7.FhirPath.Expressions
             // Now locate the function based on the types and name
             Invokee boundFunction = resolve(Symbols, expression.FunctionName, types);
 
-            return InvokeeFactory.Invoke(expression.FunctionName, arguments, boundFunction);
+            return WrapForDebugTracer(InvokeeFactory.Invoke(expression.FunctionName, arguments, boundFunction), expression);
         }
 
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return InvokeeFactory.Return(ElementNode.EmptyList);
+            return WrapForDebugTracer(InvokeeFactory.Return(ElementNode.EmptyList), expression);
         }
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression)
         {
             // HACK, for now, $this is special, and we handle in run-time, not compile time...
             if (expression.Name == "builtin.this")
-                return InvokeeFactory.GetThis;
+                return WrapForDebugTracer(InvokeeFactory.GetThis, expression);
 
             // HACK, for now, $this is special, and we handle in run-time, not compile time...
             if (expression.Name == "builtin.that")
@@ -62,25 +78,25 @@ namespace Hl7.FhirPath.Expressions
 
             // HACK, for now, $total is special, and we handle in run-time, not compile time...
             if (expression.Name == "builtin.total")
-                return InvokeeFactory.GetTotal;
+                return WrapForDebugTracer(InvokeeFactory.GetTotal, expression);
 
             // HACK, for now, $index is special, and we handle in run-time, not compile time...
             if (expression.Name == "builtin.index")
-                return InvokeeFactory.GetIndex;
+                return WrapForDebugTracer(InvokeeFactory.GetIndex, expression);
 
             // HACK, for now, %context is special, and we handle in run-time, not compile time...
             if (expression.Name == "context")
-                return InvokeeFactory.GetContext;
+                return WrapForDebugTracer(InvokeeFactory.GetContext, expression);
 
             // HACK, for now, %resource is special, and we handle in run-time, not compile time...
             if (expression.Name == "resource")
-                return InvokeeFactory.GetResource;
+                return WrapForDebugTracer(InvokeeFactory.GetResource, expression);
 
             // HACK, for now, %rootResource is special, and we handle in run-time, not compile time...
             if (expression.Name == "rootResource")
-                return InvokeeFactory.GetRootResource;
+                return WrapForDebugTracer(InvokeeFactory.GetRootResource, expression);
 
-            return chainResolves;
+            return WrapForDebugTracer(chainResolves, expression);
             
             IEnumerable<ITypedElement> chainResolves(Closure context, IEnumerable<Invokee> invokees)
             {
@@ -123,11 +139,11 @@ namespace Hl7.FhirPath.Expressions
 
     internal static class EvaluatorExpressionExtensions
     {
-        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope)
+        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope, DebugTraceDelegate debugTrace = null)
         {
-            var compiler = new EvaluatorVisitor(scope);
+            // TODO: Brian: Defaulting in the example tracer to show how it works (and good for unit test debugging)
+            var compiler = new EvaluatorVisitor(scope, debugTrace ?? DebugTracer.TraceCall);
             return expr.Accept(compiler);
         }
     }
-
 }

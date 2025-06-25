@@ -63,6 +63,11 @@ namespace Hl7.FhirPath.Expressions
 
         private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
 
+        internal IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> Variables()
+        {
+            return _namedValues;
+        }
+
         public virtual void SetValue(string name, IEnumerable<ITypedElement> value)
         {
             _namedValues.Remove(name);
