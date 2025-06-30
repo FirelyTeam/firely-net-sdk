@@ -46,7 +46,6 @@ namespace Hl7.Fhir.Support
                 ic.Expression = new List<string> { path };
                 // we no longer set IssueComponent.Location for backwards compatibility, it's been long enough since it got deprecated
                 // https://github.com/FirelyTeam/firely-validator-api/issues/523
-                // ic.Location = new List<string> { path };
             }
 
             return ic;
