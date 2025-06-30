@@ -5456,18 +5456,18 @@ namespace Hl7.Fhir.Model
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       [AllowNull]
-      public List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent> Summary
+      public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent> Summary
       {
         get
         {
-          if(_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>), Overflow["summary"]);
+          if(_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>), Overflow["summary"]);
           return _Summary ??= [];
         }
 
         set
         {
-          if (_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>>())
+          if (_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>>())
             Overflow.Remove("summary");
           _Summary = value;
           OnPropertyChanged("Summary");
@@ -5475,7 +5475,7 @@ namespace Hl7.Fhir.Model
 
       }
 
-      private List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>? _Summary;
+      private List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>? _Summary;
 
       protected internal override void CopyToInternal(Base other)
       {
@@ -5485,7 +5485,7 @@ namespace Hl7.Fhir.Model
         base.CopyToInternal(dest);
         if(_CompleteElement is not null) dest.CompleteElement = (Hl7.Fhir.Model.FhirBoolean)_CompleteElement.DeepCopyInternal();
         if(_Entry is not null) dest.Entry = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>(_Entry.DeepCopyInternal());
-        if(_Summary is not null) dest.Summary = new List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>(_Summary.DeepCopyInternal());
+        if(_Summary is not null) dest.Summary = new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>(_Summary.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -5530,13 +5530,13 @@ namespace Hl7.Fhir.Model
             value = _Entry;
             return (value as List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>)?.Any() is true;
           case "summary":
-            if (_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>>())
+            if (_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>>())
             {
               value = Overflow["summary"];
               return true;
             }
             value = _Summary;
-            return (value as List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>)?.Any() is true;
+            return (value as List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -5565,12 +5565,12 @@ namespace Hl7.Fhir.Model
             else Entry = (List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>?)value!;
             return this;
           case "summary":
-            if (value is not (List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent> or null))
+            if (value is not (List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent> or null))
             {
-              Summary = OverflowNull<List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>>.INSTANCE;
+              Summary = OverflowNull<List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>>.INSTANCE;
               Overflow["summary"] = value;
             }
-            else Summary = (List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>?)value!;
+            else Summary = (List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -5583,7 +5583,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
         if (_CompleteElement is not null && !_CompleteElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("complete",_CompleteElement);
         if (_Entry?.Any() is true && !_Entry.InOverflow<List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>>()) yield return new KeyValuePair<string,object>("entry",_Entry);
-        if (_Summary?.Any() is true && !_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>>()) yield return new KeyValuePair<string,object>("summary",_Summary);
+        if (_Summary?.Any() is true && !_Summary.InOverflow<List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipSummaryComponent>>()) yield return new KeyValuePair<string,object>("summary",_Summary);
       }
 
     }
@@ -6690,7 +6690,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Citation.citedArtifact.contributorship.summary", IsBackboneType=true)]
-    public partial class ContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
+    public partial class CitedArtifactContributorshipSummaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
@@ -6822,7 +6822,7 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        if(other is not ContributorshipSummaryComponent dest)
+        if(other is not CitedArtifactContributorshipSummaryComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
 
         base.CopyToInternal(dest);
@@ -6834,14 +6834,14 @@ namespace Hl7.Fhir.Model
 
       protected internal override Base DeepCopyInternal()
       {
-        var instance = new ContributorshipSummaryComponent();
+        var instance = new CitedArtifactContributorshipSummaryComponent();
         CopyToInternal(instance);
         return instance;
       }
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        if(other is not ContributorshipSummaryComponent otherT) return false;
+        if(other is not CitedArtifactContributorshipSummaryComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
         #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here

@@ -104,6 +104,7 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shims.Base", "src\Hl7.Fhir.Shims.Base\Hl7.Fhir.Shims.Base.shproj", "{150A59A2-371D-4747-8B08-C8E6340EC962}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossVersionBenchmarks", "src\CrossVersionBenchmarks\CrossVersionBenchmarks.csproj", "{5119E988-E9C8-41AE-A3DC-8B917DBDAC09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.R6", "src\Hl7.Fhir.R6\Hl7.Fhir.R6.csproj", "{41CF5ADE-844C-45DB-8506-181452A28F4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -304,6 +305,12 @@ Global
 		{5119E988-E9C8-41AE-A3DC-8B917DBDAC09}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
 		{5119E988-E9C8-41AE-A3DC-8B917DBDAC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5119E988-E9C8-41AE-A3DC-8B917DBDAC09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41CF5ADE-844C-45DB-8506-181452A28F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41CF5ADE-844C-45DB-8506-181452A28F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41CF5ADE-844C-45DB-8506-181452A28F4E}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{41CF5ADE-844C-45DB-8506-181452A28F4E}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
+		{41CF5ADE-844C-45DB-8506-181452A28F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41CF5ADE-844C-45DB-8506-181452A28F4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

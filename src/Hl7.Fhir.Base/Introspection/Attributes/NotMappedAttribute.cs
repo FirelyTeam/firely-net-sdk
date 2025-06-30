@@ -1,4 +1,4 @@
-﻿/*
+/*
   Copyright (c) 2011-2013, HL7, Inc.
   All rights reserved.
   

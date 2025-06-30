@@ -208,7 +208,6 @@
   // Used in model class (resource): Measure.status
   // Used in model class (resource): MedicinalProductDefinition.status
   // Used in model class (resource): MessageDefinition.status
-  // Used in model class (resource): MetadataResource.status
   // Used in model class (resource): NamingSystem.status
   // Used in model class (resource): ObservationDefinition.status
   // Used in model class (resource): OperationDefinition.status
