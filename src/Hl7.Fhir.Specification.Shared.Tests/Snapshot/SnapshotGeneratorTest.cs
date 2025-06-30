@@ -1146,7 +1146,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             if (location != null && location.Length > 0)
             {
-                Assert.IsTrue(location.SequenceEqual(issue.Location));
+                Assert.IsTrue(location.SequenceEqual(issue.Expression));
             }
         }
 
