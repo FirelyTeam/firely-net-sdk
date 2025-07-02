@@ -4423,7 +4423,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Shelf Life and storage information.
     /// </summary>
-    [FhirElement("shelfLifeStorage", Order=230)]
+    [FhirElement("shelfLifeStorage", Order=230, FiveWs="administrative.medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     [AllowNull]

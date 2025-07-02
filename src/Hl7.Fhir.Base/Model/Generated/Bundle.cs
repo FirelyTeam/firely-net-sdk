@@ -2732,7 +2732,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, Since=FhirRelease.R5)]
+    [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, FiveWs="infrastructure.exchange", Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Resource? Issues
     {

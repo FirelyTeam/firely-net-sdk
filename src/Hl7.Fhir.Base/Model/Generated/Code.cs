@@ -48,6 +48,9 @@ namespace Hl7.Fhir.Model
   /// Primitive Type code
   /// A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents
   /// </summary>
+  /// <remarks>
+  /// Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+  /// </remarks>
   [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
   [Serializable]
   [DataContract]

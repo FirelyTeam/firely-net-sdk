@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Shelf Life and storage information.
       /// </summary>
-      [FhirElement("shelfLifeStorage", InSummary=true, Order=100)]
+      [FhirElement("shelfLifeStorage", InSummary=true, Order=100, FiveWs="administrative.medication")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       [AllowNull]
@@ -1448,7 +1448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.
     /// </summary>
-    [FhirElement("marketingStatus", InSummary=true, Order=180)]
+    [FhirElement("marketingStatus", InSummary=true, Order=180, FiveWs="administrative.medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     [AllowNull]

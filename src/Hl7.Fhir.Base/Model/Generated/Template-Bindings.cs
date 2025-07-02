@@ -384,7 +384,36 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [EnumLiteral("5.0.0-draft-final"), Description("5.0.0-draft-final")]
     N5_0_0DraftFinal,
-  }
+        /// <summary>
+    /// R6 Versions.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("6.0"), Description("6.0")]
+    N6_0,
+    /// <summary>
+    /// R6 Final Version.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("6.0.0"), Description("6.0.0")]
+    N6_0_0,
+    /// <summary>
+    /// R6 1st Draft Ballot.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("6.0.0-ballo1"), Description("6.0.0-ballot1")]
+    N6_0_0Ballo1,
+    /// <summary>
+    /// R6 2nd Draft Ballot.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("6.0.0-ballot2"), Description("6.0.0-ballot2")]
+    N6_0_0Ballot2,
+    /// <summary>
+    /// R6 3rd Draft Ballot.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("6.0.0-ballot3"), Description("6.0.0-ballot3")]
+    N6_0_0Ballot3,  }
 
   /// <summary>
   /// The kind of operation to perform as a part of a property based filter.

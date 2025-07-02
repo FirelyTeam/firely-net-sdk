@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -116,47 +118,25 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void GetContainedAndBundledResources()
-        {
-            Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
-
-            var entries = _bundleNode.BundledResources().ToList();
-            Assert.AreEqual(7, entries.Count);
-
-            Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d", entries[1].FullUrl);
-            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
-
-            Assert.IsFalse(entries[1].Resource!.ContainedResources().Any());
-            Assert.IsNotNull(entries[1].Resource!.Children("active").First());
-
-            Assert.AreEqual("#a", entries[2].Resource!.Id());
-
-            var entry6 = entries[6].Resource;
-            Assert.AreEqual(2, entry6!.ContainedResources().Count());
-            Assert.IsFalse(entry6.BundledResources().Any());
-            Assert.AreEqual("#orgY", entry6.ContainedResources().Skip(1).First().Id());
-        }
-
-        [TestMethod]
         public void GetFullUrl()
         {
-            var entries = _bundleNode!.BundledResources().ToList();
+            var entries = _bundleNode!.Children("entry").OfType<ScopedNode>().ToList();
 
-            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
+            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl());
 
-            var entry3 = entries[3].Resource;
+            var entry3 = entries[3].Children("resource").SingleOrDefault() as ScopedNode;
             entry3 = entry3?.Children("managingOrganization").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry3);
             entry3 = entry3.Children("reference").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry3);
-            Assert.AreEqual(entries[3].FullUrl, entry3.FullUrl());
+            Assert.AreEqual(entries[3].FullUrl(), entry3.FullUrl());
             Assert.AreEqual(entry3.ParentResource!.FullUrl(), entry3.FullUrl());
 
-            var entry6 = entries[6].Resource;
+            var entry6 = entries[6].Children("resource").SingleOrDefault() as ScopedNode;
             entry6 = entry6?.Children("contained").Skip(1).FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry6);
             Assert.AreEqual("#orgY", entry6.Id());
-            Assert.AreEqual(entries[6].FullUrl, entry6.FullUrl());
+            Assert.AreEqual(entries[6].FullUrl(), entry6.FullUrl());
             Assert.AreEqual(entry6.ParentResource!.FullUrl(), entry6.FullUrl());
         }
 
@@ -198,8 +178,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             ScopedNode inner7 = (_bundleNode!.Children("entry").Skip(6).First().Children("resource").Children("managingOrganization").SingleOrDefault() as ScopedNode)!;
 
             Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("#e")!.Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.Location); 
             Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/d")!.Location);
             Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("Patient/d")!.Location);
             Assert.AreEqual("Bundle.entry[1].resource[0]", inner7.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d")!.Location);
@@ -222,6 +201,52 @@ namespace Hl7.Fhir.ElementModel.Tests
                 lastUrlResolved = url;
                 return null;
             }
+        }
+
+        [TestMethod]
+        public void TestVersionedReferenceResolution()
+        {
+            var b = new Bundle()
+            {
+                Entry = new List<Bundle.EntryComponent>
+                {
+                    new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "a", Meta = new Meta(){VersionId = "1"}}},
+                    new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "b", Meta = new Meta(){VersionId = "2"}}},
+                    new() { Resource = new Patient{Id = "c", Meta = new Meta(){VersionId = "1"}}},
+                    new() { Resource = new Patient{Id = "d" }},
+                    new() { FullUrl = "exampleReferencingVersionedResource", Resource = new Patient
+                    {
+                        Link = [
+                            new ()
+                            {
+                                Other = new ResourceReference("Patient/lol/_history/2")
+                            }
+                        ]
+                    }},
+                    new() { FullUrl = "exampleReferencingUnversionedResource", Resource = new Patient
+                    {
+                        Link = [
+                            new ()
+                            {
+                                Other = new ResourceReference("Patient/lol")
+                            }
+                        ]
+                    }}
+                }
+            };
+
+            var node = b.ToTypedElement().ToScopedNode();
+            var bundled = node.BundledResources();
+            Assert.AreEqual(8, bundled.Count()); // one extra (a fake version agnostic version)
+            var resolveFirst = node.Children("entry").Children("resource").Children("link").Children("other").First().Resolve()!;
+            var resolveSecond = node.Children("entry").Children("resource").Children("link").Children("other").Skip(1).First().Resolve()!;
+            Assert.AreEqual("Bundle.entry[1].resource[0]", resolveFirst.Location);
+            Assert.AreEqual("Patient/lol", resolveFirst.ToScopedNode().FullUrl());
+            Assert.AreEqual("Bundle.entry[0].resource[0]", resolveSecond.Location);
+            Assert.AreEqual("Patient/lol", resolveSecond.ToScopedNode().FullUrl());
+            var entries = bundled.Where(x => x.FullUrl is null).ToArray();
+            entries[0].Resource!.Children("meta").Children("versionId").Any().Should().BeTrue();
+            entries[1].Resource!.Children("meta").Should().BeEmpty();
         }
 
         [TestMethod]

@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -188,7 +187,7 @@ namespace Hl7.Fhir.ElementModel
             if (AtResource)
             {
                 var referenceEntryPairs = from contained in this.Children("contained")
-                    let id = contained.Children("id").FirstOrDefault()?.Value is string s ? $"#{s}" : null
+                    let id = contained.Children("id").FirstOrDefault()?.Value as string
                     let resource = contained as ScopedNode
                     select new KeyValuePair<string, ScopedNode?>(id, resource);
                 _cache.ContainedResources = new ReferencedResourceCache(referenceEntryPairs);
@@ -223,10 +222,25 @@ namespace Hl7.Fhir.ElementModel
             
             if (InstanceType == "Bundle")
             {
-                var referenceEntryPairs = from e in this.Children("entry")
-                    let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
-                    let resource = e.Children("resource").FirstOrDefault() as ScopedNode
-                    select new KeyValuePair<string, ScopedNode>(fullUrl, resource);
+                var referenceEntryPairs = new List<KeyValuePair<string?, ScopedNode>>();
+                var versionedEntries = this.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
+                foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").FirstOrDefault()?.Value as string))
+                {
+                    referenceEntryPairs.Add(new KeyValuePair<string?, ScopedNode>(versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First()));
+                    referenceEntryPairs.AddRange(
+                        versionedResourceGroup.Select(
+                            entry => new KeyValuePair<string, ScopedNode>(
+                                (versionedResourceGroup.Key + "/_history/" + entry.Children("resource").Children("meta").Children("versionId").First().Value), 
+                                entry.Children("resource").Single()
+                            )
+                        )!
+                    );
+                }
+                var unversionedEntries = this.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
+                referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string?, ScopedNode>(
+                    (entry.Children("fullUrl").FirstOrDefault()?.Value as string), 
+                    entry.Children("resource").First()
+                )));
                 _cache.BundledResources = new ReferencedResourceCache(referenceEntryPairs);
             }
                     

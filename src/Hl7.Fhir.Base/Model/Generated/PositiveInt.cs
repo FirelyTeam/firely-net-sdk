@@ -48,6 +48,9 @@ namespace Hl7.Fhir.Model
   /// Primitive Type positiveInt
   /// An integer with a value that is positive (e.g. &gt;0)
   /// </summary>
+  /// <remarks>
+  /// 32 bit number; for values larger than this, use decimal
+  /// </remarks>
   [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
   [Serializable]
   [DataContract]

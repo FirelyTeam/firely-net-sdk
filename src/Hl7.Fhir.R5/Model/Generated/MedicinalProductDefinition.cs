@@ -1929,7 +1929,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marketing status of the medicinal product, in contrast to marketing authorization.
     /// </summary>
-    [FhirElement("marketingStatus", InSummary=true, Order=240)]
+    [FhirElement("marketingStatus", InSummary=true, Order=240, FiveWs="administrative.medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     [AllowNull]

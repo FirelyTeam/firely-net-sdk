@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
             typeof(Model.Identifier),
             typeof(Model.Instant),
             typeof(Model.Integer),
+            typeof(Model.Integer64),
             typeof(Model.Markdown),
             typeof(Model.Meta),
             typeof(Model.Money),
