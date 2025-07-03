@@ -12,6 +12,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -244,10 +245,26 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         }
 
         if (!value.EnumerateElements().Any()) return;
+        
+        deferSerializeForFilter(elementName, value, writer, filter);
+    }
 
+    private void deferSerializeForFilter(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
+    {
+        var buffer = new ArrayBufferWriter<byte>();
+        using (var defer = new Utf8JsonWriter(buffer, writer.Options))
+        {
+            serializeInternal(value, defer, filter);
+        }
+
+        // brackets only, so either object was empty, or we filtered everything out
+        const int expectedLength = 3;
+        if (buffer.WrittenCount < expectedLength) return;
+        
         // Write a property with '_elementName'
         writer.WritePropertyName("_" + elementName);
-        serializeInternal(value, writer, filter);
+        // write the deferred data
+        writer.WriteRawValue(buffer.WrittenSpan, skipInputValidation: true);
     }
 
     /// <summary>
