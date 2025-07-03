@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private (T full, T summarized) runSummarize<T>(T full, SerializationFilter filter) where T : Resource
         {
             var options = new JsonSerializerOptions()
-                .ForFhir(new FhirJsonPocoSerializerSettings() { SummaryFilter = filter })
+                .ForFhir(typeof(Patient).Assembly, new FhirJsonPocoSerializerSettings() { SummaryFilter = filter })
                 .Pretty();
             string summarizedJson = JsonSerializer.Serialize(full, options);
 
