@@ -66,6 +66,9 @@ public partial class FhirUri : ICoded
     public static bool IsValidValue(string value)
     {
         Uri uri;
+        
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
 
         try
         {
