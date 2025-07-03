@@ -50,6 +50,9 @@ namespace Hl7.Fhir.Model
         public static bool IsValidValue(string value)
         {
             Uri uri;
+            
+            if(value.Length == 0)
+                return false;
 
             try
             {
