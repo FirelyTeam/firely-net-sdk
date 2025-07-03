@@ -245,8 +245,8 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("Bundle.entry[0].resource[0]", resolveSecond.Location);
             Assert.AreEqual("Patient/lol", resolveSecond.ToScopedNode().FullUrl());
             var entries = bundled.Where(x => x.FullUrl is null).ToArray();
-            entries[0].Resource.Children("meta").Children("versionId").Any().Should().BeTrue();
-            entries[1].Resource.Children("meta").Should().BeEmpty();
+            entries[0].Resource!.Children("meta").Children("versionId").Any().Should().BeTrue();
+            entries[1].Resource!.Children("meta").Should().BeEmpty();
         }
 
         [TestMethod]
