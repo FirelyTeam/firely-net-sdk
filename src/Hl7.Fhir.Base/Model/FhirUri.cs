@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
         {
             Uri uri;
             
-            if(value.Length == 0)
+            if(string.IsNullOrWhiteSpace(value))
                 return false;
 
             try
