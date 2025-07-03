@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,21 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class SummaryFilterIntegrationTests
     {
+        
+        [TestMethod]
+        public void SummaryHasNoEmptyObject()
+        {
+            var patient = new Patient
+            {
+                BirthDateElement = new Date("1990")
+                {
+                    Extension = [new Extension("birthTime", new Instant(DateTimeOffset.Now))]
+                }
+            };
+            var (original, summarized) = runSummarize(patient, SerializationFilter.ForSummary());
+            summarized.Extension.Should().BeEmpty();
+        }
+        
         [TestMethod]
         public void Basics()
         {
@@ -153,12 +169,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             // check if result contains the link
             traverse(summarized).Should().ContainKey("link");
         }
-
-        private (T full, T summarized) runSummarize<T>(string filename, SerializationFilter filter) where T : Resource
+        
+        private (T full, T summarized) runSummarize<T>(T full, SerializationFilter filter) where T : Resource
         {
-            var fullXml = File.ReadAllText(Path.Combine("TestData", filename));
-            var full = FhirXmlNode.Parse(fullXml).ToPoco<T>();
-
             var options = new JsonSerializerOptions()
                 .ForFhir(new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
@@ -167,6 +180,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var summarized = FhirJsonNode.Parse(summarizedJson).ToPoco<T>();
 
             return (full, summarized);
+        }
+
+        private (T full, T summarized) runSummarize<T>(string filename, SerializationFilter filter) where T : Resource
+        {
+            var fullXml = File.ReadAllText(Path.Combine("TestData", filename));
+            var full = FhirXmlNode.Parse(fullXml).ToPoco<T>();
+
+            return runSummarize(full, filter);
         }
 
         private static IEnumerable<KeyValuePair<string, object>> traverse(Base x)
