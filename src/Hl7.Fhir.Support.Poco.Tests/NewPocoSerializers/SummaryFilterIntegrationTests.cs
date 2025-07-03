@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 .Pretty();
             string summarizedJson = JsonSerializer.Serialize(full, options);
 
-            var summarized = FhirJsonNode.Parse(summarizedJson).ToPoco<T>();
+            var summarized = FhirJsonNode.Parse(summarizedJson).ToPoco<T>(ModelInspector.ForType<T>());
 
             return (full, summarized);
         }
