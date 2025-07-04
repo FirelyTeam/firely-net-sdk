@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2021, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
