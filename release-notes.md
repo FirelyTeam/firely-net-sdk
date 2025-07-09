@@ -1,3 +1,3 @@
 ## Intro:
 
-A hotfix that prevents issues when `BundledResources` is called when any of the bundle entries misses `fullUrl`
+Added an FHIR R6-ballot3 sattelite and Nuget package.

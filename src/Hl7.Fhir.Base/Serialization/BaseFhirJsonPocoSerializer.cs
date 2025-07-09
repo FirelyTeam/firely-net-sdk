@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -271,10 +272,33 @@ namespace Hl7.Fhir.Serialization
 
             if (value.HasElements)
             {
-                // Write a property with '_elementName'
-                writer.WritePropertyName("_" + elementName);
-                serializeInternal(value, writer, skipValue: true);
+                deferSerializeForFilter(elementName, value, writer);
             }
+        }
+
+        private void deferSerializeForFilter(string elementName, PrimitiveType value, Utf8JsonWriter writer)
+        {
+#if NETSTANDARD2_0
+            var data = new MemoryStream();
+#else
+            var data = new ArrayBufferWriter<byte>();
+#endif
+            using (var deferredWriter = new Utf8JsonWriter(data, writer.Options))
+            {
+                serializeInternal(value, deferredWriter, skipValue: true);
+            }
+            
+#if NETSTANDARD2_0
+            var bytes = data.ToArray(); 
+#else
+            var bytes = data.WrittenSpan;
+#endif
+            if(bytes.Length < 3) return;
+            
+            // Write a property with '_elementName'
+            writer.WritePropertyName("_" + elementName);
+            // write the deferred value
+            writer.WriteRawValue(bytes, skipInputValidation: true);
         }
 
         /// <summary>
