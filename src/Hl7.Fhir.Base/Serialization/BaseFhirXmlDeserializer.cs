@@ -207,13 +207,13 @@ public class BaseFhirXmlDeserializer
             {
                 hasChildElements = true;
 
-                var (propMapping, propValueMapping) = getMappingsForElement(_inspector, mapping, reader.LocalName, state, reader);
+                var (propMapping, propValueMapping) = getMappingsForElement(mapping, reader.LocalName, state, reader);
 
-                if(propMapping is not null && propMapping.SerializationHint is not (XmlRepresentation.None or XmlRepresentation.XmlElement or  XmlRepresentation.XHtml))
+                if(propMapping.SerializationHint is not (XmlRepresentation.None or XmlRepresentation.XmlElement or  XmlRepresentation.XHtml))
                     state.Errors.Add(ERR.ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(reader, state.Path.GetInstancePath(), reader.LocalName));
 
-                state.Path.EnterElement(propMapping?.Name ?? reader.LocalName,
-                    propMapping?.IsCollection == true ? 0 : null, propValueMapping.Original.IsFhirPrimitive);
+                state.Path.EnterElement(propMapping.Name,
+                    propMapping.IsCollection ? 0 : null, propValueMapping.Original.IsFhirPrimitive);
                 highestOrder = checkOrder(reader, state, highestOrder, propMapping);
 
                 try
@@ -250,12 +250,11 @@ public class BaseFhirXmlDeserializer
         reader.ReadToContent(state);
     }
 
-    private static PropertyMapping? checkOrder(XmlReader reader, PocoDeserializerState state, PropertyMapping? highestOrder, PropertyMapping? propMapping)
+    private static PropertyMapping checkOrder(XmlReader reader, PocoDeserializerState state, PropertyMapping? highestOrder, PropertyMapping propMapping)
     {
-        if (propMapping is null) return highestOrder;
-
         //check if element is in the correct order.
-        if (highestOrder is null || propMapping.Order >= highestOrder.Order)
+        if (highestOrder is null || propMapping.Order is null || highestOrder.Order is null ||
+            propMapping.Order >= highestOrder.Order)
         {
             highestOrder = propMapping;
         }
@@ -268,15 +267,13 @@ public class BaseFhirXmlDeserializer
     }
 
     private void deserializeChildElement(Base target, XmlReader reader, PocoDeserializerState state,
-        PropertyMapping? propMapping, ClassMappingDynamic propValueMapping)
+        PropertyMapping propMapping, ClassMappingDynamic propValueMapping)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
 
         var elementName = reader.LocalName;
 
-        var listFactory = propMapping is not null
-            ? _inspector.FindOrImportClassMapping(propMapping.ImplementingType)!
-            : propValueMapping.Original;
+        var listFactory = _inspector.FindOrImportClassMapping(propMapping.ImplementingType)!;
         var targetList = listFactory.ListFactory();
 
         // Read the element, and any of its direct neighbours into a list.
@@ -285,17 +282,16 @@ public class BaseFhirXmlDeserializer
             var newEntry = readSingleValue(propValueMapping, propMapping, reader, state);
             addToList(targetList, newEntry);
 
-            if(propMapping?.IsCollection != false)
+            if(propMapping.IsCollection)
                 state.Path.IncrementIndex();
         }
 
         // If the element did not repeat, and is not a list, then it is a single item after all
-        object newElement = targetList.Count == 1 && propMapping?.IsCollection != true
+        object newElement = targetList.Count == 1 && !propMapping.IsCollection
             ? targetList[0]!
             : targetList;
 
-        var propName = propMapping?.Name ?? elementName;
-        var newPropValue = setPropertyWithRepeating(target, propName, propValueMapping.Original, newElement, state, reader);
+        var newPropValue = setPropertyWithRepeating(target, propMapping.Name, propValueMapping.Original, newElement, state, reader);
 
         if (Settings.Validator is not null)
         {
@@ -305,7 +301,7 @@ public class BaseFhirXmlDeserializer
                 state.Path.GetInstancePath, // should this path GetPath or this?
                 lineNumber, position,
                 Settings.NarrativeValidation)
-                { MemberName = propName };
+                { MemberName = propMapping.Name };
 
             state.Errors.Add(Settings.Validator.ValidateProperty(elementName, newPropValue, propMapping, context));
         }
@@ -356,17 +352,17 @@ public class BaseFhirXmlDeserializer
         else throw new InvalidOperationException($"Cannot add something of type {oneOrMoreThings.GetType()}.");
     }
 
-    private IReadOnlyCollection<Base> readSingleValue(ClassMappingDynamic propValueMapping, PropertyMapping? propMapping, XmlReader reader, PocoDeserializerState state)
+    private IReadOnlyCollection<Base> readSingleValue(ClassMappingDynamic propValueMapping, PropertyMapping propMapping, XmlReader reader, PocoDeserializerState state)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         
-        if (propMapping?.Choice == ChoiceType.ResourceChoice)
+        if (propMapping.Choice == ChoiceType.ResourceChoice)
         {
             validateNameSpace(reader, state);
             return deserializeResourceContainer(reader, state);
         }
 
-        if (propMapping?.SerializationHint == XmlRepresentation.XHtml)
+        if (propMapping.SerializationHint == XmlRepresentation.XHtml)
         {
             if (reader.NamespaceURI != XmlNs.XHTML)
             {
@@ -424,7 +420,7 @@ public class BaseFhirXmlDeserializer
         return result;
     }
 
-    private void readAttributes(Base target, ClassMapping propValueMapping, XmlReader reader, PocoDeserializerState state)
+    private void readAttributes(Base target, ClassMapping parentMapping, XmlReader reader, PocoDeserializerState state)
     {
         if (!reader.MoveToFirstAttribute()) return;
 
@@ -443,9 +439,12 @@ public class BaseFhirXmlDeserializer
                 }
                 else
                 {
-                    var propMapping = propValueMapping.FindMappedElementByName(reader.LocalName);
+                    var propMapping = parentMapping.FindMappedElementByName(reader.LocalName) ??
+                                      PropertyMapping.CreateCustom(parentMapping, reader.LocalName, typeof(FhirString),
+                                          xmlSerializationHint: XmlRepresentation.XmlAttr);
 
-                    state.Path.EnterElement(reader.LocalName, propMapping?.IsCollection == true ? 0 : null, propMapping?.IsPrimitive ?? true);
+                    state.Path.EnterElement(reader.LocalName, propMapping.IsCollection ? 0 : null, propMapping.IsPrimitive);
+
                     try
                     {
                         readAttribute(target, propMapping, reader.LocalName, reader, state);
@@ -465,7 +464,7 @@ public class BaseFhirXmlDeserializer
     }
 
     ///Parse current attribute value to set the value property of the target.
-    private void readAttribute(Base target, PropertyMapping? propMapping, string attributeName, XmlReader reader, PocoDeserializerState state)
+    private void readAttribute(Base target, PropertyMapping propMapping, string attributeName, XmlReader reader, PocoDeserializerState state)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
 
@@ -476,7 +475,7 @@ public class BaseFhirXmlDeserializer
         // trailing whitespace when reading attribute values (for XML schema conformance)"
         string trimmedValue = reader.Value.Trim();
 
-        var parsedValue = parsePrimitiveValue(trimmedValue, propMapping?.ImplementingType ?? typeof(string));
+        var parsedValue = parsePrimitiveValue(trimmedValue, propMapping.ImplementingType);
 
         if (target is PrimitiveType primitive && attributeName == "value")
         {
@@ -493,16 +492,16 @@ public class BaseFhirXmlDeserializer
             // Note, you can set "Patient.active" this way using <Patient active=true>, we might want
             // to prevent that.
 
-            if (propMapping is not null && propMapping.SerializationHint != XmlRepresentation.XmlAttr)
+            if (propMapping.SerializationHint != XmlRepresentation.XmlAttr)
                 state.Errors.Add(ERR.ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT(reader, state.Path.GetInstancePath(), reader.LocalName));
 
             var targetElementMapping =
-                _inspector.FindOrImportClassMapping(propMapping?.GetInstantiableType() ?? typeof(FhirString))!;
+                _inspector.FindOrImportClassMapping(propMapping.GetInstantiableType())!;
             var targetElement = (PrimitiveType)targetElementMapping.Factory();
 
             // If this is an unknown property, we have to keep track of the fact that it was serialized
             // as an attribute.
-            if(propMapping is null)
+            if(propMapping.NativeProperty is null)
                 targetElement.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
 
             if (Settings.AnnotateLineInfo)
@@ -578,32 +577,32 @@ public class BaseFhirXmlDeserializer
     /// <remarks>In case the name is a choice type, the type suffix will be used to determine the returned
     /// <see cref="ClassMapping"/>, otherwise the <see cref="PropertyMapping.ImplementingType"/> is used.
     /// </remarks>
-    private static (PropertyMapping? propMapping, ClassMappingDynamic propValueMapping) getMappingsForElement(
-        ModelInspector inspector,
+    private static (PropertyMapping propMapping, ClassMappingDynamic propValueMapping) getMappingsForElement(
         ClassMapping parentMapping,
         string elementName,
         PocoDeserializerState state,
         XmlReader reader)
     {
         var propertyMapping = parentMapping.FindMappedElementByName(elementName)
-                              ?? parentMapping.FindMappedElementByChoiceName(elementName);
-
-        if (propertyMapping is null)
-        {
-            return reader.GetAttribute("value") != null
-                ? (null, new ClassMappingDynamic(ClassMapping.FhirString, null))
-                : (null, new ClassMappingDynamic(ClassMapping.DynamicDataType, null));
-        }
+                              ?? parentMapping.FindMappedElementByChoiceName(elementName)
+                              ?? getUnknownPropMapping();
 
         ClassMappingDynamic propertyValueMapping = propertyMapping.Choice switch
         {
             ChoiceType.None or ChoiceType.ResourceChoice =>
-                new ClassMappingDynamic(inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) ?? throw new InvalidOperationException($"Encountered property type {propertyMapping.GetInstantiableType()} for which no mapping was found in the model assemblies."), null),
+                new ClassMappingDynamic(parentMapping.Inspector
+                    .FindOrImportClassMapping(propertyMapping.GetInstantiableType()) ??
+                                        throw new InvalidOperationException($"Encountered property type {propertyMapping.GetInstantiableType()} for which no mapping was found in the model assemblies."), null),
             ChoiceType.DatatypeChoice => getChoiceClassMapping(),
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported")
         };
 
         return (propertyMapping, propertyValueMapping);
+
+        PropertyMapping getUnknownPropMapping() =>
+            reader.GetAttribute("value") != null
+                ? PropertyMapping.CreateCustom(parentMapping, elementName, typeof(FhirString))
+                : PropertyMapping.CreateCustom(parentMapping, elementName, typeof(DynamicDataType));
 
         ClassMappingDynamic getChoiceClassMapping()
         {
@@ -612,7 +611,7 @@ public class BaseFhirXmlDeserializer
 
             if (!string.IsNullOrEmpty(typeSuffix))
             {
-                var foundChoiceMapping = inspector.FindClassMapping(typeSuffix);
+                var foundChoiceMapping = parentMapping.Inspector.FindClassMapping(typeSuffix);
                 if (foundChoiceMapping is null)
                 {
                     state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(reader, state.Path.GetInstancePath(), propertyMapping.Name, typeSuffix));
