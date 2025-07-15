@@ -440,8 +440,7 @@ public class BaseFhirXmlDeserializer
                 else
                 {
                     var propMapping = parentMapping.FindMappedElementByName(reader.LocalName) ??
-                                      PropertyMapping.CreateCustom(parentMapping, reader.LocalName, typeof(FhirString),
-                                          xmlSerializationHint: XmlRepresentation.XmlAttr);
+                                      new PropertyMapping(parentMapping, reader.LocalName, typeof(FhirString)) { SerializationHint = XmlRepresentation.XmlAttr };
 
                     state.Path.EnterElement(reader.LocalName, propMapping.IsCollection ? 0 : null, propMapping.IsPrimitive);
 
@@ -601,8 +600,8 @@ public class BaseFhirXmlDeserializer
 
         PropertyMapping getUnknownPropMapping() =>
             reader.GetAttribute("value") != null
-                ? PropertyMapping.CreateCustom(parentMapping, elementName, typeof(FhirString))
-                : PropertyMapping.CreateCustom(parentMapping, elementName, typeof(DynamicDataType));
+                ? new PropertyMapping(parentMapping, elementName, typeof(FhirString))
+                : new PropertyMapping(parentMapping, elementName, typeof(DynamicDataType));
 
         ClassMappingDynamic getChoiceClassMapping()
         {

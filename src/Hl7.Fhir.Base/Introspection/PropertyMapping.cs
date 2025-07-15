@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Introspection;
 [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
 public class PropertyMapping : IElementDefinitionSummary
 {
-    /// <summary>
+ /// <summary>
     /// A bare-bones constructor that creates a new PropertyMapping with just the Name, DeclaringClass,
     /// NativeProperty properties set. All other required properties should be initialized using an object initializer.
     /// </summary>
@@ -35,15 +35,39 @@ public class PropertyMapping : IElementDefinitionSummary
     public PropertyMapping(
         ClassMapping declaringClass,
         string name,
-        PropertyInfo? nativeProperty,
-        Type? propertyType = null)
+        PropertyInfo nativeProperty)
     {
-        if (nativeProperty is null && propertyType is null)
-            throw new ArgumentException($"Either {nameof(nativeProperty)} or {nameof(propertyType)} must be provided.");
-
         DeclaringClass = declaringClass;
         Name = name;
         NativeProperty = nativeProperty;
+        _propertyType = null;
+    }
+
+    /// <summary>
+    /// Creates a custom PropertyMapping representing the metadata for a property in the overflow.
+    /// This constructor will initialize the DeclaringClass, Name, PropertyTypeMapping, and the
+    /// required properties based on the given <paramref name="propertyType"/> and <paramref name="allowedTypes"/>.
+    /// </summary>
+    [SetsRequiredMembers]
+    public PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, Type[]? allowedTypes = null)
+     : this(declaringClass, name, nativeProperty: null!)
+    {
+        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
+
+        // Get to the actual (native) type representing this element
+        var implementingType = collectionItemType ?? propertyType;
+        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
+
+        if (declaringClass.Inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
+            throw new InvalidOperationException($"Custom property {name} is of type " +
+                                                $"{implementingType}, for which a classmapping cannot be found.");
+
+        Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
+        Order = Int32.MaxValue;
+        IsCollection = collectionItemType is not null;
+        PropertyTypeMapping = propertyTypeMapping;
+        FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
+        ImplementingType = implementingType;
         _propertyType = propertyType;
     }
 
@@ -256,33 +280,6 @@ public class PropertyMapping : IElementDefinitionSummary
         };
 
         return true;
-    }
-
-    /// <summary>
-    /// Creates a custom PropertyMapping representing the metadata for a property in the overflow.
-    /// </summary>
-    public static PropertyMapping CreateCustom(ClassMapping declaringClass, string name, Type propertyType,
-        Type[]? allowedTypes = null, XmlRepresentation xmlSerializationHint = XmlRepresentation.None)
-    {
-        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
-
-        // Get to the actual (native) type representing this element
-        var implementingType = collectionItemType ?? propertyType;
-        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
-
-        if (declaringClass.Inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
-            throw new InvalidOperationException($"Custom property {name} is of type " +
-                                                $"{implementingType}, for which a classmapping cannot be found.");
-
-        return new PropertyMapping(declaringClass, name, nativeProperty: null, propertyType)
-        {
-            Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None,
-            IsCollection = collectionItemType is not null,
-            PropertyTypeMapping = propertyTypeMapping,
-            FhirType = allowedTypes is not null? allowedTypes.ToArray() : [implementingType],
-            ImplementingType = implementingType,
-            SerializationHint = xmlSerializationHint
-        };
     }
 
     private static Type determineMappingType(Type[]? overridingTypes, Type implementingType, FhirElementAttribute felem, string parentTypeName)
