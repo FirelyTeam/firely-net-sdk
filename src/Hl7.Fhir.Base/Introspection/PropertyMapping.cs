@@ -63,7 +63,6 @@ public class PropertyMapping : IElementDefinitionSummary
                                                 $"{implementingType}, for which a classmapping cannot be found.");
 
         Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
-        Order = Int32.MaxValue;
         IsCollection = collectionItemType is not null;
         PropertyTypeMapping = propertyTypeMapping;
         FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
