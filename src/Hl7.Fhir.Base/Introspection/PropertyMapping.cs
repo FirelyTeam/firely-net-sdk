@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Introspection;
 [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
 public class PropertyMapping : IElementDefinitionSummary
 {
-    /// <summary>
+ /// <summary>
     /// A bare-bones constructor that creates a new PropertyMapping with just the Name, DeclaringClass,
     /// NativeProperty properties set. All other required properties should be initialized using an object initializer.
     /// </summary>
@@ -63,7 +63,6 @@ public class PropertyMapping : IElementDefinitionSummary
                                                 $"{implementingType}, for which a classmapping cannot be found.");
 
         Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
-        Order = Int32.MaxValue;
         IsCollection = collectionItemType is not null;
         PropertyTypeMapping = propertyTypeMapping;
         FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
@@ -168,7 +167,7 @@ public class PropertyMapping : IElementDefinitionSummary
     /// The numeric order of the element (relevant for the XML serialization, which
     /// needs to be in order).
     /// </summary>
-    public int Order { get; init; }
+    public int? Order { get; init; }
 
     /// <summary>
     /// How this element is represented in the XML serialization.
@@ -209,7 +208,7 @@ public class PropertyMapping : IElementDefinitionSummary
     /// <remarks>If left null, the framework will determine the fastest way to set the value on the
     /// first call to <see cref="SetValue"/>.</remarks>
     public Action<Base, object?>? Setter { get => _setter; init => _setter = value; }
-    
+
     /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
@@ -281,7 +280,6 @@ public class PropertyMapping : IElementDefinitionSummary
 
         return true;
     }
-
 
     private static Type determineMappingType(Type[]? overridingTypes, Type implementingType, FhirElementAttribute felem, string parentTypeName)
     {
@@ -407,7 +405,7 @@ public class PropertyMapping : IElementDefinitionSummary
         SerializationHint != XmlRepresentation.None ?
             SerializationHint : XmlRepresentation.XmlElement;
 
-    int IElementDefinitionSummary.Order => Order;
+    int IElementDefinitionSummary.Order => Order ?? Int32.MaxValue;
 
     private ITypeSerializationInfo[] buildTypes()
     {

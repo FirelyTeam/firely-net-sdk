@@ -36,7 +36,7 @@ public class FhirAttributeValidator : IPocoValidator
         PropertyMapping? propertyMapping,
         PocoValidationContext context)
     {
-        if (propertyMapping is null || propertyMapping.IsPrimitive)
+        if (propertyMapping?.NativeProperty is null || propertyMapping.IsPrimitive)
         {
             var serializedForm = propertyValue is Base b && b.Annotation<XmlRepresentationAnnotation>() is not null
                 ? "attribute"
