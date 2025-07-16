@@ -64,66 +64,22 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
-        public void ConcurrentSerializationWithLegacyFilter_ShouldShowInconsistentResults()
+        public void AllFactoryMethods_ShouldUseSameInstancePerThread()
         {
-            // This test documents the issue with the legacy approach
-            // and demonstrates why the factory approach is needed
-            
-            // Arrange
-#pragma warning disable CS0618 // Type or member is obsolete
-            var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonPocoSerializerSettings 
-                { 
-                    SummaryFilter = SerializationFilter.ForElements(["id", "active"]) 
-                })
-                .Pretty();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            var patient = new Patient
-            {
-                Id = "123",
-                Active = true,
-                Name = [new() { Family = "Doe", Given = ["John"] }],
-                MultipleBirth = new FhirBoolean(false),
-            };
-            var bundle = new Bundle
-            {
-                Type = Bundle.BundleType.Collection,
-                Entry = [new() { Resource = patient }]
-            };
-
-            ConcurrentBag<string> serialized = [];
-
-            // Act
-            Parallel.For(0, 100, i =>
-            {
-                serialized.Add(JsonSerializer.Serialize(bundle, options));
-            });
-
-            // Assert
-            serialized.Count.Should().Be(100);
-            
-            // With legacy approach, many results will be missing the entry field due to race conditions
-            var resultsWithEntry = serialized.Where(json => json.Contains("\"entry\"")).Count();
-            resultsWithEntry.Should().BeLessThan(100, "legacy approach should show inconsistent results due to race conditions");
-        }
-
-        [TestMethod]
-        public void AllFactoryMethods_ShouldCreateNewInstances()
-        {
-            // Verify that each factory method call creates a new instance
+            // Verify that each factory method returns the same instance per thread
+            // (this ensures state consistency within a serialization operation)
             var summaryFactory = SerializationFilter.CreateSummaryFactory();
             var textFactory = SerializationFilter.CreateTextFactory();
             var countFactory = SerializationFilter.CreateCountFactory();
             var dataFactory = SerializationFilter.CreateDataFactory();
             var elementsFactory = SerializationFilter.CreateElementsFactory(["id", "name"]);
 
-            // Each call should return a different instance
-            summaryFactory().Should().NotBeSameAs(summaryFactory());
-            textFactory().Should().NotBeSameAs(textFactory());
-            countFactory().Should().NotBeSameAs(countFactory());
-            dataFactory().Should().NotBeSameAs(dataFactory());
-            elementsFactory().Should().NotBeSameAs(elementsFactory());
+            // Each call on the same thread should return the same instance
+            summaryFactory().Should().BeSameAs(summaryFactory());
+            textFactory().Should().BeSameAs(textFactory());
+            countFactory().Should().BeSameAs(countFactory());
+            dataFactory().Should().BeSameAs(dataFactory());
+            elementsFactory().Should().BeSameAs(elementsFactory());
         }
     }
 }

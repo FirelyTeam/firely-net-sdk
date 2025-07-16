@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Introspection;
 using System;
+using System.Threading;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -90,56 +91,81 @@ namespace Hl7.Fhir.Serialization
         /// Create a factory function that produces new filter instances conforming to the `_summary=true` summarized form.
         /// Using this factory ensures thread-safety when reusing JsonSerializerOptions instances.
         /// </summary>
-        public static Func<SerializationFilter> CreateSummaryFactory() => 
-            () => new BundleFilter(new ElementMetadataFilter() { IncludeInSummary = true });
+        public static Func<SerializationFilter> CreateSummaryFactory()
+        {
+            var threadLocalFilter = new ThreadLocal<SerializationFilter>(() => 
+                new BundleFilter(new ElementMetadataFilter() { IncludeInSummary = true }));
+            
+            return () => threadLocalFilter.Value!;
+        }
 
         /// <summary>
         /// Create a factory function that produces new filter instances conforming to the `_summary=text` summarized form.
         /// Using this factory ensures thread-safety when reusing JsonSerializerOptions instances.
         /// </summary>
-        public static Func<SerializationFilter> CreateTextFactory() => 
-            () => new BundleFilter(new TopLevelFilter(
-                new ElementMetadataFilter()
-                {
-                    IncludeNames = new[] { "text", "id", "meta" },
-                    IncludeMandatory = true
-                }));
+        public static Func<SerializationFilter> CreateTextFactory()
+        {
+            var threadLocalFilter = new ThreadLocal<SerializationFilter>(() => 
+                new BundleFilter(new TopLevelFilter(
+                    new ElementMetadataFilter()
+                    {
+                        IncludeNames = new[] { "text", "id", "meta" },
+                        IncludeMandatory = true
+                    })));
+            
+            return () => threadLocalFilter.Value!;
+        }
 
         /// <summary>
         /// Create a factory function that produces new filter instances conforming to the `_summary=count` summarized form.
         /// Using this factory ensures thread-safety when reusing JsonSerializerOptions instances.
         /// </summary>
-        public static Func<SerializationFilter> CreateCountFactory() => 
-            () => new BundleFilter(new TopLevelFilter(
-                new ElementMetadataFilter()
-                {
-                    IncludeMandatory = true,
-                    IncludeNames = new[] { "id", "total", "link" }
-                }));
+        public static Func<SerializationFilter> CreateCountFactory()
+        {
+            var threadLocalFilter = new ThreadLocal<SerializationFilter>(() => 
+                new BundleFilter(new TopLevelFilter(
+                    new ElementMetadataFilter()
+                    {
+                        IncludeMandatory = true,
+                        IncludeNames = new[] { "id", "total", "link" }
+                    })));
+            
+            return () => threadLocalFilter.Value!;
+        }
 
         /// <summary>
         /// Create a factory function that produces new filter instances conforming to the `_summary=data` summarized form.
         /// Using this factory ensures thread-safety when reusing JsonSerializerOptions instances.
         /// </summary>
-        public static Func<SerializationFilter> CreateDataFactory() => 
-            () => new BundleFilter(new TopLevelFilter(
-                new ElementMetadataFilter()
-                {
-                    IncludeNames = new[] { "text" },
-                    Invert = true
-                }));
+        public static Func<SerializationFilter> CreateDataFactory()
+        {
+            var threadLocalFilter = new ThreadLocal<SerializationFilter>(() => 
+                new BundleFilter(new TopLevelFilter(
+                    new ElementMetadataFilter()
+                    {
+                        IncludeNames = new[] { "text" },
+                        Invert = true
+                    })));
+            
+            return () => threadLocalFilter.Value!;
+        }
 
         /// <summary>
         /// Create a factory function that produces new filter instances conforming to the `_elements=...` summarized form.
         /// Using this factory ensures thread-safety when reusing JsonSerializerOptions instances.
         /// </summary>
-        public static Func<SerializationFilter> CreateElementsFactory(string[] elements) => 
-            () => new BundleFilter(new TopLevelFilter(
-                new ElementMetadataFilter()
-                {
-                    IncludeNames = elements,
-                    IncludeMandatory = true
-                }));
+        public static Func<SerializationFilter> CreateElementsFactory(string[] elements)
+        {
+            var threadLocalFilter = new ThreadLocal<SerializationFilter>(() => 
+                new BundleFilter(new TopLevelFilter(
+                    new ElementMetadataFilter()
+                    {
+                        IncludeNames = elements,
+                        IncludeMandatory = true
+                    })));
+            
+            return () => threadLocalFilter.Value!;
+        }
     }
 }
 
