@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -368,6 +369,14 @@ public class PropertyMapping : IElementDefinitionSummary
         // use dictionary access, otherwise use the generated setter.
         if (NativeProperty?.GetValueSetter<Base>() is { } setter) return setter;
         return (b,v) => b.SetValue(Name, v);
+    }
+
+    public PropertyMapping PromoteToList()
+    {
+        if(FhirType.Length > 1) throw new InvalidOperationException("Cannot promote a choice element to a list");
+
+        var listType = typeof(List<>).MakeGenericType(ImplementingType);
+        return new PropertyMapping(DeclaringClass, Name, listType);
     }
 
     #region IElementDefinitionSummary members

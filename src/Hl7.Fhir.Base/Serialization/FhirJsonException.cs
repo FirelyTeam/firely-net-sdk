@@ -96,7 +96,7 @@ public class FhirJsonException(
     // Will store the data as a DynamicResource
     internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string elementName, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Error, OO_Typ.Value);
     internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Error, OO_Typ.Value);
-    internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Error);
+    internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Error, OO_Typ.Value);
 
 
     /// <summary>

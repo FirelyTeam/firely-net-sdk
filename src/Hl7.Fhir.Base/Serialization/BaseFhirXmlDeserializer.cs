@@ -114,8 +114,8 @@ public class BaseFhirXmlDeserializer
     internal Resource? DeserializeResourceInternal(XmlReader reader, PocoDeserializerState state)
     {
         var resourceMapping = determineClassMappingFromInstance(reader, _inspector, state);
+        if (!resourceMapping.Original.IsResource) return null;
 
-        // If we have at least a mapping, let's try to continue
         var newResource = resourceMapping.CreateInstance();
 
         try
@@ -124,20 +124,12 @@ public class BaseFhirXmlDeserializer
             int nErrorCount = state.Errors.Count;
             DeserializeElementInto(newResource, resourceMapping.Original, reader, state);
 
-            if (!resourceMapping.Original.IsResource)
+            if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
             {
-                state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), resourceMapping.Original.Name));
-                return null;
+                List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
+                ((Resource)newResource).SetAnnotation(resourceErrs);
             }
-            else
-            {
-                if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
-                {
-                    List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
-                    ((Resource)newResource).SetAnnotation(resourceErrs);
-                }
-                return (Resource)newResource;
-            }
+            return (Resource)newResource;
         }
         finally
         {
@@ -565,6 +557,11 @@ public class BaseFhirXmlDeserializer
 
         if (resourceMapping is null)
             state.Errors.Add(ERR.UNKNOWN_RESOURCE_TYPE(reader, state.Path.GetInstancePath(), reader.LocalName));
+        else if (!resourceMapping.IsResource)
+        {
+            resourceMapping = null;
+            state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), reader.LocalName));
+        }
 
         return new ClassMappingDynamic(resourceMapping ?? ClassMapping.DynamicResource, reader.LocalName);
     }
@@ -629,16 +626,5 @@ public class BaseFhirXmlDeserializer
 
             return choiceMapping;
         }
-    }
-}
-
-internal record ClassMappingDynamic(ClassMapping Original, string? DynamicName)
-{
-    public Base CreateInstance()
-    {
-        var result = (Base)Original.Factory();
-        if(result is IDynamicType dt) dt.DynamicTypeName = DynamicName;
-
-        return result;
     }
 }

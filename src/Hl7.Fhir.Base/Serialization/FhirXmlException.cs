@@ -47,7 +47,6 @@ public class FhirXmlException(
     public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
     public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
     public const string EMPTY_RESOURCE_CONTAINER_CODE = "XML122";
-    public const string INVALID_TEXT_NODE_CODE = "XML123";
     public const string ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE = "XML124";
     public const string ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE = "XML125";
 
