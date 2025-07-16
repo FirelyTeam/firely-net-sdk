@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Source
             var version = values.Length == 2 ? values[1] : string.Empty;
 
             return summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == values[0] &&
-                                                               (string.IsNullOrEmpty(version) || r.GetConformanceVersion() == version));
+                                                               (string.IsNullOrEmpty(version) || MatchesVersion(r.GetConformanceVersion(), version)));
         }
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for <see cref="CodeSystem"/> resources with the specified valueSet uri.</summary>
@@ -246,6 +246,42 @@ namespace Hl7.Fhir.Specification.Source
             }
             //throw Error.MoreThanOneElement();
             throw createException(source);
+        }
+
+        /// <summary>
+        /// Determines if a resource version matches a query version according to FHIR canonical matching rules.
+        /// Supports both exact matching and partial version matching (e.g., "1.5" matches "1.5.0").
+        /// </summary>
+        /// <param name="resourceVersion">The version of the resource being checked.</param>
+        /// <param name="queryVersion">The version specified in the canonical URL query.</param>
+        /// <returns>True if the resource version matches the query version according to FHIR canonical matching rules.</returns>
+        private static bool MatchesVersion(string resourceVersion, string queryVersion)
+        {
+            // If either version is null or empty, treat as no version specified
+            if (string.IsNullOrEmpty(resourceVersion) || string.IsNullOrEmpty(queryVersion))
+                return string.IsNullOrEmpty(resourceVersion) && string.IsNullOrEmpty(queryVersion);
+
+            // First try exact match for backwards compatibility and performance
+            if (resourceVersion == queryVersion)
+                return true;
+
+            // Implement partial version matching according to FHIR canonical matching rules
+            // The query version should be a prefix of the resource version when split by dots
+            var resourceParts = resourceVersion.Split('.');
+            var queryParts = queryVersion.Split('.');
+
+            // Query version cannot have more parts than resource version for partial matching
+            if (queryParts.Length > resourceParts.Length)
+                return false;
+
+            // Check if all query version parts match the corresponding resource version parts
+            for (int i = 0; i < queryParts.Length; i++)
+            {
+                if (resourceParts[i] != queryParts[i])
+                    return false;
+            }
+
+            return true;
         }
 
         #endregion
