@@ -27,7 +27,14 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Specifies the filter to use for summary serialization.
         /// </summary>
+        [Obsolete("Use SummaryFilterFactory instead to ensure thread-safety when reusing JsonSerializerOptions instances. This property will be removed in a future version.")]
         public SerializationFilter? SummaryFilter { get; set; } = default;
+
+        /// <summary>
+        /// Specifies a factory function that creates a new filter instance for each serialization operation.
+        /// This ensures thread-safety when reusing JsonSerializerOptions instances in concurrent scenarios.
+        /// </summary>
+        public Func<SerializationFilter>? SummaryFilterFactory { get; set; } = default;
     }
 }
 

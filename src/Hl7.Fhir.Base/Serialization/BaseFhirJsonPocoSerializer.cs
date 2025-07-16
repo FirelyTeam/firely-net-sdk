@@ -89,7 +89,10 @@ namespace Hl7.Fhir.Serialization
             bool skipValue)
         {
             writer.WriteStartObject();
-            var filter = Settings.SummaryFilter;
+            // Use factory if available, otherwise fall back to the static instance for backward compatibility
+#pragma warning disable CS0618 // Type or member is obsolete
+            var filter = Settings.SummaryFilterFactory?.Invoke() ?? Settings.SummaryFilter;
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (members is Resource r)
                 writer.WriteString("resourceType", r.TypeName);
