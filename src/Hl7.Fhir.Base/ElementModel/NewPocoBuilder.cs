@@ -47,6 +47,8 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         var newInstance = buildNewInstance(classMapping);
 
         // add a link back to TypedElement to persist it's annotations on pocos
+        // this is specifically for backwards compatibility with many implementations of ITypedElement wrappers that implement their own annotations
+        // Base will then check for this annotation and call the original TypedElement.Annotations()
         if(node is IAnnotated an)
             newInstance.AddAnnotation(new TypedElementAnnotatedProvider(an));
 
