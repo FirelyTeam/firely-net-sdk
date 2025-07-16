@@ -22,11 +22,18 @@ namespace Hl7.Fhir.Utility
         public DateTimeOffset LastAccessed { get; private set; } = DateTimeOffset.Now;
 
         private V _value;
+        private volatile bool _accessedRecently = false;
+
         internal V Value
         {
             get
             {
-                LastAccessed = DateTimeOffset.Now;
+                // Only update LastAccessed occasionally to reduce allocation overhead
+                if (!_accessedRecently)
+                {
+                    LastAccessed = DateTimeOffset.Now;
+                    _accessedRecently = true;
+                }
                 return _value;
             }
             set
@@ -38,6 +45,9 @@ namespace Hl7.Fhir.Utility
                 }
             }
         }
+
+        // Method to reset the recently accessed flag during cache cleanup
+        internal void ResetAccessFlag() => _accessedRecently = false;
     }
 
     public class CacheSettings
@@ -68,6 +78,8 @@ namespace Hl7.Fhir.Utility
         private readonly ConcurrentDictionary<K, CacheItem<V>> _cached;
         private readonly int _minimumCacheSize;
         private readonly Func<K, CacheItem<V>> _retriever;
+        private volatile int _accessCount = 0;
+        private const int CLEANUP_INTERVAL = 100; // Check for cleanup every 100 accesses
 
         /// <summary>
         /// The settings for changing the behaviour of the case. Passed into the constructor and readonly here.
@@ -113,7 +125,7 @@ namespace Hl7.Fhir.Utility
             else
             {
                 var cachedItem = _cached.GetOrAdd(key, _retriever);
-                enforceMaxItems();
+                enforceMaxItemsIfNeeded();
                 return cachedItem.Value;
             }
         }
@@ -127,16 +139,31 @@ namespace Hl7.Fhir.Utility
         public V GetValueOrAdd(K key, V value)
         {
             var cachedItem = _cached.GetOrAdd(key, new CacheItem<V>(value));
-            enforceMaxItems();
+            enforceMaxItemsIfNeeded();
 
             return cachedItem.Value;
         }
 
+        private void enforceMaxItemsIfNeeded()
+        {
+            // Only check for cleanup periodically to avoid expensive operations on every access
+            if (System.Threading.Interlocked.Increment(ref _accessCount) % CLEANUP_INTERVAL == 0)
+            {
+                enforceMaxItems();
+            }
+        }
+
         private void enforceMaxItems()
         {
-            var currentCount = _cached.Count();
+            var currentCount = _cached.Count;  // Use Count property instead of Count() method
             if (currentCount > Settings.MaxCacheSize)
             {
+                // Reset access flags before cleanup to ensure proper LRU behavior
+                foreach (var item in _cached.Values)
+                {
+                    item.ResetAccessFlag();
+                }
+
                 // first copy the key value pairs in an array. Otherwise we could have a race condition. See for more information:
                 // https://stackoverflow.com/questions/11692389/getting-argument-exception-in-concurrent-dictionary-when-sorting-and-displaying
                 var copy = _cached.ToArray();
