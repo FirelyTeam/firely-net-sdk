@@ -46,12 +46,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     {
         var newInstance = buildNewInstance(classMapping);
 
-        // copy over the position information, if available.
-        if ((node.Annotation<JsonSerializationDetails>() ?? (object?)node.Annotation<XmlSerializationDetails>() ?? node.Annotation<PositionInfo>())
-            is { } positionInfo)
-        {
-            newInstance.AddAnnotation(positionInfo);
-        }
+        // add a link back to TypedElement to persist it's annotations on pocos
+        if(node is IAnnotated an)
+            newInstance.AddAnnotation(new TypedElementAnnotatedProvider(an));
 
         // Capture the instance type if this is a dynamic type.
         if (newInstance is IDynamicType dt)
