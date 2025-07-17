@@ -37,27 +37,27 @@ public class FhirPathBenchmark
         // Initialize FHIRPath compiler
         _compiler = new FhirPathCompiler();
     }
-    //
-    // [Benchmark]
-    // public object EvaluateSimplePatientExpression()
-    // {
-    //     // A simple expression to get the patient's name
-    //     return _patient.Select("name.given");
-    // }
-    //
-    // [Benchmark]
-    // public object EvaluateComplexPatientExpression()
-    // {
-    //     // A more complex expression that filters telecom entries
-    //     return _patient.Select("telecom.where(system = 'phone' and use = 'mobile')");
-    // }
-    //
-    // [Benchmark]
-    // public object EvaluateBundleExpression()
-    // {
-    //     // Query to extract all patient names from the bundle
-    //     return _bundle.Select("entry.resource.ofType(Patient).name.given");
-    // }
+    
+    [Benchmark]
+    public object EvaluateSimplePatientExpression()
+    {
+        // A simple expression to get the patient's name
+        return _patient.Select("name.given");
+    }
+    
+    [Benchmark]
+    public object EvaluateComplexPatientExpression()
+    {
+        // A more complex expression that filters telecom entries
+        return _patient.Select("telecom.where(system = 'phone' and use = 'mobile')");
+    }
+    
+    [Benchmark]
+    public object EvaluateBundleExpression()
+    {
+        // Query to extract all patient names from the bundle
+        return _bundle.Select("entry.resource.ofType(Patient).name.given");
+    }
 
     [Benchmark]
     public object EvaluateWithPreCompiledExpression()
