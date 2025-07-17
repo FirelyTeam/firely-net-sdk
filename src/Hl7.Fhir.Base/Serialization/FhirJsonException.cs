@@ -51,6 +51,8 @@ public class FhirJsonException(
     public const string DUPLICATE_ARRAY_CODE = "JSON128";
     public const string DUPLICATE_PROPERTY_CODE = "JSON129";
     public const string NESTED_ARRAY_CODE = "JSON130";
+    public const string UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE_CODE = "JSON131";
+    public const string UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE_CODE = "JSON132";
 
     // ==========================================
     // Structural errors - mistakes in the syntax which will be detected during parsing,
@@ -71,7 +73,14 @@ public class FhirJsonException(
     internal static FhirJsonException NESTED_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NESTED_ARRAY_CODE, "Nested array detected.", OO_Sev.Error);
 
     // We will just ignore the underscore and keep on parsing
-    internal static FhirJsonException USE_OF_UNDERSCORE_ILLEGAL(ref Utf8JsonReader reader, string instancePath, string propertyNameMapped, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{propertyNameMapped}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Error);
+    internal static FhirJsonException USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{elementName}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Error);
+
+    // We will add the primitive value as a "value" property to the POCO, no data loss.
+    internal static FhirJsonException UNDERSCORE_SHOULD_BE_OBJECT(ref Utf8JsonReader reader, string instancePath, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Property '{propertyName}' has an underscore, which should be a (an array of) Json object or null.", OO_Sev.Error);
+
+    internal static FhirJsonException UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE_CODE, $"Encountered a json primitive while expecting a json object for non-primitive element '{elementName}'.", OO_Sev.Error);
+
+    internal static FhirJsonException UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE_CODE, $"Encountered an unexpected json object while reading the value for primitive element '{elementName}'.", OO_Sev.Error);
 
     // Empty objects and arrays can be ignored without discarding data
     internal static FhirJsonException OBJECTS_CANNOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, OBJECTS_CANNOT_BE_EMPTY_CODE, "An object needs to have at least one property.", OO_Sev.Error);
@@ -82,7 +91,7 @@ public class FhirJsonException(
 
 
     // This will use a DynamicXXX, so no data loss.
-    internal static FhirJsonException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref Utf8JsonReader reader, string elementName, string instancePath) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, $"Choice element '{elementName} should be suffixed by a type.", OO_Sev.Error);
+    internal static FhirJsonException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, $"Choice element '{elementName} should be suffixed by a type.", OO_Sev.Error);
 
     // Will store the data as a DynamicResource
     internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType valueToken, string value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found token {valueToken} with value {value}.", OO_Sev.Error);

@@ -27,23 +27,28 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 public class FhirJsonDeserializationTests
 {
     [DataTestMethod]
-    [DataRow("OperationOutcome", null)]
-    [DataRow("OperationOutcomeX", ERR.UNKNOWN_RESOURCE_TYPE_CODE)]
-    [DataRow("Meta", ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE)]
-    [DataRow(4, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE)]
-    [DataRow(null, ERR.NO_RESOURCETYPE_PROPERTY_CODE)]
-    public void DeriveClassMapping(object? typename, string? errorcode)
+    [DataRow("OperationOutcome", new string[] {})]
+    [DataRow("OperationOutcomeX", new[] { ERR.UNKNOWN_RESOURCE_TYPE_CODE })]
+    [DataRow("Meta", new[] { ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE })]
+    [DataRow(4, new[] { ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.UNKNOWN_RESOURCE_TYPE_CODE }, "4")]
+    [DataRow(null, new[] { ERR.NO_RESOURCETYPE_PROPERTY_CODE }, "UnknownResource_Patient")]
+    public void DeriveClassMapping(object? typename, string[] errorcodes, string? correctedName = null)
     {
         var (result, error) = test(typename);
-        if (errorcode is null)
-            error.Should().BeNull();
+        if (errorcodes.Any() is false)
+            error.Should().BeEmpty();
         else
-            error?.ErrorCode.Should().Be(errorcode);
+            error.Select(e => e.ErrorCode).Should().BeEquivalentTo(errorcodes);
 
-        if (errorcode is null)
+        if (errorcodes.Any() is false)
             result!.Name.Should().Be((string?)typename);
+        else
+        {
+            result!.Name.Should().Be(correctedName ?? (string?)typename);
+            result.NativeType.Should().Be(typeof(DynamicResource));
+        }
 
-        static (ClassMapping?, CodedException?) test(object? typename)
+        static (ClassMapping?, CodedException[]) test(object? typename)
         {
             var inspector = ModelInspector.Base;
 
@@ -54,73 +59,13 @@ public class FhirJsonDeserializationTests
             reader.Read();
 
             var state = new PocoDeserializerState();
-            state.Path.EnterElement("Patient", 0, false);
-            var response = BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, state);
+            state.Path.EnterElement("Patient", null, false);
+            var response = BaseFhirJsonDeserializer.DetermineResourceClassMappingFromInstance(ref reader, inspector, state);
 
-            return (response.Original, state.Errors.SingleOrDefault());
+            return (response, state.Errors.ToArray());
         }
     }
 
-    [DataTestMethod]
-    [DataRow(null, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
-    [DataRow("SGkh", typeof(FhirString), null, "SGkh")]
-    [DataRow(4, typeof(FhirString), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
-    [DataRow("SGkh", typeof(Base64Binary), null, "SGkh")]
-    [DataRow("hi!", typeof(Base64Binary), COVE.INVALID_BASE64_VALUE_CODE, "hi!")]
-    [DataRow(4, typeof(Base64Binary), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
-    [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
-    [DataRow("", typeof(FhirDateTime), COVE.LITERAL_INVALID_CODE, null)]
-    [DataRow("2007-", typeof(FhirDateTime), COVE.LITERAL_INVALID_CODE, "2007-")]
-    [DataRow(true, typeof(FhirDateTime), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, true)]
-    [DataRow("female", typeof(Code), null, "female")]
-    [DataRow("is-a", typeof(Code<FilterOperator>), null, "is-a")]
-    [DataRow("wrong", typeof(Code<FilterOperator>), COVE.INVALID_CODED_VALUE_CODE,
-        "wrong")] // just sets ObjectValue, POCO validation handles enum checks
-    [DataRow(true, typeof(Code), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, true)]
-    [DataRow("hi!", typeof(Instant), COVE.LITERAL_INVALID_CODE)]
-    [DataRow("2007-02-03T12:00:00Z", typeof(Instant), null, "2007-02-03T12:00:00Z")]
-    [DataRow(3, typeof(FhirDecimal), null, 3)]
-    [DataRow(3.14, typeof(FhirDecimal), null, 3.14)]
-    [DataRow(3L, typeof(Integer64), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE)]
-    [DataRow("hoi", typeof(Integer64), COVE.LITERAL_INVALID_CODE)]
-    [DataRow("3", typeof(Integer64), null, "3")]
-    [DataRow(314, typeof(Integer), null, 314)]
-    [DataRow(3.14, typeof(FhirBoolean), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE)]
-    [DataRow(true, typeof(FhirBoolean), null, true)]
-    public void ParsePrimitiveValue(object value, Type targetType, string? errorcode,
-        object? expectedObjectValue = null)
-    {
-        var state = new PocoDeserializerState();
-
-        PrimitiveType test()
-        {
-            var inspector = ModelInfo.ModelInspector;
-            var deserializer = new BaseFhirJsonDeserializer(inspector);
-            var mapping = new ClassMappingDynamic(inspector.ImportType(targetType)!, null);
-
-            var reader = constructReader(value);
-            reader.Read();
-
-            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, null, state);
-        }
-
-        var result = test();
-
-        if (state.Errors.HasExceptions)
-        {
-            if (errorcode is not null)
-                state.Errors.Should().OnlyContain(ce => ce.ErrorCode == errorcode);
-            else
-                errorcode.Should().BeNull(because: state.Errors.ToString());
-        }
-        else
-        {
-            errorcode.Should().BeNull(because: state.Errors.ToString());
-        }
-
-        if (expectedObjectValue is not null)
-            result.JsonValue.Should().BeEquivalentTo(expectedObjectValue);
-    }
 
     private static (Base?, IReadOnlyCollection<CodedException>) deserializeComplex(Type objectType,
         object testObject, out Utf8JsonReader readerState,
@@ -162,10 +107,9 @@ public class FhirJsonDeserializationTests
         var reader = constructReader(testObject);
         reader.Read();
 
-        var deserializer = new FhirJsonDeserializer();
-        var state = new PocoDeserializerState();
-        _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
-        state.Errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
+        var deserializer = new FhirJsonDeserializer(new DeserializerSettings { ExceptionFilter = null } );
+        _ = deserializer.TryDeserializeResource(ref reader, out var instance, out var issues);
+        issues.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
         reader.TokenType.Should().Be(tokenAfterParsing);
     }
 

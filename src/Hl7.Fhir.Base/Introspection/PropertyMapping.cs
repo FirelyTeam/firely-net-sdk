@@ -72,6 +72,11 @@ public class PropertyMapping : IElementDefinitionSummary
     }
 
     /// <summary>
+    /// Returns <c>true</c> when this class is a custom mapping, basically a dynamic resource/type with
+    /// its own name, not being the default "DynamicType" or "DynamicResource".
+    /// </summary>
+    public bool IsCustomMapping => NativeProperty is null;
+    /// <summary>
     /// The name of the element in the FHIR specification.
     /// </summary>
     public string Name { get; }

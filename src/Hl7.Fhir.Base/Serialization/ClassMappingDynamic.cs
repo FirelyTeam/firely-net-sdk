@@ -13,20 +13,11 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization;
 
-/// <summary>
-/// A structure that can represent a "normal" class mapping, but also a dynamic class mapping. If it is a dynamic class mapping,
-/// we also store the dynamic type name as an override to just "DynamicType".
-/// </summary>
-internal record ClassMappingDynamic(ClassMapping Original, string? DynamicName)
-{
-    /// <summary>
-    /// Create a new instance of the class represented by this mapping, setting the dynamic type name if applicable.
-    /// </summary>
-    public Base CreateInstance()
-    {
-        var result = (Base)Original.Factory();
-        if(result is IDynamicType dt) dt.DynamicTypeName = DynamicName;
 
-        return result;
-    }
+/// <summary>
+/// A structure that represent a property mapping + the classmapping of this property in the encountered instance.
+/// </summary>
+internal record PropertyValueMapping(PropertyMapping PropertyMapping, ClassMapping ValueMapping)
+{
+    public Base CreateInstance() => ValueMapping.CreateInstance();
 }
