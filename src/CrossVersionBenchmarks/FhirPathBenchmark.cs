@@ -10,9 +10,9 @@ namespace Firely.Sdk.Benchmarks;
 
 [CrossVersionConfiguration(Baseline: "5.8.2-20240513.1", Versions: 
     [
-        // "5.8.2-20240521.2",
-        // "5.8.2-20240514.3",
-        // "5.8.2-20240513.1",
+        "5.8.2-20240521.2",
+        "5.8.2-20240514.3",
+        "5.8.2-20240513.1",
         "5.12.0",
     ], AddProjectReference: true)]
 public class FhirPathBenchmark
