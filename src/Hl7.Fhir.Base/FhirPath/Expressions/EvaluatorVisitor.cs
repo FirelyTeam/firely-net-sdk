@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -97,13 +97,13 @@ namespace Hl7.FhirPath.Expressions
                 return WrapForDebugTracer(InvokeeFactory.GetRootResource, expression);
 
             return WrapForDebugTracer(chainResolves, expression);
-            
+
             IEnumerable<ITypedElement> chainResolves(Closure context, IEnumerable<Invokee> invokees)
             {
                 return context.ResolveValue(expression.Name) ?? resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, []);
             }
         }
-        
+
         private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)
         {
             // For now, we don't have the types or the parameters statically, so we just match on name
@@ -129,7 +129,7 @@ namespace Hl7.FhirPath.Expressions
             }
             else
             {
-                // No function could be found, but there IS a function with the given name, 
+                // No function could be found, but there IS a function with the given name,
                 // report an error about the fact that the function is known, but could not be bound
                 throw Error.Argument("Unknown symbol '{0}'".FormatWith(name));
             }
@@ -141,8 +141,7 @@ namespace Hl7.FhirPath.Expressions
     {
         public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope, DebugTraceDelegate debugTrace = null)
         {
-            // TODO: Brian: Defaulting in the example tracer to show how it works (and good for unit test debugging)
-            var compiler = new EvaluatorVisitor(scope, debugTrace ?? DebugTracer.TraceCall);
+            var compiler = new EvaluatorVisitor(scope, debugTrace);
             return expr.Accept(compiler);
         }
     }

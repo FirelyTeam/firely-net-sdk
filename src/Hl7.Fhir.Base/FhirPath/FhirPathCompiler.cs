@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -48,9 +48,15 @@ namespace Hl7.FhirPath
             return parse.WasSuccessful ? parse.Value : throw new FormatException("Compilation failed: " + parse.ToString());
         }
 
-        public CompiledExpression Compile(Expression expression)
+        /// <summary>
+        /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
+        /// </summary>
+        /// <param name="expression">the parsed fhirpath expression to compile</param>
+        /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
+        /// <returns></returns>
+        public CompiledExpression Compile(Expression expression, DebugTraceDelegate debugTrace = null)
         {
-            Invokee inv = expression.ToEvaluator(Symbols);
+            Invokee inv = expression.ToEvaluator(Symbols, debugTrace);
 
             return (ITypedElement focus, EvaluationContext ctx) =>
                 {
@@ -59,9 +65,15 @@ namespace Hl7.FhirPath
                 };
         }
 
-        public CompiledExpression Compile(string expression)
+        /// <summary>
+        /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
+        /// </summary>
+        /// <param name="expression">the fhirpath expression to parse then compile</param>
+        /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
+        /// <returns></returns>
+        public CompiledExpression Compile(string expression, DebugTraceDelegate debugTrace = null)
         {
-            return Compile(Parse(expression));
+            return Compile(Parse(expression), debugTrace);
         }
     }
 }
