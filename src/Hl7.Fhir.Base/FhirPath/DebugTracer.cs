@@ -90,7 +90,9 @@ namespace Hl7.FhirPath
             else
             {
                 exprName = expr.GetType().Name;
+#if DEBUG
                 Debugger.Break();
+#endif
                 throw new Exception($"Unknown expression type: {expr.GetType().Name}");
                 // System.Diagnostics.Trace.WriteLine($"Evaluated: {expr} results: {result.Count()}");
             }
