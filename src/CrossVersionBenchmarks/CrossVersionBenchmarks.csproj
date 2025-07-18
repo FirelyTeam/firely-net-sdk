@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <OutputType>Exe</OutputType>
-        <DefineConstants>PROJECT;SDK6</DefineConstants>
+        <DefineConstants>SDK6;PROJECT</DefineConstants>
     </PropertyGroup>
     
     <PropertyGroup>

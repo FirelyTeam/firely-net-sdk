@@ -8,13 +8,12 @@ using Hl7.FhirPath;
 
 namespace Firely.Sdk.Benchmarks;
 
-[CrossVersionConfiguration(Baseline: "5.8.2-20240513.1", Versions: 
-    [
-        "5.8.2-20240521.2",
-        "5.8.2-20240514.3",
-        "5.8.2-20240513.1",
-        "5.12.0",
-    ], AddProjectReference: true)]
+[CrossVersionConfiguration(typeof(FhirPathBenchmark))]
+[PackageVersion("5.8.2-20240513.1", Baseline = true)]
+[PackageVersion("5.8.2-20240521.2")]
+[PackageVersion("5.8.2-20240514.3")]
+[PackageVersion("5.12.0")]
+[ProjectReference]
 public class FhirPathBenchmark
 {
     private readonly FhirJsonParser _jsonParser;
@@ -30,9 +29,11 @@ public class FhirPathBenchmark
         _jsonParser = new FhirJsonParser();
         _patient = _jsonParser.Parse<Patient>(TestData.TestData.GetPatientJson());
         _bundle = _jsonParser.Parse<Bundle>(TestData.TestData.GetLargePatientBundle());
-#pragma warning disable SDK0001
+#if SDK6
+        _patientElement = _patient.ToPocoNode();
+#else
         _patientElement = _patient.ToTypedElement();
-#pragma warning restore SDK0001
+#endif
 
         // Initialize FHIRPath compiler
         _compiler = new FhirPathCompiler();
