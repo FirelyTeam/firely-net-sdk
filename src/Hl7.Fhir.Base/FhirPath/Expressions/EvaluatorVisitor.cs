@@ -23,7 +23,7 @@ namespace Hl7.FhirPath.Expressions
                 return (Closure context, IEnumerable<Invokee> arguments) => {
                     var result = invokee(context, arguments);
                     var focus = context.GetThat();
-                    _debugTrace(expression, focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
+                    _debugTrace?.TraceCall(expression, focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
                     return result;
                 };
             }
@@ -31,9 +31,9 @@ namespace Hl7.FhirPath.Expressions
         }
 
         public SymbolTable Symbols { get; }
-        private DebugTraceDelegate _debugTrace;
+        private IDebugTracer _debugTrace;
 
-        public EvaluatorVisitor(SymbolTable symbols, DebugTraceDelegate debugTrace = null)
+        public EvaluatorVisitor(SymbolTable symbols, IDebugTracer debugTrace = null)
         {
             Symbols = symbols;
             _debugTrace = debugTrace;
@@ -139,7 +139,7 @@ namespace Hl7.FhirPath.Expressions
 
     internal static class EvaluatorExpressionExtensions
     {
-        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope, DebugTraceDelegate debugTrace = null)
+        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope, IDebugTracer debugTrace = null)
         {
             var compiler = new EvaluatorVisitor(scope, debugTrace);
             return expr.Accept(compiler);

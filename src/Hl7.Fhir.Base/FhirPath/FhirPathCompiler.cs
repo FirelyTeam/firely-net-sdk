@@ -54,7 +54,7 @@ namespace Hl7.FhirPath
         /// <param name="expression">the parsed fhirpath expression to compile</param>
         /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
         /// <returns></returns>
-        public CompiledExpression Compile(Expression expression, DebugTraceDelegate debugTrace = null)
+        public CompiledExpression Compile(Expression expression, IDebugTracer debugTrace = null)
         {
             Invokee inv = expression.ToEvaluator(Symbols, debugTrace);
 
@@ -71,7 +71,7 @@ namespace Hl7.FhirPath
         /// <param name="expression">the fhirpath expression to parse then compile</param>
         /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
         /// <returns></returns>
-        public CompiledExpression Compile(string expression, DebugTraceDelegate debugTrace = null)
+        public CompiledExpression Compile(string expression, IDebugTracer debugTrace = null)
         {
             return Compile(Parse(expression), debugTrace);
         }
