@@ -52,11 +52,10 @@ namespace Hl7.FhirPath
         /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
         /// </summary>
         /// <param name="expression">the parsed fhirpath expression to compile</param>
-        /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
         /// <returns></returns>
-        public CompiledExpression Compile(Expression expression, IDebugTracer debugTrace = null)
+        public CompiledExpression Compile(Expression expression)
         {
-            Invokee inv = expression.ToEvaluator(Symbols, debugTrace);
+            Invokee inv = expression.ToEvaluator(Symbols);
 
             return (ITypedElement focus, EvaluationContext ctx) =>
                 {
@@ -66,12 +65,39 @@ namespace Hl7.FhirPath
         }
 
         /// <summary>
+        /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
+        /// </summary>
+        /// <param name="expression">the parsed fhirpath expression to compile</param>
+        /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
+        /// <returns></returns>
+        public CompiledExpression Compile(Expression expression, IDebugTracer debugTrace)
+        {
+            Invokee inv = expression.ToEvaluator(Symbols, debugTrace);
+
+            return (ITypedElement focus, EvaluationContext ctx) =>
+            {
+                var closure = Closure.Root(focus, ctx);
+                return inv(closure, InvokeeFactory.EmptyArgs);
+            };
+        }
+
+        /// <summary>
+        /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
+        /// </summary>
+        /// <param name="expression">the fhirpath expression to parse then compile</param>
+        /// <returns></returns>
+        public CompiledExpression Compile(string expression)
+        {
+            return Compile(Parse(expression));
+        }
+
+        /// <summary>
         /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
         /// </summary>
         /// <param name="expression">the fhirpath expression to parse then compile</param>
         /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
         /// <returns></returns>
-        public CompiledExpression Compile(string expression, IDebugTracer debugTrace = null)
+        public CompiledExpression Compile(string expression, IDebugTracer debugTrace)
         {
             return Compile(Parse(expression), debugTrace);
         }
