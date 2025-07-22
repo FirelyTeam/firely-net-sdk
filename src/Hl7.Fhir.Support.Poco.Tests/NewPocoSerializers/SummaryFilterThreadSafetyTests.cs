@@ -64,22 +64,22 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
-        public void AllFactoryMethods_ShouldUseSameInstancePerThread()
+        public void AllFactoryMethods_ShouldCreateFreshInstancesPerCall()
         {
-            // Verify that each factory method returns the same instance per thread
-            // (this ensures state consistency within a serialization operation)
+            // Verify that each factory method creates a new instance per call
+            // (this ensures no state is shared between serialization operations)
             var summaryFactory = SerializationFilter.CreateSummaryFactory();
             var textFactory = SerializationFilter.CreateTextFactory();
             var countFactory = SerializationFilter.CreateCountFactory();
             var dataFactory = SerializationFilter.CreateDataFactory();
             var elementsFactory = SerializationFilter.CreateElementsFactory(["id", "name"]);
 
-            // Each call on the same thread should return the same instance
-            summaryFactory().Should().BeSameAs(summaryFactory());
-            textFactory().Should().BeSameAs(textFactory());
-            countFactory().Should().BeSameAs(countFactory());
-            dataFactory().Should().BeSameAs(dataFactory());
-            elementsFactory().Should().BeSameAs(elementsFactory());
+            // Each call should return a different instance
+            summaryFactory().Should().NotBeSameAs(summaryFactory());
+            textFactory().Should().NotBeSameAs(textFactory());
+            countFactory().Should().NotBeSameAs(countFactory());
+            dataFactory().Should().NotBeSameAs(dataFactory());
+            elementsFactory().Should().NotBeSameAs(elementsFactory());
         }
     }
 }
