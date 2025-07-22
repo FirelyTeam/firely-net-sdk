@@ -65,6 +65,8 @@ namespace Hl7.Fhir.Tests.Model
         {
             // Test for issue #3171 - Patient.Validate(true) throws NullReferenceException 
             // when BirthDate has data-absent-reason extension but no value
+            // This reproduces the exact scenario from the original issue #3171 report
+            
             var patient = new Patient()
             {
                 BirthDateElement = new Date()
@@ -83,28 +85,19 @@ namespace Hl7.Fhir.Tests.Model
                 }
             };
 
-            // This should not throw an exception
-            try
-            {
-                patient.Validate(true);
-                Assert.IsTrue(true, "Validation completed without throwing an exception");
-            }
-            catch (NullReferenceException ex)
-            {
-                Assert.Fail($"Validation threw NullReferenceException: {ex.Message}");
-            }
+            // This exact line was failing with "Object reference not set to an instance of an object"
+            // in netstandard2.0 and earlier .NET versions, due to GetHashCode() being called
+            // on primitive types with null values during validation
+            patient.Validate(true); // Should not throw NullReferenceException anymore
 
-            // Also test with TryValidate
+            // Ensure patient.Validate(false) still works as it did before
+            patient.Validate(false); // This was working before the fix
+
+            // Also test with TryValidate to ensure both validation paths work
             ICollection<ValidationResult> results = new List<ValidationResult>();
-            try
-            {
-                DotNetAttributeValidation.TryValidate(patient, results, true);
-                Assert.IsTrue(true, "TryValidate completed without throwing an exception");
-            }
-            catch (NullReferenceException ex)
-            {
-                Assert.Fail($"TryValidate threw NullReferenceException: {ex.Message}");
-            }
+            bool isValid = DotNetAttributeValidation.TryValidate(patient, results, true);
+            // The validation may or may not pass (depends on other validation rules), 
+            // but it should not throw an exception
         }
 
         [TestMethod]
