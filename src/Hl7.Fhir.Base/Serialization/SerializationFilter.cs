@@ -44,48 +44,28 @@ namespace Hl7.Fhir.Serialization
         /// Construct a new filter that conforms to the `_summary=true` summarized form.
         /// </summary>
         [Obsolete("Use CreateSummaryFactory() instead to ensure thread-safety when reusing JsonSerializerOptions instances. This method will be removed in a future version.")]
-        public static SerializationFilter ForSummary() => new BundleFilter(new ElementMetadataFilter() { IncludeInSummary = true });
+        public static SerializationFilter ForSummary() => CreateSummaryFactory()();
 
         /// <summary>
         /// Construct a new filter that conforms to the `_summary=text` summarized form.
         /// </summary>
         [Obsolete("Use CreateTextFactory() instead to ensure thread-safety when reusing JsonSerializerOptions instances. This method will be removed in a future version.")]
-        public static SerializationFilter ForText() => new BundleFilter(new TopLevelFilter(
-            new ElementMetadataFilter()
-            {
-                IncludeNames = new[] { "text", "id", "meta" },
-                IncludeMandatory = true
-            }));
+        public static SerializationFilter ForText() => CreateTextFactory()();
 
         [Obsolete("Use CreateCountFactory() instead to ensure thread-safety when reusing JsonSerializerOptions instances. This method will be removed in a future version.")]
-        public static SerializationFilter ForCount() => new BundleFilter(new TopLevelFilter(
-            new ElementMetadataFilter()
-            {
-                IncludeMandatory = true,
-                IncludeNames = new[] { "id", "total", "link" }
-            }));
+        public static SerializationFilter ForCount() => CreateCountFactory()();
 
         /// <summary>
         /// Construct a new filter that conforms to the `_summary=data` summarized form.
         /// </summary>
         [Obsolete("Use CreateDataFactory() instead to ensure thread-safety when reusing JsonSerializerOptions instances. This method will be removed in a future version.")]
-        public static SerializationFilter ForData() => new BundleFilter(new TopLevelFilter(
-          new ElementMetadataFilter()
-          {
-              IncludeNames = new[] { "text" },
-              Invert = true
-          }));
+        public static SerializationFilter ForData() => CreateDataFactory()();
 
         /// <summary>
         /// Construct a new filter that conforms to the `_elements=...` summarized form.
         /// </summary>
         [Obsolete("Use CreateElementsFactory() instead to ensure thread-safety when reusing JsonSerializerOptions instances. This method will be removed in a future version.")]
-        public static SerializationFilter ForElements(string[] elements) => new BundleFilter(new TopLevelFilter(
-          new ElementMetadataFilter()
-          {
-              IncludeNames = elements,
-              IncludeMandatory = true
-          }));
+        public static SerializationFilter ForElements(string[] elements) => CreateElementsFactory(elements)();
 
         /// <summary>
         /// Create a factory function that produces new filter instances conforming to the `_summary=true` summarized form.
