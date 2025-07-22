@@ -36,7 +36,7 @@ public class CrossVersionConfigurationAttribute : Attribute, IConfigSource
     public CrossVersionConfigurationAttribute(Type benchmarkType, bool DisplayGenColumns = false)
     {
         var attributes = benchmarkType.GetCustomAttributes(typeof(PackageVersionAttribute), false);
-        var versions = attributes.OfType<PackageVersionAttribute>().DistinctBy(x=> x.PackageVersion).Select(x=> new PackageVersion(x.PackageVersion, x.Constant, x.Baseline)).ToList();;
+        var versions = attributes.OfType<PackageVersionAttribute>().DistinctBy(x=> x.PackageVersion).Select(x=> new PackageVersion(x.PackageVersion, x.Constant, x.Baseline)).ToList();
         
         if (versions.Count == 0)
             versions.AddRange(ALL_VERSIONS_BENCHMARK.Select(x => new PackageVersion(x)));
