@@ -36,6 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -70,8 +71,14 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     {
         if (type == typeof(IFhirValueProvider))
             return [this];
-        else
-            return annotations.OfType(type);
+        
+        if (annotations.OfType(type).ToList() is { Count: > 0 } annotation)
+            return annotation;
+
+        if (annotations.TryGetAnnotation(out TypedElementAnnotatedProvider? original))
+            return original.OriginalElement.Annotations(type);
+
+        return [];
     }
 
     public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
