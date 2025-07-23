@@ -151,27 +151,34 @@ namespace Hl7.FhirPath.Tests
             var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             var expr = compiler.Compile(expression, tracer);
-            var results = expr(input, new FhirEvaluationContext()).ToFhirValues().ToList();
+            var results = expr(input, new FhirEvaluationContext()).ToList();
             System.Diagnostics.Trace.WriteLine("Expression: " + expression);
             tracer.DumpDiagnostics();
 
             Assert.AreEqual(3, results.Count());
-            //Assert.AreEqual("Peter", ((Element)results[0]).getValue().toString());
-            //Assert.AreEqual("James", ((Element)results.get(1)).getValue().toString());
-            //Assert.AreEqual("Jim", ((Element)results.get(2)).getValue().toString());
+            Assert.AreEqual("Peter", results[0].Value.ToString());
+            Assert.AreEqual("James", results[1].Value.ToString());
+            Assert.AreEqual("Jim", results[2].Value.ToString());
 
-            //Assert.AreEqual("Patient.name[0].given[0]", ((Element)results[0]).getPath());
-            //Assert.AreEqual("Patient.name[0].given[1]", ((Element)results.get(1)).getPath());
-            //Assert.AreEqual("Patient.name[1].given[0]", ((Element)results.get(2)).getPath());
+            Assert.AreEqual("Patient.name[0].given[0]", results[0].Location);
+            Assert.AreEqual("Patient.name[0].given[1]", results[1].Location);
+            Assert.AreEqual("Patient.name[1].given[0]", results[2].Location);
 
-            Assert.AreEqual(20, tracer.traceOutput.Count());
-            Assert.AreEqual("0,4,name: focus=1 result=3", tracer.traceOutput[0]);
+            Assert.AreEqual(14, tracer.traceOutput.Count());
+            Assert.AreEqual("0,4,name: focus=1 result=2", tracer.traceOutput[0]);
             Assert.AreEqual("11,3,use: focus=1 result=1", tracer.traceOutput[1]);
             Assert.AreEqual("15,10,constant: focus=1 result=1", tracer.traceOutput[2]);
             Assert.AreEqual("14,1,=: focus=1 result=1", tracer.traceOutput[3]);
-
-            Assert.AreEqual("5,5,where: focus=3 result=2", tracer.traceOutput[18]);
-            Assert.AreEqual("42,5,given: focus=2 result=3", tracer.traceOutput[19]);
+            Assert.AreEqual("26,2,or: focus=1 result=1", tracer.traceOutput[4]);
+            Assert.AreEqual("11,3,use: focus=1 result=1", tracer.traceOutput[5]);
+            Assert.AreEqual("15,10,constant: focus=1 result=1", tracer.traceOutput[6]);
+            Assert.AreEqual("14,1,=: focus=1 result=1", tracer.traceOutput[7]);
+            Assert.AreEqual("29,3,use: focus=1 result=1", tracer.traceOutput[8]);
+            Assert.AreEqual("33,7,constant: focus=1 result=1", tracer.traceOutput[9]);
+            Assert.AreEqual("32,1,=: focus=1 result=1", tracer.traceOutput[10]);
+            Assert.AreEqual("26,2,or: focus=1 result=1", tracer.traceOutput[11]);
+            Assert.AreEqual("5,5,where: focus=1 result=2", tracer.traceOutput[12]);
+            Assert.AreEqual("42,5,given: focus=1 result=3", tracer.traceOutput[13]);
         }
 
         [TestMethod]
