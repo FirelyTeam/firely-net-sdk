@@ -13,6 +13,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -361,6 +362,51 @@ namespace Hl7.Fhir.Specification.Tests
                 File.Delete(filePath2);
             }
             Assert.IsTrue(conflictException);
+        }
+
+        [TestMethod]
+        public void PartialVersionMatching_ShouldWork()
+        {
+            // Arrange - Create test resources with different versions
+            var resources = new List<Resource>
+            {
+                new StructureDefinition
+                {
+                    Url = "http://example.org/StructureDefinition/TestProfile",
+                    Version = "1.5.0",
+                    Name = "TestProfile150"
+                },
+                new StructureDefinition
+                {
+                    Url = "http://example.org/StructureDefinition/TestProfile",
+                    Version = "1.5.1",
+                    Name = "TestProfile151"
+                },
+                new StructureDefinition
+                {
+                    Url = "http://example.org/StructureDefinition/TestProfile",
+                    Version = "1.6.0",
+                    Name = "TestProfile160"
+                }
+            };
+
+            var resolver = new InMemoryResourceResolver(resources);
+
+            // Act & Assert - Test exact version matching (should still work)
+            var exactResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.5.0");
+            Assert.IsNotNull(exactResult);
+            var exactSd = (StructureDefinition)exactResult;
+            Assert.AreEqual("1.5.0", exactSd.Version);
+
+            // Act & Assert - Test partial version matching (new functionality)
+            var partialResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.5");
+            Assert.IsNotNull(partialResult, "Partial version matching should return a result");
+            var partialSd = (StructureDefinition)partialResult;
+            Assert.IsTrue(partialSd.Version.StartsWith("1.5"), $"Expected version starting with '1.5', but got '{partialSd.Version}'");
+
+            // Act & Assert - Test that wrong partial version returns null
+            var wrongResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.4");
+            Assert.IsNull(wrongResult, "Non-matching partial version should return null");
         }
 
     }
