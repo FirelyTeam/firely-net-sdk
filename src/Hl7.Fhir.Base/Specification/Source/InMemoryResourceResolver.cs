@@ -98,12 +98,9 @@ namespace Hl7.Fhir.Specification.Source
         ///<inheritdoc/>
         public Resource? ResolveByCanonicalUri(string uri)
         {
-            var values = uri.Split('|');
-            if (values.Length > 2)
-                throw new ArgumentException("Url is not valid. The pipe occurs more than once.");
-
-            var canonicalUrl = values[0];
-            var version = values.Length == 2 ? values[1] : string.Empty;
+            var canonical = new Canonical(uri);
+            var canonicalUrl = canonical.Uri;
+            var version = canonical.Version ?? string.Empty;
 
             // Filter by canonical URL first
             var candidateResources = _resources.Where(r => r.Url == canonicalUrl).ToList();
