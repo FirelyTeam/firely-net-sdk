@@ -177,8 +177,8 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual("33,7,constant: focus=1 result=1", tracer.traceOutput[9]);
             Assert.AreEqual("32,1,=: focus=1 result=1", tracer.traceOutput[10]);
             Assert.AreEqual("26,2,or: focus=1 result=1", tracer.traceOutput[11]);
-            Assert.AreEqual("5,5,where: focus=1 result=2", tracer.traceOutput[12]);
-            Assert.AreEqual("42,5,given: focus=1 result=3", tracer.traceOutput[13]);
+            Assert.AreEqual("5,5,where: focus=2 result=2", tracer.traceOutput[12]);
+            Assert.AreEqual("42,5,given: focus=2 result=3", tracer.traceOutput[13]);
         }
 
         [TestMethod]

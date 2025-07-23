@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FP = Hl7.FhirPath.Expressions;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -20,9 +21,8 @@ namespace Hl7.FhirPath.Expressions
         {
             if (_debugTrace != null)
             {
-                return (Closure context, IEnumerable<Invokee> arguments) => {
-                    var result = invokee(context, arguments);
-                    var focus = context.GetThat();
+                return (Closure context, IEnumerable<Invokee> arguments, out FocusCollection focus) => {
+                    var result = invokee(context, arguments, out focus);
                     _debugTrace?.TraceCall(expression, focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
                     return result;
                 };
@@ -98,9 +98,19 @@ namespace Hl7.FhirPath.Expressions
 
             return WrapForDebugTracer(chainResolves, expression);
 
-            IEnumerable<ITypedElement> chainResolves(Closure context, IEnumerable<Invokee> invokees)
+            FocusCollection chainResolves(Closure context, IEnumerable<Invokee> invokees, out FocusCollection focus)
             {
-                return context.ResolveValue(expression.Name) ?? resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, []);
+                var value = context.ResolveValue(expression.Name);
+                if (value != null)
+                {
+                    // this was in the context, so the scope was $this (the context)
+                    focus = context.GetThis();
+                    return value;
+                }
+                else
+                {
+                    return resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, [], out focus);
+                }
             }
         }
 
