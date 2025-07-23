@@ -29,7 +29,7 @@ internal static class InvokeeFactory
     public static FocusCollection GetTotal(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
     {
         focus = context.GetThis();
-            return context.GetTotal();
+        return context.GetTotal();
     }
 
     public static FocusCollection GetContext(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
@@ -268,7 +268,7 @@ internal static class InvokeeFactory
         return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
         {
             // Ignore focus
-            // Arguments to functions (except where etc) are not processed on the focus, they are processed on $this.
+            // Arguments to functions (except iterative functions like `where` and `select` that update the value of $this) are not processed on the focus, they are processed on $this.
             focus = ctx.GetThis();
             var left = args.Skip(1).First();
             var right = args.Skip(2).First();

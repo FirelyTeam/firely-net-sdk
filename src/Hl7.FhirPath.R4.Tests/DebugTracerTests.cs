@@ -105,7 +105,6 @@ namespace Hl7.FhirPath.Tests
                     Debugger.Break();
 #endif
                     throw new Exception($"Unknown expression type: {expr.GetType().Name}");
-                    return expr.GetType().Name;
                 }
             }
 
