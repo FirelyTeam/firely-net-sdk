@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Serialization
         /// Serializes the given dictionary with FHIR data into Json.
         /// </summary>
         public void Serialize(IReadOnlyDictionary<string, object> members, Utf8JsonWriter writer) =>
-            serializeInternal(members, writer, skipValue: false, filter: null);
+            serializeInternal(members, writer, skipValue: false);
 
         /// <summary>
         /// Serializes the given dictionary with FHIR data into a Json string.
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Serialization
         {
             var stream = new MemoryStream();
             var writer = new Utf8JsonWriter(stream);
-            serializeInternal(members, writer, skipValue: false, filter: null);
+            serializeInternal(members, writer, skipValue: false);
             writer.Flush();
             return Encoding.UTF8.GetString(stream.ToArray());
         }
