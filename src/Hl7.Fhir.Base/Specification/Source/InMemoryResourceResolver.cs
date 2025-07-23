@@ -1,11 +1,22 @@
 ﻿#nullable enable
 
+/*
+ * Copyright (c) 2025, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Hl7.Fhir.Specification.Source
 {
-    using Hl7.Fhir.Model;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+
 
     public class InMemoryResourceResolver : IAsyncResourceResolver, IResourceResolver
     {
@@ -97,68 +108,51 @@ namespace Hl7.Fhir.Specification.Source
         ///<inheritdoc/>
         public ResolverResult TryResolveByUri(string uri)
         {
-            var resource = _resources
-                .Where(r => r.Uri == uri)
-                .Select(r => r.Resource)
-                .FirstOrDefault();
+            var resource = resolveBestCandidate(uri);
 
-            if (resource is not null)
-                return resource;
-            
-            return ResolverException.NotFound();
+            return resource is not null
+                ? new ResolverResult(resource)
+                : new ResolverResult(ResolverException.NotFound());
         }
+
+        private Resource? resolveBestCandidate(string uri)
+        {
+            var canonical = new Canonical(uri);
+
+            // Filter by canonical URL first
+            var candidateResources = _resources.Where(r => r.Url == canonical.Uri);
+
+            if(canonical.Version is not null)
+            {
+                // If a version is specified, filter by version as well
+                candidateResources = candidateResources.Where(r => r.Resource is IVersionableConformanceResource versionable &&
+                                                                   Canonical.MatchesVersion(versionable.Version, canonical.Version));
+            };
+
+            return candidateResources.Select(r => r.Resource).FirstOrDefault();
+        }
+
 
         ///<inheritdoc/>
-        public ResolverResult TryResolveByCanonicalUri(string uri)
-        {
-            var resource =  _resources
-                .Where(r => r.Url == uri)
-                .Select(r => r.Resource)
-                .FirstOrDefault();
-            
-            if (resource is not null)
-                return resource;
-
-            return ResolverException.NotFound();
-        }
+        public ResolverResult TryResolveByCanonicalUri(string uri) => TryResolveByUri(uri);
 
         ///<inheritdoc/>
-        public Resource? ResolveByCanonicalUri(string uri)
-        {
-            return TryResolveByCanonicalUri(uri).Value;
-        }
+        public Resource? ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
 
         ///<inheritdoc/>
-        public Task<Resource?> ResolveByCanonicalUriAsync(string uri)
-        {
-            return Task.FromResult(ResolveByCanonicalUri(uri));
-        }
-        
-        ///<inheritdoc/>
-        public Resource? ResolveByUri(string uri)
-        {
-            return TryResolveByUri(uri).Value;
-        }
+        public Task<Resource?> ResolveByCanonicalUriAsync(string uri) => Task.FromResult(ResolveByCanonicalUri(uri));
 
         ///<inheritdoc/>
-        public Task<Resource?> ResolveByUriAsync(string uri)
-        {
-            return Task.FromResult(ResolveByUri(uri));
-        }
+        public Resource? ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
         ///<inheritdoc/>
-        public Task<ResolverResult> TryResolveByUriAsync(string uri)
-        {
-            return Task.FromResult(TryResolveByUri(uri));
-        }
+        public Task<Resource?> ResolveByUriAsync(string uri) => Task.FromResult(ResolveByUri(uri));
 
         ///<inheritdoc/>
-        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
-        {
-            return Task.FromResult(TryResolveByCanonicalUri(uri));
-        }
+        public Task<ResolverResult> TryResolveByUriAsync(string uri) => Task.FromResult(TryResolveByUri(uri));
+
+        ///<inheritdoc/>
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) =>
+            Task.FromResult(TryResolveByCanonicalUri(uri));
     }
 }
-
-#nullable restore
-
