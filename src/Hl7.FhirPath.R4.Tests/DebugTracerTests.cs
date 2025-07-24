@@ -58,54 +58,37 @@ namespace Hl7.FhirPath.Tests
 
             public string TraceExpressionNodeName(Expression expr)
             {
-                if (expr is IdentifierExpression ie)
-                    return null;
-
-                if (expr is ConstantExpression ce)
+                switch (expr)
                 {
-                    return "constant";
+                    case IdentifierExpression _:
+                        return null; // we don't trace IdentifierExpressions, they are just names
+                    case ConstantExpression ce:
+                        return "constant";
+                    case ChildExpression child:
+                        return child.ChildName;
+                    case IndexerExpression indexer:
+                        return "[]";
+                    case UnaryExpression ue:
+                        return ue.Op;
+                    case BinaryExpression be:
+                        return be.Op;
+                    case FunctionCallExpression fe:
+                        return fe.FunctionName;
+                    case NewNodeListInitExpression:
+                        return "{}";
+                    case AxisExpression ae:
+                    {
+                        if (ae.AxisName == "that")
+                            return null;
+                        return "$" + ae.AxisName;
+                    }
+                    case VariableRefExpression ve:
+                        return "%" + ve.Name;
                 }
-                else if (expr is ChildExpression child)
-                {
-                    return child.ChildName;
-                }
-                else if (expr is IndexerExpression indexer)
-                {
-                    return "[]";
-                }
-                else if (expr is UnaryExpression ue)
-                {
-                    return ue.Op;
-                }
-                else if (expr is BinaryExpression be)
-                {
-                    return be.Op;
-                }
-                else if (expr is FunctionCallExpression fe)
-                {
-                    return fe.FunctionName;
-                }
-                else if (expr is NewNodeListInitExpression)
-                {
-                    return "{}";
-                }
-                else if (expr is AxisExpression ae)
-                {
-                    if (ae.AxisName == "that")
-                        return null;
-                    return "$" + ae.AxisName;
-                }
-                else if (expr is VariableRefExpression ve)
-                {
-                    return "%" + ve.Name;
-                }
-                else
-                {
 #if DEBUG
-                    Debugger.Break();
+                Debugger.Break();
 #endif
-                    throw new Exception($"Unknown expression type: {expr.GetType().Name}");
-                }
+                throw new Exception($"Unknown expression type: {expr.GetType().Name}");
             }
 
             public void DumpDiagnostics()

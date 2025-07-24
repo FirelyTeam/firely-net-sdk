@@ -5,6 +5,9 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
+
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -20,72 +23,74 @@ namespace Hl7.FhirPath
 
         public void TraceCall(
             Expression expr,
-            IEnumerable<ITypedElement> focus,
-            IEnumerable<ITypedElement> thisValue,
-            ITypedElement index,
+            IEnumerable<ITypedElement>? focus,
+            IEnumerable<ITypedElement>? thisValue,
+            ITypedElement? index,
             IEnumerable<ITypedElement> totalValue,
             IEnumerable<ITypedElement> result,
             IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
         {
             string exprName;
-            if (expr is IdentifierExpression ie)
-                return;
-
-            if (expr is ConstantExpression ce)
+            
+            switch (expr)
             {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},constant");
-                exprName = "constant";
-            }
-            else if (expr is ChildExpression child)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{child.ChildName}");
-                exprName = child.ChildName;
-            }
-            else if (expr is IndexerExpression indexer)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},[]");
-                exprName = "[]";
-            }
-            else if (expr is UnaryExpression ue)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{ue.Op}");
-                exprName = ue.Op;
-            }
-            else if (expr is BinaryExpression be)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{be.Op}");
-                exprName = be.Op;
-            }
-            else if (expr is FunctionCallExpression fe)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{fe.FunctionName}");
-                exprName = fe.FunctionName;
-            }
-            else if (expr is NewNodeListInitExpression)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{{}} (empty)");
-                exprName = "{}";
-            }
-            else if (expr is AxisExpression ae)
-            {
-                if (ae.AxisName == "that")
+                case IdentifierExpression _:
                     return;
-                Trace.WriteLine($"Evaluated: {ae.AxisName} results: {result.Count()}");
-                exprName = "$" + ae.AxisName;
-            }
-            else if (expr is VariableRefExpression ve)
-            {
-                Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},%{ve.Name}");
-                exprName = "%" + ve.Name;
-            }
-            else
-            {
-                exprName = expr.GetType().Name;
+                
+                case ConstantExpression ce:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},constant");
+                    exprName = "constant";
+                    break;
+                
+                case ChildExpression child:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{child.ChildName}");
+                    exprName = child.ChildName;
+                    break;
+                
+                case IndexerExpression _:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},[]");
+                    exprName = "[]";
+                    break;
+                
+                case UnaryExpression ue:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{ue.Op}");
+                    exprName = ue.Op;
+                    break;
+                
+                case BinaryExpression be:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{be.Op}");
+                    exprName = be.Op;
+                    break;
+                
+                case FunctionCallExpression fe:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{fe.FunctionName}");
+                    exprName = fe.FunctionName;
+                    break;
+                
+                case NewNodeListInitExpression _:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{{}} (empty)");
+                    exprName = "{}";
+                    break;
+                
+                case AxisExpression ae:
+                    if (ae.AxisName == "that")
+                        return;
+                    Trace.WriteLine($"Evaluated: {ae.AxisName} results: {result.Count()}");
+                    exprName = "$" + ae.AxisName;
+                    break;
+                
+                case VariableRefExpression ve:
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},%{ve.Name}");
+                    exprName = "%" + ve.Name;
+                    break;
+                
+                default:
+                    exprName = expr.GetType().Name;
 #if DEBUG
-                Debugger.Break();
+                    Debugger.Break();
 #endif
-                throw new Exception($"Unknown expression type: {expr.GetType().Name}");
-                // Trace.WriteLine($"Evaluated: {expr} results: {result.Count()}");
+                    throw new Exception($"Unknown expression type: {expr.GetType().Name}");
+                    // Trace.WriteLine($"Evaluated: {expr} results: {result.Count()}");
             }
 
             if (focus != null)
@@ -126,7 +131,7 @@ namespace Hl7.FhirPath
             }
         }
 
-        private static void DebugTraceValue(string exprName, ITypedElement item)
+        private static void DebugTraceValue(string exprName, ITypedElement? item)
         {
             if (item == null)
                 return; // possible with a null focus to kick things off
