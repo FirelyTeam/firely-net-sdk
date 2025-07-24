@@ -109,6 +109,6 @@ namespace Hl7.Fhir.Model
                 return false;
         }
 
-        public override int GetHashCode() => Value.GetHashCode();
+        public override int GetHashCode() => Value?.GetHashCode() ?? 0;
     }
 }
