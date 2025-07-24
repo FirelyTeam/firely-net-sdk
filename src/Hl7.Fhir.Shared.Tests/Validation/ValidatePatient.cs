@@ -47,5 +47,55 @@ namespace Hl7.Fhir.Tests.Validation
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);
         }
+
+        [TestMethod]
+        public void ValidatePatientWithDataAbsentExtension()
+        {
+            // Test for issue #3171 - Patient.Validate(true) throws NullReferenceException 
+            // when BirthDate has data-absent-reason extension but no value
+            var patient = new Patient()
+            {
+                BirthDateElement = new Date()
+                {
+                    Extension = new List<Extension>()
+                    {
+                        new Extension
+                        {
+                            Url = "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                            Value = new Code
+                            {
+                                Value = "unknown"
+                            }
+                        }
+                    }
+                }
+            };
+
+            // This should not throw an exception
+            try
+            {
+                patient.Validate(true);
+                // If we get here, the validation succeeded without throwing an exception
+                Assert.IsTrue(true, "Validation completed without throwing an exception");
+            }
+            catch (System.NullReferenceException ex)
+            {
+                Assert.Fail($"Validation threw NullReferenceException: {ex.Message}");
+            }
+
+            // Also test with TryValidate
+            ICollection<ValidationResult> results = new List<ValidationResult>();
+            try
+            {
+                bool isValid = DotNetAttributeValidation.TryValidate(patient, results, true);
+                // The validation may or may not pass (depends on other validation rules), 
+                // but it should not throw an exception
+                Assert.IsTrue(true, "TryValidate completed without throwing an exception");
+            }
+            catch (System.NullReferenceException ex)
+            {
+                Assert.Fail($"TryValidate threw NullReferenceException: {ex.Message}");
+            }
+        }
     }
 }
