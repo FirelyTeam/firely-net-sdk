@@ -3,6 +3,7 @@
 namespace Hl7.Fhir.Specification.Source
 {
     using Hl7.Fhir.Model;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -97,7 +98,34 @@ namespace Hl7.Fhir.Specification.Source
         ///<inheritdoc/>
         public Resource? ResolveByCanonicalUri(string uri)
         {
-            return _resources.Where(r => r.Url == uri)?.Select(r => r.Resource).FirstOrDefault();
+            var canonical = new Canonical(uri);
+            var canonicalUrl = canonical.Uri;
+            var version = canonical.Version ?? string.Empty;
+
+            // Filter by canonical URL first
+            var candidateResources = _resources.Where(r => r.Url == canonicalUrl).ToList();
+            
+            if (!candidateResources.Any())
+                return null;
+
+            // If no version specified, return the first match
+            if (string.IsNullOrEmpty(version))
+            {
+                var firstCandidate = candidateResources.FirstOrDefault();
+                return firstCandidate.Resource;
+            }
+
+            // Look for exact version match or partial version match
+            foreach (var candidate in candidateResources)
+            {
+                if (candidate.Resource is IVersionableConformanceResource versionableConformance)
+                {
+                    if (Canonical.MatchesVersion(versionableConformance.Version, version))
+                        return candidate.Resource;
+                }
+            }
+
+            return null;
         }
 
         ///<inheritdoc/>
