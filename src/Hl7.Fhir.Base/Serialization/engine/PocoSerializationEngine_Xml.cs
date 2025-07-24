@@ -34,7 +34,7 @@ internal partial class PocoSerializationEngine
     }
     
     /// <inheritdoc />
-    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance);
+    public string SerializeToXml(Resource instance) => getXmlSerializer().SerializeToString(instance, (Func<SerializationFilter>?)null);
 
     /// <summary>
     /// Deserializes a resource from an XML reader
@@ -70,5 +70,5 @@ internal partial class PocoSerializationEngine
     /// </summary>
     /// <param name="instance">An instance of Base or any of its children</param>
     /// <param name="writer">The XML writer</param>
-    public void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer);
+    public void SerializeToXmlWriter(Base instance, XmlWriter writer) => getXmlSerializer().Serialize(instance, writer, (Func<SerializationFilter>?)null);
 }

@@ -42,9 +42,12 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
-        /// Serializes the given dictionary with FHIR data into Json.
+        /// Serializes the given dictionary with FHIR data into XML.
         /// </summary>
-        public void Serialize(IReadOnlyDictionary<string, object> members, XmlWriter writer, SerializationFilter? summary = default)
+        /// <param name="members">The dictionary containing FHIR data to serialize.</param>
+        /// <param name="writer">The XmlWriter to write the serialized data to.</param>
+        /// <param name="summaryFilterFactory">A factory function that creates a new filter instance for each serialization operation. This ensures thread-safety when reusing serializer instances in concurrent scenarios.</param>
+        public void Serialize(IReadOnlyDictionary<string, object> members, XmlWriter writer, Func<SerializationFilter>? summaryFilterFactory)
         {
             writer.WriteStartDocument();
 
@@ -57,17 +60,41 @@ namespace Hl7.Fhir.Serialization
                 writer.WriteStartElement(rootElementName, XmlNs.FHIR);
             }
 
-            serializeInternal(members, writer, summary);
+            var filter = summaryFilterFactory?.Invoke();
+            serializeInternal(members, writer, filter);
 
             if (simulateRoot) writer.WriteEndElement();
             writer.WriteEndDocument();
         }
 
         /// <summary>
-        /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
+        /// Serializes the given dictionary with FHIR data into XML.
         /// </summary>
+        /// <param name="members">The dictionary containing FHIR data to serialize.</param>
+        /// <param name="writer">The XmlWriter to write the serialized data to.</param>
+        /// <param name="summary">The serialization filter to apply. NOTE: For thread-safety when reusing serializer instances, pass a fresh filter instance for each serialization operation.</param>
+        [Obsolete("Use the overload that takes Func<SerializationFilter> summaryFilterFactory instead to ensure thread-safety when reusing serializer instances in concurrent scenarios. This method will be removed in a future version.")]
+        public void Serialize(IReadOnlyDictionary<string, object> members, XmlWriter writer, SerializationFilter? summary = default)
+        {
+            Serialize(members, writer, summary != null ? () => summary : (Func<SerializationFilter>?)null);
+        }
+
+        /// <summary>
+        /// Serializes the given dictionary with FHIR data into UTF8 encoded XML.
+        /// </summary>
+        /// <param name="members">The dictionary containing FHIR data to serialize.</param>
+        /// <param name="summaryFilterFactory">A factory function that creates a new filter instance for each serialization operation. This ensures thread-safety when reusing serializer instances in concurrent scenarios.</param>
+        public string SerializeToString(IReadOnlyDictionary<string, object> members, Func<SerializationFilter>? summaryFilterFactory) =>
+            SerializationUtil.WriteXmlToString(w => Serialize(members, w, summaryFilterFactory));
+
+        /// <summary>
+        /// Serializes the given dictionary with FHIR data into UTF8 encoded XML.
+        /// </summary>
+        /// <param name="members">The dictionary containing FHIR data to serialize.</param>
+        /// <param name="summary">The serialization filter to apply. NOTE: For thread-safety when reusing serializer instances, pass a fresh filter instance for each serialization operation.</param>
+        [Obsolete("Use the overload that takes Func<SerializationFilter> summaryFilterFactory instead to ensure thread-safety when reusing serializer instances in concurrent scenarios. This method will be removed in a future version.")]
         public string SerializeToString(IReadOnlyDictionary<string, object> members, SerializationFilter? summary = default) =>
-            SerializationUtil.WriteXmlToString(w => Serialize(members, w, summary));
+            SerializeToString(members, summary != null ? () => summary : (Func<SerializationFilter>?)null);
 
         /// <summary>
         /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
