@@ -86,10 +86,19 @@ namespace Hl7.Fhir.Serialization
         private void serializeInternal(
             IReadOnlyDictionary<string, object> members,
             Utf8JsonWriter writer,
-            bool skipValue)
+            bool skipValue,
+            SerializationFilter? filter = null)
         {
             writer.WriteStartObject();
-            var filter = Settings.SummaryFilter;
+            
+            // Get filter only once at the top level, then pass it through recursive calls
+            if (filter == null)
+            {
+                // Use factory if available, otherwise fall back to the static instance for backward compatibility
+#pragma warning disable CS0618 // Type or member is obsolete
+                filter = Settings.SummaryFilterFactory?.Invoke() ?? Settings.SummaryFilter;
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
 
             if (members is Resource r)
                 writer.WriteString("resourceType", r.TypeName);
@@ -132,12 +141,12 @@ namespace Hl7.Fhir.Serialization
                         writer.WriteStartArray();
 
                         foreach (var value in coll)
-                            serializeMemberValue(value, writer, requiredType);
+                            serializeMemberValue(value, writer, filter, requiredType);
 
                         writer.WriteEndArray();
                     }
                     else
-                        serializeMemberValue(member.Value, writer, requiredType);
+                        serializeMemberValue(member.Value, writer, filter, requiredType);
                 }
 
                 filter?.LeaveMember(member.Key, member.Value, propertyMapping);
@@ -159,10 +168,10 @@ namespace Hl7.Fhir.Serialization
             return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName.Substring(1);
         }
 
-        private void serializeMemberValue(object value, Utf8JsonWriter writer, Type? requiredType = null)
+        private void serializeMemberValue(object value, Utf8JsonWriter writer, SerializationFilter? filter, Type? requiredType = null)
         {
             if (value is IReadOnlyDictionary<string, object> complex)
-                serializeInternal(complex, writer, skipValue: false);
+                serializeInternal(complex, writer, skipValue: false, filter: filter);
             else
                 SerializePrimitiveValue(value, writer, requiredType);
         }

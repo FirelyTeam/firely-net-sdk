@@ -52,5 +52,56 @@ namespace Hl7.Fhir.Support.Poco.Tests
             contactArray.Count().Should().Be(1);
             contactArray.First().Elements().Should().BeEmpty();
         }
+
+        [TestMethod]
+        public void CanUseFilterFactory()
+        {
+            var patient = new Patient
+            {
+                Id = "test-patient",
+                Active = true,
+                Name = new() { new HumanName { Given = new[] { "John" }, Family = "Doe" } },
+                Gender = AdministrativeGender.Male
+            };
+
+            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+
+            // Test the new factory-based method
+            var elementsFactory = SerializationFilter.CreateElementsFactory(new[] { "id", "active" });
+            var xmlWithFactory = serializer.SerializeToString(patient, elementsFactory);
+
+            // Test the obsolete method for comparison
+#pragma warning disable CS0618 // Type or member is obsolete
+            var filter = SerializationFilter.ForElements(new[] { "id", "active" });
+            var xmlWithFilter = serializer.SerializeToString(patient, filter);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            // Both methods should produce identical output
+            xmlWithFactory.Should().Be(xmlWithFilter);
+
+            // Verify that filtering actually works (should only contain id and active)
+            var xdoc = XDocument.Parse(xmlWithFactory);
+            var patientElement = xdoc.Root;
+            
+            // Should contain id and active elements
+            patientElement.Elements(XName.Get("id", XmlNs.FHIR)).Should().HaveCount(1);
+            patientElement.Elements(XName.Get("active", XmlNs.FHIR)).Should().HaveCount(1);
+            
+            // Should NOT contain name or gender (they were filtered out)
+            patientElement.Elements(XName.Get("name", XmlNs.FHIR)).Should().BeEmpty();
+            patientElement.Elements(XName.Get("gender", XmlNs.FHIR)).Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void FilterFactoryCreatesNewInstancesEachTime()
+        {
+            var elementsFactory = SerializationFilter.CreateElementsFactory(new[] { "id", "active" });
+            
+            // Each call should return a new instance
+            var filter1 = elementsFactory();
+            var filter2 = elementsFactory();
+            
+            filter1.Should().NotBeSameAs(filter2);
+        }
     }
 }
