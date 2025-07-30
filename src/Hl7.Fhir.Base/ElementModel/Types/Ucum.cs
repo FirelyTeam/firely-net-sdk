@@ -100,7 +100,7 @@ namespace Hl7.Fhir.ElementModel.Types
             return true;
         }
 
-        private static Quantity quantityFromTuple((string value, string unit, string codesystem) quantity)
+        private static Quantity quantityFromTuple((string value, string unit, string? codesystem) quantity)
         {
             return new Quantity(
                 decimal.Parse(quantity.value, NumberStyles.Any, CultureInfo.InvariantCulture),

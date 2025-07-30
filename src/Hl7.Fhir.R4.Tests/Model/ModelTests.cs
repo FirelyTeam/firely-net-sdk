@@ -9,7 +9,11 @@
 using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -48,12 +52,103 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
         }
 
-        //If failed: change the description of the "STN" in the Currency enum of Money.cs from "SC#o TomC) and PrC-ncipe dobra" to "São Tomé and Príncipe dobra".
+        //If failed: change the description of the "STN" in the Currency enum of Money.cs from "SC#o TomC) and PrC-ncipe dobra" to "SÃ£o TomÃ© and PrÃ­ncipe dobra".
         [TestMethod]
         public void TestCorrectCurrencyDescription()
         {
             var currency = Money.Currencies.STN;
-            currency.GetDocumentation().Should().Be("São Tomé and Príncipe dobra");
+            currency.GetDocumentation().Should().Be("SÃ£o TomÃ© and PrÃ­ncipe dobra");
+        }
+
+        [TestMethod]
+        public void ValidatePatientWithDataAbsentExtension()
+        {
+            // Test for issue #3171 - Patient.Validate(true) throws NullReferenceException 
+            // when BirthDate has data-absent-reason extension but no value
+            // This reproduces the exact scenario from the original issue #3171 report
+            
+            var patient = new Patient()
+            {
+                BirthDateElement = new Date()
+                {
+                    Extension = new List<Extension>()
+                    {
+                        new Extension
+                        {
+                            Url = "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                            Value = new Code
+                            {
+                                Value = "unknown"
+                            }
+                        }
+                    }
+                }
+            };
+
+            // This exact line was failing with "Object reference not set to an instance of an object"
+            // in netstandard2.0 and earlier .NET versions, due to GetHashCode() being called
+            // on primitive types with null values during validation
+            patient.Validate(true); // Should not throw NullReferenceException anymore
+
+            // Ensure patient.Validate(false) still works as it did before
+            patient.Validate(false); // This was working before the fix
+
+            // Also test with TryValidate to ensure both validation paths work
+            ICollection<ValidationResult> results = new List<ValidationResult>();
+            bool isValid = DotNetAttributeValidation.TryValidate(patient, results, true);
+            // The validation may or may not pass (depends on other validation rules), 
+            // but it should not throw an exception
+        }
+
+        [TestMethod]
+        public void DateGetHashCodeWithNullValue()
+        {
+            // Direct test for Date.GetHashCode() with null value - reproduces issue #3171
+            var date = new Date();
+            // Verify that Value is null
+            Assert.IsNull(date.Value);
+            
+            // This should not throw NullReferenceException
+            try
+            {
+                int hashCode = date.GetHashCode();
+                Assert.IsTrue(true, "GetHashCode completed without throwing an exception");
+            }
+            catch (NullReferenceException ex)
+            {
+                Assert.Fail($"GetHashCode threw NullReferenceException: {ex.Message}");
+            }
+        }
+
+        [TestMethod]
+        public void AllPrimitiveTypesGetHashCodeWithNullValue()
+        {
+            // Test all primitive types to ensure they handle null values correctly
+            var date = new Date();
+            var dateTime = new FhirDateTime();
+            var instant = new Instant();
+            var time = new Time();
+            
+            // All should have null values
+            Assert.IsNull(date.Value);
+            Assert.IsNull(dateTime.Value);
+            Assert.IsNull(instant.Value);
+            Assert.IsNull(time.Value);
+            
+            // None should throw exceptions when GetHashCode is called
+            try
+            {
+                int hashCode1 = date.GetHashCode();
+                int hashCode2 = dateTime.GetHashCode();
+                int hashCode3 = instant.GetHashCode();
+                int hashCode4 = time.GetHashCode();
+                
+                Assert.IsTrue(true, "All GetHashCode calls completed without throwing exceptions");
+            }
+            catch (NullReferenceException ex)
+            {
+                Assert.Fail($"One of the GetHashCode calls threw NullReferenceException: {ex.Message}");
+            }
         }
     }
 }
