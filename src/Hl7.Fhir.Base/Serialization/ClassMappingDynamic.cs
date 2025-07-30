@@ -10,6 +10,7 @@
 #nullable enable
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using System.Collections;
 
 namespace Hl7.Fhir.Serialization;
 
@@ -20,4 +21,7 @@ namespace Hl7.Fhir.Serialization;
 internal record PropertyValueMapping(PropertyMapping PropertyMapping, ClassMapping ValueMapping)
 {
     public Base CreateInstance() => ValueMapping.CreateInstance();
+
+    public IList CreateList() =>
+        PropertyMapping.Inspector.FindClassMapping(PropertyMapping.ImplementingType)!.CreateList();
 }

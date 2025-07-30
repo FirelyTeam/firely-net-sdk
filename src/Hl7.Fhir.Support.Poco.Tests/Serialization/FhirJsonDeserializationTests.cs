@@ -223,7 +223,7 @@ public partial class FhirJsonDeserializationTests
         yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
-        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE); // No other errors, since we're setting url to value anyway.
+        yield return data<Extension>(new { _url = "test" }, ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE); // No other errors, since we're setting url to value anyway.
         yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
@@ -264,8 +264,8 @@ public partial class FhirJsonDeserializationTests
     {
         yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
         yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } }, ERR.UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE_CODE, COVE.UNKNOWN_ELEMENT_CODE);
-        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE);
+        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE,COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE);
         yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
         yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
         yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
@@ -418,22 +418,12 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
-
-    [TestMethod]
-    [Ignore]
-    public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
-    
-    /// fileDir is a fix for the test framework only editing temp files.
-    private void testRecovery(bool overwrite, string fileDir)
+    public async T.Task SerializingErroneousResource_Should_ThrowExpectedErrors()
     {
-        var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.json");
-        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected-json.txt");
+        var patientFileName = Path.Combine("TestData", "fp-test-patient-errors.json");
         var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir();
-        if (overwrite)
-            options = options.Pretty();
 
         try
         {
@@ -443,25 +433,10 @@ public partial class FhirJsonDeserializationTests
         catch (DeserializationFailedException dfe)
         {
             var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
-            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
+            var errorsActual = dfe.Exceptions
+                .OrderBy(e => e is ExtendedCodedException ece ? ece.LineNumber : 0);
 
-            if (overwrite)
-            {
-                File.WriteAllLines(errorsFileName, errorsActual);
-            }
-            
-            var errorsExpected = File.ReadAllLines(errorsFileName);
-            errorsActual.Should().BeEquivalentTo(errorsExpected);
-
-            var recoveredFilename = Path.Combine(fileDir, "fp-test-patient-errors-recovered.json");
-            if(overwrite)
-                File.WriteAllText(recoveredFilename, recoveredActual);
-            
-            var recoveredExpected = File.ReadAllText(recoveredFilename);
-
-            List<string> errors = [];
-            JsonAssert.AreSame("fp-test-patient-json-errors/recovery", recoveredExpected, recoveredActual, errors);
-            errors.Should().BeEmpty();
+            await Verifier.Verify(new { Errors = errorsActual, Obj = recoveredActual }, _settings);
         }
     }
 
@@ -527,7 +502,7 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    public void JsonDeserializerSupportsUnknownPropertiesOnKnownTypes()
+    public async T.Task JsonDeserializerSupportsUnknownPropertiesOnKnownTypes()
     {
         var parser = new FhirJsonDeserializer();
 
@@ -545,14 +520,8 @@ public partial class FhirJsonDeserializationTests
 
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
         obj.Should().NotBeNull();
-        obj!.TypeName.Should().Be("Patient");
-        obj.Id.Should().Be("TestIdentifier");
-        // array where primitive
-        obj["active"].Should().BeEquivalentTo(new[]{new FhirBoolean(true), new FhirBoolean(false)});
-        // primitive where array
-        obj["communication"].Should().BeEquivalentTo(new FhirString{ JsonValue = "en" });
-        // primitive when complex
-        obj["name"].Should().BeEquivalentTo(new FhirString{ JsonValue = "Test"});
+
+        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson() }, _settings);
     }
     
     [TestMethod]
@@ -579,12 +548,6 @@ public partial class FhirJsonDeserializationTests
         errors.Should().NotBeEmpty();
 
         await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson() }, _settings);
-    }
-
-
-    private void verifyErrors(List<(string code, string message)> expected, IEnumerable<CodedException> actual)
-    {
-        expected.Should().BeEmpty();
     }
 
     [TestMethod]
@@ -773,7 +736,7 @@ public partial class FhirJsonDeserializationTests
                  "_expression" : [{ "id" : "3456" }]
                }]
              }
-             """, [ERR.DUPLICATE_ARRAY_CODE]),
+             """, [ERR.DUPLICATE_PROPERTY_CODE]),
             ("""
              {
                "resourceType" : "OperationOutcome",
@@ -785,7 +748,7 @@ public partial class FhirJsonDeserializationTests
                  "_expression" : [{ "id" : "3456" }]
                }]
              }
-             """, [ERR.DUPLICATE_ARRAY_CODE]),
+             """, [ERR.DUPLICATE_PROPERTY_CODE]),
             ("""
              {
                  "resourceType" : "Patient",
@@ -802,7 +765,7 @@ public partial class FhirJsonDeserializationTests
                      "value" : "738472983"
                  }]
              }
-             """, [ERR.DUPLICATE_ARRAY_CODE]),
+             """, [ERR.DUPLICATE_PROPERTY_CODE]),
             ("""
              {
                  "resourceType" : "Patient",

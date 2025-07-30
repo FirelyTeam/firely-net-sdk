@@ -40,7 +40,6 @@ public class FhirJsonException(
     public const string RESOURCETYPE_SHOULD_BE_STRING_CODE = "JSON102";
     public const string NO_RESOURCETYPE_PROPERTY_CODE = "JSON103";
     public const string EXPECTED_PRIMITIVE_NOT_NULL_CODE = "JSON109";
-    public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113";
     public const string CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE = "JSON114";
     public const string CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE = "JSON115";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
@@ -48,11 +47,12 @@ public class FhirJsonException(
     public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
     public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
     public const string PRIMITIVE_ARRAYS_ONLY_NULL_CODE = "JSON125";
-    public const string DUPLICATE_ARRAY_CODE = "JSON128";
     public const string DUPLICATE_PROPERTY_CODE = "JSON129";
     public const string NESTED_ARRAY_CODE = "JSON130";
     public const string UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE_CODE = "JSON131";
     public const string UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE_CODE = "JSON132";
+    public const string USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE = "JSON133";
+    public const string UNDERSCORE_SHOULD_BE_OBJECT_CODE = "JSON134";
 
     // ==========================================
     // Structural errors - mistakes in the syntax which will be detected during parsing,
@@ -68,15 +68,13 @@ public class FhirJsonException(
     // The serialization contained a json null where it is not allowed, but a null does not contain data anyway.
     internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_NULL_CODE, "Expected a primitive value, not a json null.", OO_Sev.Error);
 
-    internal static FhirJsonException DUPLICATE_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, DUPLICATE_ARRAY_CODE, $"Duplicate array detected.", OO_Sev.Error);
-    
     internal static FhirJsonException NESTED_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NESTED_ARRAY_CODE, "Nested array detected.", OO_Sev.Error);
 
     // We will just ignore the underscore and keep on parsing
-    internal static FhirJsonException USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{elementName}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Error);
+    internal static FhirJsonException USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE, $"Element '{elementName}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Error);
 
     // We will add the primitive value as a "value" property to the POCO, no data loss.
-    internal static FhirJsonException UNDERSCORE_SHOULD_BE_OBJECT(ref Utf8JsonReader reader, string instancePath, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Property '{propertyName}' has an underscore, which should be a (an array of) Json object or null.", OO_Sev.Error);
+    internal static FhirJsonException UNDERSCORE_SHOULD_BE_OBJECT(ref Utf8JsonReader reader, string instancePath, string propertyName) => Initialize(ref reader, instancePath, UNDERSCORE_SHOULD_BE_OBJECT_CODE, $"Property '{propertyName}' has an underscore, which should be a (an array of) Json object or null.", OO_Sev.Error);
 
     internal static FhirJsonException UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE_CODE, $"Encountered a json primitive while expecting a json object for non-primitive element '{elementName}'.", OO_Sev.Error);
 
