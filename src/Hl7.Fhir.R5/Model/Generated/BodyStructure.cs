@@ -86,13 +86,13 @@ namespace Hl7.Fhir.Model
       [Binding("BodySite")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Structure
+      public Hl7.Fhir.Model.CodeableConcept Structure
       {
         get
         {
           if(_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["structure"]);
-          return _Structure;
+          return _Structure!;
         }
 
         set
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
               Structure = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["structure"] = value;
             }
-            else Structure = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Structure = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "laterality":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1025,13 +1025,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         default:
           return base.SetValue(key, value);

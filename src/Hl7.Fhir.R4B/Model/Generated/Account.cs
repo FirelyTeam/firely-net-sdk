@@ -129,13 +129,13 @@ namespace Hl7.Fhir.Model
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Coverage
+      public Hl7.Fhir.Model.ResourceReference Coverage
       {
         get
         {
           if(_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["coverage"]);
-          return _Coverage;
+          return _Coverage!;
         }
 
         set
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
               Coverage = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["coverage"] = value;
             }
-            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "priority":
             if (value is not (Hl7.Fhir.Model.PositiveInt or null))
@@ -307,13 +307,13 @@ namespace Hl7.Fhir.Model
       [References("Patient","RelatedPerson","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Party
+      public Hl7.Fhir.Model.ResourceReference Party
       {
         get
         {
           if(_Party.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["party"]);
-          return _Party;
+          return _Party!;
         }
 
         set
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
               Party = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["party"] = value;
             }
-            else Party = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Party = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "onHold":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -541,13 +541,13 @@ namespace Hl7.Fhir.Model
     [Binding("AccountStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Account.AccountStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Account.AccountStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Account.AccountStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -569,10 +569,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Account.AccountStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Account.AccountStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>?)value!;
           return this;
         case "type":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

@@ -1957,13 +1957,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -2012,13 +2012,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateTime", InSummary=true, Order=130, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? DateTimeElement
+    public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
       get
       {
         if(_DateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["dateTime"]);
-        return _DateTimeElement;
+        return _DateTimeElement!;
       }
 
       set
@@ -2038,12 +2038,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? DateTime
+    public string DateTime
     {
-      get => DateTimeElement?.Value;
+      get => DateTimeElement?.Value!;
       set
       {
-        DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -2429,7 +2429,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -2445,7 +2445,7 @@ namespace Hl7.Fhir.Model
             DateTimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
             Overflow["dateTime"] = value;
           }
-          else DateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          else DateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
           return this;
         case "orderer":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

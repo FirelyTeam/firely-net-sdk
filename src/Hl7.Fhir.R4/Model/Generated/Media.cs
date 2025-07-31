@@ -155,13 +155,13 @@ namespace Hl7.Fhir.Model
     [Binding("MediaStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EventStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.EventStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.EventStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EventStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -183,10 +183,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EventStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -720,13 +720,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("content", InSummary=true, Order=290)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment? Content
+    public Hl7.Fhir.Model.Attachment Content
     {
       get
       {
         if(_Content.InOverflow<Hl7.Fhir.Model.Attachment>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Attachment), Overflow["content"]);
-        return _Content;
+        return _Content!;
       }
 
       set
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.EventStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value!;
           return this;
         case "type":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
             Content = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
             Overflow["content"] = value;
           }
-          else Content = (Hl7.Fhir.Model.Attachment?)value;
+          else Content = (Hl7.Fhir.Model.Attachment?)value!;
           return this;
         case "note":
           if (value is not (List<Hl7.Fhir.Model.Annotation> or null))

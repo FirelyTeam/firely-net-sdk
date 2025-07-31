@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Origin
+    public Hl7.Fhir.Model.Quantity Origin
     {
       get
       {
         if(_Origin.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["origin"]);
-        return _Origin;
+        return _Origin!;
       }
 
       set
@@ -97,13 +97,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("period", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal? PeriodElement
+    public Hl7.Fhir.Model.FhirDecimal PeriodElement
     {
       get
       {
         if(_PeriodElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["period"]);
-        return _PeriodElement;
+        return _PeriodElement!;
       }
 
       set
@@ -125,10 +125,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Period
     {
-      get => PeriodElement?.Value;
+      get => PeriodElement?.Value!;
       set
       {
-        PeriodElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Period");
       }
     }
@@ -262,13 +262,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("dimensions", InSummary=true, Order=80)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt? DimensionsElement
+    public Hl7.Fhir.Model.PositiveInt DimensionsElement
     {
       get
       {
         if(_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["dimensions"]);
-        return _DimensionsElement;
+        return _DimensionsElement!;
       }
 
       set
@@ -290,10 +290,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => DimensionsElement?.Value;
+      get => DimensionsElement?.Value!;
       set
       {
-        DimensionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Dimensions");
       }
     }
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
             Origin = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
             Overflow["origin"] = value;
           }
-          else Origin = (Hl7.Fhir.Model.Quantity?)value;
+          else Origin = (Hl7.Fhir.Model.Quantity?)value!;
           return this;
         case "period":
           if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
             PeriodElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
             Overflow["period"] = value;
           }
-          else PeriodElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          else PeriodElement = (Hl7.Fhir.Model.FhirDecimal?)value!;
           return this;
         case "factor":
           if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
             DimensionsElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
             Overflow["dimensions"] = value;
           }
-          else DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          else DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value!;
           return this;
         case "data":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

@@ -185,13 +185,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Who
+      public Hl7.Fhir.Model.ResourceReference Who
       {
         get
         {
           if(_Who.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["who"]);
-          return _Who;
+          return _Who!;
         }
 
         set
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
               Who = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["who"] = value;
             }
-            else Who = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Who = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "onBehalfOf":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -384,13 +384,13 @@ namespace Hl7.Fhir.Model
       [Binding("ProvenanceEntityRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>? RoleElement
+      public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement
       {
         get
         {
           if(_RoleElement.InOverflow<Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>), Overflow["role"]);
-          return _RoleElement;
+          return _RoleElement!;
         }
 
         set
@@ -412,10 +412,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Provenance.ProvenanceEntityRole? Role
       {
-        get => RoleElement?.Value;
+        get => RoleElement?.Value!;
         set
         {
-          RoleElement = value is null ? null : new Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>(value);
+          RoleElement = new Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>(value);
           OnPropertyChanged("Role");
         }
       }
@@ -428,13 +428,13 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? What
+      public Hl7.Fhir.Model.ResourceReference What
       {
         get
         {
           if(_What.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["what"]);
-          return _What;
+          return _What!;
         }
 
         set
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
               RoleElement = OverflowNull<Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>>.INSTANCE;
               Overflow["role"] = value;
             }
-            else RoleElement = (Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>?)value;
+            else RoleElement = (Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>?)value!;
             return this;
           case "what":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
               What = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["what"] = value;
             }
-            else What = (Hl7.Fhir.Model.ResourceReference?)value;
+            else What = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "agent":
             if (value is not (List<Hl7.Fhir.Model.Provenance.AgentComponent> or null))

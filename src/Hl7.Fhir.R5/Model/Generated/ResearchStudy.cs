@@ -301,13 +301,13 @@ namespace Hl7.Fhir.Model
       [Binding("ResearchStudyPartyRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Role
+      public Hl7.Fhir.Model.CodeableConcept Role
       {
         get
         {
           if(_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["role"]);
-          return _Role;
+          return _Role!;
         }
 
         set
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
               Role = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["role"] = value;
             }
-            else Role = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Role = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "period":
             if (value is not (List<Hl7.Fhir.Model.Period> or null))
@@ -576,13 +576,13 @@ namespace Hl7.Fhir.Model
       [Binding("ResearchStudyStudyStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? State
+      public Hl7.Fhir.Model.CodeableConcept State
       {
         get
         {
           if(_State.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["state"]);
-          return _State;
+          return _State!;
         }
 
         set
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
               State = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["state"] = value;
             }
-            else State = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else State = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "actual":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -1120,13 +1120,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("name", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? NameElement
+      public Hl7.Fhir.Model.FhirString NameElement
       {
         get
         {
           if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-          return _NameElement;
+          return _NameElement!;
         }
 
         set
@@ -1146,12 +1146,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Name
+      public string Name
       {
-        get => NameElement?.Value;
+        get => NameElement?.Value!;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -1397,7 +1397,7 @@ namespace Hl7.Fhir.Model
               NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["name"] = value;
             }
-            else NameElement = (Hl7.Fhir.Model.FhirString?)value;
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "type":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -2328,13 +2328,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -2356,10 +2356,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -3430,7 +3430,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "primaryPurposeType":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

@@ -176,13 +176,13 @@ namespace Hl7.Fhir.Model
       [Binding("SpecimenContainedPreference")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>? PreferenceElement
+      public Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference> PreferenceElement
       {
         get
         {
           if(_PreferenceElement.InOverflow<Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>), Overflow["preference"]);
-          return _PreferenceElement;
+          return _PreferenceElement!;
         }
 
         set
@@ -204,10 +204,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference? Preference
       {
-        get => PreferenceElement?.Value;
+        get => PreferenceElement?.Value!;
         set
         {
-          PreferenceElement = value is null ? null : new Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>(value);
+          PreferenceElement = new Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>(value);
           OnPropertyChanged("Preference");
         }
       }
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
               PreferenceElement = OverflowNull<Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>>.INSTANCE;
               Overflow["preference"] = value;
             }
-            else PreferenceElement = (Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>?)value;
+            else PreferenceElement = (Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>?)value!;
             return this;
           case "container":
             if (value is not (Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent or null))
@@ -1058,13 +1058,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Additive
+      public Hl7.Fhir.Model.DataType Additive
       {
         get
         {
           if(_Additive.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["additive"]);
-          return _Additive;
+          return _Additive!;
         }
 
         set
@@ -1136,7 +1136,7 @@ namespace Hl7.Fhir.Model
               Additive = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["additive"] = value;
             }
-            else Additive = (Hl7.Fhir.Model.DataType?)value;
+            else Additive = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);

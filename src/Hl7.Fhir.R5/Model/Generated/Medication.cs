@@ -115,13 +115,13 @@ namespace Hl7.Fhir.Model
       [Binding("MedicationFormalRepresentation")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference? Item
+      public Hl7.Fhir.Model.CodeableReference Item
       {
         get
         {
           if(_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.CodeableReference?)value;
+            else Item = (Hl7.Fhir.Model.CodeableReference?)value!;
             return this;
           case "isActive":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))

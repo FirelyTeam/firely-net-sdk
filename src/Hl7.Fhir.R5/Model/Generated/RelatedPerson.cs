@@ -86,13 +86,13 @@ namespace Hl7.Fhir.Model
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Language
+      public Hl7.Fhir.Model.CodeableConcept Language
       {
         get
         {
           if(_Language.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["language"]);
-          return _Language;
+          return _Language!;
         }
 
         set
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
               Language = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["language"] = value;
             }
-            else Language = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Language = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "preferred":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -317,13 +317,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "relationship":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

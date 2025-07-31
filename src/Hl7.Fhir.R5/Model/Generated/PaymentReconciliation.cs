@@ -1010,13 +1010,13 @@ namespace Hl7.Fhir.Model
     [Binding("PaymentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Type
+    public Hl7.Fhir.Model.CodeableConcept Type
     {
       get
       {
         if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-        return _Type;
+        return _Type!;
       }
 
       set
@@ -1038,13 +1038,13 @@ namespace Hl7.Fhir.Model
     [Binding("PaymentReconciliationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1066,10 +1066,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1133,13 +1133,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("created", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
       get
       {
         if(_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["created"]);
-        return _CreatedElement;
+        return _CreatedElement!;
       }
 
       set
@@ -1159,12 +1159,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Created
+    public string Created
     {
-      get => CreatedElement?.Value;
+      get => CreatedElement?.Value!;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -1397,13 +1397,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("date", InSummary=true, Order=220)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Date? DateElement
+    public Hl7.Fhir.Model.Date DateElement
     {
       get
       {
         if(_DateElement.InOverflow<Hl7.Fhir.Model.Date>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Date), Overflow["date"]);
-        return _DateElement;
+        return _DateElement!;
       }
 
       set
@@ -1423,12 +1423,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Date
+    public string Date
     {
-      get => DateElement?.Value;
+      get => DateElement?.Value!;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        DateElement = new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1792,13 +1792,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("amount", InSummary=true, Order=330)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Money? Amount
+    public Hl7.Fhir.Model.Money Amount
     {
       get
       {
         if(_Amount.InOverflow<Hl7.Fhir.Model.Money>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Money), Overflow["amount"]);
-        return _Amount;
+        return _Amount!;
       }
 
       set
@@ -2269,7 +2269,7 @@ namespace Hl7.Fhir.Model
             Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["type"] = value;
           }
-          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> or null))
@@ -2277,7 +2277,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value!;
           return this;
         case "kind":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -2301,7 +2301,7 @@ namespace Hl7.Fhir.Model
             CreatedElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
             Overflow["created"] = value;
           }
-          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
           return this;
         case "enterer":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -2365,7 +2365,7 @@ namespace Hl7.Fhir.Model
             DateElement = OverflowNull<Hl7.Fhir.Model.Date>.INSTANCE;
             Overflow["date"] = value;
           }
-          else DateElement = (Hl7.Fhir.Model.Date?)value;
+          else DateElement = (Hl7.Fhir.Model.Date?)value!;
           return this;
         case "location":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -2453,7 +2453,7 @@ namespace Hl7.Fhir.Model
             Amount = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
             Overflow["amount"] = value;
           }
-          else Amount = (Hl7.Fhir.Model.Money?)value;
+          else Amount = (Hl7.Fhir.Model.Money?)value!;
           return this;
         case "paymentIdentifier":
           if (value is not (Hl7.Fhir.Model.Identifier or null))

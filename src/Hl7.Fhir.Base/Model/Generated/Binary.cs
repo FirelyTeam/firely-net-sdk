@@ -74,13 +74,13 @@ namespace Hl7.Fhir.Model
     [Binding("MimeType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? ContentTypeElement
+    public Hl7.Fhir.Model.Code ContentTypeElement
     {
       get
       {
         if(_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
-        return _ContentTypeElement;
+        return _ContentTypeElement!;
       }
 
       set
@@ -100,12 +100,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? ContentType
+    public string ContentType
     {
-      get => ContentTypeElement?.Value;
+      get => ContentTypeElement?.Value!;
       set
       {
-        ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
             ContentTypeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
             Overflow["contentType"] = value;
           }
-          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
+          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value!;
           return this;
         case "securityContext":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

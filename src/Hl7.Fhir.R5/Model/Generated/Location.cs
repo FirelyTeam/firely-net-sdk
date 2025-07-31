@@ -136,13 +136,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("longitude", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal? LongitudeElement
+      public Hl7.Fhir.Model.FhirDecimal LongitudeElement
       {
         get
         {
           if(_LongitudeElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["longitude"]);
-          return _LongitudeElement;
+          return _LongitudeElement!;
         }
 
         set
@@ -164,10 +164,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Longitude
       {
-        get => LongitudeElement?.Value;
+        get => LongitudeElement?.Value!;
         set
         {
-          LongitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Longitude");
         }
       }
@@ -178,13 +178,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("latitude", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal? LatitudeElement
+      public Hl7.Fhir.Model.FhirDecimal LatitudeElement
       {
         get
         {
           if(_LatitudeElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["latitude"]);
-          return _LatitudeElement;
+          return _LatitudeElement!;
         }
 
         set
@@ -206,10 +206,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Latitude
       {
-        get => LatitudeElement?.Value;
+        get => LatitudeElement?.Value!;
         set
         {
-          LatitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Latitude");
         }
       }
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
               LongitudeElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
               Overflow["longitude"] = value;
             }
-            else LongitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            else LongitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value!;
             return this;
           case "latitude":
             if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
               LatitudeElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
               Overflow["latitude"] = value;
             }
-            else LatitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            else LatitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value!;
             return this;
           case "altitude":
             if (value is not (Hl7.Fhir.Model.FhirDecimal or null))

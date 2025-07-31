@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("country", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Country
+    public Hl7.Fhir.Model.CodeableConcept Country
     {
       get
       {
         if(_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["country"]);
-        return _Country;
+        return _Country!;
       }
 
       set
@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("status", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Status
+    public Hl7.Fhir.Model.CodeableConcept Status
     {
       get
       {
         if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-        return _Status;
+        return _Status!;
       }
 
       set
@@ -146,13 +146,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateRange", InSummary=true, Order=70)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Period? DateRange
+    public Hl7.Fhir.Model.Period DateRange
     {
       get
       {
         if(_DateRange.InOverflow<Hl7.Fhir.Model.Period>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["dateRange"]);
-        return _DateRange;
+        return _DateRange!;
       }
 
       set
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
             Country = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["country"] = value;
           }
-          else Country = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Country = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "jurisdiction":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
             Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["status"] = value;
           }
-          else Status = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Status = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "dateRange":
           if (value is not (Hl7.Fhir.Model.Period or null))
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
             DateRange = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
             Overflow["dateRange"] = value;
           }
-          else DateRange = (Hl7.Fhir.Model.Period?)value;
+          else DateRange = (Hl7.Fhir.Model.Period?)value!;
           return this;
         case "restoreDate":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))

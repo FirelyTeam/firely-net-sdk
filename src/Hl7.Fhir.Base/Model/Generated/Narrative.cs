@@ -104,13 +104,13 @@ namespace Hl7.Fhir.Model
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -132,10 +132,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -146,13 +146,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.XHtml? DivElement
+    public Hl7.Fhir.Model.XHtml DivElement
     {
       get
       {
         if(_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.XHtml), Overflow["div"]);
-        return _DivElement;
+        return _DivElement!;
       }
 
       set
@@ -172,12 +172,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Div
+    public string Div
     {
-      get => DivElement?.Value;
+      get => DivElement?.Value!;
       set
       {
-        DivElement = value is null ? null : new Hl7.Fhir.Model.XHtml(value);
+        DivElement = new Hl7.Fhir.Model.XHtml(value);
         OnPropertyChanged("Div");
       }
     }
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value!;
           return this;
         case "div":
           if (value is not (Hl7.Fhir.Model.XHtml or null))
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
             DivElement = OverflowNull<Hl7.Fhir.Model.XHtml>.INSTANCE;
             Overflow["div"] = value;
           }
-          else DivElement = (Hl7.Fhir.Model.XHtml?)value;
+          else DivElement = (Hl7.Fhir.Model.XHtml?)value!;
           return this;
         default:
           return base.SetValue(key, value);

@@ -153,13 +153,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization","Patient","PractitionerRole","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Actor
+      public Hl7.Fhir.Model.ResourceReference Actor
       {
         get
         {
           if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
-          return _Actor;
+          return _Actor!;
         }
 
         set
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
               Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["actor"] = value;
             }
-            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Actor = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -360,13 +360,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? ChargeItem
+      public Hl7.Fhir.Model.DataType ChargeItem
       {
         get
         {
           if(_ChargeItem.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["chargeItem"]);
-          return _ChargeItem;
+          return _ChargeItem!;
         }
 
         set
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
               ChargeItem = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["chargeItem"] = value;
             }
-            else ChargeItem = (Hl7.Fhir.Model.DataType?)value;
+            else ChargeItem = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "priceComponent":
             if (value is not (List<Hl7.Fhir.Model.MonetaryComponent> or null))
@@ -574,13 +574,13 @@ namespace Hl7.Fhir.Model
     [Binding("InvoiceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -602,10 +602,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Invoice.InvoiceStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1341,7 +1341,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>?)value!;
           return this;
         case "cancelledReason":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

@@ -362,13 +362,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? UidElement
+      public Hl7.Fhir.Model.Id UidElement
       {
         get
         {
           if(_UidElement.InOverflow<Hl7.Fhir.Model.Id>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["uid"]);
-          return _UidElement;
+          return _UidElement!;
         }
 
         set
@@ -388,12 +388,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Uid
+      public string Uid
       {
-        get => UidElement?.Value;
+        get => UidElement?.Value!;
         set
         {
-          UidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          UidElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Model
               UidElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
               Overflow["uid"] = value;
             }
-            else UidElement = (Hl7.Fhir.Model.Id?)value;
+            else UidElement = (Hl7.Fhir.Model.Id?)value!;
             return this;
           case "number":
             if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
@@ -760,13 +760,13 @@ namespace Hl7.Fhir.Model
       [Binding("ImagingSelection2DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>? RegionTypeElement
+      public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType> RegionTypeElement
       {
         get
         {
           if(_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>), Overflow["regionType"]);
-          return _RegionTypeElement;
+          return _RegionTypeElement!;
         }
 
         set
@@ -788,10 +788,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType? RegionType
       {
-        get => RegionTypeElement?.Value;
+        get => RegionTypeElement?.Value!;
         set
         {
-          RegionTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
+          RegionTypeElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
           OnPropertyChanged("RegionType");
         }
       }
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
               RegionTypeElement = OverflowNull<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>.INSTANCE;
               Overflow["regionType"] = value;
             }
-            else RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>?)value;
+            else RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>?)value!;
             return this;
           case "coordinate":
             if (value is not (List<Hl7.Fhir.Model.FhirDecimal> or null))
@@ -957,13 +957,13 @@ namespace Hl7.Fhir.Model
       [Binding("ImagingSelection3DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>? RegionTypeElement
+      public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType> RegionTypeElement
       {
         get
         {
           if(_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>), Overflow["regionType"]);
-          return _RegionTypeElement;
+          return _RegionTypeElement!;
         }
 
         set
@@ -985,10 +985,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType? RegionType
       {
-        get => RegionTypeElement?.Value;
+        get => RegionTypeElement?.Value!;
         set
         {
-          RegionTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
+          RegionTypeElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
           OnPropertyChanged("RegionType");
         }
       }
@@ -1106,7 +1106,7 @@ namespace Hl7.Fhir.Model
               RegionTypeElement = OverflowNull<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>.INSTANCE;
               Overflow["regionType"] = value;
             }
-            else RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>?)value;
+            else RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>?)value!;
             return this;
           case "coordinate":
             if (value is not (List<Hl7.Fhir.Model.FhirDecimal> or null))
@@ -1166,13 +1166,13 @@ namespace Hl7.Fhir.Model
     [Binding("ImagingSelectionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1194,10 +1194,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1365,13 +1365,13 @@ namespace Hl7.Fhir.Model
     [Binding("ImagingSelectionCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Code
+    public Hl7.Fhir.Model.CodeableConcept Code
     {
       get
       {
         if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-        return _Code;
+        return _Code!;
       }
 
       set
@@ -1922,7 +1922,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1970,7 +1970,7 @@ namespace Hl7.Fhir.Model
             Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["code"] = value;
           }
-          else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "studyUid":
           if (value is not (Hl7.Fhir.Model.Id or null))

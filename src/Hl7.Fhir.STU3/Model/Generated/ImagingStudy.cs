@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid? UidElement
+      public Hl7.Fhir.Model.Oid UidElement
       {
         get
         {
           if(_UidElement.InOverflow<Hl7.Fhir.Model.Oid>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Oid), Overflow["uid"]);
-          return _UidElement;
+          return _UidElement!;
         }
 
         set
@@ -145,12 +145,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Uid
+      public string Uid
       {
-        get => UidElement?.Value;
+        get => UidElement?.Value!;
         set
         {
-          UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
+          UidElement = new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -203,13 +203,13 @@ namespace Hl7.Fhir.Model
       [Binding("ImagingModality")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Coding? Modality
+      public Hl7.Fhir.Model.Coding Modality
       {
         get
         {
           if(_Modality.InOverflow<Hl7.Fhir.Model.Coding>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["modality"]);
-          return _Modality;
+          return _Modality!;
         }
 
         set
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
               UidElement = OverflowNull<Hl7.Fhir.Model.Oid>.INSTANCE;
               Overflow["uid"] = value;
             }
-            else UidElement = (Hl7.Fhir.Model.Oid?)value;
+            else UidElement = (Hl7.Fhir.Model.Oid?)value!;
             return this;
           case "number":
             if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
               Modality = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
               Overflow["modality"] = value;
             }
-            else Modality = (Hl7.Fhir.Model.Coding?)value;
+            else Modality = (Hl7.Fhir.Model.Coding?)value!;
             return this;
           case "description":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -835,13 +835,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("uid", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid? UidElement
+      public Hl7.Fhir.Model.Oid UidElement
       {
         get
         {
           if(_UidElement.InOverflow<Hl7.Fhir.Model.Oid>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Oid), Overflow["uid"]);
-          return _UidElement;
+          return _UidElement!;
         }
 
         set
@@ -861,12 +861,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Uid
+      public string Uid
       {
-        get => UidElement?.Value;
+        get => UidElement?.Value!;
         set
         {
-          UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
+          UidElement = new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -918,13 +918,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sopClass", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Oid? SopClassElement
+      public Hl7.Fhir.Model.Oid SopClassElement
       {
         get
         {
           if(_SopClassElement.InOverflow<Hl7.Fhir.Model.Oid>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Oid), Overflow["sopClass"]);
-          return _SopClassElement;
+          return _SopClassElement!;
         }
 
         set
@@ -944,12 +944,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? SopClass
+      public string SopClass
       {
-        get => SopClassElement?.Value;
+        get => SopClassElement?.Value!;
         set
         {
-          SopClassElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
+          SopClassElement = new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("SopClass");
         }
       }
@@ -1082,7 +1082,7 @@ namespace Hl7.Fhir.Model
               UidElement = OverflowNull<Hl7.Fhir.Model.Oid>.INSTANCE;
               Overflow["uid"] = value;
             }
-            else UidElement = (Hl7.Fhir.Model.Oid?)value;
+            else UidElement = (Hl7.Fhir.Model.Oid?)value!;
             return this;
           case "number":
             if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
               SopClassElement = OverflowNull<Hl7.Fhir.Model.Oid>.INSTANCE;
               Overflow["sopClass"] = value;
             }
-            else SopClassElement = (Hl7.Fhir.Model.Oid?)value;
+            else SopClassElement = (Hl7.Fhir.Model.Oid?)value!;
             return this;
           case "title":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -1131,13 +1131,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("uid", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Oid? UidElement
+    public Hl7.Fhir.Model.Oid UidElement
     {
       get
       {
         if(_UidElement.InOverflow<Hl7.Fhir.Model.Oid>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Oid), Overflow["uid"]);
-        return _UidElement;
+        return _UidElement!;
       }
 
       set
@@ -1157,12 +1157,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Uid
+    public string Uid
     {
-      get => UidElement?.Value;
+      get => UidElement?.Value!;
       set
       {
-        UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
+        UidElement = new Hl7.Fhir.Model.Oid(value);
         OnPropertyChanged("Uid");
       }
     }
@@ -1300,13 +1300,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1984,7 +1984,7 @@ namespace Hl7.Fhir.Model
             UidElement = OverflowNull<Hl7.Fhir.Model.Oid>.INSTANCE;
             Overflow["uid"] = value;
           }
-          else UidElement = (Hl7.Fhir.Model.Oid?)value;
+          else UidElement = (Hl7.Fhir.Model.Oid?)value!;
           return this;
         case "accession":
           if (value is not (Hl7.Fhir.Model.Identifier or null))
@@ -2024,7 +2024,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "context":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("eventNumber", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? EventNumberElement
+      public Hl7.Fhir.Model.FhirString EventNumberElement
       {
         get
         {
           if(_EventNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["eventNumber"]);
-          return _EventNumberElement;
+          return _EventNumberElement!;
         }
 
         set
@@ -151,12 +151,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? EventNumber
+      public string EventNumber
       {
-        get => EventNumberElement?.Value;
+        get => EventNumberElement?.Value!;
         set
         {
-          EventNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          EventNumberElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("EventNumber");
         }
       }
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
               EventNumberElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["eventNumber"] = value;
             }
-            else EventNumberElement = (Hl7.Fhir.Model.FhirString?)value;
+            else EventNumberElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "timestamp":
             if (value is not (Hl7.Fhir.Model.Instant or null))
@@ -439,13 +439,13 @@ namespace Hl7.Fhir.Model
     [Binding("SubscriptionNotificationType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>? TypeElement
+    public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -467,10 +467,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType? Type
     {
-      get => TypeElement?.Value;
+      get => TypeElement?.Value!;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
+        TypeElement = new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -552,13 +552,13 @@ namespace Hl7.Fhir.Model
     [References("Subscription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subscription
+    public Hl7.Fhir.Model.ResourceReference Subscription
     {
       get
       {
         if(_Subscription.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subscription"]);
-        return _Subscription;
+        return _Subscription!;
       }
 
       set
@@ -768,7 +768,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>?)value!;
           return this;
         case "eventsSinceSubscriptionStart":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
             Subscription = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subscription"] = value;
           }
-          else Subscription = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subscription = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "topic":
           if (value is not (Hl7.Fhir.Model.Canonical or null))

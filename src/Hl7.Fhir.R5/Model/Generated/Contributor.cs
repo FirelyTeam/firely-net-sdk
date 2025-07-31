@@ -104,13 +104,13 @@ namespace Hl7.Fhir.Model
     [Binding("ContributorType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Contributor.ContributorType>? TypeElement
+    public Code<Hl7.Fhir.Model.Contributor.ContributorType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Contributor.ContributorType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Contributor.ContributorType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -132,10 +132,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Contributor.ContributorType? Type
     {
-      get => TypeElement?.Value;
+      get => TypeElement?.Value!;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Contributor.ContributorType>(value);
+        TypeElement = new Code<Hl7.Fhir.Model.Contributor.ContributorType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -146,13 +146,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? NameElement
+    public Hl7.Fhir.Model.FhirString NameElement
     {
       get
       {
         if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-        return _NameElement;
+        return _NameElement!;
       }
 
       set
@@ -172,12 +172,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Name
+    public string Name
     {
-      get => NameElement?.Value;
+      get => NameElement?.Value!;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Contributor.ContributorType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.Contributor.ContributorType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.Contributor.ContributorType>?)value!;
           return this;
         case "name":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
             NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["name"] = value;
           }
-          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
+          else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         case "contact":
           if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))

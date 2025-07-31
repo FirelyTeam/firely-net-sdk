@@ -138,13 +138,13 @@ namespace Hl7.Fhir.Model
       [Binding("DeviceUsageAdherenceCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "reason":
             if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -345,13 +345,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceUsageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -373,10 +373,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -417,13 +417,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -680,13 +680,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("device", InSummary=true, Order=220, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference? Device
+    public Hl7.Fhir.Model.CodeableReference Device
     {
       get
       {
         if(_Device.InOverflow<Hl7.Fhir.Model.CodeableReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["device"]);
-        return _Device;
+        return _Device!;
       }
 
       set
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "derivedFrom":
           if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
             Device = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
             Overflow["device"] = value;
           }
-          else Device = (Hl7.Fhir.Model.CodeableReference?)value;
+          else Device = (Hl7.Fhir.Model.CodeableReference?)value!;
           return this;
         case "reason":
           if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))

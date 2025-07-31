@@ -127,13 +127,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("linkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? LinkIdElement
+      public Hl7.Fhir.Model.FhirString LinkIdElement
       {
         get
         {
           if(_LinkIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["linkId"]);
-          return _LinkIdElement;
+          return _LinkIdElement!;
         }
 
         set
@@ -153,12 +153,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? LinkId
+      public string LinkId
       {
-        get => LinkIdElement?.Value;
+        get => LinkIdElement?.Value!;
         set
         {
-          LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LinkId");
         }
       }
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
               LinkIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["linkId"] = value;
             }
-            else LinkIdElement = (Hl7.Fhir.Model.FhirString?)value;
+            else LinkIdElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "definition":
             if (value is not (Hl7.Fhir.Model.FhirUri or null))
@@ -477,13 +477,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "item":
             if (value is not (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> or null))
@@ -712,13 +712,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("questionnaire", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical? QuestionnaireElement
+    public Hl7.Fhir.Model.Canonical QuestionnaireElement
     {
       get
       {
         if(_QuestionnaireElement.InOverflow<Hl7.Fhir.Model.Canonical>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["questionnaire"]);
-        return _QuestionnaireElement;
+        return _QuestionnaireElement!;
       }
 
       set
@@ -738,12 +738,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Questionnaire
+    public string Questionnaire
     {
-      get => QuestionnaireElement?.Value;
+      get => QuestionnaireElement?.Value!;
       set
       {
-        QuestionnaireElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        QuestionnaireElement = new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Questionnaire");
       }
     }
@@ -755,13 +755,13 @@ namespace Hl7.Fhir.Model
     [Binding("QuestionnaireResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -783,10 +783,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1155,7 +1155,7 @@ namespace Hl7.Fhir.Model
             QuestionnaireElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
             Overflow["questionnaire"] = value;
           }
-          else QuestionnaireElement = (Hl7.Fhir.Model.Canonical?)value;
+          else QuestionnaireElement = (Hl7.Fhir.Model.Canonical?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> or null))
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

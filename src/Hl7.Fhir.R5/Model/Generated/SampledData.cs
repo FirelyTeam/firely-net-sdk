@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Origin
+    public Hl7.Fhir.Model.Quantity Origin
     {
       get
       {
         if(_Origin.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["origin"]);
-        return _Origin;
+        return _Origin!;
       }
 
       set
@@ -139,13 +139,13 @@ namespace Hl7.Fhir.Model
     [Binding("Units")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? IntervalUnitElement
+    public Hl7.Fhir.Model.Code IntervalUnitElement
     {
       get
       {
         if(_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["intervalUnit"]);
-        return _IntervalUnitElement;
+        return _IntervalUnitElement!;
       }
 
       set
@@ -165,12 +165,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? IntervalUnit
+    public string IntervalUnit
     {
-      get => IntervalUnitElement?.Value;
+      get => IntervalUnitElement?.Value!;
       set
       {
-        IntervalUnitElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        IntervalUnitElement = new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("IntervalUnit");
       }
     }
@@ -304,13 +304,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("dimensions", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt? DimensionsElement
+    public Hl7.Fhir.Model.PositiveInt DimensionsElement
     {
       get
       {
         if(_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["dimensions"]);
-        return _DimensionsElement;
+        return _DimensionsElement!;
       }
 
       set
@@ -332,10 +332,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => DimensionsElement?.Value;
+      get => DimensionsElement?.Value!;
       set
       {
-        DimensionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Dimensions");
       }
     }
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
             Origin = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
             Overflow["origin"] = value;
           }
-          else Origin = (Hl7.Fhir.Model.Quantity?)value;
+          else Origin = (Hl7.Fhir.Model.Quantity?)value!;
           return this;
         case "interval":
           if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
             IntervalUnitElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
             Overflow["intervalUnit"] = value;
           }
-          else IntervalUnitElement = (Hl7.Fhir.Model.Code?)value;
+          else IntervalUnitElement = (Hl7.Fhir.Model.Code?)value!;
           return this;
         case "factor":
           if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
             DimensionsElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
             Overflow["dimensions"] = value;
           }
-          else DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          else DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value!;
           return this;
         case "codeMap":
           if (value is not (Hl7.Fhir.Model.Canonical or null))

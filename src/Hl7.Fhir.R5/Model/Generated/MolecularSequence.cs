@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
       [Binding("LL5323-2")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? CoordinateSystem
+      public Hl7.Fhir.Model.CodeableConcept CoordinateSystem
       {
         get
         {
           if(_CoordinateSystem.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["coordinateSystem"]);
-          return _CoordinateSystem;
+          return _CoordinateSystem!;
         }
 
         set
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
               CoordinateSystem = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["coordinateSystem"] = value;
             }
-            else CoordinateSystem = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else CoordinateSystem = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "ordinalPosition":
             if (value is not (Hl7.Fhir.Model.Integer or null))

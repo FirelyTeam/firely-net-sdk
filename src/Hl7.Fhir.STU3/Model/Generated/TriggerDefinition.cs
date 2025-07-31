@@ -122,13 +122,13 @@ namespace Hl7.Fhir.Model
     [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? TypeElement
+    public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -150,10 +150,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TriggerDefinition.TriggerType? Type
     {
-      get => TypeElement?.Value;
+      get => TypeElement?.Value!;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
+        TypeElement = new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value!;
           return this;
         case "eventName":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

@@ -323,13 +323,13 @@ namespace Hl7.Fhir.Model
     [Binding("EndpointStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -351,10 +351,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Endpoint.EndpointStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -615,13 +615,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUrl? AddressElement
+    public Hl7.Fhir.Model.FhirUrl AddressElement
     {
       get
       {
         if(_AddressElement.InOverflow<Hl7.Fhir.Model.FhirUrl>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUrl), Overflow["address"]);
-        return _AddressElement;
+        return _AddressElement!;
       }
 
       set
@@ -641,12 +641,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Address
+    public string Address
     {
-      get => AddressElement?.Value;
+      get => AddressElement?.Value!;
       set
       {
-        AddressElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
+        AddressElement = new Hl7.Fhir.Model.FhirUrl(value);
         OnPropertyChanged("Address");
       }
     }
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value!;
           return this;
         case "connectionType":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
             AddressElement = OverflowNull<Hl7.Fhir.Model.FhirUrl>.INSTANCE;
             Overflow["address"] = value;
           }
-          else AddressElement = (Hl7.Fhir.Model.FhirUrl?)value;
+          else AddressElement = (Hl7.Fhir.Model.FhirUrl?)value!;
           return this;
         case "header":
           if (value is not (List<Hl7.Fhir.Model.FhirString> or null))

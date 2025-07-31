@@ -528,13 +528,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PathElement
+      public Hl7.Fhir.Model.FhirString PathElement
       {
         get
         {
           if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-          return _PathElement;
+          return _PathElement!;
         }
 
         set
@@ -554,12 +554,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Path
+      public string Path
       {
-        get => PathElement?.Value;
+        get => PathElement?.Value!;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -570,13 +570,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("expression", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Expression? Expression
+      public Hl7.Fhir.Model.Expression Expression
       {
         get
         {
           if(_Expression.InOverflow<Hl7.Fhir.Model.Expression>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Expression), Overflow["expression"]);
-          return _Expression;
+          return _Expression!;
         }
 
         set
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
               PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["path"] = value;
             }
-            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "expression":
             if (value is not (Hl7.Fhir.Model.Expression or null))
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
               Expression = OverflowNull<Hl7.Fhir.Model.Expression>.INSTANCE;
               Overflow["expression"] = value;
             }
-            else Expression = (Hl7.Fhir.Model.Expression?)value;
+            else Expression = (Hl7.Fhir.Model.Expression?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -951,13 +951,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -979,10 +979,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -3014,7 +3014,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "experimental":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))

@@ -145,13 +145,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Definition
+      public Hl7.Fhir.Model.DataType Definition
       {
         get
         {
           if(_Definition.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["definition"]);
-          return _Definition;
+          return _Definition!;
         }
 
         set
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
               Definition = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["definition"] = value;
             }
-            else Definition = (Hl7.Fhir.Model.DataType?)value;
+            else Definition = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "usageContext":
             if (value is not (List<Hl7.Fhir.Model.UsageContext> or null))
@@ -1099,13 +1099,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1127,10 +1127,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1913,13 +1913,13 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchElementType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>? TypeElement
+    public Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -1941,10 +1941,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType? Type
     {
-      get => TypeElement?.Value;
+      get => TypeElement?.Value!;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>(value);
+        TypeElement = new Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -2454,7 +2454,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "experimental":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -2638,7 +2638,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>?)value!;
           return this;
         case "variableType":
           if (value is not (Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode> or null))

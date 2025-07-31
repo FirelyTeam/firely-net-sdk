@@ -729,13 +729,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier? Identifier
+      public Hl7.Fhir.Model.Identifier Identifier
       {
         get
         {
           if(_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
-          return _Identifier;
+          return _Identifier!;
         }
 
         set
@@ -757,13 +757,13 @@ namespace Hl7.Fhir.Model
       [Binding("ResponseType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MessageHeader.ResponseType>? CodeElement
+      public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
       {
         get
         {
           if(_CodeElement.InOverflow<Code<Hl7.Fhir.Model.MessageHeader.ResponseType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MessageHeader.ResponseType>), Overflow["code"]);
-          return _CodeElement;
+          return _CodeElement!;
         }
 
         set
@@ -785,10 +785,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
       {
-        get => CodeElement?.Value;
+        get => CodeElement?.Value!;
         set
         {
-          CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
+          CodeElement = new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
               Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
               Overflow["identifier"] = value;
             }
-            else Identifier = (Hl7.Fhir.Model.Identifier?)value;
+            else Identifier = (Hl7.Fhir.Model.Identifier?)value!;
             return this;
           case "code":
             if (value is not (Code<Hl7.Fhir.Model.MessageHeader.ResponseType> or null))
@@ -906,7 +906,7 @@ namespace Hl7.Fhir.Model
               CodeElement = OverflowNull<Code<Hl7.Fhir.Model.MessageHeader.ResponseType>>.INSTANCE;
               Overflow["code"] = value;
             }
-            else CodeElement = (Code<Hl7.Fhir.Model.MessageHeader.ResponseType>?)value;
+            else CodeElement = (Code<Hl7.Fhir.Model.MessageHeader.ResponseType>?)value!;
             return this;
           case "details":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -941,13 +941,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Canonical))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Event
+    public Hl7.Fhir.Model.DataType Event
     {
       get
       {
         if(_Event.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["event"]);
-        return _Event;
+        return _Event!;
       }
 
       set
@@ -1052,13 +1052,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("source", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent? Source
+    public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
     {
       get
       {
         if(_Source.InOverflow<Hl7.Fhir.Model.MessageHeader.MessageSourceComponent>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MessageHeader.MessageSourceComponent), Overflow["source"]);
-        return _Source;
+        return _Source!;
       }
 
       set
@@ -1372,7 +1372,7 @@ namespace Hl7.Fhir.Model
             Event = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["event"] = value;
           }
-          else Event = (Hl7.Fhir.Model.DataType?)value;
+          else Event = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         case "destination":
           if (value is not (List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> or null))
@@ -1404,7 +1404,7 @@ namespace Hl7.Fhir.Model
             Source = OverflowNull<Hl7.Fhir.Model.MessageHeader.MessageSourceComponent>.INSTANCE;
             Overflow["source"] = value;
           }
-          else Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent?)value;
+          else Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent?)value!;
           return this;
         case "responsible":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

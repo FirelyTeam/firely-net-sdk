@@ -1801,13 +1801,13 @@ namespace Hl7.Fhir.Model
     [Binding("GenomicStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1829,10 +1829,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1874,13 +1874,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Substance","BiologicallyDerivedProduct","NutritionProduct")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -2466,7 +2466,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>?)value!;
           return this;
         case "type":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -2482,7 +2482,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

@@ -1046,13 +1046,13 @@ namespace Hl7.Fhir.Model
       [Binding("MeasureStratifierExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -1074,13 +1074,13 @@ namespace Hl7.Fhir.Model
       [Binding("MeasureReportStratifierValueExample")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Value
+      public Hl7.Fhir.Model.CodeableConcept Value
       {
         get
         {
           if(_Value.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Value = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1445,13 +1445,13 @@ namespace Hl7.Fhir.Model
     [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1473,10 +1473,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1488,13 +1488,13 @@ namespace Hl7.Fhir.Model
     [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>? TypeElement
+    public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -1516,10 +1516,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
     {
-      get => TypeElement?.Value;
+      get => TypeElement?.Value!;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
+        TypeElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1530,13 +1530,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("measure", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical? MeasureElement
+    public Hl7.Fhir.Model.Canonical MeasureElement
     {
       get
       {
         if(_MeasureElement.InOverflow<Hl7.Fhir.Model.Canonical>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["measure"]);
-        return _MeasureElement;
+        return _MeasureElement!;
       }
 
       set
@@ -1556,12 +1556,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Measure
+    public string Measure
     {
-      get => MeasureElement?.Value;
+      get => MeasureElement?.Value!;
       set
       {
-        MeasureElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        MeasureElement = new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Measure");
       }
     }
@@ -1669,13 +1669,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("period", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Period? Period
+    public Hl7.Fhir.Model.Period Period
     {
       get
       {
         if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-        return _Period;
+        return _Period!;
       }
 
       set
@@ -1942,7 +1942,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>?)value!;
           return this;
         case "type":
           if (value is not (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> or null))
@@ -1950,7 +1950,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>?)value!;
           return this;
         case "measure":
           if (value is not (Hl7.Fhir.Model.Canonical or null))
@@ -1958,7 +1958,7 @@ namespace Hl7.Fhir.Model
             MeasureElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
             Overflow["measure"] = value;
           }
-          else MeasureElement = (Hl7.Fhir.Model.Canonical?)value;
+          else MeasureElement = (Hl7.Fhir.Model.Canonical?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1990,7 +1990,7 @@ namespace Hl7.Fhir.Model
             Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
             Overflow["period"] = value;
           }
-          else Period = (Hl7.Fhir.Model.Period?)value;
+          else Period = (Hl7.Fhir.Model.Period?)value!;
           return this;
         case "improvementNotation":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

@@ -96,13 +96,13 @@ namespace Hl7.Fhir.Model
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Appointment
+    public Hl7.Fhir.Model.ResourceReference Appointment
     {
       get
       {
         if(_Appointment.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["appointment"]);
-        return _Appointment;
+        return _Appointment!;
       }
 
       set
@@ -263,13 +263,13 @@ namespace Hl7.Fhir.Model
     [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ParticipationStatus>? ParticipantStatusElement
+    public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement
     {
       get
       {
         if(_ParticipantStatusElement.InOverflow<Code<Hl7.Fhir.Model.ParticipationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ParticipationStatus>), Overflow["participantStatus"]);
-        return _ParticipantStatusElement;
+        return _ParticipantStatusElement!;
       }
 
       set
@@ -291,10 +291,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ParticipationStatus? ParticipantStatus
     {
-      get => ParticipantStatusElement?.Value;
+      get => ParticipantStatusElement?.Value!;
       set
       {
-        ParticipantStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
+        ParticipantStatusElement = new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
         OnPropertyChanged("ParticipantStatus");
       }
     }
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
             Appointment = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["appointment"] = value;
           }
-          else Appointment = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Appointment = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "start":
           if (value is not (Hl7.Fhir.Model.Instant or null))
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
             ParticipantStatusElement = OverflowNull<Code<Hl7.Fhir.Model.ParticipationStatus>>.INSTANCE;
             Overflow["participantStatus"] = value;
           }
-          else ParticipantStatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>?)value;
+          else ParticipantStatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>?)value!;
           return this;
         case "comment":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

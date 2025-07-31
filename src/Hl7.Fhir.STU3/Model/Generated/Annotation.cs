@@ -140,13 +140,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("text", Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? TextElement
+    public Hl7.Fhir.Model.FhirString TextElement
     {
       get
       {
         if(_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
-        return _TextElement;
+        return _TextElement!;
       }
 
       set
@@ -166,12 +166,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Text
+    public string Text
     {
-      get => TextElement?.Value;
+      get => TextElement?.Value!;
       set
       {
-        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TextElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             TextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["text"] = value;
           }
-          else TextElement = (Hl7.Fhir.Model.FhirString?)value;
+          else TextElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         default:
           return base.SetValue(key, value);

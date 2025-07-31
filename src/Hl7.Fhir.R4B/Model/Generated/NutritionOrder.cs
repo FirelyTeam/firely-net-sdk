@@ -1988,13 +1988,13 @@ namespace Hl7.Fhir.Model
     [Binding("NutritionOrderStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RequestStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -2016,10 +2016,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2031,13 +2031,13 @@ namespace Hl7.Fhir.Model
     [Binding("NutritiionOrderIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestIntent>? IntentElement
+    public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
     {
       get
       {
         if(_IntentElement.InOverflow<Code<Hl7.Fhir.Model.RequestIntent>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RequestIntent>), Overflow["intent"]);
-        return _IntentElement;
+        return _IntentElement!;
       }
 
       set
@@ -2059,10 +2059,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestIntent? Intent
     {
-      get => IntentElement?.Value;
+      get => IntentElement?.Value!;
       set
       {
-        IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestIntent>(value);
+        IntentElement = new Code<Hl7.Fhir.Model.RequestIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -2075,13 +2075,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -2130,13 +2130,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateTime", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? DateTimeElement
+    public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
       get
       {
         if(_DateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["dateTime"]);
-        return _DateTimeElement;
+        return _DateTimeElement!;
       }
 
       set
@@ -2156,12 +2156,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? DateTime
+    public string DateTime
     {
-      get => DateTimeElement?.Value;
+      get => DateTimeElement?.Value!;
       set
       {
-        DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -2641,7 +2641,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.RequestStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>?)value!;
           return this;
         case "intent":
           if (value is not (Code<Hl7.Fhir.Model.RequestIntent> or null))
@@ -2649,7 +2649,7 @@ namespace Hl7.Fhir.Model
             IntentElement = OverflowNull<Code<Hl7.Fhir.Model.RequestIntent>>.INSTANCE;
             Overflow["intent"] = value;
           }
-          else IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>?)value;
+          else IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>?)value!;
           return this;
         case "patient":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -2657,7 +2657,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -2673,7 +2673,7 @@ namespace Hl7.Fhir.Model
             DateTimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
             Overflow["dateTime"] = value;
           }
-          else DateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          else DateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
           return this;
         case "orderer":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

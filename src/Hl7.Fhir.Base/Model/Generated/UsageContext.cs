@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Model
     [Binding("UsageContextType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Coding? Code
+    public Hl7.Fhir.Model.Coding Code
     {
       get
       {
         if(_Code.InOverflow<Hl7.Fhir.Model.Coding>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["code"]);
-        return _Code;
+        return _Code!;
       }
 
       set
@@ -101,13 +101,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Value
+    public Hl7.Fhir.Model.DataType Value
     {
       get
       {
         if(_Value.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-        return _Value;
+        return _Value!;
       }
 
       set
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
             Code = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
             Overflow["code"] = value;
           }
-          else Code = (Hl7.Fhir.Model.Coding?)value;
+          else Code = (Hl7.Fhir.Model.Coding?)value!;
           return this;
         case "value":
           if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
             Value = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["value"] = value;
           }
-          else Value = (Hl7.Fhir.Model.DataType?)value;
+          else Value = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         default:
           return base.SetValue(key, value);

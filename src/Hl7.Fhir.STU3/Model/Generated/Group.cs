@@ -133,13 +133,13 @@ namespace Hl7.Fhir.Model
       [Binding("GroupCharacteristicKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -163,13 +163,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -190,13 +190,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("exclude", IsModifier=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? ExcludeElement
+      public Hl7.Fhir.Model.FhirBoolean ExcludeElement
       {
         get
         {
           if(_ExcludeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["exclude"]);
-          return _ExcludeElement;
+          return _ExcludeElement!;
         }
 
         set
@@ -218,10 +218,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exclude
       {
-        get => ExcludeElement?.Value;
+        get => ExcludeElement?.Value!;
         set
         {
-          ExcludeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Exclude");
         }
       }
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "exclude":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
               ExcludeElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
               Overflow["exclude"] = value;
             }
-            else ExcludeElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            else ExcludeElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -406,13 +406,13 @@ namespace Hl7.Fhir.Model
       [References("Patient","Practitioner","Device","Medication","Substance")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Entity
+      public Hl7.Fhir.Model.ResourceReference Entity
       {
         get
         {
           if(_Entity.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["entity"]);
-          return _Entity;
+          return _Entity!;
         }
 
         set
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
               Entity = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["entity"] = value;
             }
-            else Entity = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Entity = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -681,13 +681,13 @@ namespace Hl7.Fhir.Model
     [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Group.GroupType>? TypeElement
+    public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Group.GroupType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Group.GroupType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -709,10 +709,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Group.GroupType? Type
     {
-      get => TypeElement?.Value;
+      get => TypeElement?.Value!;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Group.GroupType>(value);
+        TypeElement = new Code<Hl7.Fhir.Model.Group.GroupType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -723,13 +723,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("actual", InSummary=true, Order=120, FiveWs="class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? ActualElement
+    public Hl7.Fhir.Model.FhirBoolean ActualElement
     {
       get
       {
         if(_ActualElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["actual"]);
-        return _ActualElement;
+        return _ActualElement!;
       }
 
       set
@@ -751,10 +751,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Actual
     {
-      get => ActualElement?.Value;
+      get => ActualElement?.Value!;
       set
       {
-        ActualElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Actual");
       }
     }
@@ -1079,7 +1079,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Group.GroupType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>?)value!;
           return this;
         case "actual":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -1087,7 +1087,7 @@ namespace Hl7.Fhir.Model
             ActualElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
             Overflow["actual"] = value;
           }
-          else ActualElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          else ActualElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
           return this;
         case "code":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

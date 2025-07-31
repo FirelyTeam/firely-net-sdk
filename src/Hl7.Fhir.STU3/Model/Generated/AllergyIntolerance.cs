@@ -753,13 +753,13 @@ namespace Hl7.Fhir.Model
     [Binding("AllergyIntoleranceVerificationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>? VerificationStatusElement
+    public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus> VerificationStatusElement
     {
       get
       {
         if(_VerificationStatusElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>), Overflow["verificationStatus"]);
-        return _VerificationStatusElement;
+        return _VerificationStatusElement!;
       }
 
       set
@@ -781,10 +781,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus? VerificationStatus
     {
-      get => VerificationStatusElement?.Value;
+      get => VerificationStatusElement?.Value!;
       set
       {
-        VerificationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>(value);
+        VerificationStatusElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>(value);
         OnPropertyChanged("VerificationStatus");
       }
     }
@@ -955,13 +955,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1413,7 +1413,7 @@ namespace Hl7.Fhir.Model
             VerificationStatusElement = OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>>.INSTANCE;
             Overflow["verificationStatus"] = value;
           }
-          else VerificationStatusElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>?)value;
+          else VerificationStatusElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>?)value!;
           return this;
         case "type":
           if (value is not (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> or null))
@@ -1453,7 +1453,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "onset":
           if (value is not (Hl7.Fhir.Model.DataType or null))

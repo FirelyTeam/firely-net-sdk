@@ -48,9 +48,6 @@ namespace Hl7.Fhir.Model
   /// Primitive Type url
   /// A URI that is a literal reference
   /// </summary>
-  /// <remarks>
-  /// see http://en.wikipedia.org/wiki/Uniform_resource_identifier
-  /// </remarks>
   [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
   [Serializable]
   [DataContract]

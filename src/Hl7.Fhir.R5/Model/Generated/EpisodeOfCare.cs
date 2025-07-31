@@ -138,13 +138,13 @@ namespace Hl7.Fhir.Model
       [Binding("EpisodeOfCareStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>? StatusElement
+      public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
       {
         get
         {
           if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>), Overflow["status"]);
-          return _StatusElement;
+          return _StatusElement!;
         }
 
         set
@@ -166,10 +166,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
       {
-        get => StatusElement?.Value;
+        get => StatusElement?.Value!;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
+          StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -180,13 +180,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Period
+      public Hl7.Fhir.Model.Period Period
       {
         get
         {
           if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-          return _Period;
+          return _Period!;
         }
 
         set
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
               StatusElement = OverflowNull<Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>>.INSTANCE;
               Overflow["status"] = value;
             }
-            else StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>?)value;
+            else StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
               Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
               Overflow["period"] = value;
             }
-            else Period = (Hl7.Fhir.Model.Period?)value;
+            else Period = (Hl7.Fhir.Model.Period?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -660,13 +660,13 @@ namespace Hl7.Fhir.Model
     [Binding("EpisodeOfCareStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -688,10 +688,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -817,13 +817,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1197,7 +1197,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>?)value!;
           return this;
         case "statusHistory":
           if (value is not (List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> or null))
@@ -1237,7 +1237,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "managingOrganization":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

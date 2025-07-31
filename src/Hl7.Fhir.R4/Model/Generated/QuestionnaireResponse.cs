@@ -127,13 +127,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("linkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? LinkIdElement
+      public Hl7.Fhir.Model.FhirString LinkIdElement
       {
         get
         {
           if(_LinkIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["linkId"]);
-          return _LinkIdElement;
+          return _LinkIdElement!;
         }
 
         set
@@ -153,12 +153,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? LinkId
+      public string LinkId
       {
-        get => LinkIdElement?.Value;
+        get => LinkIdElement?.Value!;
         set
         {
-          LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LinkId");
         }
       }
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
               LinkIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["linkId"] = value;
             }
-            else LinkIdElement = (Hl7.Fhir.Model.FhirString?)value;
+            else LinkIdElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "definition":
             if (value is not (Hl7.Fhir.Model.FhirUri or null))
@@ -751,13 +751,13 @@ namespace Hl7.Fhir.Model
     [Binding("QuestionnaireResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -779,10 +779,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

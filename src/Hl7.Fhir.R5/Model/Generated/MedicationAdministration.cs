@@ -164,13 +164,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("actor", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference? Actor
+      public Hl7.Fhir.Model.CodeableReference Actor
       {
         get
         {
           if(_Actor.InOverflow<Hl7.Fhir.Model.CodeableReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["actor"]);
-          return _Actor;
+          return _Actor!;
         }
 
         set
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
               Actor = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
               Overflow["actor"] = value;
             }
-            else Actor = (Hl7.Fhir.Model.CodeableReference?)value;
+            else Actor = (Hl7.Fhir.Model.CodeableReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -732,13 +732,13 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationAdministrationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -760,10 +760,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -833,13 +833,13 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference? Medication
+    public Hl7.Fhir.Model.CodeableReference Medication
     {
       get
       {
         if(_Medication.InOverflow<Hl7.Fhir.Model.CodeableReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["medication"]);
-        return _Medication;
+        return _Medication!;
       }
 
       set
@@ -862,13 +862,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -949,13 +949,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Occurence
+    public Hl7.Fhir.Model.DataType Occurence
     {
       get
       {
         if(_Occurence.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["occurence"]);
-        return _Occurence;
+        return _Occurence!;
       }
 
       set
@@ -1561,7 +1561,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>?)value!;
           return this;
         case "statusReason":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -1585,7 +1585,7 @@ namespace Hl7.Fhir.Model
             Medication = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
             Overflow["medication"] = value;
           }
-          else Medication = (Hl7.Fhir.Model.CodeableReference?)value;
+          else Medication = (Hl7.Fhir.Model.CodeableReference?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1593,7 +1593,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1617,7 +1617,7 @@ namespace Hl7.Fhir.Model
             Occurence = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["occurence"] = value;
           }
-          else Occurence = (Hl7.Fhir.Model.DataType?)value;
+          else Occurence = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         case "recorded":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))

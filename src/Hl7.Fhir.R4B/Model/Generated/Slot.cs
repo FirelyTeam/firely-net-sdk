@@ -250,13 +250,13 @@ namespace Hl7.Fhir.Model
     [References("Schedule")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Schedule
+    public Hl7.Fhir.Model.ResourceReference Schedule
     {
       get
       {
         if(_Schedule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["schedule"]);
-        return _Schedule;
+        return _Schedule!;
       }
 
       set
@@ -278,13 +278,13 @@ namespace Hl7.Fhir.Model
     [Binding("SlotStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Slot.SlotStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Slot.SlotStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Slot.SlotStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Slot.SlotStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -306,10 +306,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Slot.SlotStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -320,13 +320,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("start", InSummary=true, Order=160, FiveWs="FiveWs.planned")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Instant? StartElement
+    public Hl7.Fhir.Model.Instant StartElement
     {
       get
       {
         if(_StartElement.InOverflow<Hl7.Fhir.Model.Instant>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["start"]);
-        return _StartElement;
+        return _StartElement!;
       }
 
       set
@@ -348,10 +348,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get => StartElement?.Value;
+      get => StartElement?.Value!;
       set
       {
-        StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        StartElement = new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -362,13 +362,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("end", InSummary=true, Order=170, FiveWs="FiveWs.planned")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Instant? EndElement
+    public Hl7.Fhir.Model.Instant EndElement
     {
       get
       {
         if(_EndElement.InOverflow<Hl7.Fhir.Model.Instant>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["end"]);
-        return _EndElement;
+        return _EndElement!;
       }
 
       set
@@ -390,10 +390,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => EndElement?.Value;
+      get => EndElement?.Value!;
       set
       {
-        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        EndElement = new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
             Schedule = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["schedule"] = value;
           }
-          else Schedule = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Schedule = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.Slot.SlotStatus> or null))
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Slot.SlotStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>?)value!;
           return this;
         case "start":
           if (value is not (Hl7.Fhir.Model.Instant or null))
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Model
             StartElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
             Overflow["start"] = value;
           }
-          else StartElement = (Hl7.Fhir.Model.Instant?)value;
+          else StartElement = (Hl7.Fhir.Model.Instant?)value!;
           return this;
         case "end":
           if (value is not (Hl7.Fhir.Model.Instant or null))
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
             EndElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
             Overflow["end"] = value;
           }
-          else EndElement = (Hl7.Fhir.Model.Instant?)value;
+          else EndElement = (Hl7.Fhir.Model.Instant?)value!;
           return this;
         case "overbooked":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))

@@ -1020,13 +1020,13 @@ namespace Hl7.Fhir.Model
       [References("Location")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Location
+      public Hl7.Fhir.Model.ResourceReference Location
       {
         get
         {
           if(_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["location"]);
-          return _Location;
+          return _Location!;
         }
 
         set
@@ -1223,7 +1223,7 @@ namespace Hl7.Fhir.Model
               Location = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["location"] = value;
             }
-            else Location = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Location = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "status":
             if (value is not (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> or null))
@@ -1301,13 +1301,13 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EncounterStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.EncounterStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.EncounterStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EncounterStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1329,10 +1329,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EncounterStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EncounterStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.EncounterStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2436,7 +2436,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.EncounterStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>?)value!;
           return this;
         case "class":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

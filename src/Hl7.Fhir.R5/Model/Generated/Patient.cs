@@ -528,13 +528,13 @@ namespace Hl7.Fhir.Model
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Language
+      public Hl7.Fhir.Model.CodeableConcept Language
       {
         get
         {
           if(_Language.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["language"]);
-          return _Language;
+          return _Language!;
         }
 
         set
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
               Language = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["language"] = value;
             }
-            else Language = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Language = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "preferred":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -706,13 +706,13 @@ namespace Hl7.Fhir.Model
       [References("Patient","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Other
+      public Hl7.Fhir.Model.ResourceReference Other
       {
         get
         {
           if(_Other.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["other"]);
-          return _Other;
+          return _Other!;
         }
 
         set
@@ -734,13 +734,13 @@ namespace Hl7.Fhir.Model
       [Binding("LinkType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Patient.LinkType>? TypeElement
+      public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Patient.LinkType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Patient.LinkType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -762,10 +762,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Patient.LinkType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
               Other = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["other"] = value;
             }
-            else Other = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Other = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "type":
             if (value is not (Code<Hl7.Fhir.Model.Patient.LinkType> or null))
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Patient.LinkType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.Patient.LinkType>?)value!;
             return this;
           default:
             return base.SetValue(key, value);

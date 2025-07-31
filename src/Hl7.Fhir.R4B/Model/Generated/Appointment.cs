@@ -280,13 +280,13 @@ namespace Hl7.Fhir.Model
       [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ParticipationStatus>? StatusElement
+      public Code<Hl7.Fhir.Model.ParticipationStatus> StatusElement
       {
         get
         {
           if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ParticipationStatus>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ParticipationStatus>), Overflow["status"]);
-          return _StatusElement;
+          return _StatusElement!;
         }
 
         set
@@ -308,10 +308,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ParticipationStatus? Status
       {
-        get => StatusElement?.Value;
+        get => StatusElement?.Value!;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
+          StatusElement = new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
               StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ParticipationStatus>>.INSTANCE;
               Overflow["status"] = value;
             }
-            else StatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>?)value;
+            else StatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -526,13 +526,13 @@ namespace Hl7.Fhir.Model
     [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -554,10 +554,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Appointment.AppointmentStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1513,7 +1513,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>?)value!;
           return this;
         case "cancelationReason":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

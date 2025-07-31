@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer? SequenceLinkIdElement
+      public Hl7.Fhir.Model.Integer SequenceLinkIdElement
       {
         get
         {
           if(_SequenceLinkIdElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["sequenceLinkId"]);
-          return _SequenceLinkIdElement;
+          return _SequenceLinkIdElement!;
         }
 
         set
@@ -147,10 +147,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SequenceLinkId
       {
-        get => SequenceLinkIdElement?.Value;
+        get => SequenceLinkIdElement?.Value!;
         set
         {
-          SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          SequenceLinkIdElement = new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
               SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
               Overflow["sequenceLinkId"] = value;
             }
-            else SequenceLinkIdElement = (Hl7.Fhir.Model.Integer?)value;
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.Integer?)value!;
             return this;
           default:
             return base.SetValue(key, value);

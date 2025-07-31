@@ -82,13 +82,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("date", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime? DateElement
+      public Hl7.Fhir.Model.FhirDateTime DateElement
       {
         get
         {
           if(_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["date"]);
-          return _DateElement;
+          return _DateElement!;
         }
 
         set
@@ -108,12 +108,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Date
+      public string Date
       {
-        get => DateElement?.Value;
+        get => DateElement?.Value!;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -220,13 +220,13 @@ namespace Hl7.Fhir.Model
       [Binding("ImmunizationRecommendationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? ForecastStatus
+      public Hl7.Fhir.Model.CodeableConcept ForecastStatus
       {
         get
         {
           if(_ForecastStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["forecastStatus"]);
-          return _ForecastStatus;
+          return _ForecastStatus!;
         }
 
         set
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
               DateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
               Overflow["date"] = value;
             }
-            else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
             return this;
           case "vaccineCode":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
               ForecastStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["forecastStatus"] = value;
             }
-            else ForecastStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else ForecastStatus = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "dateCriterion":
             if (value is not (List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> or null))
@@ -603,13 +603,13 @@ namespace Hl7.Fhir.Model
       [Binding("ImmunizationRecommendationDateCriterion")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -630,13 +630,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime? ValueElement
+      public Hl7.Fhir.Model.FhirDateTime ValueElement
       {
         get
         {
           if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["value"]);
-          return _ValueElement;
+          return _ValueElement!;
         }
 
         set
@@ -656,12 +656,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Value
+      public string Value
       {
-        get => ValueElement?.Value;
+        get => ValueElement?.Value!;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Value");
         }
       }
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
               ValueElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
               Overflow["value"] = value;
             }
-            else ValueElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            else ValueElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1091,13 +1091,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1227,7 +1227,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "recommendation":
           if (value is not (List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> or null))

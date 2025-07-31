@@ -358,13 +358,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("windowStart", InSummary=true, Order=100)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer? WindowStartElement
+      public Hl7.Fhir.Model.Integer WindowStartElement
       {
         get
         {
           if(_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["windowStart"]);
-          return _WindowStartElement;
+          return _WindowStartElement!;
         }
 
         set
@@ -386,10 +386,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowStart
       {
-        get => WindowStartElement?.Value;
+        get => WindowStartElement?.Value!;
         set
         {
-          WindowStartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          WindowStartElement = new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("WindowStart");
         }
       }
@@ -400,13 +400,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("windowEnd", InSummary=true, Order=110)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer? WindowEndElement
+      public Hl7.Fhir.Model.Integer WindowEndElement
       {
         get
         {
           if(_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["windowEnd"]);
-          return _WindowEndElement;
+          return _WindowEndElement!;
         }
 
         set
@@ -428,10 +428,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowEnd
       {
-        get => WindowEndElement?.Value;
+        get => WindowEndElement?.Value!;
         set
         {
-          WindowEndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          WindowEndElement = new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("WindowEnd");
         }
       }
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
               WindowStartElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
               Overflow["windowStart"] = value;
             }
-            else WindowStartElement = (Hl7.Fhir.Model.Integer?)value;
+            else WindowStartElement = (Hl7.Fhir.Model.Integer?)value!;
             return this;
           case "windowEnd":
             if (value is not (Hl7.Fhir.Model.Integer or null))
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
               WindowEndElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
               Overflow["windowEnd"] = value;
             }
-            else WindowEndElement = (Hl7.Fhir.Model.Integer?)value;
+            else WindowEndElement = (Hl7.Fhir.Model.Integer?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1082,13 +1082,13 @@ namespace Hl7.Fhir.Model
       [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Sequence.QualityType>? TypeElement
+      public Code<Hl7.Fhir.Model.Sequence.QualityType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Sequence.QualityType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Sequence.QualityType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -1110,10 +1110,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Sequence.QualityType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Sequence.QualityType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.Sequence.QualityType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1795,7 +1795,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Sequence.QualityType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.Sequence.QualityType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.Sequence.QualityType>?)value!;
             return this;
           case "standardSequence":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1951,13 +1951,13 @@ namespace Hl7.Fhir.Model
       [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Sequence.RepositoryType>? TypeElement
+      public Code<Hl7.Fhir.Model.Sequence.RepositoryType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Sequence.RepositoryType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Sequence.RepositoryType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -1979,10 +1979,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Sequence.RepositoryType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Sequence.RepositoryType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.Sequence.RepositoryType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -2299,7 +2299,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Sequence.RepositoryType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.Sequence.RepositoryType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.Sequence.RepositoryType>?)value!;
             return this;
           case "url":
             if (value is not (Hl7.Fhir.Model.FhirUri or null))
@@ -2436,13 +2436,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("coordinateSystem", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer? CoordinateSystemElement
+    public Hl7.Fhir.Model.Integer CoordinateSystemElement
     {
       get
       {
         if(_CoordinateSystemElement.InOverflow<Hl7.Fhir.Model.Integer>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["coordinateSystem"]);
-        return _CoordinateSystemElement;
+        return _CoordinateSystemElement!;
       }
 
       set
@@ -2464,10 +2464,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? CoordinateSystem
     {
-      get => CoordinateSystemElement?.Value;
+      get => CoordinateSystemElement?.Value!;
       set
       {
-        CoordinateSystemElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        CoordinateSystemElement = new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("CoordinateSystem");
       }
     }
@@ -3047,7 +3047,7 @@ namespace Hl7.Fhir.Model
             CoordinateSystemElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
             Overflow["coordinateSystem"] = value;
           }
-          else CoordinateSystemElement = (Hl7.Fhir.Model.Integer?)value;
+          else CoordinateSystemElement = (Hl7.Fhir.Model.Integer?)value!;
           return this;
         case "patient":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

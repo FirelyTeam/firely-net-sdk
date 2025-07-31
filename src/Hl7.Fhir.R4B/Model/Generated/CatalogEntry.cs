@@ -108,13 +108,13 @@ namespace Hl7.Fhir.Model
       [Binding("CatalogEntryRelationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>? RelationtypeElement
+      public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType> RelationtypeElement
       {
         get
         {
           if(_RelationtypeElement.InOverflow<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>), Overflow["relationtype"]);
-          return _RelationtypeElement;
+          return _RelationtypeElement!;
         }
 
         set
@@ -136,10 +136,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType? Relationtype
       {
-        get => RelationtypeElement?.Value;
+        get => RelationtypeElement?.Value!;
         set
         {
-          RelationtypeElement = value is null ? null : new Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>(value);
+          RelationtypeElement = new Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>(value);
           OnPropertyChanged("Relationtype");
         }
       }
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
       [References("CatalogEntry")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Item
+      public Hl7.Fhir.Model.ResourceReference Item
       {
         get
         {
           if(_Item.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
               RelationtypeElement = OverflowNull<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>.INSTANCE;
               Overflow["relationtype"] = value;
             }
-            else RelationtypeElement = (Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>?)value;
+            else RelationtypeElement = (Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>?)value!;
             return this;
           case "item":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Item = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -325,13 +325,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("orderable", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? OrderableElement
+    public Hl7.Fhir.Model.FhirBoolean OrderableElement
     {
       get
       {
         if(_OrderableElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["orderable"]);
-        return _OrderableElement;
+        return _OrderableElement!;
       }
 
       set
@@ -353,10 +353,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Orderable
     {
-      get => OrderableElement?.Value;
+      get => OrderableElement?.Value!;
       set
       {
-        OrderableElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        OrderableElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Orderable");
       }
     }
@@ -369,13 +369,13 @@ namespace Hl7.Fhir.Model
     [References("Medication","Device","Organization","Practitioner","PractitionerRole","HealthcareService","ActivityDefinition","PlanDefinition","SpecimenDefinition","ObservationDefinition","Binary")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? ReferencedItem
+    public Hl7.Fhir.Model.ResourceReference ReferencedItem
     {
       get
       {
         if(_ReferencedItem.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["referencedItem"]);
-        return _ReferencedItem;
+        return _ReferencedItem!;
       }
 
       set
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
             OrderableElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
             Overflow["orderable"] = value;
           }
-          else OrderableElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          else OrderableElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
           return this;
         case "referencedItem":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
             ReferencedItem = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["referencedItem"] = value;
           }
-          else ReferencedItem = (Hl7.Fhir.Model.ResourceReference?)value;
+          else ReferencedItem = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "additionalIdentifier":
           if (value is not (List<Hl7.Fhir.Model.Identifier> or null))

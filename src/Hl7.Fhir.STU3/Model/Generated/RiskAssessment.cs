@@ -87,13 +87,13 @@ namespace Hl7.Fhir.Model
       [Binding("RiskAssessmentOutcome")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Outcome
+      public Hl7.Fhir.Model.CodeableConcept Outcome
       {
         get
         {
           if(_Outcome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["outcome"]);
-          return _Outcome;
+          return _Outcome!;
         }
 
         set
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
               Outcome = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["outcome"] = value;
             }
-            else Outcome = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Outcome = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "probability":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -530,13 +530,13 @@ namespace Hl7.Fhir.Model
     [Binding("RiskAssessmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ObservationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ObservationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ObservationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -558,10 +558,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ObservationStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ObservationStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.ObservationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1161,7 +1161,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ObservationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>?)value!;
           return this;
         case "method":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

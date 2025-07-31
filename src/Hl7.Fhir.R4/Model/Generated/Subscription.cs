@@ -160,13 +160,13 @@ namespace Hl7.Fhir.Model
       [Binding("SubscriptionChannelType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>? TypeElement
+      public Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -188,10 +188,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Subscription.SubscriptionChannelType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>?)value!;
             return this;
           case "endpoint":
             if (value is not (Hl7.Fhir.Model.FhirUrl or null))
@@ -462,13 +462,13 @@ namespace Hl7.Fhir.Model
     [Binding("SubscriptionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -490,10 +490,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Subscription.SubscriptionStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -573,13 +573,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", InSummary=true, Order=120, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? ReasonElement
+    public Hl7.Fhir.Model.FhirString ReasonElement
     {
       get
       {
         if(_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["reason"]);
-        return _ReasonElement;
+        return _ReasonElement!;
       }
 
       set
@@ -599,12 +599,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Reason
+    public string Reason
     {
-      get => ReasonElement?.Value;
+      get => ReasonElement?.Value!;
       set
       {
-        ReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ReasonElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Reason");
       }
     }
@@ -615,13 +615,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("criteria", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? CriteriaElement
+    public Hl7.Fhir.Model.FhirString CriteriaElement
     {
       get
       {
         if(_CriteriaElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["criteria"]);
-        return _CriteriaElement;
+        return _CriteriaElement!;
       }
 
       set
@@ -641,12 +641,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Criteria
+    public string Criteria
     {
-      get => CriteriaElement?.Value;
+      get => CriteriaElement?.Value!;
       set
       {
-        CriteriaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CriteriaElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Criteria");
       }
     }
@@ -698,13 +698,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("channel", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Subscription.ChannelComponent? Channel
+    public Hl7.Fhir.Model.Subscription.ChannelComponent Channel
     {
       get
       {
         if(_Channel.InOverflow<Hl7.Fhir.Model.Subscription.ChannelComponent>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Subscription.ChannelComponent), Overflow["channel"]);
-        return _Channel;
+        return _Channel!;
       }
 
       set
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>?)value!;
           return this;
         case "contact":
           if (value is not (List<Hl7.Fhir.Model.ContactPoint> or null))
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
             ReasonElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["reason"] = value;
           }
-          else ReasonElement = (Hl7.Fhir.Model.FhirString?)value;
+          else ReasonElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         case "criteria":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
             CriteriaElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["criteria"] = value;
           }
-          else CriteriaElement = (Hl7.Fhir.Model.FhirString?)value;
+          else CriteriaElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         case "error":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -884,7 +884,7 @@ namespace Hl7.Fhir.Model
             Channel = OverflowNull<Hl7.Fhir.Model.Subscription.ChannelComponent>.INSTANCE;
             Overflow["channel"] = value;
           }
-          else Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent?)value;
+          else Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent?)value!;
           return this;
         default:
           return base.SetValue(key, value);

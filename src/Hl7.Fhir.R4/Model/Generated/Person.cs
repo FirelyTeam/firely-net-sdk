@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
       [References("Patient","Practitioner","RelatedPerson","Person")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Target
+      public Hl7.Fhir.Model.ResourceReference Target
       {
         get
         {
           if(_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["target"]);
-          return _Target;
+          return _Target!;
         }
 
         set
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
               Target = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["target"] = value;
             }
-            else Target = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Target = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "assurance":
             if (value is not (Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> or null))

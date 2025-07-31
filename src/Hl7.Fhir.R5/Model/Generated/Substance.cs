@@ -140,13 +140,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Substance
+      public Hl7.Fhir.Model.DataType Substance
       {
         get
         {
           if(_Substance.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["substance"]);
-          return _Substance;
+          return _Substance!;
         }
 
         set
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
               Substance = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["substance"] = value;
             }
-            else Substance = (Hl7.Fhir.Model.DataType?)value;
+            else Substance = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -287,13 +287,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("instance", InSummary=true, IsModifier=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? InstanceElement
+    public Hl7.Fhir.Model.FhirBoolean InstanceElement
     {
       get
       {
         if(_InstanceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["instance"]);
-        return _InstanceElement;
+        return _InstanceElement!;
       }
 
       set
@@ -315,10 +315,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Instance
     {
-      get => InstanceElement?.Value;
+      get => InstanceElement?.Value!;
       set
       {
-        InstanceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        InstanceElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Instance");
       }
     }
@@ -401,13 +401,13 @@ namespace Hl7.Fhir.Model
     [Binding("SubstanceCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference? Code
+    public Hl7.Fhir.Model.CodeableReference Code
     {
       get
       {
         if(_Code.InOverflow<Hl7.Fhir.Model.CodeableReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["code"]);
-        return _Code;
+        return _Code!;
       }
 
       set
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
             InstanceElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
             Overflow["instance"] = value;
           }
-          else InstanceElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          else InstanceElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> or null))
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
             Code = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
             Overflow["code"] = value;
           }
-          else Code = (Hl7.Fhir.Model.CodeableReference?)value;
+          else Code = (Hl7.Fhir.Model.CodeableReference?)value!;
           return this;
         case "description":
           if (value is not (Hl7.Fhir.Model.Markdown or null))

@@ -120,13 +120,13 @@ namespace Hl7.Fhir.Model
     [Binding("ImmunizationEvaluationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -148,10 +148,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -164,13 +164,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -261,13 +261,13 @@ namespace Hl7.Fhir.Model
     [Binding("EvaluationTargetDisease")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? TargetDisease
+    public Hl7.Fhir.Model.CodeableConcept TargetDisease
     {
       get
       {
         if(_TargetDisease.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["targetDisease"]);
-        return _TargetDisease;
+        return _TargetDisease!;
       }
 
       set
@@ -290,13 +290,13 @@ namespace Hl7.Fhir.Model
     [References("Immunization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? ImmunizationEvent
+    public Hl7.Fhir.Model.ResourceReference ImmunizationEvent
     {
       get
       {
         if(_ImmunizationEvent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["immunizationEvent"]);
-        return _ImmunizationEvent;
+        return _ImmunizationEvent!;
       }
 
       set
@@ -318,13 +318,13 @@ namespace Hl7.Fhir.Model
     [Binding("EvaluationDoseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? DoseStatus
+    public Hl7.Fhir.Model.CodeableConcept DoseStatus
     {
       get
       {
         if(_DoseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["doseStatus"]);
-        return _DoseStatus;
+        return _DoseStatus!;
       }
 
       set
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes>?)value!;
           return this;
         case "patient":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "date":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
             TargetDisease = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["targetDisease"] = value;
           }
-          else TargetDisease = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else TargetDisease = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "immunizationEvent":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
             ImmunizationEvent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["immunizationEvent"] = value;
           }
-          else ImmunizationEvent = (Hl7.Fhir.Model.ResourceReference?)value;
+          else ImmunizationEvent = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "doseStatus":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
             DoseStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["doseStatus"] = value;
           }
-          else DoseStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else DoseStatus = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "doseStatusReason":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

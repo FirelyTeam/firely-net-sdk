@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
     [Binding("ExpressionLanguage")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? LanguageElement
+    public Hl7.Fhir.Model.Code LanguageElement
     {
       get
       {
         if(_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["language"]);
-        return _LanguageElement;
+        return _LanguageElement!;
       }
 
       set
@@ -178,12 +178,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Language
+    public string Language
     {
-      get => LanguageElement?.Value;
+      get => LanguageElement?.Value!;
       set
       {
-        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        LanguageElement = new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
             LanguageElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
             Overflow["language"] = value;
           }
-          else LanguageElement = (Hl7.Fhir.Model.Code?)value;
+          else LanguageElement = (Hl7.Fhir.Model.Code?)value!;
           return this;
         case "expression":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

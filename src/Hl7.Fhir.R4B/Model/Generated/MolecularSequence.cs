@@ -1214,13 +1214,13 @@ namespace Hl7.Fhir.Model
       [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.QualityType>? TypeElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.QualityType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.QualityType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MolecularSequence.QualityType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -1242,10 +1242,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.QualityType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.QualityType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.QualityType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1963,7 +1963,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.QualityType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>?)value!;
             return this;
           case "standardSequence":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -2653,13 +2653,13 @@ namespace Hl7.Fhir.Model
       [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>? TypeElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -2681,10 +2681,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.RepositoryType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -3001,7 +3001,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>?)value!;
             return this;
           case "url":
             if (value is not (Hl7.Fhir.Model.FhirUri or null))
@@ -3838,13 +3838,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("coordinateSystem", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer? CoordinateSystemElement
+    public Hl7.Fhir.Model.Integer CoordinateSystemElement
     {
       get
       {
         if(_CoordinateSystemElement.InOverflow<Hl7.Fhir.Model.Integer>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["coordinateSystem"]);
-        return _CoordinateSystemElement;
+        return _CoordinateSystemElement!;
       }
 
       set
@@ -3866,10 +3866,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? CoordinateSystem
     {
-      get => CoordinateSystemElement?.Value;
+      get => CoordinateSystemElement?.Value!;
       set
       {
-        CoordinateSystemElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        CoordinateSystemElement = new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("CoordinateSystem");
       }
     }
@@ -4487,7 +4487,7 @@ namespace Hl7.Fhir.Model
             CoordinateSystemElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
             Overflow["coordinateSystem"] = value;
           }
-          else CoordinateSystemElement = (Hl7.Fhir.Model.Integer?)value;
+          else CoordinateSystemElement = (Hl7.Fhir.Model.Integer?)value!;
           return this;
         case "patient":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

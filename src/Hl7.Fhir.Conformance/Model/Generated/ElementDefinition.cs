@@ -438,13 +438,13 @@ namespace Hl7.Fhir.Model
       [Binding("SlicingRules")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>? RulesElement
+      public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules> RulesElement
       {
         get
         {
           if(_RulesElement.InOverflow<Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>), Overflow["rules"]);
-          return _RulesElement;
+          return _RulesElement!;
         }
 
         set
@@ -466,10 +466,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ElementDefinition.SlicingRules? Rules
       {
-        get => RulesElement?.Value;
+        get => RulesElement?.Value!;
         set
         {
-          RulesElement = value is null ? null : new Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>(value);
+          RulesElement = new Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>(value);
           OnPropertyChanged("Rules");
         }
       }
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
               RulesElement = OverflowNull<Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>>.INSTANCE;
               Overflow["rules"] = value;
             }
-            else RulesElement = (Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>?)value;
+            else RulesElement = (Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -628,13 +628,13 @@ namespace Hl7.Fhir.Model
       [Binding("DiscriminatorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>? TypeElement
+      public Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -656,10 +656,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ElementDefinition.DiscriminatorType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -670,13 +670,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PathElement
+      public Hl7.Fhir.Model.FhirString PathElement
       {
         get
         {
           if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-          return _PathElement;
+          return _PathElement!;
         }
 
         set
@@ -696,12 +696,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Path
+      public string Path
       {
-        get => PathElement?.Value;
+        get => PathElement?.Value!;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType>?)value!;
             return this;
           case "path":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Model
               PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["path"] = value;
             }
-            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -821,13 +821,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PathElement
+      public Hl7.Fhir.Model.FhirString PathElement
       {
         get
         {
           if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-          return _PathElement;
+          return _PathElement!;
         }
 
         set
@@ -847,12 +847,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Path
+      public string Path
       {
-        get => PathElement?.Value;
+        get => PathElement?.Value!;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -863,13 +863,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("min", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.UnsignedInt? MinElement
+      public Hl7.Fhir.Model.UnsignedInt MinElement
       {
         get
         {
           if(_MinElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["min"]);
-          return _MinElement;
+          return _MinElement!;
         }
 
         set
@@ -891,10 +891,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Min
       {
-        get => MinElement?.Value;
+        get => MinElement?.Value!;
         set
         {
-          MinElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+          MinElement = new Hl7.Fhir.Model.UnsignedInt(value);
           OnPropertyChanged("Min");
         }
       }
@@ -905,13 +905,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("max", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? MaxElement
+      public Hl7.Fhir.Model.FhirString MaxElement
       {
         get
         {
           if(_MaxElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["max"]);
-          return _MaxElement;
+          return _MaxElement!;
         }
 
         set
@@ -931,12 +931,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Max
+      public string Max
       {
-        get => MaxElement?.Value;
+        get => MaxElement?.Value!;
         set
         {
-          MaxElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MaxElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Max");
         }
       }
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
               PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["path"] = value;
             }
-            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "min":
             if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
               MinElement = OverflowNull<Hl7.Fhir.Model.UnsignedInt>.INSTANCE;
               Overflow["min"] = value;
             }
-            else MinElement = (Hl7.Fhir.Model.UnsignedInt?)value;
+            else MinElement = (Hl7.Fhir.Model.UnsignedInt?)value!;
             return this;
           case "max":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
               MaxElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["max"] = value;
             }
-            else MaxElement = (Hl7.Fhir.Model.FhirString?)value;
+            else MaxElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1076,13 +1076,13 @@ namespace Hl7.Fhir.Model
       [Binding("ElementDefinitionTypes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri? CodeElement
+      public Hl7.Fhir.Model.FhirUri CodeElement
       {
         get
         {
           if(_CodeElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["code"]);
-          return _CodeElement;
+          return _CodeElement!;
         }
 
         set
@@ -1102,12 +1102,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Code
+      public string Code
       {
-        get => CodeElement?.Value;
+        get => CodeElement?.Value!;
         set
         {
-          CodeElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          CodeElement = new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Code");
         }
       }
@@ -1390,7 +1390,7 @@ namespace Hl7.Fhir.Model
               CodeElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
               Overflow["code"] = value;
             }
-            else CodeElement = (Hl7.Fhir.Model.FhirUri?)value;
+            else CodeElement = (Hl7.Fhir.Model.FhirUri?)value!;
             return this;
           case "profile":
             if (value is not (List<Hl7.Fhir.Model.Canonical> or null))
@@ -1465,13 +1465,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("label", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? LabelElement
+      public Hl7.Fhir.Model.FhirString LabelElement
       {
         get
         {
           if(_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["label"]);
-          return _LabelElement;
+          return _LabelElement!;
         }
 
         set
@@ -1491,12 +1491,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Label
+      public string Label
       {
-        get => LabelElement?.Value;
+        get => LabelElement?.Value!;
         set
         {
-          LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LabelElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Label");
         }
       }
@@ -1507,13 +1507,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -1595,7 +1595,7 @@ namespace Hl7.Fhir.Model
               LabelElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["label"] = value;
             }
-            else LabelElement = (Hl7.Fhir.Model.FhirString?)value;
+            else LabelElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -1603,7 +1603,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1643,13 +1643,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("key", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? KeyElement
+      public Hl7.Fhir.Model.Id KeyElement
       {
         get
         {
           if(_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["key"]);
-          return _KeyElement;
+          return _KeyElement!;
         }
 
         set
@@ -1669,12 +1669,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Key
+      public string Key
       {
-        get => KeyElement?.Value;
+        get => KeyElement?.Value!;
         set
         {
-          KeyElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          KeyElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Key");
         }
       }
@@ -1747,13 +1747,13 @@ namespace Hl7.Fhir.Model
       [Binding("ConstraintSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ConstraintSeverity>? SeverityElement
+      public Code<Hl7.Fhir.Model.ConstraintSeverity> SeverityElement
       {
         get
         {
           if(_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.ConstraintSeverity>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ConstraintSeverity>), Overflow["severity"]);
-          return _SeverityElement;
+          return _SeverityElement!;
         }
 
         set
@@ -1775,10 +1775,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ConstraintSeverity? Severity
       {
-        get => SeverityElement?.Value;
+        get => SeverityElement?.Value!;
         set
         {
-          SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.ConstraintSeverity>(value);
+          SeverityElement = new Code<Hl7.Fhir.Model.ConstraintSeverity>(value);
           OnPropertyChanged("Severity");
         }
       }
@@ -1833,13 +1833,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("human", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? HumanElement
+      public Hl7.Fhir.Model.FhirString HumanElement
       {
         get
         {
           if(_HumanElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["human"]);
-          return _HumanElement;
+          return _HumanElement!;
         }
 
         set
@@ -1859,12 +1859,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Human
+      public string Human
       {
-        get => HumanElement?.Value;
+        get => HumanElement?.Value!;
         set
         {
-          HumanElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          HumanElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Human");
         }
       }
@@ -2123,7 +2123,7 @@ namespace Hl7.Fhir.Model
               KeyElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
               Overflow["key"] = value;
             }
-            else KeyElement = (Hl7.Fhir.Model.Id?)value;
+            else KeyElement = (Hl7.Fhir.Model.Id?)value!;
             return this;
           case "requirements":
             if (value is not (Hl7.Fhir.Model.PrimitiveType or null))
@@ -2139,7 +2139,7 @@ namespace Hl7.Fhir.Model
               SeverityElement = OverflowNull<Code<Hl7.Fhir.Model.ConstraintSeverity>>.INSTANCE;
               Overflow["severity"] = value;
             }
-            else SeverityElement = (Code<Hl7.Fhir.Model.ConstraintSeverity>?)value;
+            else SeverityElement = (Code<Hl7.Fhir.Model.ConstraintSeverity>?)value!;
             return this;
           case "suppress":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -2155,7 +2155,7 @@ namespace Hl7.Fhir.Model
               HumanElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["human"] = value;
             }
-            else HumanElement = (Hl7.Fhir.Model.FhirString?)value;
+            else HumanElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "expression":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -2226,13 +2226,13 @@ namespace Hl7.Fhir.Model
       [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.BindingStrength>? StrengthElement
+      public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
       {
         get
         {
           if(_StrengthElement.InOverflow<Code<Hl7.Fhir.Model.BindingStrength>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.BindingStrength>), Overflow["strength"]);
-          return _StrengthElement;
+          return _StrengthElement!;
         }
 
         set
@@ -2254,10 +2254,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.BindingStrength? Strength
       {
-        get => StrengthElement?.Value;
+        get => StrengthElement?.Value!;
         set
         {
-          StrengthElement = value is null ? null : new Code<Hl7.Fhir.Model.BindingStrength>(value);
+          StrengthElement = new Code<Hl7.Fhir.Model.BindingStrength>(value);
           OnPropertyChanged("Strength");
         }
       }
@@ -2482,7 +2482,7 @@ namespace Hl7.Fhir.Model
               StrengthElement = OverflowNull<Code<Hl7.Fhir.Model.BindingStrength>>.INSTANCE;
               Overflow["strength"] = value;
             }
-            else StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>?)value;
+            else StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>?)value!;
             return this;
           case "description":
             if (value is not (Hl7.Fhir.Model.PrimitiveType or null))
@@ -2551,13 +2551,13 @@ namespace Hl7.Fhir.Model
       [Binding("AdditionalBindingPurpose")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>? PurposeElement
+      public Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS> PurposeElement
       {
         get
         {
           if(_PurposeElement.InOverflow<Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>), Overflow["purpose"]);
-          return _PurposeElement;
+          return _PurposeElement!;
         }
 
         set
@@ -2579,10 +2579,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS? Purpose
       {
-        get => PurposeElement?.Value;
+        get => PurposeElement?.Value!;
         set
         {
-          PurposeElement = value is null ? null : new Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>(value);
+          PurposeElement = new Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>(value);
           OnPropertyChanged("Purpose");
         }
       }
@@ -2596,13 +2596,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueSet", InSummary=true, Order=40, Since=FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Canonical? ValueSetElement
+      public Hl7.Fhir.Model.Canonical ValueSetElement
       {
         get
         {
           if(_ValueSetElement.InOverflow<Hl7.Fhir.Model.Canonical>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["valueSet"]);
-          return _ValueSetElement;
+          return _ValueSetElement!;
         }
 
         set
@@ -2622,12 +2622,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? ValueSet
+      public string ValueSet
       {
-        get => ValueSetElement?.Value;
+        get => ValueSetElement?.Value!;
         set
         {
-          ValueSetElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          ValueSetElement = new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("ValueSet");
         }
       }
@@ -2902,7 +2902,7 @@ namespace Hl7.Fhir.Model
               PurposeElement = OverflowNull<Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>>.INSTANCE;
               Overflow["purpose"] = value;
             }
-            else PurposeElement = (Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>?)value;
+            else PurposeElement = (Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>?)value!;
             return this;
           case "valueSet":
             if (value is not (Hl7.Fhir.Model.Canonical or null))
@@ -2910,7 +2910,7 @@ namespace Hl7.Fhir.Model
               ValueSetElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
               Overflow["valueSet"] = value;
             }
-            else ValueSetElement = (Hl7.Fhir.Model.Canonical?)value;
+            else ValueSetElement = (Hl7.Fhir.Model.Canonical?)value!;
             return this;
           case "documentation":
             if (value is not (Hl7.Fhir.Model.Markdown or null))
@@ -2986,13 +2986,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("identity", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? IdentityElement
+      public Hl7.Fhir.Model.Id IdentityElement
       {
         get
         {
           if(_IdentityElement.InOverflow<Hl7.Fhir.Model.Id>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["identity"]);
-          return _IdentityElement;
+          return _IdentityElement!;
         }
 
         set
@@ -3012,12 +3012,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Identity
+      public string Identity
       {
-        get => IdentityElement?.Value;
+        get => IdentityElement?.Value!;
         set
         {
-          IdentityElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          IdentityElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Identity");
         }
       }
@@ -3070,13 +3070,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("map", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? MapElement
+      public Hl7.Fhir.Model.FhirString MapElement
       {
         get
         {
           if(_MapElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["map"]);
-          return _MapElement;
+          return _MapElement!;
         }
 
         set
@@ -3096,12 +3096,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Map
+      public string Map
       {
-        get => MapElement?.Value;
+        get => MapElement?.Value!;
         set
         {
-          MapElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MapElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Map");
         }
       }
@@ -3254,7 +3254,7 @@ namespace Hl7.Fhir.Model
               IdentityElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
               Overflow["identity"] = value;
             }
-            else IdentityElement = (Hl7.Fhir.Model.Id?)value;
+            else IdentityElement = (Hl7.Fhir.Model.Id?)value!;
             return this;
           case "language":
             if (value is not (Hl7.Fhir.Model.Code or null))
@@ -3270,7 +3270,7 @@ namespace Hl7.Fhir.Model
               MapElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["map"] = value;
             }
-            else MapElement = (Hl7.Fhir.Model.FhirString?)value;
+            else MapElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "comment":
             if (value is not (Hl7.Fhir.Model.PrimitiveType or null))
@@ -3303,13 +3303,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("path", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? PathElement
+    public Hl7.Fhir.Model.FhirString PathElement
     {
       get
       {
         if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-        return _PathElement;
+        return _PathElement!;
       }
 
       set
@@ -3329,12 +3329,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Path
+    public string Path
     {
-      get => PathElement?.Value;
+      get => PathElement?.Value!;
       set
       {
-        PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PathElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Path");
       }
     }
@@ -5028,7 +5028,7 @@ namespace Hl7.Fhir.Model
             PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["path"] = value;
           }
-          else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+          else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         case "representation":
           if (value is not (List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> or null))

@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
       [Binding("EvidenceVariableRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? VariableRole
+      public Hl7.Fhir.Model.CodeableConcept VariableRole
       {
         get
         {
           if(_VariableRole.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["variableRole"]);
-          return _VariableRole;
+          return _VariableRole!;
         }
 
         set
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
               VariableRole = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["variableRole"] = value;
             }
-            else VariableRole = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else VariableRole = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "observed":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1790,13 +1790,13 @@ namespace Hl7.Fhir.Model
       [Binding("StatisticModelCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -1980,7 +1980,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.Quantity or null))
@@ -2044,13 +2044,13 @@ namespace Hl7.Fhir.Model
       [References("Group","EvidenceVariable")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? VariableDefinition
+      public Hl7.Fhir.Model.ResourceReference VariableDefinition
       {
         get
         {
           if(_VariableDefinition.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["variableDefinition"]);
-          return _VariableDefinition;
+          return _VariableDefinition!;
         }
 
         set
@@ -2288,7 +2288,7 @@ namespace Hl7.Fhir.Model
               VariableDefinition = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["variableDefinition"] = value;
             }
-            else VariableDefinition = (Hl7.Fhir.Model.ResourceReference?)value;
+            else VariableDefinition = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "handling":
             if (value is not (Code<Hl7.Fhir.Model.EvidenceVariableHandling> or null))
@@ -2903,13 +2903,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -2931,10 +2931,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -3886,7 +3886,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "date":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))

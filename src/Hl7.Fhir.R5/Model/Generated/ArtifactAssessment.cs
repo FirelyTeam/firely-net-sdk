@@ -1086,13 +1086,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Artifact
+    public Hl7.Fhir.Model.DataType Artifact
     {
       get
       {
         if(_Artifact.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["artifact"]);
-        return _Artifact;
+        return _Artifact!;
       }
 
       set
@@ -1434,7 +1434,7 @@ namespace Hl7.Fhir.Model
             Artifact = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["artifact"] = value;
           }
-          else Artifact = (Hl7.Fhir.Model.DataType?)value;
+          else Artifact = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         case "content":
           if (value is not (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> or null))

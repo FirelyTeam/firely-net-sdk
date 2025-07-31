@@ -347,13 +347,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("text", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown? TextElement
+      public Hl7.Fhir.Model.Markdown TextElement
       {
         get
         {
           if(_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["text"]);
-          return _TextElement;
+          return _TextElement!;
         }
 
         set
@@ -373,12 +373,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Text
+      public string Text
       {
-        get => TextElement?.Value;
+        get => TextElement?.Value!;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          TextElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Text");
         }
       }
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
               TextElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
               Overflow["text"] = value;
             }
-            else TextElement = (Hl7.Fhir.Model.Markdown?)value;
+            else TextElement = (Hl7.Fhir.Model.Markdown?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -663,13 +663,13 @@ namespace Hl7.Fhir.Model
       [Binding("CitationStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Activity
+      public Hl7.Fhir.Model.CodeableConcept Activity
       {
         get
         {
           if(_Activity.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["activity"]);
-          return _Activity;
+          return _Activity!;
         }
 
         set
@@ -731,13 +731,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Period
+      public Hl7.Fhir.Model.Period Period
       {
         get
         {
           if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-          return _Period;
+          return _Period!;
         }
 
         set
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
               Activity = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["activity"] = value;
             }
-            else Activity = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Activity = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "actual":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Model
               Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
               Overflow["period"] = value;
             }
-            else Period = (Hl7.Fhir.Model.Period?)value;
+            else Period = (Hl7.Fhir.Model.Period?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1662,13 +1662,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? ValueElement
+      public Hl7.Fhir.Model.FhirString ValueElement
       {
         get
         {
           if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
-          return _ValueElement;
+          return _ValueElement!;
         }
 
         set
@@ -1688,12 +1688,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Value
+      public string Value
       {
-        get => ValueElement?.Value;
+        get => ValueElement?.Value!;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -1793,7 +1793,7 @@ namespace Hl7.Fhir.Model
               ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["value"] = value;
             }
-            else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+            else ValueElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "baseCitation":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1841,13 +1841,13 @@ namespace Hl7.Fhir.Model
       [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Activity
+      public Hl7.Fhir.Model.CodeableConcept Activity
       {
         get
         {
           if(_Activity.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["activity"]);
-          return _Activity;
+          return _Activity!;
         }
 
         set
@@ -1909,13 +1909,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Period
+      public Hl7.Fhir.Model.Period Period
       {
         get
         {
           if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-          return _Period;
+          return _Period!;
         }
 
         set
@@ -2007,7 +2007,7 @@ namespace Hl7.Fhir.Model
               Activity = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["activity"] = value;
             }
-            else Activity = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Activity = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "actual":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -2023,7 +2023,7 @@ namespace Hl7.Fhir.Model
               Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
               Overflow["period"] = value;
             }
-            else Period = (Hl7.Fhir.Model.Period?)value;
+            else Period = (Hl7.Fhir.Model.Period?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2116,13 +2116,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("text", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown? TextElement
+      public Hl7.Fhir.Model.Markdown TextElement
       {
         get
         {
           if(_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["text"]);
-          return _TextElement;
+          return _TextElement!;
         }
 
         set
@@ -2142,12 +2142,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Text
+      public string Text
       {
-        get => TextElement?.Value;
+        get => TextElement?.Value!;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          TextElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Text");
         }
       }
@@ -2245,7 +2245,7 @@ namespace Hl7.Fhir.Model
               TextElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
               Overflow["text"] = value;
             }
-            else TextElement = (Hl7.Fhir.Model.Markdown?)value;
+            else TextElement = (Hl7.Fhir.Model.Markdown?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2339,13 +2339,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("text", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown? TextElement
+      public Hl7.Fhir.Model.Markdown TextElement
       {
         get
         {
           if(_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["text"]);
-          return _TextElement;
+          return _TextElement!;
         }
 
         set
@@ -2365,12 +2365,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Text
+      public string Text
       {
-        get => TextElement?.Value;
+        get => TextElement?.Value!;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          TextElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Text");
         }
       }
@@ -2519,7 +2519,7 @@ namespace Hl7.Fhir.Model
               TextElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
               Overflow["text"] = value;
             }
-            else TextElement = (Hl7.Fhir.Model.Markdown?)value;
+            else TextElement = (Hl7.Fhir.Model.Markdown?)value!;
             return this;
           case "copyright":
             if (value is not (Hl7.Fhir.Model.Markdown or null))
@@ -2789,13 +2789,13 @@ namespace Hl7.Fhir.Model
       [Binding("RelatedArtifactTypeExpanded")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>? TypeElement
+      public Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -2817,10 +2817,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -3197,7 +3197,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>?)value!;
             return this;
           case "classifier":
             if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -5166,13 +5166,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Contributor
+      public Hl7.Fhir.Model.ResourceReference Contributor
       {
         get
         {
           if(_Contributor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["contributor"]);
-          return _Contributor;
+          return _Contributor!;
         }
 
         set
@@ -5551,7 +5551,7 @@ namespace Hl7.Fhir.Model
               Contributor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["contributor"] = value;
             }
-            else Contributor = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Contributor = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "forenameInitials":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -5650,13 +5650,13 @@ namespace Hl7.Fhir.Model
       [Binding("ArtifactContributionInstanceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -5779,7 +5779,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "time":
             if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -5904,13 +5904,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown? ValueElement
+      public Hl7.Fhir.Model.Markdown ValueElement
       {
         get
         {
           if(_ValueElement.InOverflow<Hl7.Fhir.Model.Markdown>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["value"]);
-          return _ValueElement;
+          return _ValueElement!;
         }
 
         set
@@ -5930,12 +5930,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Value
+      public string Value
       {
-        get => ValueElement?.Value;
+        get => ValueElement?.Value!;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          ValueElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Value");
         }
       }
@@ -6051,7 +6051,7 @@ namespace Hl7.Fhir.Model
               ValueElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
               Overflow["value"] = value;
             }
-            else ValueElement = (Hl7.Fhir.Model.Markdown?)value;
+            else ValueElement = (Hl7.Fhir.Model.Markdown?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -6297,13 +6297,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -6325,10 +6325,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -7527,7 +7527,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "experimental":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))

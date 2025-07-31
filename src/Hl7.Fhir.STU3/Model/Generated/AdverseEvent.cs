@@ -177,13 +177,13 @@ namespace Hl7.Fhir.Model
       [References("Substance","Medication","MedicationAdministration","MedicationStatement","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Instance
+      public Hl7.Fhir.Model.ResourceReference Instance
       {
         get
         {
           if(_Instance.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["instance"]);
-          return _Instance;
+          return _Instance!;
         }
 
         set
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
               Instance = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["instance"] = value;
             }
-            else Instance = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Instance = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "causality":
             if (value is not (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality> or null))

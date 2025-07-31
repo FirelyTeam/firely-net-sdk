@@ -113,13 +113,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "reference":
             if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
@@ -440,13 +440,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "isActive":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -661,13 +661,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -729,13 +729,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("cost", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Money? Cost
+      public Hl7.Fhir.Model.Money Cost
       {
         get
         {
           if(_Cost.InOverflow<Hl7.Fhir.Model.Money>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Money), Overflow["cost"]);
-          return _Cost;
+          return _Cost!;
         }
 
         set
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "source":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Model
               Cost = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
               Overflow["cost"] = value;
             }
-            else Cost = (Hl7.Fhir.Model.Money?)value;
+            else Cost = (Hl7.Fhir.Model.Money?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1267,13 +1267,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -1383,7 +1383,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "dosage":
             if (value is not (List<Hl7.Fhir.Model.Dosage> or null))
@@ -1432,13 +1432,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Characteristic
+      public Hl7.Fhir.Model.DataType Characteristic
       {
         get
         {
           if(_Characteristic.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["characteristic"]);
-          return _Characteristic;
+          return _Characteristic!;
         }
 
         set
@@ -1566,7 +1566,7 @@ namespace Hl7.Fhir.Model
               Characteristic = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["characteristic"] = value;
             }
-            else Characteristic = (Hl7.Fhir.Model.DataType?)value;
+            else Characteristic = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "value":
             if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
@@ -1610,13 +1610,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -1726,7 +1726,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "classification":
             if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -2096,13 +2096,13 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? RegulatoryAuthority
+      public Hl7.Fhir.Model.ResourceReference RegulatoryAuthority
       {
         get
         {
           if(_RegulatoryAuthority.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["regulatoryAuthority"]);
-          return _RegulatoryAuthority;
+          return _RegulatoryAuthority!;
         }
 
         set
@@ -2286,7 +2286,7 @@ namespace Hl7.Fhir.Model
               RegulatoryAuthority = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["regulatoryAuthority"] = value;
             }
-            else RegulatoryAuthority = (Hl7.Fhir.Model.ResourceReference?)value;
+            else RegulatoryAuthority = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "substitution":
             if (value is not (List<Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent> or null))
@@ -2348,13 +2348,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -2375,13 +2375,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("allowed", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? AllowedElement
+      public Hl7.Fhir.Model.FhirBoolean AllowedElement
       {
         get
         {
           if(_AllowedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["allowed"]);
-          return _AllowedElement;
+          return _AllowedElement!;
         }
 
         set
@@ -2403,10 +2403,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Allowed
       {
-        get => AllowedElement?.Value;
+        get => AllowedElement?.Value!;
         set
         {
-          AllowedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AllowedElement = new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Allowed");
         }
       }
@@ -2478,7 +2478,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "allowed":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -2486,7 +2486,7 @@ namespace Hl7.Fhir.Model
               AllowedElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
               Overflow["allowed"] = value;
             }
-            else AllowedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            else AllowedElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2522,13 +2522,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("schedule", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Schedule
+      public Hl7.Fhir.Model.CodeableConcept Schedule
       {
         get
         {
           if(_Schedule.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["schedule"]);
-          return _Schedule;
+          return _Schedule!;
         }
 
         set
@@ -2600,7 +2600,7 @@ namespace Hl7.Fhir.Model
               Schedule = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["schedule"] = value;
             }
-            else Schedule = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Schedule = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2635,13 +2635,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("quantity", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity? Quantity
+      public Hl7.Fhir.Model.Quantity Quantity
       {
         get
         {
           if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
-          return _Quantity;
+          return _Quantity!;
         }
 
         set
@@ -2749,7 +2749,7 @@ namespace Hl7.Fhir.Model
               Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
               Overflow["quantity"] = value;
             }
-            else Quantity = (Hl7.Fhir.Model.Quantity?)value;
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Duration or null))

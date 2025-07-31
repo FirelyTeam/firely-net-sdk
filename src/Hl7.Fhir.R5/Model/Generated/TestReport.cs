@@ -219,13 +219,13 @@ namespace Hl7.Fhir.Model
       [Binding("TestReportParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>? TypeElement
+      public Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -247,10 +247,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportParticipantType? Type
       {
-        get => TypeElement?.Value;
+        get => TypeElement?.Value!;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -261,13 +261,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("uri", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri? UriElement
+      public Hl7.Fhir.Model.FhirUri UriElement
       {
         get
         {
           if(_UriElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["uri"]);
-          return _UriElement;
+          return _UriElement!;
         }
 
         set
@@ -287,12 +287,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Uri
+      public string Uri
       {
-        get => UriElement?.Value;
+        get => UriElement?.Value!;
         set
         {
-          UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>?)value!;
             return this;
           case "uri":
             if (value is not (Hl7.Fhir.Model.FhirUri or null))
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
               UriElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
               Overflow["uri"] = value;
             }
-            else UriElement = (Hl7.Fhir.Model.FhirUri?)value;
+            else UriElement = (Hl7.Fhir.Model.FhirUri?)value!;
             return this;
           case "display":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -747,13 +747,13 @@ namespace Hl7.Fhir.Model
       [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>? ResultElement
+      public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
       {
         get
         {
           if(_ResultElement.InOverflow<Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>), Overflow["result"]);
-          return _ResultElement;
+          return _ResultElement!;
         }
 
         set
@@ -775,10 +775,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
       {
-        get => ResultElement?.Value;
+        get => ResultElement?.Value!;
         set
         {
-          ResultElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
+          ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
           OnPropertyChanged("Result");
         }
       }
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
               ResultElement = OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>>.INSTANCE;
               Overflow["result"] = value;
             }
-            else ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>?)value;
+            else ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>?)value!;
             return this;
           case "message":
             if (value is not (Hl7.Fhir.Model.Markdown or null))
@@ -999,13 +999,13 @@ namespace Hl7.Fhir.Model
       [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>? ResultElement
+      public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
       {
         get
         {
           if(_ResultElement.InOverflow<Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>), Overflow["result"]);
-          return _ResultElement;
+          return _ResultElement!;
         }
 
         set
@@ -1027,10 +1027,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
       {
-        get => ResultElement?.Value;
+        get => ResultElement?.Value!;
         set
         {
-          ResultElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
+          ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
           OnPropertyChanged("Result");
         }
       }
@@ -1232,7 +1232,7 @@ namespace Hl7.Fhir.Model
               ResultElement = OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>>.INSTANCE;
               Overflow["result"] = value;
             }
-            else ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>?)value;
+            else ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>?)value!;
             return this;
           case "message":
             if (value is not (Hl7.Fhir.Model.Markdown or null))
@@ -1928,13 +1928,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("operation", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.TestReport.OperationComponent? Operation
+      public Hl7.Fhir.Model.TestReport.OperationComponent Operation
       {
         get
         {
           if(_Operation.InOverflow<Hl7.Fhir.Model.TestReport.OperationComponent>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.TestReport.OperationComponent), Overflow["operation"]);
-          return _Operation;
+          return _Operation!;
         }
 
         set
@@ -2006,7 +2006,7 @@ namespace Hl7.Fhir.Model
               Operation = OverflowNull<Hl7.Fhir.Model.TestReport.OperationComponent>.INSTANCE;
               Overflow["operation"] = value;
             }
-            else Operation = (Hl7.Fhir.Model.TestReport.OperationComponent?)value;
+            else Operation = (Hl7.Fhir.Model.TestReport.OperationComponent?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2096,13 +2096,13 @@ namespace Hl7.Fhir.Model
     [Binding("TestReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.TestReport.TestReportStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.TestReport.TestReportStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.TestReport.TestReportStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TestReport.TestReportStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -2124,10 +2124,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TestReport.TestReportStatus? Status
     {
-      get => StatusElement?.Value;
+      get => StatusElement?.Value!;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportStatus>(value);
+        StatusElement = new Code<Hl7.Fhir.Model.TestReport.TestReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2138,13 +2138,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("testScript", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical? TestScriptElement
+    public Hl7.Fhir.Model.Canonical TestScriptElement
     {
       get
       {
         if(_TestScriptElement.InOverflow<Hl7.Fhir.Model.Canonical>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["testScript"]);
-        return _TestScriptElement;
+        return _TestScriptElement!;
       }
 
       set
@@ -2164,12 +2164,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? TestScript
+    public string TestScript
     {
-      get => TestScriptElement?.Value;
+      get => TestScriptElement?.Value!;
       set
       {
-        TestScriptElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        TestScriptElement = new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("TestScript");
       }
     }
@@ -2181,13 +2181,13 @@ namespace Hl7.Fhir.Model
     [Binding("TestReportResult")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.TestReport.TestReportResult>? ResultElement
+    public Code<Hl7.Fhir.Model.TestReport.TestReportResult> ResultElement
     {
       get
       {
         if(_ResultElement.InOverflow<Code<Hl7.Fhir.Model.TestReport.TestReportResult>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TestReport.TestReportResult>), Overflow["result"]);
-        return _ResultElement;
+        return _ResultElement!;
       }
 
       set
@@ -2209,10 +2209,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TestReport.TestReportResult? Result
     {
-      get => ResultElement?.Value;
+      get => ResultElement?.Value!;
       set
       {
-        ResultElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportResult>(value);
+        ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportResult>(value);
         OnPropertyChanged("Result");
       }
     }
@@ -2633,7 +2633,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.TestReport.TestReportStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.TestReport.TestReportStatus>?)value!;
           return this;
         case "testScript":
           if (value is not (Hl7.Fhir.Model.Canonical or null))
@@ -2641,7 +2641,7 @@ namespace Hl7.Fhir.Model
             TestScriptElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
             Overflow["testScript"] = value;
           }
-          else TestScriptElement = (Hl7.Fhir.Model.Canonical?)value;
+          else TestScriptElement = (Hl7.Fhir.Model.Canonical?)value!;
           return this;
         case "result":
           if (value is not (Code<Hl7.Fhir.Model.TestReport.TestReportResult> or null))
@@ -2649,7 +2649,7 @@ namespace Hl7.Fhir.Model
             ResultElement = OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportResult>>.INSTANCE;
             Overflow["result"] = value;
           }
-          else ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResult>?)value;
+          else ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResult>?)value!;
           return this;
         case "score":
           if (value is not (Hl7.Fhir.Model.FhirDecimal or null))

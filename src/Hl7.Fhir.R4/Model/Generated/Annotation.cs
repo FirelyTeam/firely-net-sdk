@@ -140,13 +140,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("text", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown? TextElement
+    public Hl7.Fhir.Model.Markdown TextElement
     {
       get
       {
         if(_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["text"]);
-        return _TextElement;
+        return _TextElement!;
       }
 
       set
@@ -166,12 +166,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Text
+    public string Text
     {
-      get => TextElement?.Value;
+      get => TextElement?.Value!;
       set
       {
-        TextElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        TextElement = new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Text");
       }
     }
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             TextElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
             Overflow["text"] = value;
           }
-          else TextElement = (Hl7.Fhir.Model.Markdown?)value;
+          else TextElement = (Hl7.Fhir.Model.Markdown?)value!;
           return this;
         default:
           return base.SetValue(key, value);

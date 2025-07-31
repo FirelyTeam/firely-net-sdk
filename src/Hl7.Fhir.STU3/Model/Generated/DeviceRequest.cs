@@ -87,13 +87,13 @@ namespace Hl7.Fhir.Model
       [References("Device","Practitioner","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Agent
+      public Hl7.Fhir.Model.ResourceReference Agent
       {
         get
         {
           if(_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["agent"]);
-          return _Agent;
+          return _Agent!;
         }
 
         set
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
               Agent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["agent"] = value;
             }
-            else Agent = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Agent = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "onBehalfOf":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -421,13 +421,13 @@ namespace Hl7.Fhir.Model
     [Binding("RequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Intent
+    public Hl7.Fhir.Model.CodeableConcept Intent
     {
       get
       {
         if(_Intent.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["intent"]);
-        return _Intent;
+        return _Intent!;
       }
 
       set
@@ -494,13 +494,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Code
+    public Hl7.Fhir.Model.DataType Code
     {
       get
       {
         if(_Code.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["code"]);
-        return _Code;
+        return _Code!;
       }
 
       set
@@ -523,13 +523,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Location","Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -1176,7 +1176,7 @@ namespace Hl7.Fhir.Model
             Intent = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["intent"] = value;
           }
-          else Intent = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Intent = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "priority":
           if (value is not (Code<Hl7.Fhir.Model.RequestPriority> or null))
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
             Code = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["code"] = value;
           }
-          else Code = (Hl7.Fhir.Model.DataType?)value;
+          else Code = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "context":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

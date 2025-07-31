@@ -542,13 +542,13 @@ namespace Hl7.Fhir.Model
     [Binding("MetricType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Type
+    public Hl7.Fhir.Model.CodeableConcept Type
     {
       get
       {
         if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-        return _Type;
+        return _Type!;
       }
 
       set
@@ -737,13 +737,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceMetricCategory")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>? CategoryElement
+    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> CategoryElement
     {
       get
       {
         if(_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>), Overflow["category"]);
-        return _CategoryElement;
+        return _CategoryElement!;
       }
 
       set
@@ -765,10 +765,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory? Category
     {
-      get => CategoryElement?.Value;
+      get => CategoryElement?.Value!;
       set
       {
-        CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);
+        CategoryElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);
         OnPropertyChanged("Category");
       }
     }
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
             Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["type"] = value;
           }
-          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "unit":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
             CategoryElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.INSTANCE;
             Overflow["category"] = value;
           }
-          else CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>?)value;
+          else CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>?)value!;
           return this;
         case "measurementPeriod":
           if (value is not (Hl7.Fhir.Model.Timing or null))
