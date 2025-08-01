@@ -271,7 +271,7 @@ public class BaseFhirXmlDeserializer
         // Read the element, and any of its direct neighbours into a list.
         while (reader.LocalName == elementName && reader.NodeType != XmlNodeType.EndElement)
         {
-            var newEntry = readSingleValue(propValueMapping, propMapping, reader, state);
+            var newEntry = deserializeSingleValue(propValueMapping, propMapping, reader, state);
             addToList(targetList, newEntry);
 
             if(propMapping.IsCollection)
@@ -344,7 +344,7 @@ public class BaseFhirXmlDeserializer
         else throw new InvalidOperationException($"Cannot add something of type {oneOrMoreThings.GetType()}.");
     }
 
-    private IReadOnlyCollection<Base> readSingleValue(ClassMapping propValueMapping, PropertyMapping propMapping, XmlReader reader, PocoDeserializerState state)
+    private IReadOnlyCollection<Base> deserializeSingleValue(ClassMapping propValueMapping, PropertyMapping propMapping, XmlReader reader, PocoDeserializerState state)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         
@@ -564,6 +564,7 @@ public class BaseFhirXmlDeserializer
         else if (!resourceMapping.IsResource)
         {
             state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), resourceType));
+            resourceMapping = new ClassMapping(inspector, resourceType, typeof(DynamicResource));
         }
 
         return resourceMapping;

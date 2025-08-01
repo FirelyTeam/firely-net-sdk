@@ -236,14 +236,14 @@ public partial class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> TestNormalArrayData()
     {
-        yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName,  COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName, ERR.UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE_CODE, COVE.PROPERTY_TYPE_MISMATCH_CODE);
         yield return data<ContactDetail>(new { name = "Ewout", telecom = Array.Empty<object>() }, checkName, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<ContactDetail>(
             new { name = "Ewout", telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
             checkData,  COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(
             new { name = "Ewout", _telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-            checkData, COVE.UNKNOWN_ELEMENT_CODE);
+            checkData, ERR.USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(new { name = new[] { "Ewout" }, }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
 
         static void checkName(object parsed) =>
@@ -336,6 +336,16 @@ public partial class FhirJsonDeserializationTests
         yield return data<Address>(new { _line = new[] { new { id = "1" }, null } }, checkId1,
             COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { _line = new[] { new { id = "1" }, new { id = "2" } } }, checkIds);
+        yield return data<HumanName>(new
+        {
+            _given = new[]
+            {
+                null,
+                new { id = "a3", extension = new[] { new { url = "http://nu.nl", valueString = "test" } } },
+                null
+            },
+            given = new[] { "Benedicte", "Denise", "Marie" },
+        }, checkIdsName);
 
         static void checkName(object parsed) => parsed.Should().BeOfType<Address>().Which.Line.Should()
             .BeEquivalentTo("Ewout", "Wouter");
@@ -343,6 +353,10 @@ public partial class FhirJsonDeserializationTests
         static void checkIds(object parsed) =>
             parsed.Should().BeOfType<Address>().Which.LineElement.Select(le => le?.ElementId).Should()
                 .BeEquivalentTo("1", "2");
+
+        static void checkIdsName(object parsed) =>
+            parsed.Should().BeOfType<HumanName>().Which.GivenElement.Select(ge => ge.ElementId).Should()
+                .BeEquivalentTo(default(string), "a3", null);
 
         static void checkId1(object parsed) =>
             parsed.Should().BeOfType<Address>().Which.LineElement.Select(le => le?.ElementId).Should()

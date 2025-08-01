@@ -11,7 +11,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -68,6 +67,7 @@ public class FhirJsonException(
     // The serialization contained a json null where it is not allowed, but a null does not contain data anyway.
     internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_NULL_CODE, "Expected a primitive value, not a json null.", OO_Sev.Error);
 
+    // Nested arrays are flattened, so no data loss occurs.
     internal static FhirJsonException NESTED_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NESTED_ARRAY_CODE, "Nested array detected.", OO_Sev.Error);
 
     // We will just ignore the underscore and keep on parsing
@@ -82,14 +82,16 @@ public class FhirJsonException(
 
     // Empty objects and arrays can be ignored without discarding data
     internal static FhirJsonException OBJECTS_CANNOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, OBJECTS_CANNOT_BE_EMPTY_CODE, "An object needs to have at least one property.", OO_Sev.Error);
+
+    // We define this as: "empty lists are allowed in the model, but not in json",
+    // but otherwise, empty lists do not cause data loss.
     internal static FhirJsonException ARRAYS_CANNOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, ARRAYS_CANNOT_BE_EMPTY_CODE, "An array needs to have at least one element.", OO_Sev.Error);
 
     // This leaves the incorrect nulls in place, no change in data.
     internal static FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.", OO_Sev.Error);
 
-
     // This will use a DynamicXXX, so no data loss.
-    internal static FhirJsonException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, $"Choice element '{elementName} should be suffixed by a type.", OO_Sev.Error);
+    internal static FhirJsonException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, $"Choice element '{elementName}' should be suffixed by a type.", OO_Sev.Error);
 
     // Will store the data as a DynamicResource
     internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType valueToken, string value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found token {valueToken} with value {value}.", OO_Sev.Error);
@@ -102,6 +104,7 @@ public class FhirJsonException(
 
     // Will store the data as a DynamicResource
     internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string elementName, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Error, OO_Typ.Value);
+
     internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Error, OO_Typ.Value);
     internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Error, OO_Typ.Value);
 

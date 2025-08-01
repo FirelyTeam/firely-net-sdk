@@ -16,4 +16,13 @@ internal class PocoDeserializerState
 {
     public readonly ExceptionAggregator Errors = new();
     public readonly PathStack Path = new();
+
+    private readonly Stack<BaseFhirJsonDeserializer.ObjectParsingState> objectContext = new();
+
+    public void EnterObjectContext() =>
+        objectContext.Push(new BaseFhirJsonDeserializer.ObjectParsingState());
+
+    public void LeaveObjectContext() => objectContext.Pop();
+
+    public BaseFhirJsonDeserializer.ObjectParsingState GetObjectContext() => objectContext.Peek();
 }
