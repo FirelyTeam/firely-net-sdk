@@ -18,7 +18,7 @@ public class PocoParserBenchmark
     private ReadOnlySequence<byte> _payloadJson;
     private string _payloadXml;
     private FhirXmlPocoDeserializer _xmlDeserializer;
-#if SDK6_ALPHA3 || SDK6_ALPHA2
+#if SDK6
     private FhirJsonDeserializer _jsonDeserializer;
 #else
     private FhirJsonPocoDeserializer _jsonDeserializer;
@@ -31,7 +31,7 @@ public class PocoParserBenchmark
         
         var xmlOpt = new FhirXmlPocoDeserializerSettings() { Validator = null };
         _xmlDeserializer = new FhirXmlPocoDeserializer(xmlOpt);
-#if SDK6_ALPHA3 || SDK6_ALPHA2
+#if SDK6
         var options = new DeserializerSettings() { Validator = null };
         _jsonDeserializer = new FhirJsonDeserializer(options);
 #else
