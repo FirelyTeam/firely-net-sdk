@@ -18,10 +18,10 @@
       IssueType: Structure,
       BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'communication'.,
       LineNumber: 1,
-      Position: 142,
+      Position: 138,
       InstancePath: Patient.communication[0],
       ErrorCode: JSON131,
-      Message: Encountered a json primitive while expecting a json object for non-primitive element 'communication'. At Patient.communication[0], line 1, position 142.
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'communication'. At Patient.communication[0], line 1, position 138.
     },
     {
       Type: CodedValidationException,
@@ -52,10 +52,10 @@
       IssueType: Structure,
       BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'name'.,
       LineNumber: 1,
-      Position: 156,
+      Position: 150,
       InstancePath: Patient.name[0],
       ErrorCode: JSON131,
-      Message: Encountered a json primitive while expecting a json object for non-primitive element 'name'. At Patient.name[0], line 1, position 156.
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'name'. At Patient.name[0], line 1, position 150.
     },
     {
       Type: CodedValidationException,
@@ -82,5 +82,23 @@
       Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.active, line 1, position 58.
     }
   ],
-  Obj: {"resourceType":"Patient","active":[true,false],"telecom":{"system":"phone","value":"magicnumber"},"communication":{"value":"en"},"name":{"value":"Test"},"id":"TestIdentifier"}
+  Obj:
+{
+  "resourceType": "Patient",
+  "active": [
+    true,
+    false
+  ],
+  "telecom": {
+    "system": "phone",
+    "value": "magicnumber"
+  },
+  "communication": {
+    "value": "en"
+  },
+  "name": {
+    "value": "Test"
+  },
+  "id": "TestIdentifier"
+}
 }

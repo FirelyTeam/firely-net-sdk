@@ -72,5 +72,17 @@
       Message: Found unknown element 'valueQuantity'. At Patient.valueQuantity, line 1, position 67.
     }
   ],
-  Obj: {"resourceType":"Patient","valueQuantity":{"value":{"amount":73},"unit":"bpm"},"_active":{"value":true}}
+  Obj:
+{
+  "resourceType": "Patient",
+  "valueQuantity": {
+    "value": {
+      "amount": 73
+    },
+    "unit": "bpm"
+  },
+  "_active": {
+  "value": true
+}
+}
 }

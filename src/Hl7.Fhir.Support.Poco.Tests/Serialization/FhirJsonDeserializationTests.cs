@@ -245,6 +245,7 @@ public partial class FhirJsonDeserializationTests
             new { name = "Ewout", _telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
             checkData, ERR.USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(new { name = new[] { "Ewout" }, }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { telecom = new { system = "phone" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
 
         static void checkName(object parsed) =>
             parsed.Should().BeOfType<ContactDetail>().Which.Name.Should().Be("Ewout");
@@ -437,7 +438,7 @@ public partial class FhirJsonDeserializationTests
         var patientFileName = Path.Combine("TestData", "fp-test-patient-errors.json");
         var jsonInput = File.ReadAllText(patientFileName);
 
-        var options = new JsonSerializerOptions().ForFhir();
+        var options = new JsonSerializerOptions().ForFhir().Pretty();
 
         try
         {
@@ -535,7 +536,7 @@ public partial class FhirJsonDeserializationTests
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
         obj.Should().NotBeNull();
 
-        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson() }, _settings);
+        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty:true) }, _settings);
     }
     
     [TestMethod]
@@ -561,7 +562,7 @@ public partial class FhirJsonDeserializationTests
         obj.Should().BeOfType<Patient>();
         errors.Should().NotBeEmpty();
 
-        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson() }, _settings);
+        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty: true) }, _settings);
     }
 
     [TestMethod]

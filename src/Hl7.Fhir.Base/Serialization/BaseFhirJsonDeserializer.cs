@@ -23,7 +23,6 @@ using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
 namespace Hl7.Fhir.Serialization;
 
-
 /// <summary>
 /// Deserializes Json into FHIR POCO objects.
 /// </summary>
@@ -77,7 +76,8 @@ public class BaseFhirJsonDeserializer
 
         instance = (Resource)createNewObjectInstance(ref reader, ClassMapping.Resource, state, out var classMapping);
 
-        deserializeJsonObjectInto(ref reader, instance, classMapping, state, stayOnLastToken: true);
+        deserializeSingleValueInto(instance, ref reader, "(root)", "(root)", classMapping, state, stayOnLastToken: true);
+        //deserializeJsonObjectInto(ref reader, instance, classMapping, state, stayOnLastToken: true);
         issues = Settings.ExceptionFilter is { } filter
             ? state.Errors.Remove(filter)
             : state.Errors;
@@ -108,7 +108,8 @@ public class BaseFhirJsonDeserializer
 
         var state = new PocoDeserializerState();
         instance = createNewObjectInstance(ref reader, mapping, state, out var actualClassMapping);
-        deserializeJsonObjectInto(ref reader, instance, actualClassMapping, state, stayOnLastToken: true);
+        deserializeSingleValueInto(instance, ref reader, "(root)", "(root)", actualClassMapping, state, stayOnLastToken: true);
+       // deserializeJsonObjectInto(ref reader, instance, actualClassMapping, state, stayOnLastToken: true);
 
         issues = Settings.ExceptionFilter is { } filter
             ? state.Errors.Remove(filter)
@@ -171,7 +172,6 @@ public class BaseFhirJsonDeserializer
         if (mapping.IsResource)
             state.Path.ExitResource();
 
-
         // Now after having deserialized all properties we can run the validations that needed to be
         // postponed until after all properties have been seen (e.g. Instance and Property validations for
         // primitive properties, since they may be composed from two properties `name` and `_name` in json
@@ -184,15 +184,6 @@ public class BaseFhirJsonDeserializer
 
         // do not allow empty complex objects.
         if (empty) state.Errors.Add(ERR.OBJECTS_CANNOT_BE_EMPTY(ref reader, state.Path.GetInstancePath()));
-
-        // If we need to validate & this is not a fhir primitive, run validation immediately on the object.
-        // If this is a FHIR primitive, we will run the validation later, when we have both the `name` and `_name` properties.
-        // This is done through the "delayed validation" mechanism.
-        if (Settings.Validator is not null && !mapping.IsFhirPrimitive)
-        {
-            var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath, line,pos, Settings.NarrativeValidation);
-            state.Errors.Add(Settings.Validator.ValidateObject(target, mapping, context));
-        }
 
         // If we have been parsing a resource, annotate any new validation errors that were encountered (if endaled).
         if (mapping.IsResource && Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
@@ -476,12 +467,13 @@ public class BaseFhirJsonDeserializer
         ref Utf8JsonReader reader,
         string propertyName, string elementName,
         ClassMapping propertyValueMapping,
-        PocoDeserializerState state)
+        PocoDeserializerState state,
+        bool stayOnLastToken = false)
     {
         var (line, pos) = reader.GetLocation();
         bool usesUnderscore = propertyName[0] == '_';
 
-        if (isOnJsonPrimitiveToken(ref reader))
+        if (IsOnJsonPrimitiveToken(ref reader))
         {
             if (usesUnderscore)
                 state.Errors.Add(ERR.UNDERSCORE_SHOULD_BE_OBJECT(ref reader, state.Path.GetInstancePath(), propertyName));
@@ -496,7 +488,7 @@ public class BaseFhirJsonDeserializer
             if(propertyValueMapping.IsFhirPrimitive && !usesUnderscore)
                 state.Errors.Add(ERR.UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE(ref reader, state.Path.GetInstancePath(), elementName));
 
-            deserializeJsonObjectInto(ref reader, existingValue, propertyValueMapping, state);
+            deserializeJsonObjectInto(ref reader, existingValue, propertyValueMapping, state, stayOnLastToken);
         }
         else if (reader.TokenType is JsonTokenType.Null)
         {
@@ -543,7 +535,7 @@ public class BaseFhirJsonDeserializer
     }
     
 
-    private static bool isOnJsonPrimitiveToken(ref Utf8JsonReader reader) =>
+    internal static bool IsOnJsonPrimitiveToken(ref Utf8JsonReader reader) =>
         reader.TokenType is
             JsonTokenType.String or JsonTokenType.Number
             or JsonTokenType.False or JsonTokenType.True;
@@ -748,15 +740,18 @@ public class BaseFhirJsonDeserializer
         )
     {
         bool startsWithUnderscore = propertyName[0] == '_';
-        var elementName = startsWithUnderscore ? propertyName[1..] : propertyName;
+        var propNameWithoutUnderscore = startsWithUnderscore ? propertyName[1..] : propertyName;
 
         // In FHIR primitives, the "value" property is a special case and should not appear as a
         // separate "value" property in Json. If it does, treat it like an unknown property.
-        bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && elementName == "value";
+        bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && propNameWithoutUnderscore == "value";
 
-        var propertyMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(elementName)
+        var propertyMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore)
                               ?? (isUnexpectedValueProperty ? null : lookupPropertyInDefinition())
                               ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
+
+        // Simulate us moving into the element, so we get an error at the right location
+        state.Path.EnterElement(propertyMapping.Name, null, false);
 
         var propertyValueMapping = propertyMapping.Choice switch
         {
@@ -768,15 +763,17 @@ public class BaseFhirJsonDeserializer
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported.")
         };
 
+        state.Path.ExitElement();
+
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 
         PropertyMapping? lookupPropertyInDefinition() =>
-            parentMapping.FindMappedElementByName(elementName)
-            ?? parentMapping.FindMappedElementByChoiceName(elementName);
+            parentMapping.FindMappedElementByName(propNameWithoutUnderscore)
+            ?? parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {
-            string typeSuffix = elementName[propertyMapping.Name.Length..];
+            string typeSuffix = propNameWithoutUnderscore[propertyMapping.Name.Length..];
 
             if (!string.IsNullOrEmpty(typeSuffix))
             {
@@ -795,7 +792,7 @@ public class BaseFhirJsonDeserializer
             else
             {
                 var path = state.Path.GetInstancePath();
-                state.Errors.Add(ERR.CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref r, path, elementName));
+                state.Errors.Add(ERR.CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref r, path, propNameWithoutUnderscore));
 
                 var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
                 return new ClassMapping(_inspector, $"UnknownType_{path}", guessedDynamicType);
@@ -816,12 +813,12 @@ public class BaseFhirJsonDeserializer
             var customPropertyMapping = r.TokenType switch
             {
                 JsonTokenType.StartArray =>
-                    new PropertyMapping(parentMapping, elementName, getCustomMappingTypeForToken(peekArrayElementToken(ref r))).PromoteToList(),
+                    new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeForToken(peekArrayElementToken(ref r))).PromoteToList(),
                 _ =>
-                    new PropertyMapping(parentMapping, elementName, getCustomMappingTypeForToken(r.TokenType))
+                    new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeForToken(r.TokenType))
             };
 
-            state.GetObjectContext().LocalPropertyMappings.Add(elementName, customPropertyMapping);
+            state.GetObjectContext().LocalPropertyMappings.Add(propNameWithoutUnderscore, customPropertyMapping);
 
             return customPropertyMapping;
 

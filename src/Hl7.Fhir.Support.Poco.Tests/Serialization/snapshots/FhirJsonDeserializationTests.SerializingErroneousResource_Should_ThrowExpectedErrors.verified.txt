@@ -6,10 +6,10 @@
       IssueType: Structure,
       BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'extension'.,
       LineNumber: 3,
-      Position: 28,
+      Position: 18,
       InstancePath: Patient.extension[0],
       ErrorCode: JSON131,
-      Message: Encountered a json primitive while expecting a json object for non-primitive element 'extension'. At Patient.extension[0], line 3, position 28.
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'extension'. At Patient.extension[0], line 3, position 18.
     },
     {
       Type: CodedValidationException,
@@ -97,10 +97,10 @@
       IssueType: Structure,
       BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'name'.,
       LineNumber: 22,
-      Position: 22,
+      Position: 16,
       InstancePath: Patient.contained[1].name[0],
       ErrorCode: JSON131,
-      Message: Encountered a json primitive while expecting a json object for non-primitive element 'name'. At Patient.contained[1].name[0], line 22, position 22.
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'name'. At Patient.contained[1].name[0], line 22, position 16.
     },
     {
       Type: FhirJsonException,
@@ -313,10 +313,10 @@
       IssueType: Structure,
       BaseErrorMessage: Property 'resourceType' should be a string, but found token Number with value 4.,
       LineNumber: 66,
-      Position: 24,
+      Position: 23,
       InstancePath: Patient.contained[8],
       ErrorCode: JSON102,
-      Message: Property 'resourceType' should be a string, but found token Number with value 4. At Patient.contained[8], line 66, position 24.
+      Message: Property 'resourceType' should be a string, but found token Number with value 4. At Patient.contained[8], line 66, position 23.
     },
     {
       Type: FhirJsonException,
@@ -346,10 +346,10 @@
       IssueType: Structure,
       BaseErrorMessage: Encountered duplicate property 'active'.,
       LineNumber: 76,
-      Position: 22,
+      Position: 17,
       InstancePath: Patient.contained[10],
       ErrorCode: JSON129,
-      Message: Encountered duplicate property 'active'. At Patient.contained[10], line 76, position 22.
+      Message: Encountered duplicate property 'active'. At Patient.contained[10], line 76, position 17.
     },
     {
       Type: CodedValidationException,
@@ -368,10 +368,10 @@
       IssueType: Structure,
       BaseErrorMessage: Encountered duplicate property 'active'.,
       LineNumber: 90,
-      Position: 21,
+      Position: 17,
       InstancePath: Patient.contained[11],
       ErrorCode: JSON129,
-      Message: Encountered duplicate property 'active'. At Patient.contained[11], line 90, position 21.
+      Message: Encountered duplicate property 'active'. At Patient.contained[11], line 90, position 17.
     },
     {
       Type: FhirJsonException,
@@ -581,10 +581,10 @@
       IssueType: Structure,
       BaseErrorMessage: Property '_url' has an underscore, which should be a (an array of) Json object or null.,
       LineNumber: 293,
-      Position: 91,
+      Position: 17,
       InstancePath: Patient.gender.extension[0].url,
       ErrorCode: JSON134,
-      Message: Property '_url' has an underscore, which should be a (an array of) Json object or null. At Patient.gender.extension[0].url, line 293, position 91.
+      Message: Property '_url' has an underscore, which should be a (an array of) Json object or null. At Patient.gender.extension[0].url, line 293, position 17.
     },
     {
       Type: CodedValidationException,
@@ -603,10 +603,10 @@
       IssueType: Structure,
       BaseErrorMessage: Choice element 'value' should be suffixed by a type.,
       LineNumber: 302,
-      Position: 20,
-      InstancePath: Patient.gender.extension[2],
+      Position: 18,
+      InstancePath: Patient.gender.extension[2].value,
       ErrorCode: JSON114,
-      Message: Choice element 'value' should be suffixed by a type. At Patient.gender.extension[2], line 302, position 20.
+      Message: Choice element 'value' should be suffixed by a type. At Patient.gender.extension[2].value, line 302, position 18.
     },
     {
       Type: FhirJsonException,
@@ -614,10 +614,10 @@
       IssueType: Value,
       BaseErrorMessage: Choice element 'value' is suffixed with an unrecognized type 'SuperDecimal'.,
       LineNumber: 306,
-      Position: 32,
-      InstancePath: Patient.gender.extension[3],
+      Position: 30,
+      InstancePath: Patient.gender.extension[3].value,
       ErrorCode: JSON115,
-      Message: Choice element 'value' is suffixed with an unrecognized type 'SuperDecimal'. At Patient.gender.extension[3], line 306, position 32.
+      Message: Choice element 'value' is suffixed with an unrecognized type 'SuperDecimal'. At Patient.gender.extension[3].value, line 306, position 30.
     },
     {
       Type: FhirJsonException,
@@ -626,9 +626,9 @@
       BaseErrorMessage: Choice element 'value' is suffixed with an unrecognized type 'SuperCrap'.,
       LineNumber: 310,
       Position: 28,
-      InstancePath: Patient.gender.extension[4],
+      InstancePath: Patient.gender.extension[4].value,
       ErrorCode: JSON115,
-      Message: Choice element 'value' is suffixed with an unrecognized type 'SuperCrap'. At Patient.gender.extension[4], line 310, position 28.
+      Message: Choice element 'value' is suffixed with an unrecognized type 'SuperCrap'. At Patient.gender.extension[4].value, line 310, position 28.
     },
     {
       Type: CodedValidationException,
@@ -732,28 +732,6 @@
       Message: Element 'Patient.link[0].other' with minimum cardinality 1 must be present. At Patient.link[0].other, line 383, position 6.
     },
     {
-      Type: CodedValidationException,
-      IssueSeverity: Error,
-      IssueType: Required,
-      BaseErrorMessage: Element 'Patient.link[0].type' with minimum cardinality 1 must be present.,
-      LineNumber: 384,
-      Position: 6,
-      InstancePath: Patient.link[0].type,
-      ErrorCode: PVAL105,
-      Message: Element 'Patient.link[0].type' with minimum cardinality 1 must be present. At Patient.link[0].type, line 384, position 6.
-    },
-    {
-      Type: CodedValidationException,
-      IssueSeverity: Error,
-      IssueType: Required,
-      BaseErrorMessage: Element 'Patient.link[0].other' with minimum cardinality 1 must be present.,
-      LineNumber: 384,
-      Position: 6,
-      InstancePath: Patient.link[0].other,
-      ErrorCode: PVAL105,
-      Message: Element 'Patient.link[0].other' with minimum cardinality 1 must be present. At Patient.link[0].other, line 384, position 6.
-    },
-    {
       Type: FhirJsonException,
       IssueSeverity: Error,
       IssueType: Structure,
@@ -801,5 +779,454 @@
       Message: Found unknown element 'data'. At Patient.unknownElement.valued.data, line 388, position 14.
     }
   ],
-  Obj: {"resourceType":"Patient","unknownElement":{"valued":{"data":[true,null]}},"id":"pat1-with-errors","meta":{"lastUpdated":"not a valid instant"},"text":{"resourceType":"Narrative","status":"generatedY","div":"<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"},"contained":[{"resourceType":"Patient","active":[null,true],"_active":[{"value":true},null],"id":"PrimitiveArrayContainsComplex"},{"resourceType":"Patient","id":"ComplexArrayContainsPrimitive","name":[{"value":"John"},{"family":"Doe"}]},{"resourceType":"Patient","active":[null,true],"id":"MultiLevelArrayPrimitive"},{"resourceType":"Patient","active":[true,false],"id":"MultiLevelArrayPrimitiveNoNull"},{"resourceType":"Patient","_active":[null,{"versionId":"2"}],"id":"MultiLevelArrayWithComplex"},{"resourceType":"Patient","active":[null,true],"_active":[{"versionId":"2"},null],"id":"MultiLevelArrayWithComplexNoNull"},{"resourceType":"PatientX","id":"1"},{"resourceType":"Meta","versionId":"1"},{"resourceType":"4","id":"1"},{"resourceType":"UnknownResource_Patient.contained[9]","id":"1"},{"resourceType":"Patient","active":true,"deceasedString":"yesterday"},{"resourceType":"Patient","active":false,"_active":{"url":"http://example.com","id":"duped"},"name":[{"family":"Doe"}]},{"resourceType":"Patient","name":[{"family":"Doe"}]},{"resourceType":"Patient","test":false,"_test":{"id":"duped","extension":[{"url":"http://example.com"}]},"id":"pat1"},{"resourceType":"Observation","id":"decimal","status":"final","code":{"text":"Decimal Testing Observation"},"component":[{"code":{"text":"Component"},"valueQuantity":{"value":1.0,"unit":"g"}},{"code":{"text":"Component"},"valueQuantity":{"value":1.00,"unit":"g"}},{"code":{"text":"Component"},"valueQuantity":{"value":1.0,"unit":"g"}},{"code":{"text":"Component"},"valueQuantity":{"value":0.00000000000000001,"unit":"g"}},{"code":{"text":"Component"},"valueQuantity":{"value":10000000000000000,"unit":"g"}},{"code":{"text":"Component"},"valueQuantity":{"value":"1.00000000000000000e-24","unit":"g"}},{"code":{"text":"Component"},"valueQuantity":{"value":"-1.00000000000000000e245","unit":"g"}}]},{"resourceType":"Patient","id":"pat1","name":[{"given":["Jane","John"],"_given":[null,{"id":"e1"}]}]},{"resourceType":"Patient","id":"1","identifier":[{"id":true,"system":"http://hl7.org/fhir/sid/us-ssn","value":"444222222"}],"active":true,"name":[{"given":"This should be an array","mother":"this does not exist","id":"firstname","use":"official","family":"Everywoman"},{"family":["error: array is unexpected here"],"id":"anothername","use":"usual","given":["Eveline",null],"_given":[null,{"id":"a1"}]}],"telecom":[{"system":"phone","value":"555-555-2003","rank":1}],"gender":"female","birthDate":"1973-05-31","address":[{"_use":{"incorrect":"should have been a simple string"},"line":["2222 Home Street",null],"_line":[{"id":"bla"},null]},{"line":["Wodanstraat"]}],"managingOrganization":{"reference":"Organization/hl7"}}],"extension":[{"valueString":"try this"}],"identifier":[{"use":"usual","system":"urn:oid:0.1.2.3.4.5.6.7","value":"654321"},{"use":"official","system":"urn:oid:9.0.1.2.3.4.5.6.7","value":"7654321"},{"use":"official","system":"http://some.other/system","value":"11223344"}],"active":true,"name":[{"use":"official","family":"Donald","given":["Duck",null]}],"telecom":[{"system":"phone","value":"555-555-2003","use":"work","rank":true}],"gender":"male","_gender":{"extension":[{"url":"http://example.org/StructureDefinition/extension-with-incorrect-url-prop","valueCode":"metrosexual"},{"url":"http://example.org/StructureDefinition/extension-with-number-as-code","valueCode":28},{"url":"http://example.org/StructureDefinition/extension-without-type","valueDecimal":28},{"url":"http://example.org/StructureDefinition/extension-with-unknown-type","valueDecimal":28},{"url":"http://example.org/StructureDefinition/extension-with-unknown-cplx-type","valueSuperCrap":{"temperature":38.9,"unit":"celcius"}}]},"birthDate":"1974-12-25","_birthDate":{"extension":[{"url":"http://hl7.org/fhir/StructureDefinition/patient-birthTime","valueDateTime":"1974-12-25T14:35:45-05:00"}]},"deceasedBoolean":"false","multipleBirthInteger":3.14,"photo":[{"contentType":"image/gif","data":"ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7"}],"contact":[{"relationship":[{"coding":[{"system":"http://hl7.org/fhir/ValueSet/patient-contact-relationship","code":"owner"}]}],"organization":{"reference":"Organization/1","display":"Walt Disney Corporation"}}],"communication":[{"language":{"coding":[{"code":"nl-nl"}]},"preferred":true,"_preferred":{"extension":[{"url":"http://example.org/StructureDefinition/language-preference","valueCode":"in-writing"}]}},{"language":{},"preferred":true,"_preferred":{"extension":[{"url":"http://example.org/StructureDefinition/language-preference","valueCode":"oral"}]}}],"managingOrganization":{"reference":"Organization/1","display":""},"link":[{}]}
+  Obj:
+{
+  "resourceType": "Patient",
+  "unknownElement": {
+    "valued": {
+      "data": [
+        true,
+        null
+      ]
+    }
+  },
+  "id": "pat1-with-errors",
+  "meta": {
+    "lastUpdated": "not a valid instant"
+  },
+  "text": {
+    "resourceType": "Narrative",
+    "status": "generatedY",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"
+  },
+  "contained": [
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "_active": [
+        {
+          "value": true
+        },
+        null
+      ],
+      "id": "PrimitiveArrayContainsComplex"
+    },
+    {
+      "resourceType": "Patient",
+      "id": "ComplexArrayContainsPrimitive",
+      "name": [
+        {
+          "value": "John"
+        },
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "id": "MultiLevelArrayPrimitive"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        true,
+        false
+      ],
+      "id": "MultiLevelArrayPrimitiveNoNull"
+    },
+    {
+      "resourceType": "Patient",
+      "_active": [
+        null,
+        {
+          "versionId": "2"
+        }
+      ],
+      "id": "MultiLevelArrayWithComplex"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "_active": [
+        {
+          "versionId": "2"
+        },
+        null
+      ],
+      "id": "MultiLevelArrayWithComplexNoNull"
+    },
+    {
+      "resourceType": "PatientX",
+      "id": "1"
+    },
+    {
+      "resourceType": "Meta",
+      "versionId": "1"
+    },
+    {
+      "resourceType": "4",
+      "id": "1"
+    },
+    {
+      "resourceType": "UnknownResource_Patient.contained[9]",
+      "id": "1"
+    },
+    {
+      "resourceType": "Patient",
+      "active": true,
+      "deceasedString": "yesterday"
+    },
+    {
+      "resourceType": "Patient",
+      "active": false,
+      "_active": {
+  "url": "http://example.com",
+  "id": "duped"
+},
+      "name": [
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "name": [
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "test": false,
+      "_test": {
+  "id": "duped",
+  "extension": [
+    {
+      "url": "http://example.com"
+    }
+  ]
+},
+      "id": "pat1"
+    },
+    {
+      "resourceType": "Observation",
+      "id": "decimal",
+      "status": "final",
+      "code": {
+        "text": "Decimal Testing Observation"
+      },
+      "component": [
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.00,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 0.00000000000000001,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 10000000000000000,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": "1.00000000000000000e-24",
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": "-1.00000000000000000e245",
+            "unit": "g"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "pat1",
+      "name": [
+        {
+          "given": [
+            "Jane",
+            "John"
+          ],
+          "_given": [
+            null,
+            {
+              "id": "e1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "1",
+      "identifier": [
+        {
+          "id": true,
+          "system": "http://hl7.org/fhir/sid/us-ssn",
+          "value": "444222222"
+        }
+      ],
+      "active": true,
+      "name": [
+        {
+          "given": "This should be an array",
+          "mother": "this does not exist",
+          "id": "firstname",
+          "use": "official",
+          "family": "Everywoman"
+        },
+        {
+          "family": [
+            "error: array is unexpected here"
+          ],
+          "id": "anothername",
+          "use": "usual",
+          "given": [
+            "Eveline",
+            null
+          ],
+          "_given": [
+            null,
+            {
+              "id": "a1"
+            }
+          ]
+        }
+      ],
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "555-555-2003",
+          "rank": 1
+        }
+      ],
+      "gender": "female",
+      "birthDate": "1973-05-31",
+      "address": [
+        {
+          "_use": {
+  "incorrect": "should have been a simple string"
+},
+          "line": [
+            "2222 Home Street",
+            null
+          ],
+          "_line": [
+            {
+              "id": "bla"
+            },
+            null
+          ]
+        },
+        {
+          "line": [
+            "Wodanstraat"
+          ]
+        }
+      ],
+      "managingOrganization": {
+        "reference": "Organization/hl7"
+      }
+    }
+  ],
+  "extension": [
+    {
+      "valueString": "try this"
+    }
+  ],
+  "identifier": [
+    {
+      "use": "usual",
+      "system": "urn:oid:0.1.2.3.4.5.6.7",
+      "value": "654321"
+    },
+    {
+      "use": "official",
+      "system": "urn:oid:9.0.1.2.3.4.5.6.7",
+      "value": "7654321"
+    },
+    {
+      "use": "official",
+      "system": "http://some.other/system",
+      "value": "11223344"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Donald",
+      "given": [
+        "Duck",
+        null
+      ]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "555-555-2003",
+      "use": "work",
+      "rank": true
+    }
+  ],
+  "gender": "male",
+  "_gender": {
+  "extension": [
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
+      "valueCode": "metrosexual"
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
+      "valueCode": 28
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-without-type",
+      "valueDecimal": 28
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-unknown-type",
+      "valueDecimal": 28
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-unknown-cplx-type",
+      "valueSuperCrap": {
+        "temperature": 38.9,
+        "unit": "celcius"
+      }
+    }
+  ]
+},
+  "birthDate": "1974-12-25",
+  "_birthDate": {
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+      "valueDateTime": "1974-12-25T14:35:45-05:00"
+    }
+  ]
+},
+  "deceasedBoolean": "false",
+  "multipleBirthInteger": 3.14,
+  "photo": [
+    {
+      "contentType": "image/gif",
+      "data": "ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/patient-contact-relationship",
+              "code": "owner"
+            }
+          ]
+        }
+      ],
+      "organization": {
+        "reference": "Organization/1",
+        "display": "Walt Disney Corporation"
+      }
+    }
+  ],
+  "communication": [
+    {
+      "language": {
+        "coding": [
+          {
+            "code": "nl-nl"
+          }
+        ]
+      },
+      "preferred": true,
+      "_preferred": {
+  "extension": [
+    {
+      "url": "http://example.org/StructureDefinition/language-preference",
+      "valueCode": "in-writing"
+    }
+  ]
+}
+    },
+    {
+      "language": {},
+      "preferred": true,
+      "_preferred": {
+  "extension": [
+    {
+      "url": "http://example.org/StructureDefinition/language-preference",
+      "valueCode": "oral"
+    }
+  ]
+}
+    }
+  ],
+  "managingOrganization": {
+    "reference": "Organization/1",
+    "display": ""
+  },
+  "link": [
+    {}
+  ]
+}
 }

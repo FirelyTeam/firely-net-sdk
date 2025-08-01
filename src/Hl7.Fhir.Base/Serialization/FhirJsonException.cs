@@ -127,6 +127,14 @@ public class FhirJsonException(
     {
         var (lineNumber, position) = reader.GetLocation();
 
+        // If the reader is on a primitive token, we need to adjust the position
+        // because the position is the start of the token, not the end.
+        if (BaseFhirJsonDeserializer.IsOnJsonPrimitiveToken(ref reader))
+        {
+            var length = reader.GetRawText().Length;
+            position -= length;
+        }
+
         return new FhirJsonException(
             code,
             message,
