@@ -36,6 +36,7 @@ public partial class FhirJsonDeserializationTests
     {
         _settings = new VerifySettings();
         _settings.UseDirectory("snapshots");
+        _settings.DisableDiff();
     }
 
     [DataTestMethod]
