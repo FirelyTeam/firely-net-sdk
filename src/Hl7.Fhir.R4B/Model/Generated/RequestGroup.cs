@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
         get => PrefixElement?.Value;
         set
         {
-          PrefixElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PrefixElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Prefix");
         }
       }
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
         get => TitleElement?.Value;
         set
         {
-          TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Title");
         }
       }
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
         get => TextEquivalentElement?.Value;
         set
         {
-          TextEquivalentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextEquivalentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("TextEquivalent");
         }
       }
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         get => PriorityElement?.Value;
         set
         {
-          PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+          PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
           OnPropertyChanged("Priority");
         }
       }
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
         get => GroupingBehaviorElement?.Value;
         set
         {
-          GroupingBehaviorElement = value is null ? null : new Code<Hl7.Fhir.Model.ActionGroupingBehavior>(value);
+          GroupingBehaviorElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionGroupingBehavior>(value);
           OnPropertyChanged("GroupingBehavior");
         }
       }
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
         get => SelectionBehaviorElement?.Value;
         set
         {
-          SelectionBehaviorElement = value is null ? null : new Code<Hl7.Fhir.Model.ActionSelectionBehavior>(value);
+          SelectionBehaviorElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionSelectionBehavior>(value);
           OnPropertyChanged("SelectionBehavior");
         }
       }
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
         get => RequiredBehaviorElement?.Value;
         set
         {
-          RequiredBehaviorElement = value is null ? null : new Code<Hl7.Fhir.Model.ActionRequiredBehavior>(value);
+          RequiredBehaviorElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionRequiredBehavior>(value);
           OnPropertyChanged("RequiredBehavior");
         }
       }
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
         get => PrecheckBehaviorElement?.Value;
         set
         {
-          PrecheckBehaviorElement = value is null ? null : new Code<Hl7.Fhir.Model.ActionPrecheckBehavior>(value);
+          PrecheckBehaviorElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionPrecheckBehavior>(value);
           OnPropertyChanged("PrecheckBehavior");
         }
       }
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
         get => CardinalityBehaviorElement?.Value;
         set
         {
-          CardinalityBehaviorElement = value is null ? null : new Code<Hl7.Fhir.Model.ActionCardinalityBehavior>(value);
+          CardinalityBehaviorElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionCardinalityBehavior>(value);
           OnPropertyChanged("CardinalityBehavior");
         }
       }
@@ -1215,10 +1215,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ActionConditionKind? Kind
       {
-        get => KindElement?.Value!;
+        get => KindElement?.Value;
         set
         {
-          KindElement = new Code<Hl7.Fhir.Model.ActionConditionKind>(value);
+          KindElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionConditionKind>(value);
           OnPropertyChanged("Kind");
         }
       }
@@ -1389,12 +1389,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ActionId
+      public string? ActionId
       {
-        get => ActionIdElement?.Value!;
+        get => ActionIdElement?.Value;
         set
         {
-          ActionIdElement = new Hl7.Fhir.Model.Id(value);
+          ActionIdElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("ActionId");
         }
       }
@@ -1434,10 +1434,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ActionRelationshipType? Relationship
       {
-        get => RelationshipElement?.Value!;
+        get => RelationshipElement?.Value;
         set
         {
-          RelationshipElement = new Code<Hl7.Fhir.Model.ActionRelationshipType>(value);
+          RelationshipElement = value is null ? null! : new Code<Hl7.Fhir.Model.ActionRelationshipType>(value);
           OnPropertyChanged("Relationship");
         }
       }
@@ -1822,10 +1822,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1865,10 +1865,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestIntent? Intent
     {
-      get => IntentElement?.Value!;
+      get => IntentElement?.Value;
       set
       {
-        IntentElement = new Code<Hl7.Fhir.Model.RequestIntent>(value);
+        IntentElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -1910,7 +1910,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -2033,7 +2033,7 @@ namespace Hl7.Fhir.Model
       get => AuthoredOnElement?.Value;
       set
       {
-        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -2180,7 +2180,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.RequestGroup.ActionComponent>? _Action;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

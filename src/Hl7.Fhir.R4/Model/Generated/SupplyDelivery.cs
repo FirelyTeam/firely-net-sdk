@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Receiver;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Type; set => Type = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Type?.ToCodings() ?? [];

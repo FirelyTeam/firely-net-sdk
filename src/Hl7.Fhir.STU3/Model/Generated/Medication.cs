@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         get => IsActiveElement?.Value;
         set
         {
-          IsActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          IsActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsActive");
         }
       }
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
         get => LotNumberElement?.Value;
         set
         {
-          LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LotNumber");
         }
       }
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
         get => ExpirationDateElement?.Value;
         set
         {
-          ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("ExpirationDate");
         }
       }
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Medication.MedicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Medication.MedicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -985,7 +985,7 @@ namespace Hl7.Fhir.Model
       get => IsBrandElement?.Value;
       set
       {
-        IsBrandElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        IsBrandElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("IsBrand");
       }
     }
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
       get => IsOverTheCounterElement?.Value;
       set
       {
-        IsOverTheCounterElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        IsOverTheCounterElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("IsOverTheCounter");
       }
     }

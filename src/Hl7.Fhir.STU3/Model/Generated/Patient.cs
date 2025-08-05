@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
         get => GenderElement?.Value;
         set
         {
-          GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+          GenderElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
           OnPropertyChanged("Gender");
         }
       }
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
         get => PreferredElement?.Value;
         set
         {
-          PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          PreferredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Preferred");
         }
       }
@@ -975,10 +975,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Patient.LinkType? Type
       {
-        get => TypeElement?.Value!;
+        get => TypeElement?.Value;
         set
         {
-          TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -1237,7 +1237,7 @@ namespace Hl7.Fhir.Model
       get => GenderElement?.Value;
       set
       {
-        GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+        GenderElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
         OnPropertyChanged("Gender");
       }
     }
@@ -1278,7 +1278,7 @@ namespace Hl7.Fhir.Model
       get => BirthDateElement?.Value;
       set
       {
-        BirthDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        BirthDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("BirthDate");
       }
     }
@@ -1590,7 +1590,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Patient.LinkComponent>? _Link;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

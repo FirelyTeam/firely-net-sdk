@@ -388,12 +388,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get => UidElement?.Value!;
+        get => UidElement?.Value;
         set
         {
-          UidElement = new Hl7.Fhir.Model.Id(value);
+          UidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         get => NumberElement?.Value;
         set
         {
-          NumberElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+          NumberElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
           OnPropertyChanged("Number");
         }
       }
@@ -788,10 +788,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType? RegionType
       {
-        get => RegionTypeElement?.Value!;
+        get => RegionTypeElement?.Value;
         set
         {
-          RegionTypeElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
+          RegionTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
           OnPropertyChanged("RegionType");
         }
       }
@@ -985,10 +985,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType? RegionType
       {
-        get => RegionTypeElement?.Value!;
+        get => RegionTypeElement?.Value;
         set
         {
-          RegionTypeElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
+          RegionTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
           OnPropertyChanged("RegionType");
         }
       }
@@ -1194,10 +1194,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1266,7 +1266,7 @@ namespace Hl7.Fhir.Model
       get => IssuedElement?.Value;
       set
       {
-        IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        IssuedElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Issued");
       }
     }
@@ -1422,7 +1422,7 @@ namespace Hl7.Fhir.Model
       get => StudyUidElement?.Value;
       set
       {
-        StudyUidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        StudyUidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("StudyUid");
       }
     }
@@ -1523,7 +1523,7 @@ namespace Hl7.Fhir.Model
       get => SeriesUidElement?.Value;
       set
       {
-        SeriesUidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        SeriesUidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("SeriesUid");
       }
     }
@@ -1564,7 +1564,7 @@ namespace Hl7.Fhir.Model
       get => SeriesNumberElement?.Value;
       set
       {
-        SeriesNumberElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+        SeriesNumberElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("SeriesNumber");
       }
     }
@@ -1605,7 +1605,7 @@ namespace Hl7.Fhir.Model
       get => FrameOfReferenceUidElement?.Value;
       set
       {
-        FrameOfReferenceUidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        FrameOfReferenceUidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("FrameOfReferenceUid");
       }
     }
@@ -1695,7 +1695,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>? _Instance;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

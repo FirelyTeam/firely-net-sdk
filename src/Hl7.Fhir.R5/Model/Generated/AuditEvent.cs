@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
         get => RequestorElement?.Value;
         set
         {
-          RequestorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          RequestorElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Requestor");
         }
       }
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
         get => QueryElement?.Value;
         set
         {
-          QueryElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+          QueryElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
           OnPropertyChanged("Query");
         }
       }
@@ -1650,7 +1650,7 @@ namespace Hl7.Fhir.Model
       get => ActionElement?.Value;
       set
       {
-        ActionElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
+        ActionElement = value is null ? null! : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
         OnPropertyChanged("Action");
       }
     }
@@ -1692,7 +1692,7 @@ namespace Hl7.Fhir.Model
       get => SeverityElement?.Value;
       set
       {
-        SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>(value);
+        SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>(value);
         OnPropertyChanged("Severity");
       }
     }
@@ -1759,10 +1759,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Recorded
     {
-      get => RecordedElement?.Value!;
+      get => RecordedElement?.Value;
       set
       {
-        RecordedElement = new Hl7.Fhir.Model.Instant(value);
+        RecordedElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Recorded");
       }
     }

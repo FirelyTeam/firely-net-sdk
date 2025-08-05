@@ -173,10 +173,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CommonLanguages? Language
       {
-        get => LanguageElement?.Value!;
+        get => LanguageElement?.Value;
         set
         {
-          LanguageElement = new Code<Hl7.Fhir.Model.CommonLanguages>(value);
+          LanguageElement = value is null ? null! : new Code<Hl7.Fhir.Model.CommonLanguages>(value);
           OnPropertyChanged("Language");
         }
       }
@@ -213,12 +213,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get => NameElement?.Value!;
+        get => NameElement?.Value;
         set
         {
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
         get => LanguageElement?.Value;
         set
         {
-          LanguageElement = value is null ? null : new Code<Hl7.Fhir.Model.CommonLanguages>(value);
+          LanguageElement = value is null ? null! : new Code<Hl7.Fhir.Model.CommonLanguages>(value);
           OnPropertyChanged("Language");
         }
       }
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
         get => LotNumberElement?.Value;
         set
         {
-          LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LotNumber");
         }
       }
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
         get => ExpiryElement?.Value;
         set
         {
-          ExpiryElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ExpiryElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Expiry");
         }
       }
@@ -1448,10 +1448,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1784,7 +1784,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _ProductReference;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

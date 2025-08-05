@@ -364,10 +364,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.OperationOutcome.IssueSeverity? Severity
       {
-        get => SeverityElement?.Value!;
+        get => SeverityElement?.Value;
         set
         {
-          SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
+          SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
           OnPropertyChanged("Severity");
         }
       }
@@ -407,10 +407,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.OperationOutcome.IssueType? Code
       {
-        get => CodeElement?.Value!;
+        get => CodeElement?.Value;
         set
         {
-          CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
+          CodeElement = value is null ? null! : new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         get => DiagnosticsElement?.Value;
         set
         {
-          DiagnosticsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DiagnosticsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Diagnostics");
         }
       }

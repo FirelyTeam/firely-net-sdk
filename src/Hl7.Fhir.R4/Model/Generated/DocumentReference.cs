@@ -116,10 +116,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DocumentRelationshipType? Code
       {
-        get => CodeElement?.Value!;
+        get => CodeElement?.Value;
         set
         {
-          CodeElement = new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
+          CodeElement = value is null ? null! : new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -897,10 +897,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DocumentReferenceStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.DocumentReferenceStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.DocumentReferenceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
       get => DocStatusElement?.Value;
       set
       {
-        DocStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
+        DocStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
         OnPropertyChanged("DocStatus");
       }
     }
@@ -1067,7 +1067,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1222,7 +1222,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1310,7 +1310,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.DocumentReference.ContextComponent? _Context;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

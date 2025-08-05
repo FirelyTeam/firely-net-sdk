@@ -157,10 +157,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       get => DisplayElement?.Value;
       set
       {
-        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       get => CitationElement?.Value;
       set
       {
-        CitationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CitationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Citation");
       }
     }
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }

@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model
         get => ReportedElement?.Value;
         set
         {
-          ReportedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ReportedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Reported");
         }
       }
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
         get => SeriesElement?.Value;
         set
         {
-          SeriesElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SeriesElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Series");
         }
       }
@@ -801,12 +801,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string DoseNumber
+      public string? DoseNumber
       {
-        get => DoseNumberElement?.Value!;
+        get => DoseNumberElement?.Value;
         set
         {
-          DoseNumberElement = new Hl7.Fhir.Model.FhirString(value);
+          DoseNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("DoseNumber");
         }
       }
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model
         get => SeriesDosesElement?.Value;
         set
         {
-          SeriesDosesElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SeriesDosesElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SeriesDoses");
         }
       }
@@ -1094,10 +1094,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1245,7 +1245,7 @@ namespace Hl7.Fhir.Model
       get => LotNumberElement?.Value;
       set
       {
-        LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("LotNumber");
       }
     }
@@ -1286,7 +1286,7 @@ namespace Hl7.Fhir.Model
       get => ExpirationDateElement?.Value;
       set
       {
-        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -1443,7 +1443,7 @@ namespace Hl7.Fhir.Model
       get => PrimarySourceElement?.Value;
       set
       {
-        PrimarySourceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        PrimarySourceElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("PrimarySource");
       }
     }
@@ -1704,7 +1704,7 @@ namespace Hl7.Fhir.Model
       get => IsSubpotentElement?.Value;
       set
       {
-        IsSubpotentElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        IsSubpotentElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("IsSubpotent");
       }
     }
@@ -1849,7 +1849,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent>? _ProtocolApplied;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

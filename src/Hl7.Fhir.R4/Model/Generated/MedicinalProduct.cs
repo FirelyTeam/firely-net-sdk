@@ -105,12 +105,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ProductName
+      public string? ProductName
       {
-        get => ProductNameElement?.Value!;
+        get => ProductNameElement?.Value;
         set
         {
-          ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+          ProductNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductName");
         }
       }
@@ -327,12 +327,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Part
+      public string? Part
       {
-        get => PartElement?.Value!;
+        get => PartElement?.Value;
         set
         {
-          PartElement = new Hl7.Fhir.Model.FhirString(value);
+          PartElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Part");
         }
       }
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
         get => EffectiveDateElement?.Value;
         set
         {
-          EffectiveDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          EffectiveDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EffectiveDate");
         }
       }
@@ -1202,7 +1202,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -1998,7 +1998,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent>? _SpecialDesignation;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

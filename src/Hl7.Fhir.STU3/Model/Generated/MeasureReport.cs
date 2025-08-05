@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
         get => MeasureScoreElement?.Value;
         set
         {
-          MeasureScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          MeasureScoreElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("MeasureScore");
         }
       }
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
         get => CountElement?.Value;
         set
         {
-          CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          CountElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Count");
         }
       }
@@ -867,12 +867,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get => ValueElement?.Value!;
+        get => ValueElement?.Value;
         set
         {
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
         get => MeasureScoreElement?.Value;
         set
         {
-          MeasureScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          MeasureScoreElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("MeasureScore");
         }
       }
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
         get => CountElement?.Value;
         set
         {
-          CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          CountElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Count");
         }
       }
@@ -1386,10 +1386,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1429,10 +1429,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1530,7 +1530,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1646,7 +1646,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _EvaluatedResources;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -213,10 +213,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Composition.CompositionAttestationMode? Mode
       {
-        get => ModeElement?.Value!;
+        get => ModeElement?.Value;
         set
         {
-          ModeElement = new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(value);
+          ModeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(value);
           OnPropertyChanged("Mode");
         }
       }
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
         get => TimeElement?.Value;
         set
         {
-          TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          TimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Time");
         }
       }
@@ -453,10 +453,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DocumentRelationshipType? Code
       {
-        get => CodeElement?.Value!;
+        get => CodeElement?.Value;
         set
         {
-          CodeElement = new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
+          CodeElement = value is null ? null! : new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
         get => TitleElement?.Value;
         set
         {
-          TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Title");
         }
       }
@@ -1001,7 +1001,7 @@ namespace Hl7.Fhir.Model
         get => ModeElement?.Value;
         set
         {
-          ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.ListMode>(value);
+          ModeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ListMode>(value);
           OnPropertyChanged("Mode");
         }
       }
@@ -1423,10 +1423,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CompositionStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.CompositionStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1576,12 +1576,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Date
+    public string? Date
     {
-      get => DateElement?.Value!;
+      get => DateElement?.Value;
       set
       {
-        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1648,12 +1648,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Title
+    public string? Title
     {
-      get => TitleElement?.Value!;
+      get => TitleElement?.Value;
       set
       {
-        TitleElement = new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -1695,7 +1695,7 @@ namespace Hl7.Fhir.Model
       get => ConfidentialityElement?.Value;
       set
       {
-        ConfidentialityElement = value is null ? null : new Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification>(value);
+        ConfidentialityElement = value is null ? null! : new Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification>(value);
         OnPropertyChanged("Confidentiality");
       }
     }
@@ -1840,7 +1840,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Composition.SectionComponent>? _Section;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Type; set => Type = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Type?.ToCodings() ?? [];

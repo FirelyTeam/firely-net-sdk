@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         get => IsDefiningElement?.Value;
         set
         {
-          IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          IsDefiningElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsDefining");
         }
       }
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
         get => NumberOfUnitsElement?.Value;
         set
         {
-          NumberOfUnitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          NumberOfUnitsElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("NumberOfUnits");
         }
       }
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
         get => AverageMolecularFormulaElement?.Value;
         set
         {
-          AverageMolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AverageMolecularFormulaElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AverageMolecularFormula");
         }
       }
@@ -835,7 +835,7 @@ namespace Hl7.Fhir.Model
         get => RepeatUnitElement?.Value;
         set
         {
-          RepeatUnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          RepeatUnitElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("RepeatUnit");
         }
       }
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
         get => RepresentationElement?.Value;
         set
         {
-          RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          RepresentationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Representation");
         }
       }

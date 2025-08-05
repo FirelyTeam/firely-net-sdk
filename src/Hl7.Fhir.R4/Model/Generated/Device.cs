@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         get => DeviceIdentifierElement?.Value;
         set
         {
-          DeviceIdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DeviceIdentifierElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("DeviceIdentifier");
         }
       }
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
         get => IssuerElement?.Value;
         set
         {
-          IssuerElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          IssuerElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Issuer");
         }
       }
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
         get => JurisdictionElement?.Value;
         set
         {
-          JurisdictionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          JurisdictionElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Jurisdiction");
         }
       }
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
         get => CarrierAIDCElement?.Value;
         set
         {
-          CarrierAIDCElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+          CarrierAIDCElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
           OnPropertyChanged("CarrierAIDC");
         }
       }
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
         get => CarrierHRFElement?.Value;
         set
         {
-          CarrierHRFElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          CarrierHRFElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("CarrierHRF");
         }
       }
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
         get => EntryTypeElement?.Value;
         set
         {
-          EntryTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Device.UDIEntryType>(value);
+          EntryTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Device.UDIEntryType>(value);
           OnPropertyChanged("EntryType");
         }
       }
@@ -623,12 +623,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get => NameElement?.Value!;
+        get => NameElement?.Value;
         set
         {
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -668,10 +668,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceNameType? Type
       {
-        get => TypeElement?.Value!;
+        get => TypeElement?.Value;
         set
         {
-          TypeElement = new Code<Hl7.Fhir.Model.DeviceNameType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.DeviceNameType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
         get => VersionElement?.Value;
         set
         {
-          VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Version");
         }
       }
@@ -1038,12 +1038,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get => ValueElement?.Value!;
+        get => ValueElement?.Value;
         set
         {
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -1487,7 +1487,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1557,7 +1557,7 @@ namespace Hl7.Fhir.Model
       get => DistinctIdentifierElement?.Value;
       set
       {
-        DistinctIdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DistinctIdentifierElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("DistinctIdentifier");
       }
     }
@@ -1598,7 +1598,7 @@ namespace Hl7.Fhir.Model
       get => ManufacturerElement?.Value;
       set
       {
-        ManufacturerElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ManufacturerElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Manufacturer");
       }
     }
@@ -1639,7 +1639,7 @@ namespace Hl7.Fhir.Model
       get => ManufactureDateElement?.Value;
       set
       {
-        ManufactureDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ManufactureDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ManufactureDate");
       }
     }
@@ -1680,7 +1680,7 @@ namespace Hl7.Fhir.Model
       get => ExpirationDateElement?.Value;
       set
       {
-        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -1721,7 +1721,7 @@ namespace Hl7.Fhir.Model
       get => LotNumberElement?.Value;
       set
       {
-        LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("LotNumber");
       }
     }
@@ -1762,7 +1762,7 @@ namespace Hl7.Fhir.Model
       get => SerialNumberElement?.Value;
       set
       {
-        SerialNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        SerialNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("SerialNumber");
       }
     }
@@ -1831,7 +1831,7 @@ namespace Hl7.Fhir.Model
       get => ModelNumberElement?.Value;
       set
       {
-        ModelNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ModelNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ModelNumber");
       }
     }
@@ -1872,7 +1872,7 @@ namespace Hl7.Fhir.Model
       get => PartNumberElement?.Value;
       set
       {
-        PartNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PartNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PartNumber");
       }
     }
@@ -2136,7 +2136,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -2225,7 +2225,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _Parent;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Type; set => Type = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Type?.ToCodings() ?? [];

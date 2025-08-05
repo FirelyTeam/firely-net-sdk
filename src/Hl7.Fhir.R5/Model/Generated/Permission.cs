@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -884,10 +884,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
       {
-        get => MeaningElement?.Value!;
+        get => MeaningElement?.Value;
         set
         {
-          MeaningElement = new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -1260,10 +1260,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Permission.PermissionStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Permission.PermissionStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Permission.PermissionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1429,10 +1429,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Permission.PermissionRuleCombining? Combining
     {
-      get => CombiningElement?.Value!;
+      get => CombiningElement?.Value;
       set
       {
-        CombiningElement = new Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>(value);
+        CombiningElement = value is null ? null! : new Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>(value);
         OnPropertyChanged("Combining");
       }
     }

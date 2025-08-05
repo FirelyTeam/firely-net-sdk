@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
       get => StartElement?.Value;
       set
       {
-        StartElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StartElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Start");
       }
     }
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       get => EndElement?.Value;
       set
       {
-        EndElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("End");
       }
     }

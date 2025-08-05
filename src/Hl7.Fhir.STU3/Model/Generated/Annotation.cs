@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       get => TimeElement?.Value;
       set
       {
-        TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        TimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Time");
       }
     }
@@ -166,12 +166,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get => TextElement?.Value!;
+      get => TextElement?.Value;
       set
       {
-        TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }

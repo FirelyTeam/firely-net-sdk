@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
         get => SequenceElement?.Value;
         set
         {
-          SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -602,10 +602,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Invoice.InvoiceStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Model
       get => CancelledReasonElement?.Value;
       set
       {
-        CancelledReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CancelledReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("CancelledReason");
       }
     }
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
       get => CreationElement?.Value;
       set
       {
-        CreationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreationElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Creation");
       }
     }
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
       get => PaymentTermsElement?.Value;
       set
       {
-        PaymentTermsElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        PaymentTermsElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("PaymentTerms");
       }
     }
@@ -1104,7 +1104,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

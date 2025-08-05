@@ -405,10 +405,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
       get => PreparedDateElement?.Value;
       set
       {
-        PreparedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        PreparedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("PreparedDate");
       }
     }
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
       get => WhenHandedOverElement?.Value;
       set
       {
-        WhenHandedOverElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        WhenHandedOverElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("WhenHandedOver");
       }
     }
@@ -781,12 +781,12 @@ namespace Hl7.Fhir.Model
       get => UsageInstructionElement?.Value;
       set
       {
-        UsageInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        UsageInstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("UsageInstruction");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
         get => DeletedElement?.Value;
         set
         {
-          DeletedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          DeletedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Deleted");
         }
       }
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -436,10 +436,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.List.ListStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.List.ListStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.List.ListStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -479,10 +479,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ListMode? Mode
     {
-      get => ModeElement?.Value!;
+      get => ModeElement?.Value;
       set
       {
-        ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
+        ModeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ListMode>(value);
         OnPropertyChanged("Mode");
       }
     }
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.CodeableConcept? _EmptyReason;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

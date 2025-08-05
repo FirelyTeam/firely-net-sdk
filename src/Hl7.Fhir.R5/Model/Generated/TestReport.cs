@@ -247,10 +247,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportParticipantType? Type
       {
-        get => TypeElement?.Value!;
+        get => TypeElement?.Value;
         set
         {
-          TypeElement = new Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -287,12 +287,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uri
+      public string? Uri
       {
-        get => UriElement?.Value!;
+        get => UriElement?.Value;
         set
         {
-          UriElement = new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         get => DisplayElement?.Value;
         set
         {
-          DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Display");
         }
       }
@@ -775,10 +775,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
       {
-        get => ResultElement?.Value!;
+        get => ResultElement?.Value;
         set
         {
-          ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
+          ResultElement = value is null ? null! : new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
           OnPropertyChanged("Result");
         }
       }
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
         get => MessageElement?.Value;
         set
         {
-          MessageElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          MessageElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Message");
         }
       }
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
         get => DetailElement?.Value;
         set
         {
-          DetailElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          DetailElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Detail");
         }
       }
@@ -1027,10 +1027,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
       {
-        get => ResultElement?.Value!;
+        get => ResultElement?.Value;
         set
         {
-          ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
+          ResultElement = value is null ? null! : new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
           OnPropertyChanged("Result");
         }
       }
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
         get => MessageElement?.Value;
         set
         {
-          MessageElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          MessageElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Message");
         }
       }
@@ -1112,7 +1112,7 @@ namespace Hl7.Fhir.Model
         get => DetailElement?.Value;
         set
         {
-          DetailElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DetailElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Detail");
         }
       }
@@ -1442,7 +1442,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -1483,7 +1483,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -2084,7 +2084,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -2124,10 +2124,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TestReport.TestReportStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.TestReport.TestReportStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.TestReport.TestReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2164,12 +2164,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string TestScript
+    public string? TestScript
     {
-      get => TestScriptElement?.Value!;
+      get => TestScriptElement?.Value;
       set
       {
-        TestScriptElement = new Hl7.Fhir.Model.Canonical(value);
+        TestScriptElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("TestScript");
       }
     }
@@ -2209,10 +2209,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TestReport.TestReportResult? Result
     {
-      get => ResultElement?.Value!;
+      get => ResultElement?.Value;
       set
       {
-        ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportResult>(value);
+        ResultElement = value is null ? null! : new Code<Hl7.Fhir.Model.TestReport.TestReportResult>(value);
         OnPropertyChanged("Result");
       }
     }
@@ -2253,7 +2253,7 @@ namespace Hl7.Fhir.Model
       get => ScoreElement?.Value;
       set
       {
-        ScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        ScoreElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Score");
       }
     }
@@ -2294,7 +2294,7 @@ namespace Hl7.Fhir.Model
       get => TesterElement?.Value;
       set
       {
-        TesterElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TesterElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Tester");
       }
     }
@@ -2335,7 +2335,7 @@ namespace Hl7.Fhir.Model
       get => IssuedElement?.Value;
       set
       {
-        IssuedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        IssuedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Issued");
       }
     }
@@ -2448,7 +2448,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.TestReport.TeardownComponent? _Teardown;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

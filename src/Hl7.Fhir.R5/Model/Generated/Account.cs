@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
         get => PriorityElement?.Value;
         set
         {
-          PriorityElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          PriorityElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Priority");
         }
       }
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
         get => OnHoldElement?.Value;
         set
         {
-          OnHoldElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          OnHoldElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("OnHold");
         }
       }
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         get => SequenceElement?.Value;
         set
         {
-          SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
         get => DateOfDiagnosisElement?.Value;
         set
         {
-          DateOfDiagnosisElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateOfDiagnosisElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("DateOfDiagnosis");
         }
       }
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
         get => OnAdmissionElement?.Value;
         set
         {
-          OnAdmissionElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          OnAdmissionElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("OnAdmission");
         }
       }
@@ -951,7 +951,7 @@ namespace Hl7.Fhir.Model
         get => SequenceElement?.Value;
         set
         {
-          SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
         get => DateOfServiceElement?.Value;
         set
         {
-          DateOfServiceElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateOfServiceElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("DateOfService");
         }
       }
@@ -1548,7 +1548,7 @@ namespace Hl7.Fhir.Model
         get => EstimateElement?.Value;
         set
         {
-          EstimateElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          EstimateElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Estimate");
         }
       }
@@ -1773,10 +1773,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Account.AccountStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1871,7 +1871,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -2024,7 +2024,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -2232,12 +2232,12 @@ namespace Hl7.Fhir.Model
       get => CalculatedAtElement?.Value;
       set
       {
-        CalculatedAtElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        CalculatedAtElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("CalculatedAt");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

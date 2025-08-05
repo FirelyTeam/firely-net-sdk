@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -209,12 +209,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Endpoint
+      public string? Endpoint
       {
-        get => EndpointElement?.Value!;
+        get => EndpointElement?.Value;
         set
         {
-          EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+          EndpointElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Endpoint");
         }
       }
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
         get => SoftwareElement?.Value;
         set
         {
-          SoftwareElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SoftwareElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Software");
         }
       }
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
         get => VersionElement?.Value;
         set
         {
-          VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Version");
         }
       }
@@ -527,12 +527,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Endpoint
+      public string? Endpoint
       {
-        get => EndpointElement?.Value!;
+        get => EndpointElement?.Value;
         set
         {
-          EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
+          EndpointElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Endpoint");
         }
       }
@@ -734,12 +734,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Identifier
+      public string? Identifier
       {
-        get => IdentifierElement?.Value!;
+        get => IdentifierElement?.Value;
         set
         {
-          IdentifierElement = new Hl7.Fhir.Model.Id(value);
+          IdentifierElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Identifier");
         }
       }
@@ -779,10 +779,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
       {
-        get => CodeElement?.Value!;
+        get => CodeElement?.Value;
         set
         {
-          CodeElement = new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
+          CodeElement = value is null ? null! : new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -1072,10 +1072,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Timestamp
     {
-      get => TimestampElement?.Value!;
+      get => TimestampElement?.Value;
       set
       {
-        TimestampElement = new Hl7.Fhir.Model.Instant(value);
+        TimestampElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Timestamp");
       }
     }

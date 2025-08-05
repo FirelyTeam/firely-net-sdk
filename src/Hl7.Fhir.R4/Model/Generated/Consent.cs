@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
         get => AuthorityElement?.Value;
         set
         {
-          AuthorityElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          AuthorityElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Authority");
         }
       }
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
         get => UriElement?.Value;
         set
         {
-          UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -406,10 +406,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Verified
       {
-        get => VerifiedElement?.Value!;
+        get => VerifiedElement?.Value;
         set
         {
-          VerifiedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          VerifiedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Verified");
         }
       }
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         get => VerificationDateElement?.Value;
         set
         {
-          VerificationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          VerificationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("VerificationDate");
         }
       }
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1412,10 +1412,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
       {
-        get => MeaningElement?.Value!;
+        get => MeaningElement?.Value;
         set
         {
-          MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -1604,10 +1604,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Consent.ConsentState? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
       get => DateTimeElement?.Value;
       set
       {
-        DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -1936,7 +1936,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Consent.provisionComponent? _Provision;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Category?.ToCodings() ?? [];

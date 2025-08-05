@@ -255,10 +255,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
       get => DateAssertedElement?.Value;
       set
       {
-        DateAssertedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateAssertedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateAsserted");
       }
     }
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Dosage>? _Dosage;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.DataType? ICoded<Hl7.Fhir.Model.DataType?>.Code { get => Medication; set => Medication = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Medication?.ToCodings() ?? [];

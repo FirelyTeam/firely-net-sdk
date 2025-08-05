@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
         get => CausalityElement?.Value;
         set
         {
-          CausalityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>(value);
+          CausalityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>(value);
           OnPropertyChanged("Causality");
         }
       }
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         get => CausalityProductRelatednessElement?.Value;
         set
         {
-          CausalityProductRelatednessElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          CausalityProductRelatednessElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("CausalityProductRelatedness");
         }
       }
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
       get => CategoryElement?.Value;
       set
       {
-        CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>(value);
+        CategoryElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>(value);
         OnPropertyChanged("Category");
       }
     }
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Study;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

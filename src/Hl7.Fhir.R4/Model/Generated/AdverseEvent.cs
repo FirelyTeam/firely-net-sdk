@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         get => ProductRelatednessElement?.Value;
         set
         {
-          ProductRelatednessElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProductRelatednessElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductRelatedness");
         }
       }
@@ -651,10 +651,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
     {
-      get => ActualityElement?.Value!;
+      get => ActualityElement?.Value;
       set
       {
-        ActualityElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+        ActualityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
         OnPropertyChanged("Actuality");
       }
     }
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Model
       get => DetectedElement?.Value;
       set
       {
-        DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DetectedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Detected");
       }
     }
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
       get => RecordedDateElement?.Value;
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Study;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Event; set => Event = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Event?.ToCodings() ?? [];

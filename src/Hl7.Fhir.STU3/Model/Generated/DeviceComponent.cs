@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
         get => ProductionSpecElement?.Value;
         set
         {
-          ProductionSpecElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProductionSpecElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductionSpec");
         }
       }
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
       get => LastSystemChangeElement?.Value;
       set
       {
-        LastSystemChangeElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        LastSystemChangeElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("LastSystemChange");
       }
     }
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
       get => MeasurementPrincipleElement?.Value;
       set
       {
-        MeasurementPrincipleElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
+        MeasurementPrincipleElement = value is null ? null! : new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
         OnPropertyChanged("MeasurementPrinciple");
       }
     }
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.CodeableConcept? _LanguageCode;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

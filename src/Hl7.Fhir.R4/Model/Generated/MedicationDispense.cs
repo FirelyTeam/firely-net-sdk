@@ -341,10 +341,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? WasSubstituted
       {
-        get => WasSubstitutedElement?.Value!;
+        get => WasSubstitutedElement?.Value;
         set
         {
-          WasSubstitutedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          WasSubstitutedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("WasSubstituted");
         }
       }
@@ -658,10 +658,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
       get => WhenPreparedElement?.Value;
       set
       {
-        WhenPreparedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        WhenPreparedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("WhenPrepared");
       }
     }
@@ -1082,7 +1082,7 @@ namespace Hl7.Fhir.Model
       get => WhenHandedOverElement?.Value;
       set
       {
-        WhenHandedOverElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        WhenHandedOverElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("WhenHandedOver");
       }
     }
@@ -1287,7 +1287,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _EventHistory;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.DataType? ICoded<Hl7.Fhir.Model.DataType?>.Code { get => Medication; set => Medication = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Medication?.ToCodings() ?? [];

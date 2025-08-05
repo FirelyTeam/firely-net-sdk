@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
         get => InstructionElement?.Value;
         set
         {
-          InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          InstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Instruction");
         }
       }
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
         get => ProductNameElement?.Value;
         set
         {
-          ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProductNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductName");
         }
       }
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model
         get => InstructionElement?.Value;
         set
         {
-          InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          InstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Instruction");
         }
       }
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model
         get => BaseFormulaProductNameElement?.Value;
         set
         {
-          BaseFormulaProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          BaseFormulaProductNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("BaseFormulaProductName");
         }
       }
@@ -1293,7 +1293,7 @@ namespace Hl7.Fhir.Model
         get => AdditiveProductNameElement?.Value;
         set
         {
-          AdditiveProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AdditiveProductNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AdditiveProductName");
         }
       }
@@ -1441,7 +1441,7 @@ namespace Hl7.Fhir.Model
         get => AdministrationInstructionElement?.Value;
         set
         {
-          AdministrationInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AdministrationInstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AdministrationInstruction");
         }
       }
@@ -1944,7 +1944,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2038,12 +2038,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string DateTime
+    public string? DateTime
     {
-      get => DateTimeElement?.Value!;
+      get => DateTimeElement?.Value;
       set
       {
-        DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -2244,7 +2244,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent? _EnteralFormula;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

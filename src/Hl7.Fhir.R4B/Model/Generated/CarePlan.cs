@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
         get => KindElement?.Value;
         set
         {
-          KindElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityKind>(value);
+          KindElement = value is null ? null! : new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityKind>(value);
           OnPropertyChanged("Kind");
         }
       }
@@ -826,10 +826,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus? Status
       {
-        get => StatusElement?.Value!;
+        get => StatusElement?.Value;
         set
         {
-          StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
+          StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
         get => DoNotPerformElement?.Value;
         set
         {
-          DoNotPerformElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          DoNotPerformElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("DoNotPerform");
         }
       }
@@ -1105,7 +1105,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1732,10 +1732,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1775,10 +1775,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CarePlan.CarePlanIntent? Intent
     {
-      get => IntentElement?.Value!;
+      get => IntentElement?.Value;
       set
       {
-        IntentElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>(value);
+        IntentElement = value is null ? null! : new Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -1848,7 +1848,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -1889,7 +1889,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -2013,7 +2013,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -2252,7 +2252,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

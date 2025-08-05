@@ -141,12 +141,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get => ValueElement?.Value!;
+        get => ValueElement?.Value;
         set
         {
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -740,10 +740,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
       get => SubscriberIdElement?.Value;
       set
       {
-        SubscriberIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        SubscriberIdElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("SubscriberId");
       }
     }
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
       get => DependentElement?.Value;
       set
       {
-        DependentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DependentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Dependent");
       }
     }
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
       get => OrderElement?.Value;
       set
       {
-        OrderElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        OrderElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Order");
       }
     }
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
       get => NetworkElement?.Value;
       set
       {
-        NetworkElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NetworkElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Network");
       }
     }
@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model
       get => SubrogationElement?.Value;
       set
       {
-        SubrogationElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        SubrogationElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Subrogation");
       }
     }
@@ -1234,7 +1234,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Contract;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Type; set => Type = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Type?.ToCodings() ?? [];

@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
       get => WhenElement?.Value;
       set
       {
-        WhenElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        WhenElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("When");
       }
     }
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       get => ContentTypeElement?.Value;
       set
       {
-        ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       get => TargetFormatElement?.Value;
       set
       {
-        TargetFormatElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        TargetFormatElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("TargetFormat");
       }
     }
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
       get => SigFormatElement?.Value;
       set
       {
-        SigFormatElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        SigFormatElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("SigFormat");
       }
     }
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
       get => BlobElement?.Value;
       set
       {
-        BlobElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+        BlobElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Blob");
       }
     }
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
       get => DataElement?.Value;
       set
       {
-        DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+        DataElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Data");
       }
     }

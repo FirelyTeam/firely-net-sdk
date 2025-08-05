@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
         get => OnsetElement?.Value;
         set
         {
-          OnsetElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          OnsetElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Onset");
         }
       }
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
         get => SeverityElement?.Value;
         set
         {
-          SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
+          SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
           OnPropertyChanged("Severity");
         }
       }
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
       get => CriticalityElement?.Value;
       set
       {
-        CriticalityElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
+        CriticalityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
         OnPropertyChanged("Criticality");
       }
     }
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
       get => RecordedDateElement?.Value;
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
       get => LastOccurrenceElement?.Value;
       set
       {
-        LastOccurrenceElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        LastOccurrenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastOccurrence");
       }
     }
@@ -1300,7 +1300,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>? _Reaction;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

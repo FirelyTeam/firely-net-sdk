@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       get => VersionIdElement?.Value;
       set
       {
-        VersionIdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        VersionIdElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("VersionId");
       }
     }
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       get => LastUpdatedElement?.Value;
       set
       {
-        LastUpdatedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        LastUpdatedElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("LastUpdated");
       }
     }
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
       get => SourceElement?.Value;
       set
       {
-        SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        SourceElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Source");
       }
     }

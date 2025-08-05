@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
         get => QuantityElement?.Value;
         set
         {
-          QuantityElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          QuantityElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Quantity");
         }
       }
@@ -1364,7 +1364,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -1489,7 +1489,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -1558,7 +1558,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1684,7 +1684,7 @@ namespace Hl7.Fhir.Model
       get => CopackagedIndicatorElement?.Value;
       set
       {
-        CopackagedIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        CopackagedIndicatorElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("CopackagedIndicator");
       }
     }
@@ -1745,7 +1745,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.PackagedProductDefinition.PackageComponent? _Package;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

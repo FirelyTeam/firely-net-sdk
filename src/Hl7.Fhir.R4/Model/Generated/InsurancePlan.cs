@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
         get => RequirementElement?.Value;
         set
         {
-          RequirementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          RequirementElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Requirement");
         }
       }
@@ -1369,7 +1369,7 @@ namespace Hl7.Fhir.Model
         get => GroupSizeElement?.Value;
         set
         {
-          GroupSizeElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          GroupSizeElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("GroupSize");
         }
       }
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
         get => CommentElement?.Value;
         set
         {
-          CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -2216,7 +2216,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2286,7 +2286,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -2593,7 +2593,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.InsurancePlan.PlanComponent>? _Plan;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

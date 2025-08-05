@@ -349,10 +349,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
       get => DateAssertedElement?.Value;
       set
       {
-        DateAssertedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateAssertedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateAsserted");
       }
     }
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
       get => RenderedDosageInstructionElement?.Value;
       set
       {
-        RenderedDosageInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        RenderedDosageInstructionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("RenderedDosageInstruction");
       }
     }
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.MedicationStatement.AdherenceComponent? _Adherence;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

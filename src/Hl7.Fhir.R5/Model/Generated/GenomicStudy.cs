@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         get => InstantiatesCanonicalElement?.Value;
         set
         {
-          InstantiatesCanonicalElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          InstantiatesCanonicalElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("InstantiatesCanonical");
         }
       }
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
         get => InstantiatesUriElement?.Value;
         set
         {
-          InstantiatesUriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          InstantiatesUriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("InstantiatesUri");
         }
       }
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
         get => TitleElement?.Value;
         set
         {
-          TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Title");
         }
       }
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -1829,10 +1829,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1959,7 +1959,7 @@ namespace Hl7.Fhir.Model
       get => StartDateElement?.Value;
       set
       {
-        StartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StartDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StartDate");
       }
     }
@@ -2116,7 +2116,7 @@ namespace Hl7.Fhir.Model
       get => InstantiatesCanonicalElement?.Value;
       set
       {
-        InstantiatesCanonicalElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        InstantiatesCanonicalElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("InstantiatesCanonical");
       }
     }
@@ -2157,7 +2157,7 @@ namespace Hl7.Fhir.Model
       get => InstantiatesUriElement?.Value;
       set
       {
-        InstantiatesUriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        InstantiatesUriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("InstantiatesUri");
       }
     }
@@ -2226,7 +2226,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -2259,7 +2259,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent>? _Analysis;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

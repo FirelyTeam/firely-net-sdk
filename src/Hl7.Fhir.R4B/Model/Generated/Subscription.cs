@@ -154,10 +154,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Subscription.SubscriptionChannelType? Type
       {
-        get => TypeElement?.Value!;
+        get => TypeElement?.Value;
         set
         {
-          TypeElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
         get => EndpointElement?.Value;
         set
         {
-          EndpointElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
+          EndpointElement = value is null ? null! : new Hl7.Fhir.Model.FhirUrl(value);
           OnPropertyChanged("Endpoint");
         }
       }
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
         get => PayloadElement?.Value;
         set
         {
-          PayloadElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+          PayloadElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
           OnPropertyChanged("Payload");
         }
       }
@@ -456,10 +456,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
       get => EndElement?.Value;
       set
       {
-        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -565,12 +565,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Reason
+    public string? Reason
     {
-      get => ReasonElement?.Value!;
+      get => ReasonElement?.Value;
       set
       {
-        ReasonElement = new Hl7.Fhir.Model.FhirString(value);
+        ReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Reason");
       }
     }
@@ -607,12 +607,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Criteria
+    public string? Criteria
     {
-      get => CriteriaElement?.Value!;
+      get => CriteriaElement?.Value;
       set
       {
-        CriteriaElement = new Hl7.Fhir.Model.FhirString(value);
+        CriteriaElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Criteria");
       }
     }
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
       get => ErrorElement?.Value;
       set
       {
-        ErrorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ErrorElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Error");
       }
     }

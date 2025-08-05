@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       get => ProposedNewTimeElement?.Value;
       set
       {
-        ProposedNewTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ProposedNewTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ProposedNewTime");
       }
     }
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       get => StartElement?.Value;
       set
       {
-        StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        StartElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       get => EndElement?.Value;
       set
       {
-        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -372,10 +372,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus? ParticipantStatus
     {
-      get => ParticipantStatusElement?.Value!;
+      get => ParticipantStatusElement?.Value;
       set
       {
-        ParticipantStatusElement = new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
+        ParticipantStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
         OnPropertyChanged("ParticipantStatus");
       }
     }
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
       get => RecurringElement?.Value;
       set
       {
-        RecurringElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        RecurringElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Recurring");
       }
     }
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
       get => OccurrenceDateElement?.Value;
       set
       {
-        OccurrenceDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        OccurrenceDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("OccurrenceDate");
       }
     }
@@ -539,12 +539,12 @@ namespace Hl7.Fhir.Model
       get => RecurrenceIdElement?.Value;
       set
       {
-        RecurrenceIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        RecurrenceIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("RecurrenceId");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

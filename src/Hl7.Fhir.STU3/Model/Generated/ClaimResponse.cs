@@ -113,10 +113,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SequenceLinkId
       {
-        get => SequenceLinkIdElement?.Value!;
+        get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
         get => ValueElement?.Value;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Value");
         }
       }
@@ -671,10 +671,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SequenceLinkId
       {
-        get => SequenceLinkIdElement?.Value!;
+        get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -961,10 +961,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SequenceLinkId
       {
-        get => SequenceLinkIdElement?.Value!;
+        get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -2144,7 +2144,7 @@ namespace Hl7.Fhir.Model
         get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -2185,7 +2185,7 @@ namespace Hl7.Fhir.Model
         get => DetailSequenceLinkIdElement?.Value;
         set
         {
-          DetailSequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          DetailSequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("DetailSequenceLinkId");
         }
       }
@@ -2226,7 +2226,7 @@ namespace Hl7.Fhir.Model
         get => SubdetailSequenceLinkIdElement?.Value;
         set
         {
-          SubdetailSequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SubdetailSequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SubdetailSequenceLinkId");
         }
       }
@@ -2521,7 +2521,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("Date");
         }
       }
@@ -2798,7 +2798,7 @@ namespace Hl7.Fhir.Model
         get => NumberElement?.Value;
         set
         {
-          NumberElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          NumberElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Number");
         }
       }
@@ -2866,7 +2866,7 @@ namespace Hl7.Fhir.Model
         get => TextElement?.Value;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Text");
         }
       }
@@ -3078,10 +3078,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => SequenceElement?.Value!;
+        get => SequenceElement?.Value;
         set
         {
-          SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -3120,10 +3120,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Focal
       {
-        get => FocalElement?.Value!;
+        get => FocalElement?.Value;
         set
         {
-          FocalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          FocalElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Focal");
         }
       }
@@ -3193,7 +3193,7 @@ namespace Hl7.Fhir.Model
         get => BusinessArrangementElement?.Value;
         set
         {
-          BusinessArrangementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          BusinessArrangementElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("BusinessArrangement");
         }
       }
@@ -3505,7 +3505,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -3574,7 +3574,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -3754,7 +3754,7 @@ namespace Hl7.Fhir.Model
       get => DispositionElement?.Value;
       set
       {
-        DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DispositionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -4114,7 +4114,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>? _Insurance;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

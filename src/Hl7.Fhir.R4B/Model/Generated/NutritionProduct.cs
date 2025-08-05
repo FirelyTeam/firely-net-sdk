@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
         get => LotNumberElement?.Value;
         set
         {
-          LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LotNumber");
         }
       }
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
         get => ExpiryElement?.Value;
         set
         {
-          ExpiryElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ExpiryElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Expiry");
         }
       }
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
         get => UseByElement?.Value;
         set
         {
-          UseByElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          UseByElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("UseBy");
         }
       }
@@ -953,10 +953,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus>(value);
         OnPropertyChanged("Status");
       }
     }

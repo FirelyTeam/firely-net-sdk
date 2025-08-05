@@ -308,10 +308,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Slot.SlotStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -350,10 +350,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get => StartElement?.Value!;
+      get => StartElement?.Value;
       set
       {
-        StartElement = new Hl7.Fhir.Model.Instant(value);
+        StartElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -392,10 +392,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => EndElement?.Value!;
+      get => EndElement?.Value;
       set
       {
-        EndElement = new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
       get => OverbookedElement?.Value;
       set
       {
-        OverbookedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        OverbookedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Overbooked");
       }
     }
@@ -477,12 +477,12 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

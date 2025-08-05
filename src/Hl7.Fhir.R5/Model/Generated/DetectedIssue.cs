@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -626,10 +626,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DetectedIssue.DetectedIssueStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
       get => SeverityElement?.Value;
       set
       {
-        SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>(value);
+        SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>(value);
         OnPropertyChanged("Severity");
       }
     }
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
       get => DetailElement?.Value;
       set
       {
-        DetailElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DetailElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Detail");
       }
     }
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
       get => ReferenceElement?.Value;
       set
       {
-        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        ReferenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Reference");
       }
     }
@@ -1012,7 +1012,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>? _Mitigation;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

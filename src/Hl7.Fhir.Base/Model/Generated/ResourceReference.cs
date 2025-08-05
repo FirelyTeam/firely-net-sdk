@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       get => ReferenceElement?.Value;
       set
       {
-        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ReferenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Reference");
       }
     }
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        TypeElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Type");
       }
     }
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
       get => DisplayElement?.Value;
       set
       {
-        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }

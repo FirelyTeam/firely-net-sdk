@@ -373,12 +373,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Text
+      public string? Text
       {
-        get => TextElement?.Value!;
+        get => TextElement?.Value;
         set
         {
-          TextElement = new Hl7.Fhir.Model.Markdown(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Text");
         }
       }
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
         get => ActualElement?.Value;
         set
         {
-          ActualElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ActualElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Actual");
         }
       }
@@ -968,7 +968,7 @@ namespace Hl7.Fhir.Model
         get => DateAccessedElement?.Value;
         set
         {
-          DateAccessedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateAccessedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("DateAccessed");
         }
       }
@@ -1688,12 +1688,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get => ValueElement?.Value!;
+        get => ValueElement?.Value;
         set
         {
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -1898,7 +1898,7 @@ namespace Hl7.Fhir.Model
         get => ActualElement?.Value;
         set
         {
-          ActualElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ActualElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Actual");
         }
       }
@@ -2142,12 +2142,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Text
+      public string? Text
       {
-        get => TextElement?.Value!;
+        get => TextElement?.Value;
         set
         {
-          TextElement = new Hl7.Fhir.Model.Markdown(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Text");
         }
       }
@@ -2365,12 +2365,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Text
+      public string? Text
       {
-        get => TextElement?.Value!;
+        get => TextElement?.Value;
         set
         {
-          TextElement = new Hl7.Fhir.Model.Markdown(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Text");
         }
       }
@@ -2411,7 +2411,7 @@ namespace Hl7.Fhir.Model
         get => CopyrightElement?.Value;
         set
         {
-          CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          CopyrightElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Copyright");
         }
       }
@@ -2622,7 +2622,7 @@ namespace Hl7.Fhir.Model
         get => ValueElement?.Value;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -2817,10 +2817,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded? Type
       {
-        get => TypeElement?.Value!;
+        get => TypeElement?.Value;
         set
         {
-          TypeElement = new Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -2890,7 +2890,7 @@ namespace Hl7.Fhir.Model
         get => LabelElement?.Value;
         set
         {
-          LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LabelElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Label");
         }
       }
@@ -2931,7 +2931,7 @@ namespace Hl7.Fhir.Model
         get => DisplayElement?.Value;
         set
         {
-          DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Display");
         }
       }
@@ -2972,7 +2972,7 @@ namespace Hl7.Fhir.Model
         get => CitationElement?.Value;
         set
         {
-          CitationElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          CitationElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Citation");
         }
       }
@@ -3039,7 +3039,7 @@ namespace Hl7.Fhir.Model
         get => ResourceElement?.Value;
         set
         {
-          ResourceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          ResourceElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("Resource");
         }
       }
@@ -3381,7 +3381,7 @@ namespace Hl7.Fhir.Model
         get => VolumeElement?.Value;
         set
         {
-          VolumeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          VolumeElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Volume");
         }
       }
@@ -3422,7 +3422,7 @@ namespace Hl7.Fhir.Model
         get => IssueElement?.Value;
         set
         {
-          IssueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          IssueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Issue");
         }
       }
@@ -3463,7 +3463,7 @@ namespace Hl7.Fhir.Model
         get => ArticleDateElement?.Value;
         set
         {
-          ArticleDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ArticleDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("ArticleDate");
         }
       }
@@ -3504,7 +3504,7 @@ namespace Hl7.Fhir.Model
         get => PublicationDateTextElement?.Value;
         set
         {
-          PublicationDateTextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PublicationDateTextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PublicationDateText");
         }
       }
@@ -3545,7 +3545,7 @@ namespace Hl7.Fhir.Model
         get => PublicationDateSeasonElement?.Value;
         set
         {
-          PublicationDateSeasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PublicationDateSeasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PublicationDateSeason");
         }
       }
@@ -3586,7 +3586,7 @@ namespace Hl7.Fhir.Model
         get => LastRevisionDateElement?.Value;
         set
         {
-          LastRevisionDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          LastRevisionDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("LastRevisionDate");
         }
       }
@@ -3656,7 +3656,7 @@ namespace Hl7.Fhir.Model
         get => AccessionNumberElement?.Value;
         set
         {
-          AccessionNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AccessionNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AccessionNumber");
         }
       }
@@ -3697,7 +3697,7 @@ namespace Hl7.Fhir.Model
         get => PageStringElement?.Value;
         set
         {
-          PageStringElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PageStringElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PageString");
         }
       }
@@ -3738,7 +3738,7 @@ namespace Hl7.Fhir.Model
         get => FirstPageElement?.Value;
         set
         {
-          FirstPageElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          FirstPageElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("FirstPage");
         }
       }
@@ -3779,7 +3779,7 @@ namespace Hl7.Fhir.Model
         get => LastPageElement?.Value;
         set
         {
-          LastPageElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LastPageElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LastPage");
         }
       }
@@ -3820,7 +3820,7 @@ namespace Hl7.Fhir.Model
         get => PageCountElement?.Value;
         set
         {
-          PageCountElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PageCountElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PageCount");
         }
       }
@@ -3861,7 +3861,7 @@ namespace Hl7.Fhir.Model
         get => CopyrightElement?.Value;
         set
         {
-          CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          CopyrightElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Copyright");
         }
       }
@@ -4309,7 +4309,7 @@ namespace Hl7.Fhir.Model
         get => TitleElement?.Value;
         set
         {
-          TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Title");
         }
       }
@@ -4378,7 +4378,7 @@ namespace Hl7.Fhir.Model
         get => PublisherLocationElement?.Value;
         set
         {
-          PublisherLocationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PublisherLocationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PublisherLocation");
         }
       }
@@ -4610,7 +4610,7 @@ namespace Hl7.Fhir.Model
         get => UrlElement?.Value;
         set
         {
-          UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Url");
         }
       }
@@ -4969,7 +4969,7 @@ namespace Hl7.Fhir.Model
         get => CompleteElement?.Value;
         set
         {
-          CompleteElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          CompleteElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Complete");
         }
       }
@@ -5223,7 +5223,7 @@ namespace Hl7.Fhir.Model
         get => ForenameInitialsElement?.Value;
         set
         {
-          ForenameInitialsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ForenameInitialsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ForenameInitials");
         }
       }
@@ -5378,7 +5378,7 @@ namespace Hl7.Fhir.Model
         get => CorrespondingContactElement?.Value;
         set
         {
-          CorrespondingContactElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          CorrespondingContactElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("CorrespondingContact");
         }
       }
@@ -5419,7 +5419,7 @@ namespace Hl7.Fhir.Model
         get => RankingOrderElement?.Value;
         set
         {
-          RankingOrderElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          RankingOrderElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("RankingOrder");
         }
       }
@@ -5707,7 +5707,7 @@ namespace Hl7.Fhir.Model
         get => TimeElement?.Value;
         set
         {
-          TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          TimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Time");
         }
       }
@@ -5930,12 +5930,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get => ValueElement?.Value!;
+        get => ValueElement?.Value;
         set
         {
-          ValueElement = new Hl7.Fhir.Model.Markdown(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Value");
         }
       }
@@ -6106,7 +6106,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -6175,7 +6175,7 @@ namespace Hl7.Fhir.Model
       get => VersionElement?.Value;
       set
       {
-        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -6244,7 +6244,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -6285,7 +6285,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -6325,10 +6325,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -6369,7 +6369,7 @@ namespace Hl7.Fhir.Model
       get => ExperimentalElement?.Value;
       set
       {
-        ExperimentalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ExperimentalElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Experimental");
       }
     }
@@ -6410,7 +6410,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -6451,7 +6451,7 @@ namespace Hl7.Fhir.Model
       get => PublisherElement?.Value;
       set
       {
-        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PublisherElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
@@ -6520,7 +6520,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -6618,7 +6618,7 @@ namespace Hl7.Fhir.Model
       get => PurposeElement?.Value;
       set
       {
-        PurposeElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        PurposeElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Purpose");
       }
     }
@@ -6659,7 +6659,7 @@ namespace Hl7.Fhir.Model
       get => CopyrightElement?.Value;
       set
       {
-        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -6700,7 +6700,7 @@ namespace Hl7.Fhir.Model
       get => CopyrightLabelElement?.Value;
       set
       {
-        CopyrightLabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CopyrightLabelElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("CopyrightLabel");
       }
     }
@@ -6741,7 +6741,7 @@ namespace Hl7.Fhir.Model
       get => ApprovalDateElement?.Value;
       set
       {
-        ApprovalDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        ApprovalDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ApprovalDate");
       }
     }
@@ -6782,7 +6782,7 @@ namespace Hl7.Fhir.Model
       get => LastReviewDateElement?.Value;
       set
       {
-        LastReviewDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        LastReviewDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("LastReviewDate");
       }
     }
@@ -7120,7 +7120,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Citation.CitedArtifactComponent? _CitedArtifact;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

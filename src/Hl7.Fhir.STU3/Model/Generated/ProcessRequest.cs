@@ -147,10 +147,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SequenceLinkId
       {
-        get => SequenceLinkIdElement?.Value!;
+        get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = new Hl7.Fhir.Model.Integer(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
       get => ActionElement?.Value;
       set
       {
-        ActionElement = value is null ? null : new Code<Hl7.Fhir.Model.ProcessRequest.ActionList>(value);
+        ActionElement = value is null ? null! : new Code<Hl7.Fhir.Model.ProcessRequest.ActionList>(value);
         OnPropertyChanged("Action");
       }
     }
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
       get => NullifyElement?.Value;
       set
       {
-        NullifyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        NullifyElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Nullify");
       }
     }
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
       get => ReferenceElement?.Value;
       set
       {
-        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ReferenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Reference");
       }
     }
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Period? _Period;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

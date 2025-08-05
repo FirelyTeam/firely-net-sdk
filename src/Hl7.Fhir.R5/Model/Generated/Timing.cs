@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
         get => CountElement?.Value;
         set
         {
-          CountElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          CountElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Count");
         }
       }
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
         get => CountMaxElement?.Value;
         set
         {
-          CountMaxElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          CountMaxElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("CountMax");
         }
       }
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         get => DurationElement?.Value;
         set
         {
-          DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          DurationElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Duration");
         }
       }
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
         get => DurationMaxElement?.Value;
         set
         {
-          DurationMaxElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          DurationMaxElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("DurationMax");
         }
       }
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
         get => DurationUnitElement?.Value;
         set
         {
-          DurationUnitElement = value is null ? null : new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
+          DurationUnitElement = value is null ? null! : new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
           OnPropertyChanged("DurationUnit");
         }
       }
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
         get => FrequencyElement?.Value;
         set
         {
-          FrequencyElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          FrequencyElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Frequency");
         }
       }
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
         get => FrequencyMaxElement?.Value;
         set
         {
-          FrequencyMaxElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          FrequencyMaxElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("FrequencyMax");
         }
       }
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
         get => PeriodElement?.Value;
         set
         {
-          PeriodElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          PeriodElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Period");
         }
       }
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
         get => PeriodMaxElement?.Value;
         set
         {
-          PeriodMaxElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          PeriodMaxElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("PeriodMax");
         }
       }
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
         get => PeriodUnitElement?.Value;
         set
         {
-          PeriodUnitElement = value is null ? null : new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
+          PeriodUnitElement = value is null ? null! : new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
           OnPropertyChanged("PeriodUnit");
         }
       }
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
         get => OffsetElement?.Value;
         set
         {
-          OffsetElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+          OffsetElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
           OnPropertyChanged("Offset");
         }
       }

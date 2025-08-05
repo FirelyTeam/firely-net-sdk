@@ -112,12 +112,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get => UidElement?.Value!;
+        get => UidElement?.Value;
         set
         {
-          UidElement = new Hl7.Fhir.Model.Oid(value);
+          UidElement = value is null ? null! : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -387,12 +387,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get => UidElement?.Value!;
+        get => UidElement?.Value;
         set
         {
-          UidElement = new Hl7.Fhir.Model.Oid(value);
+          UidElement = value is null ? null! : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -615,12 +615,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string SopClass
+      public string? SopClass
       {
-        get => SopClassElement?.Value!;
+        get => SopClassElement?.Value;
         set
         {
-          SopClassElement = new Hl7.Fhir.Model.Oid(value);
+          SopClassElement = value is null ? null! : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("SopClass");
         }
       }
@@ -657,12 +657,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get => UidElement?.Value!;
+        get => UidElement?.Value;
         set
         {
-          UidElement = new Hl7.Fhir.Model.Oid(value);
+          UidElement = value is null ? null! : new Hl7.Fhir.Model.Oid(value);
           OnPropertyChanged("Uid");
         }
       }
@@ -850,7 +850,7 @@ namespace Hl7.Fhir.Model
       get => AuthoringTimeElement?.Value;
       set
       {
-        AuthoringTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoringTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoringTime");
       }
     }
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -952,7 +952,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>? _Study;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

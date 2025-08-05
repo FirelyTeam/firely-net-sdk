@@ -1190,10 +1190,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1233,10 +1233,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
     {
-      get => ActualityElement?.Value!;
+      get => ActualityElement?.Value;
       set
       {
-        ActualityElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+        ActualityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
         OnPropertyChanged("Actuality");
       }
     }
@@ -1418,7 +1418,7 @@ namespace Hl7.Fhir.Model
       get => DetectedElement?.Value;
       set
       {
-        DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DetectedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Detected");
       }
     }
@@ -1459,7 +1459,7 @@ namespace Hl7.Fhir.Model
       get => RecordedDateElement?.Value;
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1700,7 +1700,7 @@ namespace Hl7.Fhir.Model
       get => ExpectedInResearchStudyElement?.Value;
       set
       {
-        ExpectedInResearchStudyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ExpectedInResearchStudyElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ExpectedInResearchStudy");
       }
     }
@@ -1873,7 +1873,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

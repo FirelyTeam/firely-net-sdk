@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1920,10 +1920,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -2220,7 +2220,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent? _Warning;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

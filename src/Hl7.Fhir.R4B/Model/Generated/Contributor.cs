@@ -132,10 +132,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Contributor.ContributorType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.Contributor.ContributorType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Contributor.ContributorType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -172,12 +172,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get => NameElement?.Value!;
+      get => NameElement?.Value;
       set
       {
-        NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }

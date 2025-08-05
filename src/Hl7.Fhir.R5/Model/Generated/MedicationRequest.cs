@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
         get => NumberOfRepeatsAllowedElement?.Value;
         set
         {
-          NumberOfRepeatsAllowedElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+          NumberOfRepeatsAllowedElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
           OnPropertyChanged("NumberOfRepeatsAllowed");
         }
       }
@@ -1153,10 +1153,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1224,7 +1224,7 @@ namespace Hl7.Fhir.Model
       get => StatusChangedElement?.Value;
       set
       {
-        StatusChangedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusChangedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusChanged");
       }
     }
@@ -1264,10 +1264,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent? Intent
     {
-      get => IntentElement?.Value!;
+      get => IntentElement?.Value;
       set
       {
-        IntentElement = new Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent>(value);
+        IntentElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -1379,7 +1379,7 @@ namespace Hl7.Fhir.Model
       get => DoNotPerformElement?.Value;
       set
       {
-        DoNotPerformElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        DoNotPerformElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("DoNotPerform");
       }
     }
@@ -1565,7 +1565,7 @@ namespace Hl7.Fhir.Model
       get => AuthoredOnElement?.Value;
       set
       {
-        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -1634,7 +1634,7 @@ namespace Hl7.Fhir.Model
       get => ReportedElement?.Value;
       set
       {
-        ReportedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ReportedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Reported");
       }
     }
@@ -1902,7 +1902,7 @@ namespace Hl7.Fhir.Model
       get => RenderedDosageInstructionElement?.Value;
       set
       {
-        RenderedDosageInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        RenderedDosageInstructionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("RenderedDosageInstruction");
       }
     }
@@ -2043,7 +2043,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _EventHistory;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

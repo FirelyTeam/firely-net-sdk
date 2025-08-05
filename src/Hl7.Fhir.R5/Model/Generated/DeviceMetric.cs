@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
         get => StateElement?.Value;
         set
         {
-          StateElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
+          StateElement = value is null ? null! : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
           OnPropertyChanged("State");
         }
       }
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
         get => TimeElement?.Value;
         set
         {
-          TimeElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+          TimeElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
           OnPropertyChanged("Time");
         }
       }
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
       get => OperationalStatusElement?.Value;
       set
       {
-        OperationalStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
+        OperationalStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
         OnPropertyChanged("OperationalStatus");
       }
     }
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
       get => ColorElement?.Value;
       set
       {
-        ColorElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        ColorElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Color");
       }
     }
@@ -679,10 +679,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory? Category
     {
-      get => CategoryElement?.Value!;
+      get => CategoryElement?.Value;
       set
       {
-        CategoryElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);
+        CategoryElement = value is null ? null! : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);
         OnPropertyChanged("Category");
       }
     }
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>? _Calibration;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

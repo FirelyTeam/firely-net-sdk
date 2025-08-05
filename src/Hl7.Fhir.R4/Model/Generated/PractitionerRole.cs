@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
         get => AllDayElement?.Value;
         set
         {
-          AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AllDayElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AllDay");
         }
       }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
         get => AvailableStartTimeElement?.Value;
         set
         {
-          AvailableStartTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          AvailableStartTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableStartTime");
         }
       }
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
         get => AvailableEndTimeElement?.Value;
         set
         {
-          AvailableEndTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          AvailableEndTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableEndTime");
         }
       }
@@ -428,12 +428,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Description
+      public string? Description
       {
-        get => DescriptionElement?.Value!;
+        get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
       get => AvailabilityExceptionsElement?.Value;
       set
       {
-        AvailabilityExceptionsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AvailabilityExceptionsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AvailabilityExceptions");
       }
     }
@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Code; set => Code = value; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];

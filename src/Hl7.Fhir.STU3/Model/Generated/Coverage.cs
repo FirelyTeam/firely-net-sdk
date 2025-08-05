@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
         get => GroupElement?.Value;
         set
         {
-          GroupElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          GroupElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Group");
         }
       }
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
         get => GroupDisplayElement?.Value;
         set
         {
-          GroupDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          GroupDisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("GroupDisplay");
         }
       }
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         get => SubGroupElement?.Value;
         set
         {
-          SubGroupElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SubGroupElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SubGroup");
         }
       }
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
         get => SubGroupDisplayElement?.Value;
         set
         {
-          SubGroupDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SubGroupDisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SubGroupDisplay");
         }
       }
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
         get => PlanElement?.Value;
         set
         {
-          PlanElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PlanElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Plan");
         }
       }
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         get => PlanDisplayElement?.Value;
         set
         {
-          PlanDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PlanDisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PlanDisplay");
         }
       }
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
         get => SubPlanElement?.Value;
         set
         {
-          SubPlanElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SubPlanElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SubPlan");
         }
       }
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
         get => SubPlanDisplayElement?.Value;
         set
         {
-          SubPlanDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SubPlanDisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SubPlanDisplay");
         }
       }
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
         get => ClassElement?.Value;
         set
         {
-          ClassElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ClassElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Class");
         }
       }
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
         get => ClassDisplayElement?.Value;
         set
         {
-          ClassDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ClassDisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ClassDisplay");
         }
       }
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
         get => SubClassElement?.Value;
         set
         {
-          SubClassElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SubClassElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SubClass");
         }
       }
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
         get => SubClassDisplayElement?.Value;
         set
         {
-          SubClassDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SubClassDisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SubClassDisplay");
         }
       }
@@ -918,7 +918,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1042,7 +1042,7 @@ namespace Hl7.Fhir.Model
       get => SubscriberIdElement?.Value;
       set
       {
-        SubscriberIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        SubscriberIdElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("SubscriberId");
       }
     }
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
       get => DependentElement?.Value;
       set
       {
-        DependentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DependentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Dependent");
       }
     }
@@ -1261,7 +1261,7 @@ namespace Hl7.Fhir.Model
       get => SequenceElement?.Value;
       set
       {
-        SequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        SequenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Sequence");
       }
     }
@@ -1302,7 +1302,7 @@ namespace Hl7.Fhir.Model
       get => OrderElement?.Value;
       set
       {
-        OrderElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        OrderElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Order");
       }
     }
@@ -1343,7 +1343,7 @@ namespace Hl7.Fhir.Model
       get => NetworkElement?.Value;
       set
       {
-        NetworkElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NetworkElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Network");
       }
     }
@@ -1378,7 +1378,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Contract;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

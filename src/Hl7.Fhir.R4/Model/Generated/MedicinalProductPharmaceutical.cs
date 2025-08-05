@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Model
         get => SupportingInformationElement?.Value;
         set
         {
-          SupportingInformationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SupportingInformationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SupportingInformation");
         }
       }
@@ -1179,7 +1179,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent>? _RouteOfAdministration;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -426,10 +426,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Goal.GoalStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Goal.GoalStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Goal.GoalStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
       get => StatusReasonElement?.Value;
       set
       {
-        StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        StatusReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("StatusReason");
       }
     }
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _OutcomeReference;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

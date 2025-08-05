@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         get => CountingDateTimeElement?.Value;
         set
         {
-          CountingDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          CountingDateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("CountingDateTime");
         }
       }
@@ -649,10 +649,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryReportStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -692,10 +692,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryCountType? CountType
     {
-      get => CountTypeElement?.Value!;
+      get => CountTypeElement?.Value;
       set
       {
-        CountTypeElement = new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
+        CountTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
         OnPropertyChanged("CountType");
       }
     }
@@ -784,12 +784,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ReportedDateTime
+    public string? ReportedDateTime
     {
-      get => ReportedDateTimeElement?.Value!;
+      get => ReportedDateTimeElement?.Value;
       set
       {
-        ReportedDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        ReportedDateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReportedDateTime");
       }
     }
@@ -904,7 +904,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

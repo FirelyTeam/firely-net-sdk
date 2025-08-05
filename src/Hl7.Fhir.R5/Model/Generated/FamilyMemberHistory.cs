@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
         get => ContributedToDeathElement?.Value;
         set
         {
-          ContributedToDeathElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ContributedToDeathElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("ContributedToDeath");
         }
       }
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
         get => ContributedToDeathElement?.Value;
         set
         {
-          ContributedToDeathElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ContributedToDeathElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("ContributedToDeath");
         }
       }
@@ -1050,10 +1050,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1150,7 +1150,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -1371,7 +1371,7 @@ namespace Hl7.Fhir.Model
       get => EstimatedAgeElement?.Value;
       set
       {
-        EstimatedAgeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        EstimatedAgeElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("EstimatedAge");
       }
     }
@@ -1517,7 +1517,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent>? _Procedure;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       get => RestoreDateElement?.Value;
       set
       {
-        RestoreDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RestoreDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RestoreDate");
       }
     }

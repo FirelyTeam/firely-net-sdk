@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
         get => IsDerivedElement?.Value;
         set
         {
-          IsDerivedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          IsDerivedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsDerived");
         }
       }
@@ -204,10 +204,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference? Preference
       {
-        get => PreferenceElement?.Value!;
+        get => PreferenceElement?.Value;
         set
         {
-          PreferenceElement = new Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>(value);
+          PreferenceElement = value is null ? null! : new Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>(value);
           OnPropertyChanged("Preference");
         }
       }
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
         get => RequirementElement?.Value;
         set
         {
-          RequirementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          RequirementElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Requirement");
         }
       }
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
         get => PreparationElement?.Value;
         set
         {
-          PreparationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PreparationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Preparation");
         }
       }
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
         get => InstructionElement?.Value;
         set
         {
-          InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          InstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Instruction");
         }
       }
@@ -1536,7 +1536,7 @@ namespace Hl7.Fhir.Model
       get => TimeAspectElement?.Value;
       set
       {
-        TimeAspectElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TimeAspectElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("TimeAspect");
       }
     }
@@ -1598,7 +1598,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent>? _TypeTested;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
         get => RoleElement?.Value;
         set
         {
-          RoleElement = value is null ? null : new Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole>(value);
+          RoleElement = value is null ? null! : new Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole>(value);
           OnPropertyChanged("Role");
         }
       }
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
         get => TextPresentationElement?.Value;
         set
         {
-          TextPresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextPresentationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("TextPresentation");
         }
       }
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
         get => TextConcentrationElement?.Value;
         set
         {
-          TextConcentrationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextConcentrationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("TextConcentration");
         }
       }
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
         get => MeasurementPointElement?.Value;
         set
         {
-          MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MeasurementPointElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MeasurementPoint");
         }
       }
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
         get => MeasurementPointElement?.Value;
         set
         {
-          MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MeasurementPointElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MeasurementPoint");
         }
       }
@@ -1200,10 +1200,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1331,7 +1331,7 @@ namespace Hl7.Fhir.Model
       get => AllergenicIndicatorElement?.Value;
       set
       {
-        AllergenicIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        AllergenicIndicatorElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AllergenicIndicator");
       }
     }
@@ -1391,7 +1391,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Ingredient.SubstanceComponent? _Substance;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

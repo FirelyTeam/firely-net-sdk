@@ -403,10 +403,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Goal.GoalLifecycleStatus? LifecycleStatus
     {
-      get => LifecycleStatusElement?.Value!;
+      get => LifecycleStatusElement?.Value;
       set
       {
-        LifecycleStatusElement = new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
+        LifecycleStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
         OnPropertyChanged("LifecycleStatus");
       }
     }
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
       get => StatusReasonElement?.Value;
       set
       {
-        StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        StatusReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("StatusReason");
       }
     }
@@ -835,7 +835,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _OutcomeReference;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Category?.ToCodings() ?? [];

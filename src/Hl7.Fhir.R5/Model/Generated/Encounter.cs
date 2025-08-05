@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
         get => StatusElement?.Value;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
+          StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -1329,10 +1329,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EncounterStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.EncounterStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.EncounterStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1800,7 +1800,7 @@ namespace Hl7.Fhir.Model
       get => PlannedStartDateElement?.Value;
       set
       {
-        PlannedStartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        PlannedStartDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("PlannedStartDate");
       }
     }
@@ -1841,7 +1841,7 @@ namespace Hl7.Fhir.Model
       get => PlannedEndDateElement?.Value;
       set
       {
-        PlannedEndDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        PlannedEndDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("PlannedEndDate");
       }
     }
@@ -2099,7 +2099,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Encounter.LocationComponent>? _Location;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

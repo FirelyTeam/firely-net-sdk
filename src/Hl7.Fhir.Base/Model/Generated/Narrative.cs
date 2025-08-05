@@ -132,10 +132,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -172,12 +172,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Div
+    public string? Div
     {
-      get => DivElement?.Value!;
+      get => DivElement?.Value;
       set
       {
-        DivElement = new Hl7.Fhir.Model.XHtml(value);
+        DivElement = value is null ? null! : new Hl7.Fhir.Model.XHtml(value);
         OnPropertyChanged("Div");
       }
     }

@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
         get => SearchParamElement?.Value;
         set
         {
-          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         get => ValueSetElement?.Value;
         set
         {
-          ValueSetElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          ValueSetElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("ValueSet");
         }
       }
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
         get => SearchParamElement?.Value;
         set
         {
-          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -668,12 +668,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get => PathElement?.Value!;
+        get => PathElement?.Value;
         set
         {
-          PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -713,10 +713,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DataRequirement.SortDirection? Direction
       {
-        get => DirectionElement?.Value!;
+        get => DirectionElement?.Value;
         set
         {
-          DirectionElement = new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
+          DirectionElement = value is null ? null! : new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
           OnPropertyChanged("Direction");
         }
       }
@@ -848,10 +848,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
       get => LimitElement?.Value;
       set
       {
-        LimitElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        LimitElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Limit");
       }
     }

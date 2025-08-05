@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
         get => TimeElement?.Value;
         set
         {
-          TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          TimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Time");
         }
       }
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
       get => VersionElement?.Value;
       set
       {
-        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -902,10 +902,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
       get => DocStatusElement?.Value;
       set
       {
-        DocStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
+        DocStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
         OnPropertyChanged("DocStatus");
       }
     }
@@ -1269,7 +1269,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1486,7 +1486,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DocumentReference.ContentComponent>? _Content;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

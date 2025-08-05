@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
         get => ReportedElement?.Value;
         set
         {
-          ReportedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ReportedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Reported");
         }
       }
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
         get => DoseSequenceElement?.Value;
         set
         {
-          DoseSequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          DoseSequenceElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("DoseSequence");
         }
       }
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
         get => SeriesElement?.Value;
         set
         {
-          SeriesElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SeriesElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Series");
         }
       }
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
         get => SeriesDosesElement?.Value;
         set
         {
-          SeriesDosesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SeriesDosesElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SeriesDoses");
         }
       }
@@ -1214,10 +1214,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1256,10 +1256,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? NotGiven
     {
-      get => NotGivenElement?.Value!;
+      get => NotGivenElement?.Value;
       set
       {
-        NotGivenElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        NotGivenElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("NotGiven");
       }
     }
@@ -1385,7 +1385,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1424,10 +1424,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? PrimarySource
     {
-      get => PrimarySourceElement?.Value!;
+      get => PrimarySourceElement?.Value;
       set
       {
-        PrimarySourceElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        PrimarySourceElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("PrimarySource");
       }
     }
@@ -1551,7 +1551,7 @@ namespace Hl7.Fhir.Model
       get => LotNumberElement?.Value;
       set
       {
-        LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("LotNumber");
       }
     }
@@ -1592,7 +1592,7 @@ namespace Hl7.Fhir.Model
       get => ExpirationDateElement?.Value;
       set
       {
-        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -1815,7 +1815,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>? _VaccinationProtocol;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

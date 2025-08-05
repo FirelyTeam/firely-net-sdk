@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
         get => AuthorityElement?.Value;
         set
         {
-          AuthorityElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          AuthorityElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Authority");
         }
       }
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
         get => UriElement?.Value;
         set
         {
-          UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -572,10 +572,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
       {
-        get => MeaningElement?.Value!;
+        get => MeaningElement?.Value;
         set
         {
-          MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -752,10 +752,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentExceptType? Type
       {
-        get => TypeElement?.Value!;
+        get => TypeElement?.Value;
         set
         {
-          TypeElement = new Code<Hl7.Fhir.Model.Consent.ConsentExceptType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentExceptType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1473,10 +1473,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
       {
-        get => MeaningElement?.Value!;
+        get => MeaningElement?.Value;
         set
         {
-          MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -1663,10 +1663,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Consent.ConsentState? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1791,7 +1791,7 @@ namespace Hl7.Fhir.Model
       get => DateTimeElement?.Value;
       set
       {
-        DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -2006,7 +2006,7 @@ namespace Hl7.Fhir.Model
       get => PolicyRuleElement?.Value;
       set
       {
-        PolicyRuleElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        PolicyRuleElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("PolicyRule");
       }
     }
@@ -2151,7 +2151,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Consent.ExceptComponent>? _Except;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

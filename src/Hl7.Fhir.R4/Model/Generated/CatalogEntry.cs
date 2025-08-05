@@ -136,10 +136,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType? Relationtype
       {
-        get => RelationtypeElement?.Value!;
+        get => RelationtypeElement?.Value;
         set
         {
-          RelationtypeElement = new Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>(value);
+          RelationtypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>(value);
           OnPropertyChanged("Relationtype");
         }
       }
@@ -353,10 +353,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Orderable
     {
-      get => OrderableElement?.Value!;
+      get => OrderableElement?.Value;
       set
       {
-        OrderableElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        OrderableElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Orderable");
       }
     }
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       get => ValidToElement?.Value;
       set
       {
-        ValidToElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ValidToElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ValidTo");
       }
     }
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
       get => LastUpdatedElement?.Value;
       set
       {
-        LastUpdatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        LastUpdatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastUpdated");
       }
     }
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>? _RelatedEntry;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

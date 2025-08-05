@@ -434,10 +434,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ChargeItem.ChargeItemStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model
       get => FactorOverrideElement?.Value;
       set
       {
-        FactorOverrideElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        FactorOverrideElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("FactorOverride");
       }
     }
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
       get => OverrideReasonElement?.Value;
       set
       {
-        OverrideReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        OverrideReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("OverrideReason");
       }
     }
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
       get => EnteredDateElement?.Value;
       set
       {
-        EnteredDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        EnteredDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("EnteredDate");
       }
     }
@@ -1106,7 +1106,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _SupportingInformation;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

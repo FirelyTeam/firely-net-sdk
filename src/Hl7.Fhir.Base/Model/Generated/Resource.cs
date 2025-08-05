@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
       get => IdElement?.Value;
       set
       {
-        IdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        IdElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("Id");
       }
     }
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
       get => ImplicitRulesElement?.Value;
       set
       {
-        ImplicitRulesElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        ImplicitRulesElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("ImplicitRules");
       }
     }
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
       get => LanguageElement?.Value;
       set
       {
-        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        LanguageElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }

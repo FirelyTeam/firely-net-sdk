@@ -198,10 +198,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionEyes? Eye
       {
-        get => EyeElement?.Value!;
+        get => EyeElement?.Value;
         set
         {
-          EyeElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
+          EyeElement = value is null ? null! : new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
           OnPropertyChanged("Eye");
         }
       }
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
         get => SphereElement?.Value;
         set
         {
-          SphereElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          SphereElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Sphere");
         }
       }
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
         get => CylinderElement?.Value;
         set
         {
-          CylinderElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          CylinderElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Cylinder");
         }
       }
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
         get => AxisElement?.Value;
         set
         {
-          AxisElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          AxisElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Axis");
         }
       }
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
         get => AddElement?.Value;
         set
         {
-          AddElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          AddElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Add");
         }
       }
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         get => PowerElement?.Value;
         set
         {
-          PowerElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          PowerElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Power");
         }
       }
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
         get => BackCurveElement?.Value;
         set
         {
-          BackCurveElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          BackCurveElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("BackCurve");
         }
       }
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
         get => DiameterElement?.Value;
         set
         {
-          DiameterElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          DiameterElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Diameter");
         }
       }
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
         get => ColorElement?.Value;
         set
         {
-          ColorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ColorElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Color");
         }
       }
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
         get => BrandElement?.Value;
         set
         {
-          BrandElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          BrandElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Brand");
         }
       }
@@ -1027,10 +1027,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Amount
       {
-        get => AmountElement?.Value!;
+        get => AmountElement?.Value;
         set
         {
-          AmountElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          AmountElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Amount");
         }
       }
@@ -1070,10 +1070,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
       {
-        get => BaseElement?.Value!;
+        get => BaseElement?.Value;
         set
         {
-          BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
+          BaseElement = value is null ? null! : new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
           OnPropertyChanged("Base");
         }
       }
@@ -1233,10 +1233,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1273,12 +1273,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get => CreatedElement?.Value!;
+      get => CreatedElement?.Value;
       set
       {
-        CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -1372,12 +1372,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string DateWritten
+    public string? DateWritten
     {
-      get => DateWrittenElement?.Value!;
+      get => DateWrittenElement?.Value;
       set
       {
-        DateWrittenElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateWrittenElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateWritten");
       }
     }
@@ -1439,7 +1439,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>? _LensSpecification;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

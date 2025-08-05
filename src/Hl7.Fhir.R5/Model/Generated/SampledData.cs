@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       get => IntervalElement?.Value;
       set
       {
-        IntervalElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        IntervalElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Interval");
       }
     }
@@ -165,12 +165,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string IntervalUnit
+    public string? IntervalUnit
     {
-      get => IntervalUnitElement?.Value!;
+      get => IntervalUnitElement?.Value;
       set
       {
-        IntervalUnitElement = new Hl7.Fhir.Model.Code(value);
+        IntervalUnitElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("IntervalUnit");
       }
     }
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
       get => FactorElement?.Value;
       set
       {
-        FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        FactorElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Factor");
       }
     }
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       get => LowerLimitElement?.Value;
       set
       {
-        LowerLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        LowerLimitElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("LowerLimit");
       }
     }
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
       get => UpperLimitElement?.Value;
       set
       {
-        UpperLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        UpperLimitElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("UpperLimit");
       }
     }
@@ -332,10 +332,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => DimensionsElement?.Value!;
+      get => DimensionsElement?.Value;
       set
       {
-        DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
+        DimensionsElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Dimensions");
       }
     }
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
       get => CodeMapElement?.Value;
       set
       {
-        CodeMapElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        CodeMapElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("CodeMap");
       }
     }
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
       get => OffsetsElement?.Value;
       set
       {
-        OffsetsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        OffsetsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Offsets");
       }
     }
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
       get => DataElement?.Value;
       set
       {
-        DataElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DataElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Data");
       }
     }

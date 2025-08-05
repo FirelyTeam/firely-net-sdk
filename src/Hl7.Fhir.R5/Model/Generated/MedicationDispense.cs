@@ -341,10 +341,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? WasSubstituted
       {
-        get => WasSubstitutedElement?.Value!;
+        get => WasSubstitutedElement?.Value;
         set
         {
-          WasSubstitutedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          WasSubstitutedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("WasSubstituted");
         }
       }
@@ -686,10 +686,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
       get => StatusChangedElement?.Value;
       set
       {
-        StatusChangedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusChangedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusChanged");
       }
     }
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
       get => RecordedElement?.Value;
       set
       {
-        RecordedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Recorded");
       }
     }
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
       get => WhenPreparedElement?.Value;
       set
       {
-        WhenPreparedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        WhenPreparedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("WhenPrepared");
       }
     }
@@ -1189,7 +1189,7 @@ namespace Hl7.Fhir.Model
       get => WhenHandedOverElement?.Value;
       set
       {
-        WhenHandedOverElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        WhenHandedOverElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("WhenHandedOver");
       }
     }
@@ -1316,7 +1316,7 @@ namespace Hl7.Fhir.Model
       get => RenderedDosageInstructionElement?.Value;
       set
       {
-        RenderedDosageInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        RenderedDosageInstructionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("RenderedDosageInstruction");
       }
     }
@@ -1405,7 +1405,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _EventHistory;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

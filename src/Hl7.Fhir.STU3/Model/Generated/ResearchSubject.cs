@@ -171,10 +171,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
       get => AssignedArmElement?.Value;
       set
       {
-        AssignedArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AssignedArmElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AssignedArm");
       }
     }
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
       get => ActualArmElement?.Value;
       set
       {
-        ActualArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ActualArmElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ActualArm");
       }
     }
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _Consent;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

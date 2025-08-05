@@ -218,10 +218,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exclude
       {
-        get => ExcludeElement?.Value!;
+        get => ExcludeElement?.Value;
         set
         {
-          ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          ExcludeElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Exclude");
         }
       }
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
         get => InactiveElement?.Value;
         set
         {
-          InactiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          InactiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Inactive");
         }
       }
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -709,10 +709,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Group.GroupType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.Group.GroupType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Group.GroupType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -751,10 +751,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Actual
     {
-      get => ActualElement?.Value!;
+      get => ActualElement?.Value;
       set
       {
-        ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActualElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Actual");
       }
     }
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
       get => QuantityElement?.Value;
       set
       {
-        QuantityElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+        QuantityElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Quantity");
       }
     }
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Group.MemberComponent>? _Member;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

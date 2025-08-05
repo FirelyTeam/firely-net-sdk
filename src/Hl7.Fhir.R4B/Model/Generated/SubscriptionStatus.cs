@@ -151,12 +151,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string EventNumber
+      public string? EventNumber
       {
-        get => EventNumberElement?.Value!;
+        get => EventNumberElement?.Value;
         set
         {
-          EventNumberElement = new Hl7.Fhir.Model.FhirString(value);
+          EventNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("EventNumber");
         }
       }
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         get => TimestampElement?.Value;
         set
         {
-          TimestampElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+          TimestampElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
           OnPropertyChanged("Timestamp");
         }
       }
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -467,10 +467,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
       get => EventsSinceSubscriptionStartElement?.Value;
       set
       {
-        EventsSinceSubscriptionStartElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        EventsSinceSubscriptionStartElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("EventsSinceSubscriptionStart");
       }
     }
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
       get => TopicElement?.Value;
       set
       {
-        TopicElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        TopicElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Topic");
       }
     }

@@ -228,10 +228,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
       get => OccurrenceDateTimeElement?.Value;
       set
       {
-        OccurrenceDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        OccurrenceDateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("OccurrenceDateTime");
       }
     }
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DataRequirement>? _DataRequirement;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
       get => DivisionElement?.Value;
       set
       {
-        DivisionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DivisionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Division");
       }
     }
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
       get => ExpirationDateElement?.Value;
       set
       {
-        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>? _Property;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -126,35 +126,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -213,28 +213,28 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
@@ -300,35 +300,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -387,35 +387,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -561,35 +561,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -648,28 +648,28 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -822,35 +822,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -909,35 +909,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -985,7 +985,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -996,35 +996,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -1040,7 +1040,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -1173,35 +1173,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -1209,7 +1209,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -1241,7 +1241,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -1249,7 +1249,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -1260,35 +1260,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -1347,35 +1347,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -1383,7 +1383,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
       get => Topic;
-      set => Topic = value;
+      set => Topic = value!;
     }
 
     [AllowNull]
@@ -1391,7 +1391,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
       get => Author;
-      set => Author = value;
+      set => Author = value!;
     }
 
     [AllowNull]
@@ -1399,7 +1399,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
       get => Editor;
-      set => Editor = value;
+      set => Editor = value!;
     }
 
     [AllowNull]
@@ -1407,7 +1407,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
       get => Reviewer;
-      set => Reviewer = value;
+      set => Reviewer = value!;
     }
 
     [AllowNull]
@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
       get => Endorser;
-      set => Endorser = value;
+      set => Endorser = value!;
     }
 
     [AllowNull]
@@ -1423,7 +1423,7 @@ namespace Hl7.Fhir.Model
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
       get => RelatedArtifact;
-      set => RelatedArtifact = value;
+      set => RelatedArtifact = value!;
     }
 
   }
@@ -1434,35 +1434,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]
@@ -1521,35 +1521,35 @@ namespace Hl7.Fhir.Model
     Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
       get => ApprovalDateElement;
-      set => ApprovalDateElement = value;
+      set => ApprovalDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.ApprovalDate
     {
       get => ApprovalDate;
-      set => ApprovalDate = value;
+      set => ApprovalDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
       get => LastReviewDateElement;
-      set => LastReviewDateElement = value;
+      set => LastReviewDateElement = value!;
     }
 
     [IgnoreDataMember]
     string? IMetadataResource.LastReviewDate
     {
       get => LastReviewDate;
-      set => LastReviewDate = value;
+      set => LastReviewDate = value!;
     }
 
     [IgnoreDataMember]
     Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
       get => EffectivePeriod;
-      set => EffectivePeriod = value;
+      set => EffectivePeriod = value!;
     }
 
     [AllowNull]

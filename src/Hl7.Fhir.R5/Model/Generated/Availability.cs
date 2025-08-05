@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
         get => AllDayElement?.Value;
         set
         {
-          AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AllDayElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AllDay");
         }
       }
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         get => AvailableStartTimeElement?.Value;
         set
         {
-          AvailableStartTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          AvailableStartTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableStartTime");
         }
       }
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
         get => AvailableEndTimeElement?.Value;
         set
         {
-          AvailableEndTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          AvailableEndTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableEndTime");
         }
       }
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }

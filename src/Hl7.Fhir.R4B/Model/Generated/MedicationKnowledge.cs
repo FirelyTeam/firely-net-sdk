@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
         get => IsActiveElement?.Value;
         set
         {
-          IsActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          IsActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsActive");
         }
       }
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
         get => SourceElement?.Value;
         set
         {
-          SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SourceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Source");
         }
       }
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -2403,10 +2403,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Allowed
       {
-        get => AllowedElement?.Value!;
+        get => AllowedElement?.Value;
         set
         {
-          AllowedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AllowedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Allowed");
         }
       }
@@ -3044,7 +3044,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -3354,7 +3354,7 @@ namespace Hl7.Fhir.Model
       get => PreparationInstructionElement?.Value;
       set
       {
-        PreparationInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        PreparationInstructionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("PreparationInstruction");
       }
     }

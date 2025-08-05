@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         get => RelativeRiskElement?.Value;
         set
         {
-          RelativeRiskElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          RelativeRiskElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("RelativeRisk");
         }
       }
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         get => RationaleElement?.Value;
         set
         {
-          RationaleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          RationaleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Rationale");
         }
       }
@@ -558,10 +558,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ObservationStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.ObservationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ObservationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
       get => MitigationElement?.Value;
       set
       {
-        MitigationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        MitigationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Mitigation");
       }
     }
@@ -923,12 +923,12 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

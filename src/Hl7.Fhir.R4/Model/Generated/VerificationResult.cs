@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         get => ValidationDateElement?.Value;
         set
         {
-          ValidationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ValidationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("ValidationDate");
         }
       }
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("Date");
         }
       }
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
         get => SourceIdentityCertificateElement?.Value;
         set
         {
-          SourceIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SourceIdentityCertificateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SourceIdentityCertificate");
         }
       }
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
         get => ProxyIdentityCertificateElement?.Value;
         set
         {
-          ProxyIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProxyIdentityCertificateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProxyIdentityCertificate");
         }
       }
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
         get => IdentityCertificateElement?.Value;
         set
         {
-          IdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          IdentityCertificateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IdentityCertificate");
         }
       }
@@ -1351,10 +1351,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.VerificationResult.StatusCode? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -1518,7 +1518,7 @@ namespace Hl7.Fhir.Model
       get => LastPerformedElement?.Value;
       set
       {
-        LastPerformedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        LastPerformedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastPerformed");
       }
     }
@@ -1559,7 +1559,7 @@ namespace Hl7.Fhir.Model
       get => NextScheduledElement?.Value;
       set
       {
-        NextScheduledElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        NextScheduledElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("NextScheduled");
       }
     }

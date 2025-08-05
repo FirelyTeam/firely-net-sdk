@@ -183,10 +183,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EventStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.EventStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.EventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
       get => IssuedElement?.Value;
       set
       {
-        IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        IssuedElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Issued");
       }
     }
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
       get => DeviceNameElement?.Value;
       set
       {
-        DeviceNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DeviceNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("DeviceName");
       }
     }
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
       get => HeightElement?.Value;
       set
       {
-        HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        HeightElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Height");
       }
     }
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
       get => WidthElement?.Value;
       set
       {
-        WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        WidthElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Width");
       }
     }
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       get => FramesElement?.Value;
       set
       {
-        FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        FramesElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Frames");
       }
     }
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
       get => DurationElement?.Value;
       set
       {
-        DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        DurationElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Duration");
       }
     }
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

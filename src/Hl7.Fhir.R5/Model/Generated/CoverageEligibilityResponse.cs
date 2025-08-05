@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
         get => InforceElement?.Value;
         set
         {
-          InforceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          InforceElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Inforce");
         }
       }
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
         get => ExcludedElement?.Value;
         set
         {
-          ExcludedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ExcludedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Excluded");
         }
       }
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -962,7 +962,7 @@ namespace Hl7.Fhir.Model
         get => AuthorizationRequiredElement?.Value;
         set
         {
-          AuthorizationRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AuthorizationRequiredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AuthorizationRequired");
         }
       }
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
         get => AuthorizationUrlElement?.Value;
         set
         {
-          AuthorizationUrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          AuthorizationUrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("AuthorizationUrl");
         }
       }
@@ -1813,10 +1813,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1985,12 +1985,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get => CreatedElement?.Value!;
+      get => CreatedElement?.Value;
       set
       {
-        CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -2087,10 +2087,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome? Outcome
     {
-      get => OutcomeElement?.Value!;
+      get => OutcomeElement?.Value;
       set
       {
-        OutcomeElement = new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>(value);
+        OutcomeElement = value is null ? null! : new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>(value);
         OnPropertyChanged("Outcome");
       }
     }
@@ -2131,7 +2131,7 @@ namespace Hl7.Fhir.Model
       get => DispositionElement?.Value;
       set
       {
-        DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DispositionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -2229,7 +2229,7 @@ namespace Hl7.Fhir.Model
       get => PreAuthRefElement?.Value;
       set
       {
-        PreAuthRefElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PreAuthRefElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PreAuthRef");
       }
     }
@@ -2289,7 +2289,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent>? _Error;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

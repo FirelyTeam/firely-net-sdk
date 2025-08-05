@@ -325,10 +325,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
       get => LabelElement?.Value;
       set
       {
-        LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        LabelElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Label");
       }
     }
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
       get => DisplayElement?.Value;
       set
       {
-        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
       get => CitationElement?.Value;
       set
       {
-        CitationElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CitationElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Citation");
       }
     }
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUrl(value);
         OnPropertyChanged("Url");
       }
     }
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
       get => ResourceElement?.Value;
       set
       {
-        ResourceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        ResourceElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Resource");
       }
     }
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
       get => PublicationStatusElement?.Value;
       set
       {
-        PublicationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        PublicationStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("PublicationStatus");
       }
     }
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       get => PublicationDateElement?.Value;
       set
       {
-        PublicationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        PublicationDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("PublicationDate");
       }
     }

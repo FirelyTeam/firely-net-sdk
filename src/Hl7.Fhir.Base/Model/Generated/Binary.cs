@@ -100,12 +100,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContentType
+    public string? ContentType
     {
-      get => ContentTypeElement?.Value!;
+      get => ContentTypeElement?.Value;
       set
       {
-        ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
       get => ContentElement?.Value;
       set
       {
-        ContentElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+        ContentElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Content");
       }
     }
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
       get => DataElement?.Value;
       set
       {
-        DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+        DataElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Data");
       }
     }

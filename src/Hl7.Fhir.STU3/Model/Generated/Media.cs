@@ -181,10 +181,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Media.DigitalMediaType? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
       get => HeightElement?.Value;
       set
       {
-        HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        HeightElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Height");
       }
     }
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
       get => WidthElement?.Value;
       set
       {
-        WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        WidthElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Width");
       }
     }
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
       get => FramesElement?.Value;
       set
       {
-        FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        FramesElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Frames");
       }
     }
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
       get => DurationElement?.Value;
       set
       {
-        DurationElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+        DurationElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Duration");
       }
     }
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

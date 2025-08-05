@@ -125,10 +125,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Period
     {
-      get => PeriodElement?.Value!;
+      get => PeriodElement?.Value;
       set
       {
-        PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
+        PeriodElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Period");
       }
     }
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       get => FactorElement?.Value;
       set
       {
-        FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        FactorElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Factor");
       }
     }
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
       get => LowerLimitElement?.Value;
       set
       {
-        LowerLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        LowerLimitElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("LowerLimit");
       }
     }
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
       get => UpperLimitElement?.Value;
       set
       {
-        UpperLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        UpperLimitElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("UpperLimit");
       }
     }
@@ -290,10 +290,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => DimensionsElement?.Value!;
+      get => DimensionsElement?.Value;
       set
       {
-        DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
+        DimensionsElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Dimensions");
       }
     }
@@ -330,12 +330,12 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Data
+    public string? Data
     {
-      get => DataElement?.Value!;
+      get => DataElement?.Value;
       set
       {
-        DataElement = new Hl7.Fhir.Model.FhirString(value);
+        DataElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Data");
       }
     }

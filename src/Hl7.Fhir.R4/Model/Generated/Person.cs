@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
         get => AssuranceElement?.Value;
         set
         {
-          AssuranceElement = value is null ? null : new Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>(value);
+          AssuranceElement = value is null ? null! : new Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>(value);
           OnPropertyChanged("Assurance");
         }
       }
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
       get => GenderElement?.Value;
       set
       {
-        GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+        GenderElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
         OnPropertyChanged("Gender");
       }
     }
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
       get => BirthDateElement?.Value;
       set
       {
-        BirthDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        BirthDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("BirthDate");
       }
     }
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Person.LinkComponent>? _Link;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

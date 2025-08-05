@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         get => StartDateElement?.Value;
         set
         {
-          StartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          StartDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("StartDate");
         }
       }
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
         get => EndDateElement?.Value;
         set
         {
-          EndDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          EndDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EndDate");
         }
       }
@@ -591,10 +591,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
       get => AssignedComparisonGroupElement?.Value;
       set
       {
-        AssignedComparisonGroupElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        AssignedComparisonGroupElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("AssignedComparisonGroup");
       }
     }
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model
       get => ActualComparisonGroupElement?.Value;
       set
       {
-        ActualComparisonGroupElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        ActualComparisonGroupElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("ActualComparisonGroup");
       }
     }
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Consent;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

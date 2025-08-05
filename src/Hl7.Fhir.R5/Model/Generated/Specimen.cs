@@ -195,12 +195,12 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Description
+      public string? Description
       {
-        get => DescriptionElement?.Value!;
+        get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1453,7 +1453,7 @@ namespace Hl7.Fhir.Model
       get => ReceivedTimeElement?.Value;
       set
       {
-        ReceivedTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ReceivedTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReceivedTime");
       }
     }
@@ -1555,7 +1555,7 @@ namespace Hl7.Fhir.Model
       get => CombinedElement?.Value;
       set
       {
-        CombinedElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenCombined>(value);
+        CombinedElement = value is null ? null! : new Code<Hl7.Fhir.Model.Specimen.SpecimenCombined>(value);
         OnPropertyChanged("Combined");
       }
     }
@@ -1756,7 +1756,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

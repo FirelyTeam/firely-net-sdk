@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
         get => EffectiveTimeElement?.Value;
         set
         {
-          EffectiveTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          EffectiveTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EffectiveTime");
         }
       }
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
         get => FactorElement?.Value;
         set
         {
-          FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          FactorElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Factor");
         }
       }
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
         get => PointsElement?.Value;
         set
         {
-          PointsElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          PointsElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Points");
         }
       }
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
         get => IssuedElement?.Value;
         set
         {
-          IssuedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          IssuedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Issued");
         }
       }
@@ -1364,7 +1364,7 @@ namespace Hl7.Fhir.Model
         get => TextElement?.Value;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Text");
         }
       }
@@ -2001,7 +2001,7 @@ namespace Hl7.Fhir.Model
         get => EffectiveTimeElement?.Value;
         set
         {
-          EffectiveTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          EffectiveTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EffectiveTime");
         }
       }
@@ -2094,7 +2094,7 @@ namespace Hl7.Fhir.Model
         get => FactorElement?.Value;
         set
         {
-          FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          FactorElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Factor");
         }
       }
@@ -2135,7 +2135,7 @@ namespace Hl7.Fhir.Model
         get => PointsElement?.Value;
         set
         {
-          PointsElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          PointsElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Points");
         }
       }
@@ -2792,7 +2792,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2833,7 +2833,7 @@ namespace Hl7.Fhir.Model
       get => IssuedElement?.Value;
       set
       {
-        IssuedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        IssuedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Issued");
       }
     }
@@ -3406,7 +3406,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent>? _Rule;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

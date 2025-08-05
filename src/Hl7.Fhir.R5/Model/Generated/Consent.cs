@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         get => UrlElement?.Value;
         set
         {
-          UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
+          UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUrl(value);
           OnPropertyChanged("Url");
         }
       }
@@ -337,10 +337,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Verified
       {
-        get => VerifiedElement?.Value!;
+        get => VerifiedElement?.Value;
         set
         {
-          VerifiedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          VerifiedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Verified");
         }
       }
@@ -1471,10 +1471,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
       {
-        get => MeaningElement?.Value!;
+        get => MeaningElement?.Value;
         set
         {
-          MeaningElement = new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -1663,10 +1663,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Consent.ConsentState? Status
     {
-      get => StatusElement?.Value!;
+      get => StatusElement?.Value;
       set
       {
-        StatusElement = new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1764,7 +1764,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("Date");
       }
     }
@@ -2123,7 +2123,7 @@ namespace Hl7.Fhir.Model
       get => DecisionElement?.Value;
       set
       {
-        DecisionElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
+        DecisionElement = value is null ? null! : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
         OnPropertyChanged("Decision");
       }
     }
@@ -2156,7 +2156,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Consent.provisionComponent>? _Provision;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

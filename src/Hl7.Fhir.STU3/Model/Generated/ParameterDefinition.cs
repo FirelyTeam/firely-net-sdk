@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Name");
       }
     }
@@ -139,10 +139,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.OperationParameterUse? Use
     {
-      get => UseElement?.Value!;
+      get => UseElement?.Value;
       set
       {
-        UseElement = new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
+        UseElement = value is null ? null! : new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
       get => MinElement?.Value;
       set
       {
-        MinElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        MinElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("Min");
       }
     }
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
       get => MaxElement?.Value;
       set
       {
-        MaxElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        MaxElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Max");
       }
     }
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
       get => DocumentationElement?.Value;
       set
       {
-        DocumentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DocumentationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Documentation");
       }
     }
@@ -305,10 +305,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get => TypeElement?.Value!;
+      get => TypeElement?.Value;
       set
       {
-        TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }

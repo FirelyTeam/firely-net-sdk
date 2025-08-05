@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
       get => RestoreDateElement?.Value;
       set
       {
-        RestoreDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RestoreDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RestoreDate");
       }
     }
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
       get => DateOfFirstAuthorizationElement?.Value;
       set
       {
-        DateOfFirstAuthorizationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateOfFirstAuthorizationElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateOfFirstAuthorization");
       }
     }
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
       get => InternationalBirthDateElement?.Value;
       set
       {
-        InternationalBirthDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        InternationalBirthDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("InternationalBirthDate");
       }
     }
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent? _Procedure;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

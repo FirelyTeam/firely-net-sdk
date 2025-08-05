@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         get => OrdinalPositionElement?.Value;
         set
         {
-          OrdinalPositionElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          OrdinalPositionElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("OrdinalPosition");
         }
       }
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
         get => WindowStartElement?.Value;
         set
         {
-          WindowStartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          WindowStartElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("WindowStart");
         }
       }
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
         get => WindowEndElement?.Value;
         set
         {
-          WindowEndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          WindowEndElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("WindowEnd");
         }
       }
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
         get => OrientationElement?.Value;
         set
         {
-          OrientationElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>(value);
+          OrientationElement = value is null ? null! : new Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>(value);
           OnPropertyChanged("Orientation");
         }
       }
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Model
         get => StrandElement?.Value;
         set
         {
-          StrandElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.StrandType>(value);
+          StrandElement = value is null ? null! : new Code<Hl7.Fhir.Model.MolecularSequence.StrandType>(value);
           OnPropertyChanged("Strand");
         }
       }
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
         get => StartElement?.Value;
         set
         {
-          StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          StartElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Start");
         }
       }
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
         get => EndElement?.Value;
         set
         {
-          EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          EndElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("End");
         }
       }
@@ -1027,7 +1027,7 @@ namespace Hl7.Fhir.Model
         get => ReplacementSequenceElement?.Value;
         set
         {
-          ReplacementSequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ReplacementSequenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ReplacementSequence");
         }
       }
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
         get => ReplacedSequenceElement?.Value;
         set
         {
-          ReplacedSequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ReplacedSequenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ReplacedSequence");
         }
       }
@@ -1268,7 +1268,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1451,7 +1451,7 @@ namespace Hl7.Fhir.Model
       get => LiteralElement?.Value;
       set
       {
-        LiteralElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        LiteralElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Literal");
       }
     }
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>? _Relative;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

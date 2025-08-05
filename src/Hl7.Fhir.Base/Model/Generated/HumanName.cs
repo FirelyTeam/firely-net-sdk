@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       get => UseElement?.Value;
       set
       {
-        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
+        UseElement = value is null ? null! : new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       get => TextElement?.Value;
       set
       {
-        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       get => FamilyElement?.Value;
       set
       {
-        FamilyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        FamilyElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Family");
       }
     }

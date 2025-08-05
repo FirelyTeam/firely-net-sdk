@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
       get => MaxParticipantsElement?.Value;
       set
       {
-        MaxParticipantsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        MaxParticipantsElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("MaxParticipants");
       }
     }
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
       get => SessionKeyElement?.Value;
       set
       {
-        SessionKeyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        SessionKeyElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("SessionKey");
       }
     }
