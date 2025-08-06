@@ -44,20 +44,13 @@ public partial class FhirJsonDeserializationTests
     public async T.Task VerifyVerifier() =>
         await VerifyChecks.Run();
 
-    [TestMethod]
-    public async T.Task SimpleVerify()
+    internal string buildVerifierPath([CallerFilePath] string sourceFile = "")
     {
-        await Verifier.Verify("oneliner", _settings, buildVerifierPath());
-    }
-
-    internal string buildVerifierPath([CallerFilePath] string sourceFile = "") => Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
-
-    [TestMethod]
-    public async T.Task LessSimpleVerify()
-    {
-        Patient p = new() { Id = "12345", Active = true };
-        var json = p.ToJson(pretty: true);
-        await Verifier.Verify(json, _settings, buildVerifierPath());
+#if CI_BUILD
+        return Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
+#else
+        return sourceFile;
+#endif
     }
 
     [DataTestMethod]

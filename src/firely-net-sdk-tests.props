@@ -34,6 +34,10 @@
 		<PackageReference Include="Verify.MSTest" Version="30.5.0" />
 	</ItemGroup>
 
+	<PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+		<DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
+	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 		<SignAssembly>True</SignAssembly>
 		<DelaySign>true</DelaySign>
