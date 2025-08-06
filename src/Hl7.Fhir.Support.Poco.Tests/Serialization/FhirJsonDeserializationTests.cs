@@ -12,6 +12,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using VerifyMSTest;
@@ -46,15 +47,17 @@ public partial class FhirJsonDeserializationTests
     [TestMethod]
     public async T.Task SimpleVerify()
     {
-        await Verifier.Verify("oneliner", _settings);
+        await Verifier.Verify("oneliner", _settings, buildVerifierPath());
     }
+
+    internal string buildVerifierPath([CallerFilePath] string sourceFile = "") => Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
 
     [TestMethod]
     public async T.Task LessSimpleVerify()
     {
-        Patient p = new Patient() { Id = "12345", Active = true };
+        Patient p = new() { Id = "12345", Active = true };
         var json = p.ToJson(pretty: true);
-        await Verifier.Verify(json, _settings);
+        await Verifier.Verify(json, _settings, buildVerifierPath());
     }
 
     [DataTestMethod]
@@ -470,7 +473,7 @@ public partial class FhirJsonDeserializationTests
             var errorsActual = dfe.Exceptions
                 .OrderBy(e => e is ExtendedCodedException ece ? ece.LineNumber : 0);
 
-            await Verifier.Verify(new { Errors = errorsActual, Obj = recoveredActual }, _settings);
+            await Verifier.Verify(new { Errors = errorsActual, Obj = recoveredActual }, _settings, buildVerifierPath());
         }
     }
 
@@ -555,7 +558,7 @@ public partial class FhirJsonDeserializationTests
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
         obj.Should().NotBeNull();
 
-        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty:true) }, _settings);
+        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty:true) }, _settings, buildVerifierPath());
     }
     
     [TestMethod]
@@ -581,7 +584,7 @@ public partial class FhirJsonDeserializationTests
         obj.Should().BeOfType<Patient>();
         errors.Should().NotBeEmpty();
 
-        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty: true) }, _settings);
+        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty: true) }, _settings, buildVerifierPath());
     }
 
     [TestMethod]
