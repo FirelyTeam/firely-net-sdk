@@ -39,6 +39,24 @@ public partial class FhirJsonDeserializationTests
         _settings.DisableDiff();
     }
 
+    [TestMethod]
+    public async T.Task VerifyVerifier() =>
+        await VerifyChecks.Run();
+
+    [TestMethod]
+    public async T.Task SimpleVerify()
+    {
+        await Verifier.Verify("oneliner", _settings);
+    }
+
+    [TestMethod]
+    public async T.Task LessSimpleVerify()
+    {
+        Patient p = new Patient() { Id = "12345", Active = true };
+        var json = p.ToJson(pretty: true);
+        await Verifier.Verify(json, _settings);
+    }
+
     [DataTestMethod]
     [DataRow("OperationOutcome", new string[] {})]
     [DataRow("OperationOutcomeX", new[] { ERR.UNKNOWN_RESOURCE_TYPE_CODE })]

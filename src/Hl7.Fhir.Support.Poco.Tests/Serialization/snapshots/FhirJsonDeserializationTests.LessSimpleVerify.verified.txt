@@ -1,0 +1,5 @@
+﻿{
+  "resourceType": "Patient",
+  "id": "12345",
+  "active": true
+}
