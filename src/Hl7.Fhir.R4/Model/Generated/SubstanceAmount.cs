@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
       get => AmountTextElement?.Value;
       set
       {
-        AmountTextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AmountTextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AmountText");
       }
     }

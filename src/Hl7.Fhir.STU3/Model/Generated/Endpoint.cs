@@ -144,13 +144,13 @@ namespace Hl7.Fhir.Model
     [Binding("EndpointStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -187,13 +187,13 @@ namespace Hl7.Fhir.Model
     [Binding("endpoint-contype")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Coding? ConnectionType
+    public Hl7.Fhir.Model.Coding ConnectionType
     {
       get
       {
         if(_ConnectionType.InOverflow<Hl7.Fhir.Model.Coding>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["connectionType"]);
-        return _ConnectionType;
+        return _ConnectionType!;
       }
 
       set
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -413,13 +413,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", InSummary=true, Order=180)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri? AddressElement
+    public Hl7.Fhir.Model.FhirUri AddressElement
     {
       get
       {
         if(_AddressElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["address"]);
-        return _AddressElement;
+        return _AddressElement!;
       }
 
       set
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
       get => AddressElement?.Value;
       set
       {
-        AddressElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        AddressElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Address");
       }
     }
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value!;
           return this;
         case "connectionType":
           if (value is not (Hl7.Fhir.Model.Coding or null))
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
             ConnectionType = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
             Overflow["connectionType"] = value;
           }
-          else ConnectionType = (Hl7.Fhir.Model.Coding?)value;
+          else ConnectionType = (Hl7.Fhir.Model.Coding?)value!;
           return this;
         case "name":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
             AddressElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
             Overflow["address"] = value;
           }
-          else AddressElement = (Hl7.Fhir.Model.FhirUri?)value;
+          else AddressElement = (Hl7.Fhir.Model.FhirUri?)value!;
           return this;
         case "header":
           if (value is not (List<Hl7.Fhir.Model.FhirString> or null))

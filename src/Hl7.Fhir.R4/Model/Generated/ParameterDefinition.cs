@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Name");
       }
     }
@@ -111,13 +111,13 @@ namespace Hl7.Fhir.Model
     [Binding("ParameterUse")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.OperationParameterUse>? UseElement
+    public Code<Hl7.Fhir.Model.OperationParameterUse> UseElement
     {
       get
       {
         if(_UseElement.InOverflow<Code<Hl7.Fhir.Model.OperationParameterUse>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.OperationParameterUse>), Overflow["use"]);
-        return _UseElement;
+        return _UseElement!;
       }
 
       set
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       get => UseElement?.Value;
       set
       {
-        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
+        UseElement = value is null ? null! : new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
       get => MinElement?.Value;
       set
       {
-        MinElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        MinElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("Min");
       }
     }
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
       get => MaxElement?.Value;
       set
       {
-        MaxElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        MaxElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Max");
       }
     }
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
       get => DocumentationElement?.Value;
       set
       {
-        DocumentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DocumentationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Documentation");
       }
     }
@@ -277,13 +277,13 @@ namespace Hl7.Fhir.Model
     [Binding("FHIRAllTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
+    public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FHIRAllTypes>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
       get => ProfileElement?.Value;
       set
       {
-        ProfileElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        ProfileElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Profile");
       }
     }
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
             UseElement = OverflowNull<Code<Hl7.Fhir.Model.OperationParameterUse>>.INSTANCE;
             Overflow["use"] = value;
           }
-          else UseElement = (Code<Hl7.Fhir.Model.OperationParameterUse>?)value;
+          else UseElement = (Code<Hl7.Fhir.Model.OperationParameterUse>?)value!;
           return this;
         case "min":
           if (value is not (Hl7.Fhir.Model.Integer or null))
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.FHIRAllTypes>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value!;
           return this;
         case "profile":
           if (value is not (Hl7.Fhir.Model.Canonical or null))

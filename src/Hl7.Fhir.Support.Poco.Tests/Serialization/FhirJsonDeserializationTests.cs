@@ -243,10 +243,9 @@ public partial class FhirJsonDeserializationTests
         yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
             ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
-        yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
-            JsonTokenType.EndObject);
+        yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" }, JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-           ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+            ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()

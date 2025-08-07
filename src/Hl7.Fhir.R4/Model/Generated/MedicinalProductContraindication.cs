@@ -82,13 +82,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("therapyRelationshipType", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? TherapyRelationshipType
+      public Hl7.Fhir.Model.CodeableConcept TherapyRelationshipType
       {
         get
         {
           if(_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["therapyRelationshipType"]);
-          return _TherapyRelationshipType;
+          return _TherapyRelationshipType!;
         }
 
         set
@@ -112,13 +112,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Medication
+      public Hl7.Fhir.Model.DataType Medication
       {
         get
         {
           if(_Medication.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["medication"]);
-          return _Medication;
+          return _Medication!;
         }
 
         set
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
               TherapyRelationshipType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["therapyRelationshipType"] = value;
             }
-            else TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "medication":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
               Medication = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["medication"] = value;
             }
-            else Medication = (Hl7.Fhir.Model.DataType?)value;
+            else Medication = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);

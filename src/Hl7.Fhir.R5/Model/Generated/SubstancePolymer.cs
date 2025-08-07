@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         get => IsDefiningElement?.Value;
         set
         {
-          IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          IsDefiningElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsDefining");
         }
       }
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
         get => AverageMolecularFormulaElement?.Value;
         set
         {
-          AverageMolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AverageMolecularFormulaElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AverageMolecularFormula");
         }
       }
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
         get => UnitElement?.Value;
         set
         {
-          UnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          UnitElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Unit");
         }
       }
@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Model
         get => AmountElement?.Value;
         set
         {
-          AmountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          AmountElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Amount");
         }
       }
@@ -1101,7 +1101,7 @@ namespace Hl7.Fhir.Model
         get => AverageElement?.Value;
         set
         {
-          AverageElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          AverageElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Average");
         }
       }
@@ -1142,7 +1142,7 @@ namespace Hl7.Fhir.Model
         get => LowElement?.Value;
         set
         {
-          LowElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          LowElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Low");
         }
       }
@@ -1183,7 +1183,7 @@ namespace Hl7.Fhir.Model
         get => HighElement?.Value;
         set
         {
-          HighElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          HighElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("High");
         }
       }
@@ -1393,7 +1393,7 @@ namespace Hl7.Fhir.Model
         get => RepresentationElement?.Value;
         set
         {
-          RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          RepresentationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Representation");
         }
       }
@@ -1722,7 +1722,7 @@ namespace Hl7.Fhir.Model
       get => ModificationElement?.Value;
       set
       {
-        ModificationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ModificationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Modification");
       }
     }
@@ -1783,7 +1783,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>? _Repeat;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

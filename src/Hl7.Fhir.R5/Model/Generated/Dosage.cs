@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       get => SequenceElement?.Value;
       set
       {
-        SequenceElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        SequenceElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("Sequence");
       }
     }
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
       get => TextElement?.Value;
       set
       {
-        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
       get => PatientInstructionElement?.Value;
       set
       {
-        PatientInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PatientInstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PatientInstruction");
       }
     }
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
       get => AsNeededElement?.Value;
       set
       {
-        AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        AsNeededElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AsNeeded");
       }
     }

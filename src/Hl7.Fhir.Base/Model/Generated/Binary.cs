@@ -74,13 +74,13 @@ namespace Hl7.Fhir.Model
     [Binding("MimeType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? ContentTypeElement
+    public Hl7.Fhir.Model.Code ContentTypeElement
     {
       get
       {
         if(_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
-        return _ContentTypeElement;
+        return _ContentTypeElement!;
       }
 
       set
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       get => ContentTypeElement?.Value;
       set
       {
-        ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
       get => ContentElement?.Value;
       set
       {
-        ContentElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+        ContentElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Content");
       }
     }
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
       get => DataElement?.Value;
       set
       {
-        DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
+        DataElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Data");
       }
     }
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
             ContentTypeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
             Overflow["contentType"] = value;
           }
-          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
+          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value!;
           return this;
         case "securityContext":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

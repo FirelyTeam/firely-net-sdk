@@ -183,13 +183,13 @@ namespace Hl7.Fhir.Model
       [References("Immunization","Procedure","Substance","Medication","MedicationAdministration","MedicationStatement","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Instance
+      public Hl7.Fhir.Model.ResourceReference Instance
       {
         get
         {
           if(_Instance.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["instance"]);
-          return _Instance;
+          return _Instance!;
         }
 
         set
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
               Instance = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["instance"] = value;
             }
-            else Instance = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Instance = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "causality":
             if (value is not (List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent> or null))
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
         get => ProductRelatednessElement?.Value;
         set
         {
-          ProductRelatednessElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProductRelatednessElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductRelatedness");
         }
       }
@@ -623,13 +623,13 @@ namespace Hl7.Fhir.Model
     [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>? ActualityElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
     {
       get
       {
         if(_ActualityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>), Overflow["actuality"]);
-        return _ActualityElement;
+        return _ActualityElement!;
       }
 
       set
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
       get => ActualityElement?.Value;
       set
       {
-        ActualityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+        ActualityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
         OnPropertyChanged("Actuality");
       }
     }
@@ -723,13 +723,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Practitioner","RelatedPerson")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Model
       get => DetectedElement?.Value;
       set
       {
-        DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DetectedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Detected");
       }
     }
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
       get => RecordedDateElement?.Value;
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Study;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Event; set => Event = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Event?.ToCodings() ?? [];
@@ -1470,7 +1470,7 @@ namespace Hl7.Fhir.Model
             ActualityElement = OverflowNull<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>.INSTANCE;
             Overflow["actuality"] = value;
           }
-          else ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>?)value;
+          else ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -1494,7 +1494,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

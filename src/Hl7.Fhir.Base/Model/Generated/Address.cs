@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
       get => UseElement?.Value;
       set
       {
-        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
+        UseElement = value is null ? null! : new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Address.AddressType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Address.AddressType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
       get => TextElement?.Value;
       set
       {
-        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
       get => CityElement?.Value;
       set
       {
-        CityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CityElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("City");
       }
     }
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       get => DistrictElement?.Value;
       set
       {
-        DistrictElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DistrictElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("District");
       }
     }
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
       get => StateElement?.Value;
       set
       {
-        StateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        StateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("State");
       }
     }
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
       get => PostalCodeElement?.Value;
       set
       {
-        PostalCodeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PostalCodeElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PostalCode");
       }
     }
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
       get => CountryElement?.Value;
       set
       {
-        CountryElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CountryElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Country");
       }
     }

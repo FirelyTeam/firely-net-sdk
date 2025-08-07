@@ -79,13 +79,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("outerPackaging", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier? OuterPackaging
+      public Hl7.Fhir.Model.Identifier OuterPackaging
       {
         get
         {
           if(_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["outerPackaging"]);
-          return _OuterPackaging;
+          return _OuterPackaging!;
         }
 
         set
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
               OuterPackaging = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
               Overflow["outerPackaging"] = value;
             }
-            else OuterPackaging = (Hl7.Fhir.Model.Identifier?)value;
+            else OuterPackaging = (Hl7.Fhir.Model.Identifier?)value!;
             return this;
           case "immediatePackaging":
             if (value is not (Hl7.Fhir.Model.Identifier or null))
@@ -265,13 +265,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -292,13 +292,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("quantity", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity? Quantity
+      public Hl7.Fhir.Model.Quantity Quantity
       {
         get
         {
           if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
-          return _Quantity;
+          return _Quantity!;
         }
 
         set
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "quantity":
             if (value is not (Hl7.Fhir.Model.Quantity or null))
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
               Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
               Overflow["quantity"] = value;
             }
-            else Quantity = (Hl7.Fhir.Model.Quantity?)value;
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value!;
             return this;
           case "material":
             if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1118,7 +1118,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>? _PackageItem;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

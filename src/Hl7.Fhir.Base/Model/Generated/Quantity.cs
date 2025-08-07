@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       get => ValueElement?.Value;
       set
       {
-        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Value");
       }
     }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       get => ComparatorElement?.Value;
       set
       {
-        ComparatorElement = value is null ? null : new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
+        ComparatorElement = value is null ? null! : new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
         OnPropertyChanged("Comparator");
       }
     }
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
       get => UnitElement?.Value;
       set
       {
-        UnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        UnitElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Unit");
       }
     }
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       get => SystemElement?.Value;
       set
       {
-        SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        SystemElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("System");
       }
     }
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       get => CodeElement?.Value;
       set
       {
-        CodeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        CodeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Code");
       }
     }

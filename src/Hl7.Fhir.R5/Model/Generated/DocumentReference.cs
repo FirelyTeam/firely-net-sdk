@@ -116,13 +116,13 @@ namespace Hl7.Fhir.Model
       [Binding("DocumentAttestationMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Mode
+      public Hl7.Fhir.Model.CodeableConcept Mode
       {
         get
         {
           if(_Mode.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["mode"]);
-          return _Mode;
+          return _Mode!;
         }
 
         set
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
         get => TimeElement?.Value;
         set
         {
-          TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          TimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Time");
         }
       }
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
               Mode = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["mode"] = value;
             }
-            else Mode = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Mode = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "time":
             if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -341,13 +341,13 @@ namespace Hl7.Fhir.Model
       [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -370,13 +370,13 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Target
+      public Hl7.Fhir.Model.ResourceReference Target
       {
         get
         {
           if(_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["target"]);
-          return _Target;
+          return _Target!;
         }
 
         set
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "target":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
               Target = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["target"] = value;
             }
-            else Target = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Target = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -506,13 +506,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("attachment", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Attachment? Attachment
+      public Hl7.Fhir.Model.Attachment Attachment
       {
         get
         {
           if(_Attachment.InOverflow<Hl7.Fhir.Model.Attachment>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Attachment), Overflow["attachment"]);
-          return _Attachment;
+          return _Attachment!;
         }
 
         set
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
               Attachment = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
               Overflow["attachment"] = value;
             }
-            else Attachment = (Hl7.Fhir.Model.Attachment?)value;
+            else Attachment = (Hl7.Fhir.Model.Attachment?)value!;
             return this;
           case "profile":
             if (value is not (List<Hl7.Fhir.Model.DocumentReference.ProfileComponent> or null))
@@ -674,13 +674,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
       get => VersionElement?.Value;
       set
       {
-        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -874,13 +874,13 @@ namespace Hl7.Fhir.Model
     [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -905,7 +905,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
       get => DocStatusElement?.Value;
       set
       {
-        DocStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
+        DocStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
         OnPropertyChanged("DocStatus");
       }
     }
@@ -1269,7 +1269,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1486,7 +1486,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DocumentReference.ContentComponent>? _Content;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1789,7 +1789,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>?)value!;
           return this;
         case "docStatus":
           if (value is not (Code<Hl7.Fhir.Model.CompositionStatus> or null))

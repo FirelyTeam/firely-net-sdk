@@ -118,13 +118,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("status", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Status
+    public Hl7.Fhir.Model.CodeableConcept Status
     {
       get
       {
         if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-        return _Status;
+        return _Status!;
       }
 
       set
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       get => RestoreDateElement?.Value;
       set
       {
-        RestoreDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RestoreDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RestoreDate");
       }
     }
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
             Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["status"] = value;
           }
-          else Status = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Status = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "dateRange":
           if (value is not (Hl7.Fhir.Model.Period or null))

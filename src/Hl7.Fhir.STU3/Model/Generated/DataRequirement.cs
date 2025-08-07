@@ -85,13 +85,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PathElement
+      public Hl7.Fhir.Model.FhirString PathElement
       {
         get
         {
           if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-          return _PathElement;
+          return _PathElement!;
         }
 
         set
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
               PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["path"] = value;
             }
-            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "valueSet":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -423,13 +423,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PathElement
+      public Hl7.Fhir.Model.FhirString PathElement
       {
         get
         {
           if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-          return _PathElement;
+          return _PathElement!;
         }
 
         set
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
               PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["path"] = value;
             }
-            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -586,13 +586,13 @@ namespace Hl7.Fhir.Model
     [Binding("FHIRAllTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
+    public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FHIRAllTypes>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.FHIRAllTypes>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value!;
           return this;
         case "profile":
           if (value is not (List<Hl7.Fhir.Model.FhirUri> or null))

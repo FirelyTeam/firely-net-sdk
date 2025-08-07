@@ -92,13 +92,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Type
+    public Hl7.Fhir.Model.CodeableConcept Type
     {
       get
       {
         if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-        return _Type;
+        return _Type!;
       }
 
       set
@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("period", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Period
+    public Hl7.Fhir.Model.Quantity Period
     {
       get
       {
         if(_Period.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["period"]);
-        return _Period;
+        return _Period!;
       }
 
       set
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
             Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["type"] = value;
           }
-          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "period":
           if (value is not (Hl7.Fhir.Model.Quantity or null))
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
             Period = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
             Overflow["period"] = value;
           }
-          else Period = (Hl7.Fhir.Model.Quantity?)value;
+          else Period = (Hl7.Fhir.Model.Quantity?)value!;
           return this;
         case "specialPrecautionsForStorage":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

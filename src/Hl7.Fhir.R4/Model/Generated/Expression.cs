@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("Name");
       }
     }
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
     [Binding("ExpressionLanguage")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? LanguageElement
+    public Hl7.Fhir.Model.Code LanguageElement
     {
       get
       {
         if(_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["language"]);
-        return _LanguageElement;
+        return _LanguageElement!;
       }
 
       set
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
       get => LanguageElement?.Value;
       set
       {
-        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        LanguageElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
       get => ExpressionElement?.Value;
       set
       {
-        ExpressionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ExpressionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Expression_");
       }
     }
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
       get => ReferenceElement?.Value;
       set
       {
-        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        ReferenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Reference");
       }
     }
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
             LanguageElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
             Overflow["language"] = value;
           }
-          else LanguageElement = (Hl7.Fhir.Model.Code?)value;
+          else LanguageElement = (Hl7.Fhir.Model.Code?)value!;
           return this;
         case "expression":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

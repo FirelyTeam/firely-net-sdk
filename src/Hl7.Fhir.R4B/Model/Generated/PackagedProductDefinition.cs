@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
         get => QuantityElement?.Value;
         set
         {
-          QuantityElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          QuantityElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Quantity");
         }
       }
@@ -1001,13 +1001,13 @@ namespace Hl7.Fhir.Model
       [Binding("ProductCharacteristic")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -1117,7 +1117,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -1161,13 +1161,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference? Item
+      public Hl7.Fhir.Model.CodeableReference Item
       {
         get
         {
           if(_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.CodeableReference?)value;
+            else Item = (Hl7.Fhir.Model.CodeableReference?)value!;
             return this;
           case "amount":
             if (value is not (Hl7.Fhir.Model.Quantity or null))
@@ -1364,7 +1364,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -1489,7 +1489,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -1558,7 +1558,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1684,7 +1684,7 @@ namespace Hl7.Fhir.Model
       get => CopackagedIndicatorElement?.Value;
       set
       {
-        CopackagedIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        CopackagedIndicatorElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("CopackagedIndicator");
       }
     }
@@ -1745,7 +1745,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.PackagedProductDefinition.PackageComponent? _Package;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

@@ -117,13 +117,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         get => IsActiveElement?.Value;
         set
         {
-          IsActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          IsActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsActive");
         }
       }
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "isActive":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -551,13 +551,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "amount":
             if (value is not (Hl7.Fhir.Model.Quantity or null))
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
         get => LotNumberElement?.Value;
         set
         {
-          LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          LotNumberElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LotNumber");
         }
       }
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
         get => ExpirationDateElement?.Value;
         set
         {
-          ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("ExpirationDate");
         }
       }
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Medication.MedicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Medication.MedicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -985,7 +985,7 @@ namespace Hl7.Fhir.Model
       get => IsBrandElement?.Value;
       set
       {
-        IsBrandElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        IsBrandElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("IsBrand");
       }
     }
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
       get => IsOverTheCounterElement?.Value;
       set
       {
-        IsOverTheCounterElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        IsOverTheCounterElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("IsOverTheCounter");
       }
     }

@@ -187,13 +187,13 @@ namespace Hl7.Fhir.Model
       [Binding("EncounterStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Encounter.EncounterStatus>? StatusElement
+      public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement
       {
         get
         {
           if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Encounter.EncounterStatus>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Encounter.EncounterStatus>), Overflow["status"]);
-          return _StatusElement;
+          return _StatusElement!;
         }
 
         set
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
         get => StatusElement?.Value;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
+          StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -229,13 +229,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Period
+      public Hl7.Fhir.Model.Period Period
       {
         get
         {
           if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-          return _Period;
+          return _Period!;
         }
 
         set
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
               StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Encounter.EncounterStatus>>.INSTANCE;
               Overflow["status"] = value;
             }
-            else StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>?)value;
+            else StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
               Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
               Overflow["period"] = value;
             }
-            else Period = (Hl7.Fhir.Model.Period?)value;
+            else Period = (Hl7.Fhir.Model.Period?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -365,13 +365,13 @@ namespace Hl7.Fhir.Model
       [Binding("EncounterClass")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Coding? Class
+      public Hl7.Fhir.Model.Coding Class
       {
         get
         {
           if(_Class.InOverflow<Hl7.Fhir.Model.Coding>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["class"]);
-          return _Class;
+          return _Class!;
         }
 
         set
@@ -392,13 +392,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Period
+      public Hl7.Fhir.Model.Period Period
       {
         get
         {
           if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-          return _Period;
+          return _Period!;
         }
 
         set
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
               Class = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
               Overflow["class"] = value;
             }
-            else Class = (Hl7.Fhir.Model.Coding?)value;
+            else Class = (Hl7.Fhir.Model.Coding?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
               Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
               Overflow["period"] = value;
             }
-            else Period = (Hl7.Fhir.Model.Period?)value;
+            else Period = (Hl7.Fhir.Model.Period?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -736,13 +736,13 @@ namespace Hl7.Fhir.Model
       [References("Condition","Procedure")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Condition
+      public Hl7.Fhir.Model.ResourceReference Condition
       {
         get
         {
           if(_Condition.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["condition"]);
-          return _Condition;
+          return _Condition!;
         }
 
         set
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
         get => RankElement?.Value;
         set
         {
-          RankElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          RankElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Rank");
         }
       }
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model
               Condition = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["condition"] = value;
             }
-            else Condition = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Condition = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "use":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1453,13 +1453,13 @@ namespace Hl7.Fhir.Model
       [References("Location")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Location
+      public Hl7.Fhir.Model.ResourceReference Location
       {
         get
         {
           if(_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["location"]);
-          return _Location;
+          return _Location!;
         }
 
         set
@@ -1511,7 +1511,7 @@ namespace Hl7.Fhir.Model
         get => StatusElement?.Value;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
+          StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -1656,7 +1656,7 @@ namespace Hl7.Fhir.Model
               Location = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["location"] = value;
             }
-            else Location = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Location = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "status":
             if (value is not (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> or null))
@@ -1734,13 +1734,13 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Encounter.EncounterStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Encounter.EncounterStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Encounter.EncounterStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1765,7 +1765,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1805,13 +1805,13 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterClass")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Coding? Class
+    public Hl7.Fhir.Model.Coding Class
     {
       get
       {
         if(_Class.InOverflow<Hl7.Fhir.Model.Coding>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["class"]);
-        return _Class;
+        return _Class!;
       }
 
       set
@@ -2362,7 +2362,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _PartOf;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2649,7 +2649,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Encounter.EncounterStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>?)value!;
           return this;
         case "statusHistory":
           if (value is not (List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent> or null))
@@ -2665,7 +2665,7 @@ namespace Hl7.Fhir.Model
             Class = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
             Overflow["class"] = value;
           }
-          else Class = (Hl7.Fhir.Model.Coding?)value;
+          else Class = (Hl7.Fhir.Model.Coding?)value!;
           return this;
         case "classHistory":
           if (value is not (List<Hl7.Fhir.Model.Encounter.ClassHistoryComponent> or null))

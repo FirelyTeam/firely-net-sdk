@@ -85,13 +85,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt? SequenceLinkIdElement
+      public Hl7.Fhir.Model.PositiveInt SequenceLinkIdElement
       {
         get
         {
           if(_SequenceLinkIdElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["sequenceLinkId"]);
-          return _SequenceLinkIdElement;
+          return _SequenceLinkIdElement!;
         }
 
         set
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
         get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
               SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
               Overflow["sequenceLinkId"] = value;
             }
-            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value!;
             return this;
           case "noteNumber":
             if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
@@ -376,13 +376,13 @@ namespace Hl7.Fhir.Model
       [Binding("Adjudication")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Category
+      public Hl7.Fhir.Model.CodeableConcept Category
       {
         get
         {
           if(_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["category"]);
-          return _Category;
+          return _Category!;
         }
 
         set
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
         get => ValueElement?.Value;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Value");
         }
       }
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
               Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["category"] = value;
             }
-            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "reason":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -643,13 +643,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt? SequenceLinkIdElement
+      public Hl7.Fhir.Model.PositiveInt SequenceLinkIdElement
       {
         get
         {
           if(_SequenceLinkIdElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["sequenceLinkId"]);
-          return _SequenceLinkIdElement;
+          return _SequenceLinkIdElement!;
         }
 
         set
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
         get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
               SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
               Overflow["sequenceLinkId"] = value;
             }
-            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value!;
             return this;
           case "noteNumber":
             if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
@@ -933,13 +933,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt? SequenceLinkIdElement
+      public Hl7.Fhir.Model.PositiveInt SequenceLinkIdElement
       {
         get
         {
           if(_SequenceLinkIdElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["sequenceLinkId"]);
-          return _SequenceLinkIdElement;
+          return _SequenceLinkIdElement!;
         }
 
         set
@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Model
         get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
               SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
               Overflow["sequenceLinkId"] = value;
             }
-            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value!;
             return this;
           case "noteNumber":
             if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
@@ -2144,7 +2144,7 @@ namespace Hl7.Fhir.Model
         get => SequenceLinkIdElement?.Value;
         set
         {
-          SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SequenceLinkId");
         }
       }
@@ -2185,7 +2185,7 @@ namespace Hl7.Fhir.Model
         get => DetailSequenceLinkIdElement?.Value;
         set
         {
-          DetailSequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          DetailSequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("DetailSequenceLinkId");
         }
       }
@@ -2226,7 +2226,7 @@ namespace Hl7.Fhir.Model
         get => SubdetailSequenceLinkIdElement?.Value;
         set
         {
-          SubdetailSequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SubdetailSequenceLinkIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("SubdetailSequenceLinkId");
         }
       }
@@ -2238,13 +2238,13 @@ namespace Hl7.Fhir.Model
       [Binding("AdjudicationError")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -2370,7 +2370,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2521,7 +2521,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("Date");
         }
       }
@@ -2798,7 +2798,7 @@ namespace Hl7.Fhir.Model
         get => NumberElement?.Value;
         set
         {
-          NumberElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          NumberElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Number");
         }
       }
@@ -2866,7 +2866,7 @@ namespace Hl7.Fhir.Model
         get => TextElement?.Value;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Text");
         }
       }
@@ -3050,13 +3050,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt? SequenceElement
+      public Hl7.Fhir.Model.PositiveInt SequenceElement
       {
         get
         {
           if(_SequenceElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["sequence"]);
-          return _SequenceElement;
+          return _SequenceElement!;
         }
 
         set
@@ -3081,7 +3081,7 @@ namespace Hl7.Fhir.Model
         get => SequenceElement?.Value;
         set
         {
-          SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -3092,13 +3092,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("focal", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? FocalElement
+      public Hl7.Fhir.Model.FhirBoolean FocalElement
       {
         get
         {
           if(_FocalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["focal"]);
-          return _FocalElement;
+          return _FocalElement!;
         }
 
         set
@@ -3123,7 +3123,7 @@ namespace Hl7.Fhir.Model
         get => FocalElement?.Value;
         set
         {
-          FocalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          FocalElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Focal");
         }
       }
@@ -3136,13 +3136,13 @@ namespace Hl7.Fhir.Model
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Coverage
+      public Hl7.Fhir.Model.ResourceReference Coverage
       {
         get
         {
           if(_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["coverage"]);
-          return _Coverage;
+          return _Coverage!;
         }
 
         set
@@ -3193,7 +3193,7 @@ namespace Hl7.Fhir.Model
         get => BusinessArrangementElement?.Value;
         set
         {
-          BusinessArrangementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          BusinessArrangementElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("BusinessArrangement");
         }
       }
@@ -3379,7 +3379,7 @@ namespace Hl7.Fhir.Model
               SequenceElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
               Overflow["sequence"] = value;
             }
-            else SequenceElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            else SequenceElement = (Hl7.Fhir.Model.PositiveInt?)value!;
             return this;
           case "focal":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -3387,7 +3387,7 @@ namespace Hl7.Fhir.Model
               FocalElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
               Overflow["focal"] = value;
             }
-            else FocalElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            else FocalElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
             return this;
           case "coverage":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -3395,7 +3395,7 @@ namespace Hl7.Fhir.Model
               Coverage = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["coverage"] = value;
             }
-            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "businessArrangement":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -3505,7 +3505,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -3574,7 +3574,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -3754,7 +3754,7 @@ namespace Hl7.Fhir.Model
       get => DispositionElement?.Value;
       set
       {
-        DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DispositionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -4114,7 +4114,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>? _Insurance;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

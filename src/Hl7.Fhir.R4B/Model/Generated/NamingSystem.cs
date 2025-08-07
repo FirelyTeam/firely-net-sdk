@@ -149,13 +149,13 @@ namespace Hl7.Fhir.Model
       [Binding("NamingSystemIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>? TypeElement
+      public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -191,13 +191,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? ValueElement
+      public Hl7.Fhir.Model.FhirString ValueElement
       {
         get
         {
           if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
-          return _ValueElement;
+          return _ValueElement!;
         }
 
         set
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
         get => ValueElement?.Value;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
         get => PreferredElement?.Value;
         set
         {
-          PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          PreferredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Preferred");
         }
       }
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
         get => CommentElement?.Value;
         set
         {
-          CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
               ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["value"] = value;
             }
-            else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+            else ValueElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "preferred":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -490,13 +490,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? NameElement
+    public Hl7.Fhir.Model.FhirString NameElement
     {
       get
       {
         if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-        return _NameElement;
+        return _NameElement!;
       }
 
       set
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -533,13 +533,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -576,13 +576,13 @@ namespace Hl7.Fhir.Model
     [Binding("NamingSystemType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>? KindElement
+    public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement
     {
       get
       {
         if(_KindElement.InOverflow<Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>), Overflow["kind"]);
-        return _KindElement;
+        return _KindElement!;
       }
 
       set
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
       get => KindElement?.Value;
       set
       {
-        KindElement = value is null ? null : new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>(value);
+        KindElement = value is null ? null! : new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>(value);
         OnPropertyChanged("Kind");
       }
     }
@@ -618,13 +618,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? DateElement
+    public Hl7.Fhir.Model.FhirDateTime DateElement
     {
       get
       {
         if(_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["date"]);
-        return _DateElement;
+        return _DateElement!;
       }
 
       set
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
       get => PublisherElement?.Value;
       set
       {
-        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PublisherElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
       get => ResponsibleElement?.Value;
       set
       {
-        ResponsibleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ResponsibleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Responsible");
       }
     }
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Model
       get => UsageElement?.Value;
       set
       {
-        UsageElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        UsageElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Usage");
       }
     }
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
             NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["name"] = value;
           }
-          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
+          else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
@@ -1143,7 +1143,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "kind":
           if (value is not (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> or null))
@@ -1151,7 +1151,7 @@ namespace Hl7.Fhir.Model
             KindElement = OverflowNull<Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>>.INSTANCE;
             Overflow["kind"] = value;
           }
-          else KindElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>?)value;
+          else KindElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>?)value!;
           return this;
         case "date":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
             DateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
             Overflow["date"] = value;
           }
-          else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
           return this;
         case "publisher":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
