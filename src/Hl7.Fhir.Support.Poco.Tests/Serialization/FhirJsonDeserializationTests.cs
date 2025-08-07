@@ -231,11 +231,11 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    // [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
     [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
     public void TestData(Type t, object testObject, JsonTokenType token, Action<object?>? verify,
         params string[] expectedErrors)
     {
@@ -264,18 +264,18 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> CatchesIncorrectlyStructuredComplexData()
     {
-        // yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
-        // yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
-        // yield return data<Extension>(new { url = "test" });
-        // yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
-        // yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
-        // yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { url = "test" });
+        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
             ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
-    //     yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
-    //         JsonTokenType.EndObject);
-    //     yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-    //        ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
+        JsonTokenType.EndObject);
+        yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
+       ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
