@@ -50,18 +50,6 @@ public class DynamicDataType : DataType, IDynamicType
 [FhirType("DynamicResource","http://fire.ly/fhir/StructureDefinition/DynamicResource")]
 public class DynamicResource : DomainResource, IDynamicType
 {
-    /// <summary>
-    /// Uses reflection emit to create a subclass of DynamicResource with the given type name.
-    /// </summary>
-    /// <returns></returns>
-    public static Type CreateSubclass(string typeName)
-    {
-        if (string.IsNullOrEmpty(typeName))
-            throw new ArgumentNullException(nameof(typeName));
-
-        return DynamicTypeFactory.CreateDynamicResourceSubclass(typeName);
-    }
-
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;

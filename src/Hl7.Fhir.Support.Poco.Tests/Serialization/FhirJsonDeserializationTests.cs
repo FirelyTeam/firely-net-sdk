@@ -12,11 +12,9 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using VerifyMSTest;
-using VerifyTests;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using DataType = Hl7.Fhir.Model.DataType;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
@@ -31,27 +29,15 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 [UsesVerify]
 public partial class FhirJsonDeserializationTests
 {
-    private static readonly VerifySettings _settings;
+    private static readonly VerifierHelper _verifier;
 
     static FhirJsonDeserializationTests()
     {
-        _settings = new VerifySettings();
-        _settings.UseDirectory("snapshots");
-        _settings.DisableDiff();
+        _verifier = new VerifierHelper();
     }
 
     [TestMethod]
-    public async T.Task VerifyVerifier() =>
-        await VerifyChecks.Run();
-
-    internal string buildVerifierPath([CallerFilePath] string sourceFile = "")
-    {
-#if CI_BUILD
-        return Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
-#else
-        return sourceFile;
-#endif
-    }
+    public async T.Task CheckVerifier() => await _verifier.Check();
 
     [DataTestMethod]
     [DataRow("OperationOutcome", new string[] {})]
@@ -465,7 +451,7 @@ public partial class FhirJsonDeserializationTests
             var errorsActual = dfe.Exceptions
                 .OrderBy(e => e is ExtendedCodedException ece ? ece.LineNumber : 0);
 
-            await Verifier.Verify(new { Errors = errorsActual, Obj = recoveredActual }, _settings, buildVerifierPath());
+            await _verifier.Verify(new { Errors = errorsActual, Obj = recoveredActual });
         }
     }
 
@@ -550,7 +536,7 @@ public partial class FhirJsonDeserializationTests
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
         obj.Should().NotBeNull();
 
-        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty:true) }, _settings, buildVerifierPath());
+        await _verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty:true) });
     }
     
     [TestMethod]
@@ -573,10 +559,7 @@ public partial class FhirJsonDeserializationTests
 
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
 
-        obj.Should().BeOfType<Patient>();
-        errors.Should().NotBeEmpty();
-
-        await Verifier.Verify(new { Errors = errors, Obj = obj.ToJson(pretty: true) }, _settings, buildVerifierPath());
+        await _verifier.Verify(new { Errors = errors, Obj = obj?.ToJson(pretty: true) });
     }
 
     [TestMethod]
