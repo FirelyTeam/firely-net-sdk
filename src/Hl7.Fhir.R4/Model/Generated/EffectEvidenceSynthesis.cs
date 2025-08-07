@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
         get => NumberOfStudiesElement?.Value;
         set
         {
-          NumberOfStudiesElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          NumberOfStudiesElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("NumberOfStudies");
         }
       }
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         get => NumberOfParticipantsElement?.Value;
         set
         {
-          NumberOfParticipantsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          NumberOfParticipantsElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("NumberOfParticipants");
         }
       }
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
         get => ExposureStateElement?.Value;
         set
         {
-          ExposureStateElement = value is null ? null : new Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode>(value);
+          ExposureStateElement = value is null ? null! : new Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode>(value);
           OnPropertyChanged("ExposureState");
         }
       }
@@ -469,13 +469,13 @@ namespace Hl7.Fhir.Model
       [References("RiskEvidenceSynthesis")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? RiskEvidenceSynthesis
+      public Hl7.Fhir.Model.ResourceReference RiskEvidenceSynthesis
       {
         get
         {
           if(_RiskEvidenceSynthesis.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["riskEvidenceSynthesis"]);
-          return _RiskEvidenceSynthesis;
+          return _RiskEvidenceSynthesis!;
         }
 
         set
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
               RiskEvidenceSynthesis = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["riskEvidenceSynthesis"] = value;
             }
-            else RiskEvidenceSynthesis = (Hl7.Fhir.Model.ResourceReference?)value;
+            else RiskEvidenceSynthesis = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
         get => ValueElement?.Value;
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Value");
         }
       }
@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Model
         get => LevelElement?.Value;
         set
         {
-          LevelElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          LevelElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Level");
         }
       }
@@ -1115,7 +1115,7 @@ namespace Hl7.Fhir.Model
         get => FromElement?.Value;
         set
         {
-          FromElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          FromElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("From");
         }
       }
@@ -1156,7 +1156,7 @@ namespace Hl7.Fhir.Model
         get => ToElement?.Value;
         set
         {
-          ToElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          ToElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("To");
         }
       }
@@ -1750,7 +1750,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -1819,7 +1819,7 @@ namespace Hl7.Fhir.Model
       get => VersionElement?.Value;
       set
       {
-        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -1860,7 +1860,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -1901,7 +1901,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -1913,13 +1913,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1944,7 +1944,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1985,7 +1985,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -2026,7 +2026,7 @@ namespace Hl7.Fhir.Model
       get => PublisherElement?.Value;
       set
       {
-        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PublisherElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
@@ -2095,7 +2095,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -2221,7 +2221,7 @@ namespace Hl7.Fhir.Model
       get => CopyrightElement?.Value;
       set
       {
-        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -2262,7 +2262,7 @@ namespace Hl7.Fhir.Model
       get => ApprovalDateElement?.Value;
       set
       {
-        ApprovalDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        ApprovalDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ApprovalDate");
       }
     }
@@ -2303,7 +2303,7 @@ namespace Hl7.Fhir.Model
       get => LastReviewDateElement?.Value;
       set
       {
-        LastReviewDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        LastReviewDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("LastReviewDate");
       }
     }
@@ -2565,13 +2565,13 @@ namespace Hl7.Fhir.Model
     [References("EvidenceVariable")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Population
+    public Hl7.Fhir.Model.ResourceReference Population
     {
       get
       {
         if(_Population.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["population"]);
-        return _Population;
+        return _Population!;
       }
 
       set
@@ -2594,13 +2594,13 @@ namespace Hl7.Fhir.Model
     [References("EvidenceVariable")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Exposure
+    public Hl7.Fhir.Model.ResourceReference Exposure
     {
       get
       {
         if(_Exposure.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["exposure"]);
-        return _Exposure;
+        return _Exposure!;
       }
 
       set
@@ -2623,13 +2623,13 @@ namespace Hl7.Fhir.Model
     [References("EvidenceVariable")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? ExposureAlternative
+    public Hl7.Fhir.Model.ResourceReference ExposureAlternative
     {
       get
       {
         if(_ExposureAlternative.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["exposureAlternative"]);
-        return _ExposureAlternative;
+        return _ExposureAlternative!;
       }
 
       set
@@ -2652,13 +2652,13 @@ namespace Hl7.Fhir.Model
     [References("EvidenceVariable")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Outcome
+    public Hl7.Fhir.Model.ResourceReference Outcome
     {
       get
       {
         if(_Outcome.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["outcome"]);
-        return _Outcome;
+        return _Outcome!;
       }
 
       set
@@ -2783,7 +2783,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.EffectEvidenceSynthesis.CertaintyComponent>? _Certainty;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -3202,7 +3202,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "date":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -3362,7 +3362,7 @@ namespace Hl7.Fhir.Model
             Population = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["population"] = value;
           }
-          else Population = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Population = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "exposure":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -3370,7 +3370,7 @@ namespace Hl7.Fhir.Model
             Exposure = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["exposure"] = value;
           }
-          else Exposure = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Exposure = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "exposureAlternative":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -3378,7 +3378,7 @@ namespace Hl7.Fhir.Model
             ExposureAlternative = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["exposureAlternative"] = value;
           }
-          else ExposureAlternative = (Hl7.Fhir.Model.ResourceReference?)value;
+          else ExposureAlternative = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "outcome":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -3386,7 +3386,7 @@ namespace Hl7.Fhir.Model
             Outcome = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["outcome"] = value;
           }
-          else Outcome = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Outcome = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "sampleSize":
           if (value is not (Hl7.Fhir.Model.EffectEvidenceSynthesis.SampleSizeComponent or null))

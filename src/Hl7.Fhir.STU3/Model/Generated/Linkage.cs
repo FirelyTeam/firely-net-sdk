@@ -114,13 +114,13 @@ namespace Hl7.Fhir.Model
       [Binding("LinkageType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Linkage.LinkageType>? TypeElement
+      public Code<Hl7.Fhir.Model.Linkage.LinkageType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Linkage.LinkageType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Linkage.LinkageType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Linkage.LinkageType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -156,13 +156,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("resource", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Resource
+      public Hl7.Fhir.Model.ResourceReference Resource
       {
         get
         {
           if(_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["resource"]);
-          return _Resource;
+          return _Resource!;
         }
 
         set
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>?)value!;
             return this;
           case "resource":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
               Resource = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["resource"] = value;
             }
-            else Resource = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Resource = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }

@@ -154,13 +154,13 @@ namespace Hl7.Fhir.Model
       [Binding("DatesType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -183,13 +183,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? When
+      public Hl7.Fhir.Model.DataType When
       {
         get
         {
           if(_When.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["when"]);
-          return _When;
+          return _When!;
         }
 
         set
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "when":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
               When = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["when"] = value;
             }
-            else When = (Hl7.Fhir.Model.DataType?)value;
+            else When = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -321,13 +321,13 @@ namespace Hl7.Fhir.Model
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Coverage
+      public Hl7.Fhir.Model.ResourceReference Coverage
       {
         get
         {
           if(_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["coverage"]);
-          return _Coverage;
+          return _Coverage!;
         }
 
         set
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
         get => InforceElement?.Value;
         set
         {
-          InforceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          InforceElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Inforce");
         }
       }
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
               Coverage = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["coverage"] = value;
             }
-            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "inforce":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
         get => ExcludedElement?.Value;
         set
         {
-          ExcludedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ExcludedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Excluded");
         }
       }
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -962,7 +962,7 @@ namespace Hl7.Fhir.Model
         get => AuthorizationRequiredElement?.Value;
         set
         {
-          AuthorizationRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AuthorizationRequiredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AuthorizationRequired");
         }
       }
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
         get => AuthorizationUrlElement?.Value;
         set
         {
-          AuthorizationUrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          AuthorizationUrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("AuthorizationUrl");
         }
       }
@@ -1380,13 +1380,13 @@ namespace Hl7.Fhir.Model
       [Binding("BenefitType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -1534,7 +1534,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "allowed":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -1591,13 +1591,13 @@ namespace Hl7.Fhir.Model
       [Binding("AdjudicationError")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -1725,7 +1725,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "expression":
             if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
@@ -1785,13 +1785,13 @@ namespace Hl7.Fhir.Model
     [Binding("EligibilityResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1816,7 +1816,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1876,13 +1876,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1959,13 +1959,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("created", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
       get
       {
         if(_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["created"]);
-        return _CreatedElement;
+        return _CreatedElement!;
       }
 
       set
@@ -1990,7 +1990,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -2031,13 +2031,13 @@ namespace Hl7.Fhir.Model
     [References("CoverageEligibilityRequest")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Request
+    public Hl7.Fhir.Model.ResourceReference Request
     {
       get
       {
         if(_Request.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["request"]);
-        return _Request;
+        return _Request!;
       }
 
       set
@@ -2059,13 +2059,13 @@ namespace Hl7.Fhir.Model
     [Binding("EligibilityOutcome")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>? OutcomeElement
+    public Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome> OutcomeElement
     {
       get
       {
         if(_OutcomeElement.InOverflow<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>), Overflow["outcome"]);
-        return _OutcomeElement;
+        return _OutcomeElement!;
       }
 
       set
@@ -2090,7 +2090,7 @@ namespace Hl7.Fhir.Model
       get => OutcomeElement?.Value;
       set
       {
-        OutcomeElement = value is null ? null : new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>(value);
+        OutcomeElement = value is null ? null! : new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>(value);
         OnPropertyChanged("Outcome");
       }
     }
@@ -2131,7 +2131,7 @@ namespace Hl7.Fhir.Model
       get => DispositionElement?.Value;
       set
       {
-        DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DispositionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -2144,13 +2144,13 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Insurer
+    public Hl7.Fhir.Model.ResourceReference Insurer
     {
       get
       {
         if(_Insurer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["insurer"]);
-        return _Insurer;
+        return _Insurer!;
       }
 
       set
@@ -2229,7 +2229,7 @@ namespace Hl7.Fhir.Model
       get => PreAuthRefElement?.Value;
       set
       {
-        PreAuthRefElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PreAuthRefElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PreAuthRef");
       }
     }
@@ -2289,7 +2289,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent>? _Error;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2506,7 +2506,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value!;
           return this;
         case "purpose":
           if (value is not (List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> or null))
@@ -2522,7 +2522,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "event":
           if (value is not (List<Hl7.Fhir.Model.CoverageEligibilityResponse.EventComponent> or null))
@@ -2546,7 +2546,7 @@ namespace Hl7.Fhir.Model
             CreatedElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
             Overflow["created"] = value;
           }
-          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
           return this;
         case "requestor":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -2562,7 +2562,7 @@ namespace Hl7.Fhir.Model
             Request = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["request"] = value;
           }
-          else Request = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Request = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "outcome":
           if (value is not (Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome> or null))
@@ -2570,7 +2570,7 @@ namespace Hl7.Fhir.Model
             OutcomeElement = OverflowNull<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>>.INSTANCE;
             Overflow["outcome"] = value;
           }
-          else OutcomeElement = (Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>?)value;
+          else OutcomeElement = (Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>?)value!;
           return this;
         case "disposition":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -2586,7 +2586,7 @@ namespace Hl7.Fhir.Model
             Insurer = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["insurer"] = value;
           }
-          else Insurer = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Insurer = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "insurance":
           if (value is not (List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent> or null))

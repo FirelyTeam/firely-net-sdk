@@ -155,13 +155,13 @@ namespace Hl7.Fhir.Model
     [Binding("MediaStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EventStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.EventStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.EventStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EventStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.EventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
       get => IssuedElement?.Value;
       set
       {
-        IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        IssuedElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Issued");
       }
     }
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
       get => DeviceNameElement?.Value;
       set
       {
-        DeviceNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DeviceNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("DeviceName");
       }
     }
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
       get => HeightElement?.Value;
       set
       {
-        HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        HeightElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Height");
       }
     }
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
       get => WidthElement?.Value;
       set
       {
-        WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        WidthElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Width");
       }
     }
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       get => FramesElement?.Value;
       set
       {
-        FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        FramesElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Frames");
       }
     }
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
       get => DurationElement?.Value;
       set
       {
-        DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        DurationElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Duration");
       }
     }
@@ -720,13 +720,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("content", InSummary=true, Order=290)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment? Content
+    public Hl7.Fhir.Model.Attachment Content
     {
       get
       {
         if(_Content.InOverflow<Hl7.Fhir.Model.Attachment>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Attachment), Overflow["content"]);
-        return _Content;
+        return _Content!;
       }
 
       set
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.EventStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value!;
           return this;
         case "type":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
             Content = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
             Overflow["content"] = value;
           }
-          else Content = (Hl7.Fhir.Model.Attachment?)value;
+          else Content = (Hl7.Fhir.Model.Attachment?)value!;
           return this;
         case "note":
           if (value is not (List<Hl7.Fhir.Model.Annotation> or null))

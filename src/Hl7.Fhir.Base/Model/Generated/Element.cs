@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
       get => ElementIdElement?.Value;
       set
       {
-        ElementIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ElementIdElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ElementId");
       }
     }

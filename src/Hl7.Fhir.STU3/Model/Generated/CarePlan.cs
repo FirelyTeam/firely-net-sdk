@@ -701,13 +701,13 @@ namespace Hl7.Fhir.Model
       [Binding("CarePlanActivityStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>? StatusElement
+      public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> StatusElement
       {
         get
         {
           if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>), Overflow["status"]);
-          return _StatusElement;
+          return _StatusElement!;
         }
 
         set
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
         get => StatusElement?.Value;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
+          StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
         get => StatusReasonElement?.Value;
         set
         {
-          StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          StatusReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("StatusReason");
         }
       }
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model
         get => ProhibitedElement?.Value;
         set
         {
-          ProhibitedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ProhibitedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Prohibited");
         }
       }
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
               StatusElement = OverflowNull<Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>>.INSTANCE;
               Overflow["status"] = value;
             }
-            else StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>?)value;
+            else StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>?)value!;
             return this;
           case "statusReason":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -1541,13 +1541,13 @@ namespace Hl7.Fhir.Model
     [Binding("CarePlanStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1572,7 +1572,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1584,13 +1584,13 @@ namespace Hl7.Fhir.Model
     [Binding("CarePlanIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>? IntentElement
+    public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> IntentElement
     {
       get
       {
         if(_IntentElement.InOverflow<Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>), Overflow["intent"]);
-        return _IntentElement;
+        return _IntentElement!;
       }
 
       set
@@ -1615,7 +1615,7 @@ namespace Hl7.Fhir.Model
       get => IntentElement?.Value;
       set
       {
-        IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>(value);
+        IntentElement = value is null ? null! : new Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -1685,7 +1685,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -1726,7 +1726,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1739,13 +1739,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -2020,7 +2020,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2309,7 +2309,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>?)value!;
           return this;
         case "intent":
           if (value is not (Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> or null))
@@ -2317,7 +2317,7 @@ namespace Hl7.Fhir.Model
             IntentElement = OverflowNull<Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>>.INSTANCE;
             Overflow["intent"] = value;
           }
-          else IntentElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>?)value;
+          else IntentElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -2349,7 +2349,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "context":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

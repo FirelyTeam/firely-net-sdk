@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
       get => ClinicalStatusElement?.Value;
       set
       {
-        ClinicalStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>(value);
+        ClinicalStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>(value);
         OnPropertyChanged("ClinicalStatus");
       }
     }
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
       get => VerificationStatusElement?.Value;
       set
       {
-        VerificationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>(value);
+        VerificationStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>(value);
         OnPropertyChanged("VerificationStatus");
       }
     }
@@ -714,13 +714,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
       get => AssertedDateElement?.Value;
       set
       {
-        AssertedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AssertedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AssertedDate");
       }
     }
@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "context":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

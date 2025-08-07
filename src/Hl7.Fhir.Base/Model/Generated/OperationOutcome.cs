@@ -336,13 +336,13 @@ namespace Hl7.Fhir.Model
       [Binding("IssueSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>? SeverityElement
+      public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> SeverityElement
       {
         get
         {
           if(_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>), Overflow["severity"]);
-          return _SeverityElement;
+          return _SeverityElement!;
         }
 
         set
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
         get => SeverityElement?.Value;
         set
         {
-          SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
+          SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
           OnPropertyChanged("Severity");
         }
       }
@@ -379,13 +379,13 @@ namespace Hl7.Fhir.Model
       [Binding("IssueType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.OperationOutcome.IssueType>? CodeElement
+      public Code<Hl7.Fhir.Model.OperationOutcome.IssueType> CodeElement
       {
         get
         {
           if(_CodeElement.InOverflow<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.OperationOutcome.IssueType>), Overflow["code"]);
-          return _CodeElement;
+          return _CodeElement!;
         }
 
         set
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
         get => CodeElement?.Value;
         set
         {
-          CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
+          CodeElement = value is null ? null! : new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         get => DiagnosticsElement?.Value;
         set
         {
-          DiagnosticsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DiagnosticsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Diagnostics");
         }
       }
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
               SeverityElement = OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>.INSTANCE;
               Overflow["severity"] = value;
             }
-            else SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>?)value;
+            else SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>?)value!;
             return this;
           case "code":
             if (value is not (Code<Hl7.Fhir.Model.OperationOutcome.IssueType> or null))
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
               CodeElement = OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>.INSTANCE;
               Overflow["code"] = value;
             }
-            else CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>?)value;
+            else CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>?)value!;
             return this;
           case "details":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

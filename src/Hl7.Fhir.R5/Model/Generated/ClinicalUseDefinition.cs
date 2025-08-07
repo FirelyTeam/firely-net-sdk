@@ -471,13 +471,13 @@ namespace Hl7.Fhir.Model
       [Binding("TherapyRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? RelationshipType
+      public Hl7.Fhir.Model.CodeableConcept RelationshipType
       {
         get
         {
           if(_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["relationshipType"]);
-          return _RelationshipType;
+          return _RelationshipType!;
         }
 
         set
@@ -499,13 +499,13 @@ namespace Hl7.Fhir.Model
       [Binding("Therapy")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference? Treatment
+      public Hl7.Fhir.Model.CodeableReference Treatment
       {
         get
         {
           if(_Treatment.InOverflow<Hl7.Fhir.Model.CodeableReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["treatment"]);
-          return _Treatment;
+          return _Treatment!;
         }
 
         set
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
               RelationshipType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["relationshipType"] = value;
             }
-            else RelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else RelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "treatment":
             if (value is not (Hl7.Fhir.Model.CodeableReference or null))
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
               Treatment = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
               Overflow["treatment"] = value;
             }
-            else Treatment = (Hl7.Fhir.Model.CodeableReference?)value;
+            else Treatment = (Hl7.Fhir.Model.CodeableReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1379,13 +1379,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -1457,7 +1457,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1892,13 +1892,13 @@ namespace Hl7.Fhir.Model
     [Binding("ClinicalUseDefinitionType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>? TypeElement
+    public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -1923,7 +1923,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -2220,7 +2220,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent? _Warning;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2397,7 +2397,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

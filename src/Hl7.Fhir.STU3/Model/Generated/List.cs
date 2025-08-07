@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
         get => DeletedElement?.Value;
         set
         {
-          DeletedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          DeletedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Deleted");
         }
       }
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -225,13 +225,13 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Item
+      public Hl7.Fhir.Model.ResourceReference Item
       {
         get
         {
           if(_Item.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Item = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -411,13 +411,13 @@ namespace Hl7.Fhir.Model
     [Binding("ListStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.List.ListStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.List.ListStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.List.ListStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.List.ListStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.List.ListStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.List.ListStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -454,13 +454,13 @@ namespace Hl7.Fhir.Model
     [Binding("ListMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ListMode>? ModeElement
+    public Code<Hl7.Fhir.Model.ListMode> ModeElement
     {
       get
       {
         if(_ModeElement.InOverflow<Code<Hl7.Fhir.Model.ListMode>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ListMode>), Overflow["mode"]);
-        return _ModeElement;
+        return _ModeElement!;
       }
 
       set
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
       get => ModeElement?.Value;
       set
       {
-        ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.ListMode>(value);
+        ModeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ListMode>(value);
         OnPropertyChanged("Mode");
       }
     }
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.CodeableConcept? _EmptyReason;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.List.ListStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.List.ListStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.List.ListStatus>?)value!;
           return this;
         case "mode":
           if (value is not (Code<Hl7.Fhir.Model.ListMode> or null))
@@ -988,7 +988,7 @@ namespace Hl7.Fhir.Model
             ModeElement = OverflowNull<Code<Hl7.Fhir.Model.ListMode>>.INSTANCE;
             Overflow["mode"] = value;
           }
-          else ModeElement = (Code<Hl7.Fhir.Model.ListMode>?)value;
+          else ModeElement = (Code<Hl7.Fhir.Model.ListMode>?)value!;
           return this;
         case "title":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

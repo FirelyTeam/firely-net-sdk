@@ -143,13 +143,13 @@ namespace Hl7.Fhir.Model
     [Binding("ResearchSubjectStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -213,13 +213,13 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Study
+    public Hl7.Fhir.Model.ResourceReference Study
     {
       get
       {
         if(_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["study"]);
-        return _Study;
+        return _Study!;
       }
 
       set
@@ -242,13 +242,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Individual
+    public Hl7.Fhir.Model.ResourceReference Individual
     {
       get
       {
         if(_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["individual"]);
-        return _Individual;
+        return _Individual!;
       }
 
       set
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
       get => AssignedArmElement?.Value;
       set
       {
-        AssignedArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AssignedArmElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AssignedArm");
       }
     }
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
       get => ActualArmElement?.Value;
       set
       {
-        ActualArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ActualArmElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ActualArm");
       }
     }
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _Consent;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value!;
           return this;
         case "period":
           if (value is not (Hl7.Fhir.Model.Period or null))
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
             Study = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["study"] = value;
           }
-          else Study = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Study = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "individual":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
             Individual = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["individual"] = value;
           }
-          else Individual = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Individual = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "assignedArm":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

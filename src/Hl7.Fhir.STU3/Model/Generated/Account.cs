@@ -117,13 +117,13 @@ namespace Hl7.Fhir.Model
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Coverage
+      public Hl7.Fhir.Model.ResourceReference Coverage
       {
         get
         {
           if(_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["coverage"]);
-          return _Coverage;
+          return _Coverage!;
         }
 
         set
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
         get => PriorityElement?.Value;
         set
         {
-          PriorityElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          PriorityElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Priority");
         }
       }
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
               Coverage = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["coverage"] = value;
             }
-            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "priority":
             if (value is not (Hl7.Fhir.Model.PositiveInt or null))
@@ -295,13 +295,13 @@ namespace Hl7.Fhir.Model
       [References("Patient","RelatedPerson","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Party
+      public Hl7.Fhir.Model.ResourceReference Party
       {
         get
         {
           if(_Party.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["party"]);
-          return _Party;
+          return _Party!;
         }
 
         set
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
         get => OnHoldElement?.Value;
         set
         {
-          OnHoldElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          OnHoldElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("OnHold");
         }
       }
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
               Party = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["party"] = value;
             }
-            else Party = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Party = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "onHold":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -830,7 +830,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Account.GuarantorComponent>? _Guarantor;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

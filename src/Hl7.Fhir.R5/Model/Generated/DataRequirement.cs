@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
         get => SearchParamElement?.Value;
         set
         {
-          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
         get => ValueSetElement?.Value;
         set
         {
-          ValueSetElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          ValueSetElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("ValueSet");
         }
       }
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
         get => SearchParamElement?.Value;
         set
         {
-          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
         get => SearchParamElement?.Value;
         set
         {
-          SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SearchParamElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SearchParam");
         }
       }
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
         get => ComparatorElement?.Value;
         set
         {
-          ComparatorElement = value is null ? null : new Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>(value);
+          ComparatorElement = value is null ? null! : new Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>(value);
           OnPropertyChanged("Comparator");
         }
       }
@@ -992,13 +992,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PathElement
+      public Hl7.Fhir.Model.FhirString PathElement
       {
         get
         {
           if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
-          return _PathElement;
+          return _PathElement!;
         }
 
         set
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
         get => PathElement?.Value;
         set
         {
-          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -1035,13 +1035,13 @@ namespace Hl7.Fhir.Model
       [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DataRequirement.SortDirection>? DirectionElement
+      public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
       {
         get
         {
           if(_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DataRequirement.SortDirection>), Overflow["direction"]);
-          return _DirectionElement;
+          return _DirectionElement!;
         }
 
         set
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
         get => DirectionElement?.Value;
         set
         {
-          DirectionElement = value is null ? null : new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
+          DirectionElement = value is null ? null! : new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
           OnPropertyChanged("Direction");
         }
       }
@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model
               PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["path"] = value;
             }
-            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "direction":
             if (value is not (Code<Hl7.Fhir.Model.DataRequirement.SortDirection> or null))
@@ -1146,7 +1146,7 @@ namespace Hl7.Fhir.Model
               DirectionElement = OverflowNull<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>.INSTANCE;
               Overflow["direction"] = value;
             }
-            else DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>?)value;
+            else DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1170,13 +1170,13 @@ namespace Hl7.Fhir.Model
     [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
+    public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FHIRAllTypes>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1448,7 +1448,7 @@ namespace Hl7.Fhir.Model
       get => LimitElement?.Value;
       set
       {
-        LimitElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        LimitElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Limit");
       }
     }
@@ -1618,7 +1618,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.FHIRAllTypes>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value!;
           return this;
         case "profile":
           if (value is not (List<Hl7.Fhir.Model.Canonical> or null))

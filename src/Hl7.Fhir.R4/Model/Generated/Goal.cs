@@ -375,13 +375,13 @@ namespace Hl7.Fhir.Model
     [Binding("GoalLifecycleStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>? LifecycleStatusElement
+    public Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus> LifecycleStatusElement
     {
       get
       {
         if(_LifecycleStatusElement.InOverflow<Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>), Overflow["lifecycleStatus"]);
-        return _LifecycleStatusElement;
+        return _LifecycleStatusElement!;
       }
 
       set
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
       get => LifecycleStatusElement?.Value;
       set
       {
-        LifecycleStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
+        LifecycleStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
         OnPropertyChanged("LifecycleStatus");
       }
     }
@@ -501,13 +501,13 @@ namespace Hl7.Fhir.Model
     [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Description
+    public Hl7.Fhir.Model.CodeableConcept Description
     {
       get
       {
         if(_Description.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["description"]);
-        return _Description;
+        return _Description!;
       }
 
       set
@@ -530,13 +530,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
       get => StatusReasonElement?.Value;
       set
       {
-        StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        StatusReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("StatusReason");
       }
     }
@@ -835,7 +835,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _OutcomeReference;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Category?.ToCodings() ?? [];
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
             LifecycleStatusElement = OverflowNull<Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>>.INSTANCE;
             Overflow["lifecycleStatus"] = value;
           }
-          else LifecycleStatusElement = (Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>?)value;
+          else LifecycleStatusElement = (Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>?)value!;
           return this;
         case "achievementStatus":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1087,7 +1087,7 @@ namespace Hl7.Fhir.Model
             Description = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["description"] = value;
           }
-          else Description = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Description = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "start":
           if (value is not (Hl7.Fhir.Model.DataType or null))

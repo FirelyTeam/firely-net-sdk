@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -859,7 +859,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
         get => TemperatureElement?.Value;
         set
         {
-          TemperatureElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          TemperatureElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Temperature");
         }
       }
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
         get => ScaleElement?.Value;
         set
         {
-          ScaleElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale>(value);
+          ScaleElement = value is null ? null! : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale>(value);
           OnPropertyChanged("Scale");
         }
       }
@@ -1168,7 +1168,7 @@ namespace Hl7.Fhir.Model
       get => ProductCategoryElement?.Value;
       set
       {
-        ProductCategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>(value);
+        ProductCategoryElement = value is null ? null! : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>(value);
         OnPropertyChanged("ProductCategory");
       }
     }
@@ -1237,7 +1237,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1308,7 +1308,7 @@ namespace Hl7.Fhir.Model
       get => QuantityElement?.Value;
       set
       {
-        QuantityElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        QuantityElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("Quantity");
       }
     }
@@ -1451,7 +1451,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent>? _Storage;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

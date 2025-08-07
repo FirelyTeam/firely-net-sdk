@@ -116,13 +116,13 @@ namespace Hl7.Fhir.Model
       [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -347,13 +347,13 @@ namespace Hl7.Fhir.Model
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Language
+      public Hl7.Fhir.Model.CodeableConcept Language
       {
         get
         {
           if(_Language.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["language"]);
-          return _Language;
+          return _Language!;
         }
 
         set
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         get => PreferredElement?.Value;
         set
         {
-          PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          PreferredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Preferred");
         }
       }
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
               Language = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["language"] = value;
             }
-            else Language = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Language = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "preferred":
             if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
       get => GenderElement?.Value;
       set
       {
-        GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+        GenderElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
         OnPropertyChanged("Gender");
       }
     }
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Model
       get => BirthDateElement?.Value;
       set
       {
-        BirthDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        BirthDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("BirthDate");
       }
     }
@@ -849,7 +849,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Practitioner.CommunicationComponent>? _Communication;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

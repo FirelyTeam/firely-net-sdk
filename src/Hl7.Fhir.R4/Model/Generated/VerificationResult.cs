@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         get => ValidationDateElement?.Value;
         set
         {
-          ValidationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          ValidationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("ValidationDate");
         }
       }
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("Date");
         }
       }
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
         get => SourceIdentityCertificateElement?.Value;
         set
         {
-          SourceIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SourceIdentityCertificateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("SourceIdentityCertificate");
         }
       }
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
         get => ProxyIdentityCertificateElement?.Value;
         set
         {
-          ProxyIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProxyIdentityCertificateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProxyIdentityCertificate");
         }
       }
@@ -1014,13 +1014,13 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Organization
+      public Hl7.Fhir.Model.ResourceReference Organization
       {
         get
         {
           if(_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["organization"]);
-          return _Organization;
+          return _Organization!;
         }
 
         set
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
         get => IdentityCertificateElement?.Value;
         set
         {
-          IdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          IdentityCertificateElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IdentityCertificate");
         }
       }
@@ -1179,7 +1179,7 @@ namespace Hl7.Fhir.Model
               Organization = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["organization"] = value;
             }
-            else Organization = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Organization = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "identityCertificate":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -1323,13 +1323,13 @@ namespace Hl7.Fhir.Model
     [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.VerificationResult.StatusCode>? StatusElement
+    public Code<Hl7.Fhir.Model.VerificationResult.StatusCode> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.VerificationResult.StatusCode>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.VerificationResult.StatusCode>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1354,7 +1354,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -1518,7 +1518,7 @@ namespace Hl7.Fhir.Model
       get => LastPerformedElement?.Value;
       set
       {
-        LastPerformedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        LastPerformedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastPerformed");
       }
     }
@@ -1559,7 +1559,7 @@ namespace Hl7.Fhir.Model
       get => NextScheduledElement?.Value;
       set
       {
-        NextScheduledElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        NextScheduledElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("NextScheduled");
       }
     }
@@ -1884,7 +1884,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.VerificationResult.StatusCode>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>?)value!;
           return this;
         case "statusDate":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))

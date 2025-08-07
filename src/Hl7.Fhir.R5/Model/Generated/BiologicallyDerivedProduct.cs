@@ -296,13 +296,13 @@ namespace Hl7.Fhir.Model
       [Binding("BiologicallyDerivedProductPropertyTypeCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -325,13 +325,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
       get => DivisionElement?.Value;
       set
       {
-        DivisionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DivisionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Division");
       }
     }
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
       get => ExpirationDateElement?.Value;
       set
       {
-        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ExpirationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>? _Property;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

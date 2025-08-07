@@ -129,13 +129,13 @@ namespace Hl7.Fhir.Model
     [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>? TypeElement
+    public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       get => DisplayElement?.Value;
       set
       {
-        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       get => CitationElement?.Value;
       set
       {
-        CitationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CitationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Citation");
       }
     }
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value!;
           return this;
         case "display":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

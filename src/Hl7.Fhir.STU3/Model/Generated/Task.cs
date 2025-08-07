@@ -166,13 +166,13 @@ namespace Hl7.Fhir.Model
       [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Agent
+      public Hl7.Fhir.Model.ResourceReference Agent
       {
         get
         {
           if(_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["agent"]);
-          return _Agent;
+          return _Agent!;
         }
 
         set
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
               Agent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["agent"] = value;
             }
-            else Agent = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Agent = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "onBehalfOf":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         get => RepetitionsElement?.Value;
         set
         {
-          RepetitionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+          RepetitionsElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Repetitions");
         }
       }
@@ -554,13 +554,13 @@ namespace Hl7.Fhir.Model
       [Binding("TaskInputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -583,13 +583,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -719,13 +719,13 @@ namespace Hl7.Fhir.Model
       [Binding("TaskOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -748,13 +748,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
         get
         {
           if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
+          return _Value!;
         }
 
         set
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
               Value = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["value"] = value;
             }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
+            else Value = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1011,13 +1011,13 @@ namespace Hl7.Fhir.Model
     [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Task.TaskStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Task.TaskStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Task.TaskStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Task.TaskStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1042,7 +1042,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Task.TaskStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Task.TaskStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1108,13 +1108,13 @@ namespace Hl7.Fhir.Model
     [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestIntent>? IntentElement
+    public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
     {
       get
       {
         if(_IntentElement.InOverflow<Code<Hl7.Fhir.Model.RequestIntent>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RequestIntent>), Overflow["intent"]);
-        return _IntentElement;
+        return _IntentElement!;
       }
 
       set
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Model
       get => IntentElement?.Value;
       set
       {
-        IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestIntent>(value);
+        IntentElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -1181,7 +1181,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -1249,7 +1249,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -1400,7 +1400,7 @@ namespace Hl7.Fhir.Model
       get => AuthoredOnElement?.Value;
       set
       {
-        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -1441,7 +1441,7 @@ namespace Hl7.Fhir.Model
       get => LastModifiedElement?.Value;
       set
       {
-        LastModifiedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        LastModifiedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastModified");
       }
     }
@@ -1696,7 +1696,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Task.OutputComponent>? _Output;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2055,7 +2055,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Task.TaskStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Task.TaskStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Task.TaskStatus>?)value!;
           return this;
         case "statusReason":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -2079,7 +2079,7 @@ namespace Hl7.Fhir.Model
             IntentElement = OverflowNull<Code<Hl7.Fhir.Model.RequestIntent>>.INSTANCE;
             Overflow["intent"] = value;
           }
-          else IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>?)value;
+          else IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>?)value!;
           return this;
         case "priority":
           if (value is not (Code<Hl7.Fhir.Model.RequestPriority> or null))

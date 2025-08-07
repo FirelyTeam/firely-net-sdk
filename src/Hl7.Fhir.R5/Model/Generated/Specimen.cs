@@ -142,13 +142,13 @@ namespace Hl7.Fhir.Model
       [Binding("SpecimenFeatureType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -169,13 +169,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("description", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? DescriptionElement
+      public Hl7.Fhir.Model.FhirString DescriptionElement
       {
         get
         {
           if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
-          return _DescriptionElement;
+          return _DescriptionElement!;
         }
 
         set
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "description":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
               DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["description"] = value;
             }
-            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1080,13 +1080,13 @@ namespace Hl7.Fhir.Model
       [References("Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Device
+      public Hl7.Fhir.Model.ResourceReference Device
       {
         get
         {
           if(_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["device"]);
-          return _Device;
+          return _Device!;
         }
 
         set
@@ -1232,7 +1232,7 @@ namespace Hl7.Fhir.Model
               Device = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["device"] = value;
             }
-            else Device = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Device = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "location":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1453,7 +1453,7 @@ namespace Hl7.Fhir.Model
       get => ReceivedTimeElement?.Value;
       set
       {
-        ReceivedTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ReceivedTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReceivedTime");
       }
     }
@@ -1555,7 +1555,7 @@ namespace Hl7.Fhir.Model
       get => CombinedElement?.Value;
       set
       {
-        CombinedElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenCombined>(value);
+        CombinedElement = value is null ? null! : new Code<Hl7.Fhir.Model.Specimen.SpecimenCombined>(value);
         OnPropertyChanged("Combined");
       }
     }
@@ -1756,7 +1756,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

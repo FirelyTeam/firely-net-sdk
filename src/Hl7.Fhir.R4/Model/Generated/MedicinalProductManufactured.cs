@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? ManufacturedDoseForm
+    public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
     {
       get
       {
         if(_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["manufacturedDoseForm"]);
-        return _ManufacturedDoseForm;
+        return _ManufacturedDoseForm!;
       }
 
       set
@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("quantity", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Quantity
+    public Hl7.Fhir.Model.Quantity Quantity
     {
       get
       {
         if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
-        return _Quantity;
+        return _Quantity!;
       }
 
       set
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
             ManufacturedDoseForm = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["manufacturedDoseForm"] = value;
           }
-          else ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "unitOfPresentation":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
             Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
             Overflow["quantity"] = value;
           }
-          else Quantity = (Hl7.Fhir.Model.Quantity?)value;
+          else Quantity = (Hl7.Fhir.Model.Quantity?)value!;
           return this;
         case "manufacturer":
           if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))

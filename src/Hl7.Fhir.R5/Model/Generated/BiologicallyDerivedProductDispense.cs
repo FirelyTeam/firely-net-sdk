@@ -169,13 +169,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Actor
+      public Hl7.Fhir.Model.ResourceReference Actor
       {
         get
         {
           if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
-          return _Actor;
+          return _Actor!;
         }
 
         set
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
               Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["actor"] = value;
             }
-            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Actor = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -377,13 +377,13 @@ namespace Hl7.Fhir.Model
     [Binding("BiologicallyDerivedProductDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -448,13 +448,13 @@ namespace Hl7.Fhir.Model
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Product
+    public Hl7.Fhir.Model.ResourceReference Product
     {
       get
       {
         if(_Product.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["product"]);
-        return _Product;
+        return _Product!;
       }
 
       set
@@ -477,13 +477,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
       get => PreparedDateElement?.Value;
       set
       {
-        PreparedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        PreparedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("PreparedDate");
       }
     }
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
       get => WhenHandedOverElement?.Value;
       set
       {
-        WhenHandedOverElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        WhenHandedOverElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("WhenHandedOver");
       }
     }
@@ -781,12 +781,12 @@ namespace Hl7.Fhir.Model
       get => UsageInstructionElement?.Value;
       set
       {
-        UsageInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        UsageInstructionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("UsageInstruction");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes>?)value!;
           return this;
         case "originRelationshipType":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
             Product = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["product"] = value;
           }
-          else Product = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Product = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "patient":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "matchStatus":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

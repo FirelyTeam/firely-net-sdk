@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -856,13 +856,13 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ConsentDataMeaning>? MeaningElement
+      public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
       {
         get
         {
           if(_MeaningElement.InOverflow<Code<Hl7.Fhir.Model.ConsentDataMeaning>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ConsentDataMeaning>), Overflow["meaning"]);
-          return _MeaningElement;
+          return _MeaningElement!;
         }
 
         set
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model
         get => MeaningElement?.Value;
         set
         {
-          MeaningElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -900,13 +900,13 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Reference
+      public Hl7.Fhir.Model.ResourceReference Reference
       {
         get
         {
           if(_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
-          return _Reference;
+          return _Reference!;
         }
 
         set
@@ -988,7 +988,7 @@ namespace Hl7.Fhir.Model
               MeaningElement = OverflowNull<Code<Hl7.Fhir.Model.ConsentDataMeaning>>.INSTANCE;
               Overflow["meaning"] = value;
             }
-            else MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>?)value;
+            else MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>?)value!;
             return this;
           case "reference":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
               Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["reference"] = value;
             }
-            else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Reference = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1232,13 +1232,13 @@ namespace Hl7.Fhir.Model
     [Binding("PermissionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Permission.PermissionStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Permission.PermissionStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Permission.PermissionStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Permission.PermissionStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Permission.PermissionStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Permission.PermissionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1401,13 +1401,13 @@ namespace Hl7.Fhir.Model
     [Binding("PermissionCombining")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>? CombiningElement
+    public Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining> CombiningElement
     {
       get
       {
         if(_CombiningElement.InOverflow<Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>), Overflow["combining"]);
-        return _CombiningElement;
+        return _CombiningElement!;
       }
 
       set
@@ -1432,7 +1432,7 @@ namespace Hl7.Fhir.Model
       get => CombiningElement?.Value;
       set
       {
-        CombiningElement = value is null ? null : new Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>(value);
+        CombiningElement = value is null ? null! : new Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>(value);
         OnPropertyChanged("Combining");
       }
     }
@@ -1582,7 +1582,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Permission.PermissionStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>?)value!;
           return this;
         case "asserter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1622,7 +1622,7 @@ namespace Hl7.Fhir.Model
             CombiningElement = OverflowNull<Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>>.INSTANCE;
             Overflow["combining"] = value;
           }
-          else CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>?)value;
+          else CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>?)value!;
           return this;
         case "rule":
           if (value is not (List<Hl7.Fhir.Model.Permission.RuleComponent> or null))

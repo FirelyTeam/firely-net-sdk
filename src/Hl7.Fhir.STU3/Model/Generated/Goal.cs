@@ -398,13 +398,13 @@ namespace Hl7.Fhir.Model
     [Binding("GoalStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Goal.GoalStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Goal.GoalStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Goal.GoalStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Goal.GoalStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Goal.GoalStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Goal.GoalStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -497,13 +497,13 @@ namespace Hl7.Fhir.Model
     [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Description
+    public Hl7.Fhir.Model.CodeableConcept Description
     {
       get
       {
         if(_Description.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["description"]);
-        return _Description;
+        return _Description!;
       }
 
       set
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
       get => StatusDateElement?.Value;
       set
       {
-        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
       get => StatusReasonElement?.Value;
       set
       {
-        StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        StatusReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("StatusReason");
       }
     }
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _OutcomeReference;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Goal.GoalStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -1059,7 +1059,7 @@ namespace Hl7.Fhir.Model
             Description = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["description"] = value;
           }
-          else Description = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Description = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

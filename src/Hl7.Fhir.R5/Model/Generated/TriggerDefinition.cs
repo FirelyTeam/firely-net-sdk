@@ -129,13 +129,13 @@ namespace Hl7.Fhir.Model
     [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? TypeElement
+    public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
       get => SubscriptionTopicElement?.Value;
       set
       {
-        SubscriptionTopicElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        SubscriptionTopicElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("SubscriptionTopic");
       }
     }
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value!;
           return this;
         case "name":
           if (value is not (Hl7.Fhir.Model.FhirString or null))

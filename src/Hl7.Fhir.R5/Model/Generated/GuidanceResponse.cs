@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Module
+    public Hl7.Fhir.Model.DataType Module
     {
       get
       {
         if(_Module.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["module"]);
-        return _Module;
+        return _Module!;
       }
 
       set
@@ -200,13 +200,13 @@ namespace Hl7.Fhir.Model
     [Binding("GuidanceResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
       get => OccurrenceDateTimeElement?.Value;
       set
       {
-        OccurrenceDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        OccurrenceDateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("OccurrenceDateTime");
       }
     }
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DataRequirement>? _DataRequirement;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
             Module = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["module"] = value;
           }
-          else Module = (Hl7.Fhir.Model.DataType?)value;
+          else Module = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> or null))
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>?)value!;
           return this;
         case "subject":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

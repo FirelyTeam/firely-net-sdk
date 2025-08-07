@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1123,7 +1123,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1163,13 +1163,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Device","Substance")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
       get => ReceivedTimeElement?.Value;
       set
       {
-        ReceivedTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ReceivedTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReceivedTime");
       }
     }
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1596,7 +1596,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "receivedTime":
           if (value is not (Hl7.Fhir.Model.FhirDateTime or null))

@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
         get => AllDayElement?.Value;
         set
         {
-          AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AllDayElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AllDay");
         }
       }
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
         get => AvailableStartTimeElement?.Value;
         set
         {
-          AvailableStartTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          AvailableStartTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableStartTime");
         }
       }
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
         get => AvailableEndTimeElement?.Value;
         set
         {
-          AvailableEndTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          AvailableEndTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableEndTime");
         }
       }
@@ -399,13 +399,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("description", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? DescriptionElement
+      public Hl7.Fhir.Model.FhirString DescriptionElement
       {
         get
         {
           if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
-          return _DescriptionElement;
+          return _DescriptionElement!;
         }
 
         set
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
               DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["description"] = value;
             }
-            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "during":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
       get => ExtraDetailsElement?.Value;
       set
       {
-        ExtraDetailsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ExtraDetailsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ExtraDetails");
       }
     }
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
       get => EligibilityNoteElement?.Value;
       set
       {
-        EligibilityNoteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        EligibilityNoteElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("EligibilityNote");
       }
     }
@@ -1209,7 +1209,7 @@ namespace Hl7.Fhir.Model
       get => AppointmentRequiredElement?.Value;
       set
       {
-        AppointmentRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        AppointmentRequiredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AppointmentRequired");
       }
     }
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
       get => AvailabilityExceptionsElement?.Value;
       set
       {
-        AvailabilityExceptionsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AvailabilityExceptionsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AvailabilityExceptions");
       }
     }
@@ -1341,7 +1341,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

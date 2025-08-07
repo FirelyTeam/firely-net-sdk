@@ -115,13 +115,13 @@ namespace Hl7.Fhir.Model
       [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "period":
             if (value is not (Hl7.Fhir.Model.Period or null))
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Organization.QualificationComponent>? _Qualification;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

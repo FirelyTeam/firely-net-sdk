@@ -79,13 +79,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("productName", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? ProductNameElement
+      public Hl7.Fhir.Model.FhirString ProductNameElement
       {
         get
         {
           if(_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["productName"]);
-          return _ProductNameElement;
+          return _ProductNameElement!;
         }
 
         set
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
         get => ProductNameElement?.Value;
         set
         {
-          ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ProductNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductName");
         }
       }
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
               ProductNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["productName"] = value;
             }
-            else ProductNameElement = (Hl7.Fhir.Model.FhirString?)value;
+            else ProductNameElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "namePart":
             if (value is not (List<Hl7.Fhir.Model.MedicinalProduct.NamePartComponent> or null))
@@ -301,13 +301,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("part", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? PartElement
+      public Hl7.Fhir.Model.FhirString PartElement
       {
         get
         {
           if(_PartElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["part"]);
-          return _PartElement;
+          return _PartElement!;
         }
 
         set
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
         get => PartElement?.Value;
         set
         {
-          PartElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PartElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Part");
         }
       }
@@ -343,13 +343,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Coding? Type
+      public Hl7.Fhir.Model.Coding Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.Coding>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
               PartElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["part"] = value;
             }
-            else PartElement = (Hl7.Fhir.Model.FhirString?)value;
+            else PartElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "type":
             if (value is not (Hl7.Fhir.Model.Coding or null))
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.Coding?)value;
+            else Type = (Hl7.Fhir.Model.Coding?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -475,13 +475,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("country", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Country
+      public Hl7.Fhir.Model.CodeableConcept Country
       {
         get
         {
           if(_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["country"]);
-          return _Country;
+          return _Country!;
         }
 
         set
@@ -528,13 +528,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("language", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Language
+      public Hl7.Fhir.Model.CodeableConcept Language
       {
         get
         {
           if(_Language.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["language"]);
-          return _Language;
+          return _Language!;
         }
 
         set
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
               Country = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["country"] = value;
             }
-            else Country = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Country = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "jurisdiction":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
               Language = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["language"] = value;
             }
-            else Language = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Language = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
         get => EffectiveDateElement?.Value;
         set
         {
-          EffectiveDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          EffectiveDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EffectiveDate");
         }
       }
@@ -1202,7 +1202,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -1998,7 +1998,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent>? _SpecialDesignation;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

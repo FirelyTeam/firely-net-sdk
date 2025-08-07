@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
         get => CommentElement?.Value;
         set
         {
-          CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          CommentElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
       get => ActiveElement?.Value;
       set
       {
-        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
       get => ExtraDetailsElement?.Value;
       set
       {
-        ExtraDetailsElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        ExtraDetailsElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("ExtraDetails");
       }
     }
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
       get => AppointmentRequiredElement?.Value;
       set
       {
-        AppointmentRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        AppointmentRequiredElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AppointmentRequired");
       }
     }
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
