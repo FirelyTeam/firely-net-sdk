@@ -11,6 +11,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
@@ -416,6 +417,51 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             result.Should().ContainSingle().Subject
                 .Should().BeOfType<Observation.ComponentComponent>()
                 .Subject.Code.IsExactly(new CodeableConcept("http://loinc.org", "2708-6")).Should().BeTrue();
+        }
+        
+                
+        [TestMethod]
+        public void PersistRootOfTypedElement_PocoBase()
+        {
+            var res = SourceNode.Resource("Bundle", "Bundle",
+            SourceNode.Node("link", 
+            SourceNode.Valued("url", "test")
+            )
+            );
+            
+            var expr = ((ITypedElement)res.ToPoco(ModelInspector.Base).ToPocoNode()).Children("link").First();
+            var loc = expr.Select("url").Select(x => x.Location).Single();
+            loc.Should().Be("Bundle.link[0].url[0]");
+        }
+        
+        [TestMethod]
+        public void PersistRootOfTypedElement_NoTypeInfo()
+        {
+            var res = SourceNode.Resource("Bundle", "Bundle",
+            SourceNode.Node("link", 
+            SourceNode.Valued("url", "test")
+            )
+            );
+            
+ #pragma warning disable CS0618 // Type or member is obsolete
+            var expr = res.ToTypedElement().Children("link").First();
+ #pragma warning restore CS0618 // Type or member is obsolete
+            var loc = expr.Select("url").Select(x => x.Location).Single();
+            loc.Should().Be("Bundle.link[0].url[0]");
+        }
+        
+        [TestMethod]
+        public void PersistRootOfTypedElement_StructuredInformationProvider()
+        {
+            var res = SourceNode.Resource("Bundle", "Bundle",
+            SourceNode.Node("link", 
+            SourceNode.Valued("url", "test")
+            )
+            );
+
+            var expr = res.ToTypedElement(ModelInspector.Base).Children("link").First();
+            var loc = expr.Select("url").Select(x => x.Location).Single();
+            loc.Should().Be("Bundle.link[0].url[0]");
         }
     }
 }

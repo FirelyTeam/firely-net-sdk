@@ -40,8 +40,14 @@ public static partial class TypedElementExtensions
     /// Converts a typed element to a PocoNode.
     /// </summary>
     /// <remarks>Will produce significantly more accurate results if a modelinspector is provided, or if the input is already a PocoNode</remarks>
-    public static PocoNode ToPocoNode(this ITypedElement node, ModelInspector? inspector = null) =>
-        node as PocoNode ?? node.ToPoco(inspector ?? node.Annotation<ModelInspector>() ?? ModelInspector.Base, new PocoBuilderSettings{IgnoreUnknownMembers = true}).ToPocoNode();
+    public static PocoNode ToPocoNode(this ITypedElement node, ModelInspector? inspector = null, string? rootName = null)
+    {
+        if (node is PocoNode pn)
+            return pn;
+        
+        var model = inspector ?? node.Annotation<ModelInspector>() ?? ModelInspector.Base;
+        return node.ToPoco(model, new() { IgnoreUnknownMembers = true }).ToPocoNode(model, rootName: rootName);
+    }
 
     #region Json
 
