@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
         get => FractionElement?.Value;
         set
         {
-          FractionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          FractionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Fraction");
         }
       }
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
         get => IntraspecificDescriptionElement?.Value;
         set
         {
-          IntraspecificDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          IntraspecificDescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IntraspecificDescription");
         }
       }
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
         get => AuthorDescriptionElement?.Value;
         set
         {
-          AuthorDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AuthorDescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AuthorDescription");
         }
       }
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
         get => MaternalOrganismIdElement?.Value;
         set
         {
-          MaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MaternalOrganismIdElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MaternalOrganismId");
         }
       }
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
         get => MaternalOrganismNameElement?.Value;
         set
         {
-          MaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MaternalOrganismNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MaternalOrganismName");
         }
       }
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
         get => PaternalOrganismIdElement?.Value;
         set
         {
-          PaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PaternalOrganismIdElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PaternalOrganismId");
         }
       }
@@ -1020,7 +1020,7 @@ namespace Hl7.Fhir.Model
         get => PaternalOrganismNameElement?.Value;
         set
         {
-          PaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          PaternalOrganismNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PaternalOrganismName");
         }
       }
@@ -1744,7 +1744,7 @@ namespace Hl7.Fhir.Model
       get => OrganismNameElement?.Value;
       set
       {
-        OrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        OrganismNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("OrganismName");
       }
     }

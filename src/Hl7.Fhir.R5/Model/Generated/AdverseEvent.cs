@@ -170,13 +170,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson","ResearchSubject")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Actor
+      public Hl7.Fhir.Model.ResourceReference Actor
       {
         get
         {
           if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
-          return _Actor;
+          return _Actor!;
         }
 
         set
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
               Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["actor"] = value;
             }
-            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Actor = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -308,13 +308,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Instance
+      public Hl7.Fhir.Model.DataType Instance
       {
         get
         {
           if(_Instance.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["instance"]);
-          return _Instance;
+          return _Instance!;
         }
 
         set
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
               Instance = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["instance"] = value;
             }
-            else Instance = (Hl7.Fhir.Model.DataType?)value;
+            else Instance = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "causality":
             if (value is not (Hl7.Fhir.Model.AdverseEvent.CausalityComponent or null))
@@ -679,13 +679,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -796,13 +796,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -916,13 +916,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1033,13 +1033,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Item
+      public Hl7.Fhir.Model.DataType Item
       {
         get
         {
           if(_Item.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item;
+          return _Item!;
         }
 
         set
@@ -1111,7 +1111,7 @@ namespace Hl7.Fhir.Model
               Item = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["item"] = value;
             }
-            else Item = (Hl7.Fhir.Model.DataType?)value;
+            else Item = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1162,13 +1162,13 @@ namespace Hl7.Fhir.Model
     [Binding("AdverseEventStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1193,7 +1193,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1205,13 +1205,13 @@ namespace Hl7.Fhir.Model
     [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>? ActualityElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
     {
       get
       {
         if(_ActualityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>), Overflow["actuality"]);
-        return _ActualityElement;
+        return _ActualityElement!;
       }
 
       set
@@ -1236,7 +1236,7 @@ namespace Hl7.Fhir.Model
       get => ActualityElement?.Value;
       set
       {
-        ActualityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+        ActualityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
         OnPropertyChanged("Actuality");
       }
     }
@@ -1305,13 +1305,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Practitioner","RelatedPerson","ResearchSubject")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
       get
       {
         if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
+        return _Subject!;
       }
 
       set
@@ -1418,7 +1418,7 @@ namespace Hl7.Fhir.Model
       get => DetectedElement?.Value;
       set
       {
-        DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DetectedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Detected");
       }
     }
@@ -1459,7 +1459,7 @@ namespace Hl7.Fhir.Model
       get => RecordedDateElement?.Value;
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1700,7 +1700,7 @@ namespace Hl7.Fhir.Model
       get => ExpectedInResearchStudyElement?.Value;
       set
       {
-        ExpectedInResearchStudyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ExpectedInResearchStudyElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ExpectedInResearchStudy");
       }
     }
@@ -1873,7 +1873,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -2170,7 +2170,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>?)value!;
           return this;
         case "actuality":
           if (value is not (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> or null))
@@ -2178,7 +2178,7 @@ namespace Hl7.Fhir.Model
             ActualityElement = OverflowNull<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>.INSTANCE;
             Overflow["actuality"] = value;
           }
-          else ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>?)value;
+          else ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -2202,7 +2202,7 @@ namespace Hl7.Fhir.Model
             Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["subject"] = value;
           }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

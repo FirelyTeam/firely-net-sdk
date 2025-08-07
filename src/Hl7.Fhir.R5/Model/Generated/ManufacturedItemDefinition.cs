@@ -80,13 +80,13 @@ namespace Hl7.Fhir.Model
       [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "value":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -241,13 +241,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "function":
             if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -860,13 +860,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -944,13 +944,13 @@ namespace Hl7.Fhir.Model
     [Binding("ManufacturedDoseForm")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? ManufacturedDoseForm
+    public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
     {
       get
       {
         if(_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["manufacturedDoseForm"]);
-        return _ManufacturedDoseForm;
+        return _ManufacturedDoseForm!;
       }
 
       set
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.
     /// </summary>
-    [FhirElement("marketingStatus", InSummary=true, Order=150, FiveWs="administrative.medication")]
+    [FhirElement("marketingStatus", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     [AllowNull]
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>? _Component;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "name":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -1308,7 +1308,7 @@ namespace Hl7.Fhir.Model
             ManufacturedDoseForm = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["manufacturedDoseForm"] = value;
           }
-          else ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "unitOfPresentation":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

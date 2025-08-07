@@ -166,13 +166,13 @@ namespace Hl7.Fhir.Model
       [Binding("GuideDependencyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>? TypeElement
+      public Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -208,13 +208,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("uri", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri? UriElement
+      public Hl7.Fhir.Model.FhirUri UriElement
       {
         get
         {
           if(_UriElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["uri"]);
-          return _UriElement;
+          return _UriElement!;
         }
 
         set
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
         get => UriElement?.Value;
         set
         {
-          UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType>?)value!;
             return this;
           case "uri":
             if (value is not (Hl7.Fhir.Model.FhirUri or null))
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
               UriElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
               Overflow["uri"] = value;
             }
-            else UriElement = (Hl7.Fhir.Model.FhirUri?)value;
+            else UriElement = (Hl7.Fhir.Model.FhirUri?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -358,13 +358,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? NameElement
+      public Hl7.Fhir.Model.FhirString NameElement
       {
         get
         {
           if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-          return _NameElement;
+          return _NameElement!;
         }
 
         set
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
               NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["name"] = value;
             }
-            else NameElement = (Hl7.Fhir.Model.FhirString?)value;
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "description":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -596,13 +596,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("example", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? ExampleElement
+      public Hl7.Fhir.Model.FhirBoolean ExampleElement
       {
         get
         {
           if(_ExampleElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["example"]);
-          return _ExampleElement;
+          return _ExampleElement!;
         }
 
         set
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
         get => ExampleElement?.Value;
         set
         {
-          ExampleElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          ExampleElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Example");
         }
       }
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
         get => AcronymElement?.Value;
         set
         {
-          AcronymElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          AcronymElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Acronym");
         }
       }
@@ -764,13 +764,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Source
+      public Hl7.Fhir.Model.DataType Source
       {
         get
         {
           if(_Source.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["source"]);
-          return _Source;
+          return _Source!;
         }
 
         set
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
               ExampleElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
               Overflow["example"] = value;
             }
-            else ExampleElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            else ExampleElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
             return this;
           case "name":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -952,7 +952,7 @@ namespace Hl7.Fhir.Model
               Source = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["source"] = value;
             }
-            else Source = (Hl7.Fhir.Model.DataType?)value;
+            else Source = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           case "exampleFor":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1005,13 +1005,13 @@ namespace Hl7.Fhir.Model
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ResourceType>? TypeElement
+      public Code<Hl7.Fhir.Model.ResourceType> TypeElement
       {
         get
         {
           if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ResourceType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ResourceType>), Overflow["type"]);
-          return _TypeElement;
+          return _TypeElement!;
         }
 
         set
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ResourceType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ResourceType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1049,13 +1049,13 @@ namespace Hl7.Fhir.Model
       [References("StructureDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Profile
+      public Hl7.Fhir.Model.ResourceReference Profile
       {
         get
         {
           if(_Profile.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["profile"]);
-          return _Profile;
+          return _Profile!;
         }
 
         set
@@ -1137,7 +1137,7 @@ namespace Hl7.Fhir.Model
               TypeElement = OverflowNull<Code<Hl7.Fhir.Model.ResourceType>>.INSTANCE;
               Overflow["type"] = value;
             }
-            else TypeElement = (Code<Hl7.Fhir.Model.ResourceType>?)value;
+            else TypeElement = (Code<Hl7.Fhir.Model.ResourceType>?)value!;
             return this;
           case "profile":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
               Profile = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["profile"] = value;
             }
-            else Profile = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Profile = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1185,13 +1185,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("source", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri? SourceElement
+      public Hl7.Fhir.Model.FhirUri SourceElement
       {
         get
         {
           if(_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["source"]);
-          return _SourceElement;
+          return _SourceElement!;
         }
 
         set
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
         get => SourceElement?.Value;
         set
         {
-          SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          SourceElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Source");
         }
       }
@@ -1227,13 +1227,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("title", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? TitleElement
+      public Hl7.Fhir.Model.FhirString TitleElement
       {
         get
         {
           if(_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["title"]);
-          return _TitleElement;
+          return _TitleElement!;
         }
 
         set
@@ -1258,7 +1258,7 @@ namespace Hl7.Fhir.Model
         get => TitleElement?.Value;
         set
         {
-          TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Title");
         }
       }
@@ -1270,13 +1270,13 @@ namespace Hl7.Fhir.Model
       [Binding("GuidePageKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>? KindElement
+      public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind> KindElement
       {
         get
         {
           if(_KindElement.InOverflow<Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>), Overflow["kind"]);
-          return _KindElement;
+          return _KindElement!;
         }
 
         set
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model
         get => KindElement?.Value;
         set
         {
-          KindElement = value is null ? null : new Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>(value);
+          KindElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>(value);
           OnPropertyChanged("Kind");
         }
       }
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
         get => FormatElement?.Value;
         set
         {
-          FormatElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+          FormatElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
           OnPropertyChanged("Format");
         }
       }
@@ -1586,7 +1586,7 @@ namespace Hl7.Fhir.Model
               SourceElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
               Overflow["source"] = value;
             }
-            else SourceElement = (Hl7.Fhir.Model.FhirUri?)value;
+            else SourceElement = (Hl7.Fhir.Model.FhirUri?)value!;
             return this;
           case "title":
             if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -1594,7 +1594,7 @@ namespace Hl7.Fhir.Model
               TitleElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
               Overflow["title"] = value;
             }
-            else TitleElement = (Hl7.Fhir.Model.FhirString?)value;
+            else TitleElement = (Hl7.Fhir.Model.FhirString?)value!;
             return this;
           case "kind":
             if (value is not (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind> or null))
@@ -1602,7 +1602,7 @@ namespace Hl7.Fhir.Model
               KindElement = OverflowNull<Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>>.INSTANCE;
               Overflow["kind"] = value;
             }
-            else KindElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>?)value;
+            else KindElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>?)value!;
             return this;
           case "type":
             if (value is not (List<Code<Hl7.Fhir.Model.ResourceType>> or null))
@@ -1662,13 +1662,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri? UrlElement
+    public Hl7.Fhir.Model.FhirUri UrlElement
     {
       get
       {
         if(_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
-        return _UrlElement;
+        return _UrlElement!;
       }
 
       set
@@ -1693,7 +1693,7 @@ namespace Hl7.Fhir.Model
       get => UrlElement?.Value;
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -1734,7 +1734,7 @@ namespace Hl7.Fhir.Model
       get => VersionElement?.Value;
       set
       {
-        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -1745,13 +1745,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? NameElement
+    public Hl7.Fhir.Model.FhirString NameElement
     {
       get
       {
         if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-        return _NameElement;
+        return _NameElement!;
       }
 
       set
@@ -1776,7 +1776,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -1788,13 +1788,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1819,7 +1819,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1860,7 +1860,7 @@ namespace Hl7.Fhir.Model
       get => ExperimentalElement?.Value;
       set
       {
-        ExperimentalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ExperimentalElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Experimental");
       }
     }
@@ -1901,7 +1901,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -1942,7 +1942,7 @@ namespace Hl7.Fhir.Model
       get => PublisherElement?.Value;
       set
       {
-        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PublisherElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
@@ -2011,7 +2011,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -2109,7 +2109,7 @@ namespace Hl7.Fhir.Model
       get => CopyrightElement?.Value;
       set
       {
-        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -2150,7 +2150,7 @@ namespace Hl7.Fhir.Model
       get => FhirVersionElement?.Value;
       set
       {
-        FhirVersionElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+        FhirVersionElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("FhirVersion");
       }
     }
@@ -2538,7 +2538,7 @@ namespace Hl7.Fhir.Model
             UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
             Overflow["url"] = value;
           }
-          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value!;
           return this;
         case "version":
           if (value is not (Hl7.Fhir.Model.FhirString or null))
@@ -2554,7 +2554,7 @@ namespace Hl7.Fhir.Model
             NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
             Overflow["name"] = value;
           }
-          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
+          else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
           return this;
         case "status":
           if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
@@ -2562,7 +2562,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
           return this;
         case "experimental":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))

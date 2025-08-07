@@ -79,13 +79,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -106,13 +106,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("group", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Group
+      public Hl7.Fhir.Model.CodeableConcept Group
       {
         get
         {
           if(_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["group"]);
-          return _Group;
+          return _Group!;
         }
 
         set
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "group":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
               Group = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["group"] = value;
             }
-            else Group = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Group = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "confidentiality":
             if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -330,13 +330,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("presentation", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio? Presentation
+      public Hl7.Fhir.Model.Ratio Presentation
       {
         get
         {
           if(_Presentation.InOverflow<Hl7.Fhir.Model.Ratio>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["presentation"]);
-          return _Presentation;
+          return _Presentation!;
         }
 
         set
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
         get => MeasurementPointElement?.Value;
         set
         {
-          MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MeasurementPointElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MeasurementPoint");
         }
       }
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
               Presentation = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
               Overflow["presentation"] = value;
             }
-            else Presentation = (Hl7.Fhir.Model.Ratio?)value;
+            else Presentation = (Hl7.Fhir.Model.Ratio?)value!;
             return this;
           case "presentationLowLimit":
             if (value is not (Hl7.Fhir.Model.Ratio or null))
@@ -758,13 +758,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio? Strength
+      public Hl7.Fhir.Model.Ratio Strength
       {
         get
         {
           if(_Strength.InOverflow<Hl7.Fhir.Model.Ratio>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["strength"]);
-          return _Strength;
+          return _Strength!;
         }
 
         set
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
         get => MeasurementPointElement?.Value;
         set
         {
-          MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          MeasurementPointElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MeasurementPoint");
         }
       }
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
               Strength = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
               Overflow["strength"] = value;
             }
-            else Strength = (Hl7.Fhir.Model.Ratio?)value;
+            else Strength = (Hl7.Fhir.Model.Ratio?)value!;
             return this;
           case "strengthLowLimit":
             if (value is not (Hl7.Fhir.Model.Ratio or null))
@@ -1042,13 +1042,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
         get
         {
           if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
+          return _Code!;
         }
 
         set
@@ -1158,7 +1158,7 @@ namespace Hl7.Fhir.Model
               Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["code"] = value;
             }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "strength":
             if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> or null))
@@ -1215,13 +1215,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("role", InSummary=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Role
+    public Hl7.Fhir.Model.CodeableConcept Role
     {
       get
       {
         if(_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["role"]);
-        return _Role;
+        return _Role!;
       }
 
       set
@@ -1272,7 +1272,7 @@ namespace Hl7.Fhir.Model
       get => AllergenicIndicatorElement?.Value;
       set
       {
-        AllergenicIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        AllergenicIndicatorElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AllergenicIndicator");
       }
     }
@@ -1361,7 +1361,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent? _Substance;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1478,7 +1478,7 @@ namespace Hl7.Fhir.Model
             Role = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["role"] = value;
           }
-          else Role = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Role = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "allergenicIndicator":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))

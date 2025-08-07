@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
         get => ConversionFactorElement?.Value;
         set
         {
-          ConversionFactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          ConversionFactorElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("ConversionFactor");
         }
       }
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
         get => DecimalPrecisionElement?.Value;
         set
         {
-          DecimalPrecisionElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          DecimalPrecisionElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("DecimalPrecision");
         }
       }
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
         get => CategoryElement?.Value;
         set
         {
-          CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>(value);
+          CategoryElement = value is null ? null! : new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>(value);
           OnPropertyChanged("Category");
         }
       }
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
         get => GenderElement?.Value;
         set
         {
-          GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+          GenderElement = value is null ? null! : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
           OnPropertyChanged("Gender");
         }
       }
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
         get => ConditionElement?.Value;
         set
         {
-          ConditionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ConditionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Condition");
         }
       }
@@ -967,13 +967,13 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Code
+    public Hl7.Fhir.Model.CodeableConcept Code
     {
       get
       {
         if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-        return _Code;
+        return _Code!;
       }
 
       set
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
       get => MultipleResultsAllowedElement?.Value;
       set
       {
-        MultipleResultsAllowedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        MultipleResultsAllowedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("MultipleResultsAllowed");
       }
     }
@@ -1167,7 +1167,7 @@ namespace Hl7.Fhir.Model
       get => PreferredReportNameElement?.Value;
       set
       {
-        PreferredReportNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        PreferredReportNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PreferredReportName");
       }
     }
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _CriticalCodedValueSet;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Code; set => Code = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];
@@ -1528,7 +1528,7 @@ namespace Hl7.Fhir.Model
             Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["code"] = value;
           }
-          else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "identifier":
           if (value is not (List<Hl7.Fhir.Model.Identifier> or null))

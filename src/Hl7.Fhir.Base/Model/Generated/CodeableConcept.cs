@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       get => TextElement?.Value;
       set
       {
-        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }

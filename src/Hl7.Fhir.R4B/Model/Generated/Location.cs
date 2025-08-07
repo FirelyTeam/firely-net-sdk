@@ -135,13 +135,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("longitude", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal? LongitudeElement
+      public Hl7.Fhir.Model.FhirDecimal LongitudeElement
       {
         get
         {
           if(_LongitudeElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["longitude"]);
-          return _LongitudeElement;
+          return _LongitudeElement!;
         }
 
         set
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         get => LongitudeElement?.Value;
         set
         {
-          LongitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          LongitudeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Longitude");
         }
       }
@@ -177,13 +177,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("latitude", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal? LatitudeElement
+      public Hl7.Fhir.Model.FhirDecimal LatitudeElement
       {
         get
         {
           if(_LatitudeElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["latitude"]);
-          return _LatitudeElement;
+          return _LatitudeElement!;
         }
 
         set
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
         get => LatitudeElement?.Value;
         set
         {
-          LatitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          LatitudeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Latitude");
         }
       }
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
         get => AltitudeElement?.Value;
         set
         {
-          AltitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+          AltitudeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Altitude");
         }
       }
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
               LongitudeElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
               Overflow["longitude"] = value;
             }
-            else LongitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            else LongitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value!;
             return this;
           case "latitude":
             if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
               LatitudeElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
               Overflow["latitude"] = value;
             }
-            else LatitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            else LatitudeElement = (Hl7.Fhir.Model.FhirDecimal?)value!;
             return this;
           case "altitude":
             if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
         get => AllDayElement?.Value;
         set
         {
-          AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          AllDayElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AllDay");
         }
       }
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
         get => OpeningTimeElement?.Value;
         set
         {
-          OpeningTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          OpeningTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("OpeningTime");
         }
       }
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
         get => ClosingTimeElement?.Value;
         set
         {
-          ClosingTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
+          ClosingTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("ClosingTime");
         }
       }
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Location.LocationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Location.LocationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
       get => ModeElement?.Value;
       set
       {
-        ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.Location.LocationMode>(value);
+        ModeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Location.LocationMode>(value);
         OnPropertyChanged("Mode");
       }
     }
@@ -1205,7 +1205,7 @@ namespace Hl7.Fhir.Model
       get => AvailabilityExceptionsElement?.Value;
       set
       {
-        AvailabilityExceptionsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AvailabilityExceptionsElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AvailabilityExceptions");
       }
     }
@@ -1240,7 +1240,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

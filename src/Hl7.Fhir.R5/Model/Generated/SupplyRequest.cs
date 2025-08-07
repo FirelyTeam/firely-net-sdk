@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -482,13 +482,13 @@ namespace Hl7.Fhir.Model
     [Binding("SupplyRequestItem")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference? Item
+    public Hl7.Fhir.Model.CodeableReference Item
     {
       get
       {
         if(_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["item"]);
-        return _Item;
+        return _Item!;
       }
 
       set
@@ -509,13 +509,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("quantity", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Quantity
+    public Hl7.Fhir.Model.Quantity Quantity
     {
       get
       {
         if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
-        return _Quantity;
+        return _Quantity!;
       }
 
       set
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
       get => AuthoredOnElement?.Value;
       set
       {
-        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _DeliverTo;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1027,7 +1027,7 @@ namespace Hl7.Fhir.Model
             Item = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
             Overflow["item"] = value;
           }
-          else Item = (Hl7.Fhir.Model.CodeableReference?)value;
+          else Item = (Hl7.Fhir.Model.CodeableReference?)value!;
           return this;
         case "quantity":
           if (value is not (Hl7.Fhir.Model.Quantity or null))
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
             Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
             Overflow["quantity"] = value;
           }
-          else Quantity = (Hl7.Fhir.Model.Quantity?)value;
+          else Quantity = (Hl7.Fhir.Model.Quantity?)value!;
           return this;
         case "parameter":
           if (value is not (List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent> or null))

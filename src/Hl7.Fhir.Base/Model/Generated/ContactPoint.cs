@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
       get => SystemElement?.Value;
       set
       {
-        SystemElement = value is null ? null : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>(value);
+        SystemElement = value is null ? null! : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>(value);
         OnPropertyChanged("System");
       }
     }
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       get => ValueElement?.Value;
       set
       {
-        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Value");
       }
     }
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       get => UseElement?.Value;
       set
       {
-        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>(value);
+        UseElement = value is null ? null! : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
       get => RankElement?.Value;
       set
       {
-        RankElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        RankElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Rank");
       }
     }

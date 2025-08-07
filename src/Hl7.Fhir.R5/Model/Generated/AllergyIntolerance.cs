@@ -273,13 +273,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Device","Organization","CareTeam")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Actor
+      public Hl7.Fhir.Model.ResourceReference Actor
       {
         get
         {
           if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
-          return _Actor;
+          return _Actor!;
         }
 
         set
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
               Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["actor"] = value;
             }
-            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Actor = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
         get => OnsetElement?.Value;
         set
         {
-          OnsetElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          OnsetElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Onset");
         }
       }
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
         get => SeverityElement?.Value;
         set
         {
-          SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
+          SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
           OnPropertyChanged("Severity");
         }
       }
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
       get => CriticalityElement?.Value;
       set
       {
-        CriticalityElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
+        CriticalityElement = value is null ? null! : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
         OnPropertyChanged("Criticality");
       }
     }
@@ -1057,13 +1057,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
       get
       {
         if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
+        return _Patient!;
       }
 
       set
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
       get => RecordedDateElement?.Value;
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
       get => LastOccurrenceElement?.Value;
       set
       {
-        LastOccurrenceElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        LastOccurrenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("LastOccurrence");
       }
     }
@@ -1300,7 +1300,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>? _Reaction;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1555,7 +1555,7 @@ namespace Hl7.Fhir.Model
             Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["patient"] = value;
           }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "encounter":
           if (value is not (Hl7.Fhir.Model.ResourceReference or null))

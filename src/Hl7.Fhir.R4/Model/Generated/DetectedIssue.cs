@@ -281,13 +281,13 @@ namespace Hl7.Fhir.Model
       [Binding("DetectedIssueMitigationAction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Action
+      public Hl7.Fhir.Model.CodeableConcept Action
       {
         get
         {
           if(_Action.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["action"]);
-          return _Action;
+          return _Action!;
         }
 
         set
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
               Action = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["action"] = value;
             }
-            else Action = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Action = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "date":
             if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
@@ -517,13 +517,13 @@ namespace Hl7.Fhir.Model
     [Binding("DetectedIssueStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ObservationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ObservationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ObservationStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ObservationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ObservationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       get => SeverityElement?.Value;
       set
       {
-        SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>(value);
+        SeverityElement = value is null ? null! : new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>(value);
         OnPropertyChanged("Severity");
       }
     }
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
       get => DetailElement?.Value;
       set
       {
-        DetailElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DetailElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Detail");
       }
     }
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
       get => ReferenceElement?.Value;
       set
       {
-        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        ReferenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Reference");
       }
     }
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>? _Mitigation;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Code; set => Code = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];
@@ -1054,7 +1054,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ObservationStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>?)value!;
           return this;
         case "code":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

@@ -134,13 +134,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("quantity", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity? Quantity
+      public Hl7.Fhir.Model.Quantity Quantity
       {
         get
         {
           if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
-          return _Quantity;
+          return _Quantity!;
         }
 
         set
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
               Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
               Overflow["quantity"] = value;
             }
-            else Quantity = (Hl7.Fhir.Model.Quantity?)value;
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value!;
             return this;
           case "item":
             if (value is not (Hl7.Fhir.Model.DataType or null))
@@ -301,13 +301,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Agent
+      public Hl7.Fhir.Model.ResourceReference Agent
       {
         get
         {
           if(_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["agent"]);
-          return _Agent;
+          return _Agent!;
         }
 
         set
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
               Agent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["agent"] = value;
             }
-            else Agent = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Agent = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           case "onBehalfOf":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
       get => AuthoredOnElement?.Value;
       set
       {
-        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.ResourceReference? _DeliverTo;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

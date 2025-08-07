@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Model
         get => DescriptionElement?.Value;
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1312,7 +1312,7 @@ namespace Hl7.Fhir.Model
       get => ReceivedTimeElement?.Value;
       set
       {
-        ReceivedTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ReceivedTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReceivedTime");
       }
     }
@@ -1516,7 +1516,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Type; set => Type = value!; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Type?.ToCodings() ?? [];

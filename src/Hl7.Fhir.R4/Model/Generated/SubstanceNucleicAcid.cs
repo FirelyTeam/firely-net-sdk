@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
         get => SubunitElement?.Value;
         set
         {
-          SubunitElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          SubunitElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Subunit");
         }
       }
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
         get => SequenceElement?.Value;
         set
         {
-          SequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
         get => LengthElement?.Value;
         set
         {
-          LengthElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+          LengthElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Length");
         }
       }
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
         get => ConnectivityElement?.Value;
         set
         {
-          ConnectivityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ConnectivityElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Connectivity");
         }
       }
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
         get => ResidueSiteElement?.Value;
         set
         {
-          ResidueSiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ResidueSiteElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ResidueSite");
         }
       }
@@ -903,7 +903,7 @@ namespace Hl7.Fhir.Model
         get => NameElement?.Value;
         set
         {
-          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
         get => ResidueSiteElement?.Value;
         set
         {
-          ResidueSiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          ResidueSiteElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ResidueSite");
         }
       }
@@ -1122,7 +1122,7 @@ namespace Hl7.Fhir.Model
       get => NumberOfSubunitsElement?.Value;
       set
       {
-        NumberOfSubunitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
+        NumberOfSubunitsElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("NumberOfSubunits");
       }
     }
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
       get => AreaOfHybridisationElement?.Value;
       set
       {
-        AreaOfHybridisationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        AreaOfHybridisationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AreaOfHybridisation");
       }
     }

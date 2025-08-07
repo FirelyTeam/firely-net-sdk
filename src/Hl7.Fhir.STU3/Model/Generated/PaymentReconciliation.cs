@@ -86,13 +86,13 @@ namespace Hl7.Fhir.Model
       [Binding("PaymentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
         get
         {
           if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
+          return _Type!;
         }
 
         set
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
         get => DateElement?.Value;
         set
         {
-          DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+          DateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
           OnPropertyChanged("Date");
         }
       }
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
               Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["type"] = value;
             }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "request":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model
         get => TextElement?.Value;
         set
         {
-          TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          TextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Text");
         }
       }
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -905,7 +905,7 @@ namespace Hl7.Fhir.Model
       get => DispositionElement?.Value;
       set
       {
-        DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DispositionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>? _ProcessNote;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

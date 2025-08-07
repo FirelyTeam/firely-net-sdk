@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
         get => RequiredElement?.Value;
         set
         {
-          RequiredElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>(value);
+          RequiredElement = value is null ? null! : new Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>(value);
           OnPropertyChanged("Required");
         }
       }
@@ -268,13 +268,13 @@ namespace Hl7.Fhir.Model
       [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ParticipationStatus>? StatusElement
+      public Code<Hl7.Fhir.Model.ParticipationStatus> StatusElement
       {
         get
         {
           if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ParticipationStatus>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ParticipationStatus>), Overflow["status"]);
-          return _StatusElement;
+          return _StatusElement!;
         }
 
         set
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
         get => StatusElement?.Value;
         set
         {
-          StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
+          StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
           OnPropertyChanged("Status");
         }
       }
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
               StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ParticipationStatus>>.INSTANCE;
               Overflow["status"] = value;
             }
-            else StatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>?)value;
+            else StatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -469,13 +469,13 @@ namespace Hl7.Fhir.Model
     [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
+        PriorityElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
       get => StartElement?.Value;
       set
       {
-        StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        StartElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Model
       get => EndElement?.Value;
       set
       {
-        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -906,7 +906,7 @@ namespace Hl7.Fhir.Model
       get => MinutesDurationElement?.Value;
       set
       {
-        MinutesDurationElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        MinutesDurationElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("MinutesDuration");
       }
     }
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
       get => CreatedElement?.Value;
       set
       {
-        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -1109,7 +1109,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Period>? _RequestedPeriod;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1366,7 +1366,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>?)value!;
           return this;
         case "serviceCategory":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

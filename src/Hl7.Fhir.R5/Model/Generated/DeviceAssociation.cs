@@ -120,13 +120,13 @@ namespace Hl7.Fhir.Model
       [Binding("DeviceAssociationOperationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Status
+      public Hl7.Fhir.Model.CodeableConcept Status
       {
         get
         {
           if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-          return _Status;
+          return _Status!;
         }
 
         set
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
               Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["status"] = value;
             }
-            else Status = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Status = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "operator":
             if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
@@ -344,13 +344,13 @@ namespace Hl7.Fhir.Model
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Device
+    public Hl7.Fhir.Model.ResourceReference Device
     {
       get
       {
         if(_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["device"]);
-        return _Device;
+        return _Device!;
       }
 
       set
@@ -400,13 +400,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceAssociationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Status
+    public Hl7.Fhir.Model.CodeableConcept Status
     {
       get
       {
         if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-        return _Status;
+        return _Status!;
       }
 
       set
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>? _Operation;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
             Device = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["device"] = value;
           }
-          else Device = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Device = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
             Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["status"] = value;
           }
-          else Status = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Status = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "statusReason":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

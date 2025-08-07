@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Receiver;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {

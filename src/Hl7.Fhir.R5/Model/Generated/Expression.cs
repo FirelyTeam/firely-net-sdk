@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       get => DescriptionElement?.Value;
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       get => NameElement?.Value;
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Name");
       }
     }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       get => LanguageElement?.Value;
       set
       {
-        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        LanguageElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
       get => ExpressionElement?.Value;
       set
       {
-        ExpressionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        ExpressionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Expression_");
       }
     }
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       get => ReferenceElement?.Value;
       set
       {
-        ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        ReferenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Reference");
       }
     }

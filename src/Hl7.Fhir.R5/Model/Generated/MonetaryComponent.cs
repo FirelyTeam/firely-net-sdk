@@ -113,13 +113,13 @@ namespace Hl7.Fhir.Model
     [Binding("PriceComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? TypeElement
+    public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType> TypeElement
     {
       get
       {
         if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>), Overflow["type"]);
-        return _TypeElement;
+        return _TypeElement!;
       }
 
       set
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
       get => TypeElement?.Value;
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
       get => FactorElement?.Value;
       set
       {
-        FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        FactorElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Factor");
       }
     }
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
             TypeElement = OverflowNull<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>.INSTANCE;
             Overflow["type"] = value;
           }
-          else TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>?)value;
+          else TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>?)value!;
           return this;
         case "code":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

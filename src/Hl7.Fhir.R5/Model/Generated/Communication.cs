@@ -88,13 +88,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Content
+      public Hl7.Fhir.Model.DataType Content
       {
         get
         {
           if(_Content.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["content"]);
-          return _Content;
+          return _Content!;
         }
 
         set
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
               Content = OverflowNull<DynamicDataType>.INSTANCE;
               Overflow["content"] = value;
             }
-            else Content = (Hl7.Fhir.Model.DataType?)value;
+            else Content = (Hl7.Fhir.Model.DataType?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -399,13 +399,13 @@ namespace Hl7.Fhir.Model
     [Binding("CommunicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EventStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.EventStatus> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.EventStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EventStatus>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.EventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
       get => PriorityElement?.Value;
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
       get => SentElement?.Value;
       set
       {
-        SentElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        SentElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Sent");
       }
     }
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
       get => ReceivedElement?.Value;
       set
       {
-        ReceivedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        ReceivedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Received");
       }
     }
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.EventStatus>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.EventStatus>?)value!;
           return this;
         case "statusReason":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))

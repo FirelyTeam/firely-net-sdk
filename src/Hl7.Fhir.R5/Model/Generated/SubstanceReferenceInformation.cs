@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }

@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
       get => ValueElement?.Value;
       set
       {
-        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Value");
       }
     }
@@ -1240,7 +1240,7 @@ namespace Hl7.Fhir.Model
       get => CurrencyElement?.Value;
       set
       {
-        CurrencyElement = value is null ? null : new Code<Hl7.Fhir.Model.Money.Currencies>(value);
+        CurrencyElement = value is null ? null! : new Code<Hl7.Fhir.Model.Money.Currencies>(value);
         OnPropertyChanged("Currency");
       }
     }

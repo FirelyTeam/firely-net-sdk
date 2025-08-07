@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
         get => InformationTypeElement?.Value;
         set
         {
-          InformationTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>(value);
+          InformationTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>(value);
           OnPropertyChanged("InformationType");
         }
       }
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
         get => SummaryElement?.Value;
         set
         {
-          SummaryElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          SummaryElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Summary");
         }
       }
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
         get => FreeToShareElement?.Value;
         set
         {
-          FreeToShareElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          FreeToShareElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("FreeToShare");
         }
       }
@@ -879,7 +879,7 @@ namespace Hl7.Fhir.Model
       get => TitleElement?.Value;
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
       get => DateElement?.Value;
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
       get => CopyrightElement?.Value;
       set
       {
-        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
       get => ApprovalDateElement?.Value;
       set
       {
-        ApprovalDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        ApprovalDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ApprovalDate");
       }
     }
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model
       get => LastReviewDateElement?.Value;
       set
       {
-        LastReviewDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        LastReviewDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("LastReviewDate");
       }
     }
@@ -1086,13 +1086,13 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Artifact
+    public Hl7.Fhir.Model.DataType Artifact
     {
       get
       {
         if(_Artifact.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["artifact"]);
-        return _Artifact;
+        return _Artifact!;
       }
 
       set
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model
       get => WorkflowStatusElement?.Value;
       set
       {
-        WorkflowStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>(value);
+        WorkflowStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>(value);
         OnPropertyChanged("WorkflowStatus");
       }
     }
@@ -1214,12 +1214,12 @@ namespace Hl7.Fhir.Model
       get => DispositionElement?.Value;
       set
       {
-        DispositionElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>(value);
+        DispositionElement = value is null ? null! : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>(value);
         OnPropertyChanged("Disposition");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -1434,7 +1434,7 @@ namespace Hl7.Fhir.Model
             Artifact = OverflowNull<DynamicDataType>.INSTANCE;
             Overflow["artifact"] = value;
           }
-          else Artifact = (Hl7.Fhir.Model.DataType?)value;
+          else Artifact = (Hl7.Fhir.Model.DataType?)value!;
           return this;
         case "content":
           if (value is not (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> or null))

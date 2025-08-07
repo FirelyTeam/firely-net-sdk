@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
         get => AuthorityElement?.Value;
         set
         {
-          AuthorityElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          AuthorityElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Authority");
         }
       }
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
         get => UriElement?.Value;
         set
         {
-          UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+          UriElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Uri");
         }
       }
@@ -378,13 +378,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("verified", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? VerifiedElement
+      public Hl7.Fhir.Model.FhirBoolean VerifiedElement
       {
         get
         {
           if(_VerifiedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["verified"]);
-          return _VerifiedElement;
+          return _VerifiedElement!;
         }
 
         set
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
         get => VerifiedElement?.Value;
         set
         {
-          VerifiedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          VerifiedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Verified");
         }
       }
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         get => VerificationDateElement?.Value;
         set
         {
-          VerificationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          VerificationDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("VerificationDate");
         }
       }
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
               VerifiedElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
               Overflow["verified"] = value;
             }
-            else VerifiedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            else VerifiedElement = (Hl7.Fhir.Model.FhirBoolean?)value!;
             return this;
           case "verifiedWith":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
         get => TypeElement?.Value;
         set
         {
-          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>(value);
+          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1219,13 +1219,13 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentActorRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Role
+      public Hl7.Fhir.Model.CodeableConcept Role
       {
         get
         {
           if(_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["role"]);
-          return _Role;
+          return _Role!;
         }
 
         set
@@ -1248,13 +1248,13 @@ namespace Hl7.Fhir.Model
       [References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Reference
+      public Hl7.Fhir.Model.ResourceReference Reference
       {
         get
         {
           if(_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
-          return _Reference;
+          return _Reference!;
         }
 
         set
@@ -1336,7 +1336,7 @@ namespace Hl7.Fhir.Model
               Role = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
               Overflow["role"] = value;
             }
-            else Role = (Hl7.Fhir.Model.CodeableConcept?)value;
+            else Role = (Hl7.Fhir.Model.CodeableConcept?)value!;
             return this;
           case "reference":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1344,7 +1344,7 @@ namespace Hl7.Fhir.Model
               Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["reference"] = value;
             }
-            else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Reference = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1384,13 +1384,13 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>? MeaningElement
+      public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
       {
         get
         {
           if(_MeaningElement.InOverflow<Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>), Overflow["meaning"]);
-          return _MeaningElement;
+          return _MeaningElement!;
         }
 
         set
@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Model
         get => MeaningElement?.Value;
         set
         {
-          MeaningElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -1428,13 +1428,13 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Reference
+      public Hl7.Fhir.Model.ResourceReference Reference
       {
         get
         {
           if(_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
-          return _Reference;
+          return _Reference!;
         }
 
         set
@@ -1516,7 +1516,7 @@ namespace Hl7.Fhir.Model
               MeaningElement = OverflowNull<Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>>.INSTANCE;
               Overflow["meaning"] = value;
             }
-            else MeaningElement = (Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>?)value;
+            else MeaningElement = (Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>?)value!;
             return this;
           case "reference":
             if (value is not (Hl7.Fhir.Model.ResourceReference or null))
@@ -1524,7 +1524,7 @@ namespace Hl7.Fhir.Model
               Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
               Overflow["reference"] = value;
             }
-            else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
+            else Reference = (Hl7.Fhir.Model.ResourceReference?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1576,13 +1576,13 @@ namespace Hl7.Fhir.Model
     [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Consent.ConsentState>? StatusElement
+    public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement
     {
       get
       {
         if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Consent.ConsentState>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Consent.ConsentState>), Overflow["status"]);
-        return _StatusElement;
+        return _StatusElement!;
       }
 
       set
@@ -1607,7 +1607,7 @@ namespace Hl7.Fhir.Model
       get => StatusElement?.Value;
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1619,13 +1619,13 @@ namespace Hl7.Fhir.Model
     [Binding("ConsentScope")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Scope
+    public Hl7.Fhir.Model.CodeableConcept Scope
     {
       get
       {
         if(_Scope.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["scope"]);
-        return _Scope;
+        return _Scope!;
       }
 
       set
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
       get => DateTimeElement?.Value;
       set
       {
-        DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -1936,7 +1936,7 @@ namespace Hl7.Fhir.Model
 
     private Hl7.Fhir.Model.Consent.provisionComponent? _Provision;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Category; set => Category = value; }
     IReadOnlyCollection<Coding> ICoded.ToCodings() => Category?.ToCodings() ?? [];
@@ -2126,7 +2126,7 @@ namespace Hl7.Fhir.Model
             StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Consent.ConsentState>>.INSTANCE;
             Overflow["status"] = value;
           }
-          else StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>?)value;
+          else StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>?)value!;
           return this;
         case "scope":
           if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
@@ -2134,7 +2134,7 @@ namespace Hl7.Fhir.Model
             Scope = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
             Overflow["scope"] = value;
           }
-          else Scope = (Hl7.Fhir.Model.CodeableConcept?)value;
+          else Scope = (Hl7.Fhir.Model.CodeableConcept?)value!;
           return this;
         case "category":
           if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))

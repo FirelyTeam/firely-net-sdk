@@ -136,13 +136,13 @@ namespace Hl7.Fhir.Model
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Appointment
+    public Hl7.Fhir.Model.ResourceReference Appointment
     {
       get
       {
         if(_Appointment.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["appointment"]);
-        return _Appointment;
+        return _Appointment!;
       }
 
       set
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       get => ProposedNewTimeElement?.Value;
       set
       {
-        ProposedNewTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        ProposedNewTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ProposedNewTime");
       }
     }
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       get => StartElement?.Value;
       set
       {
-        StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        StartElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Start");
       }
     }
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       get => EndElement?.Value;
       set
       {
-        EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
@@ -344,13 +344,13 @@ namespace Hl7.Fhir.Model
     [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>? ParticipantStatusElement
+    public Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus> ParticipantStatusElement
     {
       get
       {
         if(_ParticipantStatusElement.InOverflow<Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>), Overflow["participantStatus"]);
-        return _ParticipantStatusElement;
+        return _ParticipantStatusElement!;
       }
 
       set
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
       get => ParticipantStatusElement?.Value;
       set
       {
-        ParticipantStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
+        ParticipantStatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
         OnPropertyChanged("ParticipantStatus");
       }
     }
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
       get => CommentElement?.Value;
       set
       {
-        CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        CommentElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
       get => RecurringElement?.Value;
       set
       {
-        RecurringElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        RecurringElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Recurring");
       }
     }
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
       get => OccurrenceDateElement?.Value;
       set
       {
-        OccurrenceDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
+        OccurrenceDateElement = value is null ? null! : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("OccurrenceDate");
       }
     }
@@ -539,12 +539,12 @@ namespace Hl7.Fhir.Model
       get => RecurrenceIdElement?.Value;
       set
       {
-        RecurrenceIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        RecurrenceIdElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("RecurrenceId");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Model
             Appointment = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
             Overflow["appointment"] = value;
           }
-          else Appointment = (Hl7.Fhir.Model.ResourceReference?)value;
+          else Appointment = (Hl7.Fhir.Model.ResourceReference?)value!;
           return this;
         case "proposedNewTime":
           if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
             ParticipantStatusElement = OverflowNull<Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>>.INSTANCE;
             Overflow["participantStatus"] = value;
           }
-          else ParticipantStatusElement = (Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>?)value;
+          else ParticipantStatusElement = (Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>?)value!;
           return this;
         case "comment":
           if (value is not (Hl7.Fhir.Model.Markdown or null))
