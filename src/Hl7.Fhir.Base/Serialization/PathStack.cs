@@ -116,6 +116,15 @@ namespace Hl7.Fhir.Serialization
             _paths.Push($"{name}[{val}]");
         }
 
+        public void LeaveArray()
+        {
+            var prevVal = _paths.Pop();
+            var bracketPos = prevVal.IndexOf('[');
+            var name = bracketPos >= 0 ? prevVal[..prevVal.IndexOf('[')] : prevVal;
+
+            _paths.Push($"{name}");
+        }
+
         public void SetIndex(int index)
         {
             var prevVal = _paths.Pop();

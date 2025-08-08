@@ -111,7 +111,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
     private static Base buildNewInstance(ClassMapping mapping)
     {
-        if (mapping.Factory() is Base b) return b;
+        if (mapping.CreateInstance() is Base b) return b;
 
         throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a " +
                                      $"Base, which is required for " +
@@ -127,11 +127,11 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (propertyMapping is null)
         {
             var elementMapping = getClassMapping(elementType);
-            return elementMapping.ListFactory();
+            return elementMapping.CreateList();
         }
 
         var propertyClassMapping = getClassMapping(propertyMapping.ImplementingType);
-        return propertyClassMapping.ListFactory() ?? new List<Base>();
+        return propertyClassMapping.CreateList();
     }
 
     private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping)
