@@ -22,9 +22,8 @@ public class VerifierHelper
 
     private static string buildVerifierPath(string sourceFile = "")
     {
-#if !CI_BUILD
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
-        return path;
+#if CI_BUILD
+        return Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
 #else
         return sourceFile;
 #endif
