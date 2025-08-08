@@ -117,7 +117,7 @@ public class FhirXmlDeserializationTests
         var deserializer = getTestDeserializer(
             new DeserializerSettings());
         var classMapping = ModelInfo.ModelInspector.ImportType(fhirTargetType)!;
-        var target = (PrimitiveType)classMapping.Factory()!;
+        var target = (PrimitiveType)classMapping.CreateInstance()!;
         var state = new PocoDeserializerState();
         deserializer.DeserializeElementInto(target, classMapping, reader, state);
 

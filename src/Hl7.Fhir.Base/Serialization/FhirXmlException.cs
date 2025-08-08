@@ -47,7 +47,6 @@ public class FhirXmlException(
     public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
     public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
     public const string EMPTY_RESOURCE_CONTAINER_CODE = "XML122";
-    public const string INVALID_TEXT_NODE_CODE = "XML123";
     public const string ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE = "XML124";
     public const string ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE = "XML125";
 
@@ -81,7 +80,7 @@ public class FhirXmlException(
     internal static FhirXmlException EMPTY_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_RESOURCE_CONTAINER_CODE, $"Encountered an empty resource container.", OO_Sev.Error);
 
     // This will use a DynamicXXX, so no data loss.
-    internal static FhirXmlException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(XmlReader reader, string instancePath) => Initialize(reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, "Choice element names should be suffixed by a type.", OO_Sev.Error);
+    internal static FhirXmlException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, "Choice element names should be suffixed by a type.", OO_Sev.Error);
 
     // We'll be capturing its content, even if it was incorrectly an attribute or element
     internal static FhirXmlException ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE, $"Element '{elementName}' should have been encoded as an attribute.", OO_Sev.Error);
@@ -100,7 +99,7 @@ public class FhirXmlException(
     internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Invariant);
 
     // This will use a DynamicXXX, so no data loss.
-    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Error, OO_Typ.Value);
+    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Error, OO_Typ.Value);
 
     /// <summary>
     /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer

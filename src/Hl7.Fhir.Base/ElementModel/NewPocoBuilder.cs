@@ -128,11 +128,11 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (propertyMapping is null)
         {
             var elementMapping = getClassMapping(elementType);
-            return elementMapping.ListFactory();
+            return elementMapping.CreateList();
         }
 
         var propertyClassMapping = getClassMapping(propertyMapping.ImplementingType);
-        return propertyClassMapping.ListFactory() ?? new List<Base>();
+        return propertyClassMapping.CreateList();
     }
 
     private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping)
