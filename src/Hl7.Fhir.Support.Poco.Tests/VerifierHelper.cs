@@ -29,7 +29,7 @@ public class VerifierHelper
             {
                 yield return info.Name;
                 info = info.Parent!;
-            } while (!info.Exists || info.Name.StartsWith("Hl7.Fhir."));
+            } while (!info.Exists || !info.Name.StartsWith("Hl7.Fhir."));
         }
 
         var path = Path.Combine([Directory.GetCurrentDirectory(), ..getProjectRelativePath(new(sourceFile)).Reverse()]);
