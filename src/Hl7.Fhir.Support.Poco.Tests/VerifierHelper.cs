@@ -22,17 +22,8 @@ public class VerifierHelper
 
     private static string buildVerifierPath(string sourceFile = "")
     {
-#if CI_BUILD
-        static IEnumerable<string> getProjectRelativePath(DirectoryInfo info)
-        {
-            do
-            {
-                yield return info.Name;
-                info = info.Parent!;
-            } while (!info.Exists || !info.Name.StartsWith("Hl7.Fhir."));
-        }
-
-        var path = Path.Combine([Directory.GetCurrentDirectory(), ..getProjectRelativePath(new(sourceFile)).Reverse()]);
+#if !CI_BUILD
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
         return path;
 #else
         return sourceFile;
