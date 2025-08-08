@@ -1,4 +1,7 @@
 #nullable enable
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using VerifyMSTest;
@@ -20,11 +23,22 @@ public class VerifierHelper
     private static string buildVerifierPath(string sourceFile = "")
     {
 #if CI_BUILD
-        return Path.Combine(Directory.GetCurrentDirectory(), "Serialization", Path.GetFileName(sourceFile));
+        static IEnumerable<string> getProjectRelativePath(DirectoryInfo info)
+        {
+            do
+            {
+                yield return info.Name;
+                info = info.Parent!;
+            } while (!info.Exists || !info.GetFiles("*.csproj").Any());
+        }
+
+        var path = Path.Combine([Directory.GetCurrentDirectory(), ..getProjectRelativePath(new(sourceFile)).Reverse()]);
+        return path;
 #else
         return sourceFile;
 #endif
     }
+    
 
     public async Task Check()
     {
