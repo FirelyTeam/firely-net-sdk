@@ -54,7 +54,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
         // Capture the instance type if this is a dynamic type.
         if (newInstance is IDynamicType dt)
-            dt.DynamicTypeName = node.InstanceType;
+            dt.DynamicTypeName = node.InstanceType ?? node.Annotation<IResourceTypeSupplier>()?.ResourceType;
 
         // Value is a kind of pseudo-property, so we need to handle it separately.
         // If this is a standard Fhir primitive, we need to convert the ITypedElement.Value
@@ -111,6 +111,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
     private static Base buildNewInstance(ClassMapping mapping)
     {
+        if (mapping.NativeType.IsAbstract) 
+            return mapping.IsResource ? new DynamicResource() : new DynamicDataType();
+        
         if (mapping.CreateInstance() is Base b) return b;
 
         throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a " +
@@ -197,7 +200,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (node.Value is not null || (node.InstanceType is { } it && char.IsLower(it[0])))
             return determineBestPrimitiveMapping();
 
-        if (node.Annotation<IResourceTypeSupplier>() is not null || node.Definition?.IsResource is true)
+        if (node.Annotation<IResourceTypeSupplier>()?.ResourceType is not null || node.Definition?.IsResource is true)
             return ClassMapping.DynamicResource;
 
         return ClassMapping.DynamicDataType;
