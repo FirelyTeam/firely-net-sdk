@@ -111,7 +111,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
     private static Base buildNewInstance(ClassMapping mapping)
     {
-        if (mapping.NativeType.IsAbstract) return new DynamicResource();
+        if (mapping.NativeType.IsAbstract) 
+            return mapping.IsResource ? new DynamicResource() : new DynamicDataType();
+        
         if (mapping.CreateInstance() is Base b) return b;
 
         throw Error.InvalidOperation($"Class Factory for '{mapping.Name}' did not return a " +
