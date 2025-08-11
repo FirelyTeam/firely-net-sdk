@@ -29,7 +29,7 @@ namespace Hl7.Fhir.ElementModel;
 /// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes
 /// <param name="settings">Configuration for building the POCO.</param>
 /// used in the construction.</param>
-internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
+public class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
 {
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
@@ -112,7 +112,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private static Base buildNewInstance(ClassMapping mapping)
     {
         if (mapping.NativeType.IsAbstract) 
-            return mapping.IsResource ? new DynamicResource() : new DynamicDataType();
+            return mapping.IsResource ? new DynamicResource() { DynamicTypeName = mapping.GetTypeName() } : new DynamicDataType() { DynamicTypeName = mapping.GetTypeName() };
         
         if (mapping.CreateInstance() is Base b) return b;
 
