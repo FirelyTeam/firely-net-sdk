@@ -131,13 +131,13 @@ public class ValidationTests_LowLevelApi
     [TestMethod]
     public void TestCardinality()
     {
-        OperationOutcome oo = new();
+        OperationOutcome oo = new(){ImplicitRules = "no rules here, just making sure the oo contains something"};
         assertInstanceValidationErrors(oo, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
         oo.Issue = [];
         assertInstanceValidationErrors(oo, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
-        var issue = new OperationOutcome.IssueComponent();
+        var issue = new OperationOutcome.IssueComponent(){ElementId = "issue1"};
 
         oo.Issue.Add(issue); 
         assertInstanceValidationErrors(oo);
@@ -197,7 +197,7 @@ public class ValidationTests_LowLevelApi
     public void ValidateResourceWithIncorrectChildElement()
     {
         // First create an incomplete Observation (status and code not supplied)
-        var obs = new Observation();
+        var obs = new Observation(){Id = "obs1"};
         assertInstanceValidationErrors(obs, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
         obs.Status = ObservationStatus.Final;

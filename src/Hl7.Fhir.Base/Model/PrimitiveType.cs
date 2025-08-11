@@ -59,7 +59,9 @@ public partial class PrimitiveType : P.IToSystemPrimitive
     protected internal override IReadOnlyCollection<CodedValidationException> ValidateInvariants(
         PocoValidationContext validationContext)
     {
-        var baseResults = base.ValidateInvariants(validationContext);
+        IReadOnlyCollection<CodedValidationException> baseResults = [];
+        if (this.JsonValue is null)
+            baseResults = base.ValidateInvariants(validationContext);
         return ValidateObjectValue(validationContext) is { } result ? [..baseResults, result] : baseResults;
     }
 

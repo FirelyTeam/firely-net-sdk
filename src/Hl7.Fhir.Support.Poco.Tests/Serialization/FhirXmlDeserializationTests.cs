@@ -20,10 +20,10 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 public class FhirXmlDeserializationTests
 {
     [TestMethod]
-    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
+    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "../../../TestData");
 
     [TestMethod]
-    [Ignore]
+    // [Ignore]
     public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
 
     private void testRecovery(bool overwrite, string fileDir)
@@ -179,7 +179,7 @@ public class FhirXmlDeserializationTests
         var state = new PocoDeserializerState();
         var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
+        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
 
         resource.Should().BeOfType<Patient>();
     }
@@ -212,7 +212,7 @@ public class FhirXmlDeserializationTests
         var state = new PocoDeserializerState();
         var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
+        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
 
         resource.Should().BeOfType<Patient>();
     }
