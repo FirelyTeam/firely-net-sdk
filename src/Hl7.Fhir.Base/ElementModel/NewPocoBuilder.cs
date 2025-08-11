@@ -29,7 +29,7 @@ namespace Hl7.Fhir.ElementModel;
 /// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes
 /// <param name="settings">Configuration for building the POCO.</param>
 /// used in the construction.</param>
-public class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
+internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
 {
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
