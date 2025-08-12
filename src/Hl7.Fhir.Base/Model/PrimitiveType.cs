@@ -45,7 +45,7 @@ public partial class PrimitiveType : P.IToSystemPrimitive
     /// Returns true if the primitive has any child elements (currently in FHIR this can
     /// be only the element id and zero or more extensions).
     /// </summary>
-    public bool HasElements => ElementIdElement?.JsonValue is not null || Extension?.Any() == true;
+    public bool HasElements => ElementIdElement?.JsonValue is not null || Extension.Any();
 
     protected internal abstract P.Any? TryConvertToSystemTypeInternal();
 
