@@ -16,11 +16,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 
 namespace Hl7.Fhir.Introspection;
+
 
 /// <summary>
 /// A container for the metadata of a FHIR datatype as present on the (generated) .NET POCO class.
@@ -32,7 +34,7 @@ public class ClassMapping(
     ClassMapping.PropertyMapper propertyMapper)
     : IStructureDefinitionSummary
 {
-    public delegate IEnumerable<PropertyMapping> PropertyMapper(ClassMapping parent);
+    public delegate IEnumerable<PropertyMapping> PropertyMapper(ClassMapping declaringClass);
 
     public ClassMapping(ModelInspector parent, string name, Type nativeType,
         IEnumerable<PropertyMapping> properties) : this(parent, name, nativeType, _ => properties)
@@ -45,6 +47,12 @@ public class ClassMapping(
     {
         // Nothing
     }
+
+    /// <summary>
+    /// Returns <c>true</c> when this class is a custom mapping, basically a dynamic resource/type with
+    /// its own name, not being the default "DynamicType" or "DynamicResource".
+    /// </summary>
+    public bool IsCustomMapping => typeof(IDynamicType).IsAssignableFrom(NativeType) && NativeType.Name != Name;
 
     /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
@@ -288,10 +296,12 @@ public class ClassMapping(
     /// Gets or sets a delegate that, when called, creates an instance for the <see cref="NativeType"/> represented by this mapping.
     /// </summary>
     /// <remarks>If not set, the default constructor for the <see cref="NativeType"/> will be used.</remarks>
-    public Func<object> Factory
+    public Base CreateInstance()
     {
-        get => LazyInitializer.EnsureInitialized(ref _factory, NativeType.BuildFactoryMethod)!;
-        init => _factory = value;
+        var factory = LazyInitializer.EnsureInitialized(ref _factory, NativeType.BuildFactoryMethod)!;
+        var newInstance = factory();
+        if (newInstance is IDynamicType idt) idt.DynamicTypeName = Name;
+        return (Base)newInstance;
     }
 
     private Func<object>? _factory;
@@ -300,10 +310,10 @@ public class ClassMapping(
     /// Gets or sets a delegate that, when called, creates an instance of a List of the <see cref="NativeType"/> represented by this mapping.
     /// </summary>
     /// <remarks>If not set, the default List constructor for the <see cref="NativeType"/> will be used.</remarks>
-    public Func<IList> ListFactory
+    public IList CreateList()
     {
-        get => LazyInitializer.EnsureInitialized(ref _listFactory, NativeType.BuildListFactoryMethod)!;
-        init => _listFactory = value;
+        var factory = LazyInitializer.EnsureInitialized(ref _listFactory, NativeType.BuildListFactoryMethod)!;
+        return factory();
     }
 
     private Func<IList>? _listFactory;
@@ -376,6 +386,9 @@ public class ClassMapping(
 
     private static ClassMapping buildNetPrimitiveClassMapping(Type t, ModelInspector inspector) =>
         new(inspector, "Net." + t.FullName, t) { IsPrimitive = true };
+
+    internal static ClassMapping Resource => ModelInspector.Base.FindOrImportClassMapping(typeof(Resource)) ??
+                                                    throw new InvalidOperationException($"{nameof(Resource)} mapping not found in Base.");
 
     internal static ClassMapping DynamicResource => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicResource)) ??
                                                     throw new InvalidOperationException($"{nameof(DynamicResource)} mapping not found in Base.");

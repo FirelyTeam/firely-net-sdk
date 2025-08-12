@@ -13,30 +13,39 @@ namespace Firely.Sdk.Benchmarks;
 [PackageVersion("5.8.2-20240521.2")]
 [PackageVersion("5.8.2-20240514.3")]
 [PackageVersion("5.12.0")]
+[PackageVersion("6.0.0-beta1")]
 [ProjectReference]
 public class FhirPathBenchmark
 {
     private readonly FhirJsonParser _jsonParser;
-    private Patient _patient;
-    private Bundle _bundle;
+    private readonly Patient _patient;
+    private readonly Bundle _bundle;
 
     // Cache for FHIRPath expressions
-    private FhirPathCompiler _compiler;
+    private readonly FhirPathCompiler _compiler;
+    private readonly FhirPathCompilerCache _compilerCache;
+    #if SDK6
+    private readonly PocoNode _patientElement;
+    #else
     private readonly ITypedElement _patientElement;
-
+    #endif
+    
     public FhirPathBenchmark()
     {
-        _jsonParser = new FhirJsonParser();
+        _jsonParser = new();
         _patient = _jsonParser.Parse<Patient>(TestData.TestData.GetPatientJson());
         _bundle = _jsonParser.Parse<Bundle>(TestData.TestData.GetLargePatientBundle());
 #if SDK6
-        _patientElement = _patient.ToPocoNode();
+ #pragma warning disable SDK0001
+        _patientElement = _patient.ToPocoNode(ModelInfo.ModelInspector);
+ #pragma warning restore SDK0001
 #else
         _patientElement = _patient.ToTypedElement();
 #endif
 
         // Initialize FHIRPath compiler
-        _compiler = new FhirPathCompiler();
+        _compiler = new();
+        _compilerCache = new(_compiler);
     }
     
     [Benchmark]
@@ -65,10 +74,14 @@ public class FhirPathBenchmark
     {
         // Using pre-compiled expression which is how the SDK caches FHIRPath expressions
         var expression = _compiler.Compile("name.where(use = 'official').given");
-        #if SDK6
-        return expression.Invoke(_patientElement.ToPocoNode(), new EvaluationContext());
-        #else
         return expression.Invoke(_patientElement, new EvaluationContext());
-        #endif
+    }
+
+    [Benchmark]
+    public object EvaluateWithPreCompiledExpressionCached()
+    {
+        // Using pre-compiled expression which is how the SDK caches FHIRPath expressions
+        var expression = _compilerCache.GetCompiledExpression("name.where(use = 'official').given");
+        return expression.Invoke(_patientElement, new EvaluationContext());
     }
 }

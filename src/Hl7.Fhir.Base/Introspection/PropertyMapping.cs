@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -70,6 +71,11 @@ public class PropertyMapping : IElementDefinitionSummary
         _propertyType = propertyType;
     }
 
+    /// <summary>
+    /// Returns <c>true</c> when this class is a custom mapping, basically a dynamic resource/type with
+    /// its own name, not being the default "DynamicType" or "DynamicResource".
+    /// </summary>
+    public bool IsCustomMapping => NativeProperty is null;
     /// <summary>
     /// The name of the element in the FHIR specification.
     /// </summary>
@@ -368,6 +374,14 @@ public class PropertyMapping : IElementDefinitionSummary
         // use dictionary access, otherwise use the generated setter.
         if (NativeProperty?.GetValueSetter<Base>() is { } setter) return setter;
         return (b,v) => b.SetValue(Name, v);
+    }
+
+    public PropertyMapping PromoteToList()
+    {
+        if(FhirType.Length > 1) throw new InvalidOperationException("Cannot promote a choice element to a list");
+
+        var listType = typeof(List<>).MakeGenericType(ImplementingType);
+        return new PropertyMapping(DeclaringClass, Name, listType);
     }
 
     #region IElementDefinitionSummary members

@@ -5,6 +5,8 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
@@ -115,4 +117,39 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
         JsonValue is string or bool or decimal or int
             ? null
             : COVE.INCORRECT_LITERAL_VALUE_TYPE(validationContext, JsonValue, TypeName);
+}
+
+
+/// <summary>
+/// Factory for creating dynamic types at runtime.
+/// </summary>
+internal static class DynamicTypeFactory
+{
+    private static readonly ModuleBuilder _moduleBuilder;
+
+    static DynamicTypeFactory()
+    {
+        var assemblyName = new AssemblyName("DynamicResourceAssembly");
+        var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+        _moduleBuilder = assemblyBuilder.DefineDynamicModule("DynamicResourceModule");
+    }
+
+    public static Type CreateDynamicResourceSubclass(string typeName)
+    {
+        // Check if the type already exists
+        var existingType = _moduleBuilder.GetType(typeName, false, false);
+        if (existingType != null)
+            return existingType;
+
+        var typeBuilder = _moduleBuilder.DefineType(
+            typeName,
+            TypeAttributes.Public | TypeAttributes.Class,
+            typeof(DynamicResource)
+        );
+
+        // Optionally, add a parameterless constructor
+        typeBuilder.DefineDefaultConstructor(MethodAttributes.Public);
+
+        return typeBuilder.CreateTypeInfo()!.AsType();
+    }
 }
