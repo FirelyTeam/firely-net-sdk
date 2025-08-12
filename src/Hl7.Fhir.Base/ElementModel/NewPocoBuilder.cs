@@ -112,7 +112,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private static Base buildNewInstance(ClassMapping mapping)
     {
         if (mapping.NativeType.IsAbstract) 
-            return mapping.IsResource ? new DynamicResource() : new DynamicDataType();
+            return mapping.IsResource ? new DynamicResource() { DynamicTypeName = mapping.GetTypeName() } : new DynamicDataType() { DynamicTypeName = mapping.GetTypeName() };
         
         if (mapping.CreateInstance() is Base b) return b;
 
