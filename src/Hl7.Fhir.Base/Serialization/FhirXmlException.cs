@@ -44,8 +44,6 @@ public class FhirXmlException(
     public const string INCORRECT_ATTRIBUTE_NAMESPACE_CODE = "XML114";
     public const string ELEMENT_NOT_IN_SEQUENCE_CODE = "XML116";
     public const string SCHEMALOCATION_DISALLOWED_CODE = "XML117";
-    public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
-    public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
     public const string EMPTY_RESOURCE_CONTAINER_CODE = "XML122";
     public const string ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE = "XML124";
     public const string ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE = "XML125";
@@ -94,10 +92,7 @@ public class FhirXmlException(
     // Will store the data as a DynamicResource
     internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Error, OO_Typ.Value);
     internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Error, OO_Typ.Value);
-
-    // Empty values will result in nulls, but no data is lost.
-    internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Invariant);
-
+    
     // This will use a DynamicXXX, so no data loss.
     internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Error, OO_Typ.Value);
 

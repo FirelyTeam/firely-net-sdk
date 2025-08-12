@@ -4,6 +4,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -11,56 +12,47 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using VerifyMSTest;
+using T = System.Threading.Tasks;
 using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Support.Poco.Tests;
 
 [TestClass]
-public class FhirXmlDeserializationTests
+[UsesVerify]
+public partial class FhirXmlDeserializationTests
 {
-    [TestMethod]
-    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
+    private static readonly VerifierHelper _verifier;
 
-    [TestMethod]
-    [Ignore]
-    public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
-
-    private void testRecovery(bool overwrite, string fileDir)
+    static FhirXmlDeserializationTests()
     {
-        var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.xml");
-        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected-xml.txt");
-        var xmlInput = File.ReadAllText(patientFileName);
-        var pretty = overwrite;
+        _verifier = new VerifierHelper();
+    }
+    
+    [TestMethod]
+    public async T.Task CheckVerifier() => await _verifier.Check();
 
-        var serializer = getTestDeserializer(new DeserializerSettings());
+    [TestMethod]
+    public async T.Task SerializingErroneousResource_Should_ThrowExpectedErrors()
+    {
+        var patientFileName = Path.Combine("TestData", "fp-test-patient-errors.xml");
+        var xmlInput = File.ReadAllText(patientFileName);
+
+        var ser = new FhirXmlDeserializer();
 
         try
         {
-            _ = serializer.Deserialize<Patient>(xmlInput);
+            _ = ser.Deserialize<Patient>(xmlInput);
             Assert.Fail("Should have encountered errors.");
         }
         catch (DeserializationFailedException dfe)
         {
-            var recoveredActual = FhirXmlSerializer.Default
-                .SerializeToString(dfe.PartialResult!, pretty: pretty);
-            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
+            var recoveredActual = new FhirXmlSerializer().SerializeToString(dfe.PartialResult!);
+            var errorsActual = dfe.Exceptions
+                .OrderBy(e => e is ExtendedCodedException ece ? ece.LineNumber : 0);
 
-            if (overwrite)
-            {
-                File.WriteAllLines(errorsFileName, errorsActual);
-            }
-
-            var errorsExpected = File.ReadAllLines(errorsFileName);
-            errorsActual.Should().BeEquivalentTo(errorsExpected);
-
-            var recoveredFilename = Path.Combine(fileDir, "fp-test-patient-errors-recovered.xml");
-            if (overwrite)
-                File.WriteAllText(recoveredFilename, recoveredActual);
-
-            var recoveredExpected = File.ReadAllText(recoveredFilename);
-
-            XmlAssert.AreSame("fp-test-patient-xml-errors/recovery", recoveredExpected, recoveredActual);
+            await _verifier.Verify(new { Errors = errorsActual, Obj = recoveredActual });
         }
     }
 
@@ -179,7 +171,7 @@ public class FhirXmlDeserializationTests
         var state = new PocoDeserializerState();
         var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
+        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
 
         resource.Should().BeOfType<Patient>();
     }
@@ -212,7 +204,7 @@ public class FhirXmlDeserializationTests
         var state = new PocoDeserializerState();
         var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
+        state.Errors.Should().OnlyContain(ce => ce.ErrorCode == COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
 
         resource.Should().BeOfType<Patient>();
     }

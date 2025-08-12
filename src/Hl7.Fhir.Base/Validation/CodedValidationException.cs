@@ -49,6 +49,7 @@ public class CodedValidationException : ExtendedCodedException
     public const string UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE = "PVAL126";
     public const string PROPERTY_TYPE_MISMATCH_CODE = "PVAL127";
     public const string UNKNOWN_ELEMENT_CODE = "PVAL128";
+    public const string ELEMENT_CANNOT_BE_EMPTY_CODE = "PVAL129";
 
     // A list of all issues mentioned above, so we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -69,7 +70,8 @@ public class CodedValidationException : ExtendedCodedException
         POSITIVE_INT_MUST_BE_POSITIVE_CODE,
         UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE,
         PROPERTY_TYPE_MISMATCH_CODE,
-        UNKNOWN_ELEMENT_CODE
+        UNKNOWN_ELEMENT_CODE,
+        ELEMENT_CANNOT_BE_EMPTY_CODE
     ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(PocoValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Value);
@@ -97,6 +99,9 @@ public class CodedValidationException : ExtendedCodedException
     
     internal static COVE UNKNOWN_ELEMENT(PocoValidationContext? context, string elementName, string serializedForm = "element") =>
         Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown {serializedForm} '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
+    
+    internal static COVE ELEMENT_CANNOT_BE_EMPTY(PocoValidationContext? context) =>
+        Initialize(context, ELEMENT_CANNOT_BE_EMPTY_CODE, $"Empty FHIR elements are invalid", OO_Sev.Error, OO_Typ.Value);
 
     private static string niceValue(object? v)
     {

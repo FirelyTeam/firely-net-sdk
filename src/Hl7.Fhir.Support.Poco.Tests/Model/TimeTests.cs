@@ -28,6 +28,18 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void FromDateTimeOffsetWithMilliseconds()
+        {
+            var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, 123, TimeSpan.Zero);
+
+            var dt = Time.FromDateTimeOffset(stamp);
+            dt.Value.Should().Be("15:10:00");
+
+            dt = Time.FromDateTimeOffset(stamp, includeMillis: true);
+            dt.Value.Should().Be("15:10:00.123");
+        }
+
+        [TestMethod]
         public void TryToTimeSpan()
         {
             var fdt = new Time(13, 4, 18);
@@ -107,7 +119,17 @@ namespace Hl7.Fhir.Tests.Model
             dt.Millis.Should().Be(123);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Fraction);
 
+            dft = new Time(11,12,34,123);
+            dft.TryToSystemTime(out dt).Should().BeTrue();
+            dt.Millis.Should().Be(123);
+            dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Fraction);
+
             dft = new Time(null);
+            dft.TryToSystemTime(out dt).Should().BeFalse();
+            dt.Should().BeNull();
+
+            // Time cannot have an offset, so this should fail
+            dft = new Time("01:01:01.001Z");
             dft.TryToSystemTime(out dt).Should().BeFalse();
             dt.Should().BeNull();
         }

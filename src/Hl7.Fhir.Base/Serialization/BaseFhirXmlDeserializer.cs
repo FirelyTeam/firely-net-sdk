@@ -176,7 +176,6 @@ public class BaseFhirXmlDeserializer
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         var hasValueAttribute = reader.GetAttribute("value") != null;
-        bool hasChildElements = false;
         
         if (Settings.AnnotateLineInfo)
             target.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
@@ -197,8 +196,6 @@ public class BaseFhirXmlDeserializer
             PropertyMapping? highestOrder = null;
             while (reader.NodeType != XmlNodeType.EndElement)
             {
-                hasChildElements = true;
-
                 var (propMapping, propValueMapping) = getMappingForElement(mapping, reader.LocalName, state, reader);
 
                 if(propMapping.SerializationHint is not (XmlRepresentation.None or XmlRepresentation.XmlElement or  XmlRepresentation.XHtml))
@@ -215,13 +212,6 @@ public class BaseFhirXmlDeserializer
                 if(!propMapping.RepresentsValueElement)
                     state.ExitElement();
             }
-        }
-
-        if (!hasValueAttribute && !hasChildElements)
-        {
-            //previous element didn't have a value and the current value is not a child of the previous element.
-            //error is thrown with the location and the name of the previous element.
-            state.Errors.Add(ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN(reader, state.Path.GetInstancePath(), reader.LocalName));
         }
 
         if (Settings.Validator is not null)

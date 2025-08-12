@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Tests.Validation
             organization.Text = null;
 
             // Try again
-            patient.Validate().Should().BeEmpty();
+            patient.Validate().Should().OnlyContain(cove => cove.ErrorCode == CodedValidationException.ELEMENT_CANNOT_BE_EMPTY_CODE);
         }
 
         [TestMethod]

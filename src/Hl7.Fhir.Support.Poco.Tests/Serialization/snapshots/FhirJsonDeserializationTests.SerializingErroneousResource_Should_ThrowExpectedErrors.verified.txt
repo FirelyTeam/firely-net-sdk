@@ -496,6 +496,17 @@
       Message: Expected a primitive value, not a json null. At Patient.contained[16].telecom[0].use, line 233, position 22.
     },
     {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid,
+      LineNumber: 233,
+      Position: 22,
+      InstancePath: Patient.contained[16].telecom[0].use,
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid At Patient.contained[16].telecom[0].use, line 233, position 22.
+    },
+    {
       Type: FhirJsonException,
       IssueSeverity: Error,
       IssueType: Structure,
@@ -702,6 +713,17 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid,
+      LineNumber: 366,
+      Position: 20,
+      InstancePath: Patient.communication[1].language,
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid At Patient.communication[1].language, line 366, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
       BaseErrorMessage: string '' is not a correct literal for a string.,
       LineNumber: 380,
       Position: 18,
@@ -730,6 +752,17 @@
       InstancePath: Patient.link[0].other,
       ErrorCode: PVAL105,
       Message: Element 'Patient.link[0].other' with minimum cardinality 1 must be present. At Patient.link[0].other, line 383, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid,
+      LineNumber: 383,
+      Position: 6,
+      InstancePath: Patient.link[0],
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid At Patient.link[0], line 383, position 6.
     },
     {
       Type: FhirJsonException,

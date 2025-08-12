@@ -66,6 +66,11 @@ public partial class FhirDateTime
     {
     }
 
+    public FhirDateTime(int year, int month, int day, int hr, int min, int sec, int millis, TimeSpan offset)
+        : this(new DateTimeOffset(year, month, day, hr, min, sec, millis, offset))
+    {
+    }
+
     public FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset)
         : this(new DateTimeOffset(year, month, day, hr, min, sec, offset))
     {

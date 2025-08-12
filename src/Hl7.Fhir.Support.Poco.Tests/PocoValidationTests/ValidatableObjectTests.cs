@@ -20,7 +20,7 @@ public class ValidatableObjectTests
     public void TestCodeOfT()
     {
         var c = new Code<FilterOperator>(null);
-        assertValid(c);
+        // assertValid(c); NOT valid, no value or children!
         c.Value.Should().BeNull();
 
         c = new Code<FilterOperator>(FilterOperator.DescendentOf);
@@ -28,7 +28,7 @@ public class ValidatableObjectTests
         c.Value.Should().Be(FilterOperator.DescendentOf);
 
         c.JsonValue = null;
-        assertValid(c);
+        // assertValid(c); Idem
         c.Value.Should().BeNull();
 
         c.JsonValue = FilterOperator.ChildOf.GetLiteral();
