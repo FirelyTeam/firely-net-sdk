@@ -9,6 +9,8 @@
 
 #nullable enable
 
+using System;
+
 namespace Hl7.Fhir.Serialization;
 
 /// <summary>
@@ -21,3 +23,6 @@ public record FhirJsonConverterOptions : DeserializerSettings
     /// </summary>
     public SerializationFilter? SummaryFilter { get; init; } = null;
 }
+
+[Obsolete("Use FhirJsonConverterOptions instead. This will be removed in a future version.")]
+public record FhirJsonPocoDeserializerSettings : FhirJsonConverterOptions;

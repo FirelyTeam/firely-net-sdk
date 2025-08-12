@@ -132,6 +132,16 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     /// <inheritdoc />
     public override IReadOnlyCollection<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
 
+    /// <summary>
+    /// The literal of the code value, taken from the enum that is in <see cref="Value"/>.
+    /// </summary>
+    public override string? Literal => Value?.GetSystem();
+
+    /// <summary>
+    /// The system of the code value, taken from the enum that is in <see cref="Value"/>.
+    /// </summary>
+    public override string? System => Value?.GetLiteral();
+
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
         Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;
 
