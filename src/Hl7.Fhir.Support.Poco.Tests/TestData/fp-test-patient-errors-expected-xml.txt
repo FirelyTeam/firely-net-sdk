@@ -37,7 +37,7 @@ Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'valueStri
 Hl7.Fhir.Serialization.FhirXmlException: Choice element 'value' is suffixed with an unrecognized type 'Unknown'. At Patient.contained[10], line 75, position 8.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'highest'. At Patient.contained[10].value.highest, line 76, position 10.
 Hl7.Fhir.Validation.CodedValidationException: Value is of type 'Unknown', which is not an allowed choice. At Patient.contained[10].value, line 75, position 8.
-Hl7.Fhir.Validation.CodedValidationException: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[11].component[2].value, line 108, position 12.
+Hl7.Fhir.Validation.CodedValidationException: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[11].component[2].value.value, line 108, position 12.
 Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.contained[11].status' with minimum cardinality 1 must be present. At Patient.contained[11].status, line 81, position 6.
 Hl7.Fhir.Validation.CodedValidationException: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri. At Patient.identifier[0].system, line 116, position 6.
 Hl7.Fhir.Serialization.FhirXmlException: Attribute 'use' should have been an element with a `value` property, not an attribute. At Patient.identifier[1].use, line 119, position 15.
