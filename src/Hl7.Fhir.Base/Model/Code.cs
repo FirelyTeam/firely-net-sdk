@@ -76,4 +76,14 @@ public partial class Code : ICoded
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
     public virtual IReadOnlyCollection<Coding> ToCodings() => [new(system: null, code: Value)];
+
+    /// <summary>
+    /// The literal of the code value, which is the same as the <see cref="Value"/>.
+    /// </summary>
+    public virtual string? Literal => Value;
+
+    /// <summary>
+    /// The system of the code value, which is always null for a Code.
+    /// </summary>
+    public virtual string? System => null;
 }

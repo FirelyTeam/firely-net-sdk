@@ -45,7 +45,7 @@ public static partial class BaseExtensions
 
     public static T DeepCopy<T>(this T source) where T : Base => (T)source.DeepCopyInternal();
 
-    public static void CopyTo<T>(this T source, T target) where T : Base => source.CopyToInternal(target);
+    public static void CopyTo(this Base source, Base target) => source.CopyToInternal(target);
 
     public static IEnumerable<T> DeepCopy<T>(this IEnumerable<T> source) where T : Base => source.DeepCopyInternal();
     
@@ -66,21 +66,6 @@ public static partial class BaseExtensions
             };
         }
     }
-
-    // internal static DynamicPrimitive ToDynamicPrimitive(this Base instance)
-    // {
-    //     var primitive = new DynamicPrimitive { DynamicTypeName = instance.TypeName};
-    //
-    //     foreach(var element in instance.EnumerateElements())
-    //     {
-    //         if(element.Key == "value")
-    //             primitive.ObjectValue = element.Value;
-    //         else
-    //             primitive.SetValue(element.Key, element.Value);
-    //     }
-    //
-    //     return primitive;
-    // }
 
     internal static DynamicDataType ToDynamicDataType(this Base instance)
     {
