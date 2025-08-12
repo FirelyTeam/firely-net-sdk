@@ -1,20 +1,20 @@
 Hl7.Fhir.Serialization.FhirXmlException: Encountered an empty resource container. At Patient.contained[0], line 5, position 4.
 Hl7.Fhir.Serialization.FhirXmlException: Encountered an empty resource container. At Patient.contained[1], line 6, position 16.
 Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientX' found in root element. At Patient.contained[2], line 8, position 6.
-Hl7.Fhir.Serialization.FhirXmlException: Element 'PatientX' must have child elements and / or a value attribute At Patient.contained[2], line 9, position 7.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[2], line 8, position 6.
 Hl7.Fhir.Serialization.FhirXmlException: Encountered unexpected attribute 'containedAttribute' in a resource container. Only a single resource is allowed. At Patient.contained[3], line 11, position 14.
 Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[3].active, line 13, position 8.
 Hl7.Fhir.Validation.CodedValidationException: string 'not-checked' is not the right type of literal for a boolean. At Patient.contained[3].active, line 17, position 8.
 Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'anotherElement' found in root element. At Patient.contained[3], line 19, position 6.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'value'. At Patient.contained[3].value, line 19, position 21.
-Hl7.Fhir.Serialization.FhirXmlException: Element 'Patient' must have child elements and / or a value attribute At Patient.contained[3], line 20, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[3], line 20, position 6.
 Hl7.Fhir.Serialization.FhirXmlException: Encountered multiple elements in a resource container. Only a single resource is allowed. At Patient.contained[3], line 21, position 5.
 Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientId' found in root element. At Patient.contained[4], line 23, position 6.
 Hl7.Fhir.Serialization.FhirXmlException: Attribute 'id' should have been an element with a `value` property, not an attribute. At Patient.contained[5].id, line 28, position 14.
 Hl7.Fhir.Serialization.FhirXmlException: Element 'id' was found multiple times, but not in sequence. At Patient.contained[5].id, line 31, position 8.
 Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single id, but found a collection of id. At Patient.contained[5].id, line 29, position 8.
-Hl7.Fhir.Serialization.FhirXmlException: Element 'name' must have child elements and / or a value attribute At Patient.contained[5].name[0], line 31, position 8.
-Hl7.Fhir.Serialization.FhirXmlException: Element 'name' must have child elements and / or a value attribute At Patient.contained[5].name[1], line 32, position 15.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[5].name[0], line 31, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[5].name[1], line 32, position 8.
 Hl7.Fhir.Serialization.FhirXmlException: Element uses the namespace 'http://example.org/not-fhir', which is not allowed. At Patient.contained[6], line 36, position 6.
 Hl7.Fhir.Serialization.FhirXmlException: Attribute uses namespace 'http://nu.nl', which is not allowed. At Patient.contained[6].active.anotherAttribute, line 37, position 29.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'anotherAttribute'. At Patient.contained[6].active.anotherAttribute, line 37, position 29.
@@ -26,11 +26,11 @@ Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'data'. At P
 Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'value'. At Patient.contained[7].address[0].value, line 49, position 16.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'no'. At Patient.contained[8].no, line 53, position 14.
 Hl7.Fhir.Serialization.FhirXmlException: Xml node of type 'Text' is unexpected at this point At Patient.contained[8].id, line 54, position 11.
-Hl7.Fhir.Serialization.FhirXmlException: Element 'id' must have child elements and / or a value attribute At Patient.contained[8].id, line 56, position 9.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[8].id, line 54, position 8.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'value'. At Patient.contained[8].name[0].value, line 57, position 13.
 Hl7.Fhir.Serialization.FhirXmlException: Xml node of type 'Text' is unexpected at this point At Patient.contained[8].name[0], line 57, position 26.
 Hl7.Fhir.Serialization.FhirXmlException: Xml node of type 'Text' is unexpected at this point At Patient.contained[8].unknown, line 59, position 16.
-Hl7.Fhir.Serialization.FhirXmlException: Element 'unknown' must have child elements and / or a value attribute At Patient.contained[8].unknown, line 61, position 9.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[8].unknown, line 59, position 8.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'unknown'. At Patient.contained[8].unknown, line 59, position 8.
 Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.contained[9].issue' with minimum cardinality 1 must be present. At Patient.contained[9].issue, line 65, position 6.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'valueString'. At Patient.contained[10].valueString, line 70, position 18.

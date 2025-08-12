@@ -47,7 +47,7 @@ public abstract partial class DomainResource
         if (Contained.OfType<DomainResource>().Any(cr => cr.Contained.Any()))
             return [COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED(validationContext)];
 
-        return [];
+        return base.ValidateInvariants(validationContext);
     }
 
     /// <summary>

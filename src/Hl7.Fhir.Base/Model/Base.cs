@@ -166,5 +166,11 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     /// <summary>
     /// Validate invariants that hold across properties, or cannot be expressed by attributes on properties.
     /// </summary>
-    protected internal virtual IReadOnlyCollection<CodedValidationException> ValidateInvariants(PocoValidationContext validationContext) => [];
+    protected internal virtual IReadOnlyCollection<CodedValidationException> ValidateInvariants(PocoValidationContext validationContext)
+    {
+       if(!this.EnumerateElements().Any())
+           return [CodedValidationException.ELEMENT_CANNOT_BE_EMPTY(validationContext)];
+       
+       return [];
+    }
 }
