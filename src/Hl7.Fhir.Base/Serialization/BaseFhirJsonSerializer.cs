@@ -38,13 +38,14 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write the serialized data to.</param>
     /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
-    public void Serialize(Base instance, Utf8JsonWriter writer, Func<SerializationFilter>? filterFactory = null)
+    public void Serialize(Base instance, Utf8JsonWriter writer, Func<SerializationFilter?>? filterFactory = null)
     {
         // If the element is summarized, add the subsetted tags.
-        if (filterFactory is not null)
+        var filter = filterFactory?.Invoke();
+        if (filter is not null)
             instance = SerializationUtil.MakeSubsettedClone(instance);
 
-        serializeInternal(instance, writer, filterFactory?.Invoke());
+        serializeInternal(instance, writer, filter);
     }
 
     /// <summary>

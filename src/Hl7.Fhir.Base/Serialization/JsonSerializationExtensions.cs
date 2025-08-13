@@ -33,7 +33,7 @@ public static class JsonSerializationExtensions
     public static void Serialize(this BaseFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,
         SerializationFilter? filter = null)
     {
-        ser.Serialize(instance, writer, filter is not null ? () => filter : null);
+        ser.Serialize(instance, writer, () => filter);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public static class JsonSerializationExtensions
     /// <param name="pretty">Formats and indents the serialized Json.</param>
     /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     public static string SerializeToString(this BaseFhirJsonSerializer ser, Base instance, bool pretty = false,
-        Func<SerializationFilter>? filterFactory = null) =>
+        Func<SerializationFilter?>? filterFactory = null) =>
         SerializationUtil.WriteJsonToString(w => ser.Serialize(instance, w, filterFactory), pretty);
 
     /// <summary>
@@ -82,7 +82,7 @@ public static class JsonSerializationExtensions
     /// <param name="pretty">Formats and indents the serialized Json.</param>
     /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     public static byte[] SerializeToBytes(this BaseFhirJsonSerializer ser, Base instance, bool pretty = false,
-        Func<SerializationFilter>? filterFactory = null) =>
+        Func<SerializationFilter?>? filterFactory = null) =>
         SerializationUtil.WriteJsonToBytes(w => ser.Serialize(instance, w, filterFactory), pretty);
 
     /// <summary>

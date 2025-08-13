@@ -43,11 +43,12 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
     public void Serialize(
         Base instance,
         XmlWriter writer,
-        Func<SerializationFilter>? filterFactory = null,
+        Func<SerializationFilter?>? filterFactory = null,
         string? rootName = null)
     {
         // If the element is summarized, add the subsetted tags.
-        if (filterFactory is not null)
+        var filter = filterFactory?.Invoke();
+        if (filter is not null)
             instance = SerializationUtil.MakeSubsettedClone(instance);
 
         writer.WriteStartDocument();
@@ -59,7 +60,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         else if(instance is not Resource)
             writer.WriteStartElement(instance.TypeName, XmlNs.FHIR);
 
-        serializeInternal(instance, writer, filterFactory?.Invoke());
+        serializeInternal(instance, writer, filter);
 
         if (rootName is not null) writer.WriteEndElement();
         writer.WriteEndDocument();

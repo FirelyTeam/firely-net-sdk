@@ -38,7 +38,7 @@ public static class XmlSerializationExtensions
         SerializationFilter? filter = null,
         string? rootName = null)
     {
-        ser.Serialize(instance, writer, filter is not null ? () => filter : null, rootName);
+        ser.Serialize(instance, writer, () => filter, rootName);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public static class XmlSerializationExtensions
     /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
     /// If necessary, use this parameter to override the name of the root element.</param>
     public static string SerializeToString(this BaseFhirXmlSerializer ser, Base instance, bool pretty = false,
-        Func<SerializationFilter>? filterFactory = null, string? rootName = null) =>
+        Func<SerializationFilter?>? filterFactory = null, string? rootName = null) =>
         SerializationUtil.WriteXmlToString(w => ser.Serialize(instance, w, filterFactory, rootName), pretty);
 
     /// <summary>
@@ -96,7 +96,7 @@ public static class XmlSerializationExtensions
     /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
     /// If necessary, use this parameter to override the name of the root element.</param>
     public static byte[] SerializeToBytes(this BaseFhirXmlSerializer ser, Base instance, bool pretty = false,
-        Func<SerializationFilter>? filterFactory = null, string? rootName = null) =>
+        Func<SerializationFilter?>? filterFactory = null, string? rootName = null) =>
         SerializationUtil.WriteXmlToBytes(w => ser.Serialize(instance, w, filterFactory, rootName), pretty);
 
     /// <summary>

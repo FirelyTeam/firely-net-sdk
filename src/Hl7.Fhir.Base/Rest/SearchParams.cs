@@ -471,7 +471,7 @@ public static class SummaryTypeExtensions
     /// <summary>
     /// Creates the appropriate <see cref="SerializationFilter"/> based on the summary type.
     /// </summary>
-    public static SerializationFilter GetSerializationFilter(this SummaryType summary, string[]? elements = null, bool includeMandatoryInElementsSummary = false)
+    public static SerializationFilter? GetSerializationFilter(this SummaryType summary, string[]? elements = null, bool includeMandatoryInElementsSummary = false)
     {
         return summary switch
         {
@@ -480,7 +480,7 @@ public static class SummaryTypeExtensions
             SummaryType.Data => SerializationFilter.ForData(),
             SummaryType.Count => SerializationFilter.ForCount(),
             SummaryType.False when elements is not null => SerializationFilter.ForElements(elements, includeMandatoryInElementsSummary),
-            SummaryType.False => throw new ArgumentException("Elements must be specified for SummaryType.False"),
+            SummaryType.False => null,
             _ => throw new ArgumentException($"Unknown summary type: {summary}"),
         };
     }
