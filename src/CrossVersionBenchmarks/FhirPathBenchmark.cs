@@ -17,7 +17,7 @@ namespace Firely.Sdk.Benchmarks;
 [ProjectReference]
 public class FhirPathBenchmark
 {
-    private readonly FhirJsonParser _jsonParser;
+    private readonly FhirJsonDeserializer _jsonDeserializer;
     private readonly Patient _patient;
     private readonly Bundle _bundle;
 
@@ -32,9 +32,9 @@ public class FhirPathBenchmark
     
     public FhirPathBenchmark()
     {
-        _jsonParser = new();
-        _patient = _jsonParser.Parse<Patient>(TestData.TestData.GetPatientJson());
-        _bundle = _jsonParser.Parse<Bundle>(TestData.TestData.GetLargePatientBundle());
+        _jsonDeserializer = new();
+        _patient = _jsonDeserializer.Deserialize<Patient>(TestData.TestData.GetPatientJson());
+        _bundle = _jsonDeserializer.Deserialize<Bundle>(TestData.TestData.GetLargePatientBundle());
 #if SDK6
  #pragma warning disable SDK0001
         _patientElement = _patient.ToPocoNode(ModelInfo.ModelInspector);
@@ -44,8 +44,8 @@ public class FhirPathBenchmark
 #endif
 
         // Initialize FHIRPath compiler
-        _compiler = new();
-        _compilerCache = new(_compiler);
+        _compiler = new FhirPathCompiler();
+        _compilerCache = new FhirPathCompilerCache(_compiler);
     }
     
     [Benchmark]

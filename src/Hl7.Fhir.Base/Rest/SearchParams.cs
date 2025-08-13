@@ -468,7 +468,10 @@ public enum ContainedResult
 
 public static class SummaryTypeExtensions
 {
-    public static SerializationFilter? GetSerializationFilter(this SummaryType summary, string[]? elements = null, bool includeMandatoryInElementsSummary = false)
+    /// <summary>
+    /// Creates the appropriate <see cref="SerializationFilter"/> based on the summary type.
+    /// </summary>
+    public static SerializationFilter GetSerializationFilter(this SummaryType summary, string[]? elements = null, bool includeMandatoryInElementsSummary = false)
     {
         return summary switch
         {
@@ -477,7 +480,8 @@ public static class SummaryTypeExtensions
             SummaryType.Data => SerializationFilter.ForData(),
             SummaryType.Count => SerializationFilter.ForCount(),
             SummaryType.False when elements is not null => SerializationFilter.ForElements(elements, includeMandatoryInElementsSummary),
-            _ => null,
+            SummaryType.False => throw new ArgumentException("Elements must be specified for SummaryType.False"),
+            _ => throw new ArgumentException($"Unknown summary type: {summary}"),
         };
     }
 }

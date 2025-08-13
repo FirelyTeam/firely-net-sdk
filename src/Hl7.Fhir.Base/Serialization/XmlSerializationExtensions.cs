@@ -21,17 +21,38 @@ namespace Hl7.Fhir.Serialization;
 public static class XmlSerializationExtensions
 {
     /// <summary>
+    /// Serializes the given POCO with FHIR data into Xml.
+    /// </summary>
+    /// <param name="ser">The serializer to use.</param>
+    /// <param name="instance">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="XmlWriter"/> to write the serialized data to.</param>
+    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
+    /// If necessary, use this parameter to override the name of the root element.</param>
+    [Obsolete("Use the overload that takes Func<SerializationFilter> instead to ensure thread-safety when reusing" +
+              " serializer instances in concurrent scenarios. This method will be removed in a future version.")]
+    public static void Serialize(
+        this BaseFhirXmlSerializer ser,
+        Base instance,
+        XmlWriter writer,
+        SerializationFilter? filter = null,
+        string? rootName = null)
+    {
+        ser.Serialize(instance, writer, filter is not null ? () => filter : null, rootName);
+    }
+
+    /// <summary>
     /// Serializes the given POCO into a FHIR Xml string.
     /// </summary>
     /// <param name="ser">The serializer to use.</param>
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Xml.</param>
-    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
     /// If necessary, use this parameter to override the name of the root element.</param>
     public static string SerializeToString(this BaseFhirXmlSerializer ser, Base instance, bool pretty = false,
-        SerializationFilter? filter = null, string? rootName = null) =>
-        SerializationUtil.WriteXmlToString(w => ser.Serialize(instance, w, filter, rootName), pretty);
+        Func<SerializationFilter>? filterFactory = null, string? rootName = null) =>
+        SerializationUtil.WriteXmlToString(w => ser.Serialize(instance, w, filterFactory, rootName), pretty);
 
     /// <summary>
     /// Serializes the given POCO into a FHIR Xml string.
@@ -54,7 +75,7 @@ public static class XmlSerializationExtensions
         ser.SerializeToString(
             instance,
             pretty,
-            summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
+            () => summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
             rootName);
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
@@ -71,12 +92,12 @@ public static class XmlSerializationExtensions
     /// <param name="ser">The serializer to use.</param>
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Xml.</param>
-    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
     /// If necessary, use this parameter to override the name of the root element.</param>
     public static byte[] SerializeToBytes(this BaseFhirXmlSerializer ser, Base instance, bool pretty = false,
-        SerializationFilter? filter = null, string? rootName = null) =>
-        SerializationUtil.WriteXmlToBytes(w => ser.Serialize(instance, w, filter, rootName), pretty);
+        Func<SerializationFilter>? filterFactory = null, string? rootName = null) =>
+        SerializationUtil.WriteXmlToBytes(w => ser.Serialize(instance, w, filterFactory, rootName), pretty);
 
     /// <summary>
     /// Serializes the given POCO into a  FHIR Xml byte array.
@@ -98,7 +119,7 @@ public static class XmlSerializationExtensions
         ser.SerializeToBytes(
             instance,
             pretty,
-            summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
+            () => summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
             rootName);
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
@@ -151,7 +172,7 @@ public static class XmlSerializationExtensions
         ser.Serialize(
             instance,
             writer,
-            summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
+            () => summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary),
             rootName);
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
