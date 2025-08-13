@@ -77,9 +77,9 @@
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
       LineNumber: 1,
       Position: 58,
-      InstancePath: Patient.active,
+      InstancePath: Patient.active[2],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.active, line 1, position 58.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.active[2], line 1, position 58.
     }
   ],
   Obj:

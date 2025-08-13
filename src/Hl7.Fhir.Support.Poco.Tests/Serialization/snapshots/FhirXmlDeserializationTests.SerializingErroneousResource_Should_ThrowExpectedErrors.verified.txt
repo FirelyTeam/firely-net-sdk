@@ -449,9 +449,9 @@
       BaseErrorMessage: string '-1.00000000000000000e245' is not the right type of literal for a decimal.,
       LineNumber: 108,
       Position: 12,
-      InstancePath: Patient.contained[11].component[2].value,
+      InstancePath: Patient.contained[11].component[2].value.value,
       ErrorCode: PVAL123,
-      Message: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[11].component[2].value, line 108, position 12.
+      Message: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[11].component[2].value.value, line 108, position 12.
     },
     {
       Type: CodedValidationException,

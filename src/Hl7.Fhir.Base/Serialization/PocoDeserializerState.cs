@@ -15,7 +15,8 @@ namespace Hl7.Fhir.Serialization;
 internal class PocoDeserializerState
 {
     public readonly ExceptionAggregator Errors = new();
-    public readonly PathStack Path = new();
+
+    public PathPart Path { get; internal set; } = new RootPathPart();
 
     private readonly Stack<BaseFhirJsonDeserializer.ObjectParsingState> objectContext = new();
 

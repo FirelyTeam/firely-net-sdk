@@ -72,7 +72,7 @@ public partial class FhirJsonDeserializationTests
             reader.Read();
 
             var state = new PocoDeserializerState();
-            state.Path.EnterElement("Patient", null, false);
+            state.EnterElement("Patient");
             var response = BaseFhirJsonDeserializer.DetermineResourceClassMappingFromInstance(ref reader, inspector, state);
 
             return (response, state.Errors.ToArray());
