@@ -600,9 +600,7 @@ public class BaseFhirXmlDeserializer
 
                 if (foundChoiceMapping is null)
                 {
-                    state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(reader, state.Path.GetInstancePath(),
-                        propertyMapping.Name, typeSuffix));
-                    foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, typeof(DynamicDataType));
+                    foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, getDynamicTypeMapping());
                 }
 
                 return foundChoiceMapping;
@@ -611,12 +609,14 @@ public class BaseFhirXmlDeserializer
             var path = state.Path.GetInstancePath();
             state.Errors.Add(ERR.CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(reader, path, elementName));
 
-            return new ClassMapping(_inspector, $"UnknownType_{path}", typeof(DynamicDataType));
+            return new ClassMapping(_inspector, $"UnknownType_{path}", getDynamicTypeMapping());
         }
-
-        PropertyMapping getUnknownPropMapping() =>
+        
+        Type getDynamicTypeMapping() =>
             reader.GetAttribute("value") != null
-                ? new PropertyMapping(parentMapping, elementName, typeof(FhirString))
-                : new PropertyMapping(parentMapping, elementName, typeof(DynamicDataType));
+                ? typeof(DynamicPrimitive)
+                : typeof(DynamicDataType);
+
+        PropertyMapping getUnknownPropMapping() => new (parentMapping, elementName, getDynamicTypeMapping());
     }
 }

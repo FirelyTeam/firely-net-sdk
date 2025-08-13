@@ -397,17 +397,6 @@
       Message: Found unknown attribute 'valueString'. At Patient.contained[10].valueString, line 70, position 18.
     },
     {
-      Type: FhirXmlException,
-      IssueSeverity: Error,
-      IssueType: Value,
-      BaseErrorMessage: Choice element 'value' is suffixed with an unrecognized type 'Unknown'.,
-      LineNumber: 75,
-      Position: 8,
-      InstancePath: Patient.contained[10],
-      ErrorCode: XML106,
-      Message: Choice element 'value' is suffixed with an unrecognized type 'Unknown'. At Patient.contained[10], line 75, position 8.
-    },
-    {
       Type: CodedValidationException,
       MemberName: value,
       IssueSeverity: Error,

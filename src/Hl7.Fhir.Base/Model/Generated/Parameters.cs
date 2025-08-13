@@ -126,6 +126,8 @@ namespace Hl7.Fhir.Model
       /// If parameter is a data type.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
+      [AllowedTypes(OpenChoice = true)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {

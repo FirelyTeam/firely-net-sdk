@@ -633,9 +633,9 @@ public partial class FhirXmlDeserializationTests
         var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
         parsed.Active.Should().BeTrue();
         parsed["active"].Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
-        parsed["patientLocation"].Should().BeOfType<FhirString>().Which.Value.Should().Be("http://nu.nl");
-        parsed["remarksString"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");
-        parsed["newList"].Should().BeOfType<FhirString>().Which.Value.Should().Be("singleitem");
+        parsed["patientLocation"].Should().BeOfType<DynamicPrimitive>().Which.Value.Should().Be("http://nu.nl");
+        parsed["remarksString"].Should().BeOfType<DynamicPrimitive>().Which.Value.Should().Be("Nice guy");
+        parsed["newList"].Should().BeOfType<DynamicPrimitive>().Which.Value.Should().Be("singleitem");
 
         var patientMapping = inspector.FindClassMapping(typeof(Patient))!;
         var customPropertyA = new PropertyMapping(patientMapping, "patientLocation", typeof(FhirUri));
