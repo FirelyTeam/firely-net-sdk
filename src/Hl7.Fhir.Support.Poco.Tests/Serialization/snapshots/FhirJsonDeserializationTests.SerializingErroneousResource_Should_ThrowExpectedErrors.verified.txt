@@ -87,9 +87,9 @@
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
       LineNumber: 17,
       Position: 16,
-      InstancePath: Patient.contained[0].active,
+      InstancePath: Patient.contained[0].active[2],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[0].active, line 17, position 16.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[0].active[2], line 17, position 16.
     },
     {
       Type: FhirJsonException,
@@ -121,9 +121,9 @@
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
       LineNumber: 27,
       Position: 16,
-      InstancePath: Patient.contained[2].active,
+      InstancePath: Patient.contained[2].active[2],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[2].active, line 27, position 16.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[2].active[2], line 27, position 16.
     },
     {
       Type: FhirJsonException,
@@ -155,9 +155,9 @@
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
       LineNumber: 32,
       Position: 16,
-      InstancePath: Patient.contained[3].active,
+      InstancePath: Patient.contained[3].active[2],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[3].active, line 32, position 16.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[3].active[2], line 32, position 16.
     },
     {
       Type: CodedValidationException,
@@ -167,9 +167,9 @@
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
       LineNumber: 37,
       Position: 16,
-      InstancePath: Patient.contained[4].active,
+      InstancePath: Patient.contained[4].active[2],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[4].active, line 37, position 16.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[4].active[2], line 37, position 16.
     },
     {
       Type: FhirJsonException,
@@ -213,9 +213,9 @@
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
       LineNumber: 48,
       Position: 16,
-      InstancePath: Patient.contained[5].active,
+      InstancePath: Patient.contained[5].active[2],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[5].active, line 48, position 16.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[5].active[2], line 48, position 16.
     },
     {
       Type: FhirJsonException,
@@ -258,9 +258,9 @@
       BaseErrorMessage: Nested array detected.,
       LineNumber: 54,
       Position: 10,
-      InstancePath: Patient.contained[5].active,
+      InstancePath: Patient.contained[5].active[1],
       ErrorCode: JSON130,
-      Message: Nested array detected. At Patient.contained[5].active, line 54, position 10.
+      Message: Nested array detected. At Patient.contained[5].active[1], line 54, position 10.
     },
     {
       Type: FhirJsonException,
@@ -480,9 +480,9 @@
       BaseErrorMessage: Expected property to be a single string, but found a collection of string.,
       LineNumber: 221,
       Position: 20,
-      InstancePath: Patient.contained[16].name[1].family,
+      InstancePath: Patient.contained[16].name[1].family[1],
       ErrorCode: PVAL127,
-      Message: Expected property to be a single string, but found a collection of string. At Patient.contained[16].name[1].family, line 221, position 20.
+      Message: Expected property to be a single string, but found a collection of string. At Patient.contained[16].name[1].family[1], line 221, position 20.
     },
     {
       Type: FhirJsonException,
@@ -494,6 +494,17 @@
       InstancePath: Patient.contained[16].telecom[0].use,
       ErrorCode: JSON109,
       Message: Expected a primitive value, not a json null. At Patient.contained[16].telecom[0].use, line 233, position 22.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid,
+      LineNumber: 233,
+      Position: 22,
+      InstancePath: Patient.contained[16].telecom[0].use,
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid At Patient.contained[16].telecom[0].use, line 233, position 22.
     },
     {
       Type: FhirJsonException,
@@ -526,9 +537,9 @@
       BaseErrorMessage: Repeating elements should not contain a null value.,
       LineNumber: 243,
       Position: 19,
-      InstancePath: Patient.contained[16].address[0].line,
+      InstancePath: Patient.contained[16].address[0].line[2],
       ErrorCode: PVAL104,
-      Message: Repeating elements should not contain a null value. At Patient.contained[16].address[0].line, line 243, position 19.
+      Message: Repeating elements should not contain a null value. At Patient.contained[16].address[0].line[2], line 243, position 19.
     },
     {
       Type: FhirJsonException,
@@ -537,9 +548,9 @@
       BaseErrorMessage: Arrays need to have at least one non-null element.,
       LineNumber: 250,
       Position: 28,
-      InstancePath: Patient.contained[16].address[1].line,
+      InstancePath: Patient.contained[16].address[1].line[1],
       ErrorCode: JSON125,
-      Message: Arrays need to have at least one non-null element. At Patient.contained[16].address[1].line, line 250, position 28.
+      Message: Arrays need to have at least one non-null element. At Patient.contained[16].address[1].line[1], line 250, position 28.
     },
     {
       Type: CodedValidationException,
@@ -560,9 +571,9 @@
       BaseErrorMessage: Repeating elements should not contain a null value.,
       LineNumber: 278,
       Position: 15,
-      InstancePath: Patient.name[0].given,
+      InstancePath: Patient.name[0].given[2],
       ErrorCode: PVAL104,
-      Message: Repeating elements should not contain a null value. At Patient.name[0].given, line 278, position 15.
+      Message: Repeating elements should not contain a null value. At Patient.name[0].given[2], line 278, position 15.
     },
     {
       Type: CodedValidationException,
@@ -702,6 +713,17 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid,
+      LineNumber: 366,
+      Position: 20,
+      InstancePath: Patient.communication[1].language,
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid At Patient.communication[1].language, line 366, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
       BaseErrorMessage: string '' is not a correct literal for a string.,
       LineNumber: 380,
       Position: 18,
@@ -730,6 +752,17 @@
       InstancePath: Patient.link[0].other,
       ErrorCode: PVAL105,
       Message: Element 'Patient.link[0].other' with minimum cardinality 1 must be present. At Patient.link[0].other, line 383, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid,
+      LineNumber: 383,
+      Position: 6,
+      InstancePath: Patient.link[0],
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid At Patient.link[0], line 383, position 6.
     },
     {
       Type: FhirJsonException,
@@ -774,9 +807,9 @@
       BaseErrorMessage: Found unknown element 'data'.,
       LineNumber: 388,
       Position: 14,
-      InstancePath: Patient.unknownElement.valued.data,
+      InstancePath: Patient.unknownElement.valued.data[2],
       ErrorCode: PVAL128,
-      Message: Found unknown element 'data'. At Patient.unknownElement.valued.data, line 388, position 14.
+      Message: Found unknown element 'data'. At Patient.unknownElement.valued.data[2], line 388, position 14.
     }
   ],
   Obj:

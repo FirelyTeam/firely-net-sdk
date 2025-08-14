@@ -72,7 +72,7 @@ public partial class FhirJsonDeserializationTests
             reader.Read();
 
             var state = new PocoDeserializerState();
-            state.Path.EnterElement("Patient", null, false);
+            state.EnterElement("Patient");
             var response = BaseFhirJsonDeserializer.DetermineResourceClassMappingFromInstance(ref reader, inspector, state);
 
             return (response, state.Errors.ToArray());
@@ -130,7 +130,7 @@ public partial class FhirJsonDeserializationTests
     {
         get
         {
-            yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE];
+            yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE];
             yield return
             [
                 new { resourceType = 4, crap = 4 }, JsonTokenType.EndObject,
@@ -148,7 +148,7 @@ public partial class FhirJsonDeserializationTests
             yield return
             [
                 new { resourceType = nameof(Meta) }, JsonTokenType.EndObject, 
-                ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
+                ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE
             ];
             yield return
             [
@@ -221,7 +221,7 @@ public partial class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> CatchesIncorrectlyStructuredComplexData()
     {
-        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
         yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
         yield return data<Extension>(new { _url = "test" }, ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE); // No other errors, since we're setting url to value anyway.
@@ -303,9 +303,9 @@ public partial class FhirJsonDeserializationTests
     public static IEnumerable<object?[]> TestPrimitiveArrayData()
     {
         yield return data<Address>(new { line = "hi!" }, COVE.PROPERTY_TYPE_MISMATCH_CODE); // expected collection of string, found string
-        yield return data<Address>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+        yield return data<Address>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
         yield return data<Address>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() },
-            ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+            ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE);
         yield return data<Address>(new { line = Array.Empty<string>(), _line = new string?[] { null } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } },

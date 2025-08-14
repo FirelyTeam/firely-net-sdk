@@ -143,10 +143,9 @@ public class BaseFhirJsonDeserializer
                                                 $"Current token is {reader.TokenType}.");
         
         reader.Read();
-        var (line, pos) = reader.GetLocation();
 
         if (mapping.IsResource)
-            state.Path.EnterResource(mapping.Name);
+            state.EnterResource(mapping.Name);
         state.EnterObjectContext();
 
         int nErrorCount = state.Errors.Count;
@@ -170,7 +169,7 @@ public class BaseFhirJsonDeserializer
         }
 
         if (mapping.IsResource)
-            state.Path.ExitResource();
+            state.ExitResource();
 
         // Now after having deserialized all properties we can run the validations that needed to be
         // postponed until after all properties have been seen (e.g. Instance and Property validations for
@@ -248,7 +247,9 @@ public class BaseFhirJsonDeserializer
         if(usesUnderscore && !metadata.ValueMapping.IsFhirPrimitive)
             state.Errors.Add(ERR.USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE(ref reader, state.Path.GetInstancePath(), elementName, propertyName));
 
-        state.Path.EnterElement(elementName, propertyMapping.IsCollection ? 0 : null, propertyMapping.IsPrimitive);
+        state.EnterElement(elementName);
+        if(propertyMapping.IsCollection)
+            state.SetIndex(0);
 
         target.TryGetValue(elementName, out var existingValue);
         var result = deserializeRhs(existingValue, ref reader, propertyName, metadata, state);
@@ -256,7 +257,7 @@ public class BaseFhirJsonDeserializer
 
         doPropertyValidation(target, result, metadata, state, line, pos);
 
-        state.Path.ExitElement();
+        state.ExitElement();
     }
 
     private void doPropertyValidation(Base target, object propertyValue, PropertyValueMapping metadata, PocoDeserializerState state, long line, long pos)
@@ -266,16 +267,7 @@ public class BaseFhirJsonDeserializer
         var elementName = metadata.PropertyMapping.Name;
         var runDelayed = metadata.ValueMapping.IsFhirPrimitive;
 
-        Func<string> pathGenerator = state.Path.GetInstancePath;
-
-        if(runDelayed)
-        {
-            // TODO: for now, capture the path when running delayed, since it will change when we are actually called.
-            var path = state.Path.GetInstancePath();
-            pathGenerator = () => path;
-        }
-
-        var context = new PocoValidationContext(target, _inspector, pathGenerator,
+        var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath,
                 line, pos, Settings.NarrativeValidation) { MemberName = elementName };
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,
@@ -301,17 +293,8 @@ public class BaseFhirJsonDeserializer
 
         var runDelayed = classMapping.IsFhirPrimitive;
 
-        Func<string> pathGenerator = state.Path.GetInstancePath;
-
-        if(runDelayed)
-        {
-            // TODO: for now, capture the path when running delayed, since it will change when we are actually called.
-            var path = state.Path.GetInstancePath();
-            pathGenerator = () => path;
-        }
-
         var context =
-            new PocoValidationContext(poco, _inspector, pathGenerator, line, pos, Settings.NarrativeValidation);
+            new PocoValidationContext(poco, _inspector, state.Path.GetInstancePath, line, pos, Settings.NarrativeValidation);
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,
         // when we have had a chance to see both the `name` and `_name` properties.
@@ -337,15 +320,9 @@ public class BaseFhirJsonDeserializer
         }
     }
 
-
-
     private void deserializeListInto(IList existingList, ref Utf8JsonReader reader, string propertyName, PropertyValueMapping metadata,
         PocoDeserializerState state)
     {
-        // TODO: Handle case where we don't find a start array - just parse it and add it to the list.
-        if (reader.TokenType != JsonTokenType.StartArray)
-            throw new NotImplementedException("Found a non-array where an array was expected. Still todo.");
-
         int originalSize = existingList.Count;
         int elementIndex = 0;
 
@@ -371,7 +348,7 @@ public class BaseFhirJsonDeserializer
                         existingList.Add(null);
 
                     elementIndex += 1;
-                    state.Path.IncrementIndex();
+                    state.SetIndex(elementIndex);
 
                     // skip the null, nothing to do.
                     reader.Read();
@@ -401,11 +378,11 @@ public class BaseFhirJsonDeserializer
                     deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, actualClassMapping, state);
 
                     elementIndex += 1;
-                    state.Path.IncrementIndex();
+                    state.SetIndex(elementIndex);
                 }
             }
 
-            state.Path.LeaveArray();
+            //state.LeaveArray();
 
             if(onlyNulls == true)
                 state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL(ref reader, state.Path.GetInstancePath()));
@@ -751,7 +728,7 @@ public class BaseFhirJsonDeserializer
                               ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
 
         // Simulate us moving into the element, so we get an error at the right location
-        state.Path.EnterElement(propertyMapping.Name, null, false);
+        state.EnterElement(propertyMapping.Name);
 
         var propertyValueMapping = propertyMapping.Choice switch
         {
@@ -763,7 +740,7 @@ public class BaseFhirJsonDeserializer
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported.")
         };
 
-        state.Path.ExitElement();
+        state.ExitElement();
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 

@@ -118,7 +118,7 @@ public partial class Identifier
     {
     }
 
-    public Identifier(string system, string value)
+    public Identifier(string? system, string? value)
     {
         this.System = system;
         this.Value = value;
@@ -132,7 +132,7 @@ public partial class Period
     {
     }
 
-    public Period(FhirDateTime start, FhirDateTime end)
+    public Period(FhirDateTime? start, FhirDateTime? end)
     {
         StartElement = start;
         EndElement = end;
@@ -175,7 +175,7 @@ public partial class Quantity
     {
     }
 
-    public Quantity(decimal value, string unit, string system = "http://unitsofmeasure.org")
+    public Quantity(decimal value, string? unit, string? system = "http://unitsofmeasure.org")
     {
         Value = value;
         Unit = unit;

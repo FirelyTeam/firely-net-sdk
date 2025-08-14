@@ -120,7 +120,7 @@ public class BaseFhirXmlDeserializer
 
         try
         {
-            state.Path.EnterResource(newResource.TypeName);
+            state.EnterResource(newResource.TypeName);
             int nErrorCount = state.Errors.Count;
             DeserializeElementInto(newResource, resourceMapping, reader, state);
 
@@ -133,7 +133,7 @@ public class BaseFhirXmlDeserializer
         }
         finally
         {
-            state.Path.ExitResource();
+            state.ExitResource();
         }
     }
 
@@ -176,7 +176,6 @@ public class BaseFhirXmlDeserializer
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         var hasValueAttribute = reader.GetAttribute("value") != null;
-        bool hasChildElements = false;
         
         if (Settings.AnnotateLineInfo)
             target.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
@@ -197,33 +196,22 @@ public class BaseFhirXmlDeserializer
             PropertyMapping? highestOrder = null;
             while (reader.NodeType != XmlNodeType.EndElement)
             {
-                hasChildElements = true;
-
                 var (propMapping, propValueMapping) = getMappingForElement(mapping, reader.LocalName, state, reader);
 
                 if(propMapping.SerializationHint is not (XmlRepresentation.None or XmlRepresentation.XmlElement or  XmlRepresentation.XHtml))
                     state.Errors.Add(ERR.ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(reader, state.Path.GetInstancePath(), reader.LocalName));
 
-                state.Path.EnterElement(propMapping.Name,
-                    propMapping.IsCollection ? 0 : null, propValueMapping.IsFhirPrimitive);
+                if(!propMapping.RepresentsValueElement)
+                    state.EnterElement(propMapping.Name);
+
+                if (propMapping.IsCollection) state.SetIndex(0);
+
                 highestOrder = checkOrder(reader, state, highestOrder, propMapping);
 
-                try
-                {
-                    deserializeChildElement(target, reader, state, propMapping, propValueMapping);
-                }
-                finally
-                {
-                    state.Path.ExitElement();
-                }
+                deserializeChildElement(target, reader, state, propMapping, propValueMapping);
+                if(!propMapping.RepresentsValueElement)
+                    state.ExitElement();
             }
-        }
-
-        if (!hasValueAttribute && !hasChildElements)
-        {
-            //previous element didn't have a value and the current value is not a child of the previous element.
-            //error is thrown with the location and the name of the previous element.
-            state.Errors.Add(ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN(reader, state.Path.GetInstancePath(), reader.LocalName));
         }
 
         if (Settings.Validator is not null)
@@ -267,15 +255,19 @@ public class BaseFhirXmlDeserializer
 
         var targetListMapping = _inspector.FindOrImportClassMapping(propMapping.ImplementingType)!;
         var targetList = targetListMapping.CreateList();
+        var elementIndex = 0;
 
         // Read the element, and any of its direct neighbours into a list.
         while (reader.LocalName == elementName && reader.NodeType != XmlNodeType.EndElement)
         {
+            if (propMapping.IsCollection)
+            {
+                state.SetIndex(elementIndex);
+                elementIndex += 1;
+            }
+
             var newEntry = deserializeSingleValue(propValueMapping, propMapping, reader, state);
             addToList(targetList, newEntry);
-
-            if(propMapping.IsCollection)
-                state.Path.IncrementIndex();
         }
 
         // If the element did not repeat, and is not a list, then it is a single item after all
@@ -290,7 +282,7 @@ public class BaseFhirXmlDeserializer
             var context = new PocoValidationContext(
                 target,
                 _inspector,
-                state.Path.GetInstancePath, // should this path GetPath or this?
+                state.Path.GetInstancePath,
                 lineNumber, position,
                 Settings.NarrativeValidation)
                 { MemberName = propMapping.Name };
@@ -434,16 +426,15 @@ public class BaseFhirXmlDeserializer
                     var propMapping = parentMapping.FindMappedElementByName(reader.LocalName) ??
                                       new PropertyMapping(parentMapping, reader.LocalName, typeof(FhirString)) { SerializationHint = XmlRepresentation.XmlAttr };
 
-                    state.Path.EnterElement(reader.LocalName, propMapping.IsCollection ? 0 : null, propMapping.IsPrimitive);
+                    if(!propMapping.RepresentsValueElement)
+                        state.EnterElement(reader.LocalName);
+                    if(propMapping.IsCollection)
+                        state.SetIndex(0);
 
-                    try
-                    {
-                        readAttribute(target, propMapping, reader.LocalName, reader, state);
-                    }
-                    finally
-                    {
-                        state.Path.ExitElement();
-                    }
+                    readAttribute(target, propMapping, reader.LocalName, reader, state);
+
+                    if(!propMapping.RepresentsValueElement)
+                        state.ExitElement();
                 }
             } while (reader.MoveToNextAttribute());
         }

@@ -43,17 +43,31 @@ namespace Hl7.Fhir.Model;
 public partial class Time
 {
     public const string FMT_HOURMINSEC = "{0:D2}:{1:D2}:{2:D2}";
+    public const string FMT_HOURMINSECMS = "{0:D2}:{1:D2}:{2:D2}.{3:D2}";
 
     public Time(int hour, int minute, int second) : this(string.Format(CultureInfo.InvariantCulture, FMT_HOURMINSEC, hour, minute, second))
     {
         // Nothing
     }
     
+    public Time(int hour, int minute, int second, int millis) :
+        this(string.Format(CultureInfo.InvariantCulture, FMT_HOURMINSECMS, hour, minute, second, millis))
+    {
+        // Nothing
+    }
+
     /// <summary>
     /// Takes the hour, minute and second of a given <see cref="DateTimeOffset"/> in the indicated timezone, and uses this
     /// to construct a new Time.
     /// </summary>
-    public static Time FromDateTimeOffset(DateTimeOffset dto) => new(dto.Hour, dto.Minute, dto.Second);
+    /// <remarks>Note that by default, milliseconds are not included in the Time value. This is due to
+    /// the nature of the FHIR Time datatype, which is normally used to communicate a time of day, e.g. for
+    /// a medication administration. It is unusual to include milliseconds in such a time.
+    /// </remarks>
+    public static Time FromDateTimeOffset(DateTimeOffset dto, bool includeMillis = false) =>
+        includeMillis
+            ? new Time(dto.Hour, dto.Minute, dto.Second, dto.Millisecond)
+            : new Time(dto.Hour, dto.Minute, dto.Second);
 
     public static Time Now() => FromDateTimeOffset(DateTimeOffset.Now);
 
