@@ -84,6 +84,12 @@ namespace Hl7.Fhir.Model
       [EnumLiteral("display"), Description("Display")]
       Display,
       /// <summary>
+      /// An item that defines a specific answer to be captured, and may have child items.(the answer provided in the QuestionnaireResponse should be of the defined datatype)
+      /// (system: http://hl7.org/fhir/item-type)
+      /// </summary>
+      [EnumLiteral("question"), Description("Question")]
+      Question,
+      /// <summary>
       /// Question with a yes/no answer (valueBoolean)
       /// (system: http://hl7.org/fhir/item-type)
       /// </summary>
