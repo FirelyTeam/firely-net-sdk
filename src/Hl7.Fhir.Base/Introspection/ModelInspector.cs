@@ -179,10 +179,9 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
             if (mi.GetField(MODELINFO_OPENTYPES_MEMBER, BindingFlags.Static | BindingFlags.Public) is { } openTypesPi)
                 OpenTypes = openTypesPi.GetValue(null) as Type[] ?? [];
         }
-        else
-        {
+        
+        if (OpenTypes.Length == 0)
             OpenTypes = [typeof(DataType)];
-        }
 
         // Find and extract all EnumMappings
         var exportedEnums = exportedTypes.Where(et => et.IsEnum);
