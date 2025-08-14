@@ -22,15 +22,30 @@ namespace Hl7.Fhir.Serialization;
 public static class JsonSerializationExtensions
 {
     /// <summary>
+    /// Serializes the given POCO with FHIR data into Json.
+    /// </summary>
+    /// <param name="ser">The serializer to use.</param>
+    /// <param name="instance">The instance to serialize.</param>
+    /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write the serialized data to.</param>
+    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    [Obsolete("Use the overload that takes Func<SerializationFilter> instead to ensure thread-safety when reusing" +
+              " serializer instances in concurrent scenarios. This method will be removed in a future version.")]
+    public static void Serialize(this BaseFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,
+        SerializationFilter? filter = null)
+    {
+        ser.Serialize(instance, writer, () => filter);
+    }
+
+    /// <summary>
     /// Serializes the given POCO into a FHIR Json string.
     /// </summary>
     /// <param name="ser">The serializer to use.</param>
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Json.</param>
-    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     public static string SerializeToString(this BaseFhirJsonSerializer ser, Base instance, bool pretty = false,
-        SerializationFilter? filter = null) =>
-        SerializationUtil.WriteJsonToString(w => ser.Serialize(instance, w, filter), pretty);
+        Func<SerializationFilter?>? filterFactory = null) =>
+        SerializationUtil.WriteJsonToString(w => ser.Serialize(instance, w, filterFactory), pretty);
 
     /// <summary>
     /// Serializes the given POCO into a FHIR Json string.
@@ -50,7 +65,7 @@ public static class JsonSerializationExtensions
         ser.SerializeToString(
             instance,
             pretty,
-            summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
+            () => summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
     public static Tasks.Task<string> SerializeToStringAsync(this BaseFhirJsonSerializer ser, Base instance,
@@ -65,10 +80,10 @@ public static class JsonSerializationExtensions
     /// <param name="ser">The serializer to use.</param>
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Json.</param>
-    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     public static byte[] SerializeToBytes(this BaseFhirJsonSerializer ser, Base instance, bool pretty = false,
-        SerializationFilter? filter = null) =>
-        SerializationUtil.WriteJsonToBytes(w => ser.Serialize(instance, w, filter), pretty);
+        Func<SerializationFilter?>? filterFactory = null) =>
+        SerializationUtil.WriteJsonToBytes(w => ser.Serialize(instance, w, filterFactory), pretty);
 
     /// <summary>
     /// Serializes the given POCO into a  FHIR Json byte array.
@@ -87,7 +102,7 @@ public static class JsonSerializationExtensions
         ser.SerializeToBytes(
             instance,
             pretty,
-            summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
+            () => summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
     public static Tasks.Task<byte[]> SerializeToBytesAsync(this BaseFhirJsonSerializer ser, Base instance,
@@ -140,7 +155,7 @@ public static class JsonSerializationExtensions
         ser.Serialize(
             instance,
             writer,
-            summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
+            () => summary.GetSerializationFilter(elements, includeMandatoryInElementsSummary));
 
     [Obsolete("The new serializers do not support async serialization, use the synchronous version instead.")]
     public static Tasks.Task SerializeAsync(this BaseFhirJsonSerializer ser, Base instance, Utf8JsonWriter writer,

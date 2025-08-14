@@ -64,7 +64,7 @@ public static class PocoSerializationExtensions
     // 20241217
     [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlSerializer.Default.SerializeToBytes() instead.")]
     public static byte[] ToXmlBytes(this Base source, bool pretty = false, SerializationFilter? filter = null) =>
-        FhirXmlSerializer.Default.SerializeToBytes(source, pretty, filter);
+        FhirXmlSerializer.Default.SerializeToBytes(source, pretty, filter is not null ? () => filter : null);
 
     // 20241217
     [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlSerializer.Default.Serialize() instead.")]

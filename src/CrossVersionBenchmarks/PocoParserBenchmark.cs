@@ -17,24 +17,27 @@ public class PocoParserBenchmark
 {
     private ReadOnlySequence<byte> _payloadJson;
     private string _payloadXml;
-    private FhirXmlPocoDeserializer _xmlDeserializer;
+
 #if SDK6
+    private FhirXmlDeserializer _xmlDeserializer;
     private FhirJsonDeserializer _jsonDeserializer;
 #else
     private FhirJsonPocoDeserializer _jsonDeserializer;
+    private FhirXmlPocoDeserializer _xmlDeserializer;
 #endif
     [GlobalSetup]
     public void BenchmarkSetup()
     {
-        _payloadJson = new(Encoding.UTF8.GetBytes(File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"))));
+        _payloadJson = new ReadOnlySequence<byte>(Encoding.UTF8.GetBytes(File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"))));
         _payloadXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-        
-        var xmlOpt = new FhirXmlPocoDeserializerSettings() { Validator = null };
-        _xmlDeserializer = new FhirXmlPocoDeserializer(xmlOpt);
+
 #if SDK6
         var options = new DeserializerSettings() { Validator = null };
         _jsonDeserializer = new FhirJsonDeserializer(options);
+        _xmlDeserializer = new FhirXmlDeserializer(options);
 #else
+        var xmlOpt = new FhirXmlPocoDeserializerSettings() { Validator = null };
+        _xmlDeserializer = new FhirXmlPocoDeserializer(xmlOpt);
         var jsonOpt = new FhirJsonPocoDeserializerSettings() { Validator = null };
         _jsonDeserializer = new FhirJsonPocoDeserializer(jsonOpt);
 #endif

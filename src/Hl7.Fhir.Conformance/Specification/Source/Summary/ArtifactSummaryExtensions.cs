@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Source
             var version = values.Length == 2 ? values[1] : string.Empty;
 
             return summaries.ConformanceResources(modelInfo).Where(r => r.GetConformanceCanonicalUrl() == values[0] &&
-                                                               (string.IsNullOrEmpty(version) || r.GetConformanceVersion() == version));
+                                                               (string.IsNullOrEmpty(version) || Canonical.MatchesVersion(r.GetConformanceVersion(), version)));
         }
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for <see cref="CodeSystem"/> resources with the specified valueSet uri.</summary>

@@ -24,14 +24,14 @@ public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonConverte
 {
     private BaseFhirJsonDeserializer _deserializer = new(inspector, converterOptions);
     private readonly BaseFhirJsonSerializer _serializer = new(inspector);
-    private SerializationFilter? _serializationFilter = converterOptions.SummaryFilter;
+    private Func<SerializationFilter>? _serializationFilterFactory = converterOptions.SummaryFilterFactory;
 
     internal FhirJsonConverterOptions CurrentOptions = converterOptions;
 
     public void Reconfigure(FhirJsonConverterOptions newOptions)
     {
         _deserializer = new BaseFhirJsonDeserializer(inspector, newOptions);
-        _serializationFilter = newOptions.SummaryFilter;
+        _serializationFilterFactory = newOptions.SummaryFilterFactory;
         CurrentOptions = newOptions;
     }
     public override bool CanConvert(Type typeToConvert) => typeof(Base).IsAssignableFrom(typeToConvert);
@@ -40,14 +40,14 @@ public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonConverte
     {
         return (JsonConverter?)Activator.CreateInstance(
             typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert), BindingFlags.Public | BindingFlags.Instance, null,
-            [_deserializer, _serializer, _serializationFilter], null, null);
+            [_deserializer, _serializer, _serializationFilterFactory], null, null);
     }
 }
 
 /// <summary>
 /// FHIR Resource and datatype converter for FHIR deserialization.
 /// </summary>
-internal class FhirJsonConverter<TF>(BaseFhirJsonDeserializer deserializer, BaseFhirJsonSerializer serializer,  SerializationFilter? summaryFilter = null) : JsonConverter<TF>
+internal class FhirJsonConverter<TF>(BaseFhirJsonDeserializer deserializer, BaseFhirJsonSerializer serializer, Func<SerializationFilter>? summaryFilterFactory = null) : JsonConverter<TF>
     where TF : Base
 {
     /// <summary>
@@ -60,7 +60,7 @@ internal class FhirJsonConverter<TF>(BaseFhirJsonDeserializer deserializer, Base
     /// </summary>
     public override void Write(Utf8JsonWriter writer, TF poco, JsonSerializerOptions options)
     {
-        serializer.Serialize(poco, writer, summaryFilter);
+        serializer.Serialize(poco, writer, summaryFilterFactory);
     }
 
     /// <summary>
