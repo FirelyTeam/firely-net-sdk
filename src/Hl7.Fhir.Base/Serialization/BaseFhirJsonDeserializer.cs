@@ -692,7 +692,7 @@ public class BaseFhirJsonDeserializer
                 }
             }
 
-            state.Errors.Add(ERR.NO_RESOURCETYPE_PROPERTY(ref reader, ""));
+            state.Errors.Add(ERR.NO_RESOURCETYPE_PROPERTY(ref reader, state.Path.Previous?.GetInstancePath() ?? ""));
             return null;
         }
         finally
