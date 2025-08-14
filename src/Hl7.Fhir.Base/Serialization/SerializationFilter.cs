@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.Introspection;
+using System;
 
 namespace Hl7.Fhir.Serialization;
 
@@ -80,4 +81,10 @@ public abstract class SerializationFilter
                 IncludeNames = elements,
                 IncludeMandatory = includeMandatory
             }));
+
+    /// <summary>
+    /// Create a factory function that produces new filter instances conforming to the `_elements=...` summarized form.
+    /// Using this factory ensures thread-safety when reusing JsonSerializerOptions instances.
+    /// </summary>
+    public static Func<SerializationFilter> ForElementsFactory(string[] elements) => () => ForElements(elements);
 }

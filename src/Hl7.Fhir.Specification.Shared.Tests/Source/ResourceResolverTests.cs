@@ -13,6 +13,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -363,6 +364,5 @@ namespace Hl7.Fhir.Specification.Tests
             }
             Assert.IsTrue(conflictException);
         }
-
     }
 }
