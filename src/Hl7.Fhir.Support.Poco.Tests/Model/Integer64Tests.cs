@@ -51,4 +51,15 @@ public class Integer64Tests
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }
+
+    [TestMethod]
+    public void SetJsonValueSupportsLong()
+    {
+        var c = new Integer64 { JsonValue = 7 };
+        Assert.AreEqual(7, c.Value);
+        c.JsonValue = (long)8;
+        Assert.AreEqual(8, c.Value);
+        c.JsonValue = (uint)9;
+        Assert.AreEqual(9, c.Value);
+    }
 }
