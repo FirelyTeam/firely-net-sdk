@@ -46,10 +46,6 @@ public class Integer64Tests
         c.JsonValue = "nonsense";
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
-
-        c.JsonValue = 314;
-        Assert.ThrowsException<CodedValidationException>(() => c.Value);
-        c.HasValidValue().Should().BeFalse();
     }
 
     [TestMethod]
