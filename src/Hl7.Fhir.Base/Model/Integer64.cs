@@ -76,9 +76,14 @@ public partial class Integer64
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
         if (_parsedValue is not null || base.JsonValue is null) return null;
-
+        
+        if (base.JsonValue is long literal)
+        {
+            _parsedValue = literal;
+            return null;
+        }
+        
         _parsedValue = null;
-
         if (base.JsonValue is not string unparsed)
             return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
 
