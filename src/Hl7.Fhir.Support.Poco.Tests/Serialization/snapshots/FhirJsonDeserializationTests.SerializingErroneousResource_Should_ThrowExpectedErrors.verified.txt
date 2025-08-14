@@ -325,9 +325,9 @@
       BaseErrorMessage: Resource has no 'resourceType' property.,
       LineNumber: 71,
       Position: 6,
-      InstancePath: ,
+      InstancePath: Patient.contained,
       ErrorCode: JSON103,
-      Message: Resource has no 'resourceType' property. At line 71, position 6.
+      Message: Resource has no 'resourceType' property. At Patient.contained, line 71, position 6.
     },
     {
       Type: CodedValidationException,
