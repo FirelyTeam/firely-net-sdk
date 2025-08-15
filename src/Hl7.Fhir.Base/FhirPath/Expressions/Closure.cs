@@ -31,8 +31,6 @@ namespace Hl7.FhirPath.Expressions
             EvaluationContext = ctx;
             Id = ctx.IncrementClosuresCreatedCount();
         }
-        {
-        }
 
         public EvaluationContext EvaluationContext { get; private set; }
 
