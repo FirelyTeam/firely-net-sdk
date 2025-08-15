@@ -40,7 +40,6 @@ public class FhirJsonException(
     public const string NO_RESOURCETYPE_PROPERTY_CODE = "JSON103";
     public const string EXPECTED_PRIMITIVE_NOT_NULL_CODE = "JSON109";
     public const string CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE = "JSON114";
-    public const string CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE = "JSON115";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
     public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
     public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
@@ -103,8 +102,6 @@ public class FhirJsonException(
     // ==========================================
 
     // Will store the data as a DynamicResource
-    internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string elementName, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Error, OO_Typ.Value);
-
     internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Error, OO_Typ.Value);
     internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Error, OO_Typ.Value);
 
@@ -119,8 +116,7 @@ public class FhirJsonException(
         CodedValidationException.INVALID_CODED_VALUE_CODE,
         CodedValidationException.UNKNOWN_ELEMENT_CODE,
         CodedValidationException.CHOICE_TYPE_NOT_ALLOWED_CODE,
-        UNKNOWN_RESOURCE_TYPE_CODE,
-        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
+        UNKNOWN_RESOURCE_TYPE_CODE, 
     };
 
     internal static FhirJsonException Initialize(ref Utf8JsonReader reader, string instancePath, string code, string message, OO_Sev issueSeverity, OO_Typ issueType = OO_Typ.Structure, Exception? innerException = null)
