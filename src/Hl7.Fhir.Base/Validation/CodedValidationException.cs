@@ -51,27 +51,20 @@ public class CodedValidationException : ExtendedCodedException
     public const string UNKNOWN_ELEMENT_CODE = "PVAL128";
     public const string ELEMENT_CANNOT_BE_EMPTY_CODE = "PVAL129";
 
-    // A list of all issues mentioned above, so we can filter on them.
-    internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
+    // A list of all issues that would throw an exception if the user used the
+    // properties on the POCOs (and specifically the Value prop on datatypes).
+    // Otherwise said, if none of these are raised, the user should be able to
+    // use the POCOs without us throwing validation exceptions and should not be
+    // required to check the <see cref="Base.Overflow"/> for unknown elements.
+    internal static readonly HashSet<string> ISSUES_CAUSED_BY_OVERFLOW =
     [
-        CHOICE_TYPE_NOT_ALLOWED_CODE,
-        INCORRECT_CARDINALITY_MIN_CODE,
-        INCORRECT_CARDINALITY_MAX_CODE,
-        REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE,
-        MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE,
-        NARRATIVE_XML_IS_MALFORMED_CODE,
-        NARRATIVE_XML_IS_INVALID_CODE,
         INVALID_CODED_VALUE_CODE,
-        CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE,
         INVALID_STRING_LENGTH_CODE,
         INVALID_BASE64_VALUE_CODE,
         INCORRECT_LITERAL_VALUE_TYPE_CODE,
         LITERAL_INVALID_CODE,
-        POSITIVE_INT_MUST_BE_POSITIVE_CODE,
-        UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE,
         PROPERTY_TYPE_MISMATCH_CODE,
         UNKNOWN_ELEMENT_CODE,
-        ELEMENT_CANNOT_BE_EMPTY_CODE
     ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(PocoValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Value);

@@ -886,13 +886,13 @@ public partial class FhirJsonDeserializationTests
         [
             new JsonSerializerOptions().ForFhir()
                 .UsingMode(DeserializationMode.Recoverable),
-            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.IsRecoverableIssue(e)))
+            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.FilterRecoverableIssues(e)))
         ];
         yield return
         [
             new JsonSerializerOptions().ForFhir()
                 .UsingMode(DeserializationMode.BackwardsCompatible),
-            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.IsBackwardsCompatibilityIssue(e)))
+            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.FilterBackwardsCompatibilityIssues(e)))
         ];
         yield return
         [
