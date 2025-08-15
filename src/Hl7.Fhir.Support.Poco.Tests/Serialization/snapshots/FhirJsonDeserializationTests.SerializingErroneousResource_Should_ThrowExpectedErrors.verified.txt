@@ -620,26 +620,40 @@
       Message: Choice element 'value' should be suffixed by a type. At Patient.gender.extension[2].value, line 302, position 18.
     },
     {
-      Type: FhirJsonException,
+      Type: CodedValidationException,
+      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Choice element 'value' is suffixed with an unrecognized type 'SuperDecimal'.,
-      LineNumber: 306,
-      Position: 30,
-      InstancePath: Patient.gender.extension[3].value,
-      ErrorCode: JSON115,
-      Message: Choice element 'value' is suffixed with an unrecognized type 'SuperDecimal'. At Patient.gender.extension[3].value, line 306, position 30.
+      BaseErrorMessage: Value is of type 'UnknownType_Patient.gender.extension[2].value', which is not an allowed choice.,
+      LineNumber: 302,
+      Position: 17,
+      InstancePath: Patient.gender.extension[2].value,
+      ErrorCode: PVAL101,
+      Message: Value is of type 'UnknownType_Patient.gender.extension[2].value', which is not an allowed choice. At Patient.gender.extension[2].value, line 302, position 17.
     },
     {
-      Type: FhirJsonException,
+      Type: CodedValidationException,
+      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Choice element 'value' is suffixed with an unrecognized type 'SuperCrap'.,
+      BaseErrorMessage: Value is of type 'SuperDecimal', which is not an allowed choice.,
+      LineNumber: 306,
+      Position: 29,
+      InstancePath: Patient.gender.extension[3].value,
+      ErrorCode: PVAL101,
+      Message: Value is of type 'SuperDecimal', which is not an allowed choice. At Patient.gender.extension[3].value, line 306, position 29.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Value is of type 'SuperCrap', which is not an allowed choice.,
       LineNumber: 310,
-      Position: 28,
+      Position: 26,
       InstancePath: Patient.gender.extension[4].value,
-      ErrorCode: JSON115,
-      Message: Choice element 'value' is suffixed with an unrecognized type 'SuperCrap'. At Patient.gender.extension[4].value, line 310, position 28.
+      ErrorCode: PVAL101,
+      Message: Value is of type 'SuperCrap', which is not an allowed choice. At Patient.gender.extension[4].value, line 310, position 26.
     },
     {
       Type: CodedValidationException,
@@ -1172,11 +1186,11 @@
     },
     {
       "url": "http://example.org/StructureDefinition/extension-without-type",
-      "valueDecimal": 28
+      "valueUnknownType_Patient.gender.extension[2].value": 28
     },
     {
       "url": "http://example.org/StructureDefinition/extension-with-unknown-type",
-      "valueDecimal": 28
+      "valueSuperDecimal": 28
     },
     {
       "url": "http://example.org/StructureDefinition/extension-with-unknown-cplx-type",

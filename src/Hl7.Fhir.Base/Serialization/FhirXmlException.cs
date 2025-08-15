@@ -33,8 +33,7 @@ public class FhirXmlException(
     public const string EMPTY_ELEMENT_NAMESPACE_CODE = "XML101";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "XML102";
     public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "XML103";
-    public const string CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE = "XML105";
-    public const string CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE = "XML106";
+    public const string CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE = "XML105"; 
     public const string INCORRECT_XHTML_NAMESPACE_CODE = "XML107";
     public const string ELEMENT_OUT_OF_ORDER_CODE = "XML109";
     public const string MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE = "XML110";
@@ -93,9 +92,6 @@ public class FhirXmlException(
     internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Error, OO_Typ.Value);
     internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Error, OO_Typ.Value);
     
-    // This will use a DynamicXXX, so no data loss.
-    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Error, OO_Typ.Value);
-
     /// <summary>
     /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer
     /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
@@ -107,7 +103,6 @@ public class FhirXmlException(
         CodedValidationException.UNKNOWN_ELEMENT_CODE,
         CodedValidationException.CHOICE_TYPE_NOT_ALLOWED_CODE,
         UNKNOWN_RESOURCE_TYPE_CODE,
-        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
     ];
 
 

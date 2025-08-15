@@ -758,8 +758,6 @@ public class BaseFhirJsonDeserializer
 
                 if (foundChoiceMapping is null)
                 {
-                    state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(ref r, state.Path.GetInstancePath(),
-                        propertyMapping.Name, typeSuffix));
                     var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
                     foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, guessedDynamicType);
                 }
@@ -803,9 +801,7 @@ public class BaseFhirJsonDeserializer
             {
                 return tokenType switch
                 {
-                    JsonTokenType.String  => typeof(FhirString),
-                    JsonTokenType.Number => typeof(FhirDecimal),
-                    JsonTokenType.True or JsonTokenType.False => typeof(FhirBoolean),
+                    JsonTokenType.String or JsonTokenType.True or JsonTokenType.False or JsonTokenType.Number => typeof(DynamicPrimitive),
                     JsonTokenType.StartObject when !hasUnderscore => typeof(DynamicDataType),
                     _ when hasUnderscore => typeof(DynamicPrimitive),
                     _ => typeof(DynamicDataType)

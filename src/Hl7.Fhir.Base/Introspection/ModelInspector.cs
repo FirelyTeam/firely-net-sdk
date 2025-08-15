@@ -151,11 +151,14 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// <remarks>This is taken from the ModelInfo.Version string when the ModelInspector
     /// reflects on a satellite assembly.</remarks>
     public string? FhirVersion { get; private set; }
+    
+    public Type[] OpenTypes { get; private set; } = [];
 
     private readonly EnumMappingCollection _enumMappings = new();
 
     private const string MODELINFO_CLASSNAME = "ModelInfo";
     private const string MODELINFO_VERSION_MEMBER = "Version";
+    private const string MODELINFO_OPENTYPES_MEMBER = "OpenTypes";
 
     /// <summary>
     /// Locates all types and enums in the assembly representing FHIR metadata and extracts
@@ -169,11 +172,16 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 
         // Try to derive the literal FHIR version (e.g. 4.0.3) from the ModelInfo. This will only work
         // if the added assembly is the satellite for a FHIR release.
-        if (exportedTypes.SingleOrDefault(et => et.Name == MODELINFO_CLASSNAME) is { } mi &&
-            mi.GetProperty(MODELINFO_VERSION_MEMBER, BindingFlags.Static | BindingFlags.Public) is { } pi)
+        if (exportedTypes.SingleOrDefault(et => et.Name == MODELINFO_CLASSNAME) is { } mi)
         {
-            FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
+            if (mi.GetProperty(MODELINFO_VERSION_MEMBER, BindingFlags.Static | BindingFlags.Public) is { } verPi)
+                FhirVersion = verPi.GetValue(null) as string; // null, since this is a static property
+            if (mi.GetField(MODELINFO_OPENTYPES_MEMBER, BindingFlags.Static | BindingFlags.Public) is { } openTypesPi)
+                OpenTypes = openTypesPi.GetValue(null) as Type[] ?? [];
         }
+        
+        if (OpenTypes.Length == 0)
+            OpenTypes = [typeof(DataType)];
 
         // Find and extract all EnumMappings
         var exportedEnums = exportedTypes.Where(et => et.IsEnum);

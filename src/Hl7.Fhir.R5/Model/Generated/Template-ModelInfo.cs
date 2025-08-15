@@ -2558,6 +2558,71 @@ namespace Hl7.Fhir.Model
       new SearchParamDefinition() { Resource = "VisionPrescription", Name = "status", Code = "status", Description = new Markdown(@"The status of the vision prescription"), Type = SearchParamType.Token, Path = [], Expression = "VisionPrescription.status", Url = "http://hl7.org/fhir/SearchParameter/VisionPrescription-status" },
     };
 
+    /// <summary>
+    /// The open types that are used in the FHIR model. These are types that can be used in the 'value' field of an Extension.
+    /// </summary>
+    /// <remarks>
+    /// This list differs from the one in the written documentation (https://www.hl7.org/fhir/datatypes.html),
+    /// but we assume the list in Extension.value[x] is the more authorative.
+    /// </remarks>
+    public static readonly Type[] OpenTypes =
+    {
+      typeof(Hl7.Fhir.Model.Address),
+      typeof(Hl7.Fhir.Model.Age),
+      typeof(Hl7.Fhir.Model.Annotation),
+      typeof(Hl7.Fhir.Model.Attachment),
+      typeof(Hl7.Fhir.Model.Availability),
+      typeof(Hl7.Fhir.Model.Base64Binary),
+      typeof(Hl7.Fhir.Model.FhirBoolean),
+      typeof(Hl7.Fhir.Model.Canonical),
+      typeof(Hl7.Fhir.Model.Code),
+      typeof(Hl7.Fhir.Model.CodeableConcept),
+      typeof(Hl7.Fhir.Model.CodeableReference),
+      typeof(Hl7.Fhir.Model.Coding),
+      typeof(Hl7.Fhir.Model.ContactDetail),
+      typeof(Hl7.Fhir.Model.ContactPoint),
+      typeof(Hl7.Fhir.Model.Count),
+      typeof(Hl7.Fhir.Model.DataRequirement),
+      typeof(Hl7.Fhir.Model.Date),
+      typeof(Hl7.Fhir.Model.FhirDateTime),
+      typeof(Hl7.Fhir.Model.FhirDecimal),
+      typeof(Hl7.Fhir.Model.Distance),
+      typeof(Hl7.Fhir.Model.Dosage),
+      typeof(Hl7.Fhir.Model.Duration),
+      typeof(Hl7.Fhir.Model.Expression),
+      typeof(Hl7.Fhir.Model.ExtendedContactDetail),
+      typeof(Hl7.Fhir.Model.HumanName),
+      typeof(Hl7.Fhir.Model.Id),
+      typeof(Hl7.Fhir.Model.Identifier),
+      typeof(Hl7.Fhir.Model.Instant),
+      typeof(Hl7.Fhir.Model.Integer),
+      typeof(Hl7.Fhir.Model.Integer64),
+      typeof(Hl7.Fhir.Model.Markdown),
+      typeof(Hl7.Fhir.Model.Meta),
+      typeof(Hl7.Fhir.Model.Money),
+      typeof(Hl7.Fhir.Model.Oid),
+      typeof(Hl7.Fhir.Model.ParameterDefinition),
+      typeof(Hl7.Fhir.Model.Period),
+      typeof(Hl7.Fhir.Model.PositiveInt),
+      typeof(Hl7.Fhir.Model.Quantity),
+      typeof(Hl7.Fhir.Model.Range),
+      typeof(Hl7.Fhir.Model.Ratio),
+      typeof(Hl7.Fhir.Model.RatioRange),
+      typeof(Hl7.Fhir.Model.ResourceReference),
+      typeof(Hl7.Fhir.Model.RelatedArtifact),
+      typeof(Hl7.Fhir.Model.SampledData),
+      typeof(Hl7.Fhir.Model.Signature),
+      typeof(Hl7.Fhir.Model.FhirString),
+      typeof(Hl7.Fhir.Model.Time),
+      typeof(Hl7.Fhir.Model.Timing),
+      typeof(Hl7.Fhir.Model.TriggerDefinition),
+      typeof(Hl7.Fhir.Model.UnsignedInt),
+      typeof(Hl7.Fhir.Model.FhirUri),
+      typeof(Hl7.Fhir.Model.FhirUrl),
+      typeof(Hl7.Fhir.Model.UsageContext),
+      typeof(Hl7.Fhir.Model.Uuid),
+    };
+
   }
 
 }

@@ -253,7 +253,13 @@ public class PropertyMapping : IElementDefinitionSummary
         // The [AllowedTypes] attribute can specify a set of allowed types for this element.
         // If this is a choice element, then take this list as the declared list of FHIR types,
         // otherwise assume this is the implementing FHIR type above
-        var overridingTypes = prop.GetFhirModelAttribute<AllowedTypesAttribute>(release)?.Types;
+        var overridingTypes = prop.GetFhirModelAttribute<AllowedTypesAttribute>(release) switch
+        {
+            { OpenChoice: true } => declaringClass.Inspector.OpenTypes,
+            { Types: { Length: > 0 } types } => types,
+            _ => null
+        };
+        
         Type mappingType = determineMappingType(overridingTypes, implementingType, elementAttr, declaringClass.Name);
 
         if (declaringClass.Inspector.FindOrImportClassMapping(mappingType) is not {} propertyTypeMapping)

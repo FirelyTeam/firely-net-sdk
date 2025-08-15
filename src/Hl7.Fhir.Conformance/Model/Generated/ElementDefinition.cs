@@ -1505,6 +1505,8 @@ namespace Hl7.Fhir.Model
       /// Value of Example (one of allowed types).
       /// </summary>
       [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
+      [AllowedTypes(OpenChoice = true)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType Value
@@ -3955,6 +3957,8 @@ namespace Hl7.Fhir.Model
     /// Specified value if missing from instance.
     /// </summary>
     [FhirElement("defaultValue", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
+    [AllowedTypes(OpenChoice = true)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? DefaultValue
     {
@@ -4063,6 +4067,8 @@ namespace Hl7.Fhir.Model
     /// Value must be exactly this.
     /// </summary>
     [FhirElement("fixed", InSummary=true, Order=240, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
+    [AllowedTypes(OpenChoice = true)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Fixed
     {
@@ -4089,6 +4095,8 @@ namespace Hl7.Fhir.Model
     /// Value must have at least these property values.
     /// </summary>
     [FhirElement("pattern", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
+    [AllowedTypes(OpenChoice = true)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Pattern
     {
