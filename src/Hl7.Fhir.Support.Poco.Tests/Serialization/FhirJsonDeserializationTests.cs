@@ -209,6 +209,17 @@ public partial class FhirJsonDeserializationTests
         verify?.Invoke(result);
     }
 
+    [TestMethod]
+    public void TestSingleData()
+    {
+        var testData = new { url = "http://nu.nl", value = "blabla" };
+        string[] expectedErrors = [ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.CHOICE_TYPE_NOT_ALLOWED_CODE];
+        var (result, errors) = deserializeComplex(typeof(Extension), testData, out var readerState,
+            new FhirJsonConverterOptions());
+        
+        errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(expectedErrors);
+    }
+
     private static object?[] data<T>(object data, Action<object> verifier, params object[] args) =>
         new[] { typeof(T), data, JsonTokenType.EndObject, verifier }.Concat(args).ToArray();
 
@@ -226,12 +237,12 @@ public partial class FhirJsonDeserializationTests
         yield return data<Extension>(new { url = "test" });
         yield return data<Extension>(new { _url = "test" }, ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE); // No other errors, since we're setting url to value anyway.
         yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
-        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.CHOICE_TYPE_NOT_ALLOWED_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
-            ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+            COVE.CHOICE_TYPE_NOT_ALLOWED_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" }, JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-            ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+            COVE.CHOICE_TYPE_NOT_ALLOWED_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
@@ -509,11 +520,11 @@ public partial class FhirJsonDeserializationTests
 
         obj.Should().NotBeNull();
         obj!.Id.Should().Be("TestIdentifier");
-        obj["body"].Should().BeEquivalentTo(new List<FhirString> { new("Test") });
-        obj["testBool"].Should().BeEquivalentTo(new FhirBoolean(true));
-        obj["testDec"].Should().BeEquivalentTo(new FhirDecimal(new decimal(123.4)));
-        obj["testInt"].Should().BeEquivalentTo(new FhirDecimal(999));
-        obj["valueDateTime"].Should().BeEquivalentTo(new FhirString(dt.ToFhirDateTime()));
+        obj["body"].Should().BeEquivalentTo(new List<DynamicPrimitive> { new(){DynamicTypeName = "DynamicPrimitive", JsonValue = "Test"} });
+        obj["testBool"].Should().BeEquivalentTo(new DynamicPrimitive(){DynamicTypeName = "DynamicPrimitive", JsonValue = true});
+        obj["testDec"].Should().BeEquivalentTo(new DynamicPrimitive(){DynamicTypeName = "DynamicPrimitive", JsonValue = 123.4});
+        obj["testInt"].Should().BeEquivalentTo(new DynamicPrimitive(){DynamicTypeName = "DynamicPrimitive", JsonValue = 999});
+        obj["valueDateTime"].Should().BeEquivalentTo(new DynamicPrimitive(){DynamicTypeName = "DynamicPrimitive", JsonValue = dt.ToFhirDateTime()});
     }
 
     [TestMethod]
@@ -1015,9 +1026,9 @@ public partial class FhirJsonDeserializationTests
         var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
         parsed.Active.Should().BeTrue();
         parsed["active"].Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
-        parsed["patientLocation"].Should().BeOfType<FhirString>().Which.Value.Should().Be("http://nu.nl");
-        parsed["newList"].Should().BeOfType<List<FhirString>>().Which.Single().Value.Should().Be("singleitem");
-        parsed["remarksString"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");
+        parsed["patientLocation"].Should().BeOfType<DynamicPrimitive>().Which.Value.Should().Be("http://nu.nl");
+        parsed["newList"].Should().BeOfType<List<DynamicPrimitive>>().Which.Single().Value.Should().Be("singleitem");
+        parsed["remarksString"].Should().BeOfType<DynamicPrimitive>().Which.Value.Should().Be("Nice guy");
 
         var patientMapping = inspector.FindClassMapping(typeof(Patient))!;
         var customPropertyA = new PropertyMapping(patientMapping, "patientLocation", typeof(FhirUri));

@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     Extension = [new Extension("birthTime", new Instant(DateTimeOffset.Now))]
                 }
             };
-            var (original, summarized) = runSummarize(patient, SerializationFilter.ForSummary());
+            var (_, summarized) = runSummarize<Patient>(patient, SerializationFilter.ForSummary);
             summarized.Extension.Should().BeEmpty();
         }
         
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             b.Entry.Add(new Bundle.EntryComponent { Resource = p });
             b.Entry.Add(new Bundle.EntryComponent { Resource = nestedB });
 
-            var filter = new BundleFilter(new TopLevelFilter(
+            static SerializationFilter filter() => new BundleFilter(new TopLevelFilter(
                 new ElementMetadataFilter
                 {
                     IncludeNames = ["communication", "type"],
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 ));
 
             var options = new JsonSerializerOptions()
-                .ForFhir(new FhirJsonConverterOptions { SummaryFilter = filter })
+                .ForFhir(new FhirJsonConverterOptions { SummaryFilterFactory = filter })
                 .Pretty();
             string actual = JsonSerializer.Serialize(b, options);
 
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void AllSummaryIndeed()
         {
-            var (_, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary());
+            var (_, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary);
             var codeSystemCm = ModelInfo.ModelInspector.FindClassMapping(typeof(CodeSystem))!;
 
             summarized.EnumerateElements().All(element => codeSystemCm.FindMappedElementByName(element.Key)!.InSummary).Should().BeTrue();
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SummaryText()
         {
-            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForText());
+            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForText);
 
             traverse(summarized).Count().Should().Be(1 +
                 traverse(full.IdElement).Count() +
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SummaryData()
         {
-            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForData());
+            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForData);
 
             traverse(summarized).Count().Should().Be(traverse(full).Count() - traverse(full.Text).Count());
         }
@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SummaryElements()
         {
             // This is actually equivalent to "text" (if elements also includes mandatory)
-            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForElements(["id", "text", "meta"
-            ]));
+            var (full, summarized) = runSummarize<CodeSystem>("mask-text.xml",
+                SerializationFilter.ForElementsFactory(["id", "text", "meta"]));
 
             traverse(summarized).Count().Should().Be(1 +
                 traverse(full.IdElement).Count() +
@@ -164,16 +164,16 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SummaryCount()
         {
-            var (_, summarized) = runSummarize<Bundle>("simple-bundle.xml", SerializationFilter.ForCount());
+            var (_, summarized) = runSummarize<Bundle>("simple-bundle.xml", SerializationFilter.ForCount);
             
             // check if result contains the link
             traverse(summarized).Should().ContainKey("link");
         }
         
-        private (T full, T summarized) runSummarize<T>(T full, SerializationFilter filter) where T : Resource
+        private (T full, T summarized) runSummarize<T>(T full, Func<SerializationFilter> filterFactory) where T : Resource
         {
             var options = new JsonSerializerOptions()
-                .ForFhir(new FhirJsonConverterOptions { SummaryFilter = filter })
+                .ForFhir(new FhirJsonConverterOptions { SummaryFilterFactory = filterFactory })
                 .Pretty();
             string summarizedJson = JsonSerializer.Serialize(full, options);
 
@@ -182,12 +182,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
             return (full, summarized);
         }
 
-        private (T full, T summarized) runSummarize<T>(string filename, SerializationFilter filter) where T : Resource
+        private (T full, T summarized) runSummarize<T>(string filename, Func<SerializationFilter> filterFactory) where T : Resource
         {
             var fullXml = File.ReadAllText(Path.Combine("TestData", filename));
             var full = FhirXmlNode.Parse(fullXml).ToPoco<T>();
 
-            return runSummarize(full, filter);
+            return runSummarize(full, filterFactory);
         }
 
         private static IEnumerable<KeyValuePair<string, object>> traverse(Base x)

@@ -37,16 +37,17 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
     /// </summary>
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="writer">The <see cref="XmlWriter"/> to write the serialized data to.</param>
-    /// <param name="filter">An optional <see cref="SerializationFilter"/> to use to serialize summaries.</param>
+    /// <param name="filterFactory">An optional factory that creates a fresh <see cref="SerializationFilter"/> to use to serialize summaries.</param>
     /// <param name="rootName">When serializing subtrees, the root element is named after the type of the instance.
     /// If necessary, use this parameter to override the name of the root element.</param>
     public void Serialize(
         Base instance,
         XmlWriter writer,
-        SerializationFilter? filter = null,
+        Func<SerializationFilter?>? filterFactory = null,
         string? rootName = null)
     {
         // If the element is summarized, add the subsetted tags.
+        var filter = filterFactory?.Invoke();
         if (filter is not null)
             instance = SerializationUtil.MakeSubsettedClone(instance);
 
