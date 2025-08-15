@@ -107,8 +107,8 @@ namespace Hl7.FhirPath.Tests
             var expression = "Patient.birthDate.toString().substring(0, 4)";
             var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
-            var expr = compiler.Compile(expression, tracer);
-            var results = expr(input, new FhirEvaluationContext()).ToFhirValues().ToList();
+            var expr = compiler.Compile(expression, true);
+            var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             System.Diagnostics.Trace.WriteLine("Expression: " + expression);
             tracer.DumpDiagnostics();
 
