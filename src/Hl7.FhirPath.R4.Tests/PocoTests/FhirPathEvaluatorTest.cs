@@ -96,6 +96,12 @@ namespace Hl7.FhirPath.R4.Tests
             // Don't use the expression cache as we need to inject the debug tracer
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expression, true);
+
+            System.Diagnostics.Trace.WriteLine("");
+            System.Diagnostics.Trace.WriteLine("------------------------------------");
+            System.Diagnostics.Trace.WriteLine(expression);
+            System.Diagnostics.Trace.WriteLine("------------------------------------");
+
             return evaluator.IsBoolean(value, input, ctx ?? new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
