@@ -68,11 +68,11 @@ namespace Hl7.FhirPath
         /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
         /// </summary>
         /// <param name="expression">the parsed fhirpath expression to compile</param>
-        /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
+        /// <param name="injectDebugTraceHooks">Inject the required hooks into the compiled evaluator to support debug tracing via the EvaluationContext</param>
         /// <returns></returns>
-        public CompiledExpression Compile(Expression expression, IDebugTracer debugTrace)
+        public CompiledExpression Compile(Expression expression, bool injectDebugTraceHooks)
         {
-            Invokee inv = expression.ToEvaluator(Symbols, debugTrace);
+            Invokee inv = expression.ToEvaluator(Symbols, injectDebugTraceHooks);
 
             return (ITypedElement focus, EvaluationContext ctx) =>
             {
@@ -95,11 +95,11 @@ namespace Hl7.FhirPath
         /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
         /// </summary>
         /// <param name="expression">the fhirpath expression to parse then compile</param>
-        /// <param name="debugTrace">An optional delegate to wire into the compilation that traces the processing steps</param>
+        /// <param name="injectDebugTraceHooks">Inject the required hooks into the compiled evaluator to support debug tracing via the EvaluationContext</param>
         /// <returns></returns>
-        public CompiledExpression Compile(string expression, IDebugTracer debugTrace)
+        public CompiledExpression Compile(string expression, bool injectDebugTraceHooks)
         {
-            return Compile(Parse(expression), debugTrace);
+            return Compile(Parse(expression), injectDebugTraceHooks);
         }
     }
 }

@@ -25,24 +25,24 @@ namespace Hl7.FhirPath.Tests
         {
             ITypedElement dummy = ElementNode.ForPrimitive(value ?? true).ToScopedNode();
             var compiler = new FhirPathCompiler();
-            var evaluator = compiler.Compile(expr, new DiagnosticsDebugTracer());
-            Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext()));
+            var evaluator = compiler.Compile(expr, true);
+            Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
         }
 
         private static object scalar(string expr)
         {
             ITypedElement dummy = ElementNode.ForPrimitive(true).ToScopedNode();
             var compiler = new FhirPathCompiler();
-            var evaluator = compiler.Compile(expr, new DiagnosticsDebugTracer());
-            return evaluator.Scalar(dummy, new EvaluationContext());
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
         private static object scalar(ITypedElement dummy, string expr)
         {
             dummy = dummy.ToScopedNode();
             var compiler = new FhirPathCompiler();
-            var evaluator = compiler.Compile(expr, new DiagnosticsDebugTracer());
-            return evaluator.Scalar(dummy, new EvaluationContext());
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
         [TestMethod]

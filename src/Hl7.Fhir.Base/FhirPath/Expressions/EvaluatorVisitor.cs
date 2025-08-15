@@ -19,11 +19,11 @@ namespace Hl7.FhirPath.Expressions
     {
         private Invokee WrapForDebugTracer(Invokee invokee, Expression expression)
         {
-            if (_debugTrace != null)
+            if (_injectDebugHook)
             {
                 return (Closure context, IEnumerable<Invokee> arguments, out FocusCollection focus) => {
                     var result = invokee(context, arguments, out focus);
-                    _debugTrace?.TraceCall(expression, focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
+                    context.EvaluationContext.DebugTracer?.TraceCall(expression, context.Id, focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
                     return result;
                 };
             }
@@ -31,14 +31,19 @@ namespace Hl7.FhirPath.Expressions
         }
 
         public SymbolTable Symbols { get; }
-        private IDebugTracer _debugTrace;
+        private bool _injectDebugHook;
 
         public EvaluatorVisitor(SymbolTable symbols, IDebugTracer debugTrace = null)
         {
             Symbols = symbols;
-            _debugTrace = debugTrace;
+            _injectDebugHook = true;
         }
 
+        public EvaluatorVisitor(SymbolTable symbols, bool injectDebugHook)
+        {
+            Symbols = symbols;
+            _injectDebugHook = injectDebugHook;
+        }
 
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
@@ -47,9 +52,9 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            var focus = expression.Focus.ToEvaluator(Symbols, _debugTrace);
+            var focus = expression.Focus.ToEvaluator(Symbols, _injectDebugHook);
             var arguments = new List<Invokee>() { focus };
-            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols, _debugTrace)));
+            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols, _injectDebugHook)));
 
             // We have no real type information, so just pass object as the type
             var types = new List<Type>() { typeof(object) }; //   for the focus;
@@ -149,9 +154,15 @@ namespace Hl7.FhirPath.Expressions
 
     internal static class EvaluatorExpressionExtensions
     {
-        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope, IDebugTracer debugTrace = null)
+        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope)
         {
-            var compiler = new EvaluatorVisitor(scope, debugTrace);
+            var compiler = new EvaluatorVisitor(scope);
+            return expr.Accept(compiler);
+        }
+
+        public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope, bool injectDebugTraceHooks)
+        {
+            var compiler = new EvaluatorVisitor(scope, injectDebugTraceHooks);
             return expr.Accept(compiler);
         }
     }

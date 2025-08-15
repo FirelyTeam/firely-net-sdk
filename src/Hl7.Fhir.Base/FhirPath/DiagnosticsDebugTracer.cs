@@ -23,6 +23,7 @@ namespace Hl7.FhirPath
 
         public void TraceCall(
             Expression expr,
+            int contextId,
             IEnumerable<ITypedElement>? focus,
             IEnumerable<ITypedElement>? thisValue,
             ITypedElement? index,
@@ -31,65 +32,65 @@ namespace Hl7.FhirPath
             IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
         {
             string exprName;
-            
+
             switch (expr)
             {
                 case IdentifierExpression _:
                     return;
-                
+
                 case ConstantExpression ce:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},constant");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},constant (ctx.id: {contextId})");
                     exprName = "constant";
                     break;
-                
+
                 case ChildExpression child:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{child.ChildName}");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{child.ChildName} (ctx.id: {contextId})");
                     exprName = child.ChildName;
                     break;
-                
+
                 case IndexerExpression _:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},[]");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},[] (ctx.id: {contextId})");
                     exprName = "[]";
                     break;
-                
+
                 case UnaryExpression ue:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{ue.Op}");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{ue.Op} (ctx.id: {contextId})");
                     exprName = ue.Op;
                     break;
-                
+
                 case BinaryExpression be:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{be.Op}");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{be.Op} (ctx.id: {contextId})");
                     exprName = be.Op;
                     break;
-                
+
                 case FunctionCallExpression fe:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{fe.FunctionName}");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{fe.FunctionName} (ctx.id: {contextId})");
                     exprName = fe.FunctionName;
                     break;
-                
+
                 case NewNodeListInitExpression _:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{{}} (empty)");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},{{}} (empty) (ctx.id: {contextId})");
                     exprName = "{}";
                     break;
-                
+
                 case AxisExpression ae:
                     if (ae.AxisName == "that")
                         return;
-                    Trace.WriteLine($"Evaluated: {ae.AxisName} results: {result.Count()}");
+                    Trace.WriteLine($"Evaluated: {ae.AxisName} results: {result.Count()} (ctx.id: {contextId})");
                     exprName = "$" + ae.AxisName;
                     break;
-                
+
                 case VariableRefExpression ve:
-                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},%{ve.Name}");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},%{ve.Name} (ctx.id: {contextId})");
                     exprName = "%" + ve.Name;
                     break;
-                
+
                 default:
                     exprName = expr.GetType().Name;
 #if DEBUG
                     Debugger.Break();
 #endif
-                    throw new Exception($"Unknown expression type: {expr.GetType().Name}");
+                    throw new Exception($"Unknown expression type: {expr.GetType().Name} (ctx.id: {contextId})");
                     // Trace.WriteLine($"Evaluated: {expr} results: {result.Count()}");
             }
 

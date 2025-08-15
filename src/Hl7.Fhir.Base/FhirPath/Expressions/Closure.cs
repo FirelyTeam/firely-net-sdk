@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -17,7 +17,20 @@ namespace Hl7.FhirPath.Expressions
 {
     internal class Closure
     {
-        public Closure()
+        internal int Id { get; private set; }
+
+        public Closure(EvaluationContext ctx)
+        {
+            EvaluationContext = ctx;
+            Id = ctx.IncrementClosuresCreatedCount();
+        }
+
+        public Closure(Closure parent, EvaluationContext ctx)
+        {
+            Parent = parent;
+            EvaluationContext = ctx;
+            Id = ctx.IncrementClosuresCreatedCount();
+        }
         {
         }
 
@@ -26,22 +39,22 @@ namespace Hl7.FhirPath.Expressions
         public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
-            
+
             var node = root as ScopedNode;
-            
+
             newContext.Resource ??= node != null // if the value has been manually set, we do nothing. Otherwise, if the root is a scoped node:
                 ? getResourceFromNode(node) // we infer the resource from the scoped node
                 : (root?.Definition?.IsResource is true // if we do not have a scoped node, we see if this is even a resource to begin with
                     ? root // if it is, we use the root as the resource
                     : null // if not, this breaks the spec in every way (but we will still continue, hopefully we do not need %resource or %rootResource)
-                ); 
-            
+                );
+
             // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
-            newContext.RootResource ??= node != null 
-                ? getRootResourceFromNode(node) 
-                : newContext.Resource; 
-            
-            var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
+            newContext.RootResource ??= node != null
+                ? getRootResourceFromNode(node)
+                : newContext.Resource;
+
+            var newClosure = new Closure(ctx ?? new EvaluationContext());
 
             var input = new[] { root };
 
@@ -49,12 +62,12 @@ namespace Hl7.FhirPath.Expressions
             {
                 newClosure.SetValue(assignment.Key, assignment.Value);
             }
-            
+
             newClosure.SetThis(input);
             newClosure.SetThat(input);
             newClosure.SetIndex(ElementNode.CreateList(0));
             newClosure.SetOriginalContext(input);
-            
+
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
             if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });
 
@@ -79,11 +92,7 @@ namespace Hl7.FhirPath.Expressions
 
         public virtual Closure Nest()
         {
-            return new Closure()
-            {
-                Parent = this,
-                EvaluationContext = this.EvaluationContext
-            };
+            return new Closure(this, EvaluationContext);
         }
 
 
@@ -105,7 +114,7 @@ namespace Hl7.FhirPath.Expressions
         }
 
         private static ScopedNode getResourceFromNode(ScopedNode node) => node.AtResource ? node : node.ParentResource;
-        
+
         private static ScopedNode getRootResourceFromNode(ScopedNode node)
         {
             var resource = getResourceFromNode(node);

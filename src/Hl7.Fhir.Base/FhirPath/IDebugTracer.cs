@@ -17,6 +17,7 @@ namespace Hl7.FhirPath
     public interface IDebugTracer
     {
         void TraceCall(Expression expr,
+            int contextId,
             IEnumerable<ITypedElement> focus,
             IEnumerable<ITypedElement> thisValue,
             ITypedElement index,
