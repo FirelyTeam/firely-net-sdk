@@ -2417,7 +2417,7 @@ namespace Hl7.Fhir.Model
       typeof(Hl7.Fhir.Model.FhirUrl),
       typeof(Hl7.Fhir.Model.UsageContext),
       typeof(Hl7.Fhir.Model.Uuid),
-    }
+    };
 
   }
 

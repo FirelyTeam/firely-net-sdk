@@ -1943,7 +1943,7 @@ namespace Hl7.Fhir.Model
       typeof(Hl7.Fhir.Model.Timing),
       typeof(Hl7.Fhir.Model.UnsignedInt),
       typeof(Hl7.Fhir.Model.FhirUri),
-    }
+    };
 
   }
 
