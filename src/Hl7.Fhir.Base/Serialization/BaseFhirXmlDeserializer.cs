@@ -545,20 +545,12 @@ public class BaseFhirXmlDeserializer
     private static ClassMapping determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
     {
         var resourceType = reader.LocalName;
-        var resourceMapping = inspector.FindClassMapping(resourceType);
 
-        if (resourceMapping is null)
+        return inspector.FindClassMapping(resourceType) switch
         {
-            resourceMapping = new ClassMapping(inspector, resourceType, typeof(DynamicResource));
-            state.Errors.Add(ERR.UNKNOWN_RESOURCE_TYPE(reader, state.Path.GetInstancePath(), resourceType));
-        }
-        else if (!resourceMapping.IsResource)
-        {
-            state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), resourceType));
-            resourceMapping = new ClassMapping(inspector, resourceType, typeof(DynamicResource));
-        }
-
-        return resourceMapping;
+            null or { IsResource: false } => new ClassMapping(inspector, resourceType, typeof(DynamicResource)),
+            { } resourceMapping => resourceMapping,
+        };
     }
 
     /// <summary>

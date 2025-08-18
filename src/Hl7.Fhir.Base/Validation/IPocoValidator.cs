@@ -46,6 +46,6 @@ public interface IPocoValidator
     /// <returns>Zero or more validation errors.</returns>
     IReadOnlyCollection<CodedValidationException> ValidateObject(
         Base instance,
-        ClassMapping? classMapping,
+        ClassMapping classMapping,
         PocoValidationContext context);
 }

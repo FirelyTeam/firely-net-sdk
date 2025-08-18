@@ -39,47 +39,6 @@ public partial class FhirJsonDeserializationTests
     [TestMethod]
     public async T.Task CheckVerifier() => await _verifier.Check();
 
-    [DataTestMethod]
-    [DataRow("OperationOutcome", new string[] {})]
-    [DataRow("OperationOutcomeX", new[] { ERR.UNKNOWN_RESOURCE_TYPE_CODE })]
-    [DataRow("Meta", new[] { ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE })]
-    [DataRow(4, new[] { ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.UNKNOWN_RESOURCE_TYPE_CODE }, "4")]
-    [DataRow(null, new[] { ERR.NO_RESOURCETYPE_PROPERTY_CODE }, "UnknownResource_Patient")]
-    public void DeriveClassMapping(object? typename, string[] errorcodes, string? correctedName = null)
-    {
-        var (result, error) = test(typename);
-        if (errorcodes.Any() is false)
-            error.Should().BeEmpty();
-        else
-            error.Select(e => e.ErrorCode).Should().BeEquivalentTo(errorcodes);
-
-        if (errorcodes.Any() is false)
-            result!.Name.Should().Be((string?)typename);
-        else
-        {
-            result!.Name.Should().Be(correctedName ?? (string?)typename);
-            result.NativeType.Should().Be(typeof(DynamicResource));
-        }
-
-        static (ClassMapping?, CodedException[]) test(object? typename)
-        {
-            var inspector = ModelInspector.Base;
-
-            var jsonBytes = typename != null
-                ? JsonSerializer.SerializeToUtf8Bytes(new { resourceType = typename })
-                : JsonSerializer.SerializeToUtf8Bytes(new { resourceTypeX = "wrong" });
-            var reader = new Utf8JsonReader(jsonBytes);
-            reader.Read();
-
-            var state = new PocoDeserializerState();
-            state.EnterElement("Patient");
-            var response = BaseFhirJsonDeserializer.DetermineResourceClassMappingFromInstance(ref reader, inspector, state);
-
-            return (response, state.Errors.ToArray());
-        }
-    }
-
-
     private static (Base?, IReadOnlyCollection<CodedException>) deserializeComplex(Type objectType,
         object testObject, out Utf8JsonReader readerState,
         FhirJsonConverterOptions settings)
@@ -121,7 +80,7 @@ public partial class FhirJsonDeserializationTests
         reader.Read();
 
         var deserializer = new FhirJsonDeserializer(new DeserializerSettings { ExceptionFilter = null } );
-        _ = deserializer.TryDeserializeResource(ref reader, out var instance, out var issues);
+        _ = deserializer.TryDeserializeResource(ref reader, out Resource? _, out var issues);
         issues.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
         reader.TokenType.Should().Be(tokenAfterParsing);
     }
@@ -134,11 +93,11 @@ public partial class FhirJsonDeserializationTests
             yield return
             [
                 new { resourceType = 4, crap = 4 }, JsonTokenType.EndObject,
-                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.UNKNOWN_RESOURCE_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE
+                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, COVE.UNKNOWN_RESOURCE_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE
             ];
             yield return
             [
-                new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_RESOURCE_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE
+                new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject, COVE.UNKNOWN_RESOURCE_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE
             ];
             yield return
             [
@@ -148,7 +107,7 @@ public partial class FhirJsonDeserializationTests
             yield return
             [
                 new { resourceType = nameof(Meta) }, JsonTokenType.EndObject, 
-                ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE
+                COVE.UNKNOWN_RESOURCE_TYPE_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.ELEMENT_CANNOT_BE_EMPTY_CODE
             ];
             yield return
             [
@@ -604,7 +563,7 @@ public partial class FhirJsonDeserializationTests
         public FhirDateTime? DateTimeSeenByInstanceValidator;
         public FhirDateTime? DateTimeSeenByPropertyValidator;
 
-        public override IReadOnlyCollection<COVE> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context)
+        public override IReadOnlyCollection<COVE> ValidateObject(Base instance, ClassMapping classMapping, PocoValidationContext context)
         {
             if (instance is FhirDateTime fdt)
             {

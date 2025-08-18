@@ -50,6 +50,7 @@ public class CodedValidationException : ExtendedCodedException
     public const string PROPERTY_TYPE_MISMATCH_CODE = "PVAL127";
     public const string UNKNOWN_ELEMENT_CODE = "PVAL128";
     public const string ELEMENT_CANNOT_BE_EMPTY_CODE = "PVAL129";
+    public const string UNKNOWN_RESOURCE_TYPE_CODE = "PVAL130";
 
     // A list of all issues mentioned above, so we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -74,34 +75,37 @@ public class CodedValidationException : ExtendedCodedException
         ELEMENT_CANNOT_BE_EMPTY_CODE
     ];
 
-    internal static COVE CHOICE_TYPE_NOT_ALLOWED(PocoValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Value);
-    internal static COVE INCORRECT_CARDINALITY_MIN(PocoValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minimum cardinality is {Min}.", OO_Sev.Error, OO_Typ.Required);
-    internal static COVE INCORRECT_CARDINALITY_MAX(PocoValidationContext context, int count, int Max) => Initialize(context, INCORRECT_CARDINALITY_MAX_CODE, $"Element has {count} elements, but maximum cardinality is {Max}.", OO_Sev.Error, OO_Typ.BusinessRule);
-    internal static COVE REPEATING_ELEMENT_CANNOT_CONTAIN_NULL(PocoValidationContext context) => Initialize(context, REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, "Repeating elements should not contain a null value.", OO_Sev.Error, OO_Typ.BusinessRule);
-    internal static COVE MANDATORY_ELEMENT_MUST_BE_PRESENT(PocoValidationContext context, string? memberName, int Min) => Initialize(context, MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, $"Element '{memberName}' with minimum cardinality {Min} must be present.", OO_Sev.Error, OO_Typ.Required);
-    internal static COVE NARRATIVE_XML_IS_MALFORMED(PocoValidationContext context, string? value) => Initialize(context, NARRATIVE_XML_IS_MALFORMED_CODE, $"Value is not well-formatted Xml: {value}", OO_Sev.Error, OO_Typ.Value);
-    internal static COVE NARRATIVE_XML_IS_INVALID(PocoValidationContext context, string value) => Initialize(context, NARRATIVE_XML_IS_INVALID_CODE, $"Value is not well-formed Xml adhering to the FHIR schema for Narrative: {value}", OO_Sev.Error, OO_Typ.Value);
-    internal static COVE INVALID_CODED_VALUE(PocoValidationContext? context, object? value, string name) => Initialize(context, INVALID_CODED_VALUE_CODE, $"Value '{value}' is not a correct code for valueset '{name}'.", OO_Sev.Error, OO_Typ.CodeInvalid);
-    internal static COVE CONTAINED_RESOURCES_CANNOT_BE_NESTED(PocoValidationContext context) => Initialize(context, CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE, "It is not allowed for a resource to contain resources which themselves contain resources.", OO_Sev.Error, OO_Typ.Invariant);
-    internal static COVE INVALID_STRING_LENGTH(PocoValidationContext context, string name, string value) => Initialize(context, INVALID_STRING_LENGTH_CODE, (value.Length > 0 ? $"String {name} exceeds maximum length of 1MB." : $"String {name} is empty"), OO_Sev.Error, OO_Typ.Value);
-    internal static COVE INVALID_BASE64_VALUE(PocoValidationContext? context, object? value) => Initialize(context, INVALID_BASE64_VALUE_CODE, $"Value '{value}' is not parseable as Base64 data.", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE CHOICE_TYPE_NOT_ALLOWED(PocoValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", "Invalid datatype used", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE INCORRECT_CARDINALITY_MIN(PocoValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minimum cardinality is {Min}.", "Missing mandatory field", OO_Sev.Error, OO_Typ.Required);
+    internal static COVE INCORRECT_CARDINALITY_MAX(PocoValidationContext context, int count, int Max) => Initialize(context, INCORRECT_CARDINALITY_MAX_CODE, $"Element has {count} elements, but maximum cardinality is {Max}.", "Exceeded max values", OO_Sev.Error, OO_Typ.BusinessRule);
+    internal static COVE REPEATING_ELEMENT_CANNOT_CONTAIN_NULL(PocoValidationContext context) => Initialize(context, REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, "Repeating elements should not contain a null value.", "Cannot be null", OO_Sev.Error, OO_Typ.BusinessRule);
+    internal static COVE MANDATORY_ELEMENT_MUST_BE_PRESENT(PocoValidationContext context, string? memberName, int Min) => Initialize(context, MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, $"Element '{memberName}' with minimum cardinality {Min} must be present.", "Mandatory field cannot be null", OO_Sev.Error, OO_Typ.Required);
+    internal static COVE NARRATIVE_XML_IS_MALFORMED(PocoValidationContext context, string? value) => Initialize(context, NARRATIVE_XML_IS_MALFORMED_CODE, $"Value is not well-formatted Xml: {value}", "Malformed narrative", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE NARRATIVE_XML_IS_INVALID(PocoValidationContext context, string value) => Initialize(context, NARRATIVE_XML_IS_INVALID_CODE, $"Value is not well-formed Xml adhering to the FHIR schema for Narrative: {value}", "Invalid narrative", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE INVALID_CODED_VALUE(PocoValidationContext? context, object? value, string name) => Initialize(context, INVALID_CODED_VALUE_CODE, $"Value '{value}' is not a correct code for valueset '{name}'.", "Invalid code", OO_Sev.Error, OO_Typ.CodeInvalid);
+    internal static COVE CONTAINED_RESOURCES_CANNOT_BE_NESTED(PocoValidationContext context) => Initialize(context, CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE, "It is not allowed for a resource to contain resources which themselves contain resources.", "Contained resources cannot be nested", OO_Sev.Error, OO_Typ.Invariant);
+    internal static COVE INVALID_STRING_LENGTH(PocoValidationContext context, string name, string value) => Initialize(context, INVALID_STRING_LENGTH_CODE, (value.Length > 0 ? $"String {name} exceeds maximum length of 1MB." : $"String {name} is empty"), "String too long", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE INVALID_BASE64_VALUE(PocoValidationContext? context, object? value) => Initialize(context, INVALID_BASE64_VALUE_CODE, $"Value '{value}' is not parseable as Base64 data.", "Invalid Base64 data", OO_Sev.Error, OO_Typ.Value);
     internal static COVE INCORRECT_LITERAL_VALUE_TYPE(PocoValidationContext? context, object? value, string fhirTypeName) =>
-        Initialize(context, INCORRECT_LITERAL_VALUE_TYPE_CODE, $"{niceValue(value)} is not the right type of literal for a {fhirTypeName}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, INCORRECT_LITERAL_VALUE_TYPE_CODE, $"{niceValue(value)} is not the right type of literal for a {fhirTypeName}.", "Invalid literal type", OO_Sev.Error, OO_Typ.Value);
     internal static COVE LITERAL_INVALID(PocoValidationContext? context, object? value, string fhirTypeName) =>
-        Initialize(context, LITERAL_INVALID_CODE, $"{niceValue(value)} is not a correct literal for a {fhirTypeName}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, LITERAL_INVALID_CODE, $"{niceValue(value)} is not a correct literal for a {fhirTypeName}.", "Invalid literal", OO_Sev.Error, OO_Typ.Value);
     internal static COVE POSITIVE_INT_MUST_BE_POSITIVE(PocoValidationContext? context, int value) =>
-        Initialize(context, POSITIVE_INT_MUST_BE_POSITIVE_CODE, $"Value {value} is not positive, which is required for a PositiveInt.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, POSITIVE_INT_MUST_BE_POSITIVE_CODE, $"Value {value} is not positive, which is required for a PositiveInt.", "Number must be positive", OO_Sev.Error, OO_Typ.Value);
     internal static COVE UNSIGNED_INT_MUST_NOT_BE_NEGATIVE(PocoValidationContext? context, int value) =>
-        Initialize(context, UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE, $"Value {value} is negative, which is not allowed for an UnsignedInt.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE, $"Value {value} is negative, which is not allowed for an UnsignedInt.", "Cannot be negative", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE PROPERTY_TYPE_MISMATCH(PocoValidationContext? context, string expected, string actual) =>
-        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be a {expected}, but found a {actual}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be a {expected}, but found a {actual}.", "Type mismatch", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE UNKNOWN_ELEMENT(PocoValidationContext? context, string elementName, string serializedForm = "element") =>
-        Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown {serializedForm} '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
+        Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown {serializedForm} '{elementName}'.", "Unknown element", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE ELEMENT_CANNOT_BE_EMPTY(PocoValidationContext? context) =>
-        Initialize(context, ELEMENT_CANNOT_BE_EMPTY_CODE, $"Empty FHIR elements are invalid", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, ELEMENT_CANNOT_BE_EMPTY_CODE, $"Empty FHIR elements are invalid.", "Element cannot be empty", OO_Sev.Error, OO_Typ.Value);
+
+    internal static COVE UNKNOWN_RESOURCE_TYPE(PocoValidationContext? context, string resourceName) =>
+        Initialize(context, UNKNOWN_RESOURCE_TYPE_CODE, $"Encountered unknown resource type '{resourceName}'.", "Unknown resource", OO_Sev.Error, OO_Typ.Value);
 
     private static string niceValue(object? v)
     {
@@ -117,7 +121,7 @@ public class CodedValidationException : ExtendedCodedException
     }
 
     public CodedValidationException(string code, string message)
-        : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
+        : base(code, message, null, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
     {
         // Nothing
     }
@@ -125,23 +129,24 @@ public class CodedValidationException : ExtendedCodedException
     public CodedValidationException(
         string errorCode,
         string baseMessage,
+        string display,
         string? instancePath,
         long? lineNumber,
         long? position,
         OperationOutcome.IssueSeverity issueSeverity,
         OperationOutcome.IssueType issueType,
         string? memberName) :
-        base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType)
+        base(errorCode, baseMessage, display, instancePath, lineNumber, position, issueSeverity, issueType)
     {
         MemberName = memberName;
     }
 
-    internal static COVE Initialize(PocoValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, string? memberName = null)
+    internal static COVE Initialize(PocoValidationContext? context, string code, string message, string display, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, string? memberName = null)
     {
         var path = context?.PathProducer.Invoke();
 
         var codedException = new COVE(
-            code, message, path,
+            code, message, display, path,
             context?.LineNumber, context?.LinePosition, 
             issueSeverity, issueType,
             memberName ?? context?.MemberName);

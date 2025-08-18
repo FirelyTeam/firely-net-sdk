@@ -23,26 +23,26 @@
       Message: Encountered an empty resource container. At Patient.contained[1], line 6, position 16.
     },
     {
-      Type: FhirXmlException,
+      Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Unknown type 'PatientX' found in root element.,
+      BaseErrorMessage: Encountered unknown resource type 'PatientX'.,
       LineNumber: 8,
       Position: 6,
       InstancePath: Patient.contained[2],
-      ErrorCode: XML102,
-      Message: Unknown type 'PatientX' found in root element. At Patient.contained[2], line 8, position 6.
+      ErrorCode: PVAL130,
+      Message: Encountered unknown resource type 'PatientX'. At Patient.contained[2], line 8, position 6.
     },
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Empty FHIR elements are invalid,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
       LineNumber: 8,
       Position: 6,
       InstancePath: Patient.contained[2],
       ErrorCode: PVAL129,
-      Message: Empty FHIR elements are invalid At Patient.contained[2], line 8, position 6.
+      Message: Empty FHIR elements are invalid. At Patient.contained[2], line 8, position 6.
     },
     {
       Type: FhirXmlException,
@@ -78,20 +78,9 @@
       Message: string 'not-checked' is not the right type of literal for a boolean. At Patient.contained[3].active, line 17, position 8.
     },
     {
-      Type: FhirXmlException,
-      IssueSeverity: Error,
-      IssueType: Value,
-      BaseErrorMessage: Unknown type 'anotherElement' found in root element.,
-      LineNumber: 19,
-      Position: 6,
-      InstancePath: Patient.contained[3],
-      ErrorCode: XML102,
-      Message: Unknown type 'anotherElement' found in root element. At Patient.contained[3], line 19, position 6.
-    },
-    {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
       LineNumber: 19,
       Position: 21,
@@ -103,12 +92,23 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Empty FHIR elements are invalid,
+      BaseErrorMessage: Encountered unknown resource type 'anotherElement'.,
+      LineNumber: 19,
+      Position: 6,
+      InstancePath: Patient.contained[3],
+      ErrorCode: PVAL130,
+      Message: Encountered unknown resource type 'anotherElement'. At Patient.contained[3], line 19, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
       LineNumber: 20,
       Position: 6,
       InstancePath: Patient.contained[3],
       ErrorCode: PVAL129,
-      Message: Empty FHIR elements are invalid At Patient.contained[3], line 20, position 6.
+      Message: Empty FHIR elements are invalid. At Patient.contained[3], line 20, position 6.
     },
     {
       Type: FhirXmlException,
@@ -121,15 +121,15 @@
       Message: Encountered multiple elements in a resource container. Only a single resource is allowed. At Patient.contained[3], line 21, position 5.
     },
     {
-      Type: FhirXmlException,
+      Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Unknown type 'PatientId' found in root element.,
+      BaseErrorMessage: Encountered unknown resource type 'PatientId'.,
       LineNumber: 23,
       Position: 6,
       InstancePath: Patient.contained[4],
-      ErrorCode: XML102,
-      Message: Unknown type 'PatientId' found in root element. At Patient.contained[4], line 23, position 6.
+      ErrorCode: PVAL130,
+      Message: Encountered unknown resource type 'PatientId'. At Patient.contained[4], line 23, position 6.
     },
     {
       Type: FhirXmlException,
@@ -169,23 +169,23 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Empty FHIR elements are invalid,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
       LineNumber: 31,
       Position: 8,
       InstancePath: Patient.contained[5].name[0],
       ErrorCode: PVAL129,
-      Message: Empty FHIR elements are invalid At Patient.contained[5].name[0], line 31, position 8.
+      Message: Empty FHIR elements are invalid. At Patient.contained[5].name[0], line 31, position 8.
     },
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Empty FHIR elements are invalid,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
       LineNumber: 32,
       Position: 8,
       InstancePath: Patient.contained[5].name[1],
       ErrorCode: PVAL129,
-      Message: Empty FHIR elements are invalid At Patient.contained[5].name[1], line 32, position 8.
+      Message: Empty FHIR elements are invalid. At Patient.contained[5].name[1], line 32, position 8.
     },
     {
       Type: FhirXmlException,
@@ -212,7 +212,7 @@
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'anotherAttribute'.,
       LineNumber: 37,
       Position: 29,
@@ -257,7 +257,7 @@
       Type: CodedValidationException,
       MemberName: name,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown element 'name'.,
       LineNumber: 46,
       Position: 10,
@@ -269,7 +269,7 @@
       Type: CodedValidationException,
       MemberName: data,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown element 'data'.,
       LineNumber: 47,
       Position: 10,
@@ -280,7 +280,7 @@
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
       LineNumber: 49,
       Position: 16,
@@ -291,7 +291,7 @@
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'no'.,
       LineNumber: 53,
       Position: 14,
@@ -313,17 +313,17 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Empty FHIR elements are invalid,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
       LineNumber: 54,
       Position: 8,
       InstancePath: Patient.contained[8].id,
       ErrorCode: PVAL129,
-      Message: Empty FHIR elements are invalid At Patient.contained[8].id, line 54, position 8.
+      Message: Empty FHIR elements are invalid. At Patient.contained[8].id, line 54, position 8.
     },
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
       LineNumber: 57,
       Position: 13,
@@ -355,18 +355,18 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: Empty FHIR elements are invalid,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
       LineNumber: 59,
       Position: 8,
       InstancePath: Patient.contained[8].unknown,
       ErrorCode: PVAL129,
-      Message: Empty FHIR elements are invalid At Patient.contained[8].unknown, line 59, position 8.
+      Message: Empty FHIR elements are invalid. At Patient.contained[8].unknown, line 59, position 8.
     },
     {
       Type: CodedValidationException,
       MemberName: unknown,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown element 'unknown'.,
       LineNumber: 59,
       Position: 8,
@@ -388,7 +388,7 @@
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'valueString'.,
       LineNumber: 70,
       Position: 18,
@@ -412,7 +412,7 @@
       Type: CodedValidationException,
       MemberName: highest,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown element 'highest'.,
       LineNumber: 76,
       Position: 10,
@@ -478,7 +478,7 @@
     {
       Type: CodedValidationException,
       IssueSeverity: Error,
-      IssueType: Unknown,
+      IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'huh'.,
       LineNumber: 142,
       Position: 37,
