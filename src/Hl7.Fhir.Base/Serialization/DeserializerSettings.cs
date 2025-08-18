@@ -120,24 +120,30 @@ public record DeserializerSettings
             },
             DeserializationMode.BackwardsCompatible => this with
             {
-                ExceptionFilter = CodedExceptionFilters.IsBackwardsCompatibilityIssue,
+                ExceptionFilter = CodedExceptionFilters.FilterBackwardsCompatibilityIssues,
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Recoverable => this with
             {
-                ExceptionFilter = CodedExceptionFilters.IsRecoverableIssue,
+                ExceptionFilter = CodedExceptionFilters.FilterRecoverableIssues,
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.SyntaxOnly => this with
             {
-                ExceptionFilter = CodedExceptionFilters.IsSyntaxOnlyIssue,
+                Validator = null,   // Disable all model validations, we don't care.
+                ExceptionFilter = null,  // All exceptions coming from the parser are reported, on filtering.
+                NarrativeValidation = NarrativeValidationKind.None // Irrelevant as the Validator = null.
+            },
+            DeserializationMode.NoOverflow => this with
+            {
+                ExceptionFilter = CodedExceptionFilters.FilterNoOverflowIssues,
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Ostrich => this with
             {
-                Validator = null,   // Disable all validations, we don't care.
+                Validator = null,   // Disable all model validations, we don't care.
                 ExceptionFilter = _ => true,   // If there are still errors, ignore.
-                NarrativeValidation = nvk ?? NarrativeValidationKind.None   // We don't care about the narrative.
+                NarrativeValidation = NarrativeValidationKind.None  // Irrelevant as the Validator = null.
             },
             _ => throw Error.NotSupported("Unknown deserialization mode.")
         };
@@ -166,7 +172,7 @@ public record ParserSettings : DeserializerSettings
     {
 #pragma warning disable CS0618 // Type or member is obsolete
     //    if (PermissiveParsing) augmentedFilter = augmentedFilter.Or(CodedExceptionFilters.IsRecoverableIssue);
-    get => PermissiveParsing ? base.ExceptionFilter.Or(CodedExceptionFilters.IsRecoverableIssue) : base.ExceptionFilter;
+    get => PermissiveParsing ? base.ExceptionFilter.Or(CodedExceptionFilters.FilterRecoverableIssues) : base.ExceptionFilter;
 #pragma warning restore CS0618 // Type or member is obsolete
 
 
@@ -176,7 +182,7 @@ public record ParserSettings : DeserializerSettings
     /// <summary>
     /// Do not raise exceptions for recoverable errors.
     /// </summary>
-    /// <remarks>This is the same as adding <see cref="CodedExceptionFilters.IsRecoverableIssue"/> to the exception filter.</remarks>
+    /// <remarks>This is the same as adding <see cref="CodedExceptionFilters.FilterRecoverableIssues"/> to the exception filter.</remarks>
     [Obsolete("Use WithMode(DeserializationMode.Recoverable) instead.")]
     public bool PermissiveParsing { get; init; }
 }
