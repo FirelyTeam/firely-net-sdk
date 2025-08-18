@@ -232,7 +232,7 @@ namespace Hl7.FhirPath.Tests
                 }
                 if (n == 3)
                 {
-                    // the context and results of toString call
+                    // the context and results of indexOf call
                     Assert.AreEqual("example\t(id)\tPatient.id[0]", vFocus);
                     Assert.AreEqual("2\t(System.Integer)", vResult);
                 }

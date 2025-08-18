@@ -60,7 +60,7 @@ namespace Hl7.FhirPath
             return (ITypedElement focus, EvaluationContext ctx) =>
                 {
                     var closure = Closure.Root(focus, ctx);
-                    return inv(closure, InvokeeFactory.EmptyArgs, out _);
+                    return inv(closure, InvokeeFactory.EmptyArgs);
                 };
         }
 
@@ -77,7 +77,7 @@ namespace Hl7.FhirPath
             return (ITypedElement focus, EvaluationContext ctx) =>
             {
                 var closure = Closure.Root(focus, ctx);
-                return inv(closure, InvokeeFactory.EmptyArgs, out _);
+                return inv(closure, InvokeeFactory.EmptyArgs);
             };
         }
 

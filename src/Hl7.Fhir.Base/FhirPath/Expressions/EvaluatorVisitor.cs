@@ -21,10 +21,12 @@ namespace Hl7.FhirPath.Expressions
         {
             if (_injectDebugHook)
             {
-                return (Closure context, IEnumerable<Invokee> arguments, out FocusCollection focus) => {
+                return (Closure context, IEnumerable<Invokee> arguments) => {
                     var oldFocus = context.focus;
-                    var result = invokee(context, arguments, out focus);
+                    var result = invokee(context, arguments);
+
                     context.EvaluationContext.DebugTracer?.TraceCall(expression, context.Id, context.focus, context.GetThis(), context.GetIndex()?.FirstOrDefault(), context.GetTotal(), result, context.Variables());
+
                     // restore the original focus to the context
                     context.focus = oldFocus;
                     return result;
@@ -106,19 +108,18 @@ namespace Hl7.FhirPath.Expressions
 
             return WrapForDebugTracer(chainResolves, expression);
 
-            FocusCollection chainResolves(Closure context, IEnumerable<Invokee> invokees, out FocusCollection focus)
+            FocusCollection chainResolves(Closure context, IEnumerable<Invokee> invokees)
             {
                 var value = context.ResolveValue(expression.Name);
                 if (value != null)
                 {
                     // this was in the context, so the scope was $this (the context)
-                    focus = context.GetThis();
-                    context.focus = focus;
+                    context.focus = context.GetThis();
                     return value;
                 }
                 else
                 {
-                    return resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, [], out focus);
+                    return resolve(Symbols, expression.Name, Enumerable.Empty<Type>())(context, []);
                 }
             }
         }

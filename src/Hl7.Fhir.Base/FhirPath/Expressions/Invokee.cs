@@ -18,58 +18,52 @@ using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementM
 
 namespace Hl7.FhirPath.Expressions;
 
-internal delegate FocusCollection Invokee(Closure context, IEnumerable<Invokee> arguments, out FocusCollection focus);
+internal delegate FocusCollection Invokee(Closure context, IEnumerable<Invokee> arguments);
 
 internal static class InvokeeFactory
 {
     public static readonly IEnumerable<Invokee> EmptyArgs = [];
 
-    public static FocusCollection GetThis(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
+    public static FocusCollection GetThis(Closure context, IEnumerable<Invokee> _)
     {
-        focus = context.GetThis();
-        context.focus = focus;
-        return focus;
+        var result = context.GetThis();
+        context.focus = result;
+        return result;
     }
 
-    public static FocusCollection GetTotal(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
+    public static FocusCollection GetTotal(Closure context, IEnumerable<Invokee> _)
     {
-        focus = context.GetThis();
-        context.focus = focus;
+        context.focus = context.GetThis();
         return context.GetTotal();
     }
 
-    public static FocusCollection GetContext(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
+    public static FocusCollection GetContext(Closure context, IEnumerable<Invokee> _)
     {
-        focus = context.GetThis();
-        context.focus = focus;
+        context.focus = context.GetThis();
         return context.GetOriginalContext();
     }
 
-    public static FocusCollection GetResource(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
+    public static FocusCollection GetResource(Closure context, IEnumerable<Invokee> _)
     {
-        focus = context.GetThis();
-        context.focus = focus;
+        context.focus = context.GetThis();
         return context.GetResource();
     }
 
-    public static FocusCollection GetRootResource(Closure context, IEnumerable<Invokee> arguments, out FocusCollection focus)
+    public static FocusCollection GetRootResource(Closure context, IEnumerable<Invokee> arguments)
     {
-        focus = context.GetThis();
-        context.focus = focus;
+        context.focus = context.GetThis();
         return context.GetRootResource();
     }
 
-    public static FocusCollection GetThat(Closure context, IEnumerable<Invokee> _, out FocusCollection focus)
+    public static FocusCollection GetThat(Closure context, IEnumerable<Invokee> _)
     {
-        focus = context.GetThis();
-        context.focus = focus;
+        context.focus = context.GetThis();
         return context.GetThat();
     }
 
-    public static FocusCollection GetIndex(Closure context, IEnumerable<Invokee> args, out FocusCollection focus)
+    public static FocusCollection GetIndex(Closure context, IEnumerable<Invokee> args)
     {
-        focus = context.GetThis();
-        context.focus = focus;
+        context.focus = context.GetThis();
         return context.GetIndex();
     }
 
@@ -100,21 +94,20 @@ internal static class InvokeeFactory
 
     public static Invokee Wrap<R>(Func<R> func)
     {
-        return (Closure ctx, IEnumerable<Invokee> _, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> _) =>
         {
-            focus = ctx.GetThis();
-            ctx.focus = focus;
+            ctx.focus = ctx.GetThis();
             return Typecasts.CastTo<FocusCollection>(func());
         };
     }
 
     public static Invokee Wrap<A, R>(Func<A, R> func, bool propNull)
     {
-        return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> args) =>
         {
             if (typeof(A) != typeof(EvaluationContext))
             {
-                focus = args.First()(ctx, EmptyArgs, out _);
+                var focus = args.First()(ctx, EmptyArgs);
                 ctx.focus = focus;
                 if (getPropagator(propNull, typeof(A))(focus))
                     return ElementNode.EmptyList;
@@ -122,8 +115,7 @@ internal static class InvokeeFactory
             }
             else
             {
-                focus = ctx.GetThis();
-                ctx.focus = focus;
+                ctx.focus = ctx.GetThis();
             }
 
             A lastPar = (A)(object)ctx.EvaluationContext;
@@ -137,43 +129,36 @@ internal static class InvokeeFactory
     /// </summary>
     internal static Invokee WrapWithPropNullForFocus<A, B, C, R>(Func<A, B, C, R> func)
     {
-        return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> args) =>
         {
             // Get the original focus first before any processing
-            var originalFocus = args.First()(ctx, EmptyArgs, out _);
-            ctx.focus = originalFocus;
-
-            // Preserve the original focus for the debug tracer
-            focus = originalFocus;
+            var focus = args.First()(ctx, EmptyArgs);
+            ctx.focus = focus;
 
             // Check for null propagation condition
-            if (getPropagator(true, typeof(A))(originalFocus))
-            {
-                return ElementNode.EmptyList;
-            }
+            if (getPropagator(true, typeof(A))(focus)) return ElementNode.EmptyList;
 
             // For the actual function execution, we need a new Invokee that handles the arguments
             // but doesn't modify the focus for debug tracing
+            // re-wrapping (as the old code did) will fully re-evaluate the focus, again. Which can be VERY expensive in some expressions.
             if (typeof(B) != typeof(EvaluationContext))
             {
-                var argA = args.Skip(1).First()(ctx, EmptyArgs, out _);
+                var argA = args.Skip(1).First()(ctx, EmptyArgs);
                 if (getPropagator(false, typeof(B))(argA)) return ElementNode.EmptyList;
 
                 if (typeof(C) != typeof(EvaluationContext))
                 {
-                    var argB = args.Skip(2).First()(ctx, EmptyArgs, out _);
-                    ctx.focus = originalFocus; // reset here as the argument processing might change it
+                    var argB = args.Skip(2).First()(ctx, EmptyArgs);
                     if (getPropagator(false, typeof(C))(argB)) return ElementNode.EmptyList;
 
-                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(originalFocus),
+                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus),
                         Typecasts.CastTo<B>(argA),
                         Typecasts.CastTo<C>(argB)));
                 }
                 else
                 {
-                    ctx.focus = originalFocus; // reset here as the argument processing might change it
                     C lastPar = (C)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(originalFocus),
+                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus),
                         Typecasts.CastTo<B>(argA), lastPar));
                 }
             }
@@ -183,19 +168,17 @@ internal static class InvokeeFactory
 
                 if (typeof(C) != typeof(EvaluationContext))
                 {
-                    var argB = args.Skip(2).First()(ctx, EmptyArgs, out _);
-                    ctx.focus = originalFocus; // reset here as the argument processing might change it
+                    var argB = args.Skip(2).First()(ctx, EmptyArgs);
                     if (getPropagator(false, typeof(C))(argB)) return ElementNode.EmptyList;
 
-                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(originalFocus),
+                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus),
                         argA,
                         Typecasts.CastTo<C>(argB)));
                 }
                 else
                 {
-                    ctx.focus = originalFocus; // reset here as the argument processing might change it
                     C lastPar = (C)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(originalFocus),
+                    return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus),
                         argA, lastPar));
                 }
             }
@@ -204,16 +187,15 @@ internal static class InvokeeFactory
 
     public static Invokee Wrap<A, B, R>(Func<A, B, R> func, bool propNull)
     {
-        return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> args) =>
         {
-            focus = args.First()(ctx, EmptyArgs, out _);
+            var focus = args.First()(ctx, EmptyArgs);
             ctx.focus = focus;
             if (getPropagator(propNull, typeof(A))(focus)) return ElementNode.EmptyList;
 
             if (typeof(B) != typeof(EvaluationContext))
             {
-                var argA = args.Skip(1).First()(ctx, EmptyArgs, out _);
-                ctx.focus = focus; // reset here as the argument processing might change it
+                var argA = args.Skip(1).First()(ctx, EmptyArgs);
                 if (getPropagator(propNull, typeof(B))(argA)) return ElementNode.EmptyList;
 
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
@@ -228,20 +210,18 @@ internal static class InvokeeFactory
 
     public static Invokee Wrap<A, B, C, R>(Func<A, B, C, R> func, bool propNull)
     {
-        return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> args) =>
         {
-            focus = args.First()(ctx, EmptyArgs, out _);
+            var focus = args.First()(ctx, EmptyArgs);
             ctx.focus = focus;
             if (getPropagator(propNull,typeof(A))(focus)) return ElementNode.EmptyList;
 
-            var argA = args.Skip(1).First()(ctx, EmptyArgs, out _);
-            ctx.focus = focus; // reset here as the argument processing might change it
+            var argA = args.Skip(1).First()(ctx, EmptyArgs);
             if (getPropagator(propNull, typeof(B))(argA)) return ElementNode.EmptyList;
 
             if (typeof(C) != typeof(EvaluationContext))
             {
-                var argB = args.Skip(2).First()(ctx, EmptyArgs, out _);
-                ctx.focus = focus; // reset here as the argument processing might change it
+                var argB = args.Skip(2).First()(ctx, EmptyArgs);
                 if (getPropagator(propNull, typeof(C))(argB)) return ElementNode.EmptyList;
 
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
@@ -258,23 +238,20 @@ internal static class InvokeeFactory
 
     public static Invokee Wrap<A, B, C, D, R>(Func<A, B, C, D, R> func, bool propNull)
     {
-        return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> args) =>
         {
-            focus = args.First()(ctx, EmptyArgs, out _);
+            var focus = args.First()(ctx, EmptyArgs);
             ctx.focus = focus;
             if (getPropagator(propNull, typeof(A))(focus)) return ElementNode.EmptyList;
 
-            var argA = args.Skip(1).First()(ctx, EmptyArgs, out _);
-            ctx.focus = focus; // reset here as the argument processing might change it
+            var argA = args.Skip(1).First()(ctx, EmptyArgs);
             if (getPropagator(propNull, typeof(B))(argA)) return ElementNode.EmptyList;
-            var argB = args.Skip(2).First()(ctx, EmptyArgs, out _);
-            ctx.focus = focus; // reset here as the argument processing might change it
+            var argB = args.Skip(2).First()(ctx, EmptyArgs);
             if (getPropagator(propNull, typeof(C))(argB)) return ElementNode.EmptyList;
 
             if (typeof(D) != typeof(EvaluationContext))
             {
-                var argC = args.Skip(3).First()(ctx, EmptyArgs, out _);
-                ctx.focus = focus; // reset here as the argument processing might change it
+                var argC = args.Skip(3).First()(ctx, EmptyArgs);
                 if (getPropagator(propNull, typeof(D))(argC)) return ElementNode.EmptyList;
 
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus),
@@ -293,49 +270,42 @@ internal static class InvokeeFactory
 
     public static Invokee WrapLogic(Func<Func<bool?>, Func<bool?>, bool?> func)
     {
-        return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> args) =>
         {
             // Ignore focus
             // Arguments to functions (except iterative functions like `where` and `select` that update the value of $this) are not processed on the focus, they are processed on $this.
-            focus = ctx.GetThis();
+            ctx.focus = ctx.GetThis();
             var left = args.Skip(1).First();
             var right = args.Skip(2).First();
 
             // Return function that actually executes the Invokee at the last moment
             var result = Typecasts.CastTo<FocusCollection>(
-                func(() => left(ctx, EmptyArgs, out _).BooleanEval(),
-                     () => right(ctx, EmptyArgs, out _).BooleanEval()));
-
-            // Set the focus after the arguments are both calculated
-            // leave the functions to be evaluated as func style arguments so the logic can decide
-            // if both arguments need to be evaluated
-            ctx.focus = focus;
+                func(() => left(ctx, EmptyArgs).BooleanEval(),
+                     () => right(ctx, EmptyArgs).BooleanEval()));
             return result;
         };
     }
 
-    public static Invokee Return(ITypedElement value) => (Closure ctx, IEnumerable<Invokee> _, out FocusCollection focus) =>
+    public static Invokee Return(ITypedElement value) => (Closure ctx, IEnumerable<Invokee> _) =>
     {
-        focus = ctx.GetThis();
-        ctx.focus = focus;
+        ctx.focus = ctx.GetThis();
         return [value];
     };
 
-    public static Invokee Return(FocusCollection value) => (Closure ctx, IEnumerable<Invokee> _, out FocusCollection focus) =>
+    public static Invokee Return(FocusCollection value) => (Closure ctx, IEnumerable<Invokee> _) =>
     {
-        focus = ctx.GetThis();
-        ctx.focus = focus;
+        ctx.focus = ctx.GetThis();
         return value;
     };
 
     public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
     {
-        return (Closure ctx, IEnumerable<Invokee> _, out FocusCollection focus) =>
+        return (Closure ctx, IEnumerable<Invokee> _) =>
         {
             try
             {
                 var wrappedArguments = arguments.Skip(1).Select(wrapWithNextContext);
-                return invokee(ctx, [arguments.First(),.. wrappedArguments], out focus);
+                return invokee(ctx, [arguments.First(),.. wrappedArguments]);
             }
             catch (Exception e)
             {
@@ -346,12 +316,12 @@ internal static class InvokeeFactory
 
         static Invokee wrapWithNextContext(Invokee unwrappedArgument)
         {
-            return (Closure ctx, IEnumerable<Invokee> args, out FocusCollection focus) =>
+            return (Closure ctx, IEnumerable<Invokee> args) =>
             {
                 // Bring the context outside the call so that it is created before calling the invokee
                 // so that the debug tracer which will be injected gets the correct context object in it.
                 var newContext = ctx.Nest(ctx.GetThis());
-                var result = unwrappedArgument(newContext, args, out focus);
+                var result = unwrappedArgument(newContext, args);
                 return result;
             };
         }

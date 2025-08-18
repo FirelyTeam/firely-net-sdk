@@ -26,17 +26,18 @@ namespace Hl7.FhirPath.Expressions
         private readonly string _name;
         private readonly SymbolTable _scope;
 
-        public FocusCollection Dispatcher(Closure context, IEnumerable<Invokee> args, out FocusCollection focus)
+        public FocusCollection Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
             var actualArgs = new List<FocusCollection>();
 
-            focus = args.First()(context, InvokeeFactory.EmptyArgs, out _);
+            var focus = args.First()(context, InvokeeFactory.EmptyArgs);
+            context.focus = focus;
             if (!focus.Any()) return ElementNode.EmptyList;
 
             actualArgs.Add(focus);
             var newCtx = context.Nest(focus);
 
-            actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs, out _)));
+            actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
             if (actualArgs.Any(aa => !aa.Any())) return ElementNode.EmptyList;
 
             var entry = _scope.DynamicGet(_name, actualArgs);
@@ -48,8 +49,12 @@ namespace Hl7.FhirPath.Expressions
                     // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
                     // Need to clean up this duplicate logic later
                     var argFuncs = actualArgs.Select(InvokeeFactory.Return);
+                    var result = entry(context, argFuncs);
+
+                    // Dynamically dispatched function arguments aren't wrapped
+                    // for the debug/trace, so need to manually put the focus back
                     context.focus = focus;
-                    return entry(context, argFuncs, out _);
+                    return result;
                 }
                 catch (TargetInvocationException tie)
                 {

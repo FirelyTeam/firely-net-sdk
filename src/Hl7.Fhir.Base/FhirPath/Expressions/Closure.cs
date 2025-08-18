@@ -23,6 +23,7 @@ namespace Hl7.FhirPath.Expressions
         {
             EvaluationContext = ctx;
             Id = ctx.IncrementClosuresCreatedCount();
+            _debugTracerActive = ctx.DebugTracer != null;
         }
 
         public Closure(Closure parent, EvaluationContext ctx)
@@ -30,29 +31,37 @@ namespace Hl7.FhirPath.Expressions
             Parent = parent;
             EvaluationContext = ctx;
             Id = ctx.IncrementClosuresCreatedCount();
+            _debugTracerActive = ctx.DebugTracer != null;
         }
 
         /// <summary>
         /// When the debug/trace is enabled this property is used to record the focus of the closure.
-        /// It is set in the delegate produced for each node by the evaluator visitor.
-        /// The value is set <b>immediately before</b> returning the result of the evaluation of the node,
-        /// <b>after all</b> it's processing, this must be done as the same context is re-used in many
-        /// cases, and thus needs to be re-set just before it returns from the delegate.
-        /// The debug tracer uses this information in the wrapped delegate to report not only the
-        /// result of the expression, but also the other states of the closure, such as the focus,
-        /// resource, root resource, etc.
-        /// The $this variable doesn't change within a closure object, so it is not set here.
+        /// <br/>VALUE IS NOT USED OUTSIDE DEBUG - without debug/tracer, the value is not consistent.
         /// </summary>
+        /// <remarks>
+        /// It is set in the delegate produced for each node by the evaluator visitor.
+        /// The debug tracer will reset the focus in the closure after calling the delegate it's wrapping.
+        /// ensuring that argument evaluation doesn't impact the focus logged in the debug trace in other
+        /// calls.
+        /// </remarks>
         public IEnumerable<ITypedElement> focus
         {
-            get => _focus;
+            get
+            {
+                if (!_debugTracerActive)
+                    return ElementNode.EmptyList;
+                return _focus;
+            }
             set
             {
+                if (!_debugTracerActive)
+                    return;
                 _focus = value;
             }
         }
 
         private IEnumerable<ITypedElement> _focus;
+        private bool _debugTracerActive = false;
 
         public EvaluationContext EvaluationContext { get; private set; }
 
