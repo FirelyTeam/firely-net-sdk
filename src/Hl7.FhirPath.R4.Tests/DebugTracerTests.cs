@@ -48,6 +48,8 @@ namespace Hl7.FhirPath.Tests
                 IEnumerable<ITypedElement> result,
                 IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
             {
+                DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, variables);
+
                 var exprName = TraceExpressionNodeName(expr);
                 if (exprName == null)
                     return; // this is a node that we aren't interested in tracing (Identifier and $that)
@@ -55,7 +57,20 @@ namespace Hl7.FhirPath.Tests
                 string output = $"{pi.RawPosition},{pi.Length},{exprName}:" +
                                 $" focus={focus?.Count() ?? 0} result={result?.Count() ?? 0}";
                 traceOutput.Add(output);
+                if (TraceNode != null)
+                {
+                    TraceNode(traceOutput.Count-1, expr, contextId,
+                        focus, thisValue, index, totalValue, result);
+                }
             }
+
+            public delegate void TraceNodeDelegate(int n, Expression expr, int contextId,
+                IEnumerable<ITypedElement> focus,
+                IEnumerable<ITypedElement> thisValue,
+                ITypedElement index,
+                IEnumerable<ITypedElement> totalValue,
+                IEnumerable<ITypedElement> result);
+            public TraceNodeDelegate TraceNode { get; set; } = null;
 
             public string TraceExpressionNodeName(Expression expr)
             {
@@ -98,6 +113,18 @@ namespace Hl7.FhirPath.Tests
                 {
                     System.Diagnostics.Trace.WriteLine(item);
                 }
+            }
+
+            public string DebugTraceValue(Expression expr, ITypedElement? item)
+            {
+                string exprName = TraceExpressionNodeName(expr);
+                if (item == null)
+                    return null; // possible with a null focus to kick things off
+
+                if (item.Location == "@primitivevalue@" || item.Location == "@QuantityAsPrimitiveValue@")
+                    return $"{exprName}:\t{item.Value}\t({item.InstanceType})";
+
+                return $"{exprName}:\t{item.Value}\t({item.InstanceType})\t{item.Location}";
             }
         }
 

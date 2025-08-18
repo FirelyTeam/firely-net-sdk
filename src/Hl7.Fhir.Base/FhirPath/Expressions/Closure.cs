@@ -32,6 +32,28 @@ namespace Hl7.FhirPath.Expressions
             Id = ctx.IncrementClosuresCreatedCount();
         }
 
+        /// <summary>
+        /// When the debug/trace is enabled this property is used to record the focus of the closure.
+        /// It is set in the delegate produced for each node by the evaluator visitor.
+        /// The value is set <b>immediately before</b> returning the result of the evaluation of the node,
+        /// <b>after all</b> it's processing, this must be done as the same context is re-used in many
+        /// cases, and thus needs to be re-set just before it returns from the delegate.
+        /// The debug tracer uses this information in the wrapped delegate to report not only the
+        /// result of the expression, but also the other states of the closure, such as the focus,
+        /// resource, root resource, etc.
+        /// The $this variable doesn't change within a closure object, so it is not set here.
+        /// </summary>
+        public IEnumerable<ITypedElement> focus
+        {
+            get => _focus;
+            set
+            {
+                _focus = value;
+            }
+        }
+
+        private IEnumerable<ITypedElement> _focus;
+
         public EvaluationContext EvaluationContext { get; private set; }
 
         public static Closure Root(ITypedElement root, EvaluationContext ctx = null)

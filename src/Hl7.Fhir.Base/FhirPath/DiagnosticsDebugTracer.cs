@@ -20,8 +20,20 @@ namespace Hl7.FhirPath
 
     public class DiagnosticsDebugTracer : IDebugTracer
     {
-
         public void TraceCall(
+            Expression expr,
+            int contextId,
+            IEnumerable<ITypedElement>? focus,
+            IEnumerable<ITypedElement>? thisValue,
+            ITypedElement? index,
+            IEnumerable<ITypedElement> totalValue,
+            IEnumerable<ITypedElement> result,
+            IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
+        {
+            DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, variables);
+        }
+
+        public static void DebugTraceCall(
             Expression expr,
             int contextId,
             IEnumerable<ITypedElement>? focus,
@@ -76,7 +88,7 @@ namespace Hl7.FhirPath
                 case AxisExpression ae:
                     if (ae.AxisName == "that")
                         return;
-                    Trace.WriteLine($"Evaluated: {ae.AxisName} results: {result.Count()} (ctx.id: {contextId})");
+                    Trace.WriteLine($"{expr.Location.LineNumber},{expr.Location.LinePosition},${ae.AxisName} (ctx.id: {contextId})");
                     exprName = "$" + ae.AxisName;
                     break;
 
@@ -94,12 +106,25 @@ namespace Hl7.FhirPath
                     // Trace.WriteLine($"Evaluated: {expr} results: {result.Count()}");
             }
 
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    DebugTraceValue($"{exprName} »", item);
+                }
+            }
+
             if (focus != null)
             {
                 foreach (var item in focus)
                 {
                     DebugTraceValue($"$focus", item);
                 }
+            }
+
+            if (index != null)
+            {
+                DebugTraceValue("$index", index);
             }
 
             if (thisValue != null)
@@ -110,22 +135,9 @@ namespace Hl7.FhirPath
                 }
             }
 
-            if (index != null)
-            {
-                DebugTraceValue("$index", index);
-            }
-
             if (totalValue != null)
             {
                 foreach (var item in totalValue)
-                {
-                    DebugTraceValue($"{exprName} »", item);
-                }
-            }
-
-            if (result != null)
-            {
-                foreach (var item in result)
                 {
                     DebugTraceValue($"{exprName} »", item);
                 }

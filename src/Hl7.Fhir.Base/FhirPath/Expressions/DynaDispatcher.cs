@@ -48,6 +48,7 @@ namespace Hl7.FhirPath.Expressions
                     // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
                     // Need to clean up this duplicate logic later
                     var argFuncs = actualArgs.Select(InvokeeFactory.Return);
+                    context.focus = focus;
                     return entry(context, argFuncs, out _);
                 }
                 catch (TargetInvocationException tie)
