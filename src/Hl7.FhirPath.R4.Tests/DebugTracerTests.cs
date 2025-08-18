@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -38,6 +39,7 @@ namespace Hl7.FhirPath.Tests
         private class TestDebugTracer: IDebugTracer
         {
             public List<string> traceOutput = new List<string>();
+            public List<ExceptionDispatchInfo> exceptions = new List<ExceptionDispatchInfo>();
             public void TraceCall(
                 Expression expr,
                 int contextId,
@@ -48,7 +50,7 @@ namespace Hl7.FhirPath.Tests
                 IEnumerable<ITypedElement> result,
                 IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
             {
-                DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, variables);
+                // DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, variables);
 
                 var exprName = TraceExpressionNodeName(expr);
                 if (exprName == null)
@@ -59,8 +61,17 @@ namespace Hl7.FhirPath.Tests
                 traceOutput.Add(output);
                 if (TraceNode != null)
                 {
-                    TraceNode(traceOutput.Count-1, expr, contextId,
-                        focus, thisValue, index, totalValue, result);
+                    try
+                    {
+                        TraceNode(traceOutput.Count - 1, expr, contextId,
+                            focus, thisValue, index, totalValue, result);
+                    }
+                    catch(Exception e)
+                    {
+                        // swallow the exception while tracing during testing, then after evaluation
+                        // is complete, we can throw them.
+                        exceptions.Add(ExceptionDispatchInfo.Capture(e));
+                    }
                 }
             }
 
@@ -152,6 +163,64 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        [TestMethod]
+        public void testDebugTrace_Aggregate()
+        {
+            var expression = "(1|2).aggregate($total+$this, 0)";
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
+            var tracer = new TestDebugTracer();
+            tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
+            {
+                // TODO: Check the focus values.
+                if (n == 2)
+                {
+                    // the results of the | operator
+                    DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, null);
+                    var vThis = tracer.DebugTraceValue(expr, thisValue?.FirstOrDefault());
+                    var vFocus = tracer.DebugTraceValue(expr, focus?.FirstOrDefault());
+                    var vResult1 = tracer.DebugTraceValue(expr, result?.FirstOrDefault());
+                    var vResult2 = tracer.DebugTraceValue(expr, result?.Skip(1)?.FirstOrDefault());
+                    Assert.AreEqual(0, contextId);
+                }
+                if (n == 3) {
+                    // the results of the constant "0" for the init expression
+                    DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, null);
+                    var v1 = tracer.DebugTraceValue(expr, focus?.FirstOrDefault());
+                    var v2 = tracer.DebugTraceValue(expr, focus?.Skip(1)?.FirstOrDefault());
+                    // Assert.AreEqual(3, contextId);
+                }
+            };
+
+            var expr = compiler.Compile(expression, true);
+            System.Diagnostics.Trace.WriteLine("Expression: " + expression);
+            var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
+            tracer.DumpDiagnostics();
+
+            Assert.AreEqual(1, results.Count());
+            Assert.AreEqual("3", results[0].ToString());
+
+            // Now check the tracer outputs
+            Assert.AreEqual(11, tracer.traceOutput.Count());
+            int n = 0;
+            Assert.AreEqual("1,1,constant: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("3,1,constant: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("2,1,|: focus=1 result=2", tracer.traceOutput[n++]);
+            Assert.AreEqual("30,1,constant: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("16,6,$total: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("23,5,$this: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("22,1,+: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("16,6,$total: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("23,5,$this: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("22,1,+: focus=1 result=1", tracer.traceOutput[n++]);
+            Assert.AreEqual("6,9,aggregate: focus=2 result=1", tracer.traceOutput[n++]);
+
+            // Now check the tracer assertions
+            System.Diagnostics.Trace.WriteLine($"Tracer exceptions: {tracer.exceptions.Count}");
+            foreach (var item in tracer.exceptions)
+            {
+                item.Throw();
+            }
+        }
         public void testDebugTrace_WhereClause()
         {
             var expression = "name.where(use='official' or use='usual').given";
