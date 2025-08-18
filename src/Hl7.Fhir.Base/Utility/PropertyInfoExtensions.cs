@@ -69,9 +69,6 @@ public static class PropertyInfoExtensions
         {
             MethodInfo getMethod = propertyInfo.GetMethod ?? throw new InvalidOperationException($"Property {propertyInfo.Name} does not have a getter.");
 
-         //   if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
-         //       throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
-
             try
             {
                 if (NoCodeGenSupport) return null;

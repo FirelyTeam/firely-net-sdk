@@ -1049,6 +1049,9 @@ public partial class FhirJsonDeserializationTests
         JsonAssert.AreSame("parsed", json, serialized);
     }
 
+// This test is only relevant when we have getter/setter codegen enabled. - See PropertyMapping's
+// Getter and Setter, which are also excluded by this preprocessor directive.
+#if USE_GETTER_SETTER_AND_CODEGEN
 
     [TestMethod]
     public void CanAccessPropertiesViaPropertyMapping()
@@ -1075,13 +1078,14 @@ public partial class FhirJsonDeserializationTests
         var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
 
         var activePm = patientMapping.FindMappedElementByName("active")!;
-        activePm.GetValue(parsed).Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
-        activePm.SetValue(parsed, new FhirBoolean(false));
+        activePm.Getter(parsed).Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
+        activePm.Setter(parsed, new FhirBoolean(false));
         parsed.Active.Should().BeFalse();
 
-        patientLocPm.GetValue(parsed).Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
-        patientLocPm.SetValue(parsed, new FhirUri("there"));
+        patientLocPm.Getter(parsed).Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
+        patientLocPm.Setter(parsed, new FhirUri("there"));
         parsed["patientLocation"].Should().BeOfType<FhirUri>().Which.Value.Should().Be("there");
     }
 
+#endif
 }
