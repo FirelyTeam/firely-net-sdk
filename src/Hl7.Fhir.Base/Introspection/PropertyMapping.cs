@@ -202,20 +202,6 @@ public class PropertyMapping : IElementDefinitionSummary
     public string? BindingName { get; init; }
 
     /// <summary>
-    /// The function to use to get the value of this property on an instance of the class.
-    /// </summary>
-    /// <remarks>If left null, the framework will determine the fastest way to get the value on the
-    /// first call to <see cref="GetValue"/>.</remarks>
-    public Func<Base, object?>? Getter { get => _getter; init => _getter = value; }
-
-    /// <summary>
-    /// The function to use to set the value of this property on an instance of the class.
-    /// </summary>
-    /// <remarks>If left null, the framework will determine the fastest way to set the value on the
-    /// first call to <see cref="SetValue"/>.</remarks>
-    public Action<Base, object?>? Setter { get => _setter; init => _setter = value; }
-
-    /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
     public ModelInspector Inspector => DeclaringClass.Inspector;
@@ -352,14 +338,26 @@ public class PropertyMapping : IElementDefinitionSummary
     private static bool isAllowedNativeTypeForDataTypeValue(Type type) =>
         type.IsEnum || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
 
+// I have disabled this code since the deserializer and serializer no longer use these properties
+// instead they are calling TryGetValue and TrySetValue of the new dynamic/overflow subsystem.
+// Since these properties would enable some novel usecases in the future (like creating custom properties
+// that set cross-version extensions), I have left the code in place.
+ #if USE_GETTER_SETTER_AND_CODEGEN
+
     /// <summary>
-    /// Given an instance of the parent class, gets the value for this property.
+    /// The function to use to get the value of this property on an instance of the class.
     /// </summary>
-    public object? GetValue(Base instance) =>
-        LazyInitializer.EnsureInitialized(ref _getter, getValueGetter)!.Invoke(instance);
+    /// <remarks>If not explicitly set, the framework will determine the fastest way to get the value
+    /// the first time get is called.</remarks>
+    public Func<Base, object?> Getter
+    {
+        get => LazyInitializer.EnsureInitialized(ref _getter, buildValueGetter)!;
+        init => _getter = value;
+    }
+
     private Func<Base, object?>? _getter;
 
-    private Func<Base, object?> getValueGetter()
+    private Func<Base, object?> buildValueGetter()
     {
         // If this is a custom property, or this platform does not support code generation,
         // use dictionary access, otherwise use the generated getter.
@@ -368,19 +366,36 @@ public class PropertyMapping : IElementDefinitionSummary
     }
 
     /// <summary>
-    /// Given an instance of the parent class, sets the value for this property.
+    /// The function to use to set the value of this property on an instance of the class.
     /// </summary>
-    public void SetValue(Base instance, object? value) =>
-        LazyInitializer.EnsureInitialized(ref _setter, getValueSetter)!(instance, value);
+    /// <remarks>If not explicitly set, the framework will determine the fastest way to get the value
+    /// the first time set is called.</remarks>
+    public Action<Base, object?> Setter
+    {
+        get => LazyInitializer.EnsureInitialized(ref _setter, buildValueSetter)!;
+        init => _setter = value;
+    }
+
     private Action<Base, object?>? _setter;
 
-    private Action<Base, object?> getValueSetter()
+    private Action<Base, object?> buildValueSetter()
     {
-        // If this is a custom property, or this platform does not support code generation,
-        // use dictionary access, otherwise use the generated setter.
-        if (NativeProperty?.GetValueSetter<Base>() is { } setter) return setter;
+        // If this is a not custom property and the platform support codes generation,
+        // use the generated setter, unless we need overflow (type inequality).
+        if (NativeProperty?.GetValueSetter<Base>() is {} setter)
+        {
+            return (b, v) =>
+            {
+                if (v is null || NativeProperty.PropertyType.IsInstanceOfType(v))
+                    setter(b, v);
+                else
+                    b.SetValue(Name, v);
+            };
+        }
+
         return (b,v) => b.SetValue(Name, v);
     }
+#endif
 
     public PropertyMapping PromoteToList()
     {
