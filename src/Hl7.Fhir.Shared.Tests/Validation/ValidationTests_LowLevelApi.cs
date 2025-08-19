@@ -26,7 +26,7 @@ public class ValidationTests_LowLevelApi
     {
         var errors = validator.ValidateObject(
             instance,
-            ModelInfo.ModelInspector.FindClassMapping(instance.GetType()),
+            ModelInfo.ModelInspector.FindClassMapping(instance.GetType())!,
             new PocoValidationContext(
                 instance,
                 ModelInfo.ModelInspector,

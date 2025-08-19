@@ -41,14 +41,6 @@ public class FhirAttributeValidator : IPocoValidator
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
         }
 
-        // // For now, if we encounter a dynamic type instance with a name, this means we have a choice type
-        // // that is unknown. Choice types without a type suffix will result in a DynamicType without a name,
-        // // as will the contents of unknown properties and other error circumstances.
-        // if (propertyValue is IDynamicType { DynamicTypeName: not null } dt)
-        //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dt.DynamicTypeName)];
-        // if(propertyValue is IReadOnlyCollection<IDynamicType> dtCollection && dtCollection.FirstOrDefault() is { DynamicTypeName: not null } dte)
-        //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dte.DynamicTypeName)];
-
         // check whether the value is assignable to the property, we'll complain in runAttributeValidation about other issues
         if (!propertyMapping.PropertyType.IsInstanceOfType(propertyValue))
         {
@@ -62,9 +54,15 @@ public class FhirAttributeValidator : IPocoValidator
     }
 
    /// <inheritdoc />
-    public virtual IReadOnlyCollection<CodedValidationException> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context)
+    public virtual IReadOnlyCollection<CodedValidationException> ValidateObject(Base instance, ClassMapping classMapping, PocoValidationContext context)
     {
         var errors = new List<CodedValidationException>();
+
+        // For now, if we encounter a dynamic resource, we'll report that we have encountered an unknown
+        // resource type. In a future version, users will able to register custom dynamic types that are
+        // "known" to the validator, in which case those would not be reported here.
+        if (instance is DynamicResource dr && !BaseFhirJsonDeserializer.IsUnnamedResourceMapping(classMapping))
+            errors.Add(CodedValidationException.UNKNOWN_RESOURCE_TYPE(context, dr.DynamicTypeName ?? "(unnamed)"));
 
         // Make sure we detect missing values - go over all members that have cardinality constraints
         // and invoke those if there is no value (if there was a value, ValidateProperty will have been

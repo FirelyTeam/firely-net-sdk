@@ -196,7 +196,7 @@ public class BaseFhirJsonDeserializer
     {
         if (mapping.IsResource)
         {
-            usedMapping = DetermineResourceClassMappingFromInstance(ref reader, _inspector, state);
+            usedMapping = determineResourceClassMappingFromInstance(ref reader, state);
             return usedMapping.CreateInstance();
         }
 
@@ -643,27 +643,24 @@ public class BaseFhirJsonDeserializer
     /// the <see cref="ClassMapping" /> for it. If anything is wrong (resourceType not found,
     /// or not a resource), the appropriate dynamic mapping will be returned.
     /// </summary>
-    internal static ClassMapping DetermineResourceClassMappingFromInstance(ref Utf8JsonReader reader, ModelInspector inspector, PocoDeserializerState state)
+    private ClassMapping determineResourceClassMappingFromInstance(ref Utf8JsonReader reader, PocoDeserializerState state)
     {
         var resourceType = scanForResourceType(ref reader, state);
-        var path = state.Path.GetInstancePath();
-        if (resourceType is null) return new ClassMapping(inspector, $"UnknownResource_{path}", typeof(DynamicResource));
+        if (resourceType is null) return makeUnnamedResourceMapping(state.Path.GetInstancePath());
 
-        var resourceMapping = inspector.FindClassMapping(resourceType);
-
-        if (resourceMapping is null)
+        return _inspector.FindClassMapping(resourceType) switch
         {
-            resourceMapping = new ClassMapping(inspector, resourceType, typeof(DynamicResource));
-            state.Errors.Add(ERR.UNKNOWN_RESOURCE_TYPE(ref reader, state.Path.GetInstancePath(), resourceType));
-        }
-        else if (!resourceMapping.IsResource)
-        {
-            state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(ref reader, state.Path.GetInstancePath(), resourceType));
-            resourceMapping = new ClassMapping(inspector, resourceType, typeof(DynamicResource));
-        }
-
-        return resourceMapping;
+            null or { IsResource: false } => new ClassMapping(_inspector, resourceType, typeof(DynamicResource)),
+            { } resourceMapping => resourceMapping,
+        };
     }
+
+    private const string UNNAMED_RESOURCE_NAME_PREFIX = "UnnamedResource_";
+
+    private ClassMapping makeUnnamedResourceMapping(string path) =>
+        new(_inspector, $"{UNNAMED_RESOURCE_NAME_PREFIX}{path}", typeof(DynamicResource));
+
+    internal static bool IsUnnamedResourceMapping(ClassMapping c) => c.Name.StartsWith(UNNAMED_RESOURCE_NAME_PREFIX);
 
     private static string? scanForResourceType(ref Utf8JsonReader reader, PocoDeserializerState state)
     {

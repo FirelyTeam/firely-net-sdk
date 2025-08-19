@@ -24,6 +24,7 @@ namespace Hl7.Fhir.Utility
         public ExtendedCodedException(
             string errorCode,
             string baseMessage,
+            string? display,
             string? instancePath,
             long? lineNumber,
             long? position,
@@ -35,6 +36,7 @@ namespace Hl7.Fhir.Utility
             IssueSeverity = issueSeverity;
             IssueType = issueType;
             BaseErrorMessage = baseMessage;
+            Display = display;
             InstancePath = instancePath;
             LineNumber = lineNumber;
             Position = position;
@@ -75,7 +77,12 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// The error message without any location information appended to it (which is in Exception.Message property).
         /// </summary>
-        public string? BaseErrorMessage { get; private set; }
+        public string BaseErrorMessage { get; private set; }
+
+        /// <summary>
+        /// A short display string for the error, suitable for use in a user interface.
+        /// </summary>
+        public string? Display { get; private set; }
 
         /// <summary>
         /// The line number of the error in the original source data.
