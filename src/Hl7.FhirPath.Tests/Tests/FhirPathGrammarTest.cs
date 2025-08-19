@@ -58,7 +58,7 @@ namespace Hl7.FhirPath.Tests
                         AxisExpression.This, AxisExpression.Index,
                         new FunctionCallExpression(AxisExpression.That, "somethingElse", TypeSpecifier.Any, new ConstantExpression(true))));
 
-            AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.That, "as", TypeSpecifier.Any, new ConstantExpression("Patient")));
+            AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.That, "as", TypeSpecifier.Any, new IdentifierExpression("Patient")));
 
             var fexRaw = parser.Parse("as(Patient)");
             if (fexRaw is FunctionCallExpression fex)

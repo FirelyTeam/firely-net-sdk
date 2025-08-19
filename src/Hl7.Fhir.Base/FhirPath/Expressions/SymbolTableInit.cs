@@ -1,7 +1,7 @@
-/* 
+/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
 
 namespace Hl7.FhirPath.Expressions;
 
@@ -243,13 +244,13 @@ public static class SymbolTableInit
         table.Add(new CallSignature("builtin.children",
             typeof(IEnumerable<ITypedElement>),
             typeof(IEnumerable<ITypedElement>),
-            typeof(string)), (
-            ctx, invokees) =>
+            typeof(string)), (Closure ctx, IEnumerable<Invokee> invokees) =>
         {
             var iks = invokees.ToArray();
-            var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
-            var name = (string?)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
-            var result= focus.Navigate(name);
+            var focus = iks[0](ctx, InvokeeFactory.EmptyArgs);
+            ctx.focus = focus;
+            var name = (string?)iks[1](ctx, InvokeeFactory.EmptyArgs).First().Value;
+            var result = focus.Navigate(name);
 
             return result;
         });
@@ -268,6 +269,7 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var incrExpre = arguments.Skip(1).First();
         IEnumerable<ITypedElement> initialValue = ElementNode.EmptyList;
         if (arguments.Count() > 2)
@@ -283,6 +285,7 @@ public static class SymbolTableInit
         {
             var newFocus = ElementNode.CreateList(element);
             var newContext = totalContext.Nest(newFocus);
+            newContext.focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetTotal(totalContext.GetTotal());
             var newTotalResult = incrExpre(newContext, InvokeeFactory.EmptyArgs);
@@ -295,11 +298,12 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> Trace(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
 
         List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
         var selectResults = runSelect(ctx, selectArgs);
-        ctx?.EvaluationContext?.Tracer?.Invoke(name, selectResults);
+        ctx.EvaluationContext?.Tracer?.Invoke(name, selectResults);
 
         return focus;
     }
@@ -308,6 +312,7 @@ public static class SymbolTableInit
     {
         Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
         var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
 
         if(ctx.ResolveValue(name) is not null) throw new InvalidOperationException($"Variable {name} is already defined in this scope");
@@ -319,6 +324,7 @@ public static class SymbolTableInit
         else
         {
             var newContext = ctx.Nest(focus);
+            newContext.focus = focus;
             newContext.SetThis(focus);
             var result = enumerable[2](newContext, InvokeeFactory.EmptyArgs);
             ctx.SetValue(name, result);
@@ -332,8 +338,10 @@ public static class SymbolTableInit
         // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
         // note: short-circuit behavior is expected in this function
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
 
         var newContext = ctx.Nest(focus);
+        newContext.focus = focus;
         newContext.SetThis(focus);
 
         var expression = arguments.Skip(1).First()(newContext, InvokeeFactory.EmptyArgs);
@@ -351,6 +359,7 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
 
         return CachedEnumerable.Create(runForeach());
@@ -363,6 +372,7 @@ public static class SymbolTableInit
             {
                 var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
+                newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(ElementNode.CreateList(index));
                 index++;
@@ -376,6 +386,7 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
 
         return CachedEnumerable.Create(runForeach());
@@ -388,6 +399,7 @@ public static class SymbolTableInit
             {
                 var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
+                newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(ElementNode.CreateList(index));
                 index++;
@@ -402,6 +414,7 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
+        ctx.focus = newNodes;
         var lambda = arguments.Skip(1).First();
 
         var fullResult = new List<ITypedElement>();
@@ -416,14 +429,15 @@ public static class SymbolTableInit
             {
                 var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
+                newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(ElementNode.CreateList(index));
                 index++;
 
                 var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
-                var uniqeNewNodes = candidates.Except(fullResult, EqualityOperators.TypedElementEqualityComparer);
+                var uniqueNewNodes = candidates.Except(fullResult, EqualityOperators.TypedElementEqualityComparer);
 
-                newNodes.AddRange(uniqeNewNodes);
+                newNodes.AddRange(uniqueNewNodes);
             }
 
             fullResult.AddRange(newNodes);
@@ -435,6 +449,7 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> runAll(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
@@ -442,6 +457,7 @@ public static class SymbolTableInit
         {
             var newFocus = ElementNode.CreateList(element);
             var newContext = ctx.Nest(newFocus);
+            newContext.focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetIndex(ElementNode.CreateList(index));
             index++;
@@ -457,6 +473,7 @@ public static class SymbolTableInit
     private static IEnumerable<ITypedElement> runAny(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
@@ -464,6 +481,7 @@ public static class SymbolTableInit
         {
             var newFocus = ElementNode.CreateList(element);
             var newContext = ctx.Nest(newFocus);
+            newContext.focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetIndex(ElementNode.CreateList(index));
             index++;
