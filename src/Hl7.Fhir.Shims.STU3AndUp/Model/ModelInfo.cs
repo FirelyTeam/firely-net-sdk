@@ -255,23 +255,22 @@ namespace Hl7.Fhir.Model
 
         public static Canonical? CanonicalUriForFhirCoreType(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;
 
+        private static readonly Lazy<ModelInspector> _modelInspector = new(() =>
+        {
+            var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
+            if (inspector.FhirRelease != Specification.FhirRelease.STU3)
+            {
+                // In case of release 4 or higher, also load the assembly with common conformance resources, like StructureDefinition
+                inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
+            }
+            return inspector;
+        });
+
         /// <summary>
         /// Gets the <see cref="ModelInspector"/> providing metadata for the resources and
         /// datatypes in this release of FHIR.
         /// </summary>
-        public static ModelInspector ModelInspector
-        {
-            get
-            {
-                var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
-                if (inspector.FhirRelease != Specification.FhirRelease.STU3)
-                {
-                    // In case of release 4 or higher, also load the assembly with common conformance resources, like StructureDefinition
-                    inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
-                }
-                return inspector;
-            }
-        }
+        public static ModelInspector ModelInspector => _modelInspector.Value;
     }
 
     public static class ModelInfoExtensions
