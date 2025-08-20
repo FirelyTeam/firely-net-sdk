@@ -59,7 +59,7 @@ public partial record PocoNode
     
     private Lazy<string> SourceName => new (() => 
         Poco is DataType { TypeName: var tn } && 
-        ((ITypedElement)this).Definition!.IsChoiceElement 
+        ((ITypedElement)this).Definition?.IsChoiceElement is true 
             ? Name + tn.Capitalize() 
             : Name
     );

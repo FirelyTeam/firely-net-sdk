@@ -34,7 +34,7 @@ public static partial class SourceNodeExtensions
     /// an <see cref="TypedElementOnSourceNode"/>, passing on the parameters of this extension method.</remarks>
     /// <seealso cref="ITypedElement"/>
     public static ITypedElement ToTypedElement(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedElementSettings settings = null)
-        => new TypedElementOnSourceNode(node, type, provider, settings: settings);
+        => new TypedElementOnSourceNode(node, type, provider, settings: settings ?? new TypedElementSettings() { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
     
     /// <summary>
     /// Adapting an <c>ISourceNode</c> to a <see cref="ITypedElement"/> without adding type information to it.
