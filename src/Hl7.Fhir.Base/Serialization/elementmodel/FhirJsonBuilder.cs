@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
             {
                 _roundtripMode = true;          // will allow unknown elements to be processed
 #pragma warning disable 612,618
-                return buildInternal(source.ToTypedElement());
+                return buildInternal(source.ToTypedElementLegacy());
 #pragma warning restore 612,618
             }
             else

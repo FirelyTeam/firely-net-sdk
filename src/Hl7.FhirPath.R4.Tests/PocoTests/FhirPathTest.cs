@@ -444,7 +444,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             );
             
  #pragma warning disable CS0618 // Type or member is obsolete
-            var expr = res.ToTypedElement().Children("link").First();
+            var expr = res.ToTypedElementLegacy().Children("link").First();
  #pragma warning restore CS0618 // Type or member is obsolete
             var loc = expr.Select("url").Select(x => x.Location).Single();
             loc.Should().Be("Bundle.link[0].url[0]");

@@ -37,6 +37,17 @@ public static partial class SourceNodeExtensions
         => new TypedElementOnSourceNode(node, type, provider, settings: settings ?? new TypedElementSettings() { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
     
     /// <summary>
+    /// Turns the <c>ISourceNode</c> into a <see cref="ITypedElement"/> by adding type information from <see cref="ModelInspector.Base"/>.
+    /// </summary>
+    /// <param name="node">The node containing the source information.</param>
+    /// <returns>An <see cref="ITypedElement"/> that represents the data in the node, with type information
+    /// added to it.</returns>
+    /// <remarks>This extension method decorates the <c>ISourceNode</c> with a new instance of
+    /// an <see cref="TypedElementOnSourceNode"/>, passing on the parameters of this extension method.</remarks>
+    /// <seealso cref="ITypedElement"/>
+    public static ITypedElement ToTypedElement(this ISourceNode node) => node.ToTypedElement(ModelInspector.Base);
+    
+    /// <summary>
     /// Adapting an <c>ISourceNode</c> to a <see cref="ITypedElement"/> without adding type information to it.
     /// </summary>
     /// <param name="node"></param>
@@ -49,7 +60,7 @@ public static partial class SourceNodeExtensions
     [Obsolete("WARNING! For internal API use only. Turning an untyped SourceNode into an ITypedElement without providing" +
               "type information (see other overload) will cause side-effects with components in the API that are not prepared to deal with" +
               "missing type information. Please don't use this overload unless you know what you are doing.")]
-    public static ITypedElement ToTypedElement(this ISourceNode node) =>
+    public static ITypedElement ToTypedElementLegacy(this ISourceNode node) =>
         new SourceNodeToTypedElementAdapter(node);
 
 
