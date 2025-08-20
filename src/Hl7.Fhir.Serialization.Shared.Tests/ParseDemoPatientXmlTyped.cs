@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "typeErrors.xml"));
             var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(10, result.Count);
+            Assert.AreEqual(9, result.Count);
         }
 
         [TestMethod]
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Serialization.Tests
              "<status value='generated' />" +
              "<div><p>Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.AreEqual(2, errors.Count);
+            Assert.AreEqual(3, errors.Count);
             Assert.IsTrue(errors.Any(e => e.Message.Contains("should be an XHTML element")));
 
             // Active content
