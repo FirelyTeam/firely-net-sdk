@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = await getJsonNodeU(tp);
 #pragma warning disable 612, 618
-            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElement(), typed: false);
+            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElementLegacy(), typed: false);
 #pragma warning restore 612, 618
         }
 
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = await File.ReadAllTextAsync(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = await getJsonNodeU(bundle);
 #pragma warning disable 612,618
-            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElement());
+            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElementLegacy());
 #pragma warning restore 612, 618
         }
 

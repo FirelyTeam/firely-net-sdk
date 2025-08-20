@@ -40,7 +40,7 @@ internal class FhirXmlBuilder : IExceptionSource
 
         _roundtripMode = true;
 #pragma warning disable CS0618 // Type or member is obsolete
-        return buildInternal(source.ToTypedElement());
+        return buildInternal(source.ToTypedElementLegacy());
 #pragma warning restore CS0618 // Type or member is obsolete
     }
 

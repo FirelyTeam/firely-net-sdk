@@ -40,7 +40,7 @@ namespace Hl7.FhirPath.Tests
 #pragma warning disable CS0618 // Type or member is internal
             var input = SourceNode.Node("root",
                     SourceNode.Valued("child", "Hello world!"),
-                    SourceNode.Valued("child", "4")).ToTypedElement();
+                    SourceNode.Valued("child", "4")).ToTypedElementLegacy();
 #pragma warning restore CS0618 // Type or member is internal
             Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }

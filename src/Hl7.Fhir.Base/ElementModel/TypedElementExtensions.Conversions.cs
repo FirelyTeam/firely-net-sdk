@@ -46,7 +46,7 @@ public static partial class TypedElementExtensions
             return pn;
         
         var model = inspector ?? node.Annotation<ModelInspector>() ?? ModelInspector.Base;
-        return node.ToPoco(model, new() { IgnoreUnknownMembers = true }).ToPocoNode(model, rootName: rootName);
+        return node.ToPoco(model, new() { IgnoreUnknownMembers = true, AllowUnrecognizedEnums = true }).ToPocoNode(model, rootName: rootName);
     }
 
     #region Json
