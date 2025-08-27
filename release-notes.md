@@ -1,3 +1,5 @@
 ## Intro:
 
-Added an FHIR R6-ballot3 sattelite and Nuget package.
+Added FHIRPath debug tracer.
+Fixes bugs related to paralelization when using SerializationFilter.
+Optimization tweaks.
