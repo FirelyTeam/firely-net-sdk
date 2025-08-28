@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
         public bool ValidateFhirXhtml { get; set; } // = false;
 
         /// <summary>
-        /// Serialized elements won't be trimmed of whitespaces.
+        /// Serialized string elements won't be trimmed of whitespaces.
         /// </summary>
         /// <remarks>Retains values exactly as serialized. Untrimmed content is invalid for XML serialization or validation in general.</remarks>
         public bool PreserveWhitespaceInValues { get; set; } // = false;
