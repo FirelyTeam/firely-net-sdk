@@ -36,6 +36,12 @@ namespace Hl7.Fhir.Serialization
         public bool PermissiveParsing { get; set; } = true;
 
         /// <summary>
+        /// Instruct JSON parser to keep the values untrimmed.
+        /// </summary>
+        /// <remarks>It will keep the values as serialized, but it will not be valid XML attribute and most likely not a valid FHIR value.</remarks>
+        public bool PersistWhitespacesInValues { get; set; }
+
+        /// <summary>
         /// Allow to parse a FHIR dateTime values into an element of type date.
         /// </summary>
         /// <remarks>
@@ -76,6 +82,7 @@ namespace Hl7.Fhir.Serialization
             other.TruncateDateTimeToDate = TruncateDateTimeToDate;
 #pragma warning restore CS0618 // Type or member is obsolete
             other.ExceptionHandler = ExceptionHandler;
+            other.PersistWhitespacesInValues = PersistWhitespacesInValues;
         }
 
         /// <summary>

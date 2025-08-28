@@ -176,18 +176,15 @@ namespace Hl7.Fhir.Serialization
         {
             get
             {
-                if (JsonValue != null)
+                if (JsonValue is not { Value: {} value })
+                    return null;
+                
+                if (value is string s)
                 {
-                    if (JsonValue.Value != null)
-                    {
-                        // Make sure the representation of this Json-typed value is turned
-                        // into a string representation compatible with the XML serialization
-                        return JsonValue.Value is string s ? s.Trim()
-                            : PrimitiveTypeConverter.ConvertTo<string>(JsonValue.Value);
-                    }
+                    return this._settings.PersistWhitespacesInValues ? s : s.Trim();
                 }
 
-                return null;
+                return PrimitiveTypeConverter.ConvertTo<string>(value);
             }
         }
 

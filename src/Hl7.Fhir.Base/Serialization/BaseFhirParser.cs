@@ -46,7 +46,8 @@ namespace Hl7.Fhir.Serialization
             new()
             {
                 AllowJsonComments = false,
-                PermissiveParsing = settings.PermissiveParsing
+                PermissiveParsing = settings.PermissiveParsing,
+                PersistWhitespacesInValues = settings.PersistWhitespacesInValues,
             };
 
 
