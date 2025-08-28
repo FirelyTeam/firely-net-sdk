@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
         /// Serialized elements won't be trimmed of whitespaces.
         /// </summary>
         /// <remarks>Retains values exactly as serialized. Untrimmed content is invalid for XML serialization or validation in general.</remarks>
-        public bool PersistWhitespacesInValues { get; set; } // = false;
+        public bool PreserveWhitespaceInValues { get; set; } // = false;
 
         /// <summary>Default constructor. Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
         public FhirJsonParsingSettings() { }

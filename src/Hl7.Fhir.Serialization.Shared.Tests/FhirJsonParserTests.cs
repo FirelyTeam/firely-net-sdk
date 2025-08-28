@@ -19,7 +19,7 @@ public class FhirJsonParserTests
                       """;
         var res = new FhirJsonParser(new()
         {
-            PersistWhitespacesInValues = true
+            PreserveWhitespaceInValues = true
         }).Parse<Patient>(json);
         
         res.Id.Should().Be(" whitespace ");

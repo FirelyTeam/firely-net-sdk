@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Serialization
                 
                 if (value is string s)
                 {
-                    return this._settings.PersistWhitespacesInValues ? s : s.Trim();
+                    return this._settings.PreserveWhitespaceInValues ? s : s.Trim();
                 }
 
                 return PrimitiveTypeConverter.ConvertTo<string>(value);
