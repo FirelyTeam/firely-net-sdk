@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
         public bool PermissiveParsing { get; set; } = true;
 
         /// <summary>
-        /// Instruct JSON parser to keep the values untrimmed.
+        /// Instruct JSON parser to keep the string values untrimmed.
         /// </summary>
         /// <remarks>It will keep the values as serialized, but it will not be valid XML attribute and most likely not a valid FHIR value.</remarks>
         public bool PreserveWhitespaceInValues { get; set; }
