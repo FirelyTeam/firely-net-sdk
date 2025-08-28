@@ -31,6 +31,12 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Validation of xhtml is expensive, so turned off by default.</remarks>
         public bool ValidateFhirXhtml { get; set; } // = false;
 
+        /// <summary>
+        /// Serialized string elements won't be trimmed of whitespaces.
+        /// </summary>
+        /// <remarks>Retains values exactly as serialized. Untrimmed content is invalid for XML serialization or validation in general.</remarks>
+        public bool PreserveWhitespaceInValues { get; set; } // = false;
+
         /// <summary>Default constructor. Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
         public FhirJsonParsingSettings() { }
 
@@ -52,6 +58,7 @@ namespace Hl7.Fhir.Serialization
             other.PermissiveParsing = PermissiveParsing;
             other.AllowJsonComments = AllowJsonComments;
             other.ValidateFhirXhtml = ValidateFhirXhtml;
+            other.PreserveWhitespaceInValues = PreserveWhitespaceInValues;
         }
 
         /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> object that is a copy of the current instance.</summary>
