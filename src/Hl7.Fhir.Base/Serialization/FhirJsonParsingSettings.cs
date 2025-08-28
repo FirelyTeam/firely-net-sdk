@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization
             other.PermissiveParsing = PermissiveParsing;
             other.AllowJsonComments = AllowJsonComments;
             other.ValidateFhirXhtml = ValidateFhirXhtml;
-            other.PersistWhitespacesInValues = PersistWhitespacesInValues;
+            other.PreserveWhitespaceInValues = PreserveWhitespaceInValues;
         }
 
         /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> object that is a copy of the current instance.</summary>
