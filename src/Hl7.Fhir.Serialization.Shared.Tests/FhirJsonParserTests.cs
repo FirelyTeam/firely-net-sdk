@@ -14,7 +14,7 @@ public class FhirJsonParserTests
         string json = """
                       {
                         "resourceType": "Patient",
-                        "id": " whitespace ",
+                        "id": " whitespace "
                       }
                       """;
         var res = new FhirJsonParser(new()
@@ -31,7 +31,7 @@ public class FhirJsonParserTests
         string json = """
                       {
                         "resourceType": "Patient",
-                        "id": " whitespace ",
+                        "id": " whitespace "
                       }
                       """;
         var res = new FhirJsonParser().Parse<Patient>(json);
