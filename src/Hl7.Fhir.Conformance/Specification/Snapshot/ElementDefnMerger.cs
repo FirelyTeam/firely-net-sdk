@@ -669,21 +669,133 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
-                            // [FIX] Issue #3211: When diff has extensions but no ObjectValue (diffValue is null),
-                            // preserve the snap ObjectValue instead of overwriting it with null
-                            if (diffValue != null)
-                            {
-                                result.ObjectValue = diffValue;
-                            }
-                            // If diffValue is null, keep result.ObjectValue as is (from snap)
+                            // Apply Java validator logic for merging primitive elements
+                            result = mergePrimitiveElementValue(result, diff);
                         }
                         // Also merge element id and extensions on primitives
                         result.ElementId = mergeString(snap.ElementId, diff.ElementId);
-                        result.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
                 }
                 return result;
+            }
+
+            /// <summary>
+            /// Merge primitive element values following Java validator logic.
+            /// Based on Java FHIR validator's mergeStrings method.
+            /// </summary>
+            T mergePrimitiveElementValue<T>(T dest, T source) where T : PrimitiveType
+            {
+                var result = dest; // Already a copy of snap (dest in Java)
+                
+                // If result doesn't have value and source (diff) has value, use source value
+                if (result.IsNullOrEmpty() && !source.IsNullOrEmpty())
+                {
+                    result.ObjectValue = source.ObjectValue;
+                }
+                // If both have values and result starts with "...", append derived text 
+                else if (!result.IsNullOrEmpty() && !source.IsNullOrEmpty() && 
+                         result.ObjectValue is string resultText && resultText.StartsWith("..."))
+                {
+                    result.ObjectValue = appendDerivedTextToBase(resultText, source.ObjectValue as string);
+                }
+                // Note: If source has no value, we preserve result's value (don't overwrite with null)
+
+                // Merge extensions with special handling for translation extensions
+                result.Extension = mergePrimitiveExtensions(result.Extension, source.Extension);
+
+                return result;
+            }
+
+            /// <summary>
+            /// Append derived text to base text, handling "..." prefix
+            /// Based on Java Utilities.appendDerivedTextToBase
+            /// </summary>
+            string appendDerivedTextToBase(string baseText, string derivedText)
+            {
+                if (string.IsNullOrEmpty(derivedText))
+                {
+                    return baseText;
+                }
+
+                if (string.IsNullOrEmpty(baseText))
+                {
+                    return derivedText;
+                }
+
+                // Remove "..." prefix from base and append derived to it
+                if (baseText.StartsWith("..."))
+                {
+                    var cleanBaseText = baseText.Substring(3);
+                    return string.IsNullOrEmpty(cleanBaseText) ? derivedText : derivedText + "\r\n" + cleanBaseText;
+                }
+                
+                return baseText;
+            }
+
+            /// <summary>
+            /// Merge extensions on primitive elements with special handling for translation extensions
+            /// </summary>
+            List<Extension> mergePrimitiveExtensions(List<Extension> destExtensions, List<Extension> sourceExtensions)
+            {
+                var result = destExtensions?.ToList() ?? new List<Extension>();
+
+                if (sourceExtensions?.Any() == true)
+                {
+                    foreach (var sourceExtension in sourceExtensions)
+                    {
+                        var matchingExtension = findMatchingExtension(result, sourceExtension);
+                        if (matchingExtension == null)
+                        {
+                            result.Add((Extension)sourceExtension.DeepCopy());
+                        }
+                        else
+                        {
+                            // Update matching extension value
+                            matchingExtension.Value = (DataType)sourceExtension.Value?.DeepCopy();
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Find matching extension in destination list, with special logic for translation extensions
+            /// </summary>
+            Extension findMatchingExtension(List<Extension> destExtensions, Extension extensionToMatch)
+            {
+                const string EXT_TRANSLATION = "http://hl7.org/fhir/StructureDefinition/translation";
+
+                foreach (var elementExtension in destExtensions.Where(e => e.Url == extensionToMatch.Url))
+                {
+                    if (EXT_TRANSLATION.Equals(elementExtension.Url))
+                    {
+                        // For translation extensions, match by language code
+                        var sourceLang = getExtensionString(extensionToMatch, "lang");
+                        var destLang = getExtensionString(elementExtension, "lang");
+                        if (string.Equals(sourceLang, destLang, StringComparison.Ordinal))
+                        {
+                            return elementExtension;
+                        }
+                    }
+                    else
+                    {
+                        // For other extensions, first match by URL is sufficient
+                        return elementExtension;
+                    }
+                }
+
+                return null;
+            }
+
+            /// <summary>
+            /// Helper to get extension string value by URL
+            /// </summary>
+            string getExtensionString(Extension extension, string url)
+            {
+                var subExtension = extension.Extension?.FirstOrDefault(e => e.Url == url);
+                return (subExtension?.Value as PrimitiveType)?.ObjectValue as string;
             }
 
             static string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
