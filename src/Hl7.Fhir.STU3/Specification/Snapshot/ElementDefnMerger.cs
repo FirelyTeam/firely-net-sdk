@@ -102,7 +102,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.AliasElement = mergeCollection(snap.AliasElement, diff.AliasElement, (a, b) => a.Value == b.Value);
 
                 // Mappings are cumulative, but keep unique on full contents
-                snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
+                // Skip mappings from snap (inherited) that have the suppress extension in diff
+                snap.Mapping = mergeMappings(snap.Mapping, diff.Mapping);
 
                 // Note that max is not corrected when max < min! constrainMax could be used if that is desired.
                 snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
@@ -486,6 +487,66 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 result[idx] = mergedItem;
                             }
                             onConstraint(mergedItem);
+                        }
+                    }
+                }
+                return result;
+            }
+
+            // Custom merge logic for mappings that respects the suppress extension
+            // Inherit all mapping definitions from a parent resource unless someone added a suppress extension to it
+            List<ElementDefinition.MappingComponent> mergeMappings(List<ElementDefinition.MappingComponent> snap, List<ElementDefinition.MappingComponent> diff)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (List<ElementDefinition.MappingComponent>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        // Start with inherited mappings from snapshot
+                        result = new List<ElementDefinition.MappingComponent>(snap.DeepCopy());
+                        
+                        // Process each diff mapping
+                        foreach (var diffItem in diff)
+                        {
+                            // Match by Identity and Map, not exact equality (to handle extensions)
+                            var idx = snap.FindIndex(e => isEqualString(e.Identity, diffItem.Identity) && isEqualString(e.Map, diffItem.Map));
+                            ElementDefinition.MappingComponent mergedItem = null;
+                            if (idx < 0)
+                            {
+                                // New mapping from differential - add it (but only if not suppressed)
+                                if (!diffItem.HasSuppressExtension())
+                                {
+                                    mergedItem = (ElementDefinition.MappingComponent)diffItem.DeepCopy();
+                                    result.Add(mergedItem);
+                                }
+                            }
+                            else
+                            {
+                                // Matching mapping exists in snapshot
+                                // Check if diff mapping has suppress extension
+                                if (diffItem.HasSuppressExtension())
+                                {
+                                    // Remove the inherited mapping - it's being suppressed
+                                    result.RemoveAt(idx);
+                                    continue;
+                                }
+                                else
+                                {
+                                    // Merge diff with snap (normal cumulative behavior)
+                                    var snapItem = result[idx];
+                                    mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                    result[idx] = mergedItem;
+                                }
+                            }
+                            if (mergedItem != null)
+                            {
+                                onConstraint(mergedItem);
+                            }
                         }
                     }
                 }
