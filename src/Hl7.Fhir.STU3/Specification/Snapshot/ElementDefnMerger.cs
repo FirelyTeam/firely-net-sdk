@@ -31,6 +31,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
+            private const string EXT_TRANSLATION = "http://hl7.org/fhir/StructureDefinition/translation";
+
             readonly SnapshotGenerator _generator;
 
             ElementDefnMerger(SnapshotGenerator generator)
@@ -257,7 +259,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Also merge element id and extensions on primitives
                     // [Backported from R4] 
                     result.ElementId = mergeString(snap?.ElementId, diff.ElementId);
-                    result.Extension = mergeExtensionsWithTranslationSupport(snap?.Extension, diff.Extension);
+                    result.Extension = mergeExtensionsWithTranslationSupport<T>(snap?.Extension, diff.Extension);
                     onConstraint(result);
                     return result;
                 }
@@ -577,7 +579,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && (x.Url == y.Url);
 
             // Enhanced extension merging with special handling for translation extensions
-            List<Extension> mergeExtensionsWithTranslationSupport(List<Extension> snap, List<Extension> diff)
+            List<Extension> mergeExtensionsWithTranslationSupport<T>(List<Extension> snap, List<Extension> diff) where T : PrimitiveType
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -593,7 +595,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Properly merge matching collection items with translation support
                         foreach (var diffItem in diff)
                         {
-                            var idx = snap.FindIndex(e => matchExtensionsWithTranslation(e, diffItem));
+                            var idx = snap.FindIndex(e => matchExtensionsWithTranslation<T>(e, diffItem));
                             Extension mergedItem;
                             if (idx < 0)
                             {
@@ -616,14 +618,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Enhanced extension matching with special logic for translation extensions
-            static bool matchExtensionsWithTranslation(Extension x, Extension y)
+            static bool matchExtensionsWithTranslation<T>(Extension x, Extension y) where T : PrimitiveType
             {
                 if (x is null || y is null || x.Url != y.Url)
                     return false;
 
-                const string EXT_TRANSLATION = "http://hl7.org/fhir/StructureDefinition/translation";
-                
-                if (EXT_TRANSLATION.Equals(x.Url))
+                // Translation extension matching only applies to string and markdown primitive types
+                if (EXT_TRANSLATION.Equals(x.Url) && (typeof(T) == typeof(FhirString) || typeof(T) == typeof(Markdown)))
                 {
                     // For translation extensions, match by language code
                     var xLang = getExtensionString(x, "lang");
