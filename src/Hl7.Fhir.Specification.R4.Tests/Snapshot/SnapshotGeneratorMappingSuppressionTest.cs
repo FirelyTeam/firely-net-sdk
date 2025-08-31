@@ -194,5 +194,200 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
         }
+        [TestMethod]
+        public async System.Threading.Tasks.Task TestExampleInheritanceWithoutSuppression()
+        {
+            // Create a base profile with an example that already has snapshot
+            var baseProfile = CreateBaseProfileWithExample();
+            baseProfile.Snapshot = new StructureDefinition.SnapshotComponent
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient")
+                    {
+                        Example = new List<ElementDefinition.ExampleComponent>()
+                        {
+                            new ElementDefinition.ExampleComponent()
+                            {
+                                Label = "test-example",
+                                Value = new FhirString("Example patient name")
+                            }
+                        }
+                    }
+                }
+            };
+            
+            // Create a derived profile without suppress extension
+            var derivedProfile = CreateDerivedProfileWithoutExampleSuppression();
+            
+            // Mock resolver to return base profile when requested
+            var mockResolver = new InMemoryResourceResolver();
+            mockResolver.Add(baseProfile);
+            
+            // Create snapshot generator
+            var generator = new SnapshotGenerator(mockResolver, SnapshotGeneratorSettings.CreateDefault());
+            
+            // Generate snapshot for the derived profile  
+            generator.Update(derivedProfile);
+            
+            // Assert that the derived profile inherited the example from the base
+            Assert.IsNotNull(derivedProfile.Snapshot);
+            var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
+            Assert.IsNotNull(patientElement);
+            Assert.IsNotNull(patientElement.Example);
+            Assert.AreEqual(1, patientElement.Example.Count);
+            Assert.AreEqual("test-example", patientElement.Example[0].Label);
+            Assert.AreEqual("Example patient name", (patientElement.Example[0].Value as FhirString)?.Value);
+        }
+
+        [TestMethod]
+        public async System.Threading.Tasks.Task TestExampleSuppressionExtension()
+        {
+            // Create a base profile with an example that already has snapshot
+            var baseProfile = CreateBaseProfileWithExample();
+            baseProfile.Snapshot = new StructureDefinition.SnapshotComponent
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient")
+                    {
+                        Example = new List<ElementDefinition.ExampleComponent>()
+                        {
+                            new ElementDefinition.ExampleComponent()
+                            {
+                                Label = "test-example",
+                                Value = new FhirString("Example patient name")
+                            }
+                        }
+                    }
+                }
+            };
+            
+            // Create a derived profile that suppresses the inherited example
+            var derivedProfile = CreateDerivedProfileWithExampleSuppression();
+            
+            // Mock resolver to return base profile when requested
+            var mockResolver = new InMemoryResourceResolver();
+            mockResolver.Add(baseProfile);
+            
+            // Create snapshot generator
+            var generator = new SnapshotGenerator(mockResolver, SnapshotGeneratorSettings.CreateDefault());
+            
+            // Generate snapshot for the derived profile
+            generator.Update(derivedProfile);
+            
+            // Assert that the derived profile did NOT inherit the example (it was suppressed)
+            Assert.IsNotNull(derivedProfile.Snapshot);
+            var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
+            Assert.IsNotNull(patientElement);
+            
+            // The example should be absent because it was suppressed
+            Assert.IsTrue(patientElement.Example == null || patientElement.Example.Count == 0);
+        }
+
+        private StructureDefinition CreateBaseProfileWithExample()
+        {
+            return new StructureDefinition()
+            {
+                Id = "base-patient-profile-with-example",
+                Url = "http://example.org/fhir/StructureDefinition/base-patient-with-example",
+                Name = "BasePatientProfileWithExample",
+                Status = PublicationStatus.Active,
+                FhirVersion = FHIRVersion.N4_0_1,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Patient",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Patient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient")
+                        {
+                            Short = "Base patient profile with example",
+                            Example = new List<ElementDefinition.ExampleComponent>()
+                            {
+                                new ElementDefinition.ExampleComponent()
+                                {
+                                    Label = "test-example",
+                                    Value = new FhirString("Example patient name")
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        private StructureDefinition CreateDerivedProfileWithoutExampleSuppression()
+        {
+            return new StructureDefinition()
+            {
+                Id = "derived-patient-profile-no-example-suppression",
+                Url = "http://example.org/fhir/StructureDefinition/derived-patient-no-example-suppression",
+                Name = "DerivedPatientProfileNoExampleSuppression",
+                Status = PublicationStatus.Active,
+                FhirVersion = FHIRVersion.N4_0_1,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Patient",
+                BaseDefinition = "http://example.org/fhir/StructureDefinition/base-patient-with-example",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient")
+                        {
+                            Short = "Derived patient profile without example suppression"
+                        }
+                    }
+                }
+            };
+        }
+
+        private StructureDefinition CreateDerivedProfileWithExampleSuppression()
+        {
+            return new StructureDefinition()
+            {
+                Id = "derived-patient-profile-with-example-suppression",
+                Url = "http://example.org/fhir/StructureDefinition/derived-patient-with-example-suppression", 
+                Name = "DerivedPatientProfileWithExampleSuppression",
+                Status = PublicationStatus.Active,
+                FhirVersion = FHIRVersion.N4_0_1,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Patient",
+                BaseDefinition = "http://example.org/fhir/StructureDefinition/base-patient-with-example",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient")
+                        {
+                            Short = "Derived patient profile with example suppression",
+                            Example = new List<ElementDefinition.ExampleComponent>()
+                            {
+                                new ElementDefinition.ExampleComponent()
+                                {
+                                    Label = "test-example",
+                                    Value = new FhirString("Example patient name"),
+                                    Extension = new List<Extension>()
+                                    {
+                                        new Extension()
+                                        {
+                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                                            Value = new FhirBoolean(true)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
     }
 }

@@ -128,7 +128,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
 
                 // [EK 20170301] In STU3, this was turned into a collection
-                snap.Example = mergeCollection(snap.Example, diff.Example, (a, b) => a.IsExactly(b));
+                // Skip examples from snap (inherited) that have the suppress extension in diff
+                snap.Example = mergeExamples(snap.Example, diff.Example);
 
                 snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
                 snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
@@ -532,6 +533,66 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 if (diffItem.HasSuppressExtension())
                                 {
                                     // Remove the inherited mapping - it's being suppressed
+                                    result.RemoveAt(idx);
+                                    continue;
+                                }
+                                else
+                                {
+                                    // Merge diff with snap (normal cumulative behavior)
+                                    var snapItem = result[idx];
+                                    mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                    result[idx] = mergedItem;
+                                }
+                            }
+                            if (mergedItem != null)
+                            {
+                                onConstraint(mergedItem);
+                            }
+                        }
+                    }
+                }
+                return result;
+            }
+
+            // Custom merge logic for examples that respects the suppress extension
+            // Inherit all example definitions from a parent resource unless someone added a suppress extension to it
+            List<ElementDefinition.ExampleComponent> mergeExamples(List<ElementDefinition.ExampleComponent> snap, List<ElementDefinition.ExampleComponent> diff)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (List<ElementDefinition.ExampleComponent>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        // Start with inherited examples from snapshot
+                        result = new List<ElementDefinition.ExampleComponent>(snap.DeepCopy());
+                        
+                        // Process each diff example
+                        foreach (var diffItem in diff)
+                        {
+                            // Match by Label, not exact equality (to handle extensions)
+                            var idx = snap.FindIndex(e => isEqualString(e.Label, diffItem.Label));
+                            ElementDefinition.ExampleComponent mergedItem = null;
+                            if (idx < 0)
+                            {
+                                // New example from differential - add it (but only if not suppressed)
+                                if (!diffItem.HasSuppressExtension())
+                                {
+                                    mergedItem = (ElementDefinition.ExampleComponent)diffItem.DeepCopy();
+                                    result.Add(mergedItem);
+                                }
+                            }
+                            else
+                            {
+                                // Matching example exists in snapshot
+                                // Check if diff example has suppress extension
+                                if (diffItem.HasSuppressExtension())
+                                {
+                                    // Remove the inherited example - it's being suppressed
                                     result.RemoveAt(idx);
                                     continue;
                                 }
