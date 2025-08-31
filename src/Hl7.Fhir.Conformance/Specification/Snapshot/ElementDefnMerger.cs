@@ -669,7 +669,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
-                            result.ObjectValue = diffValue;
+                            // [FIX] Issue #3211: When diff has extensions but no ObjectValue (diffValue is null),
+                            // preserve the snap ObjectValue instead of overwriting it with null
+                            if (diffValue != null)
+                            {
+                                result.ObjectValue = diffValue;
+                            }
+                            // If diffValue is null, keep result.ObjectValue as is (from snap)
                         }
                         // Also merge element id and extensions on primitives
                         result.ElementId = mergeString(snap.ElementId, diff.ElementId);

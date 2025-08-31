@@ -230,6 +230,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     var result = (T)diff.DeepCopy();
 
+                    // [FIX] Issue #3211: When diff has extensions but no ObjectValue,
+                    // preserve the snap ObjectValue instead of losing it
+                    if (diff.ObjectValue == null && snap != null && snap.ObjectValue != null)
+                    {
+                        result.ObjectValue = snap.ObjectValue;
+                    }
+
                     if (allowAppend && diff.ObjectValue is string)
                     {
                         var diffText = diff.ObjectValue as string;
