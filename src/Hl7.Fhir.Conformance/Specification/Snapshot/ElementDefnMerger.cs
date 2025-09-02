@@ -35,6 +35,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
+            private const string EXT_TRANSLATION = "http://hl7.org/fhir/StructureDefinition/translation";
+
             readonly SnapshotGenerator _generator;
 
             ElementDefnMerger(SnapshotGenerator generator)
@@ -393,6 +395,73 @@ namespace Hl7.Fhir.Specification.Snapshot
             List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
                 => mergeCollection(snap, diff, matchExtensions);
 
+            // Enhanced extension merging with special handling for translation extensions
+            List<Extension> mergeExtensionsWithTranslationSupport<T>(List<Extension> snap, List<Extension> diff) where T : PrimitiveType
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (List<Extension>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        result = new List<Extension>(snap.DeepCopy());
+                        // Properly merge matching collection items with translation support
+                        foreach (var diffItem in diff)
+                        {
+                            var idx = snap.FindIndex(e => matchExtensionsWithTranslation<T>(e, diffItem));
+                            Extension mergedItem;
+                            if (idx < 0)
+                            {
+                                // No match; add diff item
+                                mergedItem = (Extension)diffItem.DeepCopy();
+                                result.Add(mergedItem);
+                            }
+                            else
+                            {
+                                // Match; merge diff with snap
+                                var snapItem = result[idx];
+                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                result[idx] = mergedItem;
+                            }
+                            onConstraint(mergedItem);
+                        }
+                    }
+                }
+                return result;
+            }
+
+            // Enhanced extension matching with special logic for translation extensions
+            static bool matchExtensionsWithTranslation<T>(Extension x, Extension y) where T : PrimitiveType
+            {
+                if (x is null || y is null || !IsEqualUri(x.Url, y.Url))
+                    return false;
+
+                // Translation extension matching only applies to string and markdown primitive types
+                if (EXT_TRANSLATION.Equals(x.Url) && (typeof(T) == typeof(FhirString) || typeof(T) == typeof(Markdown)))
+                {
+                    // For translation extensions, match by language code
+                    var xLang = getExtensionString(x, "lang");
+                    var yLang = getExtensionString(y, "lang");
+                    return IsEqualString(xLang, yLang);
+                }
+                
+                // For other extensions, URL match is sufficient
+                return true;
+            }
+
+            /// <summary>
+            /// Helper to get extension string value by URL
+            /// </summary>
+            static string getExtensionString(Extension extension, string url)
+            {
+                var subExtension = extension.Extension?.FirstOrDefault(e => e.Url == url);
+                return (subExtension?.Value as PrimitiveType)?.ObjectValue as string;
+            }
+
             List<ElementDefinition.ConstraintComponent> mergeConstraints(
                 List<ElementDefinition.ConstraintComponent> snap,
                 List<ElementDefinition.ConstraintComponent> diff,
@@ -745,16 +814,22 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
-                            result.ObjectValue = diffValue;
+                            // Only overwrite snap value if diff actually has a value (Java validator logic)
+                            if (diffValue != null)
+                            {
+                                result.ObjectValue = diffValue;
+                            }
                         }
                         // Also merge element id and extensions on primitives
                         result.ElementId = mergeString(snap.ElementId, diff.ElementId);
-                        result.Extension = mergeExtensions(snap.Extension, diff.Extension);
+                        result.Extension = mergeExtensionsWithTranslationSupport<T>(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
                 }
                 return result;
             }
+
+
 
             static string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
