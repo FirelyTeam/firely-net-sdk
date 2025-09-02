@@ -31,6 +31,8 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public bool AppendNewLine { get; set; } // = false;
 
+        public bool TrimWhiteSpacesInJson { get; set; } = true;
+
         /// <summary>Default constructor. Creates a new <see cref="FhirJsonSerializationSettings"/> instance with default property values.</summary>
         public FhirJsonSerializationSettings() { }
 
@@ -52,6 +54,7 @@ namespace Hl7.Fhir.Serialization
             other.IgnoreUnknownElements = IgnoreUnknownElements;
             other.Pretty = Pretty;
             other.AppendNewLine = AppendNewLine;
+            other.TrimWhiteSpacesInJson = TrimWhiteSpacesInJson;
         }
 
         /// <summary>Creates a new <see cref="FhirJsonSerializationSettings"/> object that is a copy of the current instance.</summary>

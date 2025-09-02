@@ -30,6 +30,11 @@ namespace Hl7.Fhir.Serialization
         public bool TrimWhiteSpacesInXml { get; set; } = true;
 
         /// <summary>
+        /// Trim whitespaces at the beginning and end of json string values
+        /// </summary>
+        public bool TrimWhiteSpacesInJson { get; set; } = true;
+
+        /// <summary>
         /// Include mandatory elements when serializing a subset of chosen elements (_elements). 
         /// </summary>
         public bool IncludeMandatoryInElementsSummary { get; set; } = false;
@@ -55,6 +60,7 @@ namespace Hl7.Fhir.Serialization
             other.Pretty = Pretty;
             other.AppendNewLine = AppendNewLine;
             other.TrimWhiteSpacesInXml = TrimWhiteSpacesInXml;
+            other.TrimWhiteSpacesInJson = TrimWhiteSpacesInJson;
             other.IncludeMandatoryInElementsSummary = IncludeMandatoryInElementsSummary;
         }
 
