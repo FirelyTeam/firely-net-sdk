@@ -539,6 +539,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20190926] #1123 Remove annotations and fix Base components!
                 SnapshotGenerator.copyChildren(nav, sourceNav);
+                
+                // [EK 20250618] #3177 Ensure we don't have both children and a contentReference.
+                // We should restore the Type, since that's expected information if there is no
+                // content reference available.
+                defn.ContentReference = null;
+                defn.Type = sourceNav.Current.Type.DeepCopy().ToList();
 
                 // [WMR 20180410]
                 // - Regenerate element IDs
@@ -1262,22 +1268,22 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// Copy child elements from <paramref name="typeNav"/> to <paramref name="nav"/>.
+        /// Copy child elements from <paramref name="source"/> to <paramref name="dest"/>.
         /// Remove existing annotations, fix Base components
         /// </summary>
         // [WMR 20170501] OBSOLETE: notify listeners - moved to prepareTypeProfileChildren
-        private static bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav) // , StructureDefinition typeStructure)
+        private static bool copyChildren(ElementDefinitionNavigator dest, ElementDefinitionNavigator source) // , StructureDefinition typeStructure)
         {
             // [WMR 20170426] IMPORTANT!
             // Do NOT modify typeNav/typeStructure
             // Call by mergeTypeProfiles: typeNav/typeStructure refers to modified clone of global type profile
             // Call by expandElement:     typeNav/typeStructure refers to global cached type profile (!)
 
-            Debug.Assert(!nav.AtRoot);
-            Debug.Assert(!typeNav.AtRoot);
+            Debug.Assert(!dest.AtRoot);
+            Debug.Assert(!source.AtRoot);
 
             // [WMR 20170220] CopyChildren returns false if nav already has children
-            if (nav.CopyChildren(typeNav))
+            if (dest.CopyChildren(source))
             {
                 // Fix the copied elements and notify observers
 
@@ -1285,12 +1291,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // typeNav positioned at target element of base profile (not the root element)
                 // => process only the current subtree, not the full structure
 
-                var typeRootPath = typeNav.Path;
-                var typeRootPos = typeNav.OrdinalPosition.Value; // 0 for element type, >0 for content reference
-                var typeElems = typeNav.Elements;
-                var elems = nav.Elements;
+                var typeRootPath = source.Path;
+                var typeRootPos = source.OrdinalPosition.Value; // 0 for element type, >0 for content reference
+                var typeElems = source.Elements;
+                var elems = dest.Elements;
 
-                for (int pos = nav.OrdinalPosition.Value + 1, i = typeRootPos + 1;
+                for (int pos = dest.OrdinalPosition.Value + 1, i = typeRootPos + 1;
                     i < typeElems.Count && pos < elems.Count;
                     i++, pos++)
                 {
