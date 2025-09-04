@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private FhirJsonSerializationSettings buildFhirJsonWriterSettings() =>
-            new() { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine };
+            new() { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhiteSpacesInJson = Settings.TrimWhiteSpacesInJson };
 
         /// <inheritdoc cref="SerializeToStringAsync(Base, SummaryType, string[])" />
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[]? elements = null) =>
