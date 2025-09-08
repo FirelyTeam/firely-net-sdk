@@ -62,7 +62,6 @@ public static class VersionedConversionExtensions
 
     public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings? settings = null) where T : Base
     {
-        // no need to build a poco, we already have the requested type
         if (element is PocoNode { Poco: T {} poco })
             return poco;
 
