@@ -72,9 +72,9 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     private PocoNodeOrList nodeFor(string name, object value) =>
         value switch
         {
-            PrimitiveType primitive => new PrimitiveNode(primitive, null, null, name) { ParentNode = this },
+            PrimitiveType primitive => new PrimitiveNode(primitive, this, null, name),
             Base b => new PocoNode(b, this, null, name),
-            IEnumerable<PrimitiveType> primitiveList => new PrimitiveListNode(primitiveList.ToList(), null, name) { ParentNode = this },
+            IEnumerable<PrimitiveType> primitiveList => new PrimitiveListNode(primitiveList.ToList(), this, name),
             IEnumerable<Base> list => new PocoListNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
         };
