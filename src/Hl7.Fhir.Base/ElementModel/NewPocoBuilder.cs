@@ -95,10 +95,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         {
             var propertyMapping = classMapping.FindMappedElementByName(child.Name);
 
+            // we didn't find direct match, we are in a dynamic context, so try to detect a choice-type
             if (propertyMapping is null && child is PocoNode { Poco: IDynamicType })
-            {
                 propertyMapping = classMapping.PropertyMappings.FirstOrDefault(x => child.Name.StartsWith(x.Name));
-            }
             
             if (propertyMapping is null && settings?.IgnoreUnknownMembers == false)
                 raiseFormatError($"Encountered unknown member '{child.Name}' while de-serializing", child.Location);
