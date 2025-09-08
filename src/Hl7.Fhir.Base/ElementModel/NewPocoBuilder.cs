@@ -253,7 +253,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
                 bool => getClassMapping<FhirBoolean>(),
                 int => getClassMapping<Integer>(),
                 long => getClassMapping<Integer64>(),
-                // string when node is not PocoNode { Poco: IDynamicType } => getClassMapping<FhirString>(),
+                // when TypedElement was built on a SourceNode without type information, string backed types would
+                // be unrecognizable from actual string data, so let's default to DynamicPrimitive
+                // string => getClassMapping<FhirString>(),
                 _ => ClassMapping.DynamicPrimitive
             };
         }
