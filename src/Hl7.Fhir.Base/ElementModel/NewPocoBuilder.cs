@@ -69,8 +69,8 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             if (newInstance is DynamicPrimitive)
                 objectValue = value;
             // we're trying to add the type data to untyped values
-            else if (node is PocoNode { Poco: IDynamicType dyn } && value is string s)
-                objectValue = PrimitiveTypeConverter.ConvertTo(value, classMapping.PrimitiveValueProperty?.ImplementingType);
+            else if (node is PocoNode { Poco: IDynamicType } && classMapping.PrimitiveValueProperty is not null)
+                objectValue = PrimitiveTypeConverter.ConvertTo(value, classMapping.PrimitiveValueProperty.ImplementingType);
             else
                 objectValue = convertTypedElementValue(value);
 
