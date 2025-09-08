@@ -111,7 +111,9 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     /// <inheritdoc />
     IEnumerable<object> IAnnotated.Annotations(Type type)
     {
-        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
+        if (type == typeof(PocoNode))
+            return [this];
+        if (type == typeof(ITypedElement) || type == typeof(IShortPathGenerator) || type == typeof(ISourceNode))
             return [this];
         if (type == typeof(IFhirValueProvider))
             return [this];

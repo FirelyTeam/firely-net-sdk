@@ -49,15 +49,26 @@ public static class VersionedConversionExtensions
     public static Base ToPoco(this ISourceNode source, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
         source.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
 
-    public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings? settings = null) where T : Base =>
-        (T)source.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
+    public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings? settings = null) where T : Base
+    {
+        if (source is PocoNode { Poco: T {} poco })
+            return poco;
 
-    public static Base ToPoco(this ITypedElement element, PocoBuilderSettings? settings = null) =>
-        element.ToPoco(ModelInfo.ModelInspector, settings);
+        return (T)source.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
+    }
 
-    public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings? settings = null) where T : Base =>
-        (T)element.ToPoco(ModelInfo.ModelInspector, settings);
-    
+    public static Base ToPoco(this ITypedElement element, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
+        element.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
+
+    public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings? settings = null) where T : Base
+    {
+        // no need to build a poco, we already have the requested type
+        if (element is PocoNode { Poco: T {} poco })
+            return poco;
+
+        return (T)element.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
+    }
+
     public static PocoNode ToPocoNode(this ITypedElement node) =>
-        node.ToPocoNode(ModelInfo.ModelInspector);
+        node.ToPocoNode(ModelInfo.ModelInspector, node.Name);
 }
