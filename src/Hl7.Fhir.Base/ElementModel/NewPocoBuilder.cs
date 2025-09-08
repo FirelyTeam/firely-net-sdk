@@ -39,10 +39,6 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
         var classMapping = classMappingForElement(source, null, typeHint);
-        
-        if(typeHint is not null && typeof(IDynamicType).IsAssignableFrom(classMapping.NativeType))
-            classMapping = getClassMapping(typeHint);
-        
         return readFromElement(source, classMapping);
     }
 
