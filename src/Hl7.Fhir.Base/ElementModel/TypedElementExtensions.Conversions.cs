@@ -28,13 +28,18 @@ public static partial class TypedElementExtensions
     public static ScopedNode ToScopedNode(this ITypedElement node) =>
         node as ScopedNode ?? new ScopedNode(node);
     
-    public static ISourceNode ToSourceNode(this ITypedElement node) => new TypedElementToSourceNodeAdapter(node);
-    
-    public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings? settings = null) where T : Base =>
-        (T)new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
+    public static ISourceNode ToSourceNode(this ITypedElement node) => node as ISourceNode ?? new TypedElementToSourceNodeAdapter(node);
 
-    public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings? settings = null) =>
-        new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings()).BuildFrom(element);
+    public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings? settings = null) where T : Base
+    {
+        if (element is PocoNode { Poco: T poco })
+            return poco;
+        
+        return (T)new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings() { AllowUnrecognizedEnums = true, IgnoreUnknownMembers = true }).BuildFrom(element, typeof(T));
+    }
+
+    public static Base ToPoco(this ITypedElement element, ModelInspector inspector, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
+        new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings() { AllowUnrecognizedEnums = true, IgnoreUnknownMembers = true }).BuildFrom(element, pocoType);
 
     /// <summary>
     /// Converts a typed element to a PocoNode.
@@ -46,7 +51,7 @@ public static partial class TypedElementExtensions
             return pn;
         
         var model = inspector ?? node.Annotation<ModelInspector>() ?? ModelInspector.Base;
-        return node.ToPoco(model, new() { IgnoreUnknownMembers = true, AllowUnrecognizedEnums = true }).ToPocoNode(model, rootName: rootName);
+        return node.ToPoco(model, null, new() { IgnoreUnknownMembers = true, AllowUnrecognizedEnums = true }).ToPocoNode(model, rootName: rootName);
     }
 
     #region Json

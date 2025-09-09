@@ -34,17 +34,17 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
     /// </summary>
-    public Base BuildFrom(ITypedElement source)
+    public Base BuildFrom(ITypedElement source, Type? typeHint = null)
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
-        var classMapping = classMappingForElement(source, null);
+        var classMapping = classMappingForElement(source, null, typeHint);
         return readFromElement(source, classMapping);
     }
 
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
-        var newInstance = buildNewInstance(classMapping);
+        var newInstance = buildNewInstance(classMapping, node.Value is { });
 
         // add a link back to TypedElement to persist it's annotations on pocos
         // this is specifically for backwards compatibility with many implementations of ITypedElement wrappers that implement their own annotations
@@ -54,14 +54,21 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
         // Capture the instance type if this is a dynamic type.
         if (newInstance is IDynamicType dt)
-            dt.DynamicTypeName = node.InstanceType ?? node.Annotation<IResourceTypeSupplier>()?.ResourceType;
+            dt.DynamicTypeName = node.InstanceType ?? node.Annotation<IResourceTypeSupplier>()?.ResourceType ?? classMapping.GetTypeName();
 
         // Value is a kind of pseudo-property, so we need to handle it separately.
         // If this is a standard Fhir primitive, we need to convert the ITypedElement.Value
         // to the used ObjectValue, if not, just set the value immediately on the DynamicPrimitive.
         if (node.Value is { } value)
         {
-            var objectValue = newInstance is DynamicPrimitive ? value : convertTypedElementValue(value);
+            object objectValue;
+            if (newInstance is DynamicPrimitive)
+                objectValue = value;
+            // we're trying to add the type data to untyped values
+            else if (node is PocoNode { Poco: IDynamicType } && value is string s && classMapping.PrimitiveValueProperty is not null)
+                objectValue = PrimitiveTypeConverter.ConvertTo(s, classMapping.PrimitiveValueProperty.ImplementingType);
+            else
+                objectValue = convertTypedElementValue(value);
 
             if (newInstance is PrimitiveType pt)
                 pt.JsonValue = objectValue;
@@ -88,6 +95,10 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         {
             var propertyMapping = classMapping.FindMappedElementByName(child.Name);
 
+            // we didn't find direct match, we are in a dynamic context, so try to detect a choice-type
+            if (propertyMapping is null && child is PocoNode { Poco: IDynamicType })
+                propertyMapping = classMapping.PropertyMappings.FirstOrDefault(x => child.Name.StartsWith(x.Name));
+            
             if (propertyMapping is null && settings?.IgnoreUnknownMembers == false)
                 raiseFormatError($"Encountered unknown member '{child.Name}' while de-serializing", child.Location);
 
@@ -109,10 +120,13 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         throw Error.Format("While building a POCO: " + message, location);
     }
 
-    private static Base buildNewInstance(ClassMapping mapping)
+    private static Base buildNewInstance(ClassMapping mapping, bool hasValue)
     {
+        if (hasValue && !mapping.IsFhirPrimitive)
+            return new DynamicPrimitive();
+        
         if (mapping.NativeType.IsAbstract) 
-            return mapping.IsResource ? new DynamicResource() { DynamicTypeName = mapping.GetTypeName() } : new DynamicDataType() { DynamicTypeName = mapping.GetTypeName() };
+            return mapping.IsResource ? new DynamicResource() : new DynamicDataType();
         
         if (mapping.CreateInstance() is Base b) return b;
 
@@ -137,12 +151,24 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         return propertyClassMapping.CreateList();
     }
 
-    private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping)
+    private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping, Type? typeHint = null)
     {
         var propertyClassMapping = propertyMapping is not null
             ? getClassMapping(propertyMapping.ImplementingType)
             : null;
 
+        // we're coming from a context where original PocoNode was built without necessary
+        // type information - that would result in instanceType being wrong
+        // we have type info now, we can use it to determine the type of the property
+        if (node is PocoNode { Poco: IDynamicType } && propertyClassMapping is not null)
+        {
+            if (propertyClassMapping is { NativeType.IsAbstract: false })
+                return propertyClassMapping;
+            
+            if (node.Name.Substring(propertyMapping!.Name.Length) is { Length: > 0} choice && inspector.FindClassMapping(choice) is {} cm)
+                return cm;
+        }
+        
         // If we have a concrete instanceType, and it's not the same as the property type, we need to
         // check if we have a mapping for it. If we do, we can use that.
         // Note that this is not the same as the "best" mapping, which is determined below.
@@ -150,8 +176,10 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         if (node.InstanceType is { } instanceType)
         {
             if (instanceType == propertyClassMapping?.GetTypeName() || (instanceType == "code" && propertyClassMapping?.IsCodeOfT is true))
-                return propertyClassMapping; // only case in which we return the propertyClassMapping.
-            if (inspector.FindClassMapping(instanceType) is { } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
+                return propertyClassMapping; // propertyClassMapping matches the instanceType, we can safely use that
+            
+            // try to get mapping for instanceType, but only if we're not in a dynamic context
+            if (!instanceType.StartsWith("Dynamic") && inspector.FindClassMapping(instanceType) is { } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
                 return mapping;
         }
 
@@ -165,11 +193,15 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         else if (propertyClassMapping is { NativeType.IsAbstract: false, IsPrimitive: false })
             return propertyClassMapping;
 
+        // We don't know the type, but we know the type being requested
+        if (typeHint is not null)
+            return getClassMapping(typeHint);
+        
         // No useable concrete type in the property, nor in the instance type, so we need to create
         // one of our dynamic flavours. If we do have an abstract type of the property, we can use that
         // as a hint.
         if (propertyClassMapping is not null)
-            return determineBestDynamicMappingForType(propertyClassMapping.NativeType);
+            return determineBestDynamicMappingForType(node, propertyClassMapping.NativeType);
 
         // Failing all that, guess what the best dynamic type is based on the instance data.
         return determineBestDynamicMappingForElement(node);
@@ -180,11 +212,11 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     /// </summary>
     /// <exception cref="NotSupportedException">The POCO's property is not a Resource or DataType
     /// subclass.</exception>
-    private ClassMapping determineBestDynamicMappingForType(Type elementType)
+    private ClassMapping determineBestDynamicMappingForType(ITypedElement node, Type elementType)
     {
         if (typeof(Resource).IsAssignableFrom(elementType))
             return ClassMapping.DynamicResource;
-        if (typeof(PrimitiveType).IsAssignableFrom(elementType))
+        if (typeof(PrimitiveType).IsAssignableFrom(elementType) || node.Value is { })
             return ClassMapping.DynamicPrimitive;
         if (typeof(DataType).IsAssignableFrom(elementType))
             return ClassMapping.DynamicDataType;
@@ -212,13 +244,18 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             return node.Value switch
             {
                 ET.DateTime => getClassMapping<FhirDateTime>(),
+                string when node.InstanceType is "System.DateTime" => getClassMapping<FhirDateTime>(),
                 ET.Date => getClassMapping<Date>(),
+                string when node.InstanceType is "System.Date" => getClassMapping<Date>(),
                 ET.Time => getClassMapping<Time>(),
+                string when node.InstanceType is "System.Time" => getClassMapping<Time>(),
                 decimal => getClassMapping<FhirDecimal>(),
                 bool => getClassMapping<FhirBoolean>(),
                 int => getClassMapping<Integer>(),
                 long => getClassMapping<Integer64>(),
-                string => getClassMapping<FhirString>(),
+                // when TypedElement was built on a SourceNode without type information, string backed types would
+                // be unrecognizable from actual string data, so let's default to DynamicPrimitive
+                // string => getClassMapping<FhirString>(),
                 _ => ClassMapping.DynamicPrimitive
             };
         }
@@ -229,8 +266,10 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         throw Error.InvalidOperation($"Cannot find ClassMapping for type '{dynTypeName}'.");
 
     private ClassMapping getClassMapping(Type t) =>
-        inspector.FindOrImportClassMapping(t) ??
-        throw Error.InvalidOperation($"Cannot find ClassMapping for type '{t.Name}'.");
+        inspector.FindClassMapping(t) ?? 
+        (ClassMapping.TryCreate(inspector, t, out var newMapping) 
+            ? newMapping 
+            : throw Error.InvalidOperation($"Cannot find ClassMapping for type '{t.Name}'."));
 
     private ClassMapping getClassMapping<T>() => getClassMapping(typeof(T));
 

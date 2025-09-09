@@ -6,6 +6,7 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -282,6 +283,8 @@ namespace Hl7.Fhir.ElementModel
             if (info.IsChoiceElement)
             {
                 var suffix = current.Name.Substring(info.ElementName.Length);
+                if (string.IsNullOrEmpty(suffix) && current is PocoNode { Poco: DataType { TypeName: {} tn}})
+                    suffix = tn.Capitalize();
 
                 if (string.IsNullOrEmpty(suffix))
                 {
@@ -402,13 +405,10 @@ namespace Hl7.Fhir.ElementModel
             // no name filter: work on all the parent's children
             if (name == null)
                 childSet = parent.Children();
+            else if (dis.TryGetValue(name, out var info) && info.IsChoiceElement)
+                childSet = parent.Children(name + "*");
             else
-            {
-                var hit = dis.TryGetValue(name, out var info);
-                childSet = hit
-                    ? (info!.IsChoiceElement ? parent.Children(name + "*") : parent.Children(name))
-                    : Enumerable.Empty<ISourceNode>();
-            }
+                childSet = parent.Children(name);
 
             string? lastName = null;
             int _nameIndex = 0;

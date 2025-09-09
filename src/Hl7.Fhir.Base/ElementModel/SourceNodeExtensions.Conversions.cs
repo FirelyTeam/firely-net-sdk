@@ -16,11 +16,16 @@ namespace Hl7.Fhir.ElementModel;
 public static partial class SourceNodeExtensions
 {
     public static Base ToPoco(this ISourceNode source, ModelInspector inspector, Type pocoType = null, PocoBuilderSettings settings = null) =>
-        new LegacyPocoBuilder(inspector, settings).BuildFrom(source, pocoType);
+        new LegacyPocoBuilder(inspector, settings ?? new() { AllowUnrecognizedEnums = true, IgnoreUnknownMembers = true}).BuildFrom(source, pocoType);
 
-    public static T ToPoco<T>(this ISourceNode source, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
-        (T)source.ToPoco(inspector, typeof(T), settings);
-    
+    public static T ToPoco<T>(this ISourceNode source, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base
+    {
+        if (source is PocoNode { Poco: T poco })
+            return poco;
+
+        return (T)source.ToPoco(inspector, typeof(T), settings);
+    }
+
     /// <summary>
     /// Turns the <c>ISourceNode</c> into a <see cref="ITypedElement"/> by adding type information to it.
     /// </summary>
@@ -34,7 +39,7 @@ public static partial class SourceNodeExtensions
     /// an <see cref="TypedElementOnSourceNode"/>, passing on the parameters of this extension method.</remarks>
     /// <seealso cref="ITypedElement"/>
     public static ITypedElement ToTypedElement(this ISourceNode node, IStructureDefinitionSummaryProvider provider, string type = null, TypedElementSettings settings = null)
-        => new TypedElementOnSourceNode(node, type, provider, settings: settings ?? new TypedElementSettings() { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
+        => node as ITypedElement ?? new TypedElementOnSourceNode(node, type, provider, settings: settings ?? new TypedElementSettings() { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
     
     /// <summary>
     /// Turns the <c>ISourceNode</c> into a <see cref="ITypedElement"/> by adding type information from <see cref="ModelInspector.Base"/>.
