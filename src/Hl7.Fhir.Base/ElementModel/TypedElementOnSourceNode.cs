@@ -283,7 +283,7 @@ namespace Hl7.Fhir.ElementModel
             if (info.IsChoiceElement)
             {
                 var suffix = current.Name.Substring(info.ElementName.Length);
-                if(string.IsNullOrEmpty(suffix) && current is PocoNode { Poco: DataType { TypeName: {} tn}})
+                if (string.IsNullOrEmpty(suffix) && current is PocoNode { Poco: DataType { TypeName: {} tn}})
                     suffix = tn.Capitalize();
 
                 if (string.IsNullOrEmpty(suffix))

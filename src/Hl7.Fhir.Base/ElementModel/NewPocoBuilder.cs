@@ -122,7 +122,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
 
     private static Base buildNewInstance(ClassMapping mapping, bool hasValue)
     {
-        if(hasValue && !mapping.IsFhirPrimitive)
+        if (hasValue && !mapping.IsFhirPrimitive)
             return new DynamicPrimitive();
         
         if (mapping.NativeType.IsAbstract) 
@@ -194,7 +194,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             return propertyClassMapping;
 
         // We don't know the type, but we know the type being requested
-        if(typeHint is not null)
+        if (typeHint is not null)
             return getClassMapping(typeHint);
         
         // No useable concrete type in the property, nor in the instance type, so we need to create
