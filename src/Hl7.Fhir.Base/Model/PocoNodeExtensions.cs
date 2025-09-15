@@ -163,8 +163,11 @@ public static class PocoNodeExtensions
     /// <returns></returns>
     public static string? FindFullUrl(this PocoNodeOrList node)
     {
-        var entry = node.parents().FirstOrDefault(n => n.Poco is Bundle.EntryComponent);
-        return entry?.Child<PrimitiveNode>("fullUrl")?.Value as string;
+        var entry = node.parents()
+            .Select(x => x.Poco)
+            .OfType<Bundle.EntryComponent>()
+            .FirstOrDefault();
+        return entry?.FullUrl;
     }
     
     /// <summary>
