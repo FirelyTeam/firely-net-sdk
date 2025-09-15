@@ -161,10 +161,13 @@ public static class PocoNodeExtensions
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    internal static string? FindFullUrl(this PocoNodeOrList node)
+    public static string? FindFullUrl(this PocoNodeOrList node)
     {
-        var entry = node.parents().FirstOrDefault(n => n.Poco is Bundle.EntryComponent);
-        return entry?.Child<PrimitiveNode>("fullUrl")?.Value as string;
+        var entry = node.parents()
+            .Select(x => x.Poco)
+            .OfType<Bundle.EntryComponent>()
+            .FirstOrDefault();
+        return entry?.FullUrl;
     }
     
     /// <summary>
@@ -197,8 +200,13 @@ public static class PocoNodeExtensions
     /// <remarks>See https://www.hl7.org/fhir/bundle.html#references for more information</remarks>
     public static string MakeAbsolute(this PocoNode node, string reference) =>
         node.MakeAbsolute(new ResourceIdentity(reference)).ToString();
-    
-    internal static PocoNode? GetParentResource(this PocoNodeOrList node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
+
+    /// <summary>
+    /// Gets the parent resource node of the specified PocoNodeOrList if it exists.
+    /// </summary>
+    /// <param name="node">The node for which the parent resource is to be identified.</param>
+    /// <returns>The parent PocoNode that represents a resource, or null if no parent resource is found.</returns>
+    public static PocoNode? GetParentResource(this PocoNodeOrList node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
 
     /// <summary>
     /// Gets the location of this node.
@@ -321,10 +329,16 @@ public static class PocoNodeExtensions
     }
     
     internal static ModelInspector? FindInspector(this PocoNode node) => ((IAnnotated)node).Annotation<ModelInspector>() ?? node.Parent?.SingleOrDefault()?.FindInspector();
-    
-    internal static string SerializeToString(this PocoNode pn, bool pretty)
+
+    /// <summary>
+    /// Converts a PocoNode instance into an XML string representation.
+    /// </summary>
+    /// <param name="pn">The PocoNode instance to convert.</param>
+    /// <param name="pretty">A boolean value indicating whether the XML output should be formatted prettily (indented) or compact.</param>
+    /// <returns>A string containing the XML representation of the given PocoNode instance.</returns>
+    public static string ToXml(this PocoNode pn, bool pretty)
     {
-#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618// Type or member is obsolete
         var serializer = new BaseFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForAssembly(pn.Poco.GetType().Assembly));
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -334,5 +348,21 @@ public static class PocoNodeExtensions
         var rootName = pickElementName ? pn.Name : null;
 
         return serializer.SerializeToString(pn.Poco, pretty, rootName: rootName);
+    }
+
+    /// <summary>
+    /// Converts the specified PocoNode instance to its JSON representation.
+    /// </summary>
+    /// <param name="pn">The PocoNode instance to serialize.</param>
+    /// <param name="pretty">Indicates whether the JSON output should be formatted for readability.</param>
+    /// <returns>A JSON string representing the given PocoNode.</returns>
+    public static string ToJson(this PocoNode pn, bool pretty)
+    {
+#pragma warning disable CS0618// Type or member is obsolete
+        var inspector = pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType());
+#pragma warning restore CS0618 // Type or member is obsolete
+        
+        var ser = new BaseFhirJsonSerializer(inspector);
+        return ser.SerializeToString(pn.Poco, pretty);
     }
 }

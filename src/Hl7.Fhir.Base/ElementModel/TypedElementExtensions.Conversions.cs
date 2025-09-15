@@ -72,11 +72,7 @@ public static partial class TypedElementExtensions
         if (source is not PocoNode { Poco: Resource resource } node)
             return SerializationUtil.WriteJsonToString(source.WriteTo, pretty);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        var inspector = node.FindInspector() ?? ModelInspector.ForAssembly(resource.GetType().Assembly);
-#pragma warning restore CS0618 // Type or member is obsolete
-        var ser = new BaseFhirJsonSerializer(inspector);
-        return ser.SerializeToString(resource, pretty);
+        return PocoNodeExtensions.ToJson(node, pretty);
     }
 
     /// <inheritdoc cref="ToJson(Hl7.Fhir.ElementModel.ITypedElement,bool)"/>
@@ -88,9 +84,7 @@ public static partial class TypedElementExtensions
                 .WriteJsonToStringAsync(async writer => await source.WriteToAsync(writer).ConfigureAwait(false),
                     pretty).ConfigureAwait(false);
 
-        var inspector = node.FindInspector() ?? ModelInspector.ForType(resource.GetType());
-        var ser = new BaseFhirJsonSerializer(inspector);
-        return ser.SerializeToString(resource, pretty);
+        return PocoNodeExtensions.ToJson(node, pretty);
     }
 
     /// <summary>
@@ -153,7 +147,7 @@ public static partial class TypedElementExtensions
         if (source is not PocoNode node)
             return SerializationUtil.WriteXmlToString(source.WriteTo, pretty);
 
-        return node.SerializeToString(pretty);
+        return PocoNodeExtensions.ToXml(node, pretty);
     }
     
     /// <summary>
@@ -176,7 +170,7 @@ public static partial class TypedElementExtensions
         if (source is not PocoNode node)
             return await SerializationUtil.WriteXmlToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
 
-        return node.SerializeToString(pretty);
+        return PocoNodeExtensions.ToXml(node, pretty);
     }
 
     #endregion
