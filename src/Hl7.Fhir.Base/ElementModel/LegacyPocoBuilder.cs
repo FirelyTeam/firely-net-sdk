@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Serialization
             TypedElementSettings typedSettings = new TypedElementSettings
             {
                 ErrorMode = _settings.IgnoreUnknownMembers ?
-                    TypedElementSettings.TypeErrorMode.Ignore
+                    TypedElementSettings.TypeErrorMode.Passthrough
                     : TypedElementSettings.TypeErrorMode.Report,
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -96,15 +96,16 @@ namespace Hl7.Fhir.Serialization
 
             var typedSource = source.ToTypedElement(_inspector, dataType, typedSettings);
 
-            return BuildFrom(typedSource);
+            return BuildFrom(typedSource, mapping?.NativeType);
         }
 
         /// <summary>
         /// Build a POCO from an ITypedElement.
         /// </summary>
         /// <param name="source"></param>
+        /// <param name="typeHint"></param>
         /// <returns></returns>
-        public Base BuildFrom(ITypedElement source)
+        public Base BuildFrom(ITypedElement source, Type typeHint = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
 
@@ -121,7 +122,7 @@ namespace Hl7.Fhir.Serialization
             Base build()
             {
                 var newBuilder = new NewPocoBuilder(_inspector, _settings);
-                return newBuilder.BuildFrom(source);
+                return newBuilder.BuildFrom(source, typeHint);
             }
         }
     }

@@ -48,7 +48,6 @@ public class TypedElementToPocoTests
 
             return
             [
-                [typeof(FhirString), "hi!", null],
                 [typeof(Integer), 42, null],
                 [typeof(Integer64), 42L, "42"],
                 [typeof(FhirBoolean), true, null],
@@ -57,6 +56,9 @@ public class TypedElementToPocoTests
                 [typeof(FhirDateTime), dtNow, dtNow.ToString()],
                 [typeof(Time), timeNow, timeNow.ToString()],
                 [typeof(Date), dateToday, dateToday.ToString()],
+                // strings will be parsed as DynamicPrimitive to allow for detection of string backed primitive types
+                // that were built with no type information, but we get the correct type at a later point
+                [typeof(DynamicPrimitive), "hi!", null]
             ];
         }
     }
