@@ -72,9 +72,9 @@ public partial record PocoNode
         (Index, Parent) switch
         {
             // if we have an index, write it
-            ({ } idx, { } parent) => $"{((ITypedElement)parent).Location}.{SourceName.Value}[{idx}]",
+            ({ } idx, { } parent) => $"{((ISourceNode)parent).Location}.{SourceName.Value}[{idx}]",
             // if we do not, write 0 as idx
-            (_, { } parent) => $"{((ITypedElement)parent).Location}.{SourceName.Value}[0]",
+            (_, { } parent) => $"{((ISourceNode)parent).Location}.{SourceName.Value}[0]",
             // if we have neither, we are the root.
             _ => SourceName.Value
         };
