@@ -231,5 +231,55 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         #endregion
 
+        #region Annotation: AppendedText
+
+        /// <summary>
+        /// Custom annotation for elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
+        /// that are constrained by the <see cref="StructureDefinition.DifferentialComponent"/>.
+        /// </summary>
+        [Serializable]
+        sealed class AppendedTextAnnotation
+        {
+            //
+        }
+
+        /// <summary>Annotate the specified snapshot element to indicate that it is constrained by the differential.</summary>
+        internal static void SetAppendedTextAnnotation(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.AddAnnotation(new AppendedTextAnnotation());
+        }
+
+        /// <summary>Remove any existing differential constraint annotation from the specified snapshot element.</summary>
+        internal static void RemoveAppendedTextAnnotation(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.RemoveAnnotations<AppendedTextAnnotation>();
+        }
+
+        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot element and all it's children.</summary>
+        internal static void RemoveAllAppendedTextAnnotations(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.RemoveAppendedTextAnnotation();
+            foreach (var child in element.Children)
+            {
+                child.RemoveAllAppendedTextAnnotations();
+            }
+        }
+
+        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot elements and all their children.</summary>
+        internal static void RemoveAllAppendedTextAnnotations<T>(this IEnumerable<T> elements) where T : Base
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            foreach (var elem in elements)
+            {
+                elem.RemoveAllAppendedTextAnnotations();
+            }
+        }
+
+        public static bool HasAppendedText(this Element elem) => elem != null && elem.HasAnnotation<AppendedTextAnnotation>();
+
+        #endregion
     }
 }

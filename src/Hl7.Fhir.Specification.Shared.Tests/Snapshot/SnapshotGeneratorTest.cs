@@ -2566,6 +2566,8 @@ namespace Hl7.Fhir.Specification.Tests
             baseClone.RemoveAllNonInheritableExtensions();
             elemClone.RemoveAllConstrainedByDiffAnnotations();
             baseClone.RemoveAllConstrainedByDiffAnnotations();
+            elemClone.RemoveAllAppendedTextAnnotations();
+            baseClone.RemoveAllAppendedTextAnnotations();
 
             var result = baseClone.IsExactly(elemClone);
             return result;

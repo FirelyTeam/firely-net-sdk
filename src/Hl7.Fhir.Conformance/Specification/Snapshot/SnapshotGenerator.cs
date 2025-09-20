@@ -467,6 +467,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 snapshot.RemoveAllNonInheritableExtensions();
                 snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
+                snapshot.Element.RemoveAllAppendedTextAnnotations();
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -1510,6 +1511,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20160826] Never inherit Changed extension from base profile!
                     elem.RemoveAllNonInheritableExtensions();
                     elem.RemoveAllConstrainedByDiffAnnotations();
+                    elem.RemoveAllAppendedTextAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20170424] Inherit existing base components from type profile
