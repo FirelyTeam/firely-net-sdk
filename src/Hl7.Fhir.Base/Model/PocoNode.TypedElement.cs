@@ -67,6 +67,8 @@ public partial record PocoNode
             ? Name + tn.Capitalize() 
             : Name
     );
+    
+    string ISourceNode.Name => SourceName.Value;
 
     string ISourceNode.Location =>
         (Index, Parent) switch
