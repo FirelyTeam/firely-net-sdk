@@ -20,6 +20,67 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Provides support for custom annotation types used by the <see cref="SnapshotGenerator"/>.</summary>
     public static class SnapshotGeneratorAnnotations
     {
+        #region Used internally by Snapshot Generator
+
+        internal static void RemoveSnapshotGeneratorAnnotation(this Base element)
+        {
+            element.RemoveConstrainedByDiffAnnotation();
+            element.RemoveAppendedTextAnnotation();
+        }
+
+        /// <summary>Recursively remove any existing snapshot generator annotations from the specified snapshot element and all it's children.</summary>
+        internal static void RemoveAllSnapshotGeneratorAnnotations(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.RemoveSnapshotGeneratorAnnotation();
+            foreach (var child in element.Children)
+            {
+                child.RemoveSnapshotGeneratorAnnotation();
+            }
+        }
+
+        /// <summary>Recursively remove any existing snapshot generator annotations from the specified snapshot elements and all their children.</summary>
+        internal static void RemoveAllSnapshotGeneratorAnnotations<T>(this IEnumerable<T> elements) where T : Base
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            foreach (var elem in elements)
+            {
+                elem.RemoveSnapshotGeneratorAnnotation();
+            }
+        }
+
+        #endregion
+
+        #region Annotation: AppendedText
+
+        /// <summary>
+        /// Custom annotation for properties in the <see cref="StructureDefinition.SnapshotComponent"/>
+        /// that have text appended with the ... notation.
+        /// </summary>
+        [Serializable]
+        sealed class AppendedTextAnnotation
+        {
+            //
+        }
+
+        /// <summary>Annotate the specified snapshot element to indicate that text has been appended.</summary>
+        internal static void SetAppendedTextAnnotation(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.AddAnnotation(new AppendedTextAnnotation());
+        }
+
+        /// <summary>Remove any existing appended text annotation from the specified snapshot element.</summary>
+        internal static void RemoveAppendedTextAnnotation(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.RemoveAnnotations<AppendedTextAnnotation>();
+        }
+
+        public static bool HasAppendedText(this Element elem) => elem != null && elem.HasAnnotation<AppendedTextAnnotation>();
+
+        #endregion
+
         #region Annotation: Created By Snapshot Generator
 
         /// <summary>Annotation to mark a generated element, so we can prevent duplicate re-generation.</summary>
@@ -64,27 +125,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveAnnotations<ConstrainedByDiffAnnotation>();
-        }
-
-        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot element and all it's children.</summary>
-        internal static void RemoveAllConstrainedByDiffAnnotations(this Base element)
-        {
-            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            element.RemoveConstrainedByDiffAnnotation();
-            foreach (var child in element.Children)
-            {
-                child.RemoveAllConstrainedByDiffAnnotations();
-            }
-        }
-
-        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot elements and all their children.</summary>
-        internal static void RemoveAllConstrainedByDiffAnnotations<T>(this IEnumerable<T> elements) where T : Base
-        {
-            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
-            foreach (var elem in elements)
-            {
-                elem.RemoveAllConstrainedByDiffAnnotations();
-            }
         }
 
         /// <summary>
@@ -228,57 +268,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Remove all <see cref="SnapshotElementDefinitionAnnotation"/> instances from the specified <see cref="ElementDefinition"/>.</summary>
         internal static void RemoveSnapshotElementAnnotations(this ElementDefinition ed) { ed?.RemoveAnnotations<SnapshotElementDefinitionAnnotation>(); }
-
-        #endregion
-
-        #region Annotation: AppendedText
-
-        /// <summary>
-        /// Custom annotation for elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
-        /// that are constrained by the <see cref="StructureDefinition.DifferentialComponent"/>.
-        /// </summary>
-        [Serializable]
-        sealed class AppendedTextAnnotation
-        {
-            //
-        }
-
-        /// <summary>Annotate the specified snapshot element to indicate that it is constrained by the differential.</summary>
-        internal static void SetAppendedTextAnnotation(this Base element)
-        {
-            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            element.AddAnnotation(new AppendedTextAnnotation());
-        }
-
-        /// <summary>Remove any existing differential constraint annotation from the specified snapshot element.</summary>
-        internal static void RemoveAppendedTextAnnotation(this Base element)
-        {
-            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            element.RemoveAnnotations<AppendedTextAnnotation>();
-        }
-
-        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot element and all it's children.</summary>
-        internal static void RemoveAllAppendedTextAnnotations(this Base element)
-        {
-            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            element.RemoveAppendedTextAnnotation();
-            foreach (var child in element.Children)
-            {
-                child.RemoveAllAppendedTextAnnotations();
-            }
-        }
-
-        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot elements and all their children.</summary>
-        internal static void RemoveAllAppendedTextAnnotations<T>(this IEnumerable<T> elements) where T : Base
-        {
-            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
-            foreach (var elem in elements)
-            {
-                elem.RemoveAllAppendedTextAnnotations();
-            }
-        }
-
-        public static bool HasAppendedText(this Element elem) => elem != null && elem.HasAnnotation<AppendedTextAnnotation>();
 
         #endregion
     }

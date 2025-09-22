@@ -2564,10 +2564,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Also ignore any Changed extensions on base and diff
             elemClone.RemoveAllNonInheritableExtensions();
             baseClone.RemoveAllNonInheritableExtensions();
-            elemClone.RemoveAllConstrainedByDiffAnnotations();
-            baseClone.RemoveAllConstrainedByDiffAnnotations();
-            elemClone.RemoveAllAppendedTextAnnotations();
-            baseClone.RemoveAllAppendedTextAnnotations();
+            elemClone.RemoveAllSnapshotGeneratorAnnotations();
+            baseClone.RemoveAllSnapshotGeneratorAnnotations();
 
             var result = baseClone.IsExactly(elemClone);
             return result;
