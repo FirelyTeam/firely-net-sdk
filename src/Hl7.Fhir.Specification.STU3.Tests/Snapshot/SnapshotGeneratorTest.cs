@@ -7669,13 +7669,11 @@ namespace Hl7.Fhir.Specification.Tests
             var zipSource = ZipSource.CreateValidationSource();
             var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
 
-
             //Test if core resource has relative content references.
             var coreQuestionnaire = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             var coreSnapshot = await generator.GenerateAsync(coreQuestionnaire);
             var item = coreSnapshot.Where(e => e.Path == "Questionnaire.item.item").FirstOrDefault();
             item.ContentReference.Should().Be("#Questionnaire.item");
-
 
             //Create profile for testing creation of absolute references.
             var profile = new StructureDefinition
@@ -7718,15 +7716,9 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition
                         {
-                            ElementId = "Questionnaire.item:booleanItem.type",
-                            Path = "Questionnaire.item.type",
-                            Fixed = new Code("boolean")
-                        },
-                        new ElementDefinition
-                        {
-                            ElementId = "Questionnaire.item:booleanItem.item.type",
-                            Path = "Questionnaire.item.item.type",
-                            Fixed = new Code("string")
+                            ElementId = "Questionnaire.item:booleanItem.item",
+                            Path = "Questionnaire.item.item",
+                            Min = 1
                         }
                     }
                 }
@@ -7737,9 +7729,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cref1 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item").FirstOrDefault();
             cref1.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
-
-            var cref2 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item.item").FirstOrDefault();
-            cref2.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
         }
 
         [TestMethod]
@@ -8460,5 +8449,121 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(valueQuantityEld);
 
         }
+        
+                // Test whether we have fixed issue https://github.com/FirelyTeam/firely-net-sdk/issues/3177.
+        [TestMethod]
+        public async Tasks.Task TestSliceWithContentReference()
+        {
+            var sd = buildSliceOnContentReference();
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var snapshot = await _generator.GenerateAsync(sd);
+
+            // If we have copied the contentReference's children to the slice, there should not be a contentReference
+            // on the slice itself anymore (but it should still exist on the intro).
+            snapshot.Single(e => e.ElementId == "Parameters.parameter.part")
+                .ContentReference.Should().NotBeNull();
+            snapshot.Should().ContainSingle(e => e.ElementId == "Parameters.parameter.part:medicationDispense.name");
+
+            // The slice itself should not have a contentReference, because it is copied the children below it.
+            var firstSlice = snapshot.Single(e => e.ElementId == "Parameters.parameter.part:medicationDispense");
+            firstSlice.ContentReference.Should().BeNull();
+
+            // But it should now have a TypeRef element!
+            firstSlice.Type.Should().ContainSingle(tr => tr.Code == "BackboneElement");
+        }
+
+        // Test whether fixing issue https://github.com/FirelyTeam/firely-net-sdk/issues/3177 does
+        // not break the snapshot generation when just the cardinality of the contentReference is changed.
+        [TestMethod]
+        public async Tasks.Task TestContentReferenceWithCardinalityChangeOnPart()
+        {
+            var sd = changeCardinalityOnContentReference();
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var snapshot = await _generator.GenerateAsync(sd);
+
+            // Changing the cardinality will not copy the children, so the contentReference should still
+            // be there and NOT have a typeref.
+            var firstPart = snapshot.Single(e => e.ElementId == "Parameters.parameter.part");
+            firstPart.ContentReference.Should().NotBeNull();
+            firstPart.Type.Should().BeEmpty();
+        }
+
+        // Test whether fixing issue https://github.com/FirelyTeam/firely-net-sdk/issues/3177 does
+        // not break the snapshot generation when just the cardinality of a nested contentReference is changed.
+        [TestMethod]
+        public async Tasks.Task TestContentReferenceWithCardinalityChangeOnNestedPart()
+        {
+            var sd = changeCardinalityOnNestedContentReference();
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var snapshot = await _generator.GenerateAsync(sd);
+
+            // Changing the cardinality in a child *will* copy the children, so the contentReference should
+            // now be gone, and it should have a TypeRef instead.
+            var firstPart = snapshot.Single(e => e.ElementId == "Parameters.parameter.part");
+            firstPart.ContentReference.Should().BeNull();
+            firstPart.Type.Should().ContainSingle(tr => tr.Code == "BackboneElement");
+
+            // But the nested part should still have a contentReference, and no typeref.
+            var nestedPart = snapshot.Single(e => e.ElementId == "Parameters.parameter.part.part");
+            nestedPart.ContentReference.Should().NotBeNull();
+            nestedPart.Type.Should().BeEmpty();
+        }
+
+        private static StructureDefinition buildSliceOnContentReference()
+        {
+            var result = TestProfileArtifactSource.CreateTestSD("http://validationtest.org/fhir/StructureDefinition/Parameters-issue-3177", "Parameters-issue-3177",
+                "Parameters with sliced parts - and so copied contentReferences", FHIRAllTypes.Parameters);
+
+            var cons = result.Differential.Element;
+
+            var slicingIntro = new ElementDefinition("Parameters.parameter.part")
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+                    (ElementDefinition.DiscriminatorType.Pattern, "name"))
+                .Required();
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Parameters.parameter.part")
+            {
+                ElementId = "Parameters.parameter.part:medicationDispense", SliceName = "medicationDispense",
+            }.Required());
+
+            cons.Add(new ElementDefinition("Parameters.parameter.part.name")
+            {
+                ElementId = "Parameters.parameter.part:medicationDispense.name",
+                Pattern = new FhirString("medicationDispense")
+            });
+
+            return result;
+        }
+
+        private static StructureDefinition changeCardinalityOnContentReference()
+        {
+            var result = TestProfileArtifactSource.CreateTestSD("http://validationtest.org/fhir/StructureDefinition/Parameters-issue-3177", "Parameters-issue-3177",
+                "Parameters with new cardinality on parts", FHIRAllTypes.Parameters);
+
+            var cons = result.Differential.Element;
+
+            var mainPart = new ElementDefinition("Parameters.parameter.part")
+                .Required();
+
+            cons.Add(mainPart);
+
+            return result;
+        }
+
+        private static StructureDefinition changeCardinalityOnNestedContentReference()
+        {
+            var result = TestProfileArtifactSource.CreateTestSD("http://validationtest.org/fhir/StructureDefinition/Parameters-issue-3177", "Parameters-issue-3177",
+                "Parameters with new cardinality on part.part", FHIRAllTypes.Parameters);
+
+            var cons = result.Differential.Element;
+
+            var nestedPart = new ElementDefinition("Parameters.parameter.part.part")
+                .Required();
+
+            cons.Add(nestedPart);
+
+            return result; }
     }
 }

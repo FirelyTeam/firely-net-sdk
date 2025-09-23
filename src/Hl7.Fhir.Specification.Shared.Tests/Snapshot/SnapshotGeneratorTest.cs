@@ -10362,5 +10362,84 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
         }
+
+        [TestMethod]
+        public async Tasks.Task TestElementDefinitionExtensionWithoutValuePreservesBaseValue()
+        {
+            // Test for issue #3211
+            // When a derived profile has an element with extension but no value,
+            // the snapshot generator should preserve the base value and merge the extension
+            
+            var derivedProfile = new StructureDefinition()
+            {
+                Url = "http://example.org/derived-patient",
+                Name = "DerivedPatient",
+                Status = PublicationStatus.Active, 
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.name")
+                        {
+                            // No Definition value, but has extension on _definition
+                            DefinitionElement = new Markdown()
+                            {
+                                Extension = new List<Extension>()
+                                {
+                                    new Extension()
+                                    {
+                                        Url = "http://hl7.org/fhir/StructureDefinition/translation",
+                                        Extension = new List<Extension>()
+                                        {
+                                            new Extension("lang", new Code("fr")),
+                                            new Extension("content", new Markdown("Une nomme associe de la individuelle"))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Create resolver 
+            var resolver = new InMemoryResourceResolver(derivedProfile);
+            var multiResolver = new MultiResolver(_standardFhirSource, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            // Generate snapshot for derived profile
+            await _generator.UpdateAsync(derivedProfile);
+            Assert.IsNotNull(derivedProfile.Snapshot?.Element);
+
+            // Find Patient.name element in snapshot
+            var nameElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.name");
+            Assert.IsNotNull(nameElement, "Patient.name element not found in snapshot");
+
+            // Should have the base definition value preserved
+            Assert.IsNotNull(nameElement.Definition, "Definition should not be null - base value should be preserved");
+            Assert.IsTrue(nameElement.Definition.Contains("name"), "Definition should contain base content about name");
+
+            // Should also have the extension from differential
+            Assert.IsNotNull(nameElement.DefinitionElement?.Extension, "DefinitionElement.Extension should not be null");
+            Assert.AreEqual(1, nameElement.DefinitionElement.Extension.Count, "Should have exactly one extension");
+
+            var translationExt = nameElement.DefinitionElement.Extension.First();
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/translation", translationExt.Url);
+            Assert.IsNotNull(translationExt.Extension);
+            Assert.AreEqual(2, translationExt.Extension.Count);
+            
+            var langExt = translationExt.Extension.FirstOrDefault(e => e.Url == "lang");
+            Assert.IsNotNull(langExt);
+            Assert.AreEqual("fr", (langExt.Value as Code)?.Value);
+
+            var contentExt = translationExt.Extension.FirstOrDefault(e => e.Url == "content");
+            Assert.IsNotNull(contentExt);
+            Assert.AreEqual("Une nomme associe de la individuelle", (contentExt.Value as Markdown)?.Value);
+        }
     }
 }

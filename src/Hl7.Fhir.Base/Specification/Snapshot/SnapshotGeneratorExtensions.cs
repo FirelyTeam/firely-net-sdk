@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
         public static readonly string CONSTRAINED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/constrainedByDifferentialExtension";
         public static readonly string STRUCTURE_DEFINITION_INTERFACE_EXT = "http://hl7.org/fhir/StructureDefinition/structuredefinition-interface";
+        public static readonly string ELEMENTDEFINITION_SUPPRESS_EXT = "http://hl7.org/fhir/StructureDefinition/elementdefinition-suppress";
 
         /// <summary>
         /// Decorate the specified snapshot element definition with a special extension
@@ -51,6 +52,17 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveExtension(CONSTRAINED_BY_DIFF_EXT);
+        }
+
+        /// <summary>Determines if the element has the suppress extension indicating it should not be inherited.</summary>
+        /// <param name="element">An <see cref="IExtendable"/> instance.</param>
+        /// <returns>True if the element has the suppress extension, false otherwise.</returns>
+        /// <remarks>Gets the boolean flag from the <see cref="ELEMENTDEFINITION_SUPPRESS_EXT"/> extension, if it exists.</remarks>
+        public static bool HasSuppressExtension(this IExtendable element) 
+        {
+            if (element == null) return false;
+            var suppressValue = element.GetBoolExtension(ELEMENTDEFINITION_SUPPRESS_EXT);
+            return suppressValue == true;
         }
 
         /// <summary>Recursively removes all instances of the <see cref="CONSTRAINED_BY_DIFF_EXT"/> extension from the specified element definition and all it's child objects.</summary>
