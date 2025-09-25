@@ -15,10 +15,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using ET = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel;
@@ -276,7 +273,17 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private void setOrAddProperty(ITypedElement node, Base target,
         Base convertedValue, PropertyMapping? propertyMapping)
     {
-        var existing = target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
+        // Original ITypedElement had more detailed information about the type of data it represents than the Poco we're building now.
+        // If we had no information of what to build, we will default to using Dynamic types to represent it.
+        // In this case we will add back the choice suffixes, so the data will represent values as they would be serialized
+        // and keep an option to type the data properly later, and consistent if the original ITypedElement didn't have the information as well.
+        // It will also allow us to later build properly typed Poco using PocoNode implementing ITypedElement/ISourceNode to call ToPoco<T>()
+        // Covered by tests PocoNodeSerializationRoundtrip.CanConvertCircularPocoNode and https://github.com/FirelyTeam/firely-net-sdk/issues/3278
+        var propertyName = propertyMapping is null && node.Definition?.IsChoiceElement == true ?
+            node.Name + node.InstanceType.Capitalize() :
+            node.Name;
+        
+        var existing = target.TryGetValue(propertyName, out var existingValue) ? existingValue : null;
 
         // If there are, just add this new value.
         if (existing is IList list)
@@ -334,9 +341,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         try
         {
             if (propertyMapping?.IsPrimitive == true && convertedValue is PrimitiveType { JsonValue: { } value })
-                target[node.Name] = value;
+                target[propertyName] = value;
             else
-                target[node.Name] = convertedValue;
+                target[propertyName] = convertedValue;
         }
         catch (InvalidCastException)
         {
