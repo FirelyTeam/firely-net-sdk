@@ -81,19 +81,16 @@ public static class PocoValidationExtensions
 
     private static IReadOnlyCollection<CodedValidationException> doNestedValidation(PocoValidationContext context, string propName, object value, IPocoValidator validator)
     {
-        var errors = new List<CodedValidationException>();
-
         switch (value)
         {
             case IList list:
                 {
-                    foreach (Base element in list.OfType<Base>())
+                    var errors = new List<CodedValidationException>();
+                    foreach ((Base element, int index) in list.OfType<Base>().Select((x, i) => (x, i)))
                     {
-                        var result = doObjectValidation(element, context, validator);
-                        if (result.Any()) return result;
+                        errors.AddRange(doObjectValidation(element, context.IntoPath(index), validator));
                     }
-
-                    break;
+                    return errors;
                 }
             case Base b:
                 {
@@ -105,6 +102,9 @@ public static class PocoValidationExtensions
     }
 
     internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => (parent() is not "" && propName is not "") ? $"{parent()}.{propName}" : parent + propName;
+    internal static Func<string> IntoPath(this Func<string> parent, int index) => () => (parent() is not "") ? $"{parent()}[{index}]" : $"[{index}]";
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, string propName) =>
         parent with { PathProducer = parent.PathProducer.IntoPath(propName) };
+    internal static PocoValidationContext IntoPath(this PocoValidationContext parent, int index) =>
+        parent with { PathProducer = parent.PathProducer.IntoPath(index) };
 }
