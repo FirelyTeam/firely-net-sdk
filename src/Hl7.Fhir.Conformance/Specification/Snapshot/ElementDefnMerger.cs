@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             {
                                 var prefix = snap?.ObjectValue as string;
 
-                                if (snap.HasAppendedText())
+                                if (snap?.HasAppendedText() == true)
                                 {
                                     // Don't append text twice
                                     diffText = prefix;
