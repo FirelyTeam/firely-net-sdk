@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             element.RemoveSnapshotGeneratorAnnotation();
             foreach (var child in element.Children)
             {
-                child.RemoveSnapshotGeneratorAnnotation();
+                child.RemoveAllSnapshotGeneratorAnnotations();
             }
         }
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
             foreach (var elem in elements)
             {
-                elem.RemoveSnapshotGeneratorAnnotation();
+                elem.RemoveAllSnapshotGeneratorAnnotations();
             }
         }
 

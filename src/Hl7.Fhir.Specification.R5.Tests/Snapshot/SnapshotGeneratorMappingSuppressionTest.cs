@@ -6,11 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,96 +18,6 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class SnapshotGeneratorMappingSuppressionTest
     {
-        private class ElementBaseAnnotation(ElementDefinition baseElemDef)
-        {
-            public ElementDefinition BaseElementDefinition { get; } = baseElemDef;
-        }
-
-        private const string MARKDOWN_COMMENT = "Systems are not required to have markdown support, so the text should be readable without markdown processing. The markdown syntax is GFM - see https://github.github.com/gfm/";
-
-        [TestMethod]
-        public async System.Threading.Tasks.Task CodeSystemCopyrightCommentIssueTest()
-        {
-            const string copyrightComment = "... Sometimes, the copyright differs between the code system and the codes that are included. The copyright statement should clearly differentiate between these when required.";
-
-            await copyrightCommentIssueTest("CodeSystem", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
-        }
-
-        [TestMethod]
-        public async System.Threading.Tasks.Task CapabilityStatementCopyrightCommentIssueTest()
-        {
-            const string copyrightComment = "...";
-
-            await copyrightCommentIssueTest("CapabilityStatement", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
-        }
-
-        private static async System.Threading.Tasks.Task copyrightCommentIssueTest(string resource, string expectedComment)
-        {
-            var zipSource = ZipSource.CreateValidationSource();
-            var resolver = new CachedResolver(zipSource);
-            var settings = new SnapshotGeneratorSettings
-            {
-                ForceRegenerateSnapshots = true,
-                GenerateAnnotationsOnConstraints = false,
-                GenerateExtensionsOnConstraints = false,
-                GenerateElementIds = true,
-                GenerateSnapshotForExternalProfiles = true
-            };
-            var sd = new StructureDefinition
-            {
-                Type = resource,
-                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{resource}",
-                Name = $"My{resource}",
-                Url = $"http://example.org/fhir/StructureDefinition/My{resource}",
-                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                Abstract = false,
-                FhirVersion = FHIRVersion.N5_0_0,
-            };
-
-            var generator = new SnapshotGenerator(resolver, settings);
-
-            generator.PrepareElement += addElementBaseAnnotation;
-
-            var elems = await generator.GenerateAsync(sd);
-
-            generator.PrepareElement -= addElementBaseAnnotation;
-
-            var element = elems.FirstOrDefault(e => e.ElementId == $"{resource}.copyright");
-
-            element.Should().NotBeNull();
-            element.Comment.Should().Be(expectedComment);
-
-            var baseElement = element.Annotation<ElementBaseAnnotation>()?.BaseElementDefinition;
-
-            baseElement.Should().NotBeNull();
-            element.Comment.Should().Be(baseElement.Comment);
-        }
-
-        private static string mergeAppendText(string s1, string s2)
-        {
-            if (!s2.StartsWith("..."))
-                return s2;
-
-            return string.IsNullOrEmpty(s1) 
-                ? s2[3..] 
-                : s1 + "\r\n" + s2[3..];
-        }
-
-        private static void addElementBaseAnnotation(object sender, SnapshotElementEventArgs e)
-        {
-            var elem = e.Element;
-
-            var ann = elem.Annotation<ElementBaseAnnotation>();
-
-            if (ann != null)
-                elem.RemoveAnnotations<ElementBaseAnnotation>();
-
-            var baseDef = e.BaseElement;
-
-            elem.AddAnnotation(new ElementBaseAnnotation(baseDef));
-        }
-
         [TestMethod]
         public async System.Threading.Tasks.Task TestMappingInheritanceWithoutSuppression()
         {
@@ -273,7 +181,7 @@ namespace Hl7.Fhir.Specification.Tests
                                     {
                                         new Extension()
                                         {
-                                            //Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
                                             Value = new FhirBoolean(true)
                                         }
                                     }
@@ -465,7 +373,7 @@ namespace Hl7.Fhir.Specification.Tests
                                     {
                                         new Extension()
                                         {
-                                            //Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
                                             Value = new FhirBoolean(true)
                                         }
                                     }

@@ -10441,5 +10441,82 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(contentExt);
             Assert.AreEqual("Une nomme associe de la individuelle", (contentExt.Value as Markdown)?.Value);
         }
+
+        private const string MARKDOWN_COMMENT = "Systems are not required to have markdown support, so the text should be readable without markdown processing. The markdown syntax is GFM - see https://github.github.com/gfm/";
+
+        [TestMethod]
+        public async Tasks.Task CodeSystemCopyrightCommentIssueTest()
+        {
+            const string copyrightComment = "... Sometimes, the copyright differs between the code system and the codes that are included. The copyright statement should clearly differentiate between these when required.";
+
+            await appendTextIssueTest("CodeSystem", "copyright", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
+        }
+
+        private static async Tasks.Task appendTextIssueTest(string resource, string path, string expectedComment)
+        {
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new CachedResolver(zipSource);
+            var settings = new SnapshotGeneratorSettings
+            {
+                ForceRegenerateSnapshots = true,
+                GenerateAnnotationsOnConstraints = false,
+                GenerateExtensionsOnConstraints = false,
+                GenerateElementIds = true,
+                GenerateSnapshotForExternalProfiles = true
+            };
+            var sd = new StructureDefinition
+            {
+                Type = resource,
+                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{resource}",
+                Name = $"My{resource}",
+                Url = $"http://example.org/fhir/StructureDefinition/My{resource}",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version)
+            };
+
+            var generator = new SnapshotGenerator(resolver, settings);
+
+            generator.PrepareElement += addElementBaseAnnotation;
+
+            var elems = await generator.GenerateAsync(sd);
+
+            generator.PrepareElement -= addElementBaseAnnotation;
+
+            var element = elems.FirstOrDefault(e => e.ElementId == $"{resource}.{path}");
+
+            element.Should().NotBeNull();
+            element.Comment.Should().Be(expectedComment);
+
+            var baseElement = element.Annotation<TestElementBaseAnnotation>()?.BaseElementDefinition;
+
+            baseElement.Should().NotBeNull();
+            element.Comment.Should().Be(baseElement.Comment);
+        }
+
+        private static string mergeAppendText(string s1, string s2)
+        {
+            if (!s2.StartsWith("..."))
+                return s2;
+
+            return string.IsNullOrEmpty(s1)
+                ? s2[3..]
+                : s1 + "\r\n" + s2[3..];
+        }
+
+        private static void addElementBaseAnnotation(object sender, SnapshotElementEventArgs e)
+        {
+            var elem = e.Element;
+
+            var ann = elem.Annotation<TestElementBaseAnnotation>();
+
+            if (ann != null)
+                elem.RemoveAnnotations<TestElementBaseAnnotation>();
+
+            var baseDef = e.BaseElement;
+
+            elem.AddAnnotation(new TestElementBaseAnnotation(baseDef));
+        }
     }
 }
