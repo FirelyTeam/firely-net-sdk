@@ -153,11 +153,9 @@ public class BaseFhirJsonDeserializer
 
         while (reader.TokenType != JsonTokenType.EndObject)
         {
-            var currentPropertyName = reader.GetString()!;
-
             // The resourceType property on the level of a resource is used to determine
             // the type and should otherwise be skipped when processing a resource.
-            if (currentPropertyName == "resourceType" && mapping.IsResource)
+            if (reader.ValueTextEquals("resourceType"u8) && mapping.IsResource)
             {
                 reader.SkipTo(JsonTokenType.PropertyName);
                 continue;
@@ -673,8 +671,7 @@ public class BaseFhirJsonDeserializer
             {
                 if (reader.TokenType != JsonTokenType.PropertyName || reader.CurrentDepth != atDepth) continue;
 
-                var propName = reader.GetString();
-                if (propName != "resourceType") continue;
+                if (!reader.ValueTextEquals("resourceType"u8)) continue;
 
                 reader.Read();
                 if (reader.TokenType == JsonTokenType.String)
