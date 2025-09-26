@@ -95,7 +95,9 @@ public class ArtifactSummary : IArtifactSummaryPropertyBag
     #region Properties
 
     /// <summary>Returns information about errors that occured while generating the artifact summary.</summary>
+    #if NET8_0_OR_GREATER
     [MemberNotNullWhen(true, nameof(IsFaulted))]
+    #endif
     public Exception? Error { get; }
 
     /// <summary>Indicates if any errors occured while generating the artifact summary.</summary>
@@ -132,7 +134,9 @@ public class ArtifactSummary : IArtifactSummaryPropertyBag
 
     /// <summary>Gets the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
     
+    #if NET8_0_OR_GREATER
     [MemberNotNullWhen(true, nameof(IsFhirResource))]
+    #endif
     public ResourceType? ResourceType { get; }
 
     /// <summary>Gets the resource uri.</summary>
