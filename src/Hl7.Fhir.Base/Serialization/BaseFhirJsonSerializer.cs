@@ -20,10 +20,10 @@ using System.Text.Json;
 namespace Hl7.Fhir.Serialization;
 
 /// <summary>
-/// Serializes the contents of an IReadOnlyDictionary[string,object] according to the rules of FHIR Json serialization.
+/// Serializes the contents of an instance of Base, according to the rules of FHIR Json serialization.
 /// </summary>
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/json.html. Since all POCOs included
-/// in the SDK implement IReadOnlyDictionary, these methods can be used to serialize POCOs to Json.
+/// in the SDK implement Base, these methods can be used to serialize POCOs to Json.
 /// </remarks>
 public class BaseFhirJsonSerializer(ModelInspector inspector)
 {
@@ -45,7 +45,19 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         if (filter is not null)
             instance = SerializationUtil.MakeSubsettedClone(instance);
 
-        serializeInternal(instance, writer, filter);
+        // This handles an edge-case where we are asked to serialize just a primitive value.
+        // For compatibility with SDK5 logic, we emit object with pseudo-property 'value' and value of the fhir primitive.
+        // Issue for context: https://github.com/FirelyTeam/firely-net-sdk/issues/3286
+        if (instance is not PrimitiveType val)
+        {
+            serializeInternal(instance, writer, filter);
+        }
+        else
+        {
+            writer.WriteStartObject();
+            serializeFhirPrimitive("value", val, writer, filter);
+            writer.WriteEndObject();
+        }
     }
 
     /// <summary>

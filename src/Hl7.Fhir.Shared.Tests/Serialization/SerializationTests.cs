@@ -535,6 +535,31 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.AreEqual(1, newPoco.Name.Count);
         }
+        
+        [TestMethod]
+        public void SerializesHandlesPrimitiveWithExtension()
+        {
+            var expected = "{\"value\":\"Test\",\"_value\":{\"extension\":[{\"url\":\"http://test\",\"valueString\":\"data\"}]}}";
+            var test = new FhirString("Test")
+            {
+                Extension = [new("http://test", new FhirString("data"))]
+            };
+
+            var actual = new FhirJsonSerializer().SerializeToString(test);
+
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [TestMethod]
+        public void SerializesHandlesPrimitive()
+        {
+            var expected = "{\"value\":\"Test\"}";
+            var test = new FhirString("Test");
+
+            var actual = new FhirJsonSerializer().SerializeToString(test);
+
+            Assert.AreEqual(expected, actual);
+        }
 
         [TestMethod]
         public void IncludeMandatoryInElementsSummaryTest()
