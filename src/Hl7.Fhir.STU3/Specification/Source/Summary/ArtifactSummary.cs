@@ -95,6 +95,7 @@ public class ArtifactSummary : IArtifactSummaryPropertyBag
     #region Properties
 
     /// <summary>Returns information about errors that occured while generating the artifact summary.</summary>
+    [MemberNotNullWhen(true, nameof(IsFaulted))]
     public Exception? Error { get; }
 
     /// <summary>Indicates if any errors occured while generating the artifact summary.</summary>
@@ -130,6 +131,8 @@ public class ArtifactSummary : IArtifactSummaryPropertyBag
     public string? ResourceTypeName => properties.GetTypeName();
 
     /// <summary>Gets the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
+    
+    [MemberNotNullWhen(true, nameof(IsFhirResource))]
     public ResourceType? ResourceType { get; }
 
     /// <summary>Gets the resource uri.</summary>
