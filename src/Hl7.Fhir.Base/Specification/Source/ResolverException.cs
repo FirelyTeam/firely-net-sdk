@@ -61,8 +61,8 @@ public class ResolverException : CodedException
     {
     }
 
-    internal static ResolverException NotImplemented(Exception ex) => new(NOT_IMPLEMENTED, "Resolver does not implement the used Resolve method.", ex);
-    internal static ResolverException NotFound(OperationOutcome? issues = null) => new(NOT_FOUND, 
+    public static ResolverException NotImplemented(Exception ex) => new(NOT_IMPLEMENTED, "Resolver does not implement the used Resolve method.", ex);
+    public static ResolverException NotFound(OperationOutcome? issues = null) => new(NOT_FOUND, 
         issues is null 
             ? "Resource could not be found." 
             : $"Resource could not be found. The operation outcome for this resource was: {issues}");

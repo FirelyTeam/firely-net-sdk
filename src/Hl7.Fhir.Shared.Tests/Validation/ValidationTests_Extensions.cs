@@ -269,5 +269,23 @@ namespace Hl7.Fhir.Tests.Validation
 
             bin.Validate(inspector: ModelInfo.ModelInspector).Should().NotBeEmpty();
         }
+        
+        [TestMethod]
+        public void ValidationReportsIndexes()
+        {
+            var bdl = new Bundle()
+            {
+                Entry = 
+                [
+                    new() { Resource = new Patient { ActiveElement = new() { JsonValue = "true" } } },
+                    new() { Resource = new Patient { ActiveElement = new() { JsonValue = true } } },
+                    new() { Resource = new Patient { ActiveElement = new() { JsonValue = "false" } } },
+                ] 
+            };
+            var errors = bdl.Validate();
+            errors.Should().HaveCount(3);
+            errors.Should().Contain(x => x.InstancePath == "Bundle.entry[0].resource.active");
+            errors.Should().Contain(x => x.InstancePath == "Bundle.entry[2].resource.active");
+        }
     }
 }
