@@ -325,7 +325,9 @@ public class LocalTerminologyService : ITerminologyService
         }
 
         var component = vs.FindInExpansion(code, system);
-        var codeLabel = $"Code '{code}'" + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
+        var codeLabel = $"Code '{code}'"
+            + (string.IsNullOrEmpty(display) ? string.Empty : $" (display '{display}')") 
+            + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
         var result = new Parameters();
         var success = true;
         var messages = new StringBuilder();
