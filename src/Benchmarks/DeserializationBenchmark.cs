@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Xml;
 
@@ -13,6 +14,7 @@ namespace Firely.Sdk.Benchmarks
     public class DeserializationBenchmarks
     {
         internal string JsonData;
+        internal byte[] JsonDataBytes;
         internal string XmlData;
         internal BaseFhirXmlDeserializer XmlDeserializer;
         internal BaseFhirJsonDeserializer JsonDeserializer;
@@ -24,12 +26,13 @@ namespace Firely.Sdk.Benchmarks
         {
             var jsonFileName = Path.Combine("TestData", "fp-test-patient.json");
             JsonData = File.ReadAllText(jsonFileName);
+            JsonDataBytes = Encoding.UTF8.GetBytes(JsonData);
 
             var xmlFileName = Path.Combine("TestData", "fp-test-patient.xml");
             XmlData = File.ReadAllText(xmlFileName);
 
-            XmlDeserializer = new FhirXmlDeserializer();
-            JsonDeserializer = new FhirJsonDeserializer();
+            XmlDeserializer = new FhirXmlDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Ostrich));
+            JsonDeserializer = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Ostrich));
 
             options = new JsonSerializerOptions().ForFhir();
         }
@@ -37,9 +40,10 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public Resource JsonDictionaryDeserializer()
         {
+            var reader = new Utf8JsonReader(JsonDataBytes);
             try
             {
-                return JsonSerializer.Deserialize<Patient>(JsonData, options);
+                return JsonDeserializer.DeserializeResource(ref reader);
             }
             catch (DeserializationFailedException e)
             {
