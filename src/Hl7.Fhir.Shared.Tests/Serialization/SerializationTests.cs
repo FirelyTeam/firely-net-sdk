@@ -611,16 +611,31 @@ namespace Hl7.Fhir.Tests.Serialization
                        }
                        """;
             var resultingJson = """
-                                {}
+                                {
+                                  "resourceType": "Random",
+                                  "something": {
+                                    "resourceType": "NewThing",
+                                    "data": "some data",
+                                    "newRes": [
+                                      null,
+                                      {
+                                        "resourceType": "ArrayEntry",
+                                        "id": "1"
+                                      },
+                                      {
+                                        "resourceType": "UnnamedResource_Random.something.newRes[2]",
+                                        "id": "2"
+                                      }
+                                    ]
+                                  }
+                                }
                                 """;
             
             _fhirJsonDeserializer.TryDeserializeResource(originalJson, out var resource, out var error);
+            var js = resource.ToJson(true);
             Assert.AreEqual(resultingJson, resource.ToJson(true));
-            var sn = new TypedElementOnSourceNode(resource.ToPocoNode(), null, ModelInfo.ModelInspector, new() { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough});
-            var pn = sn.ToPocoNode(ModelInfo.ModelInspector);
-            var something = pn.Child("something") as PocoNode;
             Assert.IsInstanceOfType<DynamicResource>(resource);
-            Assert.IsInstanceOfType<DynamicResource>(something!.Poco);
+            Assert.IsInstanceOfType<DynamicResource>(resource["something"]);
             var dynamic = (DynamicResource)resource["something"];
             Assert.IsFalse(dynamic.TryGetValue("resourceType", out _));
         }
