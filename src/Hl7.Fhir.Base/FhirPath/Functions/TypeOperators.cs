@@ -21,8 +21,10 @@ namespace Hl7.FhirPath.Functions
 { 
     internal static class TypeOperators
     {
-        public static bool Is(this PocoNode focus, string type)
+        public static bool Is(this PocoNode? focus, string type)
         {
+            if (focus is null) return false;
+
             var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
 #pragma warning disable CS0618 // Type or member is obsolete
                 .Select(t => ModelInspector.ForAssembly(t.Assembly).GetFhirTypeNameForType(t))
