@@ -336,7 +336,7 @@ public static class PocoNodeExtensions
     /// <param name="pn">The PocoNode instance to convert.</param>
     /// <param name="pretty">A boolean value indicating whether the XML output should be formatted prettily (indented) or compact.</param>
     /// <returns>A string containing the XML representation of the given PocoNode instance.</returns>
-    public static string ToXml(this PocoNode pn, bool pretty)
+    public static string ToXml(this PocoNode pn, bool pretty = false)
     {
 #pragma warning disable CS0618// Type or member is obsolete
         var serializer = new BaseFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForAssembly(pn.Poco.GetType().Assembly));
@@ -356,7 +356,7 @@ public static class PocoNodeExtensions
     /// <param name="pn">The PocoNode instance to serialize.</param>
     /// <param name="pretty">Indicates whether the JSON output should be formatted for readability.</param>
     /// <returns>A JSON string representing the given PocoNode.</returns>
-    public static string ToJson(this PocoNode pn, bool pretty)
+    public static string ToJson(this PocoNode pn, bool pretty = false)
     {
 #pragma warning disable CS0618// Type or member is obsolete
         var inspector = pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType());
