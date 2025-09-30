@@ -17,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlTyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlUntyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseXMLElements.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PocoNodeSerializationRoundtrip.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundTripAttachments.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripAllSerializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientJson.cs" />
