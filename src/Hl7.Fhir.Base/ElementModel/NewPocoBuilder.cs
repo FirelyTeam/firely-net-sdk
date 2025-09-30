@@ -64,7 +64,11 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             object objectValue;
             if (newInstance is DynamicPrimitive)
                 objectValue = value;
-            // we're trying to add the type data to untyped values
+            
+            // the ITypedElement is a PocoNode built with no information about the Poco, whether built with ModelInspector.Base,
+            // or representing a custom resource - it will be using DynamicPrimitive to store the values typed as in serialization source.
+            // With numeric values the JsonValue will be already good enough, but with strings it can represent FhirDateTime, FhirUri etc.
+            // now that we have ClassMapping, we can check what is the expected primitive type and convert the string value accordingly
             else if (node is PocoNode { Poco: IDynamicType } && value is string s && classMapping.PrimitiveValueProperty is not null)
                 objectValue = PrimitiveTypeConverter.ConvertTo(s, classMapping.PrimitiveValueProperty.ImplementingType);
             else
@@ -93,11 +97,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         // Now, read the children
         foreach (var child in node.Children())
         {
-            var propertyMapping = classMapping.FindMappedElementByName(child.Name);
-
-            // we didn't find direct match, we are in a dynamic context, so try to detect a choice-type
-            if (propertyMapping is null && child is PocoNode { Poco: IDynamicType })
-                propertyMapping = classMapping.PropertyMappings.FirstOrDefault(x => child.Name.StartsWith(x.Name));
+            var propertyMapping = classMapping.FindMappedElementByChoiceName(child.Name);
             
             if (propertyMapping is null && settings?.IgnoreUnknownMembers == false)
                 raiseFormatError($"Encountered unknown member '{child.Name}' while de-serializing", child.Location);
