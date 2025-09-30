@@ -386,16 +386,17 @@ public class ClassMapping(
 
     private static ClassMapping buildNetPrimitiveClassMapping(Type t, ModelInspector inspector) =>
         new(inspector, "Net." + t.FullName, t) { IsPrimitive = true };
-
-    internal static ClassMapping Resource => ModelInspector.Base.FindOrImportClassMapping(typeof(Resource)) ??
-                                                    throw new InvalidOperationException($"{nameof(Resource)} mapping not found in Base.");
-
-    internal static ClassMapping DynamicResource => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicResource)) ??
+    
+    private static ClassMapping? _resourceMapping;
+    internal static ClassMapping Resource => _resourceMapping ??= ModelInspector.Base.FindOrImportClassMapping(typeof(Resource)) ??
+                                             throw new InvalidOperationException($"{nameof(Resource)} mapping not found in Base.");
+    private static ClassMapping? _dynResMapping;
+    internal static ClassMapping DynamicResource => _dynResMapping ??= ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicResource)) ??
                                                     throw new InvalidOperationException($"{nameof(DynamicResource)} mapping not found in Base.");
-    internal static ClassMapping DynamicPrimitive => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicPrimitive)) ??
+    private static ClassMapping? _dynPrimMapping;
+    internal static ClassMapping DynamicPrimitive => _dynPrimMapping ??= ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicPrimitive)) ??
                                                      throw new InvalidOperationException($"{nameof(DynamicPrimitive)} mapping not found in Base.");
-    internal static ClassMapping DynamicDataType => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicDataType)) ??
+    private static ClassMapping? _dynDataMapping;
+    internal static ClassMapping DynamicDataType => _dynDataMapping ??= ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicDataType)) ??
                                                     throw new InvalidOperationException($"{nameof(DynamicDataType)} mapping not found in Base.");
-    internal static ClassMapping FhirString => ModelInspector.Base.FindOrImportClassMapping(typeof(FhirString)) ??
-                                                    throw new InvalidOperationException($"{nameof(FhirString)} mapping not found in Base.");
 }
