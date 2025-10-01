@@ -2193,28 +2193,32 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(nav != null);
             Debug.Assert(nav.Current != null);
 
-            var elementDef = nav.Current;
-            var location = elementDef.Path;
+            var coreType = getCoreType(nav);
 
-            var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
+            if (string.IsNullOrEmpty(coreType))
+                return null;
 
-            // [WMR 20181212] TODO: Handle logical models, where StructureDefinition.type returns an uri
+            var location = nav.Current.Path;
 
-            var coreType = nav.StructureDefinition?.Type
-                // Fall back to root element name...?
-                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+            // Try to resolve the custom element type profile reference
+            var coreSd = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(coreType).ConfigureAwait(false);
+            _ = ensureSnapshot
+                ? await this.ensureSnapshot(coreSd, coreType, location).ConfigureAwait(false)
+                : this.verifyStructure(coreSd, coreType, location);
 
-            if (!string.IsNullOrEmpty(coreType))
-            {
-                // Try to resolve the custom element type profile reference
-                var coreSd = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(coreType).ConfigureAwait(false);
-                _ = ensureSnapshot
-                    ? await this.ensureSnapshot(coreSd, coreType, location).ConfigureAwait(false)
-                    : this.verifyStructure(coreSd, coreType, location);
-                return coreSd;
-            }
+            return coreSd;
+        }
 
-            return null;
+        private static string getCoreType(ElementDefinitionNavigator nav)
+        {
+            if (nav.StructureDefinition?.Type != null)
+                return nav.StructureDefinition.Type;
+
+            var contentReference = nav.Current.ContentReference; // e.g. "#Questionnaire.item"
+
+            return contentReference.StartsWith("#")
+                ? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1))  // Fall back to root element name...?
+                : contentReference.Split('#').First(); // return url
         }
 
         private bool verifyStructure(StructureDefinition sd, string profileUrl, string location = null)
