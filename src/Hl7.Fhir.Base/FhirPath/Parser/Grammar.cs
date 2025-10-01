@@ -116,8 +116,25 @@ namespace Hl7.FhirPath.Parser
                 .UsePositionFrom(n.Location);
         }
 
+        // Direction parser for sort function
+        public static readonly Parser<string> Direction =
+            Parse.String("asc").Text().Or(Parse.String("desc").Text()).Named("Direction");
+
         public static Parser<Expression> FunctionParameter(string name)
         {
+            // Special handling for sort function: allows optional direction argument
+            if (name == "sort")
+            {
+                return
+                    from wsLeading in WhitespaceOrComments()
+                    from expr in Grammar.Expression
+                    from wsDir in WhitespaceOrComments()
+                    from dir in Direction.Optional()
+                    from wsTrailing in WhitespaceOrComments()
+                    select dir.IsDefined
+                        ? new SortDirectionExpression(dir.Get(), expr.WithLeadingWS(wsLeading)).WithLeadingWS(wsDir).WithTrailingWS(wsTrailing)
+                        : expr.WithLeadingWS(wsLeading).WithTrailingWS(wsTrailing);
+            }
             // Make exception for is() and as() FUNCTIONS (operators are handled elsewhere), since they don't
             // take a normal parameter, but an identifier (which is not normally a FhirPath type)
             if (name != "is" && name != "as" && name != "ofType")

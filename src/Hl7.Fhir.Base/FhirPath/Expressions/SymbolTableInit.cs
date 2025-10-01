@@ -220,6 +220,13 @@ public static class SymbolTableInit
         t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string)), DefineVariable);
         t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
 
+        // Co-alesce and sort have variable number of arguments.
+        t.Add(new UnknownArgCountCallSignature("coalesce", typeof(IEnumerable<ITypedElement>)), runCoalesce);
+        t.Add(new UnknownArgCountCallSignature("sort", typeof(IEnumerable<ITypedElement>)), runSort);
+        // these unary operators just inject an ordering node that includes which direction the sort if processing
+        t.Add("unary.asc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a }), doNullProp: true);
+        t.Add("unary.desc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a, Descending = true }), doNullProp: true);
+
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee)), runAggregate);
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
 
@@ -266,6 +273,60 @@ public static class SymbolTableInit
         return "http://hl7.org/fhir/ValueSet/" + id;
     }
 
+    private static IEnumerable<ITypedElement> runSort(Closure ctx, IEnumerable<Invokee> arguments)
+    {
+        var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        var lambda = arguments.Skip(1);
+        if (!lambda.Any())
+        {
+            // Just sort using the native element comparer
+            // System.Linq.Enumerable.Order;
+            return CachedEnumerable.Create(focus.OrderBy(item => item, EqualityOperators.TypedElementComparer));
+        }
+
+        var keySelector = lambda.First();
+        IOrderedEnumerable<ITypedElement> orderedResult = focus.OrderBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
+        lambda = lambda.Skip(1);
+        while (lambda.Any())
+        {
+            keySelector = lambda.First();
+            orderedResult = orderedResult.ThenBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
+
+            // move onto the next item
+            lambda = lambda.Skip(1);
+        }
+
+        return orderedResult.ToList();
+    }
+
+    private static IEnumerable<ITypedElement> readElement(Closure ctx, ITypedElement element, Invokee selectProp)
+    {
+        var newFocus = ElementNode.CreateList(element);
+        var newContext = ctx.Nest(newFocus);
+        newContext.SetThis(newFocus);
+        var result = selectProp(newContext, InvokeeFactory.EmptyArgs);
+        foreach (var resultElement in result)       // implement SelectMany()
+            yield return resultElement;
+    }
+
+    private static IEnumerable<ITypedElement> runCoalesce(Closure ctx, IEnumerable<Invokee> arguments)
+    {
+        var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        var lambda = arguments.Skip(1);
+
+        while (lambda.Any())
+        {
+            var keySelector = lambda.First();
+            var results = keySelector(ctx, InvokeeFactory.EmptyArgs);
+            if (results.Any())
+                return results;
+
+            // move onto the next item
+            lambda = lambda.Skip(1);
+        }
+
+        return ElementNode.EmptyList;
+    }
     private static IEnumerable<ITypedElement> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
