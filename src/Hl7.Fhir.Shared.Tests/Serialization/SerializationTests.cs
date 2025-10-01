@@ -6,8 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using FluentAssertions;
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -588,80 +586,6 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsTrue(json.ContainsKey("issued"));
             Assert.IsTrue(json.ContainsKey("status"));
-        }
-        
-        [TestMethod]
-        public void CustomTypesContainNestedResources()
-        {
-            var originalJson = """
-                       {
-                           "resourceType": "Random",
-                           "something": {
-                               "resourceType": "NewThing",
-                               "data": "some data",
-                               "newRes": [ null, {
-                                 "resourceType": "ArrayEntry",
-                                 "id": "1"
-                               },
-                               {
-                                 "id": "2"
-                               }
-                               ]
-                           }
-                       }
-                       """;
-            var resultingJson = """
-                                {
-                                  "resourceType": "Random",
-                                  "something": {
-                                    "resourceType": "NewThing",
-                                    "data": "some data",
-                                    "newRes": [
-                                      null,
-                                      {
-                                        "resourceType": "ArrayEntry",
-                                        "id": "1"
-                                      },
-                                      {
-                                        "resourceType": "UnnamedResource_Random.something.newRes[2]",
-                                        "id": "2"
-                                      }
-                                    ]
-                                  }
-                                }
-                                """;
-            
-            _fhirJsonDeserializer.TryDeserializeResource(originalJson, out var resource, out var error);
-            var js = resource.ToJson(true);
-            Assert.AreEqual(resultingJson, resource.ToJson(true));
-            Assert.IsInstanceOfType<DynamicResource>(resource);
-            Assert.IsInstanceOfType<DynamicResource>(resource["something"]);
-            var dynamic = (DynamicResource)resource["something"];
-            Assert.IsFalse(dynamic.TryGetValue("resourceType", out _));
-        }
-        
-        [TestMethod]
-        public void CustomTypesContainNestedResourcesAsContained()
-        {
-            var json = """
-                       {
-                           "resourceType": "Random",
-                           "contained": [{
-                               "resourceType": "NewThing",
-                               "data": "some data"
-                           }]
-                       }
-                       """;
-            
-            _fhirJsonDeserializer.TryDeserializeResource(json, out var resource, out var error);
-
-            Assert.IsInstanceOfType<DynamicResource>(resource);
-            Assert.IsInstanceOfType<List<Resource>>(resource["contained"]);
-            var contained = (List<Resource>)resource["contained"];
-            Assert.IsInstanceOfType<DynamicResource>(contained[0]);
-            var dynamic = (DynamicResource)contained[0];
-            
-            Assert.IsFalse(dynamic.TryGetValue("resourceType", out _));
         }
     }
 }

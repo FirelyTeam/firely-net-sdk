@@ -496,9 +496,9 @@ public class BaseFhirJsonDeserializer
 
     /// <summary>
     /// Look for the first token in an array that is not a null or a nested array, so
-    /// the first "real" element with content, then returns a copy of the reader at that element.
+    /// the first "real" element with content.
     /// </summary>
-    private static Utf8JsonReader peekArrayElement(ref Utf8JsonReader reader)
+    private static JsonTokenType peekArrayElementToken(ref Utf8JsonReader reader)
     {
         var peekCopy = reader;
         while (peekCopy.TokenType is JsonTokenType.StartArray or JsonTokenType.Null)
@@ -506,7 +506,7 @@ public class BaseFhirJsonDeserializer
             peekCopy.Read();
         }
 
-        return peekCopy;
+        return peekCopy.TokenType;
     }
     
 
@@ -660,28 +660,39 @@ public class BaseFhirJsonDeserializer
 
     internal static bool IsUnnamedResourceMapping(ClassMapping c) => c.Name.StartsWith(UNNAMED_RESOURCE_NAME_PREFIX);
 
-    private static string? scanForResourceType(ref Utf8JsonReader originalReader, PocoDeserializerState state)
+    private static string? scanForResourceType(ref Utf8JsonReader reader, PocoDeserializerState state)
     {
-        var reader = originalReader;// copy the struct so we can "rewind"
+        var originalReader = reader;    // copy the struct so we can "rewind"
         var atDepth = reader.CurrentDepth + 1;
 
-        while (reader.Read() && reader.CurrentDepth >= atDepth)
+        try
         {
-            if (reader.TokenType != JsonTokenType.PropertyName || reader.CurrentDepth != atDepth) continue;
+            while (reader.Read() && reader.CurrentDepth >= atDepth)
+            {
+                if (reader.TokenType != JsonTokenType.PropertyName || reader.CurrentDepth != atDepth) continue;
 
-            if (!reader.ValueTextEquals("resourceType"u8)) continue;
+                if (!reader.ValueTextEquals("resourceType"u8)) continue;
 
-            reader.Read();
-            if (reader.TokenType == JsonTokenType.String)
-                return reader.GetString();
+                reader.Read();
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    return reader.GetString();
+                }
+                else
+                {
+                    state.Errors.Add(ERR.RESOURCETYPE_SHOULD_BE_STRING(ref reader, state.Path.GetInstancePath(), reader.TokenType,
+                        reader.GetRawText()));
+                    return reader.GetRawText();
+                }
+            }
 
-            var value = reader.GetRawText();
-            state.Errors.Add(ERR.RESOURCETYPE_SHOULD_BE_STRING(ref reader, state.Path.GetInstancePath(), reader.TokenType, value));
-            return value;
+            state.Errors.Add(ERR.NO_RESOURCETYPE_PROPERTY(ref reader, ""));
+            return null;
         }
-
-        state.Errors.Add(ERR.NO_RESOURCETYPE_PROPERTY(ref reader, string.Empty));
-        return null;
+        finally
+        {
+            reader = originalReader;
+        }
     }
 
     /// <summary>
@@ -727,12 +738,27 @@ public class BaseFhirJsonDeserializer
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 
-        // FindMappedElementByChoiceName already looks up by literal name first, then searches for choice typed name
-        PropertyMapping? lookupPropertyInDefinition() => parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
+        PropertyMapping? lookupPropertyInDefinition() =>
+            parentMapping.FindMappedElementByName(propNameWithoutUnderscore)
+            ?? parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {
-            if (propNameWithoutUnderscore.Length == propertyMapping.Name.Length)
+            string typeSuffix = propNameWithoutUnderscore[propertyMapping.Name.Length..];
+
+            if (!string.IsNullOrEmpty(typeSuffix))
+            {
+                var foundChoiceMapping = parentMapping.Inspector.FindClassMapping(typeSuffix);
+
+                if (foundChoiceMapping is null)
+                {
+                    var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
+                    foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, guessedDynamicType);
+                }
+
+                return foundChoiceMapping;
+            }
+            else
             {
                 var path = state.Path.GetInstancePath();
                 state.Errors.Add(ERR.CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref r, path, propNameWithoutUnderscore));
@@ -740,15 +766,6 @@ public class BaseFhirJsonDeserializer
                 var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
                 return new ClassMapping(_inspector, $"UnknownType_{path}", guessedDynamicType);
             }
-            
-            string typeSuffix = propNameWithoutUnderscore[propertyMapping.Name.Length..];
-            var foundChoiceMapping = parentMapping.Inspector.FindClassMapping(typeSuffix);
-
-            if (foundChoiceMapping is not null)
-                return foundChoiceMapping;
-            
-            var unknownDynamic = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
-            return new ClassMapping(_inspector, typeSuffix, unknownDynamic);
         }
 
         // If the property is unknown, scan the reader for the first token. If that is a Json primitive,
@@ -764,23 +781,22 @@ public class BaseFhirJsonDeserializer
         {
             var customPropertyMapping = r.TokenType switch
             {
-                JsonTokenType.StartArray
-                    => new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeWithScan(peekArrayElement(ref r))).PromoteToList(),
-                _ 
-                    => new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeWithScan(r))
+                JsonTokenType.StartArray =>
+                    new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeForToken(peekArrayElementToken(ref r))).PromoteToList(),
+                _ =>
+                    new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeForToken(r.TokenType))
             };
 
             state.GetObjectContext().LocalPropertyMappings.Add(propNameWithoutUnderscore, customPropertyMapping);
 
             return customPropertyMapping;
 
-            Type getCustomMappingTypeWithScan(Utf8JsonReader r)
+            Type getCustomMappingTypeForToken(JsonTokenType tokenType)
             {
-                return r.TokenType switch
+                return tokenType switch
                 {
                     JsonTokenType.String or JsonTokenType.True or JsonTokenType.False or JsonTokenType.Number => typeof(DynamicPrimitive),
-                    // if we're at an object we should look for a resourceType property, then we know it has to be a resource
-                    JsonTokenType.StartObject when !hasUnderscore => scanForResourceType(ref r, new()) is null ? typeof(DynamicDataType) : typeof(DynamicResource),
+                    JsonTokenType.StartObject when !hasUnderscore => typeof(DynamicDataType),
                     _ when hasUnderscore => typeof(DynamicPrimitive),
                     _ => typeof(DynamicDataType)
                 };
