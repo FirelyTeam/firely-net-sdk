@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
@@ -96,22 +97,21 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             if (filter?.TryEnterMember(member.Key, member.Value, propertyMapping) == false)
                 continue;
 
-            var propertyName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
-                addSuffixToElementName(member.Key, member.Value) : member.Key;
-
-            // do we have more possible types (choiceType), then the required type is dependent on the type of the member.Value (is it Integer64 or not?),
-            // otherwise we will use the Fhirtype of the propertyMapping.
-            var requiredType = (propertyMapping?.FhirType.Length > 1)
-                ? (member.Value is Integer64 ? typeof(Integer64) : null)
-                : propertyMapping?.FhirType.FirstOrDefault();
+            var propertyName = propertyMapping switch
+            {
+                { Choice: ChoiceType.DatatypeChoice } => addSuffixToElementName(member.Key, member.Value),
+                null when member.Value is DataType annotatable && annotatable.HasAnnotation<ChoiceElementAnnotation>()
+                    => addSuffixToElementName(member.Key, member.Value),
+                _ => member.Key
+            };
 
             switch (member.Value)
             {
                 case PrimitiveType pt:
-                    serializeFhirPrimitive(propertyName, pt, writer, filter, requiredType);
+                    serializeFhirPrimitive(propertyName, pt, writer, filter);
                     break;
                 case IReadOnlyList<PrimitiveType?> pts:
-                    serializeFhirPrimitiveList(propertyName, pts, writer, filter, requiredType);
+                    serializeFhirPrimitiveList(propertyName, pts, writer, filter);
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
                     {
@@ -163,8 +163,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         string elementName,
         IReadOnlyList<PrimitiveType?> values,
         Utf8JsonWriter writer,
-        SerializationFilter? filter,
-        Type? requiredType = null)
+        SerializationFilter? filter)
     {
         if(values is null) throw new ArgumentNullException(nameof(values));
 
@@ -188,7 +187,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     writeStartArray(elementName, numNullsMissed, writer);
                 }
 
-                SerializePrimitiveValue(value.JsonValue, writer, requiredType);
+                SerializePrimitiveValue(value.JsonValue, writer);
             }
             else
             {
@@ -246,7 +245,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>FHIR primitives are handled separately here since they may require
     /// serialization into two Json properties called "elementName" and "_elementName".</remarks>
-    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter, Type? requiredType = null)
+    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
@@ -254,7 +253,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             // Write a property with 'elementName'
             writer.WritePropertyName(elementName);
-            SerializePrimitiveValue(value.JsonValue, writer, requiredType);
+            SerializePrimitiveValue(value.JsonValue, writer);
         }
 
         if (!value.EnumerateElements().Any()) return;
@@ -293,7 +292,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// to be written that fit in .NET's <see cref="decimal"/> type, which may be less
     /// precision than required by the FHIR specification (http://hl7.org/fhir/json.html#primitive).
     /// </remarks>
-    protected virtual void SerializePrimitiveValue(object? value, Utf8JsonWriter writer, Type? requiredType)
+    protected virtual void SerializePrimitiveValue(object? value, Utf8JsonWriter writer)
     {
         switch (value)
         {

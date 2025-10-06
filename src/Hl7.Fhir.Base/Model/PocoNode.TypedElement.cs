@@ -61,12 +61,16 @@ public partial record PocoNode
     protected virtual string? TextInternal => null; 
     string? ISourceNode.Text => TextInternal;
     
-    private Lazy<string> SourceName => new (() => 
-        Poco is DataType { TypeName: var tn } && 
-        ((ITypedElement)this).Definition?.IsChoiceElement is true 
-            ? Name + tn.Capitalize() 
-            : Name
-    );
+    private Lazy<string> SourceName => new (() =>
+    {
+        if (Poco is not DataType dt)
+            return Name;
+
+        if(dt.HasAnnotation<ChoiceElementAnnotation>() || ((ITypedElement)this).Definition?.IsChoiceElement is true)
+            return Name + dt.TypeName.Capitalize();
+
+        return Name;
+    });
     
     string ISourceNode.Name => SourceName.Value;
 
