@@ -1455,6 +1455,44 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandElement(sd, nav.Current);
         }
 
+        [TestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        public async Tasks.Task TestExpandElement_AbsoluteContentReference(bool convertToAbsolute)
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Composition.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Composition),
+                Name = "MyComposition",
+                Url = $"http://example.org/fhir/StructureDefinition/MyComposition",
+                Abstract = false,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource
+            };
+
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+            var generator = new SnapshotGenerator(resolver, _settings);
+            var elements = await generator.GenerateAsync(sd);
+            var section = elements.FirstOrDefault(e => e.ElementId == "Composition.section.section");
+            var sectionId = elements.FirstOrDefault(e => e.ElementId == "Composition.section.section.id");
+
+            section.Should().NotBeNull();
+            sectionId.Should().BeNull();
+            section.ContentReference.Should().Be("#Composition.section");
+
+            if (convertToAbsolute)
+                section.ContentReference = sd.BaseDefinition + section.ContentReference;
+
+            var expandedElements = await generator.ExpandElementAsync(elements, section);
+
+            expandedElements.Should().HaveCountGreaterThan(elements.Count);
+
+            sectionId = expandedElements.FirstOrDefault(e => e.ElementId == "Composition.section.section.id");
+            sectionId.Should().NotBeNull();
+        }
+
         private async Tasks.Task testExpandElement(string srcProfileUrl, string expandElemPath)
         {
             // Prepare...
