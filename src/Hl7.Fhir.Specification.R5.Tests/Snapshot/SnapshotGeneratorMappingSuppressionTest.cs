@@ -12,14 +12,12 @@ using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class SnapshotGeneratorMappingSuppressionTest
     {
-
         [TestMethod]
         public async System.Threading.Tasks.Task TestMappingInheritanceWithoutSuppression()
         {
@@ -42,14 +40,14 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile without suppress extension
             var derivedProfile = CreateDerivedProfileWithoutSuppression();
-            
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Generate snapshot
             var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
@@ -84,14 +82,14 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile with suppress extension on mapping
             var derivedProfile = CreateDerivedProfileWithSuppressedMapping();
-            
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Generate snapshot
             var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
@@ -216,20 +214,20 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile without suppress extension
             var derivedProfile = CreateDerivedProfileWithoutExampleSuppression();
-            
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Create snapshot generator
             var generator = new SnapshotGenerator(mockResolver, SnapshotGeneratorSettings.CreateDefault());
-            
+
             // Generate snapshot for the derived profile  
             generator.Update(derivedProfile);
-            
+
             // Assert that the derived profile inherited the example from the base
             Assert.IsNotNull(derivedProfile.Snapshot);
             var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
@@ -262,25 +260,25 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile that suppresses the inherited example
             var derivedProfile = CreateDerivedProfileWithExampleSuppression();
-            
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Create snapshot generator
             var generator = new SnapshotGenerator(mockResolver, SnapshotGeneratorSettings.CreateDefault());
-            
+
             // Generate snapshot for the derived profile
             generator.Update(derivedProfile);
-            
+
             // Assert that the derived profile did NOT inherit the example (it was suppressed)
             Assert.IsNotNull(derivedProfile.Snapshot);
             var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(patientElement);
-            
+
             // The example should be absent because it was suppressed
             Assert.IsTrue(patientElement.Example == null || patientElement.Example.Count == 0);
         }
@@ -350,7 +348,7 @@ namespace Hl7.Fhir.Specification.Tests
             return new StructureDefinition()
             {
                 Id = "derived-patient-profile-with-example-suppression",
-                Url = "http://example.org/fhir/StructureDefinition/derived-patient-with-example-suppression", 
+                Url = "http://example.org/fhir/StructureDefinition/derived-patient-with-example-suppression",
                 Name = "DerivedPatientProfileWithExampleSuppression",
                 Status = PublicationStatus.Active,
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,

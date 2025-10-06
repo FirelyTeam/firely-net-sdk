@@ -798,15 +798,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             if (diffText.StartsWith("..."))
                             {
-                                //var prefix = snap != null ? snap.ObjectValue as string : null;
                                 var prefix = snap?.ObjectValue as string;
-                                if (string.IsNullOrEmpty(prefix))
+
+                                if (snap?.HasAppendedText() == true)
                                 {
-                                    diffText = diffText.Substring(3);
+                                    // Don't append text twice
+                                    diffText = prefix;
                                 }
                                 else
                                 {
-                                    diffText = prefix + "\r\n" + diffText.Substring(3);
+                                    if (string.IsNullOrEmpty(prefix))
+                                    {
+                                        diffText = diffText.Substring(3);
+                                    }
+                                    else
+                                    {
+                                        diffText = prefix + "\r\n" + diffText.Substring(3);
+                                    }
+
+                                    // Add marker that text has been appended to prevent it being appended multiple times
+                                    // when an element has a type profile (which will result in multiple merges of the same element).
+                                    result.SetAppendedTextAnnotation();
                                 }
                             }
 

@@ -2473,8 +2473,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Also ignore any Changed extensions on base and diff
             elemClone.RemoveAllNonInheritableExtensions();
             baseClone.RemoveAllNonInheritableExtensions();
-            elemClone.RemoveAllConstrainedByDiffAnnotations();
-            baseClone.RemoveAllConstrainedByDiffAnnotations();
+            elemClone.RemoveAllSnapshotGeneratorAnnotations();
+            baseClone.RemoveAllSnapshotGeneratorAnnotations();
 
             var result = baseClone.IsExactly(elemClone);
             return result;
@@ -8602,6 +8602,84 @@ namespace Hl7.Fhir.Specification.Tests
 
             cons.Add(nestedPart);
 
-            return result; }
+            return result;
+        }
+
+        private const string MARKDOWN_COMMENT = "Systems are not required to have markdown support, and there is considerable variation in markdown syntax, so the text should be readable without markdown processing. The preferred markdown syntax is described here: http://daringfireball.net/projects/markdown/syntax (and tests here: http://daringfireball.net/projects/downloads/MarkdownTest_1.0.zip)";
+
+        [TestMethod]
+        public async Tasks.Task CodeSystemCopyrightCommentIssueTest()
+        {
+            const string copyrightComment = "... Sometimes, the copyright differs between the code system and the codes that are included. The copyright statement should clearly differentiate between these when required.";
+
+            await appendTextIssueTest("CodeSystem", "copyright", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
+        }
+
+        private static async Tasks.Task appendTextIssueTest(string resource, string path, string expectedComment)
+        {
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new CachedResolver(zipSource);
+            var settings = new SnapshotGeneratorSettings
+            {
+                ForceRegenerateSnapshots = true,
+                GenerateAnnotationsOnConstraints = false,
+                GenerateExtensionsOnConstraints = false,
+                GenerateElementIds = true,
+                GenerateSnapshotForExternalProfiles = true
+            };
+            var sd = new StructureDefinition
+            {
+                Type = resource,
+                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{resource}",
+                Name = $"My{resource}",
+                Url = $"http://example.org/fhir/StructureDefinition/My{resource}",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                FhirVersion = ModelInfo.Version
+            };
+
+            var generator = new SnapshotGenerator(resolver, settings);
+
+            generator.PrepareElement += addElementBaseAnnotation;
+
+            var elems = await generator.GenerateAsync(sd);
+
+            generator.PrepareElement -= addElementBaseAnnotation;
+
+            var element = elems.FirstOrDefault(e => e.ElementId == $"{resource}.{path}");
+
+            element.Should().NotBeNull();
+            element.Comment.Should().Be(expectedComment);
+
+            var baseElement = element.Annotation<TestElementBaseAnnotation>()?.BaseElementDefinition;
+
+            baseElement.Should().NotBeNull();
+            element.Comment.Should().Be(baseElement.Comment);
+        }
+
+        private static string mergeAppendText(string s1, string s2)
+        {
+            if (!s2.StartsWith("..."))
+                return s2;
+
+            return string.IsNullOrEmpty(s1)
+                ? s2[3..]
+                : s1 + "\r\n" + s2[3..];
+        }
+
+        private static void addElementBaseAnnotation(object sender, SnapshotElementEventArgs e)
+        {
+            var elem = e.Element;
+
+            var ann = elem.Annotation<TestElementBaseAnnotation>();
+
+            if (ann != null)
+                elem.RemoveAnnotations<TestElementBaseAnnotation>();
+
+            var baseDef = e.BaseElement;
+
+            elem.AddAnnotation(new TestElementBaseAnnotation(baseDef));
+        }
     }
 }

@@ -234,18 +234,33 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     var result = (T)diff.DeepCopy();
 
-                    if (allowAppend && diff.ObjectValue is string)
+                    var diffValue = diff.ObjectValue;
+                    if (allowAppend && diffValue is string diffText)
                     {
-                        var diffText = diff.ObjectValue as string;
-
                         if (diffText.StartsWith("..."))
                         {
-                            // [WMR 20160719] Handle snap == null
-                            // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
-                            var prefix = snap != null ? snap.ObjectValue as string : null;
-                            diffText = string.IsNullOrEmpty(prefix) ?
-                                diffText.Substring(3)
-                                : prefix + "\r\n" + diffText.Substring(3);
+                            var prefix = snap?.ObjectValue as string;
+
+                            if (snap?.HasAppendedText() == true)
+                            {
+                                // Don't append text twice
+                                diffText = prefix;
+                            }
+                            else
+                            {
+                                if (string.IsNullOrEmpty(prefix))
+                                {
+                                    diffText = diffText.Substring(3);
+                                }
+                                else
+                                {
+                                    diffText = prefix + "\r\n" + diffText.Substring(3);
+                                }
+
+                                // Add marker that text has been appended to prevent it being appended multiple times
+                                // when an element has a type profile (which will result in multiple merges of the same element).
+                                result.SetAppendedTextAnnotation();
+                            }
                         }
 
                         result.ObjectValue = diffText;
@@ -253,9 +268,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else
                     {
                         // Only overwrite snap value if diff actually has a value (Java validator logic)
-                        if (diff.ObjectValue != null)
+                        if (diffValue != null)
                         {
-                            result.ObjectValue = diff.ObjectValue;
+                            result.ObjectValue = diffValue;
                         }
                     }
                     // Also merge element id and extensions on primitives
