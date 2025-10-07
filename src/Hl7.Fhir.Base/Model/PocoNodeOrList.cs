@@ -62,7 +62,7 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
         // if we are a DynamicDataType, we hide the resourceType member from the children - it's probably a custom type
         // and will be serialized via IResourceTypeSupplier.ResourceType
         if (Poco is DynamicDataType)
-            elements = elements.Where(x => x is { Key: JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, Value: PrimitiveType });
+            elements = elements.Where(x => x is not { Key: JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, Value: PrimitiveType });
                 
         return elements.Select(ep =>
                 nodeFor(ep.Key, ep.Value)
