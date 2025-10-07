@@ -276,6 +276,16 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private void setOrAddProperty(ITypedElement node, Base target,
         Base convertedValue, PropertyMapping? propertyMapping)
     {
+        // Original ITypedElement had more detailed information about the type of data it represents than the Poco we're building now.
+        // If we had no information of what to build, we will default to using Dynamic types to represent it.
+        // In this case we will annotate the Poco element with information that it is a Choice type.
+        // Then serializers will check for it to determine whether it should append the choice type to the property name when serializing it.
+        // It will allow us to serialize the Poco back to xml/json correctly, as well as build properly typed Poco
+        // when using PocoNode implementing ITypedElement/ISourceNode to call ToPoco<T>()
+        // Covered by tests PocoNodeSerializationRoundtrip.CanConvertCircularPocoNode and https://github.com/FirelyTeam/firely-net-sdk/issues/3278
+        if(propertyMapping is null && node.Definition?.IsChoiceElement is true)
+            convertedValue.AddAnnotation(new ChoiceElementAnnotation());
+        
         var existing = target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
 
         // If there are, just add this new value.

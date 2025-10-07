@@ -1,4 +1,5 @@
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -48,17 +49,25 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
         PocoNode node => node,
         _ => null
     };
-    
+
     /// <summary>
     /// Enumerates all children of this node. These can each either be singular or repeating PocoNodes.
     /// </summary>
     /// <returns></returns>
     /// <remarks>Since PocoNodeOrList implements IEnumerable of PocoNode, you can consider this to be an IEnumerable of IEnumerable of PocoNode, if you prefer to work with that</remarks>
-    public IEnumerable<PocoNodeOrList> Children() =>
-        Poco.EnumerateElements()
-            .Select(ep =>
+    public IEnumerable<PocoNodeOrList> Children()
+    {
+        var elements = Poco.EnumerateElements();
+
+        // if we are a DynamicDataType, we hide the resourceType member from the children - it's probably a custom type
+        // and will be serialized via IResourceTypeSupplier.ResourceType
+        if (Poco is DynamicDataType)
+            elements = elements.Where(x => x is not { Key: JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, Value: PrimitiveType });
+                
+        return elements.Select(ep =>
                 nodeFor(ep.Key, ep.Value)
             );
+    }
 
     /// <summary>
     /// Finds a single child of this node by name. The result is either a singular or repeating PocoNode. The return value can always be used as an IEnumerable of PocoNode.
@@ -100,9 +109,14 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     Base IFhirValueProvider.FhirValue => Poco;
 
     /// <inheritdoc />
-    string? IResourceTypeSupplier.ResourceType => Poco is Resource
-        ? ((ITypedElement)this).InstanceType
-        : null;
+    string? IResourceTypeSupplier.ResourceType => Poco switch
+    {
+        Resource r => r.TypeName,
+        // handle the case of json serializer not being aware of the data it's serializing - a custom type that is not in ModelInspector
+        // we will build a DynamicDataType, since a custom resource with a nested resource that is not in contained should be an exceptional case
+        DynamicDataType when Poco.TryGetValue(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, out var type) && type is PrimitiveType pt => pt.JsonValue as string,
+        _ => null
+    };
 
     private AnnotationList? _annotations;
 
