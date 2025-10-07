@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -17,7 +17,7 @@ using P = Hl7.Fhir.ElementModel.Types;
 namespace Hl7.FhirPath.Expressions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class EchoVisitor : ExpressionVisitor<StringBuilder>
     {
@@ -124,7 +124,7 @@ namespace Hl7.FhirPath.Expressions
                     }
                     break;
                 case "String":
-                    _result.Append("'" + Functions.StringOperators.EscapeJson(t) + "'"); 
+                    _result.Append("'" + Functions.StringOperators.EscapeJson(t) + "'");
                     break;
                 case "Ratio":
                     _result.Append($"{t}");
@@ -161,6 +161,15 @@ namespace Hl7.FhirPath.Expressions
                 if (expression.Arguments.FirstOrDefault() is ConstantExpression ceVar)
                     _result.Append($"{ceVar.Value}");
                 _result.Append("`");
+                OutputTrailingTokens(expression);
+                return _result;
+            }
+            if (expression is SortDirectionExpression sd)
+            {
+                sd.Focus.Accept(this);
+                sd.Arguments.FirstOrDefault()?.Accept(this);
+                OutputPrecedingTokens(sd);
+                _result.Append($"{sd.Op}");
                 OutputTrailingTokens(expression);
                 return _result;
             }
@@ -242,7 +251,7 @@ namespace Hl7.FhirPath.Expressions
             if (expression is AxisExpression ae)
             {
                 // No need to output the `that` type
-                if (ae.AxisName == "that")
+                if (ae.AxisName == "that" || ae.AxisName == "this" && ae.Location == null)
                     return _result;
 
                 OutputPrecedingTokens(expression);

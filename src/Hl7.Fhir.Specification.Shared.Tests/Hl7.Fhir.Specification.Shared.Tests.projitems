@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotGeneratorManifestTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotGeneratorTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotSourceTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TestElementBaseAnnotation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TestProfileArtifactSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TimingSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSourceTests.cs" />

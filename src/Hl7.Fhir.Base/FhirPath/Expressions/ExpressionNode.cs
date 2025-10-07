@@ -1,7 +1,7 @@
-/* 
+/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -91,7 +91,7 @@ namespace Hl7.FhirPath.Expressions
             {
                 if (other.Location == null)
                     return false;
-                var label = (ISourcePositionInfo posinfo) => 
+                var label = (ISourcePositionInfo posinfo) =>
                 {
                     var pi = (FhirPathExpressionLocationInfo)posinfo;
                     return $"Line: {pi.LineNumber}, LinePos: {pi.LinePosition}, RawPos: {pi.RawPosition}, Length: {pi.Length}";
@@ -169,7 +169,7 @@ namespace Hl7.FhirPath.Expressions
             LeftBrace = leftBrace;
             RightBrace = rightBrace;
         }
-        
+
         public Expression Operand { get; private set; }
 
         /// <summary>
@@ -356,12 +356,12 @@ namespace Hl7.FhirPath.Expressions
     public class ChildExpression : FunctionCallExpression, Sprache.IPositionAware<ChildExpression>
     {
         public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
-                new ConstantExpression(name, TypeSpecifier.String))
+                new IdentifierExpression(name, TypeSpecifier.String))
         {
         }
 
         public ChildExpression(Expression focus, string name, ISourcePositionInfo location) : base(focus, OP_PREFIX + "children", TypeSpecifier.Any,
-                new ConstantExpression(name, TypeSpecifier.String), location)
+                new IdentifierExpression(name, TypeSpecifier.String), location)
         {
         }
 
@@ -474,6 +474,44 @@ namespace Hl7.FhirPath.Expressions
         BinaryExpression IPositionAware<BinaryExpression>.SetPos(Position startPos, int length) => SetPos<BinaryExpression>(startPos, length);
     }
 
+    public class SortDirectionExpression : FunctionCallExpression, Sprache.IPositionAware<SortDirectionExpression>
+    {
+        internal const string URY_PREFIX = "unary.";
+        internal static readonly int URY_PREFIX_LEN = URY_PREFIX.Length;
+
+        public SortDirectionExpression(char op, Expression operand) : this(new string(op, 1), operand)
+        {
+        }
+
+        public SortDirectionExpression(char op, Expression operand, ISourcePositionInfo location) : this(new string(op, 1), operand, location)
+        {
+        }
+
+        public SortDirectionExpression(string op, Expression operand) : base(AxisExpression.This, URY_PREFIX + op, TypeSpecifier.Any, operand)
+        {
+        }
+
+        public SortDirectionExpression(string op, Expression operand, ISourcePositionInfo location) : base(AxisExpression.This, URY_PREFIX + op, TypeSpecifier.Any, operand, location)
+        {
+        }
+
+        public string Op
+        {
+            get
+            {
+                return FunctionName.Substring(URY_PREFIX_LEN);
+            }
+        }
+
+        public Expression Operand
+        {
+            get
+            {
+                return Focus;
+            }
+        }
+        SortDirectionExpression IPositionAware<SortDirectionExpression>.SetPos(Position startPos, int length) => SetPos<SortDirectionExpression>(startPos, length);
+    }
 
     public class UnaryExpression : FunctionCallExpression, Sprache.IPositionAware<UnaryExpression>
     {

@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -116,8 +116,25 @@ namespace Hl7.FhirPath.Parser
                 .UsePositionFrom(n.Location);
         }
 
+        // Direction parser for sort function
+        public static readonly Parser<string> Direction =
+            Parse.String("asc").Text().Or(Parse.String("desc").Text()).Named("Direction");
+
         public static Parser<Expression> FunctionParameter(string name)
         {
+            // Special handling for sort function: allows optional direction argument
+            if (name == "sort")
+            {
+                return
+                    from wsLeading in WhitespaceOrComments()
+                    from expr in Grammar.Expression
+                    from wsDir in WhitespaceOrComments()
+                    from dir in Direction.Optional()
+                    from wsTrailing in WhitespaceOrComments()
+                    select dir.IsDefined
+                        ? new SortDirectionExpression(dir.Get(), expr.WithLeadingWS(wsLeading)).WithLeadingWS(wsDir).WithTrailingWS(wsTrailing)
+                        : expr.WithLeadingWS(wsLeading).WithTrailingWS(wsTrailing);
+            }
             // Make exception for is() and as() FUNCTIONS (operators are handled elsewhere), since they don't
             // take a normal parameter, but an identifier (which is not normally a FhirPath type)
             if (name != "is" && name != "as" && name != "ofType")
@@ -131,7 +148,7 @@ namespace Hl7.FhirPath.Parser
         public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
-                .Or(WhitespaceOrComments().Then(wsLeading => Lexer.Identifier.Select(i => new ConstantExpression(i).WithLeadingWS(wsLeading)).Positioned()).Select(i => new ChildExpression(focus, i)).Positioned())
+                .Or(WhitespaceOrComments().Then(wsLeading => Lexer.Identifier.Select(i => new IdentifierExpression(i).WithLeadingWS(wsLeading)).Positioned()).Select(i => new ChildExpression(focus, i)).Positioned())
                 //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 ;
         }
@@ -152,11 +169,11 @@ namespace Hl7.FhirPath.Parser
         public static Expression BuildVariableRefExpression(SubToken name)
         {
             if (name.Value.StartsWith("ext-"))
-                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(4)).UsePositionFrom(name.Location));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(4)).UsePositionFrom(name.Location)).UsePositionFrom(name.Location);
 #pragma warning disable IDE0046 // Convert to conditional expression
             else if (name.Value.StartsWith("vs-"))
 #pragma warning restore IDE0046 // Convert to conditional expression
-                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(3)).UsePositionFrom(name.Location));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", null, null, TypeSpecifier.String, new ConstantExpression(name.Value.Substring(3)).UsePositionFrom(name.Location)).UsePositionFrom(name.Location);
             else
                 return new VariableRefExpression(name.Value).UsePositionFrom(name.Location);
         }
@@ -236,7 +253,7 @@ namespace Hl7.FhirPath.Parser
 
         private static Parser<SubToken> WrapSubTokenParameter(Parser<SubToken> parser)
         {
-            return 
+            return
                 from wsLeading in WhitespaceOrComments()
                 from p in parser.SubTokenWithLeadingWS(wsLeading)
                 select p;
@@ -313,7 +330,7 @@ namespace Hl7.FhirPath.Parser
             select op.WithTrailingWS(wsTrailing);
 
         // Whitespace or comments
-        private static Parser<System.Collections.Generic.IEnumerable<WhitespaceSubToken>> WhitespaceOrComments() => 
+        private static Parser<System.Collections.Generic.IEnumerable<WhitespaceSubToken>> WhitespaceOrComments() =>
             Parse.WhiteSpace.Many().Select(w => new WhitespaceSubToken(new string(w.ToArray()))).Positioned()
             .XOr(Lexer.Comment.Select(v => new CommentSubToken(v, false)).Positioned())
             .XOr(Lexer.CommentBlock.Select(v => new CommentSubToken(v, true)).Positioned())

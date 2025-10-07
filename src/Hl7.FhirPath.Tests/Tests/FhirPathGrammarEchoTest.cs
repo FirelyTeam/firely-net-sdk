@@ -208,6 +208,20 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_Echo_Sort()
+        {
+            var parser = Grammar.InvocationExpression.End();
+
+            AssertParser.SucceedsEcho(parser, " sort ( name  /* blah */ asc )");
+            AssertParser.SucceedsEcho(parser, "sort()");
+            AssertParser.SucceedsEcho(parser, " sort()");
+            AssertParser.SucceedsEcho(parser, " sort(name)");
+            AssertParser.SucceedsEcho(parser, "sort(name desc)");
+            AssertParser.SucceedsEcho(parser, " sort(name asc)");
+            AssertParser.SucceedsEcho(parser, " sort(name asc, tel desc)");
+        }
+
+        [TestMethod]
         public void FhirPath_Echo_Bracket()
         {
             var parser = Grammar.TypeExpression.End();

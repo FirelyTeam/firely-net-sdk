@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -24,14 +24,26 @@ namespace Hl7.FhirPath.Tests
     {
         private static void isB(string expr, object value = null)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(value ?? true);
-            Assert.IsTrue(dummy.IsBoolean(expr, true));
+            ITypedElement dummy = ElementNode.ForPrimitive(value ?? true).ToScopedNode();
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
         }
 
         private static object scalar(string expr)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
-            return dummy.Scalar(expr);
+            ITypedElement dummy = ElementNode.ForPrimitive(true).ToScopedNode();
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
+        }
+
+        private static object scalar(ITypedElement dummy, string expr)
+        {
+            dummy = dummy.ToScopedNode();
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
         [TestMethod]
@@ -42,7 +54,7 @@ namespace Hl7.FhirPath.Tests
                     SourceNode.Valued("child", "Hello world!"),
                     SourceNode.Valued("child", "4")).ToTypedElementLegacy();
 #pragma warning restore CS0618 // Type or member is internal
-            Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
+            Assert.AreEqual("ello", scalar(input, @"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
         [TestMethod]
@@ -218,23 +230,23 @@ namespace Hl7.FhirPath.Tests
         {
             PocoNode dummy = PocoNode.ForAnyPrimitive(true);
 
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' + '' + 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'' + 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'DEF' + ''"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' + '' + 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'' + 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'DEF' + ''"));
 
-            Assert.IsNull(dummy.Scalar("{} + 'DEF'"));
-            Assert.IsNull(dummy.Scalar("'ABC' + {} + 'DEF'"));
-            Assert.IsNull(dummy.Scalar("'ABC' + {}"));
+            Assert.IsNull(scalar(dummy, "{} + 'DEF'"));
+            Assert.IsNull(scalar(dummy, "'ABC' + {} + 'DEF'"));
+            Assert.IsNull(scalar(dummy, "'ABC' + {}"));
 
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' & '' & 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'' & 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'DEF' & ''"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' & '' & 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'' & 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'DEF' & ''"));
 
-            Assert.AreEqual("DEF", dummy.Scalar("{} & 'DEF'"));
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' & {} & 'DEF'"));
-            Assert.AreEqual("ABC", dummy.Scalar("'ABC' & {}"));
+            Assert.AreEqual("DEF", scalar(dummy, "{} & 'DEF'"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' & {} & 'DEF'"));
+            Assert.AreEqual("ABC", scalar(dummy, "'ABC' & {}"));
 
-            Assert.IsNull(dummy.Scalar("'ABC' & {} & 'DEF' + {}"));
+            Assert.IsNull(scalar(dummy, "'ABC' & {} & 'DEF' + {}"));
         }
 
         [TestMethod]
@@ -259,7 +271,7 @@ namespace Hl7.FhirPath.Tests
             Assert.IsNotNull(result);
             CollectionAssert.AreEqual(new[] { "", "ONE", "", "TWO", "", "", "THREE", "", "" }, result.Select(r => r.Value.ToString()).ToArray());
         }
-        
+
         [DataTestMethod]
         [DataRow("(1 | 2 | 3).indexOf(3)", 2)]
         [DataRow("((1 | 2 | 3).combine(2)).indexOf(2, 2)", 3)]

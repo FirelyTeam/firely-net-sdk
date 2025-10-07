@@ -1,7 +1,7 @@
-/* 
+/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -17,6 +17,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
 
 namespace Hl7.FhirPath.Expressions;
 
@@ -218,6 +219,13 @@ public static class SymbolTableInit
         t.Add(new CallSignature("defineVariable", typeof(IEnumerable<PocoNode>), typeof(object), typeof(string)), DefineVariable);
         t.Add(new CallSignature("defineVariable", typeof(IEnumerable<PocoNode>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
 
+        // Co-alesce and sort have variable number of arguments.
+        t.Add(new UnknownArgCountCallSignature("coalesce", typeof(IEnumerable<PocoNode>)), runCoalesce);
+        t.Add(new UnknownArgCountCallSignature("sort", typeof(IEnumerable<PocoNode>)), runSort);
+        // these unary operators just inject an ordering node that includes which direction the sort if processing
+        t.Add("unary.asc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a }), doNullProp: true);
+        t.Add("unary.desc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a, Descending = true }), doNullProp: true);
+
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
 
@@ -241,13 +249,14 @@ public static class SymbolTableInit
     {
         table.Add(new CallSignature("builtin.children",
             typeof(IEnumerable<PocoNode>),
-            typeof(IEnumerable<PocoNode>),
+            typeof(IEnumerable<PocoNone>),
             typeof(string)), (
             ctx, invokees) =>
         {
             var iks = invokees.ToArray();
             var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
-            var name = iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().GetValue() as string;
+            ctx.focus = focus;
+            var name = (string?)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
             var result= focus.Navigate(name);
 
             return result;
@@ -264,9 +273,64 @@ public static class SymbolTableInit
         return "http://hl7.org/fhir/ValueSet/" + id;
     }
 
+    private static IEnumerable<PocoNode> runSort(Closure ctx, IEnumerable<Invokee> arguments)
+    {
+        var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        var lambda = arguments.Skip(1);
+        if (!lambda.Any())
+        {
+            // Just sort using the native element comparer
+            // System.Linq.Enumerable.Order;
+            return CachedEnumerable.Create(focus.OrderBy(item => item, EqualityOperators.TypedElementComparer));
+        }
+
+        var keySelector = lambda.First();
+        IOrderedEnumerable<PocoNode> orderedResult = focus.OrderBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
+        lambda = lambda.Skip(1);
+        while (lambda.Any())
+        {
+            keySelector = lambda.First();
+            orderedResult = orderedResult.ThenBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
+
+            // move onto the next item
+            lambda = lambda.Skip(1);
+        }
+
+        return orderedResult.ToList();
+    }
+
+    private static IEnumerable<PocoNode> readElement(Closure ctx, ITypedElement element, Invokee selectProp)
+    {
+        var newFocus = ElementNode.CreateList(element);
+        var newContext = ctx.Nest(newFocus);
+        newContext.SetThis(newFocus);
+        var result = selectProp(newContext, InvokeeFactory.EmptyArgs);
+        foreach (var resultElement in result)       // implement SelectMany()
+            yield return resultElement;
+    }
+
+    private static IEnumerable<PocoNode> runCoalesce(Closure ctx, IEnumerable<Invokee> arguments)
+    {
+        var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        var lambda = arguments.Skip(1);
+
+        while (lambda.Any())
+        {
+            var keySelector = lambda.First();
+            var results = keySelector(ctx, InvokeeFactory.EmptyArgs);
+            if (results.Any())
+                return results;
+
+            // move onto the next item
+            lambda = lambda.Skip(1);
+        }
+
+        return [];
+    }
     private static IEnumerable<PocoNode> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var incrExpre = arguments.Skip(1).First();
         IEnumerable<PocoNode> initialValue = [];
         if (arguments.Count() > 2)
@@ -282,6 +346,7 @@ public static class SymbolTableInit
         {
             IEnumerable<PocoNode> newFocus = [element];
             var newContext = totalContext.Nest(newFocus);
+            newContext.focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetTotal(totalContext.GetTotal());
             var newTotalResult = incrExpre(newContext, InvokeeFactory.EmptyArgs);
@@ -294,11 +359,12 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> Trace(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
+        ctx.focus = focus;
+        var name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
 
         List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
         var selectResults = runSelect(ctx, selectArgs);
-        ctx?.EvaluationContext?.Tracer?.Invoke(name, selectResults);
+        ctx.EvaluationContext?.Tracer?.Invoke(name, selectResults);
 
         return focus;
     }
@@ -307,8 +373,9 @@ public static class SymbolTableInit
     {
         Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
         var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
-        string name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
-            
+        ctx.focus = focus;
+        var name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
+
         if(ctx.ResolveValue(name) is not null) throw new InvalidOperationException($"Variable {name} is already defined in this scope");
             
         if (enumerable.Length == 2)
@@ -318,6 +385,7 @@ public static class SymbolTableInit
         else
         {
             var newContext = ctx.Nest(focus);
+            newContext.focus = focus;
             newContext.SetThis(focus);
             var result = enumerable[2](newContext, InvokeeFactory.EmptyArgs);
             ctx.SetValue(name, result);
@@ -331,8 +399,10 @@ public static class SymbolTableInit
         // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
         // note: short-circuit behavior is expected in this function
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
 
         var newContext = ctx.Nest(focus);
+        newContext.focus = focus;
         newContext.SetThis(focus);
             
         var expression = arguments.Skip(1).First()(newContext, InvokeeFactory.EmptyArgs);
@@ -350,6 +420,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
 
         return CachedEnumerable.Create(runForeach());
@@ -362,6 +433,7 @@ public static class SymbolTableInit
             {
                 PocoNode[] newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
+                newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
@@ -375,6 +447,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
 
         return CachedEnumerable.Create(runForeach());
@@ -387,6 +460,7 @@ public static class SymbolTableInit
             {
                 IEnumerable<PocoNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
+                newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
@@ -401,6 +475,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
+        ctx.focus = newNodes;
         var lambda = arguments.Skip(1).First();
 
         var fullResult = new List<PocoNode>();
@@ -415,14 +490,15 @@ public static class SymbolTableInit
             {
                 IEnumerable<PocoNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
+                newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
 
                 var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
-                var uniqeNewNodes = candidates.Except<PocoNode>(fullResult, EqualityOperators.TypedElementEqualityComparer);
+                var uniqueNewNodes = candidates.Except<PocoNode>(fullResult, EqualityOperators.TypedElementEqualityComparer);
 
-                newNodes.AddRange(uniqeNewNodes);
+                newNodes.AddRange(uniqueNewNodes);
             }
 
             fullResult.AddRange(newNodes);
@@ -434,6 +510,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runAll(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
@@ -441,6 +518,7 @@ public static class SymbolTableInit
         {
             IEnumerable<PocoNode> newFocus = [element];
             var newContext = ctx.Nest(newFocus);
+            newContext.focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
             index++;
@@ -456,6 +534,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
@@ -463,6 +542,7 @@ public static class SymbolTableInit
         {
             IEnumerable<PocoNode> newFocus = [element];
             var newContext = ctx.Nest(newFocus);
+            newContext.focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
             index++;
