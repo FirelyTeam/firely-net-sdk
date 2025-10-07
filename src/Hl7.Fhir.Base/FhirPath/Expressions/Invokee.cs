@@ -277,12 +277,6 @@ internal static class InvokeeFactory
     public static Invokee Return(FocusCollection value) => (Closure ctx, IEnumerable<Invokee> _) =>
     {
         ctx.focus = ctx.GetThis();
-        return [value];
-    };
-
-    public static Invokee Return(FocusCollection value) => (Closure ctx, IEnumerable<Invokee> _) =>
-    {
-        ctx.focus = ctx.GetThis();
         return value;
     };
 

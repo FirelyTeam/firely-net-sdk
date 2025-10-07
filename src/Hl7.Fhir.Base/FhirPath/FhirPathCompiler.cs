@@ -48,14 +48,14 @@ public class FhirPathCompiler
         return parse.WasSuccessful ? parse.Value : throw new FormatException("Compilation failed: " + parse.ToString());
     }
 
-        /// <summary>
-        /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
-        /// </summary>
-        /// <param name="expression">the parsed fhirpath expression to compile</param>
-        /// <returns></returns>
-        public CompiledExpression Compile(Expression expression)
-        {
-            Invokee inv = expression.ToEvaluator(Symbols);
+    /// <summary>
+    /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
+    /// </summary>
+    /// <param name="expression">the parsed fhirpath expression to compile</param>
+    /// <returns></returns>
+    public CompiledExpression Compile(Expression expression)
+    {
+        Invokee inv = expression.ToEvaluator(Symbols);
 
         return (focus, ctx) =>
         {
@@ -64,42 +64,41 @@ public class FhirPathCompiler
         };
     }
 
-        /// <summary>
-        /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
-        /// </summary>
-        /// <param name="expression">the parsed fhirpath expression to compile</param>
-        /// <param name="injectDebugTraceHooks">Inject the required hooks into the compiled evaluator to support debug tracing via the EvaluationContext</param>
-        /// <returns></returns>
-        public CompiledExpression Compile(Expression expression, bool injectDebugTraceHooks)
-        {
-            Invokee inv = expression.ToEvaluator(Symbols, injectDebugTraceHooks);
+    /// <summary>
+    /// Compiles a parsed FHIRPath expression into a delegate that can be used to evaluate the expression
+    /// </summary>
+    /// <param name="expression">the parsed fhirpath expression to compile</param>
+    /// <param name="injectDebugTraceHooks">Inject the required hooks into the compiled evaluator to support debug tracing via the EvaluationContext</param>
+    /// <returns></returns>
+    public CompiledExpression Compile(Expression expression, bool injectDebugTraceHooks)
+    {
+        Invokee inv = expression.ToEvaluator(Symbols, injectDebugTraceHooks);
 
-            return (PocoNode focus, EvaluationContext ctx) =>
-            {
-                var closure = Closure.Root(focus, ctx);
-                return inv(closure, InvokeeFactory.EmptyArgs);
-            };
-        }
-
-        /// <summary>
-        /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
-        /// </summary>
-        /// <param name="expression">the fhirpath expression to parse then compile</param>
-        /// <returns></returns>
-        public CompiledExpression Compile(string expression)
+        return (PocoNode focus, EvaluationContext ctx) =>
         {
-            return Compile(Parse(expression));
-        }
+            var closure = Closure.Root(focus, ctx);
+            return inv(closure, InvokeeFactory.EmptyArgs);
+        };
+    }
 
-        /// <summary>
-        /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
-        /// </summary>
-        /// <param name="expression">the fhirpath expression to parse then compile</param>
-        /// <param name="injectDebugTraceHooks">Inject the required hooks into the compiled evaluator to support debug tracing via the EvaluationContext</param>
-        /// <returns></returns>
-        public CompiledExpression Compile(string expression, bool injectDebugTraceHooks)
-        {
-            return Compile(Parse(expression), injectDebugTraceHooks);
-        }
+    /// <summary>
+    /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
+    /// </summary>
+    /// <param name="expression">the fhirpath expression to parse then compile</param>
+    /// <returns></returns>
+    public CompiledExpression Compile(string expression)
+    {
+        return Compile(Parse(expression));
+    }
+
+    /// <summary>
+    /// Compiles a FHIRPath expression string into a delegate that can be used to evaluate the expression
+    /// </summary>
+    /// <param name="expression">the fhirpath expression to parse then compile</param>
+    /// <param name="injectDebugTraceHooks">Inject the required hooks into the compiled evaluator to support debug tracing via the EvaluationContext</param>
+    /// <returns></returns>
+    public CompiledExpression Compile(string expression, bool injectDebugTraceHooks)
+    {
+        return Compile(Parse(expression), injectDebugTraceHooks);
     }
 }
