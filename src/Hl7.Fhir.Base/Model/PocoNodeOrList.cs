@@ -112,6 +112,8 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
     string? IResourceTypeSupplier.ResourceType => Poco switch
     {
         Resource r => r.TypeName,
+        // handle the case of json serializer not being aware of the data it's serializing - a custom type that is not in ModelInspector
+        // we will build a DynamicDataType, since a custom resource with a nested resource that is not in contained should be an exceptional case
         DynamicDataType when Poco.TryGetValue(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, out var type) && type is PrimitiveType pt => pt.JsonValue as string,
         _ => null
     };
