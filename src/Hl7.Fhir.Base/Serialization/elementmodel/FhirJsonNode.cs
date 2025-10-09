@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial class FhirJsonNode : ISourceNode, IResourceTypeSupplier, IAnnotated, IExceptionSource
     {
-        internal FhirJsonNode(JObject root, string nodeName, FhirJsonParsingSettings settings = null)
+        internal FhirJsonNode(JObject root, string nodeName, FhirJsonParsingSettings settings = null, bool preserveWhiteSpaceInValues = false)
         {
             JsonObject = root ?? throw Error.ArgumentNull(nameof(root));
             Name = (nodeName ?? (string.IsNullOrEmpty(ResourceType) ? null : ResourceType))
@@ -30,6 +30,7 @@ namespace Hl7.Fhir.Serialization
             JsonValue = null;
             ArrayIndex = null;
             UsesShadow = false;
+            PreserveWhiteSpaceInValues = preserveWhiteSpaceInValues;
             _settings = settings?.Clone() ?? new FhirJsonParsingSettings();
         }
 
@@ -51,6 +52,7 @@ namespace Hl7.Fhir.Serialization
         public readonly JObject JsonObject;
         public readonly int? ArrayIndex;
         public readonly bool UsesShadow;
+        public readonly bool PreserveWhiteSpaceInValues;
 
         public string Name { get; private set; }
         public string Location { get; private set; }
@@ -181,7 +183,7 @@ namespace Hl7.Fhir.Serialization
                 
                 if (value is string s)
                 {
-                    return this._settings.PreserveWhitespaceInValues ? s : s.Trim();
+                    return PreserveWhiteSpaceInValues ? s : s.Trim();
                 }
 
                 return PrimitiveTypeConverter.ConvertTo<string>(value);

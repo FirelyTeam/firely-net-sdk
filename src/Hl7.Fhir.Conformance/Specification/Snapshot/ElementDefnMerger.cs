@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             static string getExtensionString(Extension extension, string url)
             {
                 var subExtension = extension.Extension?.FirstOrDefault(e => e.Url == url);
-                return (subExtension?.Value as PrimitiveType)?.ObjectValue as string;
+                return (subExtension?.Value as PrimitiveType)?.JsonValue as string;
             }
 
             List<ElementDefinition.ConstraintComponent> mergeConstraints(

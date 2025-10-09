@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Only overwrite snap value if diff actually has a value (Java validator logic)
                         if (diffValue != null)
                         {
-                            result.ObjectValue = diffValue;
+                            result.JsonValue = diffValue;
                         }
                     }
                     // Also merge element id and extensions on primitives
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             static string getExtensionString(Extension extension, string url)
             {
                 var subExtension = extension.Extension?.FirstOrDefault(e => e.Url == url);
-                return (subExtension?.Value as PrimitiveType)?.ObjectValue as string;
+                return (subExtension?.Value as PrimitiveType)?.JsonValue as string;
             }
 
             static bool isEqualString(string x, string y) => StringComparer.Ordinal.Equals(x, y);

@@ -223,8 +223,8 @@ public static class SymbolTableInit
         t.Add(new UnknownArgCountCallSignature("coalesce", typeof(IEnumerable<PocoNode>)), runCoalesce);
         t.Add(new UnknownArgCountCallSignature("sort", typeof(IEnumerable<PocoNode>)), runSort);
         // these unary operators just inject an ordering node that includes which direction the sort if processing
-        t.Add("unary.asc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a }), doNullProp: true);
-        t.Add("unary.desc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a, Descending = true }), doNullProp: true);
+        t.Add("unary.asc", (object f, PocoNode a) => OrderedNode.FromPrimitiveNode(a), doNullProp: true);
+        t.Add("unary.desc", (object f, PocoNode a) => OrderedNode.FromPrimitiveNode(a, true), doNullProp: true);
 
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
@@ -249,14 +249,14 @@ public static class SymbolTableInit
     {
         table.Add(new CallSignature("builtin.children",
             typeof(IEnumerable<PocoNode>),
-            typeof(IEnumerable<PocoNone>),
+            typeof(IEnumerable<PocoNode>),
             typeof(string)), (
             ctx, invokees) =>
         {
             var iks = invokees.ToArray();
             var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
             ctx.focus = focus;
-            var name = (string?)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
+            var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().GetValue();
             var result= focus.Navigate(name);
 
             return result;
@@ -299,11 +299,10 @@ public static class SymbolTableInit
         return orderedResult.ToList();
     }
 
-    private static IEnumerable<PocoNode> readElement(Closure ctx, ITypedElement element, Invokee selectProp)
+    private static IEnumerable<PocoNode> readElement(Closure ctx, PocoNode element, Invokee selectProp)
     {
-        var newFocus = ElementNode.CreateList(element);
-        var newContext = ctx.Nest(newFocus);
-        newContext.SetThis(newFocus);
+        var newContext = ctx.Nest(element);
+        newContext.SetThis(element);
         var result = selectProp(newContext, InvokeeFactory.EmptyArgs);
         foreach (var resultElement in result)       // implement SelectMany()
             yield return resultElement;
@@ -344,7 +343,7 @@ public static class SymbolTableInit
 
         foreach (PocoNode element in focus)
         {
-            IEnumerable<PocoNode> newFocus = [element];
+            IEnumerable<PocoNode> newFocus = element;
             var newContext = totalContext.Nest(newFocus);
             newContext.focus = newFocus;
             newContext.SetThis(newFocus);

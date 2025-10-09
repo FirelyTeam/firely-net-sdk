@@ -33,7 +33,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveSnapshotGeneratorAnnotation();
-            foreach (var child in element.Children)
+#pragma warning disable CS0618 // Type or member is obsolete
+            foreach (var child in element.Children())
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 child.RemoveAllSnapshotGeneratorAnnotations();
             }

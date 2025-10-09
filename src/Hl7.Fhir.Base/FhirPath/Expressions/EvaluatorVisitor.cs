@@ -54,7 +54,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
-            return WrapForDebugTracer(InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value), expression));
+            return WrapForDebugTracer(InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value)), expression);
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)

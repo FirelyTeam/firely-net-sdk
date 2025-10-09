@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveConstrainedByDiffExtension();
-            foreach (var child in element.Children.OfType<Element>())
+            foreach (var child in element.Children().OfType<Element>())
             {
                 child.RemoveAllConstrainedByDiffExtensions();
             }

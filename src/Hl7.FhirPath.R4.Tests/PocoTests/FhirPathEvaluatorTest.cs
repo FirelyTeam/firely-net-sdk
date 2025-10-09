@@ -88,9 +88,9 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.IsTrue(IsBoolean(TestInput, expr, result));
         }
 
-        public bool IsBoolean(Base baseInput, string expression, bool value, EvaluationContext? ctx = null)
+        public bool IsBoolean(Base baseInput, string expression, bool value, EvaluationContext ctx = null)
         {
-            var input = baseInput.ToTypedElement().ToScopedNode();
+            var input = baseInput.ToPocoNode();
 
             // Don't use the expression cache as we need to inject the debug tracer
             var compiler = new FhirPathCompiler();

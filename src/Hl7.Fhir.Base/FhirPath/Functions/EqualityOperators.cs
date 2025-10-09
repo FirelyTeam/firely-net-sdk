@@ -322,7 +322,7 @@ namespace Hl7.FhirPath.Functions
                 if (y is null) return 1;
                 if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
                 {
-                    if (x is OrderedValue ov && ov.Descending)
+                    if (x is OrderedNode opn && opn.Descending)
                         return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
                     return EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
                 }

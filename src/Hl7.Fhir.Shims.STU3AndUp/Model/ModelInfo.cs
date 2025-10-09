@@ -198,7 +198,9 @@ public partial class ModelInfo
 
         private static readonly Lazy<ModelInspector> _modelInspector = new(() =>
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
+#pragma warning restore CS0618 // Type or member is obsolete
             if (inspector.FhirRelease != Specification.FhirRelease.STU3)
             {
                 // In case of release 4 or higher, also load the assembly with common conformance resources, like StructureDefinition

@@ -24,7 +24,7 @@ namespace Hl7.FhirPath.Tests
     {
         private static void isB(string expr, object value = null)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(value ?? true).ToScopedNode();
+            var dummy = PocoNode.ForAnyPrimitive(value ?? true);
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
             Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
@@ -32,15 +32,14 @@ namespace Hl7.FhirPath.Tests
 
         private static object scalar(string expr)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true).ToScopedNode();
+            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
             return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
-        private static object scalar(ITypedElement dummy, string expr)
+        private static object scalar(PocoNode dummy, string expr)
         {
-            dummy = dummy.ToScopedNode();
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
             return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
@@ -54,7 +53,7 @@ namespace Hl7.FhirPath.Tests
                     SourceNode.Valued("child", "Hello world!"),
                     SourceNode.Valued("child", "4")).ToTypedElementLegacy();
 #pragma warning restore CS0618 // Type or member is internal
-            Assert.AreEqual("ello", scalar(input, @"$this.child[0].substring(1,%context.child[1].toInteger())"));
+            Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
         [TestMethod]

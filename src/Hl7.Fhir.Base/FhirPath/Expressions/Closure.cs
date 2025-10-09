@@ -44,12 +44,12 @@ namespace Hl7.FhirPath.Expressions
         /// ensuring that argument evaluation doesn't impact the focus logged in the debug trace in other
         /// calls.
         /// </remarks>
-        public IEnumerable<ITypedElement> focus
+        public IEnumerable<PocoNode> focus
         {
             get
             {
                 if (!_debugTracerActive)
-                    return ElementNode.EmptyList;
+                    return [];
                 return _focus;
             }
             set
@@ -60,7 +60,7 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
-        private IEnumerable<ITypedElement> _focus;
+        private IEnumerable<PocoNode> _focus;
         private bool _debugTracerActive = false;
 
         public EvaluationContext EvaluationContext { get; private set; }
@@ -74,7 +74,7 @@ namespace Hl7.FhirPath.Expressions
             // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
             newContext.RootResource ??= root.GetRootResourceContext();
             
-            var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
+            var newClosure = new Closure(ctx ?? new EvaluationContext());
 
             foreach (var assignment in newClosure.EvaluationContext.Environment)
             {
