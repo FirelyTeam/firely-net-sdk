@@ -65,11 +65,13 @@ public partial record PocoNode
     {
         if (Poco is not DataType dt)
             return Name;
-
-        if(dt.HasAnnotation<ChoiceElementAnnotation>() || ((ITypedElement)this).Definition?.IsChoiceElement is true)
-            return Name + dt.TypeName.Capitalize();
-
-        return Name;
+        
+        return ((ITypedElement)this).Definition switch
+        {
+            { IsChoiceElement: true } => Name + dt.TypeName.Capitalize(),
+            null when dt.HasAnnotation<ChoiceElementAnnotation>() => Name + dt.TypeName.Capitalize(),
+            _ => Name
+        };
     });
     
     string ISourceNode.Name => SourceName.Value;
