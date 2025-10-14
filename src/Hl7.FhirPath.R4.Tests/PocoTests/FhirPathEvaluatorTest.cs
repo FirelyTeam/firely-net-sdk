@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -85,14 +85,29 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                         new XElement("output", new XAttribute("type", "boolean"), new XText(result ? "true" : "false")));
             Xdoc.Elements().First().Add(testXml);
 
-            Assert.IsTrue(TestInput.IsBoolean(expr, result));
+            Assert.IsTrue(IsBoolean(TestInput, expr, result));
         }
 
+        public bool IsBoolean(Base baseInput, string expression, bool value, EvaluationContext ctx = null)
+        {
+            var input = baseInput.ToPocoNode();
+
+            // Don't use the expression cache as we need to inject the debug tracer
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expression, true);
+
+            System.Diagnostics.Trace.WriteLine("");
+            System.Diagnostics.Trace.WriteLine("------------------------------------");
+            System.Diagnostics.Trace.WriteLine(expression);
+            System.Diagnostics.Trace.WriteLine("------------------------------------");
+
+            return evaluator.IsBoolean(value, input, ctx ?? new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
+        }
 
 
         public void IsTrue(string expr, Base input)
         {
-            Assert.IsTrue(input.IsBoolean(expr, true));
+            Assert.IsTrue(IsBoolean(input, expr, true));
         }
     }
 
@@ -478,7 +493,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [TestMethod]
         public void use_of_a_variable_in_separate_contexts_defined_in_2_but_used_in_1()
         {
-            // this example defines the same variable name in 2 different contexts, 
+            // this example defines the same variable name in 2 different contexts,
             // but only uses it in the second. This ensures that the first context doesn't remain when using it in another context
             var expr = "defineVariable('n1', name.first()).where(active.not()) | defineVariable('n1', name.skip(1).first()).select(%n1.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
@@ -521,7 +536,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
 
-        
+
         [TestMethod]
         public void use_of_a_variable_outside_context_throws_error()
         {
@@ -553,14 +568,14 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 ex.Message.Should().Contain("Unknown symbol 'fam'");
             }
         }
-        
+
         [TestMethod]
         public void redefining_variable_throws_error()
         {
             var expr = "defineVariable('v1').defineVariable('v1').select(%v1)";
             Assert.ThrowsException<InvalidOperationException>(() => fixture.PatientExample.Select(expr).ToList());
         }
-        
+
 
         [TestMethod]
         public void sequence_of_variable_definitions_tweak()
@@ -586,7 +601,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             // .toStrictEqual([true, "JimJim"]);
         }
 
-        
+
         [TestMethod]
         public void multi_tree_vars_valid()
         {
@@ -597,7 +612,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.AreEqual("r1-v2", r.Skip(1).First().ToString());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
         }
-        
+
         [TestMethod]
         public void defineVariable_with_compile_success()
         {

@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -24,14 +24,25 @@ namespace Hl7.FhirPath.Tests
     {
         private static void isB(string expr, object value = null)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(value ?? true);
-            Assert.IsTrue(dummy.IsBoolean(expr, true));
+            var dummy = PocoNode.ForAnyPrimitive(value ?? true);
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
         }
 
         private static object scalar(string expr)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
-            return dummy.Scalar(expr);
+            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
+        }
+
+        private static object scalar(PocoNode dummy, string expr)
+        {
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
         [TestMethod]
@@ -218,23 +229,23 @@ namespace Hl7.FhirPath.Tests
         {
             PocoNode dummy = PocoNode.ForAnyPrimitive(true);
 
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' + '' + 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'' + 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'DEF' + ''"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' + '' + 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'' + 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'DEF' + ''"));
 
-            Assert.IsNull(dummy.Scalar("{} + 'DEF'"));
-            Assert.IsNull(dummy.Scalar("'ABC' + {} + 'DEF'"));
-            Assert.IsNull(dummy.Scalar("'ABC' + {}"));
+            Assert.IsNull(scalar(dummy, "{} + 'DEF'"));
+            Assert.IsNull(scalar(dummy, "'ABC' + {} + 'DEF'"));
+            Assert.IsNull(scalar(dummy, "'ABC' + {}"));
 
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' & '' & 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'' & 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'DEF' & ''"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' & '' & 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'' & 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'DEF' & ''"));
 
-            Assert.AreEqual("DEF", dummy.Scalar("{} & 'DEF'"));
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' & {} & 'DEF'"));
-            Assert.AreEqual("ABC", dummy.Scalar("'ABC' & {}"));
+            Assert.AreEqual("DEF", scalar(dummy, "{} & 'DEF'"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' & {} & 'DEF'"));
+            Assert.AreEqual("ABC", scalar(dummy, "'ABC' & {}"));
 
-            Assert.IsNull(dummy.Scalar("'ABC' & {} & 'DEF' + {}"));
+            Assert.IsNull(scalar(dummy, "'ABC' & {} & 'DEF' + {}"));
         }
 
         [TestMethod]
@@ -259,7 +270,7 @@ namespace Hl7.FhirPath.Tests
             Assert.IsNotNull(result);
             CollectionAssert.AreEqual(new[] { "", "ONE", "", "TWO", "", "", "THREE", "", "" }, result.Select(r => r.Value.ToString()).ToArray());
         }
-        
+
         [DataTestMethod]
         [DataRow("(1 | 2 | 3).indexOf(3)", 2)]
         [DataRow("((1 | 2 | 3).combine(2)).indexOf(2, 2)", 3)]

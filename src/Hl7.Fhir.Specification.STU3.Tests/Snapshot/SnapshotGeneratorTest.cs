@@ -1340,6 +1340,44 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandElement(sd, nav.Current);
         }
 
+        [TestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        public async Tasks.Task TestExpandElement_AbsoluteContentReference(bool convertToAbsolute)
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Composition.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Composition),
+                Name = "MyComposition",
+                Url = $"http://example.org/fhir/StructureDefinition/MyComposition",
+                Abstract = false,
+                FhirVersion = ModelInfo.Version,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource
+            };
+
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+            var generator = new SnapshotGenerator(resolver, _settings);
+            var elements = await generator.GenerateAsync(sd);
+            var section = elements.FirstOrDefault(e => e.ElementId == "Composition.section.section");
+            var sectionId = elements.FirstOrDefault(e => e.ElementId == "Composition.section.section.id");
+
+            section.Should().NotBeNull();
+            sectionId.Should().BeNull();
+            section.ContentReference.Should().Be("#Composition.section");
+
+            if (convertToAbsolute)
+                section.ContentReference = sd.BaseDefinition + section.ContentReference;
+
+            var expandedElements = await generator.ExpandElementAsync(elements, section);
+
+            expandedElements.Should().HaveCountGreaterThan(elements.Count);
+
+            sectionId = expandedElements.FirstOrDefault(e => e.ElementId == "Composition.section.section.id");
+            sectionId.Should().NotBeNull();
+        }
+
         private async Tasks.Task testExpandElement(string srcProfileUrl, string expandElemPath)
         {
             // Prepare...
@@ -2435,8 +2473,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Also ignore any Changed extensions on base and diff
             elemClone.RemoveAllNonInheritableExtensions();
             baseClone.RemoveAllNonInheritableExtensions();
-            elemClone.RemoveAllConstrainedByDiffAnnotations();
-            baseClone.RemoveAllConstrainedByDiffAnnotations();
+            elemClone.RemoveAllSnapshotGeneratorAnnotations();
+            baseClone.RemoveAllSnapshotGeneratorAnnotations();
 
             var result = baseClone.IsExactly(elemClone);
             return result;
@@ -7669,13 +7707,11 @@ namespace Hl7.Fhir.Specification.Tests
             var zipSource = ZipSource.CreateValidationSource();
             var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
 
-
             //Test if core resource has relative content references.
             var coreQuestionnaire = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             var coreSnapshot = await generator.GenerateAsync(coreQuestionnaire);
             var item = coreSnapshot.Where(e => e.Path == "Questionnaire.item.item").FirstOrDefault();
             item.ContentReference.Should().Be("#Questionnaire.item");
-
 
             //Create profile for testing creation of absolute references.
             var profile = new StructureDefinition
@@ -7718,15 +7754,9 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition
                         {
-                            ElementId = "Questionnaire.item:booleanItem.type",
-                            Path = "Questionnaire.item.type",
-                            Fixed = new Code("boolean")
-                        },
-                        new ElementDefinition
-                        {
-                            ElementId = "Questionnaire.item:booleanItem.item.type",
-                            Path = "Questionnaire.item.item.type",
-                            Fixed = new Code("string")
+                            ElementId = "Questionnaire.item:booleanItem.item",
+                            Path = "Questionnaire.item.item",
+                            Min = 1
                         }
                     }
                 }
@@ -7737,9 +7767,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cref1 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item").FirstOrDefault();
             cref1.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
-
-            var cref2 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item.item").FirstOrDefault();
-            cref2.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
         }
 
         [TestMethod]
@@ -8458,6 +8485,200 @@ namespace Hl7.Fhir.Specification.Tests
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
+        }
+        
+                // Test whether we have fixed issue https://github.com/FirelyTeam/firely-net-sdk/issues/3177.
+        [TestMethod]
+        public async Tasks.Task TestSliceWithContentReference()
+        {
+            var sd = buildSliceOnContentReference();
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var snapshot = await _generator.GenerateAsync(sd);
+
+            // If we have copied the contentReference's children to the slice, there should not be a contentReference
+            // on the slice itself anymore (but it should still exist on the intro).
+            snapshot.Single(e => e.ElementId == "Parameters.parameter.part")
+                .ContentReference.Should().NotBeNull();
+            snapshot.Should().ContainSingle(e => e.ElementId == "Parameters.parameter.part:medicationDispense.name");
+
+            // The slice itself should not have a contentReference, because it is copied the children below it.
+            var firstSlice = snapshot.Single(e => e.ElementId == "Parameters.parameter.part:medicationDispense");
+            firstSlice.ContentReference.Should().BeNull();
+
+            // But it should now have a TypeRef element!
+            firstSlice.Type.Should().ContainSingle(tr => tr.Code == "BackboneElement");
+        }
+
+        // Test whether fixing issue https://github.com/FirelyTeam/firely-net-sdk/issues/3177 does
+        // not break the snapshot generation when just the cardinality of the contentReference is changed.
+        [TestMethod]
+        public async Tasks.Task TestContentReferenceWithCardinalityChangeOnPart()
+        {
+            var sd = changeCardinalityOnContentReference();
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var snapshot = await _generator.GenerateAsync(sd);
+
+            // Changing the cardinality will not copy the children, so the contentReference should still
+            // be there and NOT have a typeref.
+            var firstPart = snapshot.Single(e => e.ElementId == "Parameters.parameter.part");
+            firstPart.ContentReference.Should().NotBeNull();
+            firstPart.Type.Should().BeEmpty();
+        }
+
+        // Test whether fixing issue https://github.com/FirelyTeam/firely-net-sdk/issues/3177 does
+        // not break the snapshot generation when just the cardinality of a nested contentReference is changed.
+        [TestMethod]
+        public async Tasks.Task TestContentReferenceWithCardinalityChangeOnNestedPart()
+        {
+            var sd = changeCardinalityOnNestedContentReference();
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var snapshot = await _generator.GenerateAsync(sd);
+
+            // Changing the cardinality in a child *will* copy the children, so the contentReference should
+            // now be gone, and it should have a TypeRef instead.
+            var firstPart = snapshot.Single(e => e.ElementId == "Parameters.parameter.part");
+            firstPart.ContentReference.Should().BeNull();
+            firstPart.Type.Should().ContainSingle(tr => tr.Code == "BackboneElement");
+
+            // But the nested part should still have a contentReference, and no typeref.
+            var nestedPart = snapshot.Single(e => e.ElementId == "Parameters.parameter.part.part");
+            nestedPart.ContentReference.Should().NotBeNull();
+            nestedPart.Type.Should().BeEmpty();
+        }
+
+        private static StructureDefinition buildSliceOnContentReference()
+        {
+            var result = TestProfileArtifactSource.CreateTestSD("http://validationtest.org/fhir/StructureDefinition/Parameters-issue-3177", "Parameters-issue-3177",
+                "Parameters with sliced parts - and so copied contentReferences", FHIRAllTypes.Parameters);
+
+            var cons = result.Differential.Element;
+
+            var slicingIntro = new ElementDefinition("Parameters.parameter.part")
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+                    (ElementDefinition.DiscriminatorType.Pattern, "name"))
+                .Required();
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Parameters.parameter.part")
+            {
+                ElementId = "Parameters.parameter.part:medicationDispense", SliceName = "medicationDispense",
+            }.Required());
+
+            cons.Add(new ElementDefinition("Parameters.parameter.part.name")
+            {
+                ElementId = "Parameters.parameter.part:medicationDispense.name",
+                Pattern = new FhirString("medicationDispense")
+            });
+
+            return result;
+        }
+
+        private static StructureDefinition changeCardinalityOnContentReference()
+        {
+            var result = TestProfileArtifactSource.CreateTestSD("http://validationtest.org/fhir/StructureDefinition/Parameters-issue-3177", "Parameters-issue-3177",
+                "Parameters with new cardinality on parts", FHIRAllTypes.Parameters);
+
+            var cons = result.Differential.Element;
+
+            var mainPart = new ElementDefinition("Parameters.parameter.part")
+                .Required();
+
+            cons.Add(mainPart);
+
+            return result;
+        }
+
+        private static StructureDefinition changeCardinalityOnNestedContentReference()
+        {
+            var result = TestProfileArtifactSource.CreateTestSD("http://validationtest.org/fhir/StructureDefinition/Parameters-issue-3177", "Parameters-issue-3177",
+                "Parameters with new cardinality on part.part", FHIRAllTypes.Parameters);
+
+            var cons = result.Differential.Element;
+
+            var nestedPart = new ElementDefinition("Parameters.parameter.part.part")
+                .Required();
+
+            cons.Add(nestedPart);
+
+            return result;
+        }
+
+        private const string MARKDOWN_COMMENT = "Systems are not required to have markdown support, and there is considerable variation in markdown syntax, so the text should be readable without markdown processing. The preferred markdown syntax is described here: http://daringfireball.net/projects/markdown/syntax (and tests here: http://daringfireball.net/projects/downloads/MarkdownTest_1.0.zip)";
+
+        [TestMethod]
+        public async Tasks.Task CodeSystemCopyrightCommentIssueTest()
+        {
+            const string copyrightComment = "... Sometimes, the copyright differs between the code system and the codes that are included. The copyright statement should clearly differentiate between these when required.";
+
+            await appendTextIssueTest("CodeSystem", "copyright", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
+        }
+
+        private static async Tasks.Task appendTextIssueTest(string resource, string path, string expectedComment)
+        {
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new CachedResolver(zipSource);
+            var settings = new SnapshotGeneratorSettings
+            {
+                ForceRegenerateSnapshots = true,
+                GenerateAnnotationsOnConstraints = false,
+                GenerateExtensionsOnConstraints = false,
+                GenerateElementIds = true,
+                GenerateSnapshotForExternalProfiles = true
+            };
+            var sd = new StructureDefinition
+            {
+                Type = resource,
+                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{resource}",
+                Name = $"My{resource}",
+                Url = $"http://example.org/fhir/StructureDefinition/My{resource}",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                FhirVersion = ModelInfo.Version
+            };
+
+            var generator = new SnapshotGenerator(resolver, settings);
+
+            generator.PrepareElement += addElementBaseAnnotation;
+
+            var elems = await generator.GenerateAsync(sd);
+
+            generator.PrepareElement -= addElementBaseAnnotation;
+
+            var element = elems.FirstOrDefault(e => e.ElementId == $"{resource}.{path}");
+
+            element.Should().NotBeNull();
+            element.Comment.Should().Be(expectedComment);
+
+            var baseElement = element.Annotation<TestElementBaseAnnotation>()?.BaseElementDefinition;
+
+            baseElement.Should().NotBeNull();
+            element.Comment.Should().Be(baseElement.Comment);
+        }
+
+        private static string mergeAppendText(string s1, string s2)
+        {
+            if (!s2.StartsWith("..."))
+                return s2;
+
+            return string.IsNullOrEmpty(s1)
+                ? s2[3..]
+                : s1 + "\r\n" + s2[3..];
+        }
+
+        private static void addElementBaseAnnotation(object sender, SnapshotElementEventArgs e)
+        {
+            var elem = e.Element;
+
+            var ann = elem.Annotation<TestElementBaseAnnotation>();
+
+            if (ann != null)
+                elem.RemoveAnnotations<TestElementBaseAnnotation>();
+
+            var baseDef = e.BaseElement;
+
+            elem.AddAnnotation(new TestElementBaseAnnotation(baseDef));
         }
     }
 }

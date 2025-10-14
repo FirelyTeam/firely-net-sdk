@@ -12,7 +12,9 @@ public class EvaluationContext
     [Obsolete("This method does not initialize any members and will be removed in a future version. Use the empty constructor instead.")]
     public static EvaluationContext CreateDefault() => new();
 
-    
+    private int ClosuresCreated { get; set; } = 0;
+    internal int IncrementClosuresCreatedCount() => ClosuresCreated++;
+
     public EvaluationContext()
     {
         // no defaults yet
@@ -36,13 +38,13 @@ public class EvaluationContext
         Resource = resource;
         RootResource = rootResource ?? resource;
     }
-        
+
     [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method. Environment can be set explicitly after construction of the base context")]
     public EvaluationContext(PocoNode? resource, PocoNode? rootResource, IDictionary<string, IEnumerable<PocoNode>> environment) : this(resource, rootResource)
     {
         Environment = environment;
     }
-    
+
     /// <summary>
     /// The data represented by <c>%rootResource</c>.
     /// </summary>
@@ -62,6 +64,11 @@ public class EvaluationContext
     /// A delegate that handles the output for the <c>trace()</c> function.
     /// </summary>
     public Action<string?, IEnumerable<PocoNode>>? Tracer { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tracer used for capturing debug information during evaluation
+    /// </summary>
+    public IDebugTracer? DebugTracer { get; set; }
 }
 
 public static class EvaluationContextExtensions
