@@ -100,7 +100,7 @@ public static class PocoNodeExtensions
     /// <param name="externalResolver">An external resolver</param>
     /// <returns></returns>
     /// <remarks>Does not create a copy. The resolved resource will be part of the PocoNode-tree that was passed to this function</remarks>
-    public static PocoNode? Resolve(this PocoNode? node, Func<string, PocoNode>? externalResolver = null)
+    public static PocoNode? Resolve(this PocoNode? node, Func<string, PocoNode?>? externalResolver = null)
     {
         if (node is null) return null;
         
