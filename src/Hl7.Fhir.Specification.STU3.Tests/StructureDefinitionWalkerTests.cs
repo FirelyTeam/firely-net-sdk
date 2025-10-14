@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        [Ignore("Test resource has broken snapshot chain due to missing base profile")]
         public async Tasks.Task WalkAcrossInlineExtension()
         {
             var sd = await _source.FindStructureDefinitionAsync("http://unittest.com/StructureDefinition/patient-sliced-complex-extension");
