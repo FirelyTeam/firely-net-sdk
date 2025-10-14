@@ -125,14 +125,15 @@ public static partial class SourceNodeExtensions
     [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
     public static async Task<string> ToJsonAsync(this ISourceNode source, bool pretty = false)
         => await SerializationUtil.WriteJsonToStringAsync(source.WriteToAsync, pretty).ConfigureAwait(false);
-    
+
     /// <summary>
     /// Serializes an <see cref="ISourceNode"/> instance into a <see cref="JObject"/>.
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
+    /// <param name="preserveWhiteSpaceInValues">Whether to preserve whitespace in string values when serializing</param>
     /// <remarks>Since <see cref="ISourceNode"/> has no type information, this function will throw unless
     /// the <see cref="ISourceNode"/> originated from parsing using <see cref="FhirJsonNode"/>.</remarks>
-    public static JObject ToJObject(this ISourceNode source) => new FhirJsonBuilder().Build(source);
+    public static JObject ToJObject(this ISourceNode source, bool preserveWhiteSpaceInValues = false) => new FhirJsonBuilder(preserveWhiteSpaceInValues).Build(source);
     
     /// <summary>
     /// Serializes an <see cref="ISourceNode"/> instance into FHIR Json.

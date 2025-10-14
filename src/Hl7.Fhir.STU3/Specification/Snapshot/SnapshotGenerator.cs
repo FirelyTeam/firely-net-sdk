@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 // Also remove core extensions that are not supposed to be inherited by derived profiles
                 snapshot.RemoveAllNonInheritableExtensions();
-                snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
+                snapshot.Element.RemoveAllSnapshotGeneratorAnnotations();
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -539,6 +539,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20190926] #1123 Remove annotations and fix Base components!
                 SnapshotGenerator.copyChildren(nav, sourceNav);
+                
+                // [EK 20250618] #3177 Ensure we don't have both children and a contentReference.
+                // We should restore the Type, since that's expected information if there is no
+                // content reference available.
+                defn.ContentReference = null;
+                defn.Type = sourceNav.Current.Type.DeepCopy().ToList();
 
                 // [WMR 20180410]
                 // - Regenerate element IDs
@@ -1262,22 +1268,22 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// Copy child elements from <paramref name="typeNav"/> to <paramref name="nav"/>.
+        /// Copy child elements from <paramref name="source"/> to <paramref name="dest"/>.
         /// Remove existing annotations, fix Base components
         /// </summary>
         // [WMR 20170501] OBSOLETE: notify listeners - moved to prepareTypeProfileChildren
-        private static bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav) // , StructureDefinition typeStructure)
+        private static bool copyChildren(ElementDefinitionNavigator dest, ElementDefinitionNavigator source) // , StructureDefinition typeStructure)
         {
             // [WMR 20170426] IMPORTANT!
             // Do NOT modify typeNav/typeStructure
             // Call by mergeTypeProfiles: typeNav/typeStructure refers to modified clone of global type profile
             // Call by expandElement:     typeNav/typeStructure refers to global cached type profile (!)
 
-            Debug.Assert(!nav.AtRoot);
-            Debug.Assert(!typeNav.AtRoot);
+            Debug.Assert(!dest.AtRoot);
+            Debug.Assert(!source.AtRoot);
 
             // [WMR 20170220] CopyChildren returns false if nav already has children
-            if (nav.CopyChildren(typeNav))
+            if (dest.CopyChildren(source))
             {
                 // Fix the copied elements and notify observers
 
@@ -1285,12 +1291,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // typeNav positioned at target element of base profile (not the root element)
                 // => process only the current subtree, not the full structure
 
-                var typeRootPath = typeNav.Path;
-                var typeRootPos = typeNav.OrdinalPosition.Value; // 0 for element type, >0 for content reference
-                var typeElems = typeNav.Elements;
-                var elems = nav.Elements;
+                var typeRootPath = source.Path;
+                var typeRootPos = source.OrdinalPosition.Value; // 0 for element type, >0 for content reference
+                var typeElems = source.Elements;
+                var elems = dest.Elements;
 
-                for (int pos = nav.OrdinalPosition.Value + 1, i = typeRootPos + 1;
+                for (int pos = dest.OrdinalPosition.Value + 1, i = typeRootPos + 1;
                     i < typeElems.Count && pos < elems.Count;
                     i++, pos++)
                 {
@@ -1311,7 +1317,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20160826] Never inherit Changed extension from base profile!
                     elem.RemoveAllNonInheritableExtensions();
-                    elem.RemoveAllConstrainedByDiffAnnotations();
+                    elem.RemoveAllSnapshotGeneratorAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20170424] Inherit existing base components from type profile
@@ -1891,26 +1897,32 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(nav != null);
             Debug.Assert(nav.Current != null);
 
-            var elementDef = nav.Current;
-            var location = elementDef.Path;
+            var coreType = getCoreType(nav);
 
-            var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
+            if (string.IsNullOrEmpty(coreType))
+                return null;
 
-            var coreType = nav.StructureDefinition?.Type
-                // Fall back to root element name...?
-                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+            var location = nav.Current.Path;
 
-            if (!string.IsNullOrEmpty(coreType))
-            {
-                // Try to resolve the custom element type profile reference
-                var coreSd = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(coreType).ConfigureAwait(false);
-                _ = ensureSnapshot
-                    ? await this.ensureSnapshot(coreSd, coreType, location).ConfigureAwait(false)
-                    : this.verifyStructure(coreSd, coreType, location);
-                return coreSd;
-            }
+            // Try to resolve the custom element type profile reference
+            var coreSd = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(coreType).ConfigureAwait(false);
+            _ = ensureSnapshot
+                ? await this.ensureSnapshot(coreSd, coreType, location).ConfigureAwait(false)
+                : this.verifyStructure(coreSd, coreType, location);
 
-            return null;
+            return coreSd;
+        }
+
+        private static string getCoreType(ElementDefinitionNavigator nav)
+        {
+            if (nav.StructureDefinition?.Type != null)
+                return nav.StructureDefinition.Type;
+
+            var contentReference = nav.Current.ContentReference; // e.g. "#Questionnaire.item"
+
+            return contentReference.StartsWith("#")
+                ? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1))  // Fall back to root element name...?
+                : contentReference.Split('#').First(); // return url
         }
 
         private bool verifyStructure(StructureDefinition sd, string profileUrl, string location = null)

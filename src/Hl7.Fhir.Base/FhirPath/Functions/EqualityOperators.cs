@@ -260,7 +260,29 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
+        public static int? CompareTo(P.Any left, P.Any right)
+        {
+            // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
+            // (though we might handle this more generally with the null-propagating functionality of the compiler
+            // framework already.
+            if (left == null || right == null) return null;
+
+            // Try to convert both operands to a common type if they differ.
+            // When that fails, the CompareTo function on each type will itself
+            // report an error if they cannot handle that.
+            // TODO: in the end the engine/compiler will handle this and report an overload resolution fail
+            tryCoerce(ref left, ref right);
+
+            if (left is P.ICqlOrderable orderable) return orderable.CompareTo(right);
+
+            // Now, only the non-comparables are left (coding, concept, boolean).
+            // TODO: We should be able to retrieve the cql name of the type, not the
+            // dotnet type somehow.
+            throw new InvalidOperationException($"Values of type {left.GetType().Name} is not an ordered type and cannot be compared.");
+        }
+
         public static readonly IEqualityComparer<ITypedElement> TypedElementEqualityComparer = new ValueProviderEqualityComparer();
+        public static readonly IComparer<ITypedElement?> TypedElementComparer = new ValueProviderComparer();
 
         private class ValueProviderEqualityComparer : IEqualityComparer<ITypedElement>
         {
@@ -288,6 +310,23 @@ namespace Hl7.FhirPath.Functions
                 }
 
                 return result;
+            }
+        }
+
+        private class ValueProviderComparer : IComparer<ITypedElement?>
+        {
+            public int Compare(ITypedElement? x, ITypedElement? y)
+            {
+                if (x is null && y is null) return 0;
+                if (x is null) return -1;
+                if (y is null) return 1;
+                if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
+                {
+                    if (x is OrderedNode opn && opn.Descending)
+                        return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                    return EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                }
+                return 0;
             }
         }
     }

@@ -1455,6 +1455,44 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandElement(sd, nav.Current);
         }
 
+        [TestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        public async Tasks.Task TestExpandElement_AbsoluteContentReference(bool convertToAbsolute)
+        {
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Composition.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Composition),
+                Name = "MyComposition",
+                Url = $"http://example.org/fhir/StructureDefinition/MyComposition",
+                Abstract = false,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource
+            };
+
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+            var generator = new SnapshotGenerator(resolver, _settings);
+            var elements = await generator.GenerateAsync(sd);
+            var section = elements.FirstOrDefault(e => e.ElementId == "Composition.section.section");
+            var sectionId = elements.FirstOrDefault(e => e.ElementId == "Composition.section.section.id");
+
+            section.Should().NotBeNull();
+            sectionId.Should().BeNull();
+            section.ContentReference.Should().Be("#Composition.section");
+
+            if (convertToAbsolute)
+                section.ContentReference = sd.BaseDefinition + section.ContentReference;
+
+            var expandedElements = await generator.ExpandElementAsync(elements, section);
+
+            expandedElements.Should().HaveCountGreaterThan(elements.Count);
+
+            sectionId = expandedElements.FirstOrDefault(e => e.ElementId == "Composition.section.section.id");
+            sectionId.Should().NotBeNull();
+        }
+
         private async Tasks.Task testExpandElement(string srcProfileUrl, string expandElemPath)
         {
             // Prepare...
@@ -2564,8 +2602,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Also ignore any Changed extensions on base and diff
             elemClone.RemoveAllNonInheritableExtensions();
             baseClone.RemoveAllNonInheritableExtensions();
-            elemClone.RemoveAllConstrainedByDiffAnnotations();
-            baseClone.RemoveAllConstrainedByDiffAnnotations();
+            elemClone.RemoveAllSnapshotGeneratorAnnotations();
+            baseClone.RemoveAllSnapshotGeneratorAnnotations();
 
             var result = baseClone.IsExactly(elemClone);
             return result;
@@ -10361,6 +10399,162 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
+        }
+
+        [TestMethod]
+        public async Tasks.Task TestElementDefinitionExtensionWithoutValuePreservesBaseValue()
+        {
+            // Test for issue #3211
+            // When a derived profile has an element with extension but no value,
+            // the snapshot generator should preserve the base value and merge the extension
+            
+            var derivedProfile = new StructureDefinition()
+            {
+                Url = "http://example.org/derived-patient",
+                Name = "DerivedPatient",
+                Status = PublicationStatus.Active, 
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.name")
+                        {
+                            // No Definition value, but has extension on _definition
+                            DefinitionElement = new Markdown()
+                            {
+                                Extension = new List<Extension>()
+                                {
+                                    new Extension()
+                                    {
+                                        Url = "http://hl7.org/fhir/StructureDefinition/translation",
+                                        Extension = new List<Extension>()
+                                        {
+                                            new Extension("lang", new Code("fr")),
+                                            new Extension("content", new Markdown("Une nomme associe de la individuelle"))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Create resolver 
+            var resolver = new InMemoryResourceResolver(derivedProfile);
+            var multiResolver = new MultiResolver(_standardFhirSource, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            // Generate snapshot for derived profile
+            await _generator.UpdateAsync(derivedProfile);
+            Assert.IsNotNull(derivedProfile.Snapshot?.Element);
+
+            // Find Patient.name element in snapshot
+            var nameElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.name");
+            Assert.IsNotNull(nameElement, "Patient.name element not found in snapshot");
+
+            // Should have the base definition value preserved
+            Assert.IsNotNull(nameElement.Definition, "Definition should not be null - base value should be preserved");
+            Assert.IsTrue(nameElement.Definition.Contains("name"), "Definition should contain base content about name");
+
+            // Should also have the extension from differential
+            Assert.IsNotNull(nameElement.DefinitionElement?.Extension, "DefinitionElement.Extension should not be null");
+            Assert.AreEqual(1, nameElement.DefinitionElement.Extension.Count, "Should have exactly one extension");
+
+            var translationExt = nameElement.DefinitionElement.Extension.First();
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/translation", translationExt.Url);
+            Assert.IsNotNull(translationExt.Extension);
+            Assert.AreEqual(2, translationExt.Extension.Count);
+            
+            var langExt = translationExt.Extension.FirstOrDefault(e => e.Url == "lang");
+            Assert.IsNotNull(langExt);
+            Assert.AreEqual("fr", (langExt.Value as Code)?.Value);
+
+            var contentExt = translationExt.Extension.FirstOrDefault(e => e.Url == "content");
+            Assert.IsNotNull(contentExt);
+            Assert.AreEqual("Une nomme associe de la individuelle", (contentExt.Value as Markdown)?.Value);
+        }
+
+        private const string MARKDOWN_COMMENT = "Systems are not required to have markdown support, so the text should be readable without markdown processing. The markdown syntax is GFM - see https://github.github.com/gfm/";
+
+        [TestMethod]
+        public async Tasks.Task CodeSystemCopyrightCommentIssueTest()
+        {
+            const string copyrightComment = "... Sometimes, the copyright differs between the code system and the codes that are included. The copyright statement should clearly differentiate between these when required.";
+
+            await appendTextIssueTest("CodeSystem", "copyright", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
+        }
+
+        private static async Tasks.Task appendTextIssueTest(string resource, string path, string expectedComment)
+        {
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new CachedResolver(zipSource);
+            var settings = new SnapshotGeneratorSettings
+            {
+                ForceRegenerateSnapshots = true,
+                GenerateAnnotationsOnConstraints = false,
+                GenerateExtensionsOnConstraints = false,
+                GenerateElementIds = true,
+                GenerateSnapshotForExternalProfiles = true
+            };
+            var sd = new StructureDefinition
+            {
+                Type = resource,
+                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{resource}",
+                Name = $"My{resource}",
+                Url = $"http://example.org/fhir/StructureDefinition/My{resource}",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version)
+            };
+
+            var generator = new SnapshotGenerator(resolver, settings);
+
+            generator.PrepareElement += addElementBaseAnnotation;
+
+            var elems = await generator.GenerateAsync(sd);
+
+            generator.PrepareElement -= addElementBaseAnnotation;
+
+            var element = elems.FirstOrDefault(e => e.ElementId == $"{resource}.{path}");
+
+            element.Should().NotBeNull();
+            element.Comment.Should().Be(expectedComment);
+
+            var baseElement = element.Annotation<TestElementBaseAnnotation>()?.BaseElementDefinition;
+
+            baseElement.Should().NotBeNull();
+            element.Comment.Should().Be(baseElement.Comment);
+        }
+
+        private static string mergeAppendText(string s1, string s2)
+        {
+            if (!s2.StartsWith("..."))
+                return s2;
+
+            return string.IsNullOrEmpty(s1)
+                ? s2[3..]
+                : s1 + "\r\n" + s2[3..];
+        }
+
+        private static void addElementBaseAnnotation(object sender, SnapshotElementEventArgs e)
+        {
+            var elem = e.Element;
+
+            var ann = elem.Annotation<TestElementBaseAnnotation>();
+
+            if (ann != null)
+                elem.RemoveAnnotations<TestElementBaseAnnotation>();
+
+            var baseDef = e.BaseElement;
+
+            elem.AddAnnotation(new TestElementBaseAnnotation(baseDef));
         }
     }
 }
