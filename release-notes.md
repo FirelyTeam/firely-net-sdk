@@ -1,5 +1,4 @@
 ## Intro:
 
-Added FHIRPath debug tracer.
-Fixes bugs related to paralelization when using SerializationFilter.
-Optimization tweaks.
+Added support for not trimming whitespace in serialization
+Made minor changes to the snapshot generator
