@@ -29,7 +29,7 @@ namespace Hl7.FhirPath.Functions
 #pragma warning disable CS0618 // Type or member is obsolete
                 .Select(t => ModelInspector.ForAssembly(t.Assembly).GetFhirTypeNameForType(t))
 #pragma warning restore CS0618 // Type or member is obsolete
-                .Append(((ITypedElement)focus).InstanceType);
+                .Prepend(((ITypedElement)focus).InstanceType);
             return selfAndBaseClasses.Any(typeString => Is(typeString, type));
             
             static IEnumerable<Type> getBaseClasses(Type t)
@@ -41,8 +41,8 @@ namespace Hl7.FhirPath.Functions
         public static bool Is(string? instanceType, string declaredType)
         {
             // Bit of a hack, this hardwires the FhirPath implementation to FHIR
-            if (instanceType?.Contains(".") is false) instanceType = "FHIR." + instanceType;
-            if (declaredType.Contains("."))
+            if (instanceType?.Contains('.') is false) instanceType = "FHIR." + instanceType;
+            if (declaredType.Contains('.'))
                 return instanceType == declaredType;
             else
             {
