@@ -26,9 +26,9 @@ namespace Hl7.Fhir.FhirPath
 
         public ICodeValidationTerminologyService? TerminologyService { get; set; }
 
-        private Func<string, PocoNode>? _elementResolver;
+        private Func<string, PocoNode?>? _elementResolver;
 
-        public Func<string, PocoNode>? ElementResolver
+        public Func<string, PocoNode?>? ElementResolver
         {
             get { return _elementResolver; }
             set { _elementResolver = value; }
