@@ -135,12 +135,12 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     /// <summary>
     /// The literal of the code value, taken from the enum that is in <see cref="Value"/>.
     /// </summary>
-    public override string? Literal => Value?.GetSystem();
+    public override string? Literal => Value?.GetLiteral();
 
     /// <summary>
     /// The system of the code value, taken from the enum that is in <see cref="Value"/>.
     /// </summary>
-    public override string? System => Value?.GetLiteral();
+    public override string? System => Value?.GetSystem();
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
         Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;
