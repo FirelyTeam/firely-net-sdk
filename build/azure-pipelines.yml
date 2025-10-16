@@ -63,7 +63,7 @@ stages:
           nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
           
     - ${{ if eq(variables.useGitHubPackageFeed, 'no') }}:
-      - script: dotnet restore --source https://api.nuget.org/v3/index.json
+      - script: dotnet restore --source https://api.nuget.org/v3/index.json /clp:ForceConsoleColor
         displayName: 'Run dotnet restore'
         
     - task: DotNetCoreCLI@2
@@ -71,7 +71,7 @@ stages:
       inputs:
         command: build
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
+        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true /clp:ForceConsoleColor
 
     - task: DotNetCoreCLI@2
       displayName: Create Test artifacts
@@ -82,7 +82,7 @@ stages:
          **/Hl7.FhirPath.R4.Tests/*.csproj
         publishWebProjects: false
         zipAfterPublish: false
-        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK) /clp:ForceConsoleColor
 
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
