@@ -54,18 +54,23 @@ stages:
     - powershell: |
         Write-Host "##[section]🔨 Starting Firely .NET SDK Build Process"
         Write-Host "##[command]Repository: $(Build.Repository.Name)"
-        Write-Host "##[command]Branch: $(Build.SourceBranchName)"
+        
+        if ($Env:BUILD_REASON -eq "PullRequest") {
+          Write-Host "##[command]Source Branch: $(System.PullRequest.SourceBranch)"
+          Write-Host "##[command]Target Branch: $(System.PullRequest.TargetBranch)"
+          Write-Host "##[command]PR Number: #$(System.PullRequest.PullRequestNumber)"
+          Write-Host "##[section]📝 This is a Pull Request build"
+        } elseif ($Env:isTagBranch -eq "true") {
+          Write-Host "##[command]Tag/Branch: $(Build.SourceBranchName)"
+          Write-Host "##[section]🏷️ This is a Tagged Release build"
+        } else {
+          Write-Host "##[command]Branch: $(Build.SourceBranchName)"
+          Write-Host "##[section]🚀 This is a Development build"
+        }
+        
         Write-Host "##[command]Build Configuration: $(buildConfiguration)"
         Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)"
         Write-Host "##[command]Build Number: $(Build.BuildNumber)"
-        
-        if ($Env:BUILD_REASON -eq "PullRequest") {
-          Write-Host "##[section]📝 This is a Pull Request build"
-        } elseif ($Env:isTagBranch -eq "true") {
-          Write-Host "##[section]🏷️ This is a Tagged Release build"
-        } else {
-          Write-Host "##[section]🚀 This is a Development build"
-        }
       displayName: 'Build Information'
       
     - template: templates/apply-versioning-steps-template.yml
