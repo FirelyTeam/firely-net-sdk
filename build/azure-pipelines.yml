@@ -130,7 +130,7 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
-        buildProperties: '/clp:ForceConsoleColor'
+        arguments: '/clp:ForceConsoleColor'
     - powershell: |
         if ([string]::IsNullOrEmpty($Env:CurrentSuffix))
         {
