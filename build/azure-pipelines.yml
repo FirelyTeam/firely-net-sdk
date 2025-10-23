@@ -141,21 +141,21 @@ stages:
           $version = "$Env:CurrentVersion-$Env:CurrentSuffix"
         }
 
-        Write-Host "##[section]Packing Hl7.Fhir.Specification.* metapackages with version $version" -ForegroundColor Green
+        Write-Host "##[section]Packing Hl7.Fhir.Specification.* metapackages with version $version"
 
-        Write-Host "##[command]Packing STU3 specification package..." -ForegroundColor Yellow
+        Write-Host "##[command]Packing STU3 specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=STU3 -OutputDirectory $(Build.ArtifactStagingDirectory)
         
-        Write-Host "##[command]Packing R4 specification package..." -ForegroundColor Yellow
+        Write-Host "##[command]Packing R4 specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4 -OutputDirectory $(Build.ArtifactStagingDirectory)
         
-        Write-Host "##[command]Packing R4B specification package..." -ForegroundColor Yellow
+        Write-Host "##[command]Packing R4B specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4B -OutputDirectory $(Build.ArtifactStagingDirectory)
         
-        Write-Host "##[command]Packing R5 specification package..." -ForegroundColor Yellow
+        Write-Host "##[command]Packing R5 specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
         
-        Write-Host "##[section]Metapackage packing completed successfully!" -ForegroundColor Green
+        Write-Host "##[section]Metapackage packing completed successfully!"
       name: packMetapackages
       displayName: 'Pack NuGet Metapackages'    
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
@@ -329,9 +329,9 @@ stages:
         deploy:
             steps:
             - powershell: |
-                Write-Host "##[section]🚀 Starting deployment to GitHub Packages" -ForegroundColor Green
-                Write-Host "##[command]Target: GitHub Packages Registry" -ForegroundColor Yellow
-                Write-Host "##[command]Artifact: NuGetPackages" -ForegroundColor Yellow
+                Write-Host "##[section]🚀 Starting deployment to GitHub Packages"
+                Write-Host "##[command]Target: GitHub Packages Registry"
+                Write-Host "##[command]Artifact: NuGetPackages"
               displayName: 'GitHub Deployment Info'
               
             - template: push-nuget-package.yml@templates  # Template reference
@@ -341,7 +341,7 @@ stages:
                 apiKey: $(GITHUB_PACKAGES_APIKEY)
                 
             - powershell: |
-                Write-Host "##[section]✅ Successfully deployed to GitHub Packages!" -ForegroundColor Green
+                Write-Host "##[section]✅ Successfully deployed to GitHub Packages!"
               displayName: 'GitHub Deployment Success'
               condition: succeeded()    
                 
@@ -360,10 +360,10 @@ stages:
         deploy:
             steps:
             - powershell: |
-                Write-Host "##[section]🚀 Starting deployment to NuGet.org" -ForegroundColor Green
-                Write-Host "##[command]Target: NuGet.org Official Registry" -ForegroundColor Yellow
-                Write-Host "##[command]Artifact: NuGetPackages" -ForegroundColor Yellow
-                Write-Host "##[warning]⚠ This is a PRODUCTION release!" -ForegroundColor Magenta
+                Write-Host "##[section]🚀 Starting deployment to NuGet.org"
+                Write-Host "##[command]Target: NuGet.org Official Registry"
+                Write-Host "##[command]Artifact: NuGetPackages"
+                Write-Host "##[warning]⚠ This is a PRODUCTION release!"
               displayName: 'NuGet Deployment Info'
               
             - template: push-nuget-package.yml@templates
@@ -373,7 +373,7 @@ stages:
                 apiKey: $(NUGET_APIKEY)
                 
             - powershell: |
-                Write-Host "##[section]🎉 Successfully deployed to NuGet.org!" -ForegroundColor Green
-                Write-Host "##[section]🎯 Release is now live and available publicly!" -ForegroundColor Cyan
+                Write-Host "##[section]🎉 Successfully deployed to NuGet.org!"
+                Write-Host "##[section]🎯 Release is now live and available publicly!"
               displayName: 'NuGet Deployment Success'
               condition: succeeded()

@@ -7,10 +7,10 @@ parameters:
 
 steps:
 - powershell: |
-    Write-Host "##[section]Starting test execution: ${{ parameters.testRunTitle }}" -ForegroundColor Green
-    Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)" -ForegroundColor Yellow
-    Write-Host "##[command]Test Projects: ${{ parameters.projects }}" -ForegroundColor Yellow
-    Write-Host "##[command]Filters: TestCategory!=IntegrationTest&TestCategory!=FhirClient" -ForegroundColor Yellow
+    Write-Host "##[section]Starting test execution: ${{ parameters.testRunTitle }}"
+    Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)"
+    Write-Host "##[command]Test Projects: ${{ parameters.projects }}"
+    Write-Host "##[command]Filters: TestCategory!=IntegrationTest&TestCategory!=FhirClient"
   displayName: 'Test Configuration Info'
   
 - task: UseDotNet@2

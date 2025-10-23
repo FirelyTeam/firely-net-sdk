@@ -21,12 +21,12 @@ steps:
           $suffix = "$Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER"
         }
         
-        Write-Host "##[section]Setting build suffix to: $suffix" -ForegroundColor Green
+        Write-Host "##[section]Setting build suffix to: $suffix"
         Write-Host "##vso[task.setvariable variable=CurrentSuffix]$suffix"
      }
      else
      {
-        Write-Host "##[section]Release build - no suffix will be applied" -ForegroundColor Cyan
+        Write-Host "##[section]Release build - no suffix will be applied"
      }
   displayName: 'Setting suffix'
 - task: PowerShell@2

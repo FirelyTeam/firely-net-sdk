@@ -4,7 +4,7 @@
   [string]$suffix = [string]::Empty
 )
 
-Write-Host "##[section]Updating version information in $propFile" -ForegroundColor Green
+Write-Host "##[section]Updating version information in $propFile"
 
 $xml = [xml](get-content $propFile)
 
@@ -13,10 +13,10 @@ If ([string]::IsNullOrEmpty($newVersion))
 {
 	#Get the version (without suffix)
 	$newVersion = $xml.Project.PropertyGroup.VersionPrefix
-	Write-Host "##[command]Using existing version from file: $newVersion" -ForegroundColor Yellow
+	Write-Host "##[command]Using existing version from file: $newVersion"
 }
 	
-Write-Host "##[command]Replacing version information with version: [$newVersion] suffix: [$suffix]" -ForegroundColor Yellow
+Write-Host "##[command]Replacing version information with version: [$newVersion] suffix: [$suffix]"
 
 #Replacing the version and suffix
 (Get-Content $propFile) |
@@ -26,4 +26,4 @@ Write-Host "##[command]Replacing version information with version: [$newVersion]
     } |
     Set-Content $propFile
 
-Write-Host "##[section]Version update completed successfully!" -ForegroundColor Green
+Write-Host "##[section]Version update completed successfully!"
