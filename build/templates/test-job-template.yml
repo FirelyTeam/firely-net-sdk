@@ -29,7 +29,7 @@ steps:
   inputs:
     command: test
     projects: ${{ parameters.projects }}
-    arguments: '-f $(TEST_TARGETFRAMEWORK) --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage" /clp:ForceConsoleColor'
+    arguments: '-f $(TEST_TARGETFRAMEWORK) --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
     testRunTitle: ${{ parameters.testRunTitle }}
   env:
     DOTNET_CLI_FORCE_ANSI_COLOR: true
