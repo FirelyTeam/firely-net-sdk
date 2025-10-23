@@ -36,6 +36,6 @@ steps:
     TERM: xterm
 
 - powershell: |
-    Write-Host "##[section]✓ Test execution completed: ${{ parameters.testRunTitle }}" -ForegroundColor Green
+    Write-Host "##[section]✓ Test execution completed: ${{ parameters.testRunTitle }}"
   displayName: 'Test Completion Status'
   condition: succeeded()
