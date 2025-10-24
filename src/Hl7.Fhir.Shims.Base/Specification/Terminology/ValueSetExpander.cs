@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (inactiveProperty?.Value is FhirBoolean isInactive)
                 newContains.Inactive = isInactive.Value;
 
-#if !STU3
+#if R5 || R6
             if (source.Property.Any())
             {
                 newContains.Property = source.Property.Select(p => new ValueSet.ConceptPropertyComponent { Code = p.Code, Value = p.Value }).ToList();

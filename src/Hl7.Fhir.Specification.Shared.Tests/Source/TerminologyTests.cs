@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using System;
@@ -755,6 +756,41 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 group.Aggregate(group.First().total, (total, next) => { Assert.Equal(total, next.total); return total; });
             }
+        }
+
+        /// <summary>
+        /// Test for issue with ValueSet expansion causing NullReferenceException during serialization 
+        /// when the expansion contains property field that doesn't exist in R4/R4B.
+        /// The Property field in ValueSet.expansion.contains was introduced in R5.
+        /// </summary>
+        [Fact]
+        public async Tasks.Task ExpandedValueSetShouldSerializeSuccessfully()
+        {
+            var server = new LocalTerminologyService(_resolver);
+            var parameters = new Parameters()
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent()
+                    {
+                        Name = "url",
+                        Value = new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender"),
+                    },
+                },
+            };
+            
+            var resource = await server.Expand(parameters);
+            
+            // This should not throw a NullReferenceException
+            var json = await resource.ToJsonAsync();
+            
+            // Verify the expansion was successful
+            Assert.NotNull(json);
+            Assert.NotEmpty(json);
+            var valueSet = resource as ValueSet;
+            Assert.NotNull(valueSet);
+            Assert.True(valueSet.HasExpansion);
+            Assert.True(valueSet.Expansion.Contains.Any());
         }
 
         [Fact]
