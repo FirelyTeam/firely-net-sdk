@@ -301,17 +301,21 @@ namespace Hl7.Fhir.Specification.Tests.Snapshot
 
             return result;
         }
+        
+        public Resource ResolveByCanonicalUri(string uri) =>  TryResolveByCanonicalUri(uri).Value;
 
-        public Resource ResolveByCanonicalUri(string uri)
+        public Resource ResolveByUri(string uri) => ResolveByCanonicalUri(uri);
+
+        public ResolverResult TryResolveByUri(string uri) => TryResolveByCanonicalUri(uri);
+
+        public ResolverResult TryResolveByCanonicalUri(string uri) 
         {
-            return TestProfiles.SingleOrDefault(p => p.Url == uri);
-        }
+            var resource = TestProfiles.SingleOrDefault(p => p.Url == uri);
+            if(resource is not null)
+                return resource;
 
-        public Resource ResolveByUri(string uri)
-        {
-            return ResolveByCanonicalUri(uri);
+            return ResolverException.NotFound();
         }
-
 
         private static StructureDefinition buildDutchPatient()
         {

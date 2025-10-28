@@ -7,7 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -56,28 +60,23 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "base64Binary"; } }
+    public override string TypeName => "base64Binary";
 
     /// Must conform to the pattern "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?"
     public const string PATTERN = @"(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?";
 
-    public Base64Binary(byte[] value)
+    public Base64Binary(byte[]? value)
     {
       Value = value;
     }
 
-    public Base64Binary(): this((byte[])null) {}
+    public Base64Binary(): this((byte[]?)null) {}
 
-    /// <summary>
-    /// Primitive value of the element
-    /// </summary>
-    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
-    [DataMember]
-    public byte[] Value
+    protected internal override Base DeepCopyInternal()
     {
-      get { return (byte[])ObjectValue; }
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
+      var instance = new Base64Binary();
+      CopyToInternal(instance);
+      return instance;
     }
 
   }

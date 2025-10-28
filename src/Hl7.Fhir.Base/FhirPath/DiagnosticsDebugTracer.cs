@@ -9,11 +9,13 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 
 namespace Hl7.FhirPath
 {
@@ -23,12 +25,12 @@ namespace Hl7.FhirPath
         public void TraceCall(
             Expression expr,
             int contextId,
-            IEnumerable<ITypedElement>? focus,
-            IEnumerable<ITypedElement>? thisValue,
-            ITypedElement? index,
-            IEnumerable<ITypedElement> totalValue,
-            IEnumerable<ITypedElement> result,
-            IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
+            IEnumerable<PocoNode>? focus,
+            IEnumerable<PocoNode>? thisValue,
+            PocoNode? index,
+            IEnumerable<PocoNode> totalValue,
+            IEnumerable<PocoNode> result,
+            IEnumerable<KeyValuePair<string, IEnumerable<PocoNode>>> variables)
         {
             DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, variables);
         }
@@ -36,12 +38,12 @@ namespace Hl7.FhirPath
         public static void DebugTraceCall(
             Expression expr,
             int contextId,
-            IEnumerable<ITypedElement>? focus,
-            IEnumerable<ITypedElement>? thisValue,
-            ITypedElement? index,
-            IEnumerable<ITypedElement> totalValue,
-            IEnumerable<ITypedElement> result,
-            IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
+            IEnumerable<PocoNode>? focus,
+            IEnumerable<PocoNode>? thisValue,
+            PocoNode? index,
+            IEnumerable<PocoNode> totalValue,
+            IEnumerable<PocoNode> result,
+            IEnumerable<KeyValuePair<string, IEnumerable<PocoNode>>> variables)
         {
             string exprName;
 
@@ -144,14 +146,14 @@ namespace Hl7.FhirPath
             }
         }
 
-        private static void DebugTraceValue(string exprName, ITypedElement? item)
+        private static void DebugTraceValue(string exprName, PocoNode? item)
         {
             if (item == null)
                 return; // possible with a null focus to kick things off
-            if (item.Location == "@primitivevalue@" || item.Location == "@QuantityAsPrimitiveValue@")
-                Trace.WriteLine($"  {exprName}:\t{item.Value}\t({item.InstanceType})");
+            if (item is PrimitiveNode)
+                Trace.WriteLine($"  {exprName}:\t{item.GetValue()}\t({item.Poco.TypeName})");
             else
-                Trace.WriteLine($"  {exprName}:\t{item.Value}\t({item.InstanceType})\t{item.Location}");
+                Trace.WriteLine($"  {exprName}:\t{item.GetValue()}\t({item.Poco.TypeName})\t{item.GetLocation()}");
         }
     }
 }

@@ -55,11 +55,11 @@ namespace Hl7.FhirPath.R4.Tests
                 Active = true,
             };
             var expr = compiler.Compile("coalesce(id)");
-            var result = expr(p.ToTypedElement(), new FhirEvaluationContext());
+            var result = expr(p.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual("pat1", result.ElementAt(0).Value);
+            Assert.AreEqual("pat1", result.First().GetValue());
         }
 
         [TestMethod]
@@ -73,11 +73,11 @@ namespace Hl7.FhirPath.R4.Tests
                 Active = true,
             };
             var expr = compiler.Compile("coalesce(name, id)");
-            var result = expr(p.ToTypedElement(), new FhirEvaluationContext());
+            var result = expr(p.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual("pat1", result.ElementAt(0).Value);
+            Assert.AreEqual("pat1", result.First().GetValue());
         }
 
         [TestMethod]
@@ -91,11 +91,11 @@ namespace Hl7.FhirPath.R4.Tests
                 Active = true,
             };
             var expr = compiler.Compile("coalesce(name, telecom, {}, address, extension, 'five', id, birthDate)");
-            var result = expr(p.ToTypedElement(), new FhirEvaluationContext());
+            var result = expr(p.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual("five", result.ElementAt(0).Value);
+            Assert.AreEqual("five", result.ElementAt(0).GetValue());
         }
 
         [TestMethod]
@@ -107,9 +107,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(1, result.ElementAt(0).Value);
-            Assert.AreEqual(2, result.ElementAt(1).Value);
-            Assert.AreEqual(3, result.ElementAt(2).Value);
+            Assert.AreEqual(1, result.ElementAt(0).GetValue());
+            Assert.AreEqual(2, result.ElementAt(1).GetValue());
+            Assert.AreEqual(3, result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -121,9 +121,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(1, result.ElementAt(0).Value);
-            Assert.AreEqual(2, result.ElementAt(1).Value);
-            Assert.AreEqual(3, result.ElementAt(2).Value);
+            Assert.AreEqual(1, result.ElementAt(0).GetValue());
+            Assert.AreEqual(2, result.ElementAt(1).GetValue());
+            Assert.AreEqual(3, result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -135,9 +135,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(1, result.ElementAt(0).Value);
-            Assert.AreEqual(2, result.ElementAt(1).Value);
-            Assert.AreEqual(3, result.ElementAt(2).Value);
+            Assert.AreEqual(1, result.ElementAt(0).GetValue());
+            Assert.AreEqual(2, result.ElementAt(1).GetValue());
+            Assert.AreEqual(3, result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -149,9 +149,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(1, result.ElementAt(0).Value);
-            Assert.AreEqual(2, result.ElementAt(1).Value);
-            Assert.AreEqual(3, result.ElementAt(2).Value);
+            Assert.AreEqual(1, result.ElementAt(0).GetValue());
+            Assert.AreEqual(2, result.ElementAt(1).GetValue());
+            Assert.AreEqual(3, result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -163,9 +163,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(3, result.ElementAt(0).Value);
-            Assert.AreEqual(2, result.ElementAt(1).Value);
-            Assert.AreEqual(1, result.ElementAt(2).Value);
+            Assert.AreEqual(3, result.ElementAt(0).GetValue());
+            Assert.AreEqual(2, result.ElementAt(1).GetValue());
+            Assert.AreEqual(1, result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -179,9 +179,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(3, result.ElementAt(0).Value);
-            Assert.AreEqual(2, result.ElementAt(1).Value);
-            Assert.AreEqual(1, result.ElementAt(2).Value);
+            Assert.AreEqual(3, result.ElementAt(0).GetValue());
+            Assert.AreEqual(2, result.ElementAt(1).GetValue());
+            Assert.AreEqual(1, result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -195,9 +195,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual("c", result.ElementAt(0).Value);
-            Assert.AreEqual("b", result.ElementAt(1).Value);
-            Assert.AreEqual("a", result.ElementAt(2).Value);
+            Assert.AreEqual("c", result.ElementAt(0).GetValue());
+            Assert.AreEqual("b", result.ElementAt(1).GetValue());
+            Assert.AreEqual("a", result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -209,9 +209,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual("a", result.ElementAt(0).Value);
-            Assert.AreEqual("b", result.ElementAt(1).Value);
-            Assert.AreEqual("c", result.ElementAt(2).Value);
+            Assert.AreEqual("a", result.ElementAt(0).GetValue());
+            Assert.AreEqual("b", result.ElementAt(1).GetValue());
+            Assert.AreEqual("c", result.ElementAt(2).GetValue());
         }
 
         [TestMethod]
@@ -221,12 +221,12 @@ namespace Hl7.FhirPath.R4.Tests
             patient.Name.Add(new HumanName() { Family = "Smith", Given = new List<string>() { "Peter", "James" } });
             FhirPathCompiler compiler = new FhirPathCompiler();
             var expr = compiler.Compile("Patient.name.given.sort()");
-            var result = expr(patient.ToTypedElement(), new FhirEvaluationContext());
+            var result = expr(patient.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("James", result.ElementAt(0).Value);
-            Assert.AreEqual("Peter", result.ElementAt(1).Value);
+            Assert.AreEqual("James", result.ElementAt(0).GetValue());
+            Assert.AreEqual("Peter", result.ElementAt(1).GetValue());
         }
 
         [TestMethod]
@@ -238,13 +238,13 @@ namespace Hl7.FhirPath.R4.Tests
             patient.Name.Add(new HumanName() { ElementId = "2", Family = "Pos", Given = new List<string>() { "Brian", "R" } });
             FhirPathCompiler compiler = new FhirPathCompiler();
             var expr = compiler.Compile("Patient.name.sort(family, given.first()).id");
-            var result = expr(patient.ToTypedElement(), new FhirEvaluationContext());
+            var result = expr(patient.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual("3", result.ElementAt(0).Value);
-            Assert.AreEqual("2", result.ElementAt(1).Value);
-            Assert.AreEqual("1", result.ElementAt(2).Value);
+            Assert.AreEqual("3", result.ElementAt(0).GetValue());
+            Assert.AreEqual("2", result.ElementAt(1).GetValue());
+            Assert.AreEqual("1", result.ElementAt(2).GetValue());
         }
     }
 }

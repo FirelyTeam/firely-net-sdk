@@ -9,11 +9,8 @@
     <Import_RootNamespace>Hl7.Fhir.Shims.STU3AndUp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)ElementModel\PocoBuilderExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ElementModel\TypedElementExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ElementModel\VersionedConversionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FhirPath\FhirPathExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\HumanName.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Initializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ModelInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Questionnaire.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\QuestionnaireResponse.cs" />
@@ -30,5 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\PocoSerializationExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlPocoSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\PocoStructureDefinitionSummaryProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\PocoValidationExtensions.cs" />
   </ItemGroup>
 </Project>

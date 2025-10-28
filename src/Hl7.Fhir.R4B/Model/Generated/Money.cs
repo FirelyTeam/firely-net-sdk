@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -54,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Money"; } }
+    public override string TypeName => "Money";
 
     /// <summary>
     /// Currency codes from ISO 4217 (see https://www.iso.org/iso-4217-currency-codes.html)
@@ -1159,17 +1163,30 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Numerical value (with implicit precision)
+    /// Numerical value (with implicit precision).
     /// </summary>
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal ValueElement
+    public Hl7.Fhir.Model.FhirDecimal? ValueElement
     {
-      get { return _ValueElement; }
-      set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+      get
+      {
+        if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["value"]);
+        return _ValueElement;
+      }
+
+      set
+      {
+        if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          Overflow.Remove("value");
+        _ValueElement = value;
+        OnPropertyChanged("ValueElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirDecimal _ValueElement;
+    private Hl7.Fhir.Model.FhirDecimal? _ValueElement;
 
     /// <summary>
     /// Numerical value (with implicit precision)
@@ -1178,31 +1195,40 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Value
     {
-      get { return ValueElement != null ? ValueElement.Value : null; }
+      get => ValueElement?.Value;
       set
       {
-        if (value == null)
-          ValueElement = null;
-        else
-          ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+        ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Value");
       }
     }
 
     /// <summary>
-    /// ISO 4217 Currency Code
+    /// ISO 4217 Currency Code.
     /// </summary>
     [FhirElement("currency", InSummary=true, Order=40)]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("CurrencyCode")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Money.Currencies> CurrencyElement
+    public Code<Hl7.Fhir.Model.Money.Currencies>? CurrencyElement
     {
-      get { return _CurrencyElement; }
-      set { _CurrencyElement = value; OnPropertyChanged("CurrencyElement"); }
+      get
+      {
+        if(_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Money.Currencies>), Overflow["currency"]);
+        return _CurrencyElement;
+      }
+
+      set
+      {
+        if (_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>())
+          Overflow.Remove("currency");
+        _CurrencyElement = value;
+        OnPropertyChanged("CurrencyElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.Money.Currencies> _CurrencyElement;
+    private Code<Hl7.Fhir.Model.Money.Currencies>? _CurrencyElement;
 
     /// <summary>
     /// ISO 4217 Currency Code
@@ -1211,105 +1237,102 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Money.Currencies? Currency
     {
-      get { return CurrencyElement != null ? CurrencyElement.Value : null; }
+      get => CurrencyElement?.Value;
       set
       {
-        if (value == null)
-          CurrencyElement = null;
-        else
-          CurrencyElement = new Code<Hl7.Fhir.Model.Money.Currencies>(value);
+        CurrencyElement = value is null ? null! : new Code<Hl7.Fhir.Model.Money.Currencies>(value);
         OnPropertyChanged("Currency");
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Money;
-
-      if (dest == null)
-      {
+      if(other is not Money dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
-      if(CurrencyElement != null) dest.CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>)CurrencyElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)_ValueElement.DeepCopyInternal();
+      if(_CurrencyElement is not null) dest.CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>)_CurrencyElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Money());
+      var instance = new Money();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Money;
-      if(otherT == null) return false;
+      if(other is not Money otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-      if( !DeepComparable.Matches(CurrencyElement, otherT.CurrencyElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      if(!comparer.Equals(_CurrencyElement, otherT._CurrencyElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Money;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-      if( !DeepComparable.IsExactly(CurrencyElement, otherT.CurrencyElement)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (ValueElement != null) yield return ValueElement;
-        if (CurrencyElement != null) yield return CurrencyElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-        if (CurrencyElement != null) yield return new ElementValue("currency", CurrencyElement);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "value":
-          value = ValueElement;
-          return ValueElement is not null;
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          {
+            value = Overflow["value"];
+            return true;
+          }
+          value = _ValueElement;
+          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
         case "currency":
-          value = CurrencyElement;
-          return CurrencyElement is not null;
+          if (_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>())
+          {
+            value = Overflow["currency"];
+            return true;
+          }
+          value = _CurrencyElement;
+          return (value as Code<Hl7.Fhir.Model.Money.Currencies>) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
-      if (CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",CurrencyElement);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "value":
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            ValueElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          return this;
+        case "currency":
+          if (value is not (Code<Hl7.Fhir.Model.Money.Currencies> or null))
+          {
+            CurrencyElement = OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.INSTANCE;
+            Overflow["currency"] = value;
+          }
+          else CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_CurrencyElement is not null && !_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>()) yield return new KeyValuePair<string,object>("currency",_CurrencyElement);
     }
 
   }

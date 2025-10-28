@@ -11,6 +11,7 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Introspection
@@ -73,6 +74,23 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNull(codeOfT);
         }
 
+        [TestMethod]
+        public void CanManipulateClassMappingsList()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+
+            // Inspect the HL7.Fhir.Model common assembly
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            // Try to remove a mapping
+            var metaMapping = inspector.FindClassMapping("Meta");
+            inspector.ClassMappings.Remove(metaMapping);
+            inspector.FindClassMapping("Meta").Should().BeNull();
+
+            // And add it back.
+            inspector.ClassMappings.Add(metaMapping);
+            inspector.FindClassMapping("Meta").Should().NotBeNull();
+        }
     }
 
     [FhirEnumeration("SomeEnum")]

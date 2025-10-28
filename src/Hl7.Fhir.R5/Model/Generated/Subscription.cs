@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -51,13 +55,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
+  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription")]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Subscription"; } }
+    public override string TypeName => "Subscription";
 
     /// <summary>
     /// Codes to represent how much resource content to send in the notification payload.
@@ -95,93 +99,124 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#FilterBy", IsNestedType=true)]
-    [BackboneType("Subscription.filterBy")]
+    [FhirType("Subscription.filterBy", IsBackboneType=true)]
     public partial class FilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription#FilterBy"; } }
+      public override string TypeName => "Subscription.filterBy";
 
       /// <summary>
-      /// Allowed Resource (reference to definition) for this Subscription filter
+      /// Allowed Resource (reference to definition) for this Subscription filter.
       /// </summary>
       [FhirElement("resourceType", InSummary=true, Order=40)]
       [Binding("FHIRTypes")]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri ResourceTypeElement
+      public Hl7.Fhir.Model.FhirUri? ResourceTypeElement
       {
-        get { return _ResourceTypeElement; }
-        set { _ResourceTypeElement = value; OnPropertyChanged("ResourceTypeElement"); }
+        get
+        {
+          if(_ResourceTypeElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["resourceType"]);
+          return _ResourceTypeElement;
+        }
+
+        set
+        {
+          if (_ResourceTypeElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+            Overflow.Remove("resourceType");
+          _ResourceTypeElement = value;
+          OnPropertyChanged("ResourceTypeElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirUri _ResourceTypeElement;
+      private Hl7.Fhir.Model.FhirUri? _ResourceTypeElement;
 
       /// <summary>
       /// Allowed Resource (reference to definition) for this Subscription filter
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ResourceType
+      public string? ResourceType
       {
-        get { return ResourceTypeElement != null ? ResourceTypeElement.Value : null; }
+        get => ResourceTypeElement?.Value;
         set
         {
-          if (value == null)
-            ResourceTypeElement = null;
-          else
-            ResourceTypeElement = new Hl7.Fhir.Model.FhirUri(value);
+          ResourceTypeElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("ResourceType");
         }
       }
 
       /// <summary>
-      /// Filter label defined in SubscriptionTopic
+      /// Filter label defined in SubscriptionTopic.
       /// </summary>
       [FhirElement("filterParameter", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString FilterParameterElement
       {
-        get { return _FilterParameterElement; }
-        set { _FilterParameterElement = value; OnPropertyChanged("FilterParameterElement"); }
+        get
+        {
+          if(_FilterParameterElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["filterParameter"]);
+          return _FilterParameterElement!;
+        }
+
+        set
+        {
+          if (_FilterParameterElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("filterParameter");
+          _FilterParameterElement = value;
+          OnPropertyChanged("FilterParameterElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _FilterParameterElement;
+      private Hl7.Fhir.Model.FhirString? _FilterParameterElement;
 
       /// <summary>
       /// Filter label defined in SubscriptionTopic
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string FilterParameter
+      public string? FilterParameter
       {
-        get { return FilterParameterElement != null ? FilterParameterElement.Value : null; }
+        get => FilterParameterElement?.Value;
         set
         {
-          if (value == null)
-            FilterParameterElement = null;
-          else
-            FilterParameterElement = new Hl7.Fhir.Model.FhirString(value);
+          FilterParameterElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("FilterParameter");
         }
       }
 
       /// <summary>
-      /// eq | ne | gt | lt | ge | le | sa | eb | ap
+      /// eq | ne | gt | lt | ge | le | sa | eb | ap.
       /// </summary>
       [FhirElement("comparator", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
       [Binding("SearchComparator")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.SearchComparator> ComparatorElement
+      public Code<Hl7.Fhir.Model.SearchComparator>? ComparatorElement
       {
-        get { return _ComparatorElement; }
-        set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
+        get
+        {
+          if(_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.SearchComparator>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.SearchComparator>), Overflow["comparator"]);
+          return _ComparatorElement;
+        }
+
+        set
+        {
+          if (_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.SearchComparator>>())
+            Overflow.Remove("comparator");
+          _ComparatorElement = value;
+          OnPropertyChanged("ComparatorElement");
+        }
+
       }
 
-      private Code<Hl7.Fhir.Model.SearchComparator> _ComparatorElement;
+      private Code<Hl7.Fhir.Model.SearchComparator>? _ComparatorElement;
 
       /// <summary>
       /// eq | ne | gt | lt | ge | le | sa | eb | ap
@@ -190,31 +225,40 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.SearchComparator? Comparator
       {
-        get { return ComparatorElement != null ? ComparatorElement.Value : null; }
+        get => ComparatorElement?.Value;
         set
         {
-          if (value == null)
-            ComparatorElement = null;
-          else
-            ComparatorElement = new Code<Hl7.Fhir.Model.SearchComparator>(value);
+          ComparatorElement = value is null ? null! : new Code<Hl7.Fhir.Model.SearchComparator>(value);
           OnPropertyChanged("Comparator");
         }
       }
 
       /// <summary>
-      /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate
+      /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate.
       /// </summary>
       [FhirElement("modifier", Order=70)]
-      [DeclaredType(Type = typeof(Code))]
       [Binding("SearchModifierCode")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.SearchModifierCode> ModifierElement
+      public Code<Hl7.Fhir.Model.SearchModifierCode>? ModifierElement
       {
-        get { return _ModifierElement; }
-        set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
+        get
+        {
+          if(_ModifierElement.InOverflow<Code<Hl7.Fhir.Model.SearchModifierCode>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.SearchModifierCode>), Overflow["modifier"]);
+          return _ModifierElement;
+        }
+
+        set
+        {
+          if (_ModifierElement.InOverflow<Code<Hl7.Fhir.Model.SearchModifierCode>>())
+            Overflow.Remove("modifier");
+          _ModifierElement = value;
+          OnPropertyChanged("ModifierElement");
+        }
+
       }
 
-      private Code<Hl7.Fhir.Model.SearchModifierCode> _ModifierElement;
+      private Code<Hl7.Fhir.Model.SearchModifierCode>? _ModifierElement;
 
       /// <summary>
       /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate
@@ -223,164 +267,201 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.SearchModifierCode? Modifier
       {
-        get { return ModifierElement != null ? ModifierElement.Value : null; }
+        get => ModifierElement?.Value;
         set
         {
-          if (value == null)
-            ModifierElement = null;
-          else
-            ModifierElement = new Code<Hl7.Fhir.Model.SearchModifierCode>(value);
+          ModifierElement = value is null ? null! : new Code<Hl7.Fhir.Model.SearchModifierCode>(value);
           OnPropertyChanged("Modifier");
         }
       }
 
       /// <summary>
-      /// Literal value or resource path
+      /// Literal value or resource path.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
       {
-        get { return _ValueElement; }
-        set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+        get
+        {
+          if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
+          return _ValueElement!;
+        }
+
+        set
+        {
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("value");
+          _ValueElement = value;
+          OnPropertyChanged("ValueElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _ValueElement;
+      private Hl7.Fhir.Model.FhirString? _ValueElement;
 
       /// <summary>
       /// Literal value or resource path
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get { return ValueElement != null ? ValueElement.Value : null; }
+        get => ValueElement?.Value;
         set
         {
-          if (value == null)
-            ValueElement = null;
-          else
-            ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as FilterByComponent;
-
-        if (dest == null)
-        {
+        if(other is not FilterByComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(ResourceTypeElement != null) dest.ResourceTypeElement = (Hl7.Fhir.Model.FhirUri)ResourceTypeElement.DeepCopy();
-        if(FilterParameterElement != null) dest.FilterParameterElement = (Hl7.Fhir.Model.FhirString)FilterParameterElement.DeepCopy();
-        if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.SearchComparator>)ComparatorElement.DeepCopy();
-        if(ModifierElement != null) dest.ModifierElement = (Code<Hl7.Fhir.Model.SearchModifierCode>)ModifierElement.DeepCopy();
-        if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_ResourceTypeElement is not null) dest.ResourceTypeElement = (Hl7.Fhir.Model.FhirUri)_ResourceTypeElement.DeepCopyInternal();
+        if(_FilterParameterElement is not null) dest.FilterParameterElement = (Hl7.Fhir.Model.FhirString)_FilterParameterElement.DeepCopyInternal();
+        if(_ComparatorElement is not null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.SearchComparator>)_ComparatorElement.DeepCopyInternal();
+        if(_ModifierElement is not null) dest.ModifierElement = (Code<Hl7.Fhir.Model.SearchModifierCode>)_ModifierElement.DeepCopyInternal();
+        if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)_ValueElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new FilterByComponent());
+        var instance = new FilterByComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as FilterByComponent;
-        if(otherT == null) return false;
+        if(other is not FilterByComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(ResourceTypeElement, otherT.ResourceTypeElement)) return false;
-        if( !DeepComparable.Matches(FilterParameterElement, otherT.FilterParameterElement)) return false;
-        if( !DeepComparable.Matches(ComparatorElement, otherT.ComparatorElement)) return false;
-        if( !DeepComparable.Matches(ModifierElement, otherT.ModifierElement)) return false;
-        if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_ResourceTypeElement, otherT._ResourceTypeElement)) return false;
+        if(!comparer.Equals(_FilterParameterElement, otherT._FilterParameterElement)) return false;
+        if(!comparer.Equals(_ComparatorElement, otherT._ComparatorElement)) return false;
+        if(!comparer.Equals(_ModifierElement, otherT._ModifierElement)) return false;
+        if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as FilterByComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(ResourceTypeElement, otherT.ResourceTypeElement)) return false;
-        if( !DeepComparable.IsExactly(FilterParameterElement, otherT.FilterParameterElement)) return false;
-        if( !DeepComparable.IsExactly(ComparatorElement, otherT.ComparatorElement)) return false;
-        if( !DeepComparable.IsExactly(ModifierElement, otherT.ModifierElement)) return false;
-        if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (ResourceTypeElement != null) yield return ResourceTypeElement;
-          if (FilterParameterElement != null) yield return FilterParameterElement;
-          if (ComparatorElement != null) yield return ComparatorElement;
-          if (ModifierElement != null) yield return ModifierElement;
-          if (ValueElement != null) yield return ValueElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (ResourceTypeElement != null) yield return new ElementValue("resourceType", ResourceTypeElement);
-          if (FilterParameterElement != null) yield return new ElementValue("filterParameter", FilterParameterElement);
-          if (ComparatorElement != null) yield return new ElementValue("comparator", ComparatorElement);
-          if (ModifierElement != null) yield return new ElementValue("modifier", ModifierElement);
-          if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "resourceType":
-            value = ResourceTypeElement;
-            return ResourceTypeElement is not null;
+            if (_ResourceTypeElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+            {
+              value = Overflow["resourceType"];
+              return true;
+            }
+            value = _ResourceTypeElement;
+            return (value as Hl7.Fhir.Model.FhirUri) is not null;
           case "filterParameter":
-            value = FilterParameterElement;
-            return FilterParameterElement is not null;
+            if (_FilterParameterElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["filterParameter"];
+              return true;
+            }
+            value = _FilterParameterElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "comparator":
-            value = ComparatorElement;
-            return ComparatorElement is not null;
+            if (_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.SearchComparator>>())
+            {
+              value = Overflow["comparator"];
+              return true;
+            }
+            value = _ComparatorElement;
+            return (value as Code<Hl7.Fhir.Model.SearchComparator>) is not null;
           case "modifier":
-            value = ModifierElement;
-            return ModifierElement is not null;
+            if (_ModifierElement.InOverflow<Code<Hl7.Fhir.Model.SearchModifierCode>>())
+            {
+              value = Overflow["modifier"];
+              return true;
+            }
+            value = _ModifierElement;
+            return (value as Code<Hl7.Fhir.Model.SearchModifierCode>) is not null;
           case "value":
-            value = ValueElement;
-            return ValueElement is not null;
+            if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
+            value = _ValueElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (ResourceTypeElement is not null) yield return new KeyValuePair<string,object>("resourceType",ResourceTypeElement);
-        if (FilterParameterElement is not null) yield return new KeyValuePair<string,object>("filterParameter",FilterParameterElement);
-        if (ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",ComparatorElement);
-        if (ModifierElement is not null) yield return new KeyValuePair<string,object>("modifier",ModifierElement);
-        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "resourceType":
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              ResourceTypeElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["resourceType"] = value;
+            }
+            else ResourceTypeElement = (Hl7.Fhir.Model.FhirUri?)value;
+            return this;
+          case "filterParameter":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              FilterParameterElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["filterParameter"] = value;
+            }
+            else FilterParameterElement = (Hl7.Fhir.Model.FhirString?)value!;
+            return this;
+          case "comparator":
+            if (value is not (Code<Hl7.Fhir.Model.SearchComparator> or null))
+            {
+              ComparatorElement = OverflowNull<Code<Hl7.Fhir.Model.SearchComparator>>.INSTANCE;
+              Overflow["comparator"] = value;
+            }
+            else ComparatorElement = (Code<Hl7.Fhir.Model.SearchComparator>?)value;
+            return this;
+          case "modifier":
+            if (value is not (Code<Hl7.Fhir.Model.SearchModifierCode> or null))
+            {
+              ModifierElement = OverflowNull<Code<Hl7.Fhir.Model.SearchModifierCode>>.INSTANCE;
+              Overflow["modifier"] = value;
+            }
+            else ModifierElement = (Code<Hl7.Fhir.Model.SearchModifierCode>?)value;
+            return this;
+          case "value":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else ValueElement = (Hl7.Fhir.Model.FhirString?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_ResourceTypeElement is not null && !_ResourceTypeElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("resourceType",_ResourceTypeElement);
+        if (_FilterParameterElement is not null && !_FilterParameterElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("filterParameter",_FilterParameterElement);
+        if (_ComparatorElement is not null && !_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.SearchComparator>>()) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
+        if (_ModifierElement is not null && !_ModifierElement.InOverflow<Code<Hl7.Fhir.Model.SearchModifierCode>>()) yield return new KeyValuePair<string,object>("modifier",_ModifierElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -394,231 +475,286 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Subscription#Parameter", IsNestedType=true)]
-    [BackboneType("Subscription.parameter")]
+    [FhirType("Subscription.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription#Parameter"; } }
+      public override string TypeName => "Subscription.parameter";
 
       /// <summary>
-      /// Name (key) of the parameter
+      /// Name (key) of the parameter.
       /// </summary>
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
-        get { return _NameElement; }
-        set { _NameElement = value; OnPropertyChanged("NameElement"); }
+        get
+        {
+          if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
+          return _NameElement!;
+        }
+
+        set
+        {
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("name");
+          _NameElement = value;
+          OnPropertyChanged("NameElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Name (key) of the parameter
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
 
       /// <summary>
-      /// Value of the parameter to use or pass through
+      /// Value of the parameter to use or pass through.
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
       {
-        get { return _ValueElement; }
-        set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+        get
+        {
+          if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
+          return _ValueElement!;
+        }
+
+        set
+        {
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("value");
+          _ValueElement = value;
+          OnPropertyChanged("ValueElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _ValueElement;
+      private Hl7.Fhir.Model.FhirString? _ValueElement;
 
       /// <summary>
       /// Value of the parameter to use or pass through
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get { return ValueElement != null ? ValueElement.Value : null; }
+        get => ValueElement?.Value;
         set
         {
-          if (value == null)
-            ValueElement = null;
-          else
-            ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParameterComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParameterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)_ValueElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ParameterComponent());
+        var instance = new ParameterComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParameterComponent;
-        if(otherT == null) return false;
+        if(other is not ParameterComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ParameterComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (NameElement != null) yield return NameElement;
-          if (ValueElement != null) yield return ValueElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (NameElement != null) yield return new ElementValue("name", NameElement);
-          if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["name"];
+              return true;
+            }
+            value = _NameElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "value":
-            value = ValueElement;
-            return ValueElement is not null;
+            if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
+            value = _ValueElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "name":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["name"] = value;
+            }
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
+            return this;
+          case "value":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else ValueElement = (Hl7.Fhir.Model.FhirString?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
 
     /// <summary>
-    /// Additional identifiers (business identifier)
+    /// Additional identifiers (business identifier).
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
-    /// Human readable name for this subscription
+    /// Human readable name for this subscription.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
-      get { return _NameElement; }
-      set { _NameElement = value; OnPropertyChanged("NameElement"); }
+      get
+      {
+        if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
+        return _NameElement;
+      }
+
+      set
+      {
+        if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("name");
+        _NameElement = value;
+        OnPropertyChanged("NameElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Human readable name for this subscription
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
 
     /// <summary>
-    /// requested | active | error | off | entered-in-error
+    /// requested | active | error | off | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("SubscriptionStatusCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatusCodes> StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.SubscriptionStatusCodes>), Overflow["status"]);
+        return _StatusElement!;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.SubscriptionStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.SubscriptionStatusCodes>? _StatusElement;
 
     /// <summary>
     /// requested | active | error | off | entered-in-error
@@ -627,75 +763,109 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// Reference to the subscription topic being subscribed to
+    /// Reference to the subscription topic being subscribed to.
     /// </summary>
     [FhirElement("topic", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical TopicElement
     {
-      get { return _TopicElement; }
-      set { _TopicElement = value; OnPropertyChanged("TopicElement"); }
+      get
+      {
+        if(_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["topic"]);
+        return _TopicElement!;
+      }
+
+      set
+      {
+        if (_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          Overflow.Remove("topic");
+        _TopicElement = value;
+        OnPropertyChanged("TopicElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Canonical _TopicElement;
+    private Hl7.Fhir.Model.Canonical? _TopicElement;
 
     /// <summary>
     /// Reference to the subscription topic being subscribed to
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Topic
+    public string? Topic
     {
-      get { return TopicElement != null ? TopicElement.Value : null; }
+      get => TopicElement?.Value;
       set
       {
-        if (value == null)
-          TopicElement = null;
-        else
-          TopicElement = new Hl7.Fhir.Model.Canonical(value);
+        TopicElement = value is null ? null! : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Topic");
       }
     }
 
     /// <summary>
-    /// Contact details for source (e.g. troubleshooting)
+    /// Contact details for source (e.g. troubleshooting).
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
-      set { _Contact = value; OnPropertyChanged("Contact"); }
+      get
+      {
+        if(_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactPoint>), Overflow["contact"]);
+        return _Contact ??= [];
+      }
+
+      set
+      {
+        if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>())
+          Overflow.Remove("contact");
+        _Contact = value;
+        OnPropertyChanged("Contact");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Contact;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Contact;
 
     /// <summary>
-    /// When to automatically delete the subscription
+    /// When to automatically delete the subscription.
     /// </summary>
     [FhirElement("end", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant EndElement
+    public Hl7.Fhir.Model.Instant? EndElement
     {
-      get { return _EndElement; }
-      set { _EndElement = value; OnPropertyChanged("EndElement"); }
+      get
+      {
+        if(_EndElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["end"]);
+        return _EndElement;
+      }
+
+      set
+      {
+        if (_EndElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          Overflow.Remove("end");
+        _EndElement = value;
+        OnPropertyChanged("EndElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Instant _EndElement;
+    private Hl7.Fhir.Model.Instant? _EndElement;
 
     /// <summary>
     /// When to automatically delete the subscription
@@ -704,79 +874,113 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get { return EndElement != null ? EndElement.Value : null; }
+      get => EndElement?.Value;
       set
       {
-        if (value == null)
-          EndElement = null;
-        else
-          EndElement = new Hl7.Fhir.Model.Instant(value);
+        EndElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("End");
       }
     }
 
     /// <summary>
-    /// Entity responsible for Subscription changes
+    /// Entity responsible for Subscription changes.
     /// </summary>
     [FhirElement("managingEntity", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("CareTeam","HealthcareService","Organization","RelatedPerson","Patient","Practitioner","PractitionerRole")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ManagingEntity
+    public Hl7.Fhir.Model.ResourceReference? ManagingEntity
     {
-      get { return _ManagingEntity; }
-      set { _ManagingEntity = value; OnPropertyChanged("ManagingEntity"); }
+      get
+      {
+        if(_ManagingEntity.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["managingEntity"]);
+        return _ManagingEntity;
+      }
+
+      set
+      {
+        if (_ManagingEntity.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("managingEntity");
+        _ManagingEntity = value;
+        OnPropertyChanged("ManagingEntity");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ManagingEntity;
+    private Hl7.Fhir.Model.ResourceReference? _ManagingEntity;
 
     /// <summary>
-    /// Description of why this subscription was created
+    /// Description of why this subscription was created.
     /// </summary>
     [FhirElement("reason", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ReasonElement
+    public Hl7.Fhir.Model.FhirString? ReasonElement
     {
-      get { return _ReasonElement; }
-      set { _ReasonElement = value; OnPropertyChanged("ReasonElement"); }
+      get
+      {
+        if(_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["reason"]);
+        return _ReasonElement;
+      }
+
+      set
+      {
+        if (_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("reason");
+        _ReasonElement = value;
+        OnPropertyChanged("ReasonElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _ReasonElement;
+    private Hl7.Fhir.Model.FhirString? _ReasonElement;
 
     /// <summary>
     /// Description of why this subscription was created
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Reason
+    public string? Reason
     {
-      get { return ReasonElement != null ? ReasonElement.Value : null; }
+      get => ReasonElement?.Value;
       set
       {
-        if (value == null)
-          ReasonElement = null;
-        else
-          ReasonElement = new Hl7.Fhir.Model.FhirString(value);
+        ReasonElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Reason");
       }
     }
 
     /// <summary>
-    /// Criteria for narrowing the subscription topic stream
+    /// Criteria for narrowing the subscription topic stream.
     /// </summary>
     [FhirElement("filterBy", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Subscription.FilterByComponent> FilterBy
     {
-      get { if(_FilterBy==null) _FilterBy = new List<Hl7.Fhir.Model.Subscription.FilterByComponent>(); return _FilterBy; }
-      set { _FilterBy = value; OnPropertyChanged("FilterBy"); }
+      get
+      {
+        if(_FilterBy.InOverflow<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Subscription.FilterByComponent>), Overflow["filterBy"]);
+        return _FilterBy ??= [];
+      }
+
+      set
+      {
+        if (_FilterBy.InOverflow<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>())
+          Overflow.Remove("filterBy");
+        _FilterBy = value;
+        OnPropertyChanged("FilterBy");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Subscription.FilterByComponent> _FilterBy;
+    private List<Hl7.Fhir.Model.Subscription.FilterByComponent>? _FilterBy;
 
     /// <summary>
-    /// Channel type for notifications
+    /// Channel type for notifications.
     /// </summary>
     [FhirElement("channelType", InSummary=true, Order=180)]
     [Binding("SubscriptionChannelType")]
@@ -784,69 +988,119 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Coding ChannelType
     {
-      get { return _ChannelType; }
-      set { _ChannelType = value; OnPropertyChanged("ChannelType"); }
+      get
+      {
+        if(_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["channelType"]);
+        return _ChannelType!;
+      }
+
+      set
+      {
+        if (_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>())
+          Overflow.Remove("channelType");
+        _ChannelType = value;
+        OnPropertyChanged("ChannelType");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Coding _ChannelType;
+    private Hl7.Fhir.Model.Coding? _ChannelType;
 
     /// <summary>
-    /// Where the channel points to
+    /// Where the channel points to.
     /// </summary>
     [FhirElement("endpoint", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUrl EndpointElement
+    public Hl7.Fhir.Model.FhirUrl? EndpointElement
     {
-      get { return _EndpointElement; }
-      set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+      get
+      {
+        if(_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUrl), Overflow["endpoint"]);
+        return _EndpointElement;
+      }
+
+      set
+      {
+        if (_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>())
+          Overflow.Remove("endpoint");
+        _EndpointElement = value;
+        OnPropertyChanged("EndpointElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirUrl _EndpointElement;
+    private Hl7.Fhir.Model.FhirUrl? _EndpointElement;
 
     /// <summary>
     /// Where the channel points to
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Endpoint
+    public string? Endpoint
     {
-      get { return EndpointElement != null ? EndpointElement.Value : null; }
+      get => EndpointElement?.Value;
       set
       {
-        if (value == null)
-          EndpointElement = null;
-        else
-          EndpointElement = new Hl7.Fhir.Model.FhirUrl(value);
+        EndpointElement = value is null ? null! : new Hl7.Fhir.Model.FhirUrl(value);
         OnPropertyChanged("Endpoint");
       }
     }
 
     /// <summary>
-    /// Channel type
+    /// Channel type.
     /// </summary>
     [FhirElement("parameter", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Subscription.ParameterComponent> Parameter
     {
-      get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Subscription.ParameterComponent>(); return _Parameter; }
-      set { _Parameter = value; OnPropertyChanged("Parameter"); }
+      get
+      {
+        if(_Parameter.InOverflow<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Subscription.ParameterComponent>), Overflow["parameter"]);
+        return _Parameter ??= [];
+      }
+
+      set
+      {
+        if (_Parameter.InOverflow<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>())
+          Overflow.Remove("parameter");
+        _Parameter = value;
+        OnPropertyChanged("Parameter");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Subscription.ParameterComponent> _Parameter;
+    private List<Hl7.Fhir.Model.Subscription.ParameterComponent>? _Parameter;
 
     /// <summary>
-    /// Interval in seconds to send 'heartbeat' notification
+    /// Interval in seconds to send 'heartbeat' notification.
     /// </summary>
     [FhirElement("heartbeatPeriod", InSummary=true, Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.UnsignedInt HeartbeatPeriodElement
+    public Hl7.Fhir.Model.UnsignedInt? HeartbeatPeriodElement
     {
-      get { return _HeartbeatPeriodElement; }
-      set { _HeartbeatPeriodElement = value; OnPropertyChanged("HeartbeatPeriodElement"); }
+      get
+      {
+        if(_HeartbeatPeriodElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["heartbeatPeriod"]);
+        return _HeartbeatPeriodElement;
+      }
+
+      set
+      {
+        if (_HeartbeatPeriodElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          Overflow.Remove("heartbeatPeriod");
+        _HeartbeatPeriodElement = value;
+        OnPropertyChanged("HeartbeatPeriodElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.UnsignedInt _HeartbeatPeriodElement;
+    private Hl7.Fhir.Model.UnsignedInt? _HeartbeatPeriodElement;
 
     /// <summary>
     /// Interval in seconds to send 'heartbeat' notification
@@ -855,29 +1109,39 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? HeartbeatPeriod
     {
-      get { return HeartbeatPeriodElement != null ? HeartbeatPeriodElement.Value : null; }
+      get => HeartbeatPeriodElement?.Value;
       set
       {
-        if (value == null)
-          HeartbeatPeriodElement = null;
-        else
-          HeartbeatPeriodElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        HeartbeatPeriodElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("HeartbeatPeriod");
       }
     }
 
     /// <summary>
-    /// Timeout in seconds to attempt notification delivery
+    /// Timeout in seconds to attempt notification delivery.
     /// </summary>
     [FhirElement("timeout", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.UnsignedInt TimeoutElement
+    public Hl7.Fhir.Model.UnsignedInt? TimeoutElement
     {
-      get { return _TimeoutElement; }
-      set { _TimeoutElement = value; OnPropertyChanged("TimeoutElement"); }
+      get
+      {
+        if(_TimeoutElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["timeout"]);
+        return _TimeoutElement;
+      }
+
+      set
+      {
+        if (_TimeoutElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          Overflow.Remove("timeout");
+        _TimeoutElement = value;
+        OnPropertyChanged("TimeoutElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.UnsignedInt _TimeoutElement;
+    private Hl7.Fhir.Model.UnsignedInt? _TimeoutElement;
 
     /// <summary>
     /// Timeout in seconds to attempt notification delivery
@@ -886,63 +1150,82 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Timeout
     {
-      get { return TimeoutElement != null ? TimeoutElement.Value : null; }
+      get => TimeoutElement?.Value;
       set
       {
-        if (value == null)
-          TimeoutElement = null;
-        else
-          TimeoutElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        TimeoutElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Timeout");
       }
     }
 
     /// <summary>
-    /// MIME type to send, or omit for no payload
+    /// MIME type to send, or omit for no payload.
     /// </summary>
     [FhirElement("contentType", InSummary=true, Order=230)]
     [Binding("MimeType")]
     [DataMember]
-    public Hl7.Fhir.Model.Code ContentTypeElement
+    public Hl7.Fhir.Model.Code? ContentTypeElement
     {
-      get { return _ContentTypeElement; }
-      set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+      get
+      {
+        if(_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
+        return _ContentTypeElement;
+      }
+
+      set
+      {
+        if (_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
+          Overflow.Remove("contentType");
+        _ContentTypeElement = value;
+        OnPropertyChanged("ContentTypeElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Code _ContentTypeElement;
+    private Hl7.Fhir.Model.Code? _ContentTypeElement;
 
     /// <summary>
     /// MIME type to send, or omit for no payload
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContentType
+    public string? ContentType
     {
-      get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+      get => ContentTypeElement?.Value;
       set
       {
-        if (value == null)
-          ContentTypeElement = null;
-        else
-          ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+        ContentTypeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
 
     /// <summary>
-    /// empty | id-only | full-resource
+    /// empty | id-only | full-resource.
     /// </summary>
     [FhirElement("content", InSummary=true, Order=240)]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("SubscriptionPayloadContent")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> ContentElement
+    public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>? ContentElement
     {
-      get { return _ContentElement; }
-      set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
+      get
+      {
+        if(_ContentElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>), Overflow["content"]);
+        return _ContentElement;
+      }
+
+      set
+      {
+        if (_ContentElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>())
+          Overflow.Remove("content");
+        _ContentElement = value;
+        OnPropertyChanged("ContentElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> _ContentElement;
+    private Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>? _ContentElement;
 
     /// <summary>
     /// empty | id-only | full-resource
@@ -951,29 +1234,39 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent? Content
     {
-      get { return ContentElement != null ? ContentElement.Value : null; }
+      get => ContentElement?.Value;
       set
       {
-        if (value == null)
-          ContentElement = null;
-        else
-          ContentElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>(value);
+        ContentElement = value is null ? null! : new Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>(value);
         OnPropertyChanged("Content");
       }
     }
 
     /// <summary>
-    /// Maximum number of events that can be combined in a single notification
+    /// Maximum number of events that can be combined in a single notification.
     /// </summary>
     [FhirElement("maxCount", InSummary=true, Order=250)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt MaxCountElement
+    public Hl7.Fhir.Model.PositiveInt? MaxCountElement
     {
-      get { return _MaxCountElement; }
-      set { _MaxCountElement = value; OnPropertyChanged("MaxCountElement"); }
+      get
+      {
+        if(_MaxCountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["maxCount"]);
+        return _MaxCountElement;
+      }
+
+      set
+      {
+        if (_MaxCountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          Overflow.Remove("maxCount");
+        _MaxCountElement = value;
+        OnPropertyChanged("MaxCountElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.PositiveInt _MaxCountElement;
+    private Hl7.Fhir.Model.PositiveInt? _MaxCountElement;
 
     /// <summary>
     /// Maximum number of events that can be combined in a single notification
@@ -982,242 +1275,389 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MaxCount
     {
-      get { return MaxCountElement != null ? MaxCountElement.Value : null; }
+      get => MaxCountElement?.Value;
       set
       {
-        if (value == null)
-          MaxCountElement = null;
-        else
-          MaxCountElement = new Hl7.Fhir.Model.PositiveInt(value);
+        MaxCountElement = value is null ? null! : new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("MaxCount");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Subscription;
-
-      if (dest == null)
-      {
+      if(other is not Subscription dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)StatusElement.DeepCopy();
-      if(TopicElement != null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)TopicElement.DeepCopy();
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
-      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
-      if(ManagingEntity != null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)ManagingEntity.DeepCopy();
-      if(ReasonElement != null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)ReasonElement.DeepCopy();
-      if(FilterBy.Any()) dest.FilterBy = new List<Hl7.Fhir.Model.Subscription.FilterByComponent>(FilterBy.DeepCopy());
-      if(ChannelType != null) dest.ChannelType = (Hl7.Fhir.Model.Coding)ChannelType.DeepCopy();
-      if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
-      if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.Subscription.ParameterComponent>(Parameter.DeepCopy());
-      if(HeartbeatPeriodElement != null) dest.HeartbeatPeriodElement = (Hl7.Fhir.Model.UnsignedInt)HeartbeatPeriodElement.DeepCopy();
-      if(TimeoutElement != null) dest.TimeoutElement = (Hl7.Fhir.Model.UnsignedInt)TimeoutElement.DeepCopy();
-      if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
-      if(ContentElement != null) dest.ContentElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>)ContentElement.DeepCopy();
-      if(MaxCountElement != null) dest.MaxCountElement = (Hl7.Fhir.Model.PositiveInt)MaxCountElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_TopicElement is not null) dest.TopicElement = (Hl7.Fhir.Model.Canonical)_TopicElement.DeepCopyInternal();
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(_Contact.DeepCopyInternal());
+      if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Instant)_EndElement.DeepCopyInternal();
+      if(_ManagingEntity is not null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)_ManagingEntity.DeepCopyInternal();
+      if(_ReasonElement is not null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)_ReasonElement.DeepCopyInternal();
+      if(_FilterBy is not null) dest.FilterBy = new List<Hl7.Fhir.Model.Subscription.FilterByComponent>(_FilterBy.DeepCopyInternal());
+      if(_ChannelType is not null) dest.ChannelType = (Hl7.Fhir.Model.Coding)_ChannelType.DeepCopyInternal();
+      if(_EndpointElement is not null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)_EndpointElement.DeepCopyInternal();
+      if(_Parameter is not null) dest.Parameter = new List<Hl7.Fhir.Model.Subscription.ParameterComponent>(_Parameter.DeepCopyInternal());
+      if(_HeartbeatPeriodElement is not null) dest.HeartbeatPeriodElement = (Hl7.Fhir.Model.UnsignedInt)_HeartbeatPeriodElement.DeepCopyInternal();
+      if(_TimeoutElement is not null) dest.TimeoutElement = (Hl7.Fhir.Model.UnsignedInt)_TimeoutElement.DeepCopyInternal();
+      if(_ContentTypeElement is not null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)_ContentTypeElement.DeepCopyInternal();
+      if(_ContentElement is not null) dest.ContentElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>)_ContentElement.DeepCopyInternal();
+      if(_MaxCountElement is not null) dest.MaxCountElement = (Hl7.Fhir.Model.PositiveInt)_MaxCountElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Subscription());
+      var instance = new Subscription();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Subscription;
-      if(otherT == null) return false;
+      if(other is not Subscription otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(TopicElement, otherT.TopicElement)) return false;
-      if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
-      if( !DeepComparable.Matches(ManagingEntity, otherT.ManagingEntity)) return false;
-      if( !DeepComparable.Matches(ReasonElement, otherT.ReasonElement)) return false;
-      if( !DeepComparable.Matches(FilterBy, otherT.FilterBy)) return false;
-      if( !DeepComparable.Matches(ChannelType, otherT.ChannelType)) return false;
-      if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
-      if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
-      if( !DeepComparable.Matches(HeartbeatPeriodElement, otherT.HeartbeatPeriodElement)) return false;
-      if( !DeepComparable.Matches(TimeoutElement, otherT.TimeoutElement)) return false;
-      if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
-      if( !DeepComparable.Matches(MaxCountElement, otherT.MaxCountElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_TopicElement, otherT._TopicElement)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+      if(!comparer.Equals(_ManagingEntity, otherT._ManagingEntity)) return false;
+      if(!comparer.Equals(_ReasonElement, otherT._ReasonElement)) return false;
+      if(!comparer.ListEquals(_FilterBy, otherT._FilterBy)) return false;
+      if(!comparer.Equals(_ChannelType, otherT._ChannelType)) return false;
+      if(!comparer.Equals(_EndpointElement, otherT._EndpointElement)) return false;
+      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
+      if(!comparer.Equals(_HeartbeatPeriodElement, otherT._HeartbeatPeriodElement)) return false;
+      if(!comparer.Equals(_TimeoutElement, otherT._TimeoutElement)) return false;
+      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
+      if(!comparer.Equals(_ContentElement, otherT._ContentElement)) return false;
+      if(!comparer.Equals(_MaxCountElement, otherT._MaxCountElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Subscription;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(TopicElement, otherT.TopicElement)) return false;
-      if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
-      if( !DeepComparable.IsExactly(ManagingEntity, otherT.ManagingEntity)) return false;
-      if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
-      if( !DeepComparable.IsExactly(FilterBy, otherT.FilterBy)) return false;
-      if( !DeepComparable.IsExactly(ChannelType, otherT.ChannelType)) return false;
-      if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
-      if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
-      if( !DeepComparable.IsExactly(HeartbeatPeriodElement, otherT.HeartbeatPeriodElement)) return false;
-      if( !DeepComparable.IsExactly(TimeoutElement, otherT.TimeoutElement)) return false;
-      if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
-      if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
-      if( !DeepComparable.IsExactly(MaxCountElement, otherT.MaxCountElement)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (NameElement != null) yield return NameElement;
-        if (StatusElement != null) yield return StatusElement;
-        if (TopicElement != null) yield return TopicElement;
-        foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        if (EndElement != null) yield return EndElement;
-        if (ManagingEntity != null) yield return ManagingEntity;
-        if (ReasonElement != null) yield return ReasonElement;
-        foreach (var elem in FilterBy) { if (elem != null) yield return elem; }
-        if (ChannelType != null) yield return ChannelType;
-        if (EndpointElement != null) yield return EndpointElement;
-        foreach (var elem in Parameter) { if (elem != null) yield return elem; }
-        if (HeartbeatPeriodElement != null) yield return HeartbeatPeriodElement;
-        if (TimeoutElement != null) yield return TimeoutElement;
-        if (ContentTypeElement != null) yield return ContentTypeElement;
-        if (ContentElement != null) yield return ContentElement;
-        if (MaxCountElement != null) yield return MaxCountElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (TopicElement != null) yield return new ElementValue("topic", TopicElement);
-        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        if (EndElement != null) yield return new ElementValue("end", EndElement);
-        if (ManagingEntity != null) yield return new ElementValue("managingEntity", ManagingEntity);
-        if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
-        foreach (var elem in FilterBy) { if (elem != null) yield return new ElementValue("filterBy", elem); }
-        if (ChannelType != null) yield return new ElementValue("channelType", ChannelType);
-        if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
-        foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
-        if (HeartbeatPeriodElement != null) yield return new ElementValue("heartbeatPeriod", HeartbeatPeriodElement);
-        if (TimeoutElement != null) yield return new ElementValue("timeout", TimeoutElement);
-        if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
-        if (ContentElement != null) yield return new ElementValue("content", ContentElement);
-        if (MaxCountElement != null) yield return new ElementValue("maxCount", MaxCountElement);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["name"];
+            return true;
+          }
+          value = _NameElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.SubscriptionStatusCodes>) is not null;
         case "topic":
-          value = TopicElement;
-          return TopicElement is not null;
+          if (_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          {
+            value = Overflow["topic"];
+            return true;
+          }
+          value = _TopicElement;
+          return (value as Hl7.Fhir.Model.Canonical) is not null;
         case "contact":
-          value = Contact;
-          return Contact?.Any() == true;
+          if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>())
+          {
+            value = Overflow["contact"];
+            return true;
+          }
+          value = _Contact;
+          return (value as List<Hl7.Fhir.Model.ContactPoint>)?.Any() is true;
         case "end":
-          value = EndElement;
-          return EndElement is not null;
+          if (_EndElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          {
+            value = Overflow["end"];
+            return true;
+          }
+          value = _EndElement;
+          return (value as Hl7.Fhir.Model.Instant) is not null;
         case "managingEntity":
-          value = ManagingEntity;
-          return ManagingEntity is not null;
+          if (_ManagingEntity.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["managingEntity"];
+            return true;
+          }
+          value = _ManagingEntity;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "reason":
-          value = ReasonElement;
-          return ReasonElement is not null;
+          if (_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["reason"];
+            return true;
+          }
+          value = _ReasonElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "filterBy":
-          value = FilterBy;
-          return FilterBy?.Any() == true;
+          if (_FilterBy.InOverflow<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>())
+          {
+            value = Overflow["filterBy"];
+            return true;
+          }
+          value = _FilterBy;
+          return (value as List<Hl7.Fhir.Model.Subscription.FilterByComponent>)?.Any() is true;
         case "channelType":
-          value = ChannelType;
-          return ChannelType is not null;
+          if (_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>())
+          {
+            value = Overflow["channelType"];
+            return true;
+          }
+          value = _ChannelType;
+          return (value as Hl7.Fhir.Model.Coding) is not null;
         case "endpoint":
-          value = EndpointElement;
-          return EndpointElement is not null;
+          if (_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>())
+          {
+            value = Overflow["endpoint"];
+            return true;
+          }
+          value = _EndpointElement;
+          return (value as Hl7.Fhir.Model.FhirUrl) is not null;
         case "parameter":
-          value = Parameter;
-          return Parameter?.Any() == true;
+          if (_Parameter.InOverflow<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>())
+          {
+            value = Overflow["parameter"];
+            return true;
+          }
+          value = _Parameter;
+          return (value as List<Hl7.Fhir.Model.Subscription.ParameterComponent>)?.Any() is true;
         case "heartbeatPeriod":
-          value = HeartbeatPeriodElement;
-          return HeartbeatPeriodElement is not null;
+          if (_HeartbeatPeriodElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          {
+            value = Overflow["heartbeatPeriod"];
+            return true;
+          }
+          value = _HeartbeatPeriodElement;
+          return (value as Hl7.Fhir.Model.UnsignedInt) is not null;
         case "timeout":
-          value = TimeoutElement;
-          return TimeoutElement is not null;
+          if (_TimeoutElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          {
+            value = Overflow["timeout"];
+            return true;
+          }
+          value = _TimeoutElement;
+          return (value as Hl7.Fhir.Model.UnsignedInt) is not null;
         case "contentType":
-          value = ContentTypeElement;
-          return ContentTypeElement is not null;
+          if (_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
+          {
+            value = Overflow["contentType"];
+            return true;
+          }
+          value = _ContentTypeElement;
+          return (value as Hl7.Fhir.Model.Code) is not null;
         case "content":
-          value = ContentElement;
-          return ContentElement is not null;
+          if (_ContentElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>())
+          {
+            value = Overflow["content"];
+            return true;
+          }
+          value = _ContentElement;
+          return (value as Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>) is not null;
         case "maxCount":
-          value = MaxCountElement;
-          return MaxCountElement is not null;
+          if (_MaxCountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          {
+            value = Overflow["maxCount"];
+            return true;
+          }
+          value = _MaxCountElement;
+          return (value as Hl7.Fhir.Model.PositiveInt) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (TopicElement is not null) yield return new KeyValuePair<string,object>("topic",TopicElement);
-      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
-      if (ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",ManagingEntity);
-      if (ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",ReasonElement);
-      if (FilterBy?.Any() == true) yield return new KeyValuePair<string,object>("filterBy",FilterBy);
-      if (ChannelType is not null) yield return new KeyValuePair<string,object>("channelType",ChannelType);
-      if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
-      if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
-      if (HeartbeatPeriodElement is not null) yield return new KeyValuePair<string,object>("heartbeatPeriod",HeartbeatPeriodElement);
-      if (TimeoutElement is not null) yield return new KeyValuePair<string,object>("timeout",TimeoutElement);
-      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
-      if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);
-      if (MaxCountElement is not null) yield return new KeyValuePair<string,object>("maxCount",MaxCountElement);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          return this;
+        case "name":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["name"] = value;
+          }
+          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "status":
+          if (value is not (Code<Hl7.Fhir.Model.SubscriptionStatusCodes> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.SubscriptionStatusCodes>?)value!;
+          return this;
+        case "topic":
+          if (value is not (Hl7.Fhir.Model.Canonical or null))
+          {
+            TopicElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
+            Overflow["topic"] = value;
+          }
+          else TopicElement = (Hl7.Fhir.Model.Canonical?)value!;
+          return this;
+        case "contact":
+          if (value is not (List<Hl7.Fhir.Model.ContactPoint> or null))
+          {
+            Contact = OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.INSTANCE;
+            Overflow["contact"] = value;
+          }
+          else Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
+          return this;
+        case "end":
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            EndElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["end"] = value;
+          }
+          else EndElement = (Hl7.Fhir.Model.Instant?)value;
+          return this;
+        case "managingEntity":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            ManagingEntity = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["managingEntity"] = value;
+          }
+          else ManagingEntity = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "reason":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ReasonElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["reason"] = value;
+          }
+          else ReasonElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "filterBy":
+          if (value is not (List<Hl7.Fhir.Model.Subscription.FilterByComponent> or null))
+          {
+            FilterBy = OverflowNull<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>.INSTANCE;
+            Overflow["filterBy"] = value;
+          }
+          else FilterBy = (List<Hl7.Fhir.Model.Subscription.FilterByComponent>?)value!;
+          return this;
+        case "channelType":
+          if (value is not (Hl7.Fhir.Model.Coding or null))
+          {
+            ChannelType = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+            Overflow["channelType"] = value;
+          }
+          else ChannelType = (Hl7.Fhir.Model.Coding?)value!;
+          return this;
+        case "endpoint":
+          if (value is not (Hl7.Fhir.Model.FhirUrl or null))
+          {
+            EndpointElement = OverflowNull<Hl7.Fhir.Model.FhirUrl>.INSTANCE;
+            Overflow["endpoint"] = value;
+          }
+          else EndpointElement = (Hl7.Fhir.Model.FhirUrl?)value;
+          return this;
+        case "parameter":
+          if (value is not (List<Hl7.Fhir.Model.Subscription.ParameterComponent> or null))
+          {
+            Parameter = OverflowNull<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>.INSTANCE;
+            Overflow["parameter"] = value;
+          }
+          else Parameter = (List<Hl7.Fhir.Model.Subscription.ParameterComponent>?)value!;
+          return this;
+        case "heartbeatPeriod":
+          if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
+          {
+            HeartbeatPeriodElement = OverflowNull<Hl7.Fhir.Model.UnsignedInt>.INSTANCE;
+            Overflow["heartbeatPeriod"] = value;
+          }
+          else HeartbeatPeriodElement = (Hl7.Fhir.Model.UnsignedInt?)value;
+          return this;
+        case "timeout":
+          if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
+          {
+            TimeoutElement = OverflowNull<Hl7.Fhir.Model.UnsignedInt>.INSTANCE;
+            Overflow["timeout"] = value;
+          }
+          else TimeoutElement = (Hl7.Fhir.Model.UnsignedInt?)value;
+          return this;
+        case "contentType":
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            ContentTypeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["contentType"] = value;
+          }
+          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
+          return this;
+        case "content":
+          if (value is not (Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> or null))
+          {
+            ContentElement = OverflowNull<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>.INSTANCE;
+            Overflow["content"] = value;
+          }
+          else ContentElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>?)value;
+          return this;
+        case "maxCount":
+          if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+          {
+            MaxCountElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+            Overflow["maxCount"] = value;
+          }
+          else MaxCountElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_TopicElement is not null && !_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("topic",_TopicElement);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_ManagingEntity is not null && !_ManagingEntity.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("managingEntity",_ManagingEntity);
+      if (_ReasonElement is not null && !_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("reason",_ReasonElement);
+      if (_FilterBy?.Any() is true && !_FilterBy.InOverflow<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>()) yield return new KeyValuePair<string,object>("filterBy",_FilterBy);
+      if (_ChannelType is not null && !_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
+      if (_EndpointElement is not null && !_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
+      if (_Parameter?.Any() is true && !_Parameter.InOverflow<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>()) yield return new KeyValuePair<string,object>("parameter",_Parameter);
+      if (_HeartbeatPeriodElement is not null && !_HeartbeatPeriodElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("heartbeatPeriod",_HeartbeatPeriodElement);
+      if (_TimeoutElement is not null && !_TimeoutElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("timeout",_TimeoutElement);
+      if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_ContentElement is not null && !_ContentElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>()) yield return new KeyValuePair<string,object>("content",_ContentElement);
+      if (_MaxCountElement is not null && !_MaxCountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("maxCount",_MaxCountElement);
     }
 
   }

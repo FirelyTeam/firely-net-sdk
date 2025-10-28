@@ -7,7 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -56,29 +60,34 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "uuid"; } }
+    public override string TypeName => "uuid";
 
     /// Must conform to the pattern "urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     public const string PATTERN = @"urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
 
-    public Uuid(string value)
+    public Uuid(string? value)
     {
       Value = value;
     }
 
-    public Uuid(): this((string)null) {}
+    public Uuid(): this((string?)null) {}
 
     /// <summary>
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
-    [UuidPattern]
     [DataMember]
-    public string Value
+    public string? Value
     {
-      get { return (string)ObjectValue; }
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
+      get { return JsonValue is string or null ? (string?)JsonValue : throw COVE.FromTypes(typeof(Uuid), JsonValue); }
+      set { JsonValue = value; OnPropertyChanged("Value"); }
+    }
+
+    protected internal override Base DeepCopyInternal()
+    {
+      var instance = new Uuid();
+      CopyToInternal(instance);
+      return instance;
     }
 
   }

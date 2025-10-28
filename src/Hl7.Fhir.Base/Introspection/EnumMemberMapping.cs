@@ -14,63 +14,57 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Introspection;
+
+/// <summary>
+/// A container for the metadata of a FHIR code from a valueset as present on the .NET Enum member.
+/// </summary>
+public class EnumMemberMapping(FieldInfo fieldInfo, string code, object value)
 {
     /// <summary>
-    /// A container for the metadata of a FHIR code from a valueset as present on the .NET Enum member.
+    /// The original <see cref="FieldInfo"/> the metadata was extracted from.
     /// </summary>
-    public class EnumMemberMapping
+    public FieldInfo NativeField { get; } = fieldInfo;
+
+    /// <summary>
+    /// The code that is represented by this member.
+    /// </summary>
+    public string Code { get; } = code;
+
+    /// <summary>
+    /// The .NET enum value for this enum member.
+    /// </summary>
+    public object Value { get; } = value;
+
+    /// <summary>
+    /// The coding system that is associated with the code.
+    /// </summary>
+    public string? System { get; init; }
+
+    /// <summary>
+    /// A description of the concept.
+    /// </summary>
+    public string? Description { get; init; }
+
+    /// <summary>
+    /// Inspects the given enum member, extracting metadata from its attributes and creating a new <see cref="EnumMemberMapping"/>.
+    /// </summary>
+    public static bool TryCreate(FieldInfo member, [NotNullWhen(true)] out EnumMemberMapping? result,
+        FhirRelease release = (FhirRelease)int.MaxValue, string? defaultSystem = null)
     {
-        private EnumMemberMapping(FieldInfo fieldInfo, string code, string? system, object value, string? description, string? defaultSystem)
+        result = null;
+        if (member.GetFhirModelAttribute<EnumLiteralAttribute>(release) is not { } ela) return false;
+
+        var code = ela.Literal;
+        var value = (Enum)member.GetValue(null)!;
+        var desc = member.GetFhirModelAttribute<DescriptionAttribute>(release)?.Description;
+
+        result = new EnumMemberMapping(member, code, value)
         {
-            Code = code;
-            System = system ?? defaultSystem;
-            Description = description;
-            Value = value;
-            NativeField = fieldInfo;
-        }
+            System = ela.System ?? defaultSystem,
+            Description = desc
+        };
 
-        /// <summary>
-        /// The code that is represented by this member.
-        /// </summary>
-        public string Code { get; }
-
-        /// <summary>
-        /// The coding system that is associated with the code.
-        /// </summary>
-        public string? System { get; }
-
-        /// <summary>
-        /// A description of the concept.
-        /// </summary>
-        public string? Description { get; }
-
-        /// <summary>
-        /// The .NET enum value for this enum member.
-        /// </summary>
-        public object Value { get; }
-
-        /// <summary>
-        /// The original <see cref="FieldInfo"/> the metadata was extracted from.
-        /// </summary>
-        public FieldInfo NativeField { get; }
-
-        /// <summary>
-        /// Inspects the given enum member, extracting metadata from its attributes and creating a new <see cref="EnumMemberMapping"/>.
-        /// </summary>
-        public static bool TryCreate(FieldInfo member, [NotNullWhen(true)] out EnumMemberMapping? result, FhirRelease release = (FhirRelease)int.MaxValue, string? defaultSystem = null)
-        {
-            result = null;
-            if (ClassMapping.GetAttribute<EnumLiteralAttribute>(member, release) is not { } ela) return false;
-
-            var code = ela.Literal ?? member.Name;
-            var value = (Enum)member.GetValue(null)!;
-            var desc = ClassMapping.GetAttribute<DescriptionAttribute>(member, release)?.Description;
-
-            result = new EnumMemberMapping(member, code, ela.System, value, desc, defaultSystem);
-            return true;
-        }
+        return true;
     }
 }
-
-#nullable restore

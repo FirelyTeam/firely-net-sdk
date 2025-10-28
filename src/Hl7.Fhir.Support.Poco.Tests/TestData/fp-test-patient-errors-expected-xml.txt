@@ -1,0 +1,46 @@
+Hl7.Fhir.Serialization.FhirXmlException: Encountered an empty resource container. At Patient.contained[0], line 5, position 4.
+Hl7.Fhir.Serialization.FhirXmlException: Encountered an empty resource container. At Patient.contained[1], line 6, position 16.
+Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientX' found in root element. At Patient.contained[2], line 8, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[2], line 8, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Encountered unexpected attribute 'containedAttribute' in a resource container. Only a single resource is allowed. At Patient.contained[3], line 11, position 14.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[3].active, line 13, position 8.
+Hl7.Fhir.Validation.CodedValidationException: string 'not-checked' is not the right type of literal for a boolean. At Patient.contained[3].active, line 17, position 8.
+Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'anotherElement' found in root element. At Patient.contained[3], line 19, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'value'. At Patient.contained[3].value, line 19, position 21.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[3], line 20, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Encountered multiple elements in a resource container. Only a single resource is allowed. At Patient.contained[3], line 21, position 5.
+Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientId' found in root element. At Patient.contained[4], line 23, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Attribute 'id' should have been an element with a `value` property, not an attribute. At Patient.contained[5].id, line 28, position 14.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'id' was found multiple times, but not in sequence. At Patient.contained[5].id, line 31, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single id, but found a collection of id. At Patient.contained[5].id, line 29, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[5].name[0], line 31, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[5].name[1], line 32, position 8.
+Hl7.Fhir.Serialization.FhirXmlException: Element uses the namespace 'http://example.org/not-fhir', which is not allowed. At Patient.contained[6], line 36, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Attribute uses namespace 'http://nu.nl', which is not allowed. At Patient.contained[6].active.anotherAttribute, line 37, position 29.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'anotherAttribute'. At Patient.contained[6].active.anotherAttribute, line 37, position 29.
+Hl7.Fhir.Validation.CodedValidationException: string 'February' is not a correct literal for a date. At Patient.contained[6].birthDate, line 38, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Value 'cat' is not a correct code for valueset 'AdministrativeGender'. At Patient.contained[7].gender, line 44, position 8.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'active' is not in the correct order, should go before element 'gender'. At Patient.contained[7].active, line 45, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'name'. At Patient.contained[7].active.name, line 46, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'data'. At Patient.contained[7].active.data, line 47, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'value'. At Patient.contained[7].address[0].value, line 49, position 16.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'no'. At Patient.contained[8].no, line 53, position 14.
+Hl7.Fhir.Serialization.FhirXmlException: Xml node of type 'Text' is unexpected at this point At Patient.contained[8].id, line 54, position 11.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[8].id, line 54, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'value'. At Patient.contained[8].name[0].value, line 57, position 13.
+Hl7.Fhir.Serialization.FhirXmlException: Xml node of type 'Text' is unexpected at this point At Patient.contained[8].name[0], line 57, position 26.
+Hl7.Fhir.Serialization.FhirXmlException: Xml node of type 'Text' is unexpected at this point At Patient.contained[8].unknown, line 59, position 16.
+Hl7.Fhir.Validation.CodedValidationException: Empty FHIR elements are invalid At Patient.contained[8].unknown, line 59, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'unknown'. At Patient.contained[8].unknown, line 59, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.contained[9].issue' with minimum cardinality 1 must be present. At Patient.contained[9].issue, line 65, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'valueString'. At Patient.contained[10].valueString, line 70, position 18.
+Hl7.Fhir.Serialization.FhirXmlException: Choice element 'value' is suffixed with an unrecognized type 'Unknown'. At Patient.contained[10], line 75, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'highest'. At Patient.contained[10].value.highest, line 76, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Value is of type 'Unknown', which is not an allowed choice. At Patient.contained[10].value, line 75, position 8.
+Hl7.Fhir.Validation.CodedValidationException: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[11].component[2].value.value, line 108, position 12.
+Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.contained[11].status' with minimum cardinality 1 must be present. At Patient.contained[11].status, line 81, position 6.
+Hl7.Fhir.Validation.CodedValidationException: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri. At Patient.identifier[0].system, line 116, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Attribute 'use' should have been an element with a `value` property, not an attribute. At Patient.identifier[1].use, line 119, position 15.
+Hl7.Fhir.Validation.CodedValidationException: string 'urn:oid:crap' is not a correct literal for a uri. At Patient.gender.extension[1].url, line 139, position 16.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown attribute 'huh'. At Patient.gender.extension[2].huh, line 142, position 37.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'url' should have been encoded as an attribute. At Patient.gender.extension[3], line 146, position 8.

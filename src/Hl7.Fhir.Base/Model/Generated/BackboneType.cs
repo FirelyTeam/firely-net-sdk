@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,98 +59,95 @@ namespace Hl7.Fhir.Model
   public abstract partial class BackboneType : Hl7.Fhir.Model.DataType, Hl7.Fhir.Model.IModifierExtendable
   {
     /// <summary>
-    /// FHIR Type Name
-    /// </summary>
-    public override string TypeName { get { return "BackboneType"; } }
-
-    /// <summary>
-    /// Extensions that cannot be ignored even if unrecognized
+    /// Extensions that cannot be ignored even if unrecognized.
     /// </summary>
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
-      set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
+      get
+      {
+        if(_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["modifierExtension"]);
+        return _ModifierExtension ??= [];
+      }
+
+      set
+      {
+        if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          Overflow.Remove("modifierExtension");
+        _ModifierExtension = value;
+        OnPropertyChanged("ModifierExtension");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
+    private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as BackboneType;
-
-      if (dest == null)
-      {
+      if(other is not BackboneType dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_ModifierExtension is not null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(_ModifierExtension.DeepCopyInternal());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as BackboneType;
-      if(otherT == null) return false;
+      if(other is not BackboneType otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_ModifierExtension, otherT._ModifierExtension)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as BackboneType;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "modifierExtension":
-          value = ModifierExtension;
-          return ModifierExtension?.Any() == true;
+          if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
+            value = Overflow["modifierExtension"];
+            return true;
+          }
+          value = _ModifierExtension;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",ModifierExtension);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "modifierExtension":
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            ModifierExtension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["modifierExtension"] = value;
+          }
+          else ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_ModifierExtension?.Any() is true && !_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

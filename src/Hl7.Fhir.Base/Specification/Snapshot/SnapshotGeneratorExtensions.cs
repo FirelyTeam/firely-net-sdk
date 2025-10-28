@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveConstrainedByDiffExtension();
-            foreach (var child in element.Children.OfType<Element>())
+            foreach (var child in element.Children().OfType<Element>())
             {
                 child.RemoveAllConstrainedByDiffExtensions();
             }
@@ -93,11 +93,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Non-inheritable extensions are extensions that should not be inherited by derived profiles.
         /// </summary>
         /// <param name="element"></param>
-        public static void RemoveAllNonInheritableExtensions(this Element element)
+        internal static void RemoveAllNonInheritableExtensions(this Element element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveNonInheritableExtensions();
-            foreach (var child in element.Children.OfType<Element>())
+#pragma warning disable CS0618 // Type or member is obsolete
+            foreach (var child in element.Children().OfType<Element>())
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 child.RemoveAllNonInheritableExtensions();
             }
@@ -132,47 +134,5 @@ namespace Hl7.Fhir.Specification.Snapshot
          ResourceIdentity.CORE_BASE_URL + "resource-lastReviewDate",
          CONSTRAINED_BY_DIFF_EXT //this is our own extension to define differences compared to the base, this can't be inherited from the base profile
         ];
-
-        // ========== For internal use only ==========
-        // [WMR 20170209] OBSOLETE
-#if false
-
-        /// <summary>Removes a specific extension from the snapshot element definition and it's descendant elements, recursively.</summary>
-        /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
-        /// <param name="uri">The canonical url of the extension.</param>
-        static void ClearAllExtensions(this ElementDefinition elemDef, string uri)
-        {
-            if (elemDef != null)
-            {
-                ClearExtensions(elemDef, uri);
-            }
-        }
-
-        static void ClearExtensions<T>(this IEnumerable<T> elements, string uri) where T : Base
-        {
-            if (elements != null)
-            {
-                foreach (var child in elements)
-                {
-                    ClearExtensions(child, uri);
-                }
-            }
-        }
-
-        static void ClearExtensions<T>(this T element, string uri) where T : Base
-        {
-            if (element != null)
-            {
-                ClearExtension(element as IExtendable, uri);
-                ClearExtensions(element.Children, uri);
-            }
-        }
-
-        static void ClearExtension(this IExtendable extendable, string uri)
-        {
-            extendable?.RemoveExtension(uri);
-        }
-#endif
-
     }
 }

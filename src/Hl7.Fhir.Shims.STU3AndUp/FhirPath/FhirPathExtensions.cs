@@ -23,22 +23,6 @@ namespace Hl7.Fhir.FhirPath
         private static readonly FhirPathCompilerCache CACHE = new(COMPILER);
 
         /// <summary>
-        /// Converts results of a resolver from Resource to ITypedElement
-        /// </summary>
-        /// <param name="resolver">results of a resolver as Resource</param>
-        /// <returns>Result of the convertion to ITypedElement</returns>
-        public static Func<string, ITypedElement?> ToFhirPathResolver(this Func<string, Resource> resolver)
-        {
-            return navResolver;
-
-            ITypedElement? navResolver(string url)
-            {
-                var resource = resolver(url);
-                return resource?.ToTypedElement();
-            }
-        }
-
-        /// <summary>
         /// Expose the SymbolTable of the compiler, so we can add extra symbols to it.
         /// </summary>
         /// <returns>The SymbolTable of the internal FP compiler</returns>
@@ -46,25 +30,25 @@ namespace Hl7.Fhir.FhirPath
         /// now used by 1 unit test FhirPathScaleTest</remarks>
         internal static SymbolTable GetSymbols() => COMPILER.Symbols;
 
-        /// <inheritdoc cref="FhirPathCompilerCache.Select(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.Select(PocoNode, string, EvaluationContext?)"/>
         public static IEnumerable<Base?> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Select(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext()).ToFhirValues();
+            => CACHE.Select(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext()).ToFhirValues();
 
-        /// <inheritdoc cref="FhirPathCompilerCache.Scalar(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.Scalar(PocoNode, string, EvaluationContext?)"/>
         public static object? Scalar(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Scalar(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.Scalar(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext());
 
-        /// <inheritdoc cref="FhirPathCompilerCache.Predicate(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.Predicate(PocoNode, string, EvaluationContext?)"/>
         public static bool Predicate(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.Predicate(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.Predicate(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext());
 
-        /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(PocoNode, string, EvaluationContext?)"/>
         public static bool IsTrue(this Base input, string expression, FhirEvaluationContext? ctx = null)
-            => CACHE.IsTrue(input.ToTypedElement().ToScopedNode(), expression, ctx ?? new FhirEvaluationContext());
+            => CACHE.IsTrue(input.ToPocoNode(), expression, ctx ?? new FhirEvaluationContext());
 
-        /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(ITypedElement, string, bool, EvaluationContext?) "/>
+        /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(PocoNode, string, bool, EvaluationContext?) "/>
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext? ctx = null)
-            => CACHE.IsBoolean(input.ToTypedElement().ToScopedNode(), expression, value, ctx ?? new FhirEvaluationContext());
+            => CACHE.IsBoolean(input.ToPocoNode(), expression, value, ctx ?? new FhirEvaluationContext());
     }
 }
 

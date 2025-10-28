@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Specification.Tests
             var generator = new SnapshotGenerator(mockResolver, SnapshotGeneratorSettings.CreateDefault());
             
             // Generate snapshot for the derived profile  
-            generator.Update(derivedProfile);
+            await generator.UpdateAsync(derivedProfile);
             
             // Assert that the derived profile inherited the example from the base
             Assert.IsNotNull(derivedProfile.Snapshot);
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Specification.Tests
             var generator = new SnapshotGenerator(mockResolver, SnapshotGeneratorSettings.CreateDefault());
             
             // Generate snapshot for the derived profile
-            generator.Update(derivedProfile);
+            await generator.UpdateAsync(derivedProfile);
             
             // Assert that the derived profile did NOT inherit the example (it was suppressed)
             Assert.IsNotNull(derivedProfile.Snapshot);
