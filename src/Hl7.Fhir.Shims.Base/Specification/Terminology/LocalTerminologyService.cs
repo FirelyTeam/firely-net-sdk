@@ -217,7 +217,7 @@ public class LocalTerminologyService : ITerminologyService
                 ? await getExpandedValueSet(new FhirUri(url!), version, "expand").ConfigureAwait(false)
                 : await getExpandedValueSet(valueSet, "expand").ConfigureAwait(false);
         }
-        catch (Exception e)
+        catch (Exception e) when (e is not FhirOperationException)
         {
             //500 internal server error
             throw new FhirOperationException(e.Message, (HttpStatusCode)500);
