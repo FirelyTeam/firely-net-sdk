@@ -2,7 +2,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -18,8 +17,6 @@ namespace Hl7.Fhir.Serialization.Tests
             // This should not throw a NullReferenceException
             var serializer = new FhirJsonPocoSerializer();
             var json = serializer.SerializeToString(patient);
-            
-            System.Console.WriteLine("JSON output: " + json);
             
             // The null should be filtered out
             Assert.IsFalse(json.Contains("null"));
@@ -37,8 +34,6 @@ namespace Hl7.Fhir.Serialization.Tests
             var serializer = new FhirXmlPocoSerializer();
             var xml = serializer.SerializeToString(patient);
             
-            System.Console.WriteLine("XML output: " + xml);
-            
             // The null should be filtered out
             Assert.IsTrue(xml.Contains("http://test"));
             Assert.IsTrue(xml.Contains("abcd"));
@@ -53,8 +48,6 @@ namespace Hl7.Fhir.Serialization.Tests
             // This should not throw a NullReferenceException
             var serializer = new FhirJsonPocoSerializer();
             var json = serializer.SerializeToString(patient);
-            
-            System.Console.WriteLine("JSON output: " + json);
             
             // The null should be filtered out
             Assert.IsFalse(json.Contains("null"));
