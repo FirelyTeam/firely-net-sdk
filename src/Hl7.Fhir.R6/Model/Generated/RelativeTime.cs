@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -57,269 +61,378 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RelativeTime"; } }
+    public override string TypeName => "RelativeTime";
 
     /// <summary>
-    /// The specific event occurrence or resource context used as a base point (reference point) in time
+    /// The specific event occurrence or resource context used as a base point (reference point) in time.
     /// </summary>
     [FhirElement("contextReference", Order=40)]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ContextReference
+    public Hl7.Fhir.Model.ResourceReference? ContextReference
     {
-      get { return _ContextReference; }
-      set { _ContextReference = value; OnPropertyChanged("ContextReference"); }
+      get
+      {
+        if(_ContextReference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["contextReference"]);
+        return _ContextReference;
+      }
+
+      set
+      {
+        if (_ContextReference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("contextReference");
+        _ContextReference = value;
+        OnPropertyChanged("ContextReference");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ContextReference;
+    private Hl7.Fhir.Model.ResourceReference? _ContextReference;
 
     /// <summary>
-    /// The type of event used as a base point
+    /// The type of event used as a base point.
     /// </summary>
     [FhirElement("contextDefinition", Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical ContextDefinitionElement
+    public Hl7.Fhir.Model.Canonical? ContextDefinitionElement
     {
-      get { return _ContextDefinitionElement; }
-      set { _ContextDefinitionElement = value; OnPropertyChanged("ContextDefinitionElement"); }
+      get
+      {
+        if(_ContextDefinitionElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["contextDefinition"]);
+        return _ContextDefinitionElement;
+      }
+
+      set
+      {
+        if (_ContextDefinitionElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          Overflow.Remove("contextDefinition");
+        _ContextDefinitionElement = value;
+        OnPropertyChanged("ContextDefinitionElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Canonical _ContextDefinitionElement;
+    private Hl7.Fhir.Model.Canonical? _ContextDefinitionElement;
 
     /// <summary>
     /// The type of event used as a base point
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContextDefinition
+    public string? ContextDefinition
     {
-      get { return ContextDefinitionElement != null ? ContextDefinitionElement.Value : null; }
+      get => ContextDefinitionElement?.Value;
       set
       {
-        if (value == null)
-          ContextDefinitionElement = null;
-        else
-          ContextDefinitionElement = new Hl7.Fhir.Model.Canonical(value);
+        ContextDefinitionElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("ContextDefinition");
       }
     }
 
     /// <summary>
-    /// Path to the element defining the point in time
+    /// Path to the element defining the point in time.
     /// </summary>
     [FhirElement("contextPath", Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ContextPathElement
+    public Hl7.Fhir.Model.FhirString? ContextPathElement
     {
-      get { return _ContextPathElement; }
-      set { _ContextPathElement = value; OnPropertyChanged("ContextPathElement"); }
+      get
+      {
+        if(_ContextPathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["contextPath"]);
+        return _ContextPathElement;
+      }
+
+      set
+      {
+        if (_ContextPathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("contextPath");
+        _ContextPathElement = value;
+        OnPropertyChanged("ContextPathElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _ContextPathElement;
+    private Hl7.Fhir.Model.FhirString? _ContextPathElement;
 
     /// <summary>
     /// Path to the element defining the point in time
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ContextPath
+    public string? ContextPath
     {
-      get { return ContextPathElement != null ? ContextPathElement.Value : null; }
+      get => ContextPathElement?.Value;
       set
       {
-        if (value == null)
-          ContextPathElement = null;
-        else
-          ContextPathElement = new Hl7.Fhir.Model.FhirString(value);
+        ContextPathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ContextPath");
       }
     }
 
     /// <summary>
-    /// Coded representation of the event used as a base point (reference point) in time
+    /// Coded representation of the event used as a base point (reference point) in time.
     /// </summary>
     [FhirElement("contextCode", Order=70)]
     [Binding("EvidenceVariableEvent")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ContextCode
+    public Hl7.Fhir.Model.CodeableConcept? ContextCode
     {
-      get { return _ContextCode; }
-      set { _ContextCode = value; OnPropertyChanged("ContextCode"); }
+      get
+      {
+        if(_ContextCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["contextCode"]);
+        return _ContextCode;
+      }
+
+      set
+      {
+        if (_ContextCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("contextCode");
+        _ContextCode = value;
+        OnPropertyChanged("ContextCode");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ContextCode;
+    private Hl7.Fhir.Model.CodeableConcept? _ContextCode;
 
     /// <summary>
-    /// An offset or offset range before (negative values) or after (positive values) the event
+    /// An offset or offset range before (negative values) or after (positive values) the event.
     /// </summary>
     [FhirElement("offset", Order=80, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Offset
+    public Hl7.Fhir.Model.DataType? Offset
     {
-      get { return _Offset; }
-      set { _Offset = value; OnPropertyChanged("Offset"); }
+      get
+      {
+        if(_Offset.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["offset"]);
+        return _Offset;
+      }
+
+      set
+      {
+        if (_Offset.InOverflow<DynamicDataType>())
+          Overflow.Remove("offset");
+        _Offset = value;
+        OnPropertyChanged("Offset");
+      }
+
     }
 
-    private Hl7.Fhir.Model.DataType _Offset;
+    private Hl7.Fhir.Model.DataType? _Offset;
 
     /// <summary>
-    /// Free-text description
+    /// Free-text description.
     /// </summary>
     [FhirElement("text", Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
-      get { return _TextElement; }
-      set { _TextElement = value; OnPropertyChanged("TextElement"); }
+      get
+      {
+        if(_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
+        return _TextElement;
+      }
+
+      set
+      {
+        if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("text");
+        _TextElement = value;
+        OnPropertyChanged("TextElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// Free-text description
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get { return TextElement != null ? TextElement.Value : null; }
+      get => TextElement?.Value;
       set
       {
-        if (value == null)
-          TextElement = null;
-        else
-          TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as RelativeTime;
-
-      if (dest == null)
-      {
+      if(other is not RelativeTime dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(ContextReference != null) dest.ContextReference = (Hl7.Fhir.Model.ResourceReference)ContextReference.DeepCopy();
-      if(ContextDefinitionElement != null) dest.ContextDefinitionElement = (Hl7.Fhir.Model.Canonical)ContextDefinitionElement.DeepCopy();
-      if(ContextPathElement != null) dest.ContextPathElement = (Hl7.Fhir.Model.FhirString)ContextPathElement.DeepCopy();
-      if(ContextCode != null) dest.ContextCode = (Hl7.Fhir.Model.CodeableConcept)ContextCode.DeepCopy();
-      if(Offset != null) dest.Offset = (Hl7.Fhir.Model.DataType)Offset.DeepCopy();
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_ContextReference is not null) dest.ContextReference = (Hl7.Fhir.Model.ResourceReference)_ContextReference.DeepCopyInternal();
+      if(_ContextDefinitionElement is not null) dest.ContextDefinitionElement = (Hl7.Fhir.Model.Canonical)_ContextDefinitionElement.DeepCopyInternal();
+      if(_ContextPathElement is not null) dest.ContextPathElement = (Hl7.Fhir.Model.FhirString)_ContextPathElement.DeepCopyInternal();
+      if(_ContextCode is not null) dest.ContextCode = (Hl7.Fhir.Model.CodeableConcept)_ContextCode.DeepCopyInternal();
+      if(_Offset is not null) dest.Offset = (Hl7.Fhir.Model.DataType)_Offset.DeepCopyInternal();
+      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new RelativeTime());
+      var instance = new RelativeTime();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as RelativeTime;
-      if(otherT == null) return false;
+      if(other is not RelativeTime otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(ContextReference, otherT.ContextReference)) return false;
-      if( !DeepComparable.Matches(ContextDefinitionElement, otherT.ContextDefinitionElement)) return false;
-      if( !DeepComparable.Matches(ContextPathElement, otherT.ContextPathElement)) return false;
-      if( !DeepComparable.Matches(ContextCode, otherT.ContextCode)) return false;
-      if( !DeepComparable.Matches(Offset, otherT.Offset)) return false;
-      if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ContextReference, otherT._ContextReference)) return false;
+      if(!comparer.Equals(_ContextDefinitionElement, otherT._ContextDefinitionElement)) return false;
+      if(!comparer.Equals(_ContextPathElement, otherT._ContextPathElement)) return false;
+      if(!comparer.Equals(_ContextCode, otherT._ContextCode)) return false;
+      if(!comparer.Equals(_Offset, otherT._Offset)) return false;
+      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as RelativeTime;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(ContextReference, otherT.ContextReference)) return false;
-      if( !DeepComparable.IsExactly(ContextDefinitionElement, otherT.ContextDefinitionElement)) return false;
-      if( !DeepComparable.IsExactly(ContextPathElement, otherT.ContextPathElement)) return false;
-      if( !DeepComparable.IsExactly(ContextCode, otherT.ContextCode)) return false;
-      if( !DeepComparable.IsExactly(Offset, otherT.Offset)) return false;
-      if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (ContextReference != null) yield return ContextReference;
-        if (ContextDefinitionElement != null) yield return ContextDefinitionElement;
-        if (ContextPathElement != null) yield return ContextPathElement;
-        if (ContextCode != null) yield return ContextCode;
-        if (Offset != null) yield return Offset;
-        if (TextElement != null) yield return TextElement;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (ContextReference != null) yield return new ElementValue("contextReference", ContextReference);
-        if (ContextDefinitionElement != null) yield return new ElementValue("contextDefinition", ContextDefinitionElement);
-        if (ContextPathElement != null) yield return new ElementValue("contextPath", ContextPathElement);
-        if (ContextCode != null) yield return new ElementValue("contextCode", ContextCode);
-        if (Offset != null) yield return new ElementValue("offset", Offset);
-        if (TextElement != null) yield return new ElementValue("text", TextElement);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "contextReference":
-          value = ContextReference;
-          return ContextReference is not null;
+          if (_ContextReference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["contextReference"];
+            return true;
+          }
+          value = _ContextReference;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "contextDefinition":
-          value = ContextDefinitionElement;
-          return ContextDefinitionElement is not null;
+          if (_ContextDefinitionElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          {
+            value = Overflow["contextDefinition"];
+            return true;
+          }
+          value = _ContextDefinitionElement;
+          return (value as Hl7.Fhir.Model.Canonical) is not null;
         case "contextPath":
-          value = ContextPathElement;
-          return ContextPathElement is not null;
+          if (_ContextPathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["contextPath"];
+            return true;
+          }
+          value = _ContextPathElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "contextCode":
-          value = ContextCode;
-          return ContextCode is not null;
+          if (_ContextCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["contextCode"];
+            return true;
+          }
+          value = _ContextCode;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "offset":
-          value = Offset;
-          return Offset is not null;
+          if (_Offset.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["offset"];
+            return true;
+          }
+          value = _Offset;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "text":
-          value = TextElement;
-          return TextElement is not null;
+          if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["text"];
+            return true;
+          }
+          value = _TextElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (ContextReference is not null) yield return new KeyValuePair<string,object>("contextReference",ContextReference);
-      if (ContextDefinitionElement is not null) yield return new KeyValuePair<string,object>("contextDefinition",ContextDefinitionElement);
-      if (ContextPathElement is not null) yield return new KeyValuePair<string,object>("contextPath",ContextPathElement);
-      if (ContextCode is not null) yield return new KeyValuePair<string,object>("contextCode",ContextCode);
-      if (Offset is not null) yield return new KeyValuePair<string,object>("offset",Offset);
-      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "contextReference":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            ContextReference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["contextReference"] = value;
+          }
+          else ContextReference = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "contextDefinition":
+          if (value is not (Hl7.Fhir.Model.Canonical or null))
+          {
+            ContextDefinitionElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
+            Overflow["contextDefinition"] = value;
+          }
+          else ContextDefinitionElement = (Hl7.Fhir.Model.Canonical?)value;
+          return this;
+        case "contextPath":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ContextPathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["contextPath"] = value;
+          }
+          else ContextPathElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "contextCode":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            ContextCode = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["contextCode"] = value;
+          }
+          else ContextCode = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "offset":
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Offset = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["offset"] = value;
+          }
+          else Offset = (Hl7.Fhir.Model.DataType?)value;
+          return this;
+        case "text":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            TextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["text"] = value;
+          }
+          else TextElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_ContextReference is not null && !_ContextReference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("contextReference",_ContextReference);
+      if (_ContextDefinitionElement is not null && !_ContextDefinitionElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("contextDefinition",_ContextDefinitionElement);
+      if (_ContextPathElement is not null && !_ContextPathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("contextPath",_ContextPathElement);
+      if (_ContextCode is not null && !_ContextCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("contextCode",_ContextCode);
+      if (_Offset is not null && !_Offset.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("offset",_Offset);
+      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("text",_TextElement);
     }
 
   }

@@ -10,16 +10,14 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientLineInfoAnnotationPoco
     {
-        private static T getXmlPocoAnnotated<T>(string xml) where T : Resource
+        private static T getXmlPocoAnnotated<T>(string xml) where T : Base
         {
-            new FhirXmlPocoDeserializer(new FhirXmlPocoDeserializerSettings(){ AnnotateLineInfo = true }).TryDeserializeResource(xml, out var resource, out _);
-            return (T)resource;
+            return new FhirXmlDeserializer(new DeserializerSettings() { AnnotateLineInfo = true }.UsingMode(DeserializationMode.Ostrich)).Deserialize<T>(xml);
         }
-        
-        private static T getJsonPocoAnnotated<T>(string json) where T : Resource
+
+        private static T getJsonPocoAnnotated<T>(string json) where T : Base
         {
-            new FhirJsonPocoDeserializer(new FhirJsonPocoDeserializerSettings(){ AnnotateLineInfo = true }).TryDeserializeResource(json, out var resource, out _);
-            return (T)resource;
+            return new FhirJsonDeserializer(new DeserializerSettings() { AnnotateLineInfo = true }.UsingMode(DeserializationMode.Ostrich)).Deserialize<T>(json);
         }
 
         [TestMethod]
@@ -28,7 +26,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlPocoAnnotated<Patient>(xml);
 
-            foreach (var c in nav.Children)
+            foreach (var (name, c) in nav.EnumerateElements())
             {
                 CheckAllElementsAnnotated<XmlSerializationDetails>(c);
             }
@@ -40,12 +38,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonPocoAnnotated<Patient>(json);
 
-            foreach (var c in nav.Children)
+            foreach (var (name, c) in nav.EnumerateElements())
             {
                 CheckAllElementsAnnotated<JsonSerializationDetails>(c);
             }
         }
-
+        
         public void CheckAllElementsAnnotated<T>(object element) where T : IPositionInfo
         {
             Assert.IsNotNull(element);
@@ -57,7 +55,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 posInfo.LineNumber.Should().NotBe(-1).And.NotBe(0);
                 posInfo.LinePosition.Should().NotBe(-1).And.NotBe(0);
                 
-                foreach (var (_, baseChild) in baseElement)
+                foreach (var (_, baseChild) in baseElement.EnumerateElements())
                 {
                     CheckAllElementsAnnotated<T>(baseChild);
                 }

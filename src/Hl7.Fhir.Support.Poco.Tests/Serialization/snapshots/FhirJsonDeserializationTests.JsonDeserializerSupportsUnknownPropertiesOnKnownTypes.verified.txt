@@ -1,0 +1,111 @@
+﻿{
+  Errors: [
+    {
+      Type: CodedValidationException,
+      MemberName: telecom,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a collection of ContactPoint, but found a single ContactPoint.,
+      Display: Type mismatch,
+      LineNumber: 1,
+      Position: 81,
+      InstancePath: Patient.telecom[0],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a collection of ContactPoint, but found a single ContactPoint. At Patient.telecom[0], line 1, position 81.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'communication'.,
+      Display: Expected object,
+      LineNumber: 1,
+      Position: 138,
+      InstancePath: Patient.communication[0],
+      ErrorCode: JSON131,
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'communication'. At Patient.communication[0], line 1, position 138.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Required,
+      BaseErrorMessage: Element 'Patient.communication[0].language' with minimum cardinality 1 must be present.,
+      Display: Mandatory field cannot be null,
+      LineNumber: 1,
+      Position: 142,
+      InstancePath: Patient.communication[0].language,
+      ErrorCode: PVAL105,
+      Message: Element 'Patient.communication[0].language' with minimum cardinality 1 must be present. At Patient.communication[0].language, line 1, position 142.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: communication,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a collection of Patient.communication, but found a single Patient.communication.,
+      Display: Type mismatch,
+      LineNumber: 1,
+      Position: 138,
+      InstancePath: Patient.communication[0],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a collection of Patient.communication, but found a single Patient.communication. At Patient.communication[0], line 1, position 138.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'name'.,
+      Display: Expected object,
+      LineNumber: 1,
+      Position: 150,
+      InstancePath: Patient.name[0],
+      ErrorCode: JSON131,
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'name'. At Patient.name[0], line 1, position 150.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: name,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a collection of HumanName, but found a single HumanName.,
+      Display: Type mismatch,
+      LineNumber: 1,
+      Position: 150,
+      InstancePath: Patient.name[0],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a collection of HumanName, but found a single HumanName. At Patient.name[0], line 1, position 150.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: active,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
+      Display: Type mismatch,
+      LineNumber: 1,
+      Position: 58,
+      InstancePath: Patient.active[2],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.active[2], line 1, position 58.
+    }
+  ],
+  Obj:
+{
+  "resourceType": "Patient",
+  "active": [
+    true,
+    false
+  ],
+  "telecom": {
+    "system": "phone",
+    "value": "magicnumber"
+  },
+  "communication": {
+    "value": "en"
+  },
+  "name": {
+    "value": "Test"
+  },
+  "id": "TestIdentifier"
+}
+}

@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonUntyped
     {
-        public async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
+        private async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
             await FhirJsonNode.ParseAsync(json, settings: settings);
 
         async Task<ISourceNode> FhirJsonNodeParse(string json, string rootName) =>
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = await getJsonNodeU(tp);
 #pragma warning disable 612, 618
-            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElement(), typed: false);
+            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElementLegacy(), typed: false);
 #pragma warning restore 612, 618
         }
 
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var output = await xmlNav.ToJsonAsync();
+                var output = xmlNav.ToJson();
                 Assert.Fail();
             }
             catch (NotSupportedException)
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = await File.ReadAllTextAsync(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = await getJsonNodeU(bundle);
 #pragma warning disable 612,618
-            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElement());
+            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElementLegacy());
 #pragma warning restore 612, 618
         }
 

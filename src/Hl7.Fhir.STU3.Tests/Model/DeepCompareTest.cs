@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlParser().Parse<Patient>(xml);
+            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             Assert.IsTrue(p2.IsExactly(p));
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlParser().Parse<Patient>(xml);
+            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             p2.ActiveElement.Value = !p2.ActiveElement.Value;
@@ -57,10 +57,10 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlParser().Parse<Patient>(xml);
-            var p2 = (Patient)p.DeepCopy();
+            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
+            var p2 = p.DeepCopy();
 
-            var rel = (CodeableConcept)p.Contact[0].Relationship[0].DeepCopy();
+            var rel = p.Contact[0].Relationship[0].DeepCopy();
 
             p2.Contact[0].Relationship.Add(rel);
 

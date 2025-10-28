@@ -25,24 +25,24 @@ namespace Hl7.Fhir.Tests.Model
     public class DeepCopyTest
     {
         [TestMethod]
-        public async Task CheckCopyAllFields()
+        public void CheckCopyAllFields()
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = await new FhirXmlParser().ParseAsync<Patient>(xml);
-            var p2 = (Patient)p.DeepCopy();
-            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
+            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
+            var p2 = p.DeepCopy();
+            var xml2 = new FhirXmlSerializer().SerializeToString(p2);
             XmlAssert.AreSame("TestPatient.xml", xml, xml2);
         }
 
         [TestMethod]
-        public async Task CheckCopyCarePlan()
+        public void CheckCopyCarePlan()
         {
             string xml = ReadTestData(@"careplan-example-f201-renal.xml");
 
-            var p = await new FhirXmlParser().ParseAsync<CarePlan>(xml);
-            var p2 = (CarePlan)p.DeepCopy();
-            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
+            var p = new FhirXmlDeserializer().Deserialize<CarePlan>(xml);
+            var p2 = p.DeepCopy();
+            var xml2 = new FhirXmlSerializer().SerializeToString(p2);
             XmlAssert.AreSame("careplan-example-f201-renal.xml", xml, xml2);
         }
 
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlParser().Parse<Patient>(xml);
+            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
             var sw = new Stopwatch();
 
             sw.Start();

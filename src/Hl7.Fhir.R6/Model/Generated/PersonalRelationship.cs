@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -51,253 +55,396 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("PersonalRelationship","http://hl7.org/fhir/StructureDefinition/PersonalRelationship", IsResource=true)]
+  [FhirType("PersonalRelationship","http://hl7.org/fhir/StructureDefinition/PersonalRelationship")]
   public partial class PersonalRelationship : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "PersonalRelationship"; } }
+    public override string TypeName => "PersonalRelationship";
 
     /// <summary>
-    /// The individual that is the the source of the relationship
+    /// The individual that is the the source of the relationship.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=90)]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Person")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Source
+    public Hl7.Fhir.Model.ResourceReference? Source
     {
-      get { return _Source; }
-      set { _Source = value; OnPropertyChanged("Source"); }
+      get
+      {
+        if(_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["source"]);
+        return _Source;
+      }
+
+      set
+      {
+        if (_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("source");
+        _Source = value;
+        OnPropertyChanged("Source");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Source;
+    private Hl7.Fhir.Model.ResourceReference? _Source;
 
     /// <summary>
-    /// The relationship between the source and the target individuals
+    /// The relationship between the source and the target individuals.
     /// </summary>
     [FhirElement("relationshipType", InSummary=true, Order=100)]
     [Binding("PersonalRelationshipType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept RelationshipType
+    public Hl7.Fhir.Model.CodeableConcept? RelationshipType
     {
-      get { return _RelationshipType; }
-      set { _RelationshipType = value; OnPropertyChanged("RelationshipType"); }
+      get
+      {
+        if(_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["relationshipType"]);
+        return _RelationshipType;
+      }
+
+      set
+      {
+        if (_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("relationshipType");
+        _RelationshipType = value;
+        OnPropertyChanged("RelationshipType");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _RelationshipType;
+    private Hl7.Fhir.Model.CodeableConcept? _RelationshipType;
 
     /// <summary>
-    /// The individual that is the the target of the relationship
+    /// The individual that is the the target of the relationship.
     /// </summary>
     [FhirElement("target", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Person")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Target
+    public Hl7.Fhir.Model.ResourceReference? Target
     {
-      get { return _Target; }
-      set { _Target = value; OnPropertyChanged("Target"); }
+      get
+      {
+        if(_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["target"]);
+        return _Target;
+      }
+
+      set
+      {
+        if (_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("target");
+        _Target = value;
+        OnPropertyChanged("Target");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Target;
+    private Hl7.Fhir.Model.ResourceReference? _Target;
 
     /// <summary>
-    /// The period of time during which the relationship is active
+    /// The period of time during which the relationship is active.
     /// </summary>
     [FhirElement("period", Order=120, FiveWs="FiveWs.done[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Period> Period
     {
-      get { if(_Period==null) _Period = new List<Hl7.Fhir.Model.Period>(); return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(_Period.InOverflow<List<Hl7.Fhir.Model.Period>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Period>), Overflow["period"]);
+        return _Period ??= [];
+      }
+
+      set
+      {
+        if (_Period.InOverflow<List<Hl7.Fhir.Model.Period>>())
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Period> _Period;
+    private List<Hl7.Fhir.Model.Period>? _Period;
 
     /// <summary>
-    /// The confidence level of this relationship
+    /// The confidence level of this relationship.
     /// </summary>
     [FhirElement("confidence", InSummary=true, Order=130)]
     [Binding("Confidence")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Confidence
+    public Hl7.Fhir.Model.CodeableConcept? Confidence
     {
-      get { return _Confidence; }
-      set { _Confidence = value; OnPropertyChanged("Confidence"); }
+      get
+      {
+        if(_Confidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["confidence"]);
+        return _Confidence;
+      }
+
+      set
+      {
+        if (_Confidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("confidence");
+        _Confidence = value;
+        OnPropertyChanged("Confidence");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Confidence;
+    private Hl7.Fhir.Model.CodeableConcept? _Confidence;
 
     /// <summary>
-    /// Who has asserted the details of the relationship
+    /// Who has asserted the details of the relationship.
     /// </summary>
     [FhirElement("asserter", Order=140)]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Asserter
+    public Hl7.Fhir.Model.ResourceReference? Asserter
     {
-      get { return _Asserter; }
-      set { _Asserter = value; OnPropertyChanged("Asserter"); }
+      get
+      {
+        if(_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["asserter"]);
+        return _Asserter;
+      }
+
+      set
+      {
+        if (_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("asserter");
+        _Asserter = value;
+        OnPropertyChanged("Asserter");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Asserter;
+    private Hl7.Fhir.Model.ResourceReference? _Asserter;
 
     /// <summary>
-    /// This relationship is applicable to the referenced group(s)
+    /// This relationship is applicable to the referenced group(s).
     /// </summary>
     [FhirElement("group", InSummary=true, Order=150)]
     [CLSCompliant(false)]
     [References("Group")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Group
     {
-      get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.ResourceReference>(); return _Group; }
-      set { _Group = value; OnPropertyChanged("Group"); }
+      get
+      {
+        if(_Group.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["group"]);
+        return _Group ??= [];
+      }
+
+      set
+      {
+        if (_Group.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("group");
+        _Group = value;
+        OnPropertyChanged("Group");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Group;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Group;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as PersonalRelationship;
-
-      if (dest == null)
-      {
+      if(other is not PersonalRelationship dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-      if(RelationshipType != null) dest.RelationshipType = (Hl7.Fhir.Model.CodeableConcept)RelationshipType.DeepCopy();
-      if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
-      if(Period.Any()) dest.Period = new List<Hl7.Fhir.Model.Period>(Period.DeepCopy());
-      if(Confidence != null) dest.Confidence = (Hl7.Fhir.Model.CodeableConcept)Confidence.DeepCopy();
-      if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
-      if(Group.Any()) dest.Group = new List<Hl7.Fhir.Model.ResourceReference>(Group.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.ResourceReference)_Source.DeepCopyInternal();
+      if(_RelationshipType is not null) dest.RelationshipType = (Hl7.Fhir.Model.CodeableConcept)_RelationshipType.DeepCopyInternal();
+      if(_Target is not null) dest.Target = (Hl7.Fhir.Model.ResourceReference)_Target.DeepCopyInternal();
+      if(_Period is not null) dest.Period = new List<Hl7.Fhir.Model.Period>(_Period.DeepCopyInternal());
+      if(_Confidence is not null) dest.Confidence = (Hl7.Fhir.Model.CodeableConcept)_Confidence.DeepCopyInternal();
+      if(_Asserter is not null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)_Asserter.DeepCopyInternal();
+      if(_Group is not null) dest.Group = new List<Hl7.Fhir.Model.ResourceReference>(_Group.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new PersonalRelationship());
+      var instance = new PersonalRelationship();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as PersonalRelationship;
-      if(otherT == null) return false;
+      if(other is not PersonalRelationship otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-      if( !DeepComparable.Matches(RelationshipType, otherT.RelationshipType)) return false;
-      if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(Confidence, otherT.Confidence)) return false;
-      if( !DeepComparable.Matches(Asserter, otherT.Asserter)) return false;
-      if( !DeepComparable.Matches(Group, otherT.Group)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Source, otherT._Source)) return false;
+      if(!comparer.Equals(_RelationshipType, otherT._RelationshipType)) return false;
+      if(!comparer.Equals(_Target, otherT._Target)) return false;
+      if(!comparer.ListEquals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Confidence, otherT._Confidence)) return false;
+      if(!comparer.Equals(_Asserter, otherT._Asserter)) return false;
+      if(!comparer.ListEquals(_Group, otherT._Group)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as PersonalRelationship;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-      if( !DeepComparable.IsExactly(RelationshipType, otherT.RelationshipType)) return false;
-      if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(Confidence, otherT.Confidence)) return false;
-      if( !DeepComparable.IsExactly(Asserter, otherT.Asserter)) return false;
-      if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Source != null) yield return Source;
-        if (RelationshipType != null) yield return RelationshipType;
-        if (Target != null) yield return Target;
-        foreach (var elem in Period) { if (elem != null) yield return elem; }
-        if (Confidence != null) yield return Confidence;
-        if (Asserter != null) yield return Asserter;
-        foreach (var elem in Group) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Source != null) yield return new ElementValue("source", Source);
-        if (RelationshipType != null) yield return new ElementValue("relationshipType", RelationshipType);
-        if (Target != null) yield return new ElementValue("target", Target);
-        foreach (var elem in Period) { if (elem != null) yield return new ElementValue("period", elem); }
-        if (Confidence != null) yield return new ElementValue("confidence", Confidence);
-        if (Asserter != null) yield return new ElementValue("asserter", Asserter);
-        foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "source":
-          value = Source;
-          return Source is not null;
+          if (_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["source"];
+            return true;
+          }
+          value = _Source;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "relationshipType":
-          value = RelationshipType;
-          return RelationshipType is not null;
+          if (_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["relationshipType"];
+            return true;
+          }
+          value = _RelationshipType;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "target":
-          value = Target;
-          return Target is not null;
+          if (_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["target"];
+            return true;
+          }
+          value = _Target;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "period":
-          value = Period;
-          return Period?.Any() == true;
+          if (_Period.InOverflow<List<Hl7.Fhir.Model.Period>>())
+          {
+            value = Overflow["period"];
+            return true;
+          }
+          value = _Period;
+          return (value as List<Hl7.Fhir.Model.Period>)?.Any() is true;
         case "confidence":
-          value = Confidence;
-          return Confidence is not null;
+          if (_Confidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["confidence"];
+            return true;
+          }
+          value = _Confidence;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "asserter":
-          value = Asserter;
-          return Asserter is not null;
+          if (_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["asserter"];
+            return true;
+          }
+          value = _Asserter;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "group":
-          value = Group;
-          return Group?.Any() == true;
+          if (_Group.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["group"];
+            return true;
+          }
+          value = _Group;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (RelationshipType is not null) yield return new KeyValuePair<string,object>("relationshipType",RelationshipType);
-      if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
-      if (Period?.Any() == true) yield return new KeyValuePair<string,object>("period",Period);
-      if (Confidence is not null) yield return new KeyValuePair<string,object>("confidence",Confidence);
-      if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
-      if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "source":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Source = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["source"] = value;
+          }
+          else Source = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "relationshipType":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            RelationshipType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["relationshipType"] = value;
+          }
+          else RelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "target":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Target = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["target"] = value;
+          }
+          else Target = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "period":
+          if (value is not (List<Hl7.Fhir.Model.Period> or null))
+          {
+            Period = OverflowNull<List<Hl7.Fhir.Model.Period>>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (List<Hl7.Fhir.Model.Period>?)value!;
+          return this;
+        case "confidence":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Confidence = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["confidence"] = value;
+          }
+          else Confidence = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "asserter":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Asserter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["asserter"] = value;
+          }
+          else Asserter = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "group":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Group = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["group"] = value;
+          }
+          else Group = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_RelationshipType is not null && !_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("relationshipType",_RelationshipType);
+      if (_Target is not null && !_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("target",_Target);
+      if (_Period?.Any() is true && !_Period.InOverflow<List<Hl7.Fhir.Model.Period>>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Confidence is not null && !_Confidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("confidence",_Confidence);
+      if (_Asserter is not null && !_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("asserter",_Asserter);
+      if (_Group?.Any() is true && !_Group.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("group",_Group);
     }
 
   }

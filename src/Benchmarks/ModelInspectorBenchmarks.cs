@@ -30,7 +30,9 @@ namespace Firely.Sdk.Benchmarks
             //ModelInspector.Clear();
             //ClassMapping.Clear();
 
+#pragma warning disable CS0618 // Type or member is obsolete
             _ = ModelInspector.ForAssembly(typeof(ModelInfo).Assembly);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         [Benchmark]
@@ -40,7 +42,9 @@ namespace Firely.Sdk.Benchmarks
             //ModelInspector.Clear();
             //ClassMapping.Clear();
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).Assembly);
+#pragma warning restore CS0618 // Type or member is obsolete
             foreach (var t in PopularResources)
             {
                 var mapping = inspector.FindClassMapping(t);

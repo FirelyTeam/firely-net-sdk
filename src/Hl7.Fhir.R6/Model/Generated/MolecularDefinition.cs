@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -51,13 +55,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MolecularDefinition","http://hl7.org/fhir/StructureDefinition/MolecularDefinition", IsResource=true)]
+  [FhirType("MolecularDefinition","http://hl7.org/fhir/StructureDefinition/MolecularDefinition")]
   public partial class MolecularDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MolecularDefinition"; } }
+    public override string TypeName => "MolecularDefinition";
 
     /// <summary>
     /// A defined location on a molecular entity
@@ -67,129 +71,154 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Location", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location")]
+    [FhirType("MolecularDefinition.location", IsBackboneType=true)]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Location"; } }
+      public override string TypeName => "MolecularDefinition.location";
 
       /// <summary>
-      /// A coordinate-based location on a sequence
+      /// A coordinate-based location on a sequence.
       /// </summary>
       [FhirElement("sequenceLocation", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent SequenceLocation
+      public Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent? SequenceLocation
       {
-        get { return _SequenceLocation; }
-        set { _SequenceLocation = value; OnPropertyChanged("SequenceLocation"); }
+        get
+        {
+          if(_SequenceLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent), Overflow["sequenceLocation"]);
+          return _SequenceLocation;
+        }
+
+        set
+        {
+          if (_SequenceLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent>())
+            Overflow.Remove("sequenceLocation");
+          _SequenceLocation = value;
+          OnPropertyChanged("SequenceLocation");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent _SequenceLocation;
+      private Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent? _SequenceLocation;
 
       /// <summary>
-      /// A cytoband-based location on a sequence
+      /// A cytoband-based location on a sequence.
       /// </summary>
       [FhirElement("cytobandLocation", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent CytobandLocation
+      public Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent? CytobandLocation
       {
-        get { return _CytobandLocation; }
-        set { _CytobandLocation = value; OnPropertyChanged("CytobandLocation"); }
+        get
+        {
+          if(_CytobandLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent), Overflow["cytobandLocation"]);
+          return _CytobandLocation;
+        }
+
+        set
+        {
+          if (_CytobandLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent>())
+            Overflow.Remove("cytobandLocation");
+          _CytobandLocation = value;
+          OnPropertyChanged("CytobandLocation");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent _CytobandLocation;
+      private Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent? _CytobandLocation;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LocationComponent;
-
-        if (dest == null)
-        {
+        if(other is not LocationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(SequenceLocation != null) dest.SequenceLocation = (Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent)SequenceLocation.DeepCopy();
-        if(CytobandLocation != null) dest.CytobandLocation = (Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent)CytobandLocation.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_SequenceLocation is not null) dest.SequenceLocation = (Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent)_SequenceLocation.DeepCopyInternal();
+        if(_CytobandLocation is not null) dest.CytobandLocation = (Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent)_CytobandLocation.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LocationComponent());
+        var instance = new LocationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LocationComponent;
-        if(otherT == null) return false;
+        if(other is not LocationComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(SequenceLocation, otherT.SequenceLocation)) return false;
-        if( !DeepComparable.Matches(CytobandLocation, otherT.CytobandLocation)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SequenceLocation, otherT._SequenceLocation)) return false;
+        if(!comparer.Equals(_CytobandLocation, otherT._CytobandLocation)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as LocationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(SequenceLocation, otherT.SequenceLocation)) return false;
-        if( !DeepComparable.IsExactly(CytobandLocation, otherT.CytobandLocation)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (SequenceLocation != null) yield return SequenceLocation;
-          if (CytobandLocation != null) yield return CytobandLocation;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (SequenceLocation != null) yield return new ElementValue("sequenceLocation", SequenceLocation);
-          if (CytobandLocation != null) yield return new ElementValue("cytobandLocation", CytobandLocation);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequenceLocation":
-            value = SequenceLocation;
-            return SequenceLocation is not null;
+            if (_SequenceLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent>())
+            {
+              value = Overflow["sequenceLocation"];
+              return true;
+            }
+            value = _SequenceLocation;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent) is not null;
           case "cytobandLocation":
-            value = CytobandLocation;
-            return CytobandLocation is not null;
+            if (_CytobandLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent>())
+            {
+              value = Overflow["cytobandLocation"];
+              return true;
+            }
+            value = _CytobandLocation;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (SequenceLocation is not null) yield return new KeyValuePair<string,object>("sequenceLocation",SequenceLocation);
-        if (CytobandLocation is not null) yield return new KeyValuePair<string,object>("cytobandLocation",CytobandLocation);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "sequenceLocation":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent or null))
+            {
+              SequenceLocation = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent>.INSTANCE;
+              Overflow["sequenceLocation"] = value;
+            }
+            else SequenceLocation = (Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent?)value;
+            return this;
+          case "cytobandLocation":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent or null))
+            {
+              CytobandLocation = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent>.INSTANCE;
+              Overflow["cytobandLocation"] = value;
+            }
+            else CytobandLocation = (Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_SequenceLocation is not null && !_SequenceLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.SequenceLocationComponent>()) yield return new KeyValuePair<string,object>("sequenceLocation",_SequenceLocation);
+        if (_CytobandLocation is not null && !_CytobandLocation.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandLocationComponent>()) yield return new KeyValuePair<string,object>("cytobandLocation",_CytobandLocation);
       }
 
     }
@@ -202,154 +231,202 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#SequenceLocation", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.sequenceLocation")]
+    [FhirType("MolecularDefinition.location.sequenceLocation", IsBackboneType=true)]
     public partial class SequenceLocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#SequenceLocation"; } }
+      public override string TypeName => "MolecularDefinition.location.sequenceLocation";
 
       /// <summary>
-      /// The sequence on which the location is defined
+      /// The sequence on which the location is defined.
       /// </summary>
       [FhirElement("sequenceContext", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference SequenceContext
+      public Hl7.Fhir.Model.ResourceReference? SequenceContext
       {
-        get { return _SequenceContext; }
-        set { _SequenceContext = value; OnPropertyChanged("SequenceContext"); }
+        get
+        {
+          if(_SequenceContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["sequenceContext"]);
+          return _SequenceContext;
+        }
+
+        set
+        {
+          if (_SequenceContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("sequenceContext");
+          _SequenceContext = value;
+          OnPropertyChanged("SequenceContext");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _SequenceContext;
+      private Hl7.Fhir.Model.ResourceReference? _SequenceContext;
 
       /// <summary>
-      /// An interval on a sequence
+      /// An interval on a sequence.
       /// </summary>
       [FhirElement("coordinateInterval", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent CoordinateInterval
+      public Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent? CoordinateInterval
       {
-        get { return _CoordinateInterval; }
-        set { _CoordinateInterval = value; OnPropertyChanged("CoordinateInterval"); }
+        get
+        {
+          if(_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent), Overflow["coordinateInterval"]);
+          return _CoordinateInterval;
+        }
+
+        set
+        {
+          if (_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent>())
+            Overflow.Remove("coordinateInterval");
+          _CoordinateInterval = value;
+          OnPropertyChanged("CoordinateInterval");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent _CoordinateInterval;
+      private Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent? _CoordinateInterval;
 
       /// <summary>
-      /// The strand at the coordinateInterval
+      /// The strand at the coordinateInterval.
       /// </summary>
       [FhirElement("strand", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Strand
+      public Hl7.Fhir.Model.CodeableConcept? Strand
       {
-        get { return _Strand; }
-        set { _Strand = value; OnPropertyChanged("Strand"); }
+        get
+        {
+          if(_Strand.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["strand"]);
+          return _Strand;
+        }
+
+        set
+        {
+          if (_Strand.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("strand");
+          _Strand = value;
+          OnPropertyChanged("Strand");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Strand;
+      private Hl7.Fhir.Model.CodeableConcept? _Strand;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SequenceLocationComponent;
-
-        if (dest == null)
-        {
+        if(other is not SequenceLocationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(SequenceContext != null) dest.SequenceContext = (Hl7.Fhir.Model.ResourceReference)SequenceContext.DeepCopy();
-        if(CoordinateInterval != null) dest.CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent)CoordinateInterval.DeepCopy();
-        if(Strand != null) dest.Strand = (Hl7.Fhir.Model.CodeableConcept)Strand.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_SequenceContext is not null) dest.SequenceContext = (Hl7.Fhir.Model.ResourceReference)_SequenceContext.DeepCopyInternal();
+        if(_CoordinateInterval is not null) dest.CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent)_CoordinateInterval.DeepCopyInternal();
+        if(_Strand is not null) dest.Strand = (Hl7.Fhir.Model.CodeableConcept)_Strand.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SequenceLocationComponent());
+        var instance = new SequenceLocationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SequenceLocationComponent;
-        if(otherT == null) return false;
+        if(other is not SequenceLocationComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(SequenceContext, otherT.SequenceContext)) return false;
-        if( !DeepComparable.Matches(CoordinateInterval, otherT.CoordinateInterval)) return false;
-        if( !DeepComparable.Matches(Strand, otherT.Strand)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SequenceContext, otherT._SequenceContext)) return false;
+        if(!comparer.Equals(_CoordinateInterval, otherT._CoordinateInterval)) return false;
+        if(!comparer.Equals(_Strand, otherT._Strand)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as SequenceLocationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(SequenceContext, otherT.SequenceContext)) return false;
-        if( !DeepComparable.IsExactly(CoordinateInterval, otherT.CoordinateInterval)) return false;
-        if( !DeepComparable.IsExactly(Strand, otherT.Strand)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (SequenceContext != null) yield return SequenceContext;
-          if (CoordinateInterval != null) yield return CoordinateInterval;
-          if (Strand != null) yield return Strand;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (SequenceContext != null) yield return new ElementValue("sequenceContext", SequenceContext);
-          if (CoordinateInterval != null) yield return new ElementValue("coordinateInterval", CoordinateInterval);
-          if (Strand != null) yield return new ElementValue("strand", Strand);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequenceContext":
-            value = SequenceContext;
-            return SequenceContext is not null;
+            if (_SequenceContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["sequenceContext"];
+              return true;
+            }
+            value = _SequenceContext;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "coordinateInterval":
-            value = CoordinateInterval;
-            return CoordinateInterval is not null;
+            if (_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent>())
+            {
+              value = Overflow["coordinateInterval"];
+              return true;
+            }
+            value = _CoordinateInterval;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent) is not null;
           case "strand":
-            value = Strand;
-            return Strand is not null;
+            if (_Strand.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["strand"];
+              return true;
+            }
+            value = _Strand;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (SequenceContext is not null) yield return new KeyValuePair<string,object>("sequenceContext",SequenceContext);
-        if (CoordinateInterval is not null) yield return new KeyValuePair<string,object>("coordinateInterval",CoordinateInterval);
-        if (Strand is not null) yield return new KeyValuePair<string,object>("strand",Strand);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "sequenceContext":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              SequenceContext = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["sequenceContext"] = value;
+            }
+            else SequenceContext = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "coordinateInterval":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent or null))
+            {
+              CoordinateInterval = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent>.INSTANCE;
+              Overflow["coordinateInterval"] = value;
+            }
+            else CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent?)value;
+            return this;
+          case "strand":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Strand = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["strand"] = value;
+            }
+            else Strand = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_SequenceContext is not null && !_SequenceContext.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("sequenceContext",_SequenceContext);
+        if (_CoordinateInterval is not null && !_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalComponentComponent>()) yield return new KeyValuePair<string,object>("coordinateInterval",_CoordinateInterval);
+        if (_Strand is not null && !_Strand.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("strand",_Strand);
       }
 
     }
@@ -362,155 +439,203 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#LocationSequenceLocationCoordinateIntervalComponent", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.sequenceLocation.coordinateInterval")]
+    [FhirType("MolecularDefinition.location.sequenceLocation.coordinateInterval", IsBackboneType=true)]
     public partial class LocationSequenceLocationCoordinateIntervalComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#LocationSequenceLocationCoordinateIntervalComponent"; } }
+      public override string TypeName => "MolecularDefinition.location.sequenceLocation.coordinateInterval";
 
       /// <summary>
-      /// The coordinate system used to define the location
+      /// The coordinate system used to define the location.
       /// </summary>
       [FhirElement("coordinateSystem", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent CoordinateSystem
+      public Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent? CoordinateSystem
       {
-        get { return _CoordinateSystem; }
-        set { _CoordinateSystem = value; OnPropertyChanged("CoordinateSystem"); }
+        get
+        {
+          if(_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent), Overflow["coordinateSystem"]);
+          return _CoordinateSystem;
+        }
+
+        set
+        {
+          if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent>())
+            Overflow.Remove("coordinateSystem");
+          _CoordinateSystem = value;
+          OnPropertyChanged("CoordinateSystem");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent _CoordinateSystem;
+      private Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent? _CoordinateSystem;
 
       /// <summary>
-      /// The start location of the interval
+      /// The start location of the interval.
       /// </summary>
       [FhirElement("start", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Start
+      public Hl7.Fhir.Model.DataType? Start
       {
-        get { return _Start; }
-        set { _Start = value; OnPropertyChanged("Start"); }
+        get
+        {
+          if(_Start.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["start"]);
+          return _Start;
+        }
+
+        set
+        {
+          if (_Start.InOverflow<DynamicDataType>())
+            Overflow.Remove("start");
+          _Start = value;
+          OnPropertyChanged("Start");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Start;
+      private Hl7.Fhir.Model.DataType? _Start;
 
       /// <summary>
-      /// The end location of the interval
+      /// The end location of the interval.
       /// </summary>
       [FhirElement("end", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType End
+      public Hl7.Fhir.Model.DataType? End
       {
-        get { return _End; }
-        set { _End = value; OnPropertyChanged("End"); }
+        get
+        {
+          if(_End.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["end"]);
+          return _End;
+        }
+
+        set
+        {
+          if (_End.InOverflow<DynamicDataType>())
+            Overflow.Remove("end");
+          _End = value;
+          OnPropertyChanged("End");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _End;
+      private Hl7.Fhir.Model.DataType? _End;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LocationSequenceLocationCoordinateIntervalComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not LocationSequenceLocationCoordinateIntervalComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(CoordinateSystem != null) dest.CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent)CoordinateSystem.DeepCopy();
-        if(Start != null) dest.Start = (Hl7.Fhir.Model.DataType)Start.DeepCopy();
-        if(End != null) dest.End = (Hl7.Fhir.Model.DataType)End.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_CoordinateSystem is not null) dest.CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent)_CoordinateSystem.DeepCopyInternal();
+        if(_Start is not null) dest.Start = (Hl7.Fhir.Model.DataType)_Start.DeepCopyInternal();
+        if(_End is not null) dest.End = (Hl7.Fhir.Model.DataType)_End.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LocationSequenceLocationCoordinateIntervalComponentComponent());
+        var instance = new LocationSequenceLocationCoordinateIntervalComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LocationSequenceLocationCoordinateIntervalComponentComponent;
-        if(otherT == null) return false;
+        if(other is not LocationSequenceLocationCoordinateIntervalComponentComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(CoordinateSystem, otherT.CoordinateSystem)) return false;
-        if( !DeepComparable.Matches(Start, otherT.Start)) return false;
-        if( !DeepComparable.Matches(End, otherT.End)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_CoordinateSystem, otherT._CoordinateSystem)) return false;
+        if(!comparer.Equals(_Start, otherT._Start)) return false;
+        if(!comparer.Equals(_End, otherT._End)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as LocationSequenceLocationCoordinateIntervalComponentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(CoordinateSystem, otherT.CoordinateSystem)) return false;
-        if( !DeepComparable.IsExactly(Start, otherT.Start)) return false;
-        if( !DeepComparable.IsExactly(End, otherT.End)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (CoordinateSystem != null) yield return CoordinateSystem;
-          if (Start != null) yield return Start;
-          if (End != null) yield return End;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (CoordinateSystem != null) yield return new ElementValue("coordinateSystem", CoordinateSystem);
-          if (Start != null) yield return new ElementValue("start", Start);
-          if (End != null) yield return new ElementValue("end", End);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "coordinateSystem":
-            value = CoordinateSystem;
-            return CoordinateSystem is not null;
+            if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent>())
+            {
+              value = Overflow["coordinateSystem"];
+              return true;
+            }
+            value = _CoordinateSystem;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent) is not null;
           case "start":
-            value = Start;
-            return Start is not null;
+            if (_Start.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["start"];
+              return true;
+            }
+            value = _Start;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "end":
-            value = End;
-            return End is not null;
+            if (_End.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["end"];
+              return true;
+            }
+            value = _End;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (CoordinateSystem is not null) yield return new KeyValuePair<string,object>("coordinateSystem",CoordinateSystem);
-        if (Start is not null) yield return new KeyValuePair<string,object>("start",Start);
-        if (End is not null) yield return new KeyValuePair<string,object>("end",End);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "coordinateSystem":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent or null))
+            {
+              CoordinateSystem = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent>.INSTANCE;
+              Overflow["coordinateSystem"] = value;
+            }
+            else CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent?)value;
+            return this;
+          case "start":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Start = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["start"] = value;
+            }
+            else Start = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "end":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              End = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["end"] = value;
+            }
+            else End = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_CoordinateSystem is not null && !_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent>()) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystem);
+        if (_Start is not null && !_Start.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("start",_Start);
+        if (_End is not null && !_End.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("end",_End);
       }
 
     }
@@ -523,152 +648,200 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#LocationSequenceLocationCoordinateIntervalCoordinateSystemComponent", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.sequenceLocation.coordinateInterval.coordinateSystem")]
+    [FhirType("MolecularDefinition.location.sequenceLocation.coordinateInterval.coordinateSystem", IsBackboneType=true)]
     public partial class LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#LocationSequenceLocationCoordinateIntervalCoordinateSystemComponent"; } }
+      public override string TypeName => "MolecularDefinition.location.sequenceLocation.coordinateInterval.coordinateSystem";
 
       /// <summary>
-      /// The type of coordinate system used
+      /// The type of coordinate system used.
       /// </summary>
       [FhirElement("system", InSummary=true, Order=40)]
       [Binding("LL5323-2")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept System
+      public Hl7.Fhir.Model.CodeableConcept? System
       {
-        get { return _System; }
-        set { _System = value; OnPropertyChanged("System"); }
+        get
+        {
+          if(_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["system"]);
+          return _System;
+        }
+
+        set
+        {
+          if (_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("system");
+          _System = value;
+          OnPropertyChanged("System");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _System;
+      private Hl7.Fhir.Model.CodeableConcept? _System;
 
       /// <summary>
-      /// The location of the origin of the coordinate system
+      /// The location of the origin of the coordinate system.
       /// </summary>
       [FhirElement("origin", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Origin
+      public Hl7.Fhir.Model.CodeableConcept? Origin
       {
-        get { return _Origin; }
-        set { _Origin = value; OnPropertyChanged("Origin"); }
+        get
+        {
+          if(_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["origin"]);
+          return _Origin;
+        }
+
+        set
+        {
+          if (_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("origin");
+          _Origin = value;
+          OnPropertyChanged("Origin");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Origin;
+      private Hl7.Fhir.Model.CodeableConcept? _Origin;
 
       /// <summary>
-      /// The normalization method used for determining a location within the coordinate system
+      /// The normalization method used for determining a location within the coordinate system.
       /// </summary>
       [FhirElement("normalizationMethod", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept NormalizationMethod
+      public Hl7.Fhir.Model.CodeableConcept? NormalizationMethod
       {
-        get { return _NormalizationMethod; }
-        set { _NormalizationMethod = value; OnPropertyChanged("NormalizationMethod"); }
+        get
+        {
+          if(_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["normalizationMethod"]);
+          return _NormalizationMethod;
+        }
+
+        set
+        {
+          if (_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("normalizationMethod");
+          _NormalizationMethod = value;
+          OnPropertyChanged("NormalizationMethod");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _NormalizationMethod;
+      private Hl7.Fhir.Model.CodeableConcept? _NormalizationMethod;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(System != null) dest.System = (Hl7.Fhir.Model.CodeableConcept)System.DeepCopy();
-        if(Origin != null) dest.Origin = (Hl7.Fhir.Model.CodeableConcept)Origin.DeepCopy();
-        if(NormalizationMethod != null) dest.NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept)NormalizationMethod.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_System is not null) dest.System = (Hl7.Fhir.Model.CodeableConcept)_System.DeepCopyInternal();
+        if(_Origin is not null) dest.Origin = (Hl7.Fhir.Model.CodeableConcept)_Origin.DeepCopyInternal();
+        if(_NormalizationMethod is not null) dest.NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept)_NormalizationMethod.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent());
+        var instance = new LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent;
-        if(otherT == null) return false;
+        if(other is not LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(System, otherT.System)) return false;
-        if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
-        if( !DeepComparable.Matches(NormalizationMethod, otherT.NormalizationMethod)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_System, otherT._System)) return false;
+        if(!comparer.Equals(_Origin, otherT._Origin)) return false;
+        if(!comparer.Equals(_NormalizationMethod, otherT._NormalizationMethod)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as LocationSequenceLocationCoordinateIntervalCoordinateSystemComponentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(System, otherT.System)) return false;
-        if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
-        if( !DeepComparable.IsExactly(NormalizationMethod, otherT.NormalizationMethod)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (System != null) yield return System;
-          if (Origin != null) yield return Origin;
-          if (NormalizationMethod != null) yield return NormalizationMethod;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (System != null) yield return new ElementValue("system", System);
-          if (Origin != null) yield return new ElementValue("origin", Origin);
-          if (NormalizationMethod != null) yield return new ElementValue("normalizationMethod", NormalizationMethod);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "system":
-            value = System;
-            return System is not null;
+            if (_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["system"];
+              return true;
+            }
+            value = _System;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "origin":
-            value = Origin;
-            return Origin is not null;
+            if (_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["origin"];
+              return true;
+            }
+            value = _Origin;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "normalizationMethod":
-            value = NormalizationMethod;
-            return NormalizationMethod is not null;
+            if (_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["normalizationMethod"];
+              return true;
+            }
+            value = _NormalizationMethod;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (System is not null) yield return new KeyValuePair<string,object>("system",System);
-        if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
-        if (NormalizationMethod is not null) yield return new KeyValuePair<string,object>("normalizationMethod",NormalizationMethod);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "system":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              System = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["system"] = value;
+            }
+            else System = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "origin":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Origin = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["origin"] = value;
+            }
+            else Origin = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "normalizationMethod":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              NormalizationMethod = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["normalizationMethod"] = value;
+            }
+            else NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_System is not null && !_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("system",_System);
+        if (_Origin is not null && !_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("origin",_Origin);
+        if (_NormalizationMethod is not null && !_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("normalizationMethod",_NormalizationMethod);
       }
 
     }
@@ -681,131 +854,156 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#CytobandLocation", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.cytobandLocation")]
+    [FhirType("MolecularDefinition.location.cytobandLocation", IsBackboneType=true)]
     public partial class CytobandLocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#CytobandLocation"; } }
+      public override string TypeName => "MolecularDefinition.location.cytobandLocation";
 
       /// <summary>
-      /// Reference Genome
+      /// Reference Genome.
       /// </summary>
       [FhirElement("genomeAssembly", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent GenomeAssembly
+      public Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent? GenomeAssembly
       {
-        get { return _GenomeAssembly; }
-        set { _GenomeAssembly = value; OnPropertyChanged("GenomeAssembly"); }
+        get
+        {
+          if(_GenomeAssembly.InOverflow<Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent), Overflow["genomeAssembly"]);
+          return _GenomeAssembly;
+        }
+
+        set
+        {
+          if (_GenomeAssembly.InOverflow<Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent>())
+            Overflow.Remove("genomeAssembly");
+          _GenomeAssembly = value;
+          OnPropertyChanged("GenomeAssembly");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent _GenomeAssembly;
+      private Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent? _GenomeAssembly;
 
       /// <summary>
-      /// Cytoband Interval
+      /// Cytoband Interval.
       /// </summary>
       [FhirElement("cytobandInterval", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent CytobandInterval
+      public Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent? CytobandInterval
       {
-        get { return _CytobandInterval; }
-        set { _CytobandInterval = value; OnPropertyChanged("CytobandInterval"); }
+        get
+        {
+          if(_CytobandInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent), Overflow["cytobandInterval"]);
+          return _CytobandInterval;
+        }
+
+        set
+        {
+          if (_CytobandInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent>())
+            Overflow.Remove("cytobandInterval");
+          _CytobandInterval = value;
+          OnPropertyChanged("CytobandInterval");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent _CytobandInterval;
+      private Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent? _CytobandInterval;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CytobandLocationComponent;
-
-        if (dest == null)
-        {
+        if(other is not CytobandLocationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(GenomeAssembly != null) dest.GenomeAssembly = (Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent)GenomeAssembly.DeepCopy();
-        if(CytobandInterval != null) dest.CytobandInterval = (Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent)CytobandInterval.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_GenomeAssembly is not null) dest.GenomeAssembly = (Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent)_GenomeAssembly.DeepCopyInternal();
+        if(_CytobandInterval is not null) dest.CytobandInterval = (Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent)_CytobandInterval.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CytobandLocationComponent());
+        var instance = new CytobandLocationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CytobandLocationComponent;
-        if(otherT == null) return false;
+        if(other is not CytobandLocationComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(GenomeAssembly, otherT.GenomeAssembly)) return false;
-        if( !DeepComparable.Matches(CytobandInterval, otherT.CytobandInterval)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_GenomeAssembly, otherT._GenomeAssembly)) return false;
+        if(!comparer.Equals(_CytobandInterval, otherT._CytobandInterval)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as CytobandLocationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(GenomeAssembly, otherT.GenomeAssembly)) return false;
-        if( !DeepComparable.IsExactly(CytobandInterval, otherT.CytobandInterval)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (GenomeAssembly != null) yield return GenomeAssembly;
-          if (CytobandInterval != null) yield return CytobandInterval;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (GenomeAssembly != null) yield return new ElementValue("genomeAssembly", GenomeAssembly);
-          if (CytobandInterval != null) yield return new ElementValue("cytobandInterval", CytobandInterval);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "genomeAssembly":
-            value = GenomeAssembly;
-            return GenomeAssembly is not null;
+            if (_GenomeAssembly.InOverflow<Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent>())
+            {
+              value = Overflow["genomeAssembly"];
+              return true;
+            }
+            value = _GenomeAssembly;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent) is not null;
           case "cytobandInterval":
-            value = CytobandInterval;
-            return CytobandInterval is not null;
+            if (_CytobandInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent>())
+            {
+              value = Overflow["cytobandInterval"];
+              return true;
+            }
+            value = _CytobandInterval;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (GenomeAssembly is not null) yield return new KeyValuePair<string,object>("genomeAssembly",GenomeAssembly);
-        if (CytobandInterval is not null) yield return new KeyValuePair<string,object>("cytobandInterval",CytobandInterval);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "genomeAssembly":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent or null))
+            {
+              GenomeAssembly = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent>.INSTANCE;
+              Overflow["genomeAssembly"] = value;
+            }
+            else GenomeAssembly = (Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent?)value;
+            return this;
+          case "cytobandInterval":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent or null))
+            {
+              CytobandInterval = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent>.INSTANCE;
+              Overflow["cytobandInterval"] = value;
+            }
+            else CytobandInterval = (Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_GenomeAssembly is not null && !_GenomeAssembly.InOverflow<Hl7.Fhir.Model.MolecularDefinition.GenomeAssemblyComponent>()) yield return new KeyValuePair<string,object>("genomeAssembly",_GenomeAssembly);
+        if (_CytobandInterval is not null && !_CytobandInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.CytobandIntervalComponent>()) yield return new KeyValuePair<string,object>("cytobandInterval",_CytobandInterval);
       }
 
     }
@@ -818,175 +1016,246 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#GenomeAssembly", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.cytobandLocation.genomeAssembly")]
+    [FhirType("MolecularDefinition.location.cytobandLocation.genomeAssembly", IsBackboneType=true)]
     public partial class GenomeAssemblyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#GenomeAssembly"; } }
+      public override string TypeName => "MolecularDefinition.location.cytobandLocation.genomeAssembly";
 
       /// <summary>
-      /// Species of the organism
+      /// Species of the organism.
       /// </summary>
       [FhirElement("organism", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Organism
+      public Hl7.Fhir.Model.CodeableConcept? Organism
       {
-        get { return _Organism; }
-        set { _Organism = value; OnPropertyChanged("Organism"); }
+        get
+        {
+          if(_Organism.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["organism"]);
+          return _Organism;
+        }
+
+        set
+        {
+          if (_Organism.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("organism");
+          _Organism = value;
+          OnPropertyChanged("Organism");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Organism;
+      private Hl7.Fhir.Model.CodeableConcept? _Organism;
 
       /// <summary>
-      /// Build number
+      /// Build number.
       /// </summary>
       [FhirElement("build", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Build
+      public Hl7.Fhir.Model.CodeableConcept? Build
       {
-        get { return _Build; }
-        set { _Build = value; OnPropertyChanged("Build"); }
+        get
+        {
+          if(_Build.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["build"]);
+          return _Build;
+        }
+
+        set
+        {
+          if (_Build.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("build");
+          _Build = value;
+          OnPropertyChanged("Build");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Build;
+      private Hl7.Fhir.Model.CodeableConcept? _Build;
 
       /// <summary>
-      /// Accession
+      /// Accession.
       /// </summary>
       [FhirElement("accession", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Accession
+      public Hl7.Fhir.Model.CodeableConcept? Accession
       {
-        get { return _Accession; }
-        set { _Accession = value; OnPropertyChanged("Accession"); }
+        get
+        {
+          if(_Accession.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["accession"]);
+          return _Accession;
+        }
+
+        set
+        {
+          if (_Accession.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("accession");
+          _Accession = value;
+          OnPropertyChanged("Accession");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Accession;
+      private Hl7.Fhir.Model.CodeableConcept? _Accession;
 
       /// <summary>
-      /// Genome assembly description
+      /// Genome assembly description.
       /// </summary>
       [FhirElement("description", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Description
+      public Hl7.Fhir.Model.DataType? Description
       {
-        get { return _Description; }
-        set { _Description = value; OnPropertyChanged("Description"); }
+        get
+        {
+          if(_Description.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["description"]);
+          return _Description;
+        }
+
+        set
+        {
+          if (_Description.InOverflow<DynamicDataType>())
+            Overflow.Remove("description");
+          _Description = value;
+          OnPropertyChanged("Description");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Description;
+      private Hl7.Fhir.Model.DataType? _Description;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as GenomeAssemblyComponent;
-
-        if (dest == null)
-        {
+        if(other is not GenomeAssemblyComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Organism != null) dest.Organism = (Hl7.Fhir.Model.CodeableConcept)Organism.DeepCopy();
-        if(Build != null) dest.Build = (Hl7.Fhir.Model.CodeableConcept)Build.DeepCopy();
-        if(Accession != null) dest.Accession = (Hl7.Fhir.Model.CodeableConcept)Accession.DeepCopy();
-        if(Description != null) dest.Description = (Hl7.Fhir.Model.DataType)Description.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Organism is not null) dest.Organism = (Hl7.Fhir.Model.CodeableConcept)_Organism.DeepCopyInternal();
+        if(_Build is not null) dest.Build = (Hl7.Fhir.Model.CodeableConcept)_Build.DeepCopyInternal();
+        if(_Accession is not null) dest.Accession = (Hl7.Fhir.Model.CodeableConcept)_Accession.DeepCopyInternal();
+        if(_Description is not null) dest.Description = (Hl7.Fhir.Model.DataType)_Description.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new GenomeAssemblyComponent());
+        var instance = new GenomeAssemblyComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as GenomeAssemblyComponent;
-        if(otherT == null) return false;
+        if(other is not GenomeAssemblyComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Organism, otherT.Organism)) return false;
-        if( !DeepComparable.Matches(Build, otherT.Build)) return false;
-        if( !DeepComparable.Matches(Accession, otherT.Accession)) return false;
-        if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Organism, otherT._Organism)) return false;
+        if(!comparer.Equals(_Build, otherT._Build)) return false;
+        if(!comparer.Equals(_Accession, otherT._Accession)) return false;
+        if(!comparer.Equals(_Description, otherT._Description)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as GenomeAssemblyComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Organism, otherT.Organism)) return false;
-        if( !DeepComparable.IsExactly(Build, otherT.Build)) return false;
-        if( !DeepComparable.IsExactly(Accession, otherT.Accession)) return false;
-        if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Organism != null) yield return Organism;
-          if (Build != null) yield return Build;
-          if (Accession != null) yield return Accession;
-          if (Description != null) yield return Description;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Organism != null) yield return new ElementValue("organism", Organism);
-          if (Build != null) yield return new ElementValue("build", Build);
-          if (Accession != null) yield return new ElementValue("accession", Accession);
-          if (Description != null) yield return new ElementValue("description", Description);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "organism":
-            value = Organism;
-            return Organism is not null;
+            if (_Organism.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["organism"];
+              return true;
+            }
+            value = _Organism;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "build":
-            value = Build;
-            return Build is not null;
+            if (_Build.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["build"];
+              return true;
+            }
+            value = _Build;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "accession":
-            value = Accession;
-            return Accession is not null;
+            if (_Accession.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["accession"];
+              return true;
+            }
+            value = _Accession;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "description":
-            value = Description;
-            return Description is not null;
+            if (_Description.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["description"];
+              return true;
+            }
+            value = _Description;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
-        if (Build is not null) yield return new KeyValuePair<string,object>("build",Build);
-        if (Accession is not null) yield return new KeyValuePair<string,object>("accession",Accession);
-        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "organism":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Organism = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["organism"] = value;
+            }
+            else Organism = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "build":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Build = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["build"] = value;
+            }
+            else Build = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "accession":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Accession = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["accession"] = value;
+            }
+            else Accession = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "description":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Description = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["description"] = value;
+            }
+            else Description = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Organism is not null && !_Organism.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("organism",_Organism);
+        if (_Build is not null && !_Build.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("build",_Build);
+        if (_Accession is not null && !_Accession.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("accession",_Accession);
+        if (_Description is not null && !_Description.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("description",_Description);
       }
 
     }
@@ -999,152 +1268,200 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#CytobandInterval", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.cytobandLocation.cytobandInterval")]
+    [FhirType("MolecularDefinition.location.cytobandLocation.cytobandInterval", IsBackboneType=true)]
     public partial class CytobandIntervalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#CytobandInterval"; } }
+      public override string TypeName => "MolecularDefinition.location.cytobandLocation.cytobandInterval";
 
       /// <summary>
-      /// Chromosome
+      /// Chromosome.
       /// </summary>
       [FhirElement("chromosome", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Chromosome
+      public Hl7.Fhir.Model.CodeableConcept? Chromosome
       {
-        get { return _Chromosome; }
-        set { _Chromosome = value; OnPropertyChanged("Chromosome"); }
+        get
+        {
+          if(_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["chromosome"]);
+          return _Chromosome;
+        }
+
+        set
+        {
+          if (_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("chromosome");
+          _Chromosome = value;
+          OnPropertyChanged("Chromosome");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Chromosome;
+      private Hl7.Fhir.Model.CodeableConcept? _Chromosome;
 
       /// <summary>
-      /// Start
+      /// Start.
       /// </summary>
       [FhirElement("startCytoband", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent StartCytoband
+      public Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent? StartCytoband
       {
-        get { return _StartCytoband; }
-        set { _StartCytoband = value; OnPropertyChanged("StartCytoband"); }
+        get
+        {
+          if(_StartCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent), Overflow["startCytoband"]);
+          return _StartCytoband;
+        }
+
+        set
+        {
+          if (_StartCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent>())
+            Overflow.Remove("startCytoband");
+          _StartCytoband = value;
+          OnPropertyChanged("StartCytoband");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent _StartCytoband;
+      private Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent? _StartCytoband;
 
       /// <summary>
-      /// End
+      /// End.
       /// </summary>
       [FhirElement("endCytoband", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent EndCytoband
+      public Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent? EndCytoband
       {
-        get { return _EndCytoband; }
-        set { _EndCytoband = value; OnPropertyChanged("EndCytoband"); }
+        get
+        {
+          if(_EndCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent), Overflow["endCytoband"]);
+          return _EndCytoband;
+        }
+
+        set
+        {
+          if (_EndCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent>())
+            Overflow.Remove("endCytoband");
+          _EndCytoband = value;
+          OnPropertyChanged("EndCytoband");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent _EndCytoband;
+      private Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent? _EndCytoband;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CytobandIntervalComponent;
-
-        if (dest == null)
-        {
+        if(other is not CytobandIntervalComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopy();
-        if(StartCytoband != null) dest.StartCytoband = (Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent)StartCytoband.DeepCopy();
-        if(EndCytoband != null) dest.EndCytoband = (Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent)EndCytoband.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Chromosome is not null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)_Chromosome.DeepCopyInternal();
+        if(_StartCytoband is not null) dest.StartCytoband = (Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent)_StartCytoband.DeepCopyInternal();
+        if(_EndCytoband is not null) dest.EndCytoband = (Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent)_EndCytoband.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new CytobandIntervalComponent());
+        var instance = new CytobandIntervalComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CytobandIntervalComponent;
-        if(otherT == null) return false;
+        if(other is not CytobandIntervalComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Chromosome, otherT.Chromosome)) return false;
-        if( !DeepComparable.Matches(StartCytoband, otherT.StartCytoband)) return false;
-        if( !DeepComparable.Matches(EndCytoband, otherT.EndCytoband)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Chromosome, otherT._Chromosome)) return false;
+        if(!comparer.Equals(_StartCytoband, otherT._StartCytoband)) return false;
+        if(!comparer.Equals(_EndCytoband, otherT._EndCytoband)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as CytobandIntervalComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Chromosome, otherT.Chromosome)) return false;
-        if( !DeepComparable.IsExactly(StartCytoband, otherT.StartCytoband)) return false;
-        if( !DeepComparable.IsExactly(EndCytoband, otherT.EndCytoband)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Chromosome != null) yield return Chromosome;
-          if (StartCytoband != null) yield return StartCytoband;
-          if (EndCytoband != null) yield return EndCytoband;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Chromosome != null) yield return new ElementValue("chromosome", Chromosome);
-          if (StartCytoband != null) yield return new ElementValue("startCytoband", StartCytoband);
-          if (EndCytoband != null) yield return new ElementValue("endCytoband", EndCytoband);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "chromosome":
-            value = Chromosome;
-            return Chromosome is not null;
+            if (_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["chromosome"];
+              return true;
+            }
+            value = _Chromosome;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "startCytoband":
-            value = StartCytoband;
-            return StartCytoband is not null;
+            if (_StartCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent>())
+            {
+              value = Overflow["startCytoband"];
+              return true;
+            }
+            value = _StartCytoband;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent) is not null;
           case "endCytoband":
-            value = EndCytoband;
-            return EndCytoband is not null;
+            if (_EndCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent>())
+            {
+              value = Overflow["endCytoband"];
+              return true;
+            }
+            value = _EndCytoband;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Chromosome is not null) yield return new KeyValuePair<string,object>("chromosome",Chromosome);
-        if (StartCytoband is not null) yield return new KeyValuePair<string,object>("startCytoband",StartCytoband);
-        if (EndCytoband is not null) yield return new KeyValuePair<string,object>("endCytoband",EndCytoband);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "chromosome":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Chromosome = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["chromosome"] = value;
+            }
+            else Chromosome = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "startCytoband":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent or null))
+            {
+              StartCytoband = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent>.INSTANCE;
+              Overflow["startCytoband"] = value;
+            }
+            else StartCytoband = (Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent?)value;
+            return this;
+          case "endCytoband":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent or null))
+            {
+              EndCytoband = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent>.INSTANCE;
+              Overflow["endCytoband"] = value;
+            }
+            else EndCytoband = (Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Chromosome is not null && !_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("chromosome",_Chromosome);
+        if (_StartCytoband is not null && !_StartCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.StartCytobandComponent>()) yield return new KeyValuePair<string,object>("startCytoband",_StartCytoband);
+        if (_EndCytoband is not null && !_EndCytoband.InOverflow<Hl7.Fhir.Model.MolecularDefinition.EndCytobandComponent>()) yield return new KeyValuePair<string,object>("endCytoband",_EndCytoband);
       }
 
     }
@@ -1157,181 +1474,252 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#StartCytoband", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.cytobandLocation.cytobandInterval.startCytoband")]
+    [FhirType("MolecularDefinition.location.cytobandLocation.cytobandInterval.startCytoband", IsBackboneType=true)]
     public partial class StartCytobandComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#StartCytoband"; } }
+      public override string TypeName => "MolecularDefinition.location.cytobandLocation.cytobandInterval.startCytoband";
 
       /// <summary>
-      /// Arm
+      /// Arm.
       /// </summary>
       [FhirElement("arm", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Arm
+      public Hl7.Fhir.Model.DataType? Arm
       {
-        get { return _Arm; }
-        set { _Arm = value; OnPropertyChanged("Arm"); }
+        get
+        {
+          if(_Arm.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["arm"]);
+          return _Arm;
+        }
+
+        set
+        {
+          if (_Arm.InOverflow<DynamicDataType>())
+            Overflow.Remove("arm");
+          _Arm = value;
+          OnPropertyChanged("Arm");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Arm;
+      private Hl7.Fhir.Model.DataType? _Arm;
 
       /// <summary>
-      /// Region
+      /// Region.
       /// </summary>
       [FhirElement("region", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Region
+      public Hl7.Fhir.Model.DataType? Region
       {
-        get { return _Region; }
-        set { _Region = value; OnPropertyChanged("Region"); }
+        get
+        {
+          if(_Region.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["region"]);
+          return _Region;
+        }
+
+        set
+        {
+          if (_Region.InOverflow<DynamicDataType>())
+            Overflow.Remove("region");
+          _Region = value;
+          OnPropertyChanged("Region");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Region;
+      private Hl7.Fhir.Model.DataType? _Region;
 
       /// <summary>
-      /// Band
+      /// Band.
       /// </summary>
       [FhirElement("band", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Band
+      public Hl7.Fhir.Model.DataType? Band
       {
-        get { return _Band; }
-        set { _Band = value; OnPropertyChanged("Band"); }
+        get
+        {
+          if(_Band.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["band"]);
+          return _Band;
+        }
+
+        set
+        {
+          if (_Band.InOverflow<DynamicDataType>())
+            Overflow.Remove("band");
+          _Band = value;
+          OnPropertyChanged("Band");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Band;
+      private Hl7.Fhir.Model.DataType? _Band;
 
       /// <summary>
-      /// Sub-band
+      /// Sub-band.
       /// </summary>
       [FhirElement("subBand", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType SubBand
+      public Hl7.Fhir.Model.DataType? SubBand
       {
-        get { return _SubBand; }
-        set { _SubBand = value; OnPropertyChanged("SubBand"); }
+        get
+        {
+          if(_SubBand.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["subBand"]);
+          return _SubBand;
+        }
+
+        set
+        {
+          if (_SubBand.InOverflow<DynamicDataType>())
+            Overflow.Remove("subBand");
+          _SubBand = value;
+          OnPropertyChanged("SubBand");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _SubBand;
+      private Hl7.Fhir.Model.DataType? _SubBand;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StartCytobandComponent;
-
-        if (dest == null)
-        {
+        if(other is not StartCytobandComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Arm != null) dest.Arm = (Hl7.Fhir.Model.DataType)Arm.DeepCopy();
-        if(Region != null) dest.Region = (Hl7.Fhir.Model.DataType)Region.DeepCopy();
-        if(Band != null) dest.Band = (Hl7.Fhir.Model.DataType)Band.DeepCopy();
-        if(SubBand != null) dest.SubBand = (Hl7.Fhir.Model.DataType)SubBand.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Arm is not null) dest.Arm = (Hl7.Fhir.Model.DataType)_Arm.DeepCopyInternal();
+        if(_Region is not null) dest.Region = (Hl7.Fhir.Model.DataType)_Region.DeepCopyInternal();
+        if(_Band is not null) dest.Band = (Hl7.Fhir.Model.DataType)_Band.DeepCopyInternal();
+        if(_SubBand is not null) dest.SubBand = (Hl7.Fhir.Model.DataType)_SubBand.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new StartCytobandComponent());
+        var instance = new StartCytobandComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StartCytobandComponent;
-        if(otherT == null) return false;
+        if(other is not StartCytobandComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Arm, otherT.Arm)) return false;
-        if( !DeepComparable.Matches(Region, otherT.Region)) return false;
-        if( !DeepComparable.Matches(Band, otherT.Band)) return false;
-        if( !DeepComparable.Matches(SubBand, otherT.SubBand)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Arm, otherT._Arm)) return false;
+        if(!comparer.Equals(_Region, otherT._Region)) return false;
+        if(!comparer.Equals(_Band, otherT._Band)) return false;
+        if(!comparer.Equals(_SubBand, otherT._SubBand)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as StartCytobandComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Arm, otherT.Arm)) return false;
-        if( !DeepComparable.IsExactly(Region, otherT.Region)) return false;
-        if( !DeepComparable.IsExactly(Band, otherT.Band)) return false;
-        if( !DeepComparable.IsExactly(SubBand, otherT.SubBand)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Arm != null) yield return Arm;
-          if (Region != null) yield return Region;
-          if (Band != null) yield return Band;
-          if (SubBand != null) yield return SubBand;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Arm != null) yield return new ElementValue("arm", Arm);
-          if (Region != null) yield return new ElementValue("region", Region);
-          if (Band != null) yield return new ElementValue("band", Band);
-          if (SubBand != null) yield return new ElementValue("subBand", SubBand);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "arm":
-            value = Arm;
-            return Arm is not null;
+            if (_Arm.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["arm"];
+              return true;
+            }
+            value = _Arm;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "region":
-            value = Region;
-            return Region is not null;
+            if (_Region.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["region"];
+              return true;
+            }
+            value = _Region;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "band":
-            value = Band;
-            return Band is not null;
+            if (_Band.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["band"];
+              return true;
+            }
+            value = _Band;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "subBand":
-            value = SubBand;
-            return SubBand is not null;
+            if (_SubBand.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["subBand"];
+              return true;
+            }
+            value = _SubBand;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Arm is not null) yield return new KeyValuePair<string,object>("arm",Arm);
-        if (Region is not null) yield return new KeyValuePair<string,object>("region",Region);
-        if (Band is not null) yield return new KeyValuePair<string,object>("band",Band);
-        if (SubBand is not null) yield return new KeyValuePair<string,object>("subBand",SubBand);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "arm":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Arm = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["arm"] = value;
+            }
+            else Arm = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "region":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Region = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["region"] = value;
+            }
+            else Region = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "band":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Band = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["band"] = value;
+            }
+            else Band = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "subBand":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              SubBand = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["subBand"] = value;
+            }
+            else SubBand = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Arm is not null && !_Arm.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("arm",_Arm);
+        if (_Region is not null && !_Region.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("region",_Region);
+        if (_Band is not null && !_Band.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("band",_Band);
+        if (_SubBand is not null && !_SubBand.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("subBand",_SubBand);
       }
 
     }
@@ -1344,181 +1732,252 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#EndCytoband", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.location.cytobandLocation.cytobandInterval.endCytoband")]
+    [FhirType("MolecularDefinition.location.cytobandLocation.cytobandInterval.endCytoband", IsBackboneType=true)]
     public partial class EndCytobandComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#EndCytoband"; } }
+      public override string TypeName => "MolecularDefinition.location.cytobandLocation.cytobandInterval.endCytoband";
 
       /// <summary>
-      /// Arm
+      /// Arm.
       /// </summary>
       [FhirElement("arm", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Arm
+      public Hl7.Fhir.Model.DataType? Arm
       {
-        get { return _Arm; }
-        set { _Arm = value; OnPropertyChanged("Arm"); }
+        get
+        {
+          if(_Arm.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["arm"]);
+          return _Arm;
+        }
+
+        set
+        {
+          if (_Arm.InOverflow<DynamicDataType>())
+            Overflow.Remove("arm");
+          _Arm = value;
+          OnPropertyChanged("Arm");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Arm;
+      private Hl7.Fhir.Model.DataType? _Arm;
 
       /// <summary>
-      /// Region
+      /// Region.
       /// </summary>
       [FhirElement("region", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Region
+      public Hl7.Fhir.Model.DataType? Region
       {
-        get { return _Region; }
-        set { _Region = value; OnPropertyChanged("Region"); }
+        get
+        {
+          if(_Region.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["region"]);
+          return _Region;
+        }
+
+        set
+        {
+          if (_Region.InOverflow<DynamicDataType>())
+            Overflow.Remove("region");
+          _Region = value;
+          OnPropertyChanged("Region");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Region;
+      private Hl7.Fhir.Model.DataType? _Region;
 
       /// <summary>
-      /// Band
+      /// Band.
       /// </summary>
       [FhirElement("band", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Band
+      public Hl7.Fhir.Model.DataType? Band
       {
-        get { return _Band; }
-        set { _Band = value; OnPropertyChanged("Band"); }
+        get
+        {
+          if(_Band.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["band"]);
+          return _Band;
+        }
+
+        set
+        {
+          if (_Band.InOverflow<DynamicDataType>())
+            Overflow.Remove("band");
+          _Band = value;
+          OnPropertyChanged("Band");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Band;
+      private Hl7.Fhir.Model.DataType? _Band;
 
       /// <summary>
-      /// SuBand
+      /// SuBand.
       /// </summary>
       [FhirElement("subBand", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType SubBand
+      public Hl7.Fhir.Model.DataType? SubBand
       {
-        get { return _SubBand; }
-        set { _SubBand = value; OnPropertyChanged("SubBand"); }
+        get
+        {
+          if(_SubBand.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["subBand"]);
+          return _SubBand;
+        }
+
+        set
+        {
+          if (_SubBand.InOverflow<DynamicDataType>())
+            Overflow.Remove("subBand");
+          _SubBand = value;
+          OnPropertyChanged("SubBand");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _SubBand;
+      private Hl7.Fhir.Model.DataType? _SubBand;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EndCytobandComponent;
-
-        if (dest == null)
-        {
+        if(other is not EndCytobandComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Arm != null) dest.Arm = (Hl7.Fhir.Model.DataType)Arm.DeepCopy();
-        if(Region != null) dest.Region = (Hl7.Fhir.Model.DataType)Region.DeepCopy();
-        if(Band != null) dest.Band = (Hl7.Fhir.Model.DataType)Band.DeepCopy();
-        if(SubBand != null) dest.SubBand = (Hl7.Fhir.Model.DataType)SubBand.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Arm is not null) dest.Arm = (Hl7.Fhir.Model.DataType)_Arm.DeepCopyInternal();
+        if(_Region is not null) dest.Region = (Hl7.Fhir.Model.DataType)_Region.DeepCopyInternal();
+        if(_Band is not null) dest.Band = (Hl7.Fhir.Model.DataType)_Band.DeepCopyInternal();
+        if(_SubBand is not null) dest.SubBand = (Hl7.Fhir.Model.DataType)_SubBand.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new EndCytobandComponent());
+        var instance = new EndCytobandComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EndCytobandComponent;
-        if(otherT == null) return false;
+        if(other is not EndCytobandComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Arm, otherT.Arm)) return false;
-        if( !DeepComparable.Matches(Region, otherT.Region)) return false;
-        if( !DeepComparable.Matches(Band, otherT.Band)) return false;
-        if( !DeepComparable.Matches(SubBand, otherT.SubBand)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Arm, otherT._Arm)) return false;
+        if(!comparer.Equals(_Region, otherT._Region)) return false;
+        if(!comparer.Equals(_Band, otherT._Band)) return false;
+        if(!comparer.Equals(_SubBand, otherT._SubBand)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as EndCytobandComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Arm, otherT.Arm)) return false;
-        if( !DeepComparable.IsExactly(Region, otherT.Region)) return false;
-        if( !DeepComparable.IsExactly(Band, otherT.Band)) return false;
-        if( !DeepComparable.IsExactly(SubBand, otherT.SubBand)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Arm != null) yield return Arm;
-          if (Region != null) yield return Region;
-          if (Band != null) yield return Band;
-          if (SubBand != null) yield return SubBand;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Arm != null) yield return new ElementValue("arm", Arm);
-          if (Region != null) yield return new ElementValue("region", Region);
-          if (Band != null) yield return new ElementValue("band", Band);
-          if (SubBand != null) yield return new ElementValue("subBand", SubBand);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "arm":
-            value = Arm;
-            return Arm is not null;
+            if (_Arm.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["arm"];
+              return true;
+            }
+            value = _Arm;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "region":
-            value = Region;
-            return Region is not null;
+            if (_Region.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["region"];
+              return true;
+            }
+            value = _Region;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "band":
-            value = Band;
-            return Band is not null;
+            if (_Band.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["band"];
+              return true;
+            }
+            value = _Band;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "subBand":
-            value = SubBand;
-            return SubBand is not null;
+            if (_SubBand.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["subBand"];
+              return true;
+            }
+            value = _SubBand;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Arm is not null) yield return new KeyValuePair<string,object>("arm",Arm);
-        if (Region is not null) yield return new KeyValuePair<string,object>("region",Region);
-        if (Band is not null) yield return new KeyValuePair<string,object>("band",Band);
-        if (SubBand is not null) yield return new KeyValuePair<string,object>("subBand",SubBand);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "arm":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Arm = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["arm"] = value;
+            }
+            else Arm = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "region":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Region = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["region"] = value;
+            }
+            else Region = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "band":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Band = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["band"] = value;
+            }
+            else Band = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "subBand":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              SubBand = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["subBand"] = value;
+            }
+            else SubBand = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Arm is not null && !_Arm.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("arm",_Arm);
+        if (_Region is not null && !_Region.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("region",_Region);
+        if (_Band is not null && !_Band.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("band",_Band);
+        if (_SubBand is not null && !_SubBand.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("subBand",_SubBand);
       }
 
     }
@@ -1531,264 +1990,428 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Representation", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation")]
+    [FhirType("MolecularDefinition.representation", IsBackboneType=true)]
     public partial class RepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Representation"; } }
+      public override string TypeName => "MolecularDefinition.representation";
 
       /// <summary>
-      /// The domain concept that is the focus of a given instance of the representation
+      /// The domain concept that is the focus of a given instance of the representation.
       /// </summary>
       [FhirElement("focus", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Focus
+      public Hl7.Fhir.Model.CodeableConcept? Focus
       {
-        get { return _Focus; }
-        set { _Focus = value; OnPropertyChanged("Focus"); }
+        get
+        {
+          if(_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["focus"]);
+          return _Focus;
+        }
+
+        set
+        {
+          if (_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("focus");
+          _Focus = value;
+          OnPropertyChanged("Focus");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Focus;
+      private Hl7.Fhir.Model.CodeableConcept? _Focus;
 
       /// <summary>
-      /// A code (e.g., sequence accession number) used to represent a molecular entity
+      /// A code (e.g., sequence accession number) used to represent a molecular entity.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
-        set { _Code = value; OnPropertyChanged("Code"); }
+        get
+        {
+          if(_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["code"]);
+          return _Code ??= [];
+        }
+
+        set
+        {
+          if (_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("code");
+          _Code = value;
+          OnPropertyChanged("Code");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Code;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Code;
 
       /// <summary>
-      /// A molecular entity defined as a string literal
+      /// A molecular entity defined as a string literal.
       /// </summary>
       [FhirElement("literal", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.LiteralComponent Literal
+      public Hl7.Fhir.Model.MolecularDefinition.LiteralComponent? Literal
       {
-        get { return _Literal; }
-        set { _Literal = value; OnPropertyChanged("Literal"); }
+        get
+        {
+          if(_Literal.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LiteralComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.LiteralComponent), Overflow["literal"]);
+          return _Literal;
+        }
+
+        set
+        {
+          if (_Literal.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LiteralComponent>())
+            Overflow.Remove("literal");
+          _Literal = value;
+          OnPropertyChanged("Literal");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.LiteralComponent _Literal;
+      private Hl7.Fhir.Model.MolecularDefinition.LiteralComponent? _Literal;
 
       /// <summary>
-      /// A resolvable representation of a molecular entity (e.g., URI, attached and formatted file)
+      /// A resolvable representation of a molecular entity (e.g., URI, attached and formatted file).
       /// </summary>
       [FhirElement("resolvable", InSummary=true, Order=70)]
       [CLSCompliant(false)]
       [References("DocumentReference")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Resolvable
+      public Hl7.Fhir.Model.ResourceReference? Resolvable
       {
-        get { return _Resolvable; }
-        set { _Resolvable = value; OnPropertyChanged("Resolvable"); }
+        get
+        {
+          if(_Resolvable.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["resolvable"]);
+          return _Resolvable;
+        }
+
+        set
+        {
+          if (_Resolvable.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("resolvable");
+          _Resolvable = value;
+          OnPropertyChanged("Resolvable");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Resolvable;
+      private Hl7.Fhir.Model.ResourceReference? _Resolvable;
 
       /// <summary>
-      /// A molecular entity that is represented as a portion of a different entity
+      /// A molecular entity that is represented as a portion of a different entity.
       /// </summary>
       [FhirElement("extracted", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent Extracted
+      public Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent? Extracted
       {
-        get { return _Extracted; }
-        set { _Extracted = value; OnPropertyChanged("Extracted"); }
+        get
+        {
+          if(_Extracted.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent), Overflow["extracted"]);
+          return _Extracted;
+        }
+
+        set
+        {
+          if (_Extracted.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent>())
+            Overflow.Remove("extracted");
+          _Extracted = value;
+          OnPropertyChanged("Extracted");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent _Extracted;
+      private Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent? _Extracted;
 
       /// <summary>
-      /// A representation as a repeated motif
+      /// A representation as a repeated motif.
       /// </summary>
       [FhirElement("repeated", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent Repeated
+      public Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent? Repeated
       {
-        get { return _Repeated; }
-        set { _Repeated = value; OnPropertyChanged("Repeated"); }
+        get
+        {
+          if(_Repeated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent), Overflow["repeated"]);
+          return _Repeated;
+        }
+
+        set
+        {
+          if (_Repeated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent>())
+            Overflow.Remove("repeated");
+          _Repeated = value;
+          OnPropertyChanged("Repeated");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent _Repeated;
+      private Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent? _Repeated;
 
       /// <summary>
-      /// An ordered concatenation of molecular entities
+      /// An ordered concatenation of molecular entities.
       /// </summary>
       [FhirElement("concatenated", InSummary=true, Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent Concatenated
+      public Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent? Concatenated
       {
-        get { return _Concatenated; }
-        set { _Concatenated = value; OnPropertyChanged("Concatenated"); }
+        get
+        {
+          if(_Concatenated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent), Overflow["concatenated"]);
+          return _Concatenated;
+        }
+
+        set
+        {
+          if (_Concatenated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent>())
+            Overflow.Remove("concatenated");
+          _Concatenated = value;
+          OnPropertyChanged("Concatenated");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent _Concatenated;
+      private Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent? _Concatenated;
 
       /// <summary>
-      /// A molecular entity represented as an ordered series of edits on a specified starting entity
+      /// A molecular entity represented as an ordered series of edits on a specified starting entity.
       /// </summary>
       [FhirElement("relative", InSummary=true, Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.RelativeComponent Relative
+      public Hl7.Fhir.Model.MolecularDefinition.RelativeComponent? Relative
       {
-        get { return _Relative; }
-        set { _Relative = value; OnPropertyChanged("Relative"); }
+        get
+        {
+          if(_Relative.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RelativeComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.RelativeComponent), Overflow["relative"]);
+          return _Relative;
+        }
+
+        set
+        {
+          if (_Relative.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RelativeComponent>())
+            Overflow.Remove("relative");
+          _Relative = value;
+          OnPropertyChanged("Relative");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.RelativeComponent _Relative;
+      private Hl7.Fhir.Model.MolecularDefinition.RelativeComponent? _Relative;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepresentationComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepresentationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Focus != null) dest.Focus = (Hl7.Fhir.Model.CodeableConcept)Focus.DeepCopy();
-        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
-        if(Literal != null) dest.Literal = (Hl7.Fhir.Model.MolecularDefinition.LiteralComponent)Literal.DeepCopy();
-        if(Resolvable != null) dest.Resolvable = (Hl7.Fhir.Model.ResourceReference)Resolvable.DeepCopy();
-        if(Extracted != null) dest.Extracted = (Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent)Extracted.DeepCopy();
-        if(Repeated != null) dest.Repeated = (Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent)Repeated.DeepCopy();
-        if(Concatenated != null) dest.Concatenated = (Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent)Concatenated.DeepCopy();
-        if(Relative != null) dest.Relative = (Hl7.Fhir.Model.MolecularDefinition.RelativeComponent)Relative.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Focus is not null) dest.Focus = (Hl7.Fhir.Model.CodeableConcept)_Focus.DeepCopyInternal();
+        if(_Code is not null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(_Code.DeepCopyInternal());
+        if(_Literal is not null) dest.Literal = (Hl7.Fhir.Model.MolecularDefinition.LiteralComponent)_Literal.DeepCopyInternal();
+        if(_Resolvable is not null) dest.Resolvable = (Hl7.Fhir.Model.ResourceReference)_Resolvable.DeepCopyInternal();
+        if(_Extracted is not null) dest.Extracted = (Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent)_Extracted.DeepCopyInternal();
+        if(_Repeated is not null) dest.Repeated = (Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent)_Repeated.DeepCopyInternal();
+        if(_Concatenated is not null) dest.Concatenated = (Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent)_Concatenated.DeepCopyInternal();
+        if(_Relative is not null) dest.Relative = (Hl7.Fhir.Model.MolecularDefinition.RelativeComponent)_Relative.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepresentationComponent());
+        var instance = new RepresentationComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepresentationComponent;
-        if(otherT == null) return false;
+        if(other is not RepresentationComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
-        if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-        if( !DeepComparable.Matches(Literal, otherT.Literal)) return false;
-        if( !DeepComparable.Matches(Resolvable, otherT.Resolvable)) return false;
-        if( !DeepComparable.Matches(Extracted, otherT.Extracted)) return false;
-        if( !DeepComparable.Matches(Repeated, otherT.Repeated)) return false;
-        if( !DeepComparable.Matches(Concatenated, otherT.Concatenated)) return false;
-        if( !DeepComparable.Matches(Relative, otherT.Relative)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Focus, otherT._Focus)) return false;
+        if(!comparer.ListEquals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_Literal, otherT._Literal)) return false;
+        if(!comparer.Equals(_Resolvable, otherT._Resolvable)) return false;
+        if(!comparer.Equals(_Extracted, otherT._Extracted)) return false;
+        if(!comparer.Equals(_Repeated, otherT._Repeated)) return false;
+        if(!comparer.Equals(_Concatenated, otherT._Concatenated)) return false;
+        if(!comparer.Equals(_Relative, otherT._Relative)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepresentationComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
-        if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-        if( !DeepComparable.IsExactly(Literal, otherT.Literal)) return false;
-        if( !DeepComparable.IsExactly(Resolvable, otherT.Resolvable)) return false;
-        if( !DeepComparable.IsExactly(Extracted, otherT.Extracted)) return false;
-        if( !DeepComparable.IsExactly(Repeated, otherT.Repeated)) return false;
-        if( !DeepComparable.IsExactly(Concatenated, otherT.Concatenated)) return false;
-        if( !DeepComparable.IsExactly(Relative, otherT.Relative)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Focus != null) yield return Focus;
-          foreach (var elem in Code) { if (elem != null) yield return elem; }
-          if (Literal != null) yield return Literal;
-          if (Resolvable != null) yield return Resolvable;
-          if (Extracted != null) yield return Extracted;
-          if (Repeated != null) yield return Repeated;
-          if (Concatenated != null) yield return Concatenated;
-          if (Relative != null) yield return Relative;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Focus != null) yield return new ElementValue("focus", Focus);
-          foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
-          if (Literal != null) yield return new ElementValue("literal", Literal);
-          if (Resolvable != null) yield return new ElementValue("resolvable", Resolvable);
-          if (Extracted != null) yield return new ElementValue("extracted", Extracted);
-          if (Repeated != null) yield return new ElementValue("repeated", Repeated);
-          if (Concatenated != null) yield return new ElementValue("concatenated", Concatenated);
-          if (Relative != null) yield return new ElementValue("relative", Relative);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "focus":
-            value = Focus;
-            return Focus is not null;
+            if (_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["focus"];
+              return true;
+            }
+            value = _Focus;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "code":
-            value = Code;
-            return Code?.Any() == true;
+            if (_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["code"];
+              return true;
+            }
+            value = _Code;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "literal":
-            value = Literal;
-            return Literal is not null;
+            if (_Literal.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LiteralComponent>())
+            {
+              value = Overflow["literal"];
+              return true;
+            }
+            value = _Literal;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.LiteralComponent) is not null;
           case "resolvable":
-            value = Resolvable;
-            return Resolvable is not null;
+            if (_Resolvable.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["resolvable"];
+              return true;
+            }
+            value = _Resolvable;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "extracted":
-            value = Extracted;
-            return Extracted is not null;
+            if (_Extracted.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent>())
+            {
+              value = Overflow["extracted"];
+              return true;
+            }
+            value = _Extracted;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent) is not null;
           case "repeated":
-            value = Repeated;
-            return Repeated is not null;
+            if (_Repeated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent>())
+            {
+              value = Overflow["repeated"];
+              return true;
+            }
+            value = _Repeated;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent) is not null;
           case "concatenated":
-            value = Concatenated;
-            return Concatenated is not null;
+            if (_Concatenated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent>())
+            {
+              value = Overflow["concatenated"];
+              return true;
+            }
+            value = _Concatenated;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent) is not null;
           case "relative":
-            value = Relative;
-            return Relative is not null;
+            if (_Relative.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RelativeComponent>())
+            {
+              value = Overflow["relative"];
+              return true;
+            }
+            value = _Relative;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.RelativeComponent) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
-        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
-        if (Literal is not null) yield return new KeyValuePair<string,object>("literal",Literal);
-        if (Resolvable is not null) yield return new KeyValuePair<string,object>("resolvable",Resolvable);
-        if (Extracted is not null) yield return new KeyValuePair<string,object>("extracted",Extracted);
-        if (Repeated is not null) yield return new KeyValuePair<string,object>("repeated",Repeated);
-        if (Concatenated is not null) yield return new KeyValuePair<string,object>("concatenated",Concatenated);
-        if (Relative is not null) yield return new KeyValuePair<string,object>("relative",Relative);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "focus":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Focus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["focus"] = value;
+            }
+            else Focus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "code":
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Code = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else Code = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            return this;
+          case "literal":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.LiteralComponent or null))
+            {
+              Literal = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.LiteralComponent>.INSTANCE;
+              Overflow["literal"] = value;
+            }
+            else Literal = (Hl7.Fhir.Model.MolecularDefinition.LiteralComponent?)value;
+            return this;
+          case "resolvable":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Resolvable = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["resolvable"] = value;
+            }
+            else Resolvable = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "extracted":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent or null))
+            {
+              Extracted = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent>.INSTANCE;
+              Overflow["extracted"] = value;
+            }
+            else Extracted = (Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent?)value;
+            return this;
+          case "repeated":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent or null))
+            {
+              Repeated = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent>.INSTANCE;
+              Overflow["repeated"] = value;
+            }
+            else Repeated = (Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent?)value;
+            return this;
+          case "concatenated":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent or null))
+            {
+              Concatenated = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent>.INSTANCE;
+              Overflow["concatenated"] = value;
+            }
+            else Concatenated = (Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent?)value;
+            return this;
+          case "relative":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.RelativeComponent or null))
+            {
+              Relative = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.RelativeComponent>.INSTANCE;
+              Overflow["relative"] = value;
+            }
+            else Relative = (Hl7.Fhir.Model.MolecularDefinition.RelativeComponent?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Focus is not null && !_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("focus",_Focus);
+        if (_Code?.Any() is true && !_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Literal is not null && !_Literal.InOverflow<Hl7.Fhir.Model.MolecularDefinition.LiteralComponent>()) yield return new KeyValuePair<string,object>("literal",_Literal);
+        if (_Resolvable is not null && !_Resolvable.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resolvable",_Resolvable);
+        if (_Extracted is not null && !_Extracted.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ExtractedComponent>()) yield return new KeyValuePair<string,object>("extracted",_Extracted);
+        if (_Repeated is not null && !_Repeated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepeatedComponent>()) yield return new KeyValuePair<string,object>("repeated",_Repeated);
+        if (_Concatenated is not null && !_Concatenated.InOverflow<Hl7.Fhir.Model.MolecularDefinition.ConcatenatedComponent>()) yield return new KeyValuePair<string,object>("concatenated",_Concatenated);
+        if (_Relative is not null && !_Relative.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RelativeComponent>()) yield return new KeyValuePair<string,object>("relative",_Relative);
       }
 
     }
@@ -1798,148 +2421,170 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Literal", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.literal")]
+    [FhirType("MolecularDefinition.representation.literal", IsBackboneType=true)]
     public partial class LiteralComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Literal"; } }
+      public override string TypeName => "MolecularDefinition.representation.literal";
 
       /// <summary>
-      /// The encoding used in the value
+      /// The encoding used in the value.
       /// </summary>
       [FhirElement("encoding", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Encoding
+      public Hl7.Fhir.Model.CodeableConcept? Encoding
       {
-        get { return _Encoding; }
-        set { _Encoding = value; OnPropertyChanged("Encoding"); }
+        get
+        {
+          if(_Encoding.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["encoding"]);
+          return _Encoding;
+        }
+
+        set
+        {
+          if (_Encoding.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("encoding");
+          _Encoding = value;
+          OnPropertyChanged("Encoding");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Encoding;
+      private Hl7.Fhir.Model.CodeableConcept? _Encoding;
 
       /// <summary>
-      /// A string literal representation of the molecular entity, using the encoding specified in encoding
+      /// A string literal representation of the molecular entity, using the encoding specified in encoding.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ValueElement
+      public Hl7.Fhir.Model.FhirString? ValueElement
       {
-        get { return _ValueElement; }
-        set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+        get
+        {
+          if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
+          return _ValueElement;
+        }
+
+        set
+        {
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("value");
+          _ValueElement = value;
+          OnPropertyChanged("ValueElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _ValueElement;
+      private Hl7.Fhir.Model.FhirString? _ValueElement;
 
       /// <summary>
       /// A string literal representation of the molecular entity, using the encoding specified in encoding
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Value
+      public string? Value
       {
-        get { return ValueElement != null ? ValueElement.Value : null; }
+        get => ValueElement?.Value;
         set
         {
-          if (value == null)
-            ValueElement = null;
-          else
-            ValueElement = new Hl7.Fhir.Model.FhirString(value);
+          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Value");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LiteralComponent;
-
-        if (dest == null)
-        {
+        if(other is not LiteralComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Encoding != null) dest.Encoding = (Hl7.Fhir.Model.CodeableConcept)Encoding.DeepCopy();
-        if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Encoding is not null) dest.Encoding = (Hl7.Fhir.Model.CodeableConcept)_Encoding.DeepCopyInternal();
+        if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)_ValueElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new LiteralComponent());
+        var instance = new LiteralComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LiteralComponent;
-        if(otherT == null) return false;
+        if(other is not LiteralComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Encoding, otherT.Encoding)) return false;
-        if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Encoding, otherT._Encoding)) return false;
+        if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as LiteralComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Encoding, otherT.Encoding)) return false;
-        if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Encoding != null) yield return Encoding;
-          if (ValueElement != null) yield return ValueElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Encoding != null) yield return new ElementValue("encoding", Encoding);
-          if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "encoding":
-            value = Encoding;
-            return Encoding is not null;
+            if (_Encoding.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["encoding"];
+              return true;
+            }
+            value = _Encoding;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "value":
-            value = ValueElement;
-            return ValueElement is not null;
+            if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
+            value = _ValueElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Encoding is not null) yield return new KeyValuePair<string,object>("encoding",Encoding);
-        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "encoding":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Encoding = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["encoding"] = value;
+            }
+            else Encoding = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "value":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Encoding is not null && !_Encoding.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("encoding",_Encoding);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -1952,56 +2597,94 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Extracted", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.extracted")]
+    [FhirType("MolecularDefinition.representation.extracted", IsBackboneType=true)]
     public partial class ExtractedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Extracted"; } }
+      public override string TypeName => "MolecularDefinition.representation.extracted";
 
       /// <summary>
-      /// The molecular entity that serves as the conceptual 'parent' from which the intended entity is derived
+      /// The molecular entity that serves as the conceptual 'parent' from which the intended entity is derived.
       /// </summary>
       [FhirElement("startingMolecule", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference StartingMolecule
+      public Hl7.Fhir.Model.ResourceReference? StartingMolecule
       {
-        get { return _StartingMolecule; }
-        set { _StartingMolecule = value; OnPropertyChanged("StartingMolecule"); }
+        get
+        {
+          if(_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["startingMolecule"]);
+          return _StartingMolecule;
+        }
+
+        set
+        {
+          if (_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("startingMolecule");
+          _StartingMolecule = value;
+          OnPropertyChanged("StartingMolecule");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _StartingMolecule;
+      private Hl7.Fhir.Model.ResourceReference? _StartingMolecule;
 
       /// <summary>
-      /// The interval on startingMolecule that defines the portion to be extracted to produce the intended entity
+      /// The interval on startingMolecule that defines the portion to be extracted to produce the intended entity.
       /// </summary>
       [FhirElement("coordinateInterval", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent CoordinateInterval
+      public Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent? CoordinateInterval
       {
-        get { return _CoordinateInterval; }
-        set { _CoordinateInterval = value; OnPropertyChanged("CoordinateInterval"); }
+        get
+        {
+          if(_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent), Overflow["coordinateInterval"]);
+          return _CoordinateInterval;
+        }
+
+        set
+        {
+          if (_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent>())
+            Overflow.Remove("coordinateInterval");
+          _CoordinateInterval = value;
+          OnPropertyChanged("CoordinateInterval");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent _CoordinateInterval;
+      private Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent? _CoordinateInterval;
 
       /// <summary>
-      /// A flag that indicates whether the extracted sequence should be reverse complemented
+      /// A flag that indicates whether the extracted sequence should be reverse complemented.
       /// </summary>
       [FhirElement("reverseComplement", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean ReverseComplementElement
+      public Hl7.Fhir.Model.FhirBoolean? ReverseComplementElement
       {
-        get { return _ReverseComplementElement; }
-        set { _ReverseComplementElement = value; OnPropertyChanged("ReverseComplementElement"); }
+        get
+        {
+          if(_ReverseComplementElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["reverseComplement"]);
+          return _ReverseComplementElement;
+        }
+
+        set
+        {
+          if (_ReverseComplementElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            Overflow.Remove("reverseComplement");
+          _ReverseComplementElement = value;
+          OnPropertyChanged("ReverseComplementElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _ReverseComplementElement;
+      private Hl7.Fhir.Model.FhirBoolean? _ReverseComplementElement;
 
       /// <summary>
       /// A flag that indicates whether the extracted sequence should be reverse complemented
@@ -2010,114 +2693,121 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? ReverseComplement
       {
-        get { return ReverseComplementElement != null ? ReverseComplementElement.Value : null; }
+        get => ReverseComplementElement?.Value;
         set
         {
-          if (value == null)
-            ReverseComplementElement = null;
-          else
-            ReverseComplementElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          ReverseComplementElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("ReverseComplement");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ExtractedComponent;
-
-        if (dest == null)
-        {
+        if(other is not ExtractedComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(StartingMolecule != null) dest.StartingMolecule = (Hl7.Fhir.Model.ResourceReference)StartingMolecule.DeepCopy();
-        if(CoordinateInterval != null) dest.CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent)CoordinateInterval.DeepCopy();
-        if(ReverseComplementElement != null) dest.ReverseComplementElement = (Hl7.Fhir.Model.FhirBoolean)ReverseComplementElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_StartingMolecule is not null) dest.StartingMolecule = (Hl7.Fhir.Model.ResourceReference)_StartingMolecule.DeepCopyInternal();
+        if(_CoordinateInterval is not null) dest.CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent)_CoordinateInterval.DeepCopyInternal();
+        if(_ReverseComplementElement is not null) dest.ReverseComplementElement = (Hl7.Fhir.Model.FhirBoolean)_ReverseComplementElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ExtractedComponent());
+        var instance = new ExtractedComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ExtractedComponent;
-        if(otherT == null) return false;
+        if(other is not ExtractedComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(StartingMolecule, otherT.StartingMolecule)) return false;
-        if( !DeepComparable.Matches(CoordinateInterval, otherT.CoordinateInterval)) return false;
-        if( !DeepComparable.Matches(ReverseComplementElement, otherT.ReverseComplementElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_StartingMolecule, otherT._StartingMolecule)) return false;
+        if(!comparer.Equals(_CoordinateInterval, otherT._CoordinateInterval)) return false;
+        if(!comparer.Equals(_ReverseComplementElement, otherT._ReverseComplementElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ExtractedComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(StartingMolecule, otherT.StartingMolecule)) return false;
-        if( !DeepComparable.IsExactly(CoordinateInterval, otherT.CoordinateInterval)) return false;
-        if( !DeepComparable.IsExactly(ReverseComplementElement, otherT.ReverseComplementElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (StartingMolecule != null) yield return StartingMolecule;
-          if (CoordinateInterval != null) yield return CoordinateInterval;
-          if (ReverseComplementElement != null) yield return ReverseComplementElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (StartingMolecule != null) yield return new ElementValue("startingMolecule", StartingMolecule);
-          if (CoordinateInterval != null) yield return new ElementValue("coordinateInterval", CoordinateInterval);
-          if (ReverseComplementElement != null) yield return new ElementValue("reverseComplement", ReverseComplementElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "startingMolecule":
-            value = StartingMolecule;
-            return StartingMolecule is not null;
+            if (_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["startingMolecule"];
+              return true;
+            }
+            value = _StartingMolecule;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "coordinateInterval":
-            value = CoordinateInterval;
-            return CoordinateInterval is not null;
+            if (_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent>())
+            {
+              value = Overflow["coordinateInterval"];
+              return true;
+            }
+            value = _CoordinateInterval;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent) is not null;
           case "reverseComplement":
-            value = ReverseComplementElement;
-            return ReverseComplementElement is not null;
+            if (_ReverseComplementElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            {
+              value = Overflow["reverseComplement"];
+              return true;
+            }
+            value = _ReverseComplementElement;
+            return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (StartingMolecule is not null) yield return new KeyValuePair<string,object>("startingMolecule",StartingMolecule);
-        if (CoordinateInterval is not null) yield return new KeyValuePair<string,object>("coordinateInterval",CoordinateInterval);
-        if (ReverseComplementElement is not null) yield return new KeyValuePair<string,object>("reverseComplement",ReverseComplementElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "startingMolecule":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              StartingMolecule = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["startingMolecule"] = value;
+            }
+            else StartingMolecule = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "coordinateInterval":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent or null))
+            {
+              CoordinateInterval = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent>.INSTANCE;
+              Overflow["coordinateInterval"] = value;
+            }
+            else CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent?)value;
+            return this;
+          case "reverseComplement":
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              ReverseComplementElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["reverseComplement"] = value;
+            }
+            else ReverseComplementElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_StartingMolecule is not null && !_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("startingMolecule",_StartingMolecule);
+        if (_CoordinateInterval is not null && !_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalComponentComponent>()) yield return new KeyValuePair<string,object>("coordinateInterval",_CoordinateInterval);
+        if (_ReverseComplementElement is not null && !_ReverseComplementElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("reverseComplement",_ReverseComplementElement);
       }
 
     }
@@ -2130,155 +2820,203 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#RepresentationExtractedCoordinateIntervalComponent", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.extracted.coordinateInterval")]
+    [FhirType("MolecularDefinition.representation.extracted.coordinateInterval", IsBackboneType=true)]
     public partial class RepresentationExtractedCoordinateIntervalComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#RepresentationExtractedCoordinateIntervalComponent"; } }
+      public override string TypeName => "MolecularDefinition.representation.extracted.coordinateInterval";
 
       /// <summary>
-      /// The coordinate system used to define the location
+      /// The coordinate system used to define the location.
       /// </summary>
       [FhirElement("coordinateSystem", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent CoordinateSystem
+      public Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent? CoordinateSystem
       {
-        get { return _CoordinateSystem; }
-        set { _CoordinateSystem = value; OnPropertyChanged("CoordinateSystem"); }
+        get
+        {
+          if(_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent), Overflow["coordinateSystem"]);
+          return _CoordinateSystem;
+        }
+
+        set
+        {
+          if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent>())
+            Overflow.Remove("coordinateSystem");
+          _CoordinateSystem = value;
+          OnPropertyChanged("CoordinateSystem");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent _CoordinateSystem;
+      private Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent? _CoordinateSystem;
 
       /// <summary>
-      /// The start location of the interval
+      /// The start location of the interval.
       /// </summary>
       [FhirElement("start", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Start
+      public Hl7.Fhir.Model.DataType? Start
       {
-        get { return _Start; }
-        set { _Start = value; OnPropertyChanged("Start"); }
+        get
+        {
+          if(_Start.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["start"]);
+          return _Start;
+        }
+
+        set
+        {
+          if (_Start.InOverflow<DynamicDataType>())
+            Overflow.Remove("start");
+          _Start = value;
+          OnPropertyChanged("Start");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Start;
+      private Hl7.Fhir.Model.DataType? _Start;
 
       /// <summary>
-      /// The end location of the interval
+      /// The end location of the interval.
       /// </summary>
       [FhirElement("end", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType End
+      public Hl7.Fhir.Model.DataType? End
       {
-        get { return _End; }
-        set { _End = value; OnPropertyChanged("End"); }
+        get
+        {
+          if(_End.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["end"]);
+          return _End;
+        }
+
+        set
+        {
+          if (_End.InOverflow<DynamicDataType>())
+            Overflow.Remove("end");
+          _End = value;
+          OnPropertyChanged("End");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _End;
+      private Hl7.Fhir.Model.DataType? _End;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepresentationExtractedCoordinateIntervalComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepresentationExtractedCoordinateIntervalComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(CoordinateSystem != null) dest.CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent)CoordinateSystem.DeepCopy();
-        if(Start != null) dest.Start = (Hl7.Fhir.Model.DataType)Start.DeepCopy();
-        if(End != null) dest.End = (Hl7.Fhir.Model.DataType)End.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_CoordinateSystem is not null) dest.CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent)_CoordinateSystem.DeepCopyInternal();
+        if(_Start is not null) dest.Start = (Hl7.Fhir.Model.DataType)_Start.DeepCopyInternal();
+        if(_End is not null) dest.End = (Hl7.Fhir.Model.DataType)_End.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepresentationExtractedCoordinateIntervalComponentComponent());
+        var instance = new RepresentationExtractedCoordinateIntervalComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepresentationExtractedCoordinateIntervalComponentComponent;
-        if(otherT == null) return false;
+        if(other is not RepresentationExtractedCoordinateIntervalComponentComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(CoordinateSystem, otherT.CoordinateSystem)) return false;
-        if( !DeepComparable.Matches(Start, otherT.Start)) return false;
-        if( !DeepComparable.Matches(End, otherT.End)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_CoordinateSystem, otherT._CoordinateSystem)) return false;
+        if(!comparer.Equals(_Start, otherT._Start)) return false;
+        if(!comparer.Equals(_End, otherT._End)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepresentationExtractedCoordinateIntervalComponentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(CoordinateSystem, otherT.CoordinateSystem)) return false;
-        if( !DeepComparable.IsExactly(Start, otherT.Start)) return false;
-        if( !DeepComparable.IsExactly(End, otherT.End)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (CoordinateSystem != null) yield return CoordinateSystem;
-          if (Start != null) yield return Start;
-          if (End != null) yield return End;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (CoordinateSystem != null) yield return new ElementValue("coordinateSystem", CoordinateSystem);
-          if (Start != null) yield return new ElementValue("start", Start);
-          if (End != null) yield return new ElementValue("end", End);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "coordinateSystem":
-            value = CoordinateSystem;
-            return CoordinateSystem is not null;
+            if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent>())
+            {
+              value = Overflow["coordinateSystem"];
+              return true;
+            }
+            value = _CoordinateSystem;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent) is not null;
           case "start":
-            value = Start;
-            return Start is not null;
+            if (_Start.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["start"];
+              return true;
+            }
+            value = _Start;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "end":
-            value = End;
-            return End is not null;
+            if (_End.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["end"];
+              return true;
+            }
+            value = _End;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (CoordinateSystem is not null) yield return new KeyValuePair<string,object>("coordinateSystem",CoordinateSystem);
-        if (Start is not null) yield return new KeyValuePair<string,object>("start",Start);
-        if (End is not null) yield return new KeyValuePair<string,object>("end",End);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "coordinateSystem":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent or null))
+            {
+              CoordinateSystem = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent>.INSTANCE;
+              Overflow["coordinateSystem"] = value;
+            }
+            else CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent?)value;
+            return this;
+          case "start":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Start = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["start"] = value;
+            }
+            else Start = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "end":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              End = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["end"] = value;
+            }
+            else End = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_CoordinateSystem is not null && !_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent>()) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystem);
+        if (_Start is not null && !_Start.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("start",_Start);
+        if (_End is not null && !_End.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("end",_End);
       }
 
     }
@@ -2291,152 +3029,200 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#RepresentationExtractedCoordinateIntervalCoordinateSystemComponent", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.extracted.coordinateInterval.coordinateSystem")]
+    [FhirType("MolecularDefinition.representation.extracted.coordinateInterval.coordinateSystem", IsBackboneType=true)]
     public partial class RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#RepresentationExtractedCoordinateIntervalCoordinateSystemComponent"; } }
+      public override string TypeName => "MolecularDefinition.representation.extracted.coordinateInterval.coordinateSystem";
 
       /// <summary>
-      /// The type of coordinate system used
+      /// The type of coordinate system used.
       /// </summary>
       [FhirElement("system", InSummary=true, Order=40)]
       [Binding("LL5323-2")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept System
+      public Hl7.Fhir.Model.CodeableConcept? System
       {
-        get { return _System; }
-        set { _System = value; OnPropertyChanged("System"); }
+        get
+        {
+          if(_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["system"]);
+          return _System;
+        }
+
+        set
+        {
+          if (_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("system");
+          _System = value;
+          OnPropertyChanged("System");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _System;
+      private Hl7.Fhir.Model.CodeableConcept? _System;
 
       /// <summary>
-      /// The location of the origin of the coordinate system
+      /// The location of the origin of the coordinate system.
       /// </summary>
       [FhirElement("origin", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Origin
+      public Hl7.Fhir.Model.CodeableConcept? Origin
       {
-        get { return _Origin; }
-        set { _Origin = value; OnPropertyChanged("Origin"); }
+        get
+        {
+          if(_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["origin"]);
+          return _Origin;
+        }
+
+        set
+        {
+          if (_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("origin");
+          _Origin = value;
+          OnPropertyChanged("Origin");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Origin;
+      private Hl7.Fhir.Model.CodeableConcept? _Origin;
 
       /// <summary>
-      /// The normalization method used for determining a location within the coordinate system
+      /// The normalization method used for determining a location within the coordinate system.
       /// </summary>
       [FhirElement("normalizationMethod", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept NormalizationMethod
+      public Hl7.Fhir.Model.CodeableConcept? NormalizationMethod
       {
-        get { return _NormalizationMethod; }
-        set { _NormalizationMethod = value; OnPropertyChanged("NormalizationMethod"); }
+        get
+        {
+          if(_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["normalizationMethod"]);
+          return _NormalizationMethod;
+        }
+
+        set
+        {
+          if (_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("normalizationMethod");
+          _NormalizationMethod = value;
+          OnPropertyChanged("NormalizationMethod");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _NormalizationMethod;
+      private Hl7.Fhir.Model.CodeableConcept? _NormalizationMethod;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(System != null) dest.System = (Hl7.Fhir.Model.CodeableConcept)System.DeepCopy();
-        if(Origin != null) dest.Origin = (Hl7.Fhir.Model.CodeableConcept)Origin.DeepCopy();
-        if(NormalizationMethod != null) dest.NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept)NormalizationMethod.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_System is not null) dest.System = (Hl7.Fhir.Model.CodeableConcept)_System.DeepCopyInternal();
+        if(_Origin is not null) dest.Origin = (Hl7.Fhir.Model.CodeableConcept)_Origin.DeepCopyInternal();
+        if(_NormalizationMethod is not null) dest.NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept)_NormalizationMethod.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent());
+        var instance = new RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent;
-        if(otherT == null) return false;
+        if(other is not RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(System, otherT.System)) return false;
-        if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
-        if( !DeepComparable.Matches(NormalizationMethod, otherT.NormalizationMethod)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_System, otherT._System)) return false;
+        if(!comparer.Equals(_Origin, otherT._Origin)) return false;
+        if(!comparer.Equals(_NormalizationMethod, otherT._NormalizationMethod)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepresentationExtractedCoordinateIntervalCoordinateSystemComponentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(System, otherT.System)) return false;
-        if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
-        if( !DeepComparable.IsExactly(NormalizationMethod, otherT.NormalizationMethod)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (System != null) yield return System;
-          if (Origin != null) yield return Origin;
-          if (NormalizationMethod != null) yield return NormalizationMethod;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (System != null) yield return new ElementValue("system", System);
-          if (Origin != null) yield return new ElementValue("origin", Origin);
-          if (NormalizationMethod != null) yield return new ElementValue("normalizationMethod", NormalizationMethod);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "system":
-            value = System;
-            return System is not null;
+            if (_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["system"];
+              return true;
+            }
+            value = _System;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "origin":
-            value = Origin;
-            return Origin is not null;
+            if (_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["origin"];
+              return true;
+            }
+            value = _Origin;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "normalizationMethod":
-            value = NormalizationMethod;
-            return NormalizationMethod is not null;
+            if (_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["normalizationMethod"];
+              return true;
+            }
+            value = _NormalizationMethod;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (System is not null) yield return new KeyValuePair<string,object>("system",System);
-        if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
-        if (NormalizationMethod is not null) yield return new KeyValuePair<string,object>("normalizationMethod",NormalizationMethod);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "system":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              System = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["system"] = value;
+            }
+            else System = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "origin":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Origin = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["origin"] = value;
+            }
+            else Origin = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "normalizationMethod":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              NormalizationMethod = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["normalizationMethod"] = value;
+            }
+            else NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_System is not null && !_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("system",_System);
+        if (_Origin is not null && !_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("origin",_Origin);
+        if (_NormalizationMethod is not null && !_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("normalizationMethod",_NormalizationMethod);
       }
 
     }
@@ -2449,44 +3235,69 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Repeated", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.repeated")]
+    [FhirType("MolecularDefinition.representation.repeated", IsBackboneType=true)]
     public partial class RepeatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Repeated"; } }
+      public override string TypeName => "MolecularDefinition.representation.repeated";
 
       /// <summary>
-      /// The motif that is repeated
+      /// The motif that is repeated.
       /// </summary>
       [FhirElement("sequenceMotif", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference SequenceMotif
+      public Hl7.Fhir.Model.ResourceReference? SequenceMotif
       {
-        get { return _SequenceMotif; }
-        set { _SequenceMotif = value; OnPropertyChanged("SequenceMotif"); }
+        get
+        {
+          if(_SequenceMotif.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["sequenceMotif"]);
+          return _SequenceMotif;
+        }
+
+        set
+        {
+          if (_SequenceMotif.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("sequenceMotif");
+          _SequenceMotif = value;
+          OnPropertyChanged("SequenceMotif");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _SequenceMotif;
+      private Hl7.Fhir.Model.ResourceReference? _SequenceMotif;
 
       /// <summary>
-      /// The number of copies of the motif
+      /// The number of copies of the motif.
       /// </summary>
       [FhirElement("copyCount", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer CopyCountElement
+      public Hl7.Fhir.Model.Integer? CopyCountElement
       {
-        get { return _CopyCountElement; }
-        set { _CopyCountElement = value; OnPropertyChanged("CopyCountElement"); }
+        get
+        {
+          if(_CopyCountElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["copyCount"]);
+          return _CopyCountElement;
+        }
+
+        set
+        {
+          if (_CopyCountElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            Overflow.Remove("copyCount");
+          _CopyCountElement = value;
+          OnPropertyChanged("CopyCountElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Integer _CopyCountElement;
+      private Hl7.Fhir.Model.Integer? _CopyCountElement;
 
       /// <summary>
       /// The number of copies of the motif
@@ -2495,105 +3306,102 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? CopyCount
       {
-        get { return CopyCountElement != null ? CopyCountElement.Value : null; }
+        get => CopyCountElement?.Value;
         set
         {
-          if (value == null)
-            CopyCountElement = null;
-          else
-            CopyCountElement = new Hl7.Fhir.Model.Integer(value);
+          CopyCountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("CopyCount");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepeatedComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepeatedComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(SequenceMotif != null) dest.SequenceMotif = (Hl7.Fhir.Model.ResourceReference)SequenceMotif.DeepCopy();
-        if(CopyCountElement != null) dest.CopyCountElement = (Hl7.Fhir.Model.Integer)CopyCountElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_SequenceMotif is not null) dest.SequenceMotif = (Hl7.Fhir.Model.ResourceReference)_SequenceMotif.DeepCopyInternal();
+        if(_CopyCountElement is not null) dest.CopyCountElement = (Hl7.Fhir.Model.Integer)_CopyCountElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepeatedComponent());
+        var instance = new RepeatedComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepeatedComponent;
-        if(otherT == null) return false;
+        if(other is not RepeatedComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(SequenceMotif, otherT.SequenceMotif)) return false;
-        if( !DeepComparable.Matches(CopyCountElement, otherT.CopyCountElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SequenceMotif, otherT._SequenceMotif)) return false;
+        if(!comparer.Equals(_CopyCountElement, otherT._CopyCountElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepeatedComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(SequenceMotif, otherT.SequenceMotif)) return false;
-        if( !DeepComparable.IsExactly(CopyCountElement, otherT.CopyCountElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (SequenceMotif != null) yield return SequenceMotif;
-          if (CopyCountElement != null) yield return CopyCountElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (SequenceMotif != null) yield return new ElementValue("sequenceMotif", SequenceMotif);
-          if (CopyCountElement != null) yield return new ElementValue("copyCount", CopyCountElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequenceMotif":
-            value = SequenceMotif;
-            return SequenceMotif is not null;
+            if (_SequenceMotif.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["sequenceMotif"];
+              return true;
+            }
+            value = _SequenceMotif;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "copyCount":
-            value = CopyCountElement;
-            return CopyCountElement is not null;
+            if (_CopyCountElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
+              value = Overflow["copyCount"];
+              return true;
+            }
+            value = _CopyCountElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (SequenceMotif is not null) yield return new KeyValuePair<string,object>("sequenceMotif",SequenceMotif);
-        if (CopyCountElement is not null) yield return new KeyValuePair<string,object>("copyCount",CopyCountElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "sequenceMotif":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              SequenceMotif = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["sequenceMotif"] = value;
+            }
+            else SequenceMotif = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "copyCount":
+            if (value is not (Hl7.Fhir.Model.Integer or null))
+            {
+              CopyCountElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+              Overflow["copyCount"] = value;
+            }
+            else CopyCountElement = (Hl7.Fhir.Model.Integer?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_SequenceMotif is not null && !_SequenceMotif.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("sequenceMotif",_SequenceMotif);
+        if (_CopyCountElement is not null && !_CopyCountElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("copyCount",_CopyCountElement);
       }
 
     }
@@ -2606,108 +3414,111 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Concatenated", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.concatenated")]
+    [FhirType("MolecularDefinition.representation.concatenated", IsBackboneType=true)]
     public partial class ConcatenatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Concatenated"; } }
+      public override string TypeName => "MolecularDefinition.representation.concatenated";
 
       /// <summary>
-      /// One of the concatenated entities
+      /// One of the concatenated entities.
       /// </summary>
       [FhirElement("sequenceElement", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent> SequenceElement
       {
-        get { if(_SequenceElement==null) _SequenceElement = new List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>(); return _SequenceElement; }
-        set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
+        get
+        {
+          if(_SequenceElement.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>), Overflow["sequenceElement"]);
+          return _SequenceElement ??= [];
+        }
+
+        set
+        {
+          if (_SequenceElement.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>>())
+            Overflow.Remove("sequenceElement");
+          _SequenceElement = value;
+          OnPropertyChanged("SequenceElement");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent> _SequenceElement;
+      private List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>? _SequenceElement;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ConcatenatedComponent;
-
-        if (dest == null)
-        {
+        if(other is not ConcatenatedComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(SequenceElement.Any()) dest.SequenceElement = new List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>(SequenceElement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_SequenceElement is not null) dest.SequenceElement = new List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>(_SequenceElement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ConcatenatedComponent());
+        var instance = new ConcatenatedComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ConcatenatedComponent;
-        if(otherT == null) return false;
+        if(other is not ConcatenatedComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_SequenceElement, otherT._SequenceElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ConcatenatedComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in SequenceElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in SequenceElement) { if (elem != null) yield return new ElementValue("sequenceElement", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequenceElement":
-            value = SequenceElement;
-            return SequenceElement?.Any() == true;
+            if (_SequenceElement.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>>())
+            {
+              value = Overflow["sequenceElement"];
+              return true;
+            }
+            value = _SequenceElement;
+            return (value as List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (SequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("sequenceElement",SequenceElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "sequenceElement":
+            if (value is not (List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent> or null))
+            {
+              SequenceElement = OverflowNull<List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>>.INSTANCE;
+              Overflow["sequenceElement"] = value;
+            }
+            else SequenceElement = (List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_SequenceElement?.Any() is true && !_SequenceElement.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.SequenceElementComponent>>()) yield return new KeyValuePair<string,object>("sequenceElement",_SequenceElement);
       }
 
     }
@@ -2721,44 +3532,69 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#SequenceElement", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.concatenated.sequenceElement")]
+    [FhirType("MolecularDefinition.representation.concatenated.sequenceElement", IsBackboneType=true)]
     public partial class SequenceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#SequenceElement"; } }
+      public override string TypeName => "MolecularDefinition.representation.concatenated.sequenceElement";
 
       /// <summary>
-      /// A reference to the sequence that defines this specific concatenated element
+      /// A reference to the sequence that defines this specific concatenated element.
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Sequence
+      public Hl7.Fhir.Model.ResourceReference? Sequence
       {
-        get { return _Sequence; }
-        set { _Sequence = value; OnPropertyChanged("Sequence"); }
+        get
+        {
+          if(_Sequence.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["sequence"]);
+          return _Sequence;
+        }
+
+        set
+        {
+          if (_Sequence.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("sequence");
+          _Sequence = value;
+          OnPropertyChanged("Sequence");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Sequence;
+      private Hl7.Fhir.Model.ResourceReference? _Sequence;
 
       /// <summary>
-      /// The ordinal index of the element within the concatenated representation
+      /// The ordinal index of the element within the concatenated representation.
       /// </summary>
       [FhirElement("ordinalIndex", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer OrdinalIndexElement
+      public Hl7.Fhir.Model.Integer? OrdinalIndexElement
       {
-        get { return _OrdinalIndexElement; }
-        set { _OrdinalIndexElement = value; OnPropertyChanged("OrdinalIndexElement"); }
+        get
+        {
+          if(_OrdinalIndexElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["ordinalIndex"]);
+          return _OrdinalIndexElement;
+        }
+
+        set
+        {
+          if (_OrdinalIndexElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            Overflow.Remove("ordinalIndex");
+          _OrdinalIndexElement = value;
+          OnPropertyChanged("OrdinalIndexElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Integer _OrdinalIndexElement;
+      private Hl7.Fhir.Model.Integer? _OrdinalIndexElement;
 
       /// <summary>
       /// The ordinal index of the element within the concatenated representation
@@ -2767,105 +3603,102 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? OrdinalIndex
       {
-        get { return OrdinalIndexElement != null ? OrdinalIndexElement.Value : null; }
+        get => OrdinalIndexElement?.Value;
         set
         {
-          if (value == null)
-            OrdinalIndexElement = null;
-          else
-            OrdinalIndexElement = new Hl7.Fhir.Model.Integer(value);
+          OrdinalIndexElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("OrdinalIndex");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SequenceElementComponent;
-
-        if (dest == null)
-        {
+        if(other is not SequenceElementComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Sequence != null) dest.Sequence = (Hl7.Fhir.Model.ResourceReference)Sequence.DeepCopy();
-        if(OrdinalIndexElement != null) dest.OrdinalIndexElement = (Hl7.Fhir.Model.Integer)OrdinalIndexElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Sequence is not null) dest.Sequence = (Hl7.Fhir.Model.ResourceReference)_Sequence.DeepCopyInternal();
+        if(_OrdinalIndexElement is not null) dest.OrdinalIndexElement = (Hl7.Fhir.Model.Integer)_OrdinalIndexElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new SequenceElementComponent());
+        var instance = new SequenceElementComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SequenceElementComponent;
-        if(otherT == null) return false;
+        if(other is not SequenceElementComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Sequence, otherT.Sequence)) return false;
-        if( !DeepComparable.Matches(OrdinalIndexElement, otherT.OrdinalIndexElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Sequence, otherT._Sequence)) return false;
+        if(!comparer.Equals(_OrdinalIndexElement, otherT._OrdinalIndexElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as SequenceElementComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Sequence, otherT.Sequence)) return false;
-        if( !DeepComparable.IsExactly(OrdinalIndexElement, otherT.OrdinalIndexElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Sequence != null) yield return Sequence;
-          if (OrdinalIndexElement != null) yield return OrdinalIndexElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Sequence != null) yield return new ElementValue("sequence", Sequence);
-          if (OrdinalIndexElement != null) yield return new ElementValue("ordinalIndex", OrdinalIndexElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequence":
-            value = Sequence;
-            return Sequence is not null;
+            if (_Sequence.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["sequence"];
+              return true;
+            }
+            value = _Sequence;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "ordinalIndex":
-            value = OrdinalIndexElement;
-            return OrdinalIndexElement is not null;
+            if (_OrdinalIndexElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
+              value = Overflow["ordinalIndex"];
+              return true;
+            }
+            value = _OrdinalIndexElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Sequence is not null) yield return new KeyValuePair<string,object>("sequence",Sequence);
-        if (OrdinalIndexElement is not null) yield return new KeyValuePair<string,object>("ordinalIndex",OrdinalIndexElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "sequence":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Sequence = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["sequence"] = value;
+            }
+            else Sequence = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "ordinalIndex":
+            if (value is not (Hl7.Fhir.Model.Integer or null))
+            {
+              OrdinalIndexElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+              Overflow["ordinalIndex"] = value;
+            }
+            else OrdinalIndexElement = (Hl7.Fhir.Model.Integer?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Sequence is not null && !_Sequence.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("sequence",_Sequence);
+        if (_OrdinalIndexElement is not null && !_OrdinalIndexElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("ordinalIndex",_OrdinalIndexElement);
       }
 
     }
@@ -2878,133 +3711,159 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Relative", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.relative")]
+    [FhirType("MolecularDefinition.representation.relative", IsBackboneType=true)]
     public partial class RelativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Relative"; } }
+      public override string TypeName => "MolecularDefinition.representation.relative";
 
       /// <summary>
-      /// The molecular entity on which edits will be applied
+      /// The molecular entity on which edits will be applied.
       /// </summary>
       [FhirElement("startingMolecule", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference StartingMolecule
+      public Hl7.Fhir.Model.ResourceReference? StartingMolecule
       {
-        get { return _StartingMolecule; }
-        set { _StartingMolecule = value; OnPropertyChanged("StartingMolecule"); }
+        get
+        {
+          if(_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["startingMolecule"]);
+          return _StartingMolecule;
+        }
+
+        set
+        {
+          if (_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("startingMolecule");
+          _StartingMolecule = value;
+          OnPropertyChanged("StartingMolecule");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _StartingMolecule;
+      private Hl7.Fhir.Model.ResourceReference? _StartingMolecule;
 
       /// <summary>
-      /// A defined edit (change) to be applied
+      /// A defined edit (change) to be applied.
       /// </summary>
       [FhirElement("edit", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MolecularDefinition.EditComponent> Edit
       {
-        get { if(_Edit==null) _Edit = new List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>(); return _Edit; }
-        set { _Edit = value; OnPropertyChanged("Edit"); }
+        get
+        {
+          if(_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>), Overflow["edit"]);
+          return _Edit ??= [];
+        }
+
+        set
+        {
+          if (_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>>())
+            Overflow.Remove("edit");
+          _Edit = value;
+          OnPropertyChanged("Edit");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.MolecularDefinition.EditComponent> _Edit;
+      private List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>? _Edit;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RelativeComponent;
-
-        if (dest == null)
-        {
+        if(other is not RelativeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(StartingMolecule != null) dest.StartingMolecule = (Hl7.Fhir.Model.ResourceReference)StartingMolecule.DeepCopy();
-        if(Edit.Any()) dest.Edit = new List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>(Edit.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_StartingMolecule is not null) dest.StartingMolecule = (Hl7.Fhir.Model.ResourceReference)_StartingMolecule.DeepCopyInternal();
+        if(_Edit is not null) dest.Edit = new List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>(_Edit.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RelativeComponent());
+        var instance = new RelativeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RelativeComponent;
-        if(otherT == null) return false;
+        if(other is not RelativeComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(StartingMolecule, otherT.StartingMolecule)) return false;
-        if( !DeepComparable.Matches(Edit, otherT.Edit)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_StartingMolecule, otherT._StartingMolecule)) return false;
+        if(!comparer.ListEquals(_Edit, otherT._Edit)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RelativeComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(StartingMolecule, otherT.StartingMolecule)) return false;
-        if( !DeepComparable.IsExactly(Edit, otherT.Edit)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (StartingMolecule != null) yield return StartingMolecule;
-          foreach (var elem in Edit) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (StartingMolecule != null) yield return new ElementValue("startingMolecule", StartingMolecule);
-          foreach (var elem in Edit) { if (elem != null) yield return new ElementValue("edit", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "startingMolecule":
-            value = StartingMolecule;
-            return StartingMolecule is not null;
+            if (_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["startingMolecule"];
+              return true;
+            }
+            value = _StartingMolecule;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "edit":
-            value = Edit;
-            return Edit?.Any() == true;
+            if (_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>>())
+            {
+              value = Overflow["edit"];
+              return true;
+            }
+            value = _Edit;
+            return (value as List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (StartingMolecule is not null) yield return new KeyValuePair<string,object>("startingMolecule",StartingMolecule);
-        if (Edit?.Any() == true) yield return new KeyValuePair<string,object>("edit",Edit);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "startingMolecule":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              StartingMolecule = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["startingMolecule"] = value;
+            }
+            else StartingMolecule = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "edit":
+            if (value is not (List<Hl7.Fhir.Model.MolecularDefinition.EditComponent> or null))
+            {
+              Edit = OverflowNull<List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>>.INSTANCE;
+              Overflow["edit"] = value;
+            }
+            else Edit = (List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_StartingMolecule is not null && !_StartingMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("startingMolecule",_StartingMolecule);
+        if (_Edit?.Any() is true && !_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.EditComponent>>()) yield return new KeyValuePair<string,object>("edit",_Edit);
       }
 
     }
@@ -3018,27 +3877,39 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#Edit", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.relative.edit")]
+    [FhirType("MolecularDefinition.representation.relative.edit", IsBackboneType=true)]
     public partial class EditComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#Edit"; } }
+      public override string TypeName => "MolecularDefinition.representation.relative.edit";
 
       /// <summary>
-      /// Defines the order of edits when multiple edits are to be applied to the startingMolecule
+      /// Defines the order of edits when multiple edits are to be applied to the startingMolecule.
       /// </summary>
       [FhirElement("editOrder", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer EditOrderElement
+      public Hl7.Fhir.Model.Integer? EditOrderElement
       {
-        get { return _EditOrderElement; }
-        set { _EditOrderElement = value; OnPropertyChanged("EditOrderElement"); }
+        get
+        {
+          if(_EditOrderElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["editOrder"]);
+          return _EditOrderElement;
+        }
+
+        set
+        {
+          if (_EditOrderElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            Overflow.Remove("editOrder");
+          _EditOrderElement = value;
+          OnPropertyChanged("EditOrderElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Integer _EditOrderElement;
+      private Hl7.Fhir.Model.Integer? _EditOrderElement;
 
       /// <summary>
       /// Defines the order of edits when multiple edits are to be applied to the startingMolecule
@@ -3047,167 +3918,223 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? EditOrder
       {
-        get { return EditOrderElement != null ? EditOrderElement.Value : null; }
+        get => EditOrderElement?.Value;
         set
         {
-          if (value == null)
-            EditOrderElement = null;
-          else
-            EditOrderElement = new Hl7.Fhir.Model.Integer(value);
+          EditOrderElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("EditOrder");
         }
       }
 
       /// <summary>
-      /// The interval on startingMolecule that defines the portion to be extracted to produce the intended entity
+      /// The interval on startingMolecule that defines the portion to be extracted to produce the intended entity.
       /// </summary>
       [FhirElement("coordinateInterval", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent CoordinateInterval
+      public Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent? CoordinateInterval
       {
-        get { return _CoordinateInterval; }
-        set { _CoordinateInterval = value; OnPropertyChanged("CoordinateInterval"); }
+        get
+        {
+          if(_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent), Overflow["coordinateInterval"]);
+          return _CoordinateInterval;
+        }
+
+        set
+        {
+          if (_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent>())
+            Overflow.Remove("coordinateInterval");
+          _CoordinateInterval = value;
+          OnPropertyChanged("CoordinateInterval");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent _CoordinateInterval;
+      private Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent? _CoordinateInterval;
 
       /// <summary>
-      /// The molecular entity that serves as the replacement in the edit operation
+      /// The molecular entity that serves as the replacement in the edit operation.
       /// </summary>
       [FhirElement("replacementMolecule", InSummary=true, Order=60)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference ReplacementMolecule
+      public Hl7.Fhir.Model.ResourceReference? ReplacementMolecule
       {
-        get { return _ReplacementMolecule; }
-        set { _ReplacementMolecule = value; OnPropertyChanged("ReplacementMolecule"); }
+        get
+        {
+          if(_ReplacementMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["replacementMolecule"]);
+          return _ReplacementMolecule;
+        }
+
+        set
+        {
+          if (_ReplacementMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("replacementMolecule");
+          _ReplacementMolecule = value;
+          OnPropertyChanged("ReplacementMolecule");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _ReplacementMolecule;
+      private Hl7.Fhir.Model.ResourceReference? _ReplacementMolecule;
 
       /// <summary>
-      /// The portion of the molecular entity that is replaced by the replacementMolecule
+      /// The portion of the molecular entity that is replaced by the replacementMolecule.
       /// </summary>
       [FhirElement("replacedMolecule", InSummary=true, Order=70)]
       [CLSCompliant(false)]
       [References("MolecularDefinition")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference ReplacedMolecule
+      public Hl7.Fhir.Model.ResourceReference? ReplacedMolecule
       {
-        get { return _ReplacedMolecule; }
-        set { _ReplacedMolecule = value; OnPropertyChanged("ReplacedMolecule"); }
+        get
+        {
+          if(_ReplacedMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["replacedMolecule"]);
+          return _ReplacedMolecule;
+        }
+
+        set
+        {
+          if (_ReplacedMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("replacedMolecule");
+          _ReplacedMolecule = value;
+          OnPropertyChanged("ReplacedMolecule");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _ReplacedMolecule;
+      private Hl7.Fhir.Model.ResourceReference? _ReplacedMolecule;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EditComponent;
-
-        if (dest == null)
-        {
+        if(other is not EditComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(EditOrderElement != null) dest.EditOrderElement = (Hl7.Fhir.Model.Integer)EditOrderElement.DeepCopy();
-        if(CoordinateInterval != null) dest.CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent)CoordinateInterval.DeepCopy();
-        if(ReplacementMolecule != null) dest.ReplacementMolecule = (Hl7.Fhir.Model.ResourceReference)ReplacementMolecule.DeepCopy();
-        if(ReplacedMolecule != null) dest.ReplacedMolecule = (Hl7.Fhir.Model.ResourceReference)ReplacedMolecule.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_EditOrderElement is not null) dest.EditOrderElement = (Hl7.Fhir.Model.Integer)_EditOrderElement.DeepCopyInternal();
+        if(_CoordinateInterval is not null) dest.CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent)_CoordinateInterval.DeepCopyInternal();
+        if(_ReplacementMolecule is not null) dest.ReplacementMolecule = (Hl7.Fhir.Model.ResourceReference)_ReplacementMolecule.DeepCopyInternal();
+        if(_ReplacedMolecule is not null) dest.ReplacedMolecule = (Hl7.Fhir.Model.ResourceReference)_ReplacedMolecule.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new EditComponent());
+        var instance = new EditComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EditComponent;
-        if(otherT == null) return false;
+        if(other is not EditComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(EditOrderElement, otherT.EditOrderElement)) return false;
-        if( !DeepComparable.Matches(CoordinateInterval, otherT.CoordinateInterval)) return false;
-        if( !DeepComparable.Matches(ReplacementMolecule, otherT.ReplacementMolecule)) return false;
-        if( !DeepComparable.Matches(ReplacedMolecule, otherT.ReplacedMolecule)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_EditOrderElement, otherT._EditOrderElement)) return false;
+        if(!comparer.Equals(_CoordinateInterval, otherT._CoordinateInterval)) return false;
+        if(!comparer.Equals(_ReplacementMolecule, otherT._ReplacementMolecule)) return false;
+        if(!comparer.Equals(_ReplacedMolecule, otherT._ReplacedMolecule)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as EditComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(EditOrderElement, otherT.EditOrderElement)) return false;
-        if( !DeepComparable.IsExactly(CoordinateInterval, otherT.CoordinateInterval)) return false;
-        if( !DeepComparable.IsExactly(ReplacementMolecule, otherT.ReplacementMolecule)) return false;
-        if( !DeepComparable.IsExactly(ReplacedMolecule, otherT.ReplacedMolecule)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (EditOrderElement != null) yield return EditOrderElement;
-          if (CoordinateInterval != null) yield return CoordinateInterval;
-          if (ReplacementMolecule != null) yield return ReplacementMolecule;
-          if (ReplacedMolecule != null) yield return ReplacedMolecule;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (EditOrderElement != null) yield return new ElementValue("editOrder", EditOrderElement);
-          if (CoordinateInterval != null) yield return new ElementValue("coordinateInterval", CoordinateInterval);
-          if (ReplacementMolecule != null) yield return new ElementValue("replacementMolecule", ReplacementMolecule);
-          if (ReplacedMolecule != null) yield return new ElementValue("replacedMolecule", ReplacedMolecule);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "editOrder":
-            value = EditOrderElement;
-            return EditOrderElement is not null;
+            if (_EditOrderElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
+              value = Overflow["editOrder"];
+              return true;
+            }
+            value = _EditOrderElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "coordinateInterval":
-            value = CoordinateInterval;
-            return CoordinateInterval is not null;
+            if (_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent>())
+            {
+              value = Overflow["coordinateInterval"];
+              return true;
+            }
+            value = _CoordinateInterval;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent) is not null;
           case "replacementMolecule":
-            value = ReplacementMolecule;
-            return ReplacementMolecule is not null;
+            if (_ReplacementMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["replacementMolecule"];
+              return true;
+            }
+            value = _ReplacementMolecule;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "replacedMolecule":
-            value = ReplacedMolecule;
-            return ReplacedMolecule is not null;
+            if (_ReplacedMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["replacedMolecule"];
+              return true;
+            }
+            value = _ReplacedMolecule;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (EditOrderElement is not null) yield return new KeyValuePair<string,object>("editOrder",EditOrderElement);
-        if (CoordinateInterval is not null) yield return new KeyValuePair<string,object>("coordinateInterval",CoordinateInterval);
-        if (ReplacementMolecule is not null) yield return new KeyValuePair<string,object>("replacementMolecule",ReplacementMolecule);
-        if (ReplacedMolecule is not null) yield return new KeyValuePair<string,object>("replacedMolecule",ReplacedMolecule);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "editOrder":
+            if (value is not (Hl7.Fhir.Model.Integer or null))
+            {
+              EditOrderElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+              Overflow["editOrder"] = value;
+            }
+            else EditOrderElement = (Hl7.Fhir.Model.Integer?)value;
+            return this;
+          case "coordinateInterval":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent or null))
+            {
+              CoordinateInterval = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent>.INSTANCE;
+              Overflow["coordinateInterval"] = value;
+            }
+            else CoordinateInterval = (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent?)value;
+            return this;
+          case "replacementMolecule":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              ReplacementMolecule = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["replacementMolecule"] = value;
+            }
+            else ReplacementMolecule = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "replacedMolecule":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              ReplacedMolecule = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["replacedMolecule"] = value;
+            }
+            else ReplacedMolecule = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_EditOrderElement is not null && !_EditOrderElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("editOrder",_EditOrderElement);
+        if (_CoordinateInterval is not null && !_CoordinateInterval.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalComponentComponent>()) yield return new KeyValuePair<string,object>("coordinateInterval",_CoordinateInterval);
+        if (_ReplacementMolecule is not null && !_ReplacementMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("replacementMolecule",_ReplacementMolecule);
+        if (_ReplacedMolecule is not null && !_ReplacedMolecule.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("replacedMolecule",_ReplacedMolecule);
       }
 
     }
@@ -3220,155 +4147,203 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#RepresentationRelativeEditCoordinateIntervalComponent", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.relative.edit.coordinateInterval")]
+    [FhirType("MolecularDefinition.representation.relative.edit.coordinateInterval", IsBackboneType=true)]
     public partial class RepresentationRelativeEditCoordinateIntervalComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#RepresentationRelativeEditCoordinateIntervalComponent"; } }
+      public override string TypeName => "MolecularDefinition.representation.relative.edit.coordinateInterval";
 
       /// <summary>
-      /// The coordinate system used to define the location
+      /// The coordinate system used to define the location.
       /// </summary>
       [FhirElement("coordinateSystem", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent CoordinateSystem
+      public Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent? CoordinateSystem
       {
-        get { return _CoordinateSystem; }
-        set { _CoordinateSystem = value; OnPropertyChanged("CoordinateSystem"); }
+        get
+        {
+          if(_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent), Overflow["coordinateSystem"]);
+          return _CoordinateSystem;
+        }
+
+        set
+        {
+          if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent>())
+            Overflow.Remove("coordinateSystem");
+          _CoordinateSystem = value;
+          OnPropertyChanged("CoordinateSystem");
+        }
+
       }
 
-      private Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent _CoordinateSystem;
+      private Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent? _CoordinateSystem;
 
       /// <summary>
-      /// The start location of the interval
+      /// The start location of the interval.
       /// </summary>
       [FhirElement("start", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Start
+      public Hl7.Fhir.Model.DataType? Start
       {
-        get { return _Start; }
-        set { _Start = value; OnPropertyChanged("Start"); }
+        get
+        {
+          if(_Start.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["start"]);
+          return _Start;
+        }
+
+        set
+        {
+          if (_Start.InOverflow<DynamicDataType>())
+            Overflow.Remove("start");
+          _Start = value;
+          OnPropertyChanged("Start");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Start;
+      private Hl7.Fhir.Model.DataType? _Start;
 
       /// <summary>
-      /// The end location of the interval
+      /// The end location of the interval.
       /// </summary>
       [FhirElement("end", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType End
+      public Hl7.Fhir.Model.DataType? End
       {
-        get { return _End; }
-        set { _End = value; OnPropertyChanged("End"); }
+        get
+        {
+          if(_End.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["end"]);
+          return _End;
+        }
+
+        set
+        {
+          if (_End.InOverflow<DynamicDataType>())
+            Overflow.Remove("end");
+          _End = value;
+          OnPropertyChanged("End");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _End;
+      private Hl7.Fhir.Model.DataType? _End;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepresentationRelativeEditCoordinateIntervalComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepresentationRelativeEditCoordinateIntervalComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(CoordinateSystem != null) dest.CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent)CoordinateSystem.DeepCopy();
-        if(Start != null) dest.Start = (Hl7.Fhir.Model.DataType)Start.DeepCopy();
-        if(End != null) dest.End = (Hl7.Fhir.Model.DataType)End.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_CoordinateSystem is not null) dest.CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent)_CoordinateSystem.DeepCopyInternal();
+        if(_Start is not null) dest.Start = (Hl7.Fhir.Model.DataType)_Start.DeepCopyInternal();
+        if(_End is not null) dest.End = (Hl7.Fhir.Model.DataType)_End.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepresentationRelativeEditCoordinateIntervalComponentComponent());
+        var instance = new RepresentationRelativeEditCoordinateIntervalComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepresentationRelativeEditCoordinateIntervalComponentComponent;
-        if(otherT == null) return false;
+        if(other is not RepresentationRelativeEditCoordinateIntervalComponentComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(CoordinateSystem, otherT.CoordinateSystem)) return false;
-        if( !DeepComparable.Matches(Start, otherT.Start)) return false;
-        if( !DeepComparable.Matches(End, otherT.End)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_CoordinateSystem, otherT._CoordinateSystem)) return false;
+        if(!comparer.Equals(_Start, otherT._Start)) return false;
+        if(!comparer.Equals(_End, otherT._End)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepresentationRelativeEditCoordinateIntervalComponentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(CoordinateSystem, otherT.CoordinateSystem)) return false;
-        if( !DeepComparable.IsExactly(Start, otherT.Start)) return false;
-        if( !DeepComparable.IsExactly(End, otherT.End)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (CoordinateSystem != null) yield return CoordinateSystem;
-          if (Start != null) yield return Start;
-          if (End != null) yield return End;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (CoordinateSystem != null) yield return new ElementValue("coordinateSystem", CoordinateSystem);
-          if (Start != null) yield return new ElementValue("start", Start);
-          if (End != null) yield return new ElementValue("end", End);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "coordinateSystem":
-            value = CoordinateSystem;
-            return CoordinateSystem is not null;
+            if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent>())
+            {
+              value = Overflow["coordinateSystem"];
+              return true;
+            }
+            value = _CoordinateSystem;
+            return (value as Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent) is not null;
           case "start":
-            value = Start;
-            return Start is not null;
+            if (_Start.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["start"];
+              return true;
+            }
+            value = _Start;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "end":
-            value = End;
-            return End is not null;
+            if (_End.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["end"];
+              return true;
+            }
+            value = _End;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (CoordinateSystem is not null) yield return new KeyValuePair<string,object>("coordinateSystem",CoordinateSystem);
-        if (Start is not null) yield return new KeyValuePair<string,object>("start",Start);
-        if (End is not null) yield return new KeyValuePair<string,object>("end",End);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "coordinateSystem":
+            if (value is not (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent or null))
+            {
+              CoordinateSystem = OverflowNull<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent>.INSTANCE;
+              Overflow["coordinateSystem"] = value;
+            }
+            else CoordinateSystem = (Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent?)value;
+            return this;
+          case "start":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Start = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["start"] = value;
+            }
+            else Start = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "end":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              End = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["end"] = value;
+            }
+            else End = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_CoordinateSystem is not null && !_CoordinateSystem.InOverflow<Hl7.Fhir.Model.MolecularDefinition.RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent>()) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystem);
+        if (_Start is not null && !_Start.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("start",_Start);
+        if (_End is not null && !_End.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("end",_End);
       }
 
     }
@@ -3381,430 +4356,645 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("MolecularDefinition#RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponent", IsNestedType=true)]
-    [BackboneType("MolecularDefinition.representation.relative.edit.coordinateInterval.coordinateSystem")]
+    [FhirType("MolecularDefinition.representation.relative.edit.coordinateInterval.coordinateSystem", IsBackboneType=true)]
     public partial class RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularDefinition#RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponent"; } }
+      public override string TypeName => "MolecularDefinition.representation.relative.edit.coordinateInterval.coordinateSystem";
 
       /// <summary>
-      /// The type of coordinate system used
+      /// The type of coordinate system used.
       /// </summary>
       [FhirElement("system", InSummary=true, Order=40)]
       [Binding("LL5323-2")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept System
+      public Hl7.Fhir.Model.CodeableConcept? System
       {
-        get { return _System; }
-        set { _System = value; OnPropertyChanged("System"); }
+        get
+        {
+          if(_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["system"]);
+          return _System;
+        }
+
+        set
+        {
+          if (_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("system");
+          _System = value;
+          OnPropertyChanged("System");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _System;
+      private Hl7.Fhir.Model.CodeableConcept? _System;
 
       /// <summary>
-      /// The location of the origin of the coordinate system
+      /// The location of the origin of the coordinate system.
       /// </summary>
       [FhirElement("origin", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Origin
+      public Hl7.Fhir.Model.CodeableConcept? Origin
       {
-        get { return _Origin; }
-        set { _Origin = value; OnPropertyChanged("Origin"); }
+        get
+        {
+          if(_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["origin"]);
+          return _Origin;
+        }
+
+        set
+        {
+          if (_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("origin");
+          _Origin = value;
+          OnPropertyChanged("Origin");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Origin;
+      private Hl7.Fhir.Model.CodeableConcept? _Origin;
 
       /// <summary>
-      /// The normalization method used for determining a location within the coordinate system
+      /// The normalization method used for determining a location within the coordinate system.
       /// </summary>
       [FhirElement("normalizationMethod", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept NormalizationMethod
+      public Hl7.Fhir.Model.CodeableConcept? NormalizationMethod
       {
-        get { return _NormalizationMethod; }
-        set { _NormalizationMethod = value; OnPropertyChanged("NormalizationMethod"); }
+        get
+        {
+          if(_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["normalizationMethod"]);
+          return _NormalizationMethod;
+        }
+
+        set
+        {
+          if (_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("normalizationMethod");
+          _NormalizationMethod = value;
+          OnPropertyChanged("NormalizationMethod");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _NormalizationMethod;
+      private Hl7.Fhir.Model.CodeableConcept? _NormalizationMethod;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(System != null) dest.System = (Hl7.Fhir.Model.CodeableConcept)System.DeepCopy();
-        if(Origin != null) dest.Origin = (Hl7.Fhir.Model.CodeableConcept)Origin.DeepCopy();
-        if(NormalizationMethod != null) dest.NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept)NormalizationMethod.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_System is not null) dest.System = (Hl7.Fhir.Model.CodeableConcept)_System.DeepCopyInternal();
+        if(_Origin is not null) dest.Origin = (Hl7.Fhir.Model.CodeableConcept)_Origin.DeepCopyInternal();
+        if(_NormalizationMethod is not null) dest.NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept)_NormalizationMethod.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent());
+        var instance = new RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent;
-        if(otherT == null) return false;
+        if(other is not RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(System, otherT.System)) return false;
-        if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
-        if( !DeepComparable.Matches(NormalizationMethod, otherT.NormalizationMethod)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_System, otherT._System)) return false;
+        if(!comparer.Equals(_Origin, otherT._Origin)) return false;
+        if(!comparer.Equals(_NormalizationMethod, otherT._NormalizationMethod)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RepresentationRelativeEditCoordinateIntervalCoordinateSystemComponentComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(System, otherT.System)) return false;
-        if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
-        if( !DeepComparable.IsExactly(NormalizationMethod, otherT.NormalizationMethod)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (System != null) yield return System;
-          if (Origin != null) yield return Origin;
-          if (NormalizationMethod != null) yield return NormalizationMethod;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (System != null) yield return new ElementValue("system", System);
-          if (Origin != null) yield return new ElementValue("origin", Origin);
-          if (NormalizationMethod != null) yield return new ElementValue("normalizationMethod", NormalizationMethod);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "system":
-            value = System;
-            return System is not null;
+            if (_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["system"];
+              return true;
+            }
+            value = _System;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "origin":
-            value = Origin;
-            return Origin is not null;
+            if (_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["origin"];
+              return true;
+            }
+            value = _Origin;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "normalizationMethod":
-            value = NormalizationMethod;
-            return NormalizationMethod is not null;
+            if (_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["normalizationMethod"];
+              return true;
+            }
+            value = _NormalizationMethod;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (System is not null) yield return new KeyValuePair<string,object>("system",System);
-        if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
-        if (NormalizationMethod is not null) yield return new KeyValuePair<string,object>("normalizationMethod",NormalizationMethod);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "system":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              System = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["system"] = value;
+            }
+            else System = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "origin":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Origin = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["origin"] = value;
+            }
+            else Origin = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "normalizationMethod":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              NormalizationMethod = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["normalizationMethod"] = value;
+            }
+            else NormalizationMethod = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_System is not null && !_System.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("system",_System);
+        if (_Origin is not null && !_Origin.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("origin",_Origin);
+        if (_NormalizationMethod is not null && !_NormalizationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("normalizationMethod",_NormalizationMethod);
       }
 
     }
 
     /// <summary>
-    /// Unique ID of an instance
+    /// Unique ID of an instance.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
-    /// Description of the Molecular Definition instance
+    /// Description of the Molecular Definition instance.
     /// </summary>
     [FhirElement("description", Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown DescriptionElement
+    public Hl7.Fhir.Model.Markdown? DescriptionElement
     {
-      get { return _DescriptionElement; }
-      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+      get
+      {
+        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["description"]);
+        return _DescriptionElement;
+      }
+
+      set
+      {
+        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          Overflow.Remove("description");
+        _DescriptionElement = value;
+        OnPropertyChanged("DescriptionElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
 
     /// <summary>
     /// Description of the Molecular Definition instance
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
 
     /// <summary>
-    /// The type of molecule (e.g., DNA, RNA, amino acid)
+    /// The type of molecule (e.g., DNA, RNA, amino acid).
     /// </summary>
     [FhirElement("moleculeType", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept MoleculeType
+    public Hl7.Fhir.Model.CodeableConcept? MoleculeType
     {
-      get { return _MoleculeType; }
-      set { _MoleculeType = value; OnPropertyChanged("MoleculeType"); }
+      get
+      {
+        if(_MoleculeType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["moleculeType"]);
+        return _MoleculeType;
+      }
+
+      set
+      {
+        if (_MoleculeType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("moleculeType");
+        _MoleculeType = value;
+        OnPropertyChanged("MoleculeType");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _MoleculeType;
+    private Hl7.Fhir.Model.CodeableConcept? _MoleculeType;
 
     /// <summary>
-    /// Classification of the molecule into types other than those defined by moleculeType
+    /// Classification of the molecule into types other than those defined by moleculeType.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["type"]);
+        return _Type ??= [];
+      }
+
+      set
+      {
+        if (_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
     /// <summary>
-    /// The structural topology of the molecular entity (e.g., linear, circular)
+    /// The structural topology of the molecular entity (e.g., linear, circular).
     /// </summary>
     [FhirElement("topology", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topology
     {
-      get { if(_Topology==null) _Topology = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Topology; }
-      set { _Topology = value; OnPropertyChanged("Topology"); }
+      get
+      {
+        if(_Topology.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["topology"]);
+        return _Topology ??= [];
+      }
+
+      set
+      {
+        if (_Topology.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("topology");
+        _Topology = value;
+        OnPropertyChanged("Topology");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Topology;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Topology;
 
     /// <summary>
-    /// Constituents of an aggregate molecular concept (e.g., haplotype, genotype)
+    /// Constituents of an aggregate molecular concept (e.g., haplotype, genotype).
     /// </summary>
     [FhirElement("member", InSummary=true, Order=140)]
     [CLSCompliant(false)]
     [References("MolecularDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Member
     {
-      get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.ResourceReference>(); return _Member; }
-      set { _Member = value; OnPropertyChanged("Member"); }
+      get
+      {
+        if(_Member.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["member"]);
+        return _Member ??= [];
+      }
+
+      set
+      {
+        if (_Member.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("member");
+        _Member = value;
+        OnPropertyChanged("Member");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Member;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Member;
 
     /// <summary>
-    /// A defined location on a molecular entity
+    /// A defined location on a molecular entity.
     /// </summary>
     [FhirElement("location", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent> Location
     {
-      get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>(); return _Location; }
-      set { _Location = value; OnPropertyChanged("Location"); }
+      get
+      {
+        if(_Location.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>), Overflow["location"]);
+        return _Location ??= [];
+      }
+
+      set
+      {
+        if (_Location.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>>())
+          Overflow.Remove("location");
+        _Location = value;
+        OnPropertyChanged("Location");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent> _Location;
+    private List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>? _Location;
 
     /// <summary>
-    /// A representation of a molecular entity
+    /// A representation of a molecular entity.
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent> Representation
     {
-      get { if(_Representation==null) _Representation = new List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>(); return _Representation; }
-      set { _Representation = value; OnPropertyChanged("Representation"); }
+      get
+      {
+        if(_Representation.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>), Overflow["representation"]);
+        return _Representation ??= [];
+      }
+
+      set
+      {
+        if (_Representation.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>>())
+          Overflow.Remove("representation");
+        _Representation = value;
+        OnPropertyChanged("Representation");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent> _Representation;
+    private List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>? _Representation;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MolecularDefinition;
-
-      if (dest == null)
-      {
+      if(other is not MolecularDefinition dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
-      if(MoleculeType != null) dest.MoleculeType = (Hl7.Fhir.Model.CodeableConcept)MoleculeType.DeepCopy();
-      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-      if(Topology.Any()) dest.Topology = new List<Hl7.Fhir.Model.CodeableConcept>(Topology.DeepCopy());
-      if(Member.Any()) dest.Member = new List<Hl7.Fhir.Model.ResourceReference>(Member.DeepCopy());
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>(Location.DeepCopy());
-      if(Representation.Any()) dest.Representation = new List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>(Representation.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+      if(_MoleculeType is not null) dest.MoleculeType = (Hl7.Fhir.Model.CodeableConcept)_MoleculeType.DeepCopyInternal();
+      if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+      if(_Topology is not null) dest.Topology = new List<Hl7.Fhir.Model.CodeableConcept>(_Topology.DeepCopyInternal());
+      if(_Member is not null) dest.Member = new List<Hl7.Fhir.Model.ResourceReference>(_Member.DeepCopyInternal());
+      if(_Location is not null) dest.Location = new List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>(_Location.DeepCopyInternal());
+      if(_Representation is not null) dest.Representation = new List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>(_Representation.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new MolecularDefinition());
+      var instance = new MolecularDefinition();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MolecularDefinition;
-      if(otherT == null) return false;
+      if(other is not MolecularDefinition otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.Matches(MoleculeType, otherT.MoleculeType)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Topology, otherT.Topology)) return false;
-      if( !DeepComparable.Matches(Member, otherT.Member)) return false;
-      if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-      if( !DeepComparable.Matches(Representation, otherT.Representation)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.Equals(_MoleculeType, otherT._MoleculeType)) return false;
+      if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+      if(!comparer.ListEquals(_Topology, otherT._Topology)) return false;
+      if(!comparer.ListEquals(_Member, otherT._Member)) return false;
+      if(!comparer.ListEquals(_Location, otherT._Location)) return false;
+      if(!comparer.ListEquals(_Representation, otherT._Representation)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as MolecularDefinition;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-      if( !DeepComparable.IsExactly(MoleculeType, otherT.MoleculeType)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Topology, otherT.Topology)) return false;
-      if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
-      if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-      if( !DeepComparable.IsExactly(Representation, otherT.Representation)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (DescriptionElement != null) yield return DescriptionElement;
-        if (MoleculeType != null) yield return MoleculeType;
-        foreach (var elem in Type) { if (elem != null) yield return elem; }
-        foreach (var elem in Topology) { if (elem != null) yield return elem; }
-        foreach (var elem in Member) { if (elem != null) yield return elem; }
-        foreach (var elem in Location) { if (elem != null) yield return elem; }
-        foreach (var elem in Representation) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-        if (MoleculeType != null) yield return new ElementValue("moleculeType", MoleculeType);
-        foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
-        foreach (var elem in Topology) { if (elem != null) yield return new ElementValue("topology", elem); }
-        foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", elem); }
-        foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
-        foreach (var elem in Representation) { if (elem != null) yield return new ElementValue("representation", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          {
+            value = Overflow["description"];
+            return true;
+          }
+          value = _DescriptionElement;
+          return (value as Hl7.Fhir.Model.Markdown) is not null;
         case "moleculeType":
-          value = MoleculeType;
-          return MoleculeType is not null;
+          if (_MoleculeType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["moleculeType"];
+            return true;
+          }
+          value = _MoleculeType;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "type":
-          value = Type;
-          return Type?.Any() == true;
+          if (_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
+          value = _Type;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "topology":
-          value = Topology;
-          return Topology?.Any() == true;
+          if (_Topology.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["topology"];
+            return true;
+          }
+          value = _Topology;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "member":
-          value = Member;
-          return Member?.Any() == true;
+          if (_Member.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["member"];
+            return true;
+          }
+          value = _Member;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "location":
-          value = Location;
-          return Location?.Any() == true;
+          if (_Location.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>>())
+          {
+            value = Overflow["location"];
+            return true;
+          }
+          value = _Location;
+          return (value as List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>)?.Any() is true;
         case "representation":
-          value = Representation;
-          return Representation?.Any() == true;
+          if (_Representation.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>>())
+          {
+            value = Overflow["representation"];
+            return true;
+          }
+          value = _Representation;
+          return (value as List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (MoleculeType is not null) yield return new KeyValuePair<string,object>("moleculeType",MoleculeType);
-      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-      if (Topology?.Any() == true) yield return new KeyValuePair<string,object>("topology",Topology);
-      if (Member?.Any() == true) yield return new KeyValuePair<string,object>("member",Member);
-      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
-      if (Representation?.Any() == true) yield return new KeyValuePair<string,object>("representation",Representation);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          return this;
+        case "description":
+          if (value is not (Hl7.Fhir.Model.Markdown or null))
+          {
+            DescriptionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+            Overflow["description"] = value;
+          }
+          else DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
+          return this;
+        case "moleculeType":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            MoleculeType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["moleculeType"] = value;
+          }
+          else MoleculeType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "type":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Type = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        case "topology":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Topology = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["topology"] = value;
+          }
+          else Topology = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        case "member":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Member = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["member"] = value;
+          }
+          else Member = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "location":
+          if (value is not (List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent> or null))
+          {
+            Location = OverflowNull<List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>>.INSTANCE;
+            Overflow["location"] = value;
+          }
+          else Location = (List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>?)value!;
+          return this;
+        case "representation":
+          if (value is not (List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent> or null))
+          {
+            Representation = OverflowNull<List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>>.INSTANCE;
+            Overflow["representation"] = value;
+          }
+          else Representation = (List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_MoleculeType is not null && !_MoleculeType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("moleculeType",_MoleculeType);
+      if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Topology?.Any() is true && !_Topology.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("topology",_Topology);
+      if (_Member?.Any() is true && !_Member.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("member",_Member);
+      if (_Location?.Any() is true && !_Location.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.LocationComponent>>()) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_Representation?.Any() is true && !_Representation.InOverflow<List<Hl7.Fhir.Model.MolecularDefinition.RepresentationComponent>>()) yield return new KeyValuePair<string,object>("representation",_Representation);
     }
 
   }

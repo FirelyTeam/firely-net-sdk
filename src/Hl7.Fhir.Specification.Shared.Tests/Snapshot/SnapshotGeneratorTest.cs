@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Specification.Tests
             derivedSD.BaseDefinition = baseSD.Url;
 
             var resourceResolver = Substitute.For<IResourceResolver>();
-            resourceResolver.ResolveByCanonicalUri(Arg.Any<string>()).Returns(baseSD);
+            resourceResolver.TryResolveByCanonicalUri(Arg.Any<string>()).Returns(baseSD);
             var snapshotGenerator = new SnapshotGenerator(resourceResolver, new SnapshotGeneratorSettings());
             await snapshotGenerator.UpdateAsync(derivedSD);
 
@@ -1209,8 +1209,8 @@ namespace Hl7.Fhir.Specification.Tests
             // {
             var tempPath = Path.GetTempPath();
             var xmlSer = new FhirXmlSerializer();
-            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-source.xml"), await xmlSer.SerializeToStringAsync(original));
-            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-dest.xml"), await xmlSer.SerializeToStringAsync(expanded));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-source.xml"), xmlSer.SerializeToString(original));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-dest.xml"), xmlSer.SerializeToString(expanded));
             // }
 
             // Assert.IsTrue(areEqual);
@@ -2823,8 +2823,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             using (var reader = XmlReader.Create(stream))
             {
-                var parser = new FhirXmlParser();
-                var bundle = parser.Parse<Bundle>(reader);
+                var parser = new FhirXmlDeserializer();
+                var bundle = parser.Deserialize<Bundle>(reader);
                 foreach (var entry in bundle.Entry)
                 {
                     if (entry.Resource is T res) { yield return res; }
@@ -4161,7 +4161,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
 
-            baseBinding.Description.Should().BeEquivalentTo(profileBinding.Description);
+            baseBinding.DescriptionElement.IsExactly(profileBinding.DescriptionElement).Should().BeTrue();
             baseBinding.ValueSet.Should().BeEquivalentTo(profileBinding.ValueSet);
         }
 

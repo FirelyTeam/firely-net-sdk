@@ -49,18 +49,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        [Obsolete("Property was renamed to SliceName", true)]
-        public string Name
-        {
-            get { return SliceName; }
-            set
-            {
-                SliceName = value;
-            }
-        }
-
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
         public partial class DiscriminatorComponent

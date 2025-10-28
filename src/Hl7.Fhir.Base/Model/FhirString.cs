@@ -29,20 +29,46 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class FhirString : ICoded
 {
-    [Bindable(true)]
-    public partial class FhirString
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => value.Length is <= 1024 * 1024 and > 0;    // Note that strings SHALL NOT exceed 1MB in size.
-        
-        // We do not match against the pattern since that is more expensive
-    }
-}
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
+        JsonValue switch
+        {
+            null => null,
+            string s when IsValidValue(s) => null,
+            string s => COVE.LITERAL_INVALID(context, s, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
+        };
 
-#nullable restore
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => value.Length is <= 1024 * 1024 and > 0;    // Note that strings SHALL NOT exceed 1MB in size.
+        
+    // We do not match against the pattern since that is more expensive
+
+    /// <summary>
+    /// Converts this FhirString to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this string is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
+
+    /// <inheritdoc cref="ICoded.ToCodings"/>
+    public IReadOnlyCollection<Coding> ToCodings() => [new(null, Value)];
+}

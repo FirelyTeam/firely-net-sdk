@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -32,13 +33,13 @@ namespace Hl7.FhirPath.R4.Tests
             if (path.Contains("source-test"))
                 return;
 
-            var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
-            var jsonParser = new Fhir.Serialization.FhirJsonParser();
+            var xmlParser = FhirXmlDeserializer.OSTRICH; // There are many errors in the test data
+            var jsonParser = FhirJsonDeserializer.OSTRICH; // Idem
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {
                 string content = File.ReadAllText(item);
-                Hl7.Fhir.Model.Resource resource = null;
+
                 try
                 {
                     // Exclude the fhirpath unit test config files
@@ -62,12 +63,12 @@ namespace Hl7.FhirPath.R4.Tests
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = xmlParser.Parse<Resource>(content);
+                        xmlParser.Deserialize<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = jsonParser.Parse<Resource>(content);
+                        jsonParser.Deserialize<Resource>(content);
                     }
                     else
                     {

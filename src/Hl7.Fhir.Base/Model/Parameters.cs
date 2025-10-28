@@ -127,7 +127,7 @@ public partial class Parameters
         if (name == null) throw new ArgumentNullException(nameof(name));
 
         if (matchPrefix)
-            return Parameter.Where(p => p.Name.StartsWith(name)).ToList();
+            return Parameter.Where(p => p.Name?.StartsWith(name) == true).ToList();
         else
             return Parameter.Where(p => p.Name == name).ToList();
     }
@@ -143,8 +143,6 @@ public partial class Parameters
 
         return Get(name, matchPrefix).SingleOrDefault();
     }
-
-    public ParameterComponent? this[string name] => GetSingle(name);
 
     /// <summary>
     /// Returns the Value property of the requested parameter casted to the requested type

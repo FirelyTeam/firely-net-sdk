@@ -107,7 +107,7 @@ public partial class TransactionBuilder
     public TransactionBuilder Read(string resourceType, string id, string? versionId = null, DateTimeOffset? ifModifiedSince = null, string? bundleEntryFullUrl = null)
     {
         var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read, bundleEntryFullUrl);
-        entry.Request.IfNoneMatch = createIfMatchETag(versionId);
+        entry.Request!.IfNoneMatch = createIfMatchETag(versionId);
         entry.Request.IfModifiedSince = ifModifiedSince;
         var path = newRestUrl().AddPath(resourceType, id);
         addEntry(entry, path);
@@ -148,7 +148,7 @@ public partial class TransactionBuilder
     {
         var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update, bundleEntryFullUrl);
         entry.Resource = body;
-        entry.Request.IfMatch = createIfMatchETag(versionId);
+        entry.Request!.IfMatch = createIfMatchETag(versionId);
         var path = newRestUrl().AddPath(body.TypeName, id);
         addEntry(entry, path);
 
@@ -167,7 +167,7 @@ public partial class TransactionBuilder
     {
         var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.ConditionalUpdate, bundleEntryFullUrl);
         entry.Resource = body;
-        entry.Request.IfMatch = createIfMatchETag(versionId);
+        entry.Request!.IfMatch = createIfMatchETag(versionId);
         var path = newRestUrl().AddPath(body.TypeName);
         path.AddParams(condition.ToUriParamList());
         addEntry(entry, path);
@@ -192,7 +192,7 @@ public partial class TransactionBuilder
     {
         var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch, bundleEntryFullUrl);
         entry.Resource = body;
-        entry.Request.IfMatch = createIfMatchETag(versionId);
+        entry.Request!.IfMatch = createIfMatchETag(versionId);
         var path = newRestUrl().AddPath(resourceType, id);
         addEntry(entry, path);
 
@@ -212,7 +212,7 @@ public partial class TransactionBuilder
     {
         var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.ConditionalPatch, bundleEntryFullUrl);
         entry.Resource = body;
-        entry.Request.IfMatch = createIfMatchETag(versionId);
+        entry.Request!.IfMatch = createIfMatchETag(versionId);
         var path = newRestUrl().AddPath(resourceType);
         path.AddParams(condition.ToUriParamList());
         addEntry(entry, path);
@@ -253,7 +253,7 @@ public partial class TransactionBuilder
         var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.ConditionalDeleteSingle, bundleEntryFullUrl);
         var path = newRestUrl().AddPath(resourceType ?? "");
         path.AddParams(condition.ToUriParamList());
-        entry.Request.IfMatch = createIfMatchETag(versionId);
+        entry.Request!.IfMatch = createIfMatchETag(versionId);
             
         addEntry(entry, path);
 
@@ -347,7 +347,7 @@ public partial class TransactionBuilder
         entry.Resource = body;
         var path = newRestUrl().AddPath(body.TypeName);
 
-        entry.Request.IfNoneExist = condition.ToUriParamList().ToQueryString();
+        entry.Request!.IfNoneExist = condition.ToUriParamList().ToQueryString();
         addEntry(entry, path);
 
         return this;
@@ -496,7 +496,8 @@ public partial class TransactionBuilder
             {
                 foreach (var parameter in parameters.Parameter)
                 {
-                    path.AddParam(parameter.Name, paramValueToString(parameter));
+                    path.AddParam(parameter.Name ?? throw new ArgumentException("Parameters should have a name.", nameof(parameters)),
+                        paramValueToString(parameter));
                 }
             }
         }
@@ -635,6 +636,8 @@ public partial class TransactionBuilder
 
     private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
     {
+        if(newEntry.Request is null) throw Error.InvalidOperation("Request component of the entry is not set.");
+
         var url = HttpUtil.MakeRelativeFromBase(path.Uri, _baseUrl);
         newEntry.Request.Url = url!.OriginalString;
         _result.Entry.Add(newEntry);

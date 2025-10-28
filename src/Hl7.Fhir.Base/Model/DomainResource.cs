@@ -28,62 +28,56 @@
 */
 
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+[DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}}")]
+public abstract partial class DomainResource
 {
-    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}}")]
-    public abstract partial class DomainResource : IModifierExtendable
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
+
+    protected internal override IReadOnlyCollection<COVE> ValidateInvariants(PocoValidationContext validationContext)
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
+        if (Contained.OfType<DomainResource>().Any(cr => cr.Contained.Any()))
+            return [COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED(validationContext)];
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>(base.Validate(validationContext));
+        return base.ValidateInvariants(validationContext);
+    }
 
-            if (this.Contained != null)
-            {
-                if (!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
-                    result.Add(COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED(validationContext).AsResult(validationContext));
-            }
+    /// <summary>
+    /// Finds the contained resource defined by the <paramref name="reference"/>. A reference to a contained resource starts with the
+    /// character #.
+    /// </summary>
+    /// <param name="reference">the reference to contained resource</param>
+    /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
+    public Resource FindContainedResource(ResourceReference reference)
+    {
+        if (reference == null) throw Error.ArgumentNull(nameof(reference));
 
-            return result;
-        }
+        if (!reference.IsContainedReference) return null;
 
-        /// <summary>
-        /// Finds the contained resource defined by the <paramref name="reference"/>. A reference to a contained resource starts with the
-        /// character #.
-        /// </summary>
-        /// <param name="reference">the reference to contained resource</param>
-        /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
-        public Resource FindContainedResource(ResourceReference reference)
-        {
-            if (reference == null) throw Error.ArgumentNull(nameof(reference));
+        if (reference.Reference == "#") return this;
 
-            if (!reference.IsContainedReference) return null;
+        // search the contained resource by removing '#'
+        return Contained.FirstOrDefault(c => c.Id == reference.Reference?.Remove(0, 1));
+    }
+    /// <summary>
+    /// Finds the contained resource defined by the <paramref name="reference"/>. A reference to a contained resource starts with the
+    /// character #.
+    /// </summary>
+    /// <param name="reference">the reference to contained resource</param>
+    /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
 
-            if (reference.Reference == "#") return this;
+    public Resource FindContainedResource(string reference)
+    {
+        if (reference == null) throw Error.ArgumentNullOrEmpty(nameof(reference));
 
-            // search the contained resource by removing '#' 
-            return Contained.FirstOrDefault(c => c.Id == reference.Reference.Remove(0, 1));
-        }
-        /// <summary>
-        /// Finds the contained resource defined by the <paramref name="reference"/>. A reference to a contained resource starts with the
-        /// character #.
-        /// </summary>
-        /// <param name="reference">the reference to contained resource</param>
-        /// <returns>The resource referenced by <paramref name="reference"/>, null otherwise.</returns>
-
-        public Resource FindContainedResource(string reference)
-        {
-            if (reference == null) throw Error.ArgumentNullOrEmpty(nameof(reference));
-
-            return FindContainedResource(new ResourceReference(reference));
-        }
+        return FindContainedResource(new ResourceReference(reference));
     }
 }

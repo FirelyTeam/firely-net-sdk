@@ -109,11 +109,11 @@ namespace Hl7.Fhir.Model
 
         private Uri? getLink(string rel)
         {
-            if (Link is null) return null;
+            if (!Link.Any()) return null;
 
             var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
 
-            return entry != null ? new Uri(entry.Url, UriKind.RelativeOrAbsolute) : null;
+            return entry?.Url != null ? new Uri(entry.Url, UriKind.RelativeOrAbsolute) : null;
         }
 
         private void setLink(string rel, Uri? uri)

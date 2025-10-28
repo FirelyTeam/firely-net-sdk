@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -57,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Narrative"; } }
+    public override string TypeName => "Narrative";
 
     /// <summary>
     /// The status of a resource narrative.
@@ -94,20 +98,32 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// generated | extensions | additional | empty
+    /// generated | extensions | additional | empty.
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [FhirElement("status", Order=30)]
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>), Overflow["status"]);
+        return _StatusElement!;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? _StatusElement;
 
     /// <summary>
     /// generated | extensions | additional | empty
@@ -116,137 +132,144 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// Limited xhtml content
+    /// Limited xhtml content.
     /// </summary>
-    [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, InSummary=true, Order=40)]
+    [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.XHtml DivElement
     {
-      get { return _DivElement; }
-      set { _DivElement = value; OnPropertyChanged("DivElement"); }
+      get
+      {
+        if(_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.XHtml), Overflow["div"]);
+        return _DivElement!;
+      }
+
+      set
+      {
+        if (_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
+          Overflow.Remove("div");
+        _DivElement = value;
+        OnPropertyChanged("DivElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.XHtml _DivElement;
+    private Hl7.Fhir.Model.XHtml? _DivElement;
 
     /// <summary>
     /// Limited xhtml content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Div
+    public string? Div
     {
-      get { return DivElement != null ? DivElement.Value : null; }
+      get => DivElement?.Value;
       set
       {
-        if (value == null)
-          DivElement = null;
-        else
-          DivElement = new Hl7.Fhir.Model.XHtml(value);
+        DivElement = value is null ? null! : new Hl7.Fhir.Model.XHtml(value);
         OnPropertyChanged("Div");
       }
     }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Narrative;
-
-      if (dest == null)
-      {
+      if(other is not Narrative dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)StatusElement.DeepCopy();
-      if(DivElement != null) dest.DivElement = (Hl7.Fhir.Model.XHtml)DivElement.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)_StatusElement.DeepCopyInternal();
+      if(_DivElement is not null) dest.DivElement = (Hl7.Fhir.Model.XHtml)_DivElement.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Narrative());
+      var instance = new Narrative();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Narrative;
-      if(otherT == null) return false;
+      if(other is not Narrative otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(DivElement, otherT.DivElement)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_DivElement, otherT._DivElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Narrative;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(DivElement, otherT.DivElement)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (StatusElement != null) yield return StatusElement;
-        if (DivElement != null) yield return new FhirString(DivElement.Value);
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (DivElement != null) yield return new ElementValue("div", new FhirString(DivElement.Value));
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>) is not null;
         case "div":
-          value = DivElement;
-          return DivElement is not null;
+          if (_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
+          {
+            value = Overflow["div"];
+            return true;
+          }
+          value = _DivElement;
+          return (value as Hl7.Fhir.Model.XHtml) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (DivElement is not null) yield return new KeyValuePair<string,object>("div",DivElement);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "status":
+          if (value is not (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value!;
+          return this;
+        case "div":
+          if (value is not (Hl7.Fhir.Model.XHtml or null))
+          {
+            DivElement = OverflowNull<Hl7.Fhir.Model.XHtml>.INSTANCE;
+            Overflow["div"] = value;
+          }
+          else DivElement = (Hl7.Fhir.Model.XHtml?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_DivElement is not null && !_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>()) yield return new KeyValuePair<string,object>("div",_DivElement);
     }
 
   }

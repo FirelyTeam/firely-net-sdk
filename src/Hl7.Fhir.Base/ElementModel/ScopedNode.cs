@@ -6,20 +6,18 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
-using Hl7.FhirPath;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 #nullable enable
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : ITypedElement, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IShortPathGenerator, IAnnotated, IExceptionSource
     {
         private class Cache
         {
@@ -56,7 +54,6 @@ namespace Hl7.Fhir.ElementModel
 
             if (Current.Name == "entry")
                 _fullUrl = Current.Children("fullUrl").FirstOrDefault()?.Value as string ?? _fullUrl;
-
         }
 
         public ExceptionNotificationHandler? ExceptionHandler { get; set; }
@@ -74,7 +71,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// The resource or element which is the direct parent of this node.
         /// </summary>
-        public readonly ScopedNode? Parent;
+        public ScopedNode? Parent { get; }
 
         /// <summary>
         /// Returns the location of the current element within its most direct parent resource or datatype.
@@ -97,6 +94,12 @@ namespace Hl7.Fhir.ElementModel
 
         /// <inheritdoc/>
         public string Location => Current.Location;
+
+        public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out ScopedNode? result)
+            => (result = ((ReferencedResourceCache)this.BundledResources()).ResolveReference(fullUrl)) is not null;
+
+        public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out ScopedNode? result) 
+            => (result = (this.ContainedResourcesWithId()).ResolveReference(id)) is not null;
 
         /// <summary>
         /// Whether this node is a root element of a Resource.
@@ -223,12 +226,12 @@ namespace Hl7.Fhir.ElementModel
                 var versionedEntries = this.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
                 foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").FirstOrDefault()?.Value as string))
                 {
-                    referenceEntryPairs.Add(new (versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First().ToScopedNode()));
+                    referenceEntryPairs.Add(new KeyValuePair<string?, ScopedNode>(versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First()));
                     referenceEntryPairs.AddRange(
                         versionedResourceGroup.Select(
                             entry => new KeyValuePair<string, ScopedNode>(
                                 (versionedResourceGroup.Key + "/_history/" + entry.Children("resource").Children("meta").Children("versionId").First().Value), 
-                                entry.Children("resource").Single().ToScopedNode()
+                                entry.Children("resource").Single()
                             )
                         )!
                     );
@@ -236,7 +239,7 @@ namespace Hl7.Fhir.ElementModel
                 var unversionedEntries = this.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
                 referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string?, ScopedNode>(
                     (entry.Children("fullUrl").FirstOrDefault()?.Value as string), 
-                    entry.Children("resource").First().ToScopedNode()
+                    entry.Children("resource").First()
                 )));
                 _cache.BundledResources = new ReferencedResourceCache(referenceEntryPairs);
             }
@@ -281,7 +284,13 @@ namespace Hl7.Fhir.ElementModel
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
 
         /// <inheritdoc />
-        public IEnumerable<ITypedElement> Children(string? name = null) =>
+        IEnumerable<ITypedElement> ITypedElement.Children(string? name) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+        
+        /// <inheritdoc />
+        public IEnumerable<ScopedNode> Children(string? name = null) =>
+            Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+
+        public string ShortPath => Current is ElementNode en ? en.ShortPath : Current.Location;
     }
 }

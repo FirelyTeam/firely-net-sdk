@@ -41,7 +41,8 @@ namespace Hl7.Fhir.Specification.Tests
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
             var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"));
+                .Subject.Value.IsExactly(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"))
+                .Should().BeTrue();
         }
 
         [DataTestMethod]
@@ -55,7 +56,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"The Coding references a value set, not a code system ('{system}')"));
+                .Subject.Value.IsExactly(new FhirString($"The Coding references a value set, not a code system ('{system}')"))
+                .Should().BeTrue();
         }
 
         [TestMethod]
@@ -72,7 +74,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await service.ValueSetValidateCode(parameters);
 
             result.Parameter.Should().Contain(p => p.Name == "result")
-               .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+               .Subject.Value.IsExactly(new FhirBoolean(true)).Should().BeTrue();
         }
 
         [TestMethod]
@@ -127,13 +129,11 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("code", "<ValueSet />", null, "context", false)]
         public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
         {
-            var parameters = new Parameters()
-            {
-                { "code", code is not null ? new FhirString(code) : null },
-                { "url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null },
-                { "context", context is not null ? new FhirUri("context") : null },
-                { "valueSet", valueset is not null ? new ValueSet() : null }
-            };
+            var parameters = new Parameters();
+            parameters.Add("code", code is not null ? new FhirString(code) : null);
+            parameters.Add("url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null );
+            parameters.Add("context", context is not null ? new FhirUri("context") : null);
+            parameters.Add("valueSet", valueset is not null ? new ValueSet() : null);
 
             Action validate = () => parameters.CheckForValidityOfValidateCodeParams();
 
@@ -150,10 +150,9 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("http://hl7.org/fhir/ValueSet/vs|2.0", "3.0", "http://hl7.org/fhir/ValueSet/vs|3.0")]
         public async Task PicksUpValidationVersionInUri(string url, string vsVersion, string resolved)
         {
-            var parameters = new Parameters()
-            {
-                { "code", new FhirString("code") }, { "url", new FhirUri(url) }
-            };
+            var parameters = new Parameters();
+            parameters.Add("code", new FhirString("code"));
+            parameters.Add("url", new FhirUri(url));
 
             if(vsVersion is not null)
                 parameters.Add("valueSetVersion", new FhirString(vsVersion));

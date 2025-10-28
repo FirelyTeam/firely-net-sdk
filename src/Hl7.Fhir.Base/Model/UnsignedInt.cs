@@ -30,15 +30,38 @@
 
 #nullable enable
 
-namespace Hl7.Fhir.Model
-{
-    public partial class UnsignedInt
-    {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Integer.TryParse(value, out var parsed) && parsed.Value >= 0;
-    }
-}
+using Hl7.Fhir.Validation;
+using System;
+using System.ComponentModel.DataAnnotations;
+using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
-#nullable restore
+namespace Hl7.Fhir.Model;
+
+public partial class UnsignedInt
+{
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
+        JsonValue switch
+        {
+            null => null,
+            >= 0 => null,
+            int i => COVE.UNSIGNED_INT_MUST_NOT_BE_NEGATIVE(context, i),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
+        };
+
+    /// <summary>
+    /// Converts this UnsignedInt to a <see cref="P.Long" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this UnsignedInt is null,
+    /// which is not valid for System longs.</exception>
+    public P.Long ToSystemLong() =>
+        (P.Long?)TryConvertToSystemTypeInternal()
+        ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Long(Value.Value) : null;
+}
