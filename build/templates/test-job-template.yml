@@ -6,6 +6,13 @@ parameters:
 - name: projects
 
 steps:
+- powershell: |
+    Write-Host "##[section]Starting test execution: ${{ parameters.testRunTitle }}"
+    Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)"
+    Write-Host "##[command]Test Projects: ${{ parameters.projects }}"
+    Write-Host "##[command]Filters: TestCategory!=IntegrationTest&TestCategory!=FhirClient"
+  displayName: 'Test Configuration Info'
+  
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
   inputs:
@@ -24,3 +31,11 @@ steps:
     projects: ${{ parameters.projects }}
     arguments: '-f $(TEST_TARGETFRAMEWORK) --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
     testRunTitle: ${{ parameters.testRunTitle }}
+  env:
+    DOTNET_CLI_FORCE_ANSI_COLOR: true
+    TERM: xterm
+
+- powershell: |
+    Write-Host "##[section]✓ Test execution completed: ${{ parameters.testRunTitle }}"
+  displayName: 'Test Completion Status'
+  condition: succeeded()

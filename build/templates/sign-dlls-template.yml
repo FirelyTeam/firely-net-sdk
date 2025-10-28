@@ -18,15 +18,30 @@ steps:
   - powershell: |
         $sdkfiles   =  Get-ChildItem -Path $(Build.SourcesDirectory)\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
 
-        Write-Verbose "Last exitcode before signing: $lastexitcode"
+        Write-Host "##[section]Starting DLL signing process..."
+        Write-Host "##[debug]Last exitcode before signing: $lastexitcode"
+        
+        $fileCount = $sdkfiles.Count
+        $currentFile = 0
+        
         foreach ($file in ($sdkfiles))
         {
-          Write-Verbose "Signing file: $file"
+          $currentFile++
+          Write-Host "##[command]Signing file ($currentFile/$fileCount): $($file.Name)"
+          Write-Host "##[debug]Full path: $file"
 
           & '$(Build.SourcesDirectory)\build\tools\sn.exe' -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
-          Write-Verbose "Last exitcode after signing file: $lastexitcode"
+          
+          if ($lastexitcode -eq 0) {
+            Write-Host "##[section]✓ Successfully signed: $($file.Name)"
+          } else {
+            Write-Host "##[warning]⚠ Exit code after signing $($file.Name): $lastexitcode"
+          }
         }
-        Write-Verbose "Last exitcode after signing all files: $lastexitcode"
+        
+        Write-Host "##[section]DLL signing process completed! Signed $fileCount files."
+        Write-Host "##[debug]Final exitcode: $lastexitcode"
+        
         # suppress exitcode 
         if ($lastexitcode -lt 2) { $global:lastexitcode = 0 }
     displayName: Signing the dlls
