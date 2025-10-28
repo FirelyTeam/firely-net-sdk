@@ -767,6 +767,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// Test for issue with ValueSet expansion causing NullReferenceException during serialization 
         /// when the expansion contains property field that doesn't exist in R4/R4B.
         /// The Property field in ValueSet.expansion.contains was introduced in R5.
+        /// Uses item-type ValueSet which has properties in R5.
         /// </summary>
         [Fact]
         public async Tasks.Task ExpandedValueSetShouldSerializeSuccessfully()
@@ -779,7 +780,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new Parameters.ParameterComponent()
                     {
                         Name = "url",
-                        Value = new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender"),
+                        Value = new FhirUri("http://hl7.org/fhir/ValueSet/item-type"),
                     },
                 },
             };
@@ -796,6 +797,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.NotNull(valueSet);
             Assert.True(valueSet.HasExpansion);
             Assert.True(valueSet.Expansion.Contains.Any());
+
+#if R5 || R6
+            // In R5 and R6, verify that the Property element is correctly set in the expansion
+            // when the CodeSystem has properties defined. The item-type CodeSystem has the
+            // "notSelectable" property defined for some concepts (e.g., "question").
+            var containsWithProperties = valueSet.Expansion.Contains
+                .Where(c => c.Property != null && c.Property.Any())
+                .ToList();
+            
+            // The item-type ValueSet should have at least one concept with properties in R5+
+            Assert.NotEmpty(containsWithProperties);
+#endif
         }
 
         [Fact]
