@@ -13,6 +13,8 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class LocalTerminologyServiceTests
     {
+        private const string NonexistentValueSetUrl = "http://hl7.org/fhir/ValueSet/nonexistent";
+
         private readonly LocalTerminologyService _service = new(
             new CachedResolver(
                 new MultiResolver(
@@ -172,10 +174,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Test for issue: LocalTerminologyService.Expand hides internally reported 404 HttpStatus FhirOperationException
             var localTerminology = new LocalTerminologyService(ZipSource.CreateValidationSource());
-            var valueSetUrl = "http://hl7.org/fhir/ValueSet/nonexistent";
 
             var expandAction = async () => await localTerminology.Expand(
-                new ExpandParameters().WithValueSet(valueSetUrl).Build());
+                new ExpandParameters().WithValueSet(NonexistentValueSetUrl).Build());
 
             var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
             ex.Which.Status.Should().Be(System.Net.HttpStatusCode.NotFound);
@@ -186,11 +187,10 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Test for issue: LocalTerminologyService.Expand hides internally reported 422 HttpStatus FhirOperationException
             var localTerminology = new LocalTerminologyService(ZipSource.CreateValidationSource());
-            var valueSetUrl = "http://hl7.org/fhir/ValueSet/nonexistent";
 
             var valueSet = new ValueSet
             {
-                Url = valueSetUrl,
+                Url = NonexistentValueSetUrl,
                 Compose = new ValueSet.ComposeComponent
                 {
                     Include = new System.Collections.Generic.List<ValueSet.ConceptSetComponent>
