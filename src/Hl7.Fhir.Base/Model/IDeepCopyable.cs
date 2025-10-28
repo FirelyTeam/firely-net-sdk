@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
     {
         public static IEnumerable<T> DeepCopy<T>(this IEnumerable<T> source) where T : IDeepCopyable 
         {
-            return source.Select(item => item != null ? (T)item.DeepCopy() : default(T)).ToList();
+            return source.Where(item => item != null).Select(item => (T)item.DeepCopy()).ToList();
         }
     }
 }

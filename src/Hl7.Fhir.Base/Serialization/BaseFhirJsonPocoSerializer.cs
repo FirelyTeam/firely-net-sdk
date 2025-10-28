@@ -141,7 +141,11 @@ namespace Hl7.Fhir.Serialization
                         writer.WriteStartArray();
 
                         foreach (var value in coll)
-                            serializeMemberValue(value, writer, filter, requiredType);
+                        {
+                            // Skip null values in collections
+                            if (value is not null)
+                                serializeMemberValue(value, writer, filter, requiredType);
+                        }
 
                         writer.WriteEndArray();
                     }

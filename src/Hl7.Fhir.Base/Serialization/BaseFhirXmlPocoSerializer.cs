@@ -141,7 +141,11 @@ namespace Hl7.Fhir.Serialization
                 if (mValue is ICollection coll and not byte[])
                 {
                     foreach (var value in coll)
-                        serializeMemberValue(elementName, value, writer, filter);
+                    {
+                        // Skip null values in collections
+                        if (value is not null)
+                            serializeMemberValue(elementName, value, writer, filter);
+                    }
                 }
                 else
                     serializeMemberValue(elementName, mValue, writer, filter);

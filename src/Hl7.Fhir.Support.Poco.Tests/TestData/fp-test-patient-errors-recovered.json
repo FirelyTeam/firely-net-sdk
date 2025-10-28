@@ -1,16 +1,14 @@
 {
   "resourceType": "Patient",
   "id": "pat1-with-errors",
-  "meta": { "lastUpdated": "not a valid instant" },
+  "meta": {
+    "lastUpdated": "not a valid instant"
+  },
   "text": {
     "status": "generated",
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"
   },
   "contained": [
-    null,
-    null,
-    null,
-    null,
     {
       "resourceType": "Patient",
       "id": "1",
@@ -26,15 +24,22 @@
           "id": "firstname",
           "use": "official",
           "family": "Everywoman",
-          "given": [ "This should be an array" ]
+          "given": [
+            "This should be an array"
+          ]
         },
         {
           "id": "anothername",
           "use": "usual",
-          "given": [ "Eveline", null ],
+          "given": [
+            "Eveline",
+            null
+          ],
           "_given": [
             null,
-            { "id": "a1" }
+            {
+              "id": "a1"
+            }
           ]
         }
       ],
@@ -49,14 +54,21 @@
       "birthDate": "1973-05-31",
       "address": [
         {
-          "line": [ "2222 Home Street", null ],
+          "line": [
+            "2222 Home Street",
+            null
+          ],
           "_line": [
-            { "id": "bla" },
+            {
+              "id": "bla"
+            },
             null
           ]
         }
       ],
-      "managingOrganization": { "reference": "Organization/hl7" }
+      "managingOrganization": {
+        "reference": "Organization/hl7"
+      }
     },
     {
       "resourceType": "Questionnaire",
@@ -67,19 +79,25 @@
       },
       "status": "draft",
       "date": "2012-01",
-      "subjectType": [ "Patient" ],
+      "subjectType": [
+        "Patient"
+      ],
       "item": [
         {
           "linkId": "1",
           "text": "Cancer Quality Forum Questionnaire 2012",
           "type": "display",
           "option": [
-            { "valueBoolean": true }
+            {
+              "valueBoolean": true
+            }
           ],
           "item": [
             {
               "linkId": "1.1",
-              "code": [ {} ],
+              "code": [
+                {}
+              ],
               "type": "display",
               "item": [
                 {
@@ -91,7 +109,9 @@
                     }
                   ],
                   "type": "choice",
-                  "options": { "reference": "#yesno" },
+                  "options": {
+                    "reference": "#yesno"
+                  },
                   "item": [
                     {
                       "linkId": "1.1.1.1",
@@ -112,7 +132,9 @@
                             }
                           ],
                           "type": "choice",
-                          "options": { "reference": "#yesno" }
+                          "options": {
+                            "reference": "#yesno"
+                          }
                         },
                         {
                           "linkId": "1.1.1.1.2",
@@ -129,7 +151,9 @@
                             }
                           ],
                           "type": "choice",
-                          "options": { "reference": "#yesno" }
+                          "options": {
+                            "reference": "#yesno"
+                          }
                         },
                         {
                           "linkId": "1.1.1.1.3",
@@ -141,7 +165,9 @@
                             }
                           ],
                           "type": "choice",
-                          "options": { "reference": "#yesno" }
+                          "options": {
+                            "reference": "#yesno"
+                          }
                         }
                       ]
                     },
@@ -214,7 +240,10 @@
     {
       "use": "official",
       "family": "Donald",
-      "given": [ "Duck", null ]
+      "given": [
+        "Duck",
+        null
+      ]
     }
   ],
   "telecom": [
@@ -236,8 +265,12 @@
         "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
         "valueCode": "28"
       },
-      { "url": "http://example.org/StructureDefinition/extension-without-type" },
-      { "url": "http://example.org/StructureDefinition/extension-with-unknown-type" }
+      {
+        "url": "http://example.org/StructureDefinition/extension-without-type"
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-unknown-type"
+      }
     ]
   },
   "birthDate": "1974-12-25",
@@ -277,7 +310,13 @@
   ],
   "communication": [
     {
-      "language": { "coding": [ { "code": "nl-nl" } ] },
+      "language": {
+        "coding": [
+          {
+            "code": "nl-nl"
+          }
+        ]
+      },
       "preferred": true,
       "_preferred": {
         "extension": [
@@ -305,5 +344,7 @@
     "reference": "Organization/1",
     "display": ""
   },
-  "link": [ {} ]
+  "link": [
+    {}
+  ]
 }
