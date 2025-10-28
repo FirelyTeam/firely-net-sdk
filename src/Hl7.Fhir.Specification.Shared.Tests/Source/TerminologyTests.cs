@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resource = await server.Expand(parameters);
             
             // This should not throw a NullReferenceException
-            var json = await resource.ToJsonAsync();
+            var json = resource.ToJson();
             
             // Verify the expansion was successful
             Assert.NotNull(json);
