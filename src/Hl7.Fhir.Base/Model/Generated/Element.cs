@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,121 +59,155 @@ namespace Hl7.Fhir.Model
   public abstract partial class Element : Hl7.Fhir.Model.Base
   {
     /// <summary>
-    /// FHIR Type Name
+    /// Unique id for inter-element referencing.
     /// </summary>
-    public override string TypeName { get { return "Element"; } }
+    [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, Order=10)]
+    [DataMember]
+    public Hl7.Fhir.Model.FhirString? ElementIdElement
+    {
+      get
+      {
+        if(_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["id"]);
+        return _ElementIdElement;
+      }
+
+      set
+      {
+        if (_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("id");
+        _ElementIdElement = value;
+        OnPropertyChanged("ElementIdElement");
+      }
+
+    }
+
+    private Hl7.Fhir.Model.FhirString? _ElementIdElement;
 
     /// <summary>
     /// Unique id for inter-element referencing
     /// </summary>
-    [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, Order=10)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
-    [DataMember]
-    public string ElementId
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string? ElementId
     {
-      get { return _ElementId; }
-      set { _ElementId = value; OnPropertyChanged("ElementId"); }
+      get => ElementIdElement?.Value;
+      set
+      {
+        ElementIdElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        OnPropertyChanged("ElementId");
+      }
     }
 
-    private string _ElementId;
-
     /// <summary>
-    /// Additional content defined by implementations
+    /// Additional content defined by implementations.
     /// </summary>
     [FhirElement("extension", Order=20)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
-      set { _Extension = value; OnPropertyChanged("Extension"); }
+      get
+      {
+        if(_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
+        return _Extension ??= [];
+      }
+
+      set
+      {
+        if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          Overflow.Remove("extension");
+        _Extension = value;
+        OnPropertyChanged("Extension");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Extension> _Extension;
+    private List<Hl7.Fhir.Model.Extension>? _Extension;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Element;
-
-      if (dest == null)
-      {
+      if(other is not Element dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(ElementId != null) dest.ElementId = ElementId;
-      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_ElementIdElement is not null) dest.ElementIdElement = (Hl7.Fhir.Model.FhirString)_ElementIdElement.DeepCopyInternal();
+      if(_Extension is not null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(_Extension.DeepCopyInternal());
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Element;
-      if(otherT == null) return false;
+      if(other is not Element otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( ElementId != otherT.ElementId ) return false;
-      if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ElementIdElement, otherT._ElementIdElement)) return false;
+      if(!comparer.ListEquals(_Extension, otherT._Extension)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Element;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if(ElementId != otherT.ElementId) return false;
-      if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (ElementId != null) yield return new FhirString(ElementId);
-        foreach (var elem in Extension) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (ElementId != null) yield return new ElementValue("id", new FhirString(ElementId));
-        foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "id":
-          value = ElementId;
-          return ElementId is not null;
+          if (_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["id"];
+            return true;
+          }
+          value = _ElementIdElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "extension":
-          value = Extension;
-          return Extension?.Any() == true;
+          if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
+            value = Overflow["extension"];
+            return true;
+          }
+          value = _Extension;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (ElementId is not null) yield return new KeyValuePair<string,object>("id",ElementId);
-      if (Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",Extension);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "id":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ElementIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["id"] = value;
+          }
+          else ElementIdElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "extension":
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            Extension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["extension"] = value;
+          }
+          else Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_ElementIdElement is not null && !_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
+      if (_Extension?.Any() is true && !_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("extension",_Extension);
     }
 
   }

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     internal static class ElementDefinitionNavigatorExtensions
     {
-        internal static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
+        internal static string? GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
             // This was required for 3.0.0, but was rectified in the 3.0.1 technical update
             //if (cc.Key == "ele-1")
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         internal static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
-            var desc = cc.Key;
+            var desc = cc.Key ?? "(unnamed)";
 
             if (cc.Human != null)
                 desc += " \"" + cc.Human + "\"";

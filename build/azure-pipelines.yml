@@ -20,6 +20,10 @@ variables:
 - group: APIKeys
 - template: build-variables.yml
 - template: pipeline-variables.yml
+- name: DOTNET_CLI_FORCE_ANSI_COLOR
+  value: true
+- name: TERM
+  value: xterm
   
 pool:
   vmImage: windows-latest
@@ -46,6 +50,29 @@ stages:
     - checkout: self
       clean: true
       fetchDepth: 1
+      
+    - powershell: |
+        Write-Host "##[section]🔨 Starting Firely .NET SDK Build Process"
+        Write-Host "##[command]Repository: $(Build.Repository.Name)"
+        
+        if ($Env:BUILD_REASON -eq "PullRequest") {
+          Write-Host "##[command]Source Branch: $(System.PullRequest.SourceBranch)"
+          Write-Host "##[command]Target Branch: $(System.PullRequest.TargetBranch)"
+          Write-Host "##[command]PR Number: #$(System.PullRequest.PullRequestNumber)"
+          Write-Host "##[section]📝 This is a Pull Request build"
+        } elseif ($Env:isTagBranch -eq "true") {
+          Write-Host "##[command]Tag/Branch: $(Build.SourceBranchName)"
+          Write-Host "##[section]🏷️ This is a Tagged Release build"
+        } else {
+          Write-Host "##[command]Branch: $(Build.SourceBranchName)"
+          Write-Host "##[section]🚀 This is a Development build"
+        }
+        
+        Write-Host "##[command]Build Configuration: $(buildConfiguration)"
+        Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)"
+        Write-Host "##[command]Build Number: $(Build.BuildNumber)"
+      displayName: 'Build Information'
+      
     - template: templates/apply-versioning-steps-template.yml
 
     - task: UseDotNet@2
@@ -63,7 +90,7 @@ stages:
           nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
           
     - ${{ if eq(variables.useGitHubPackageFeed, 'no') }}:
-      - script: dotnet restore --source https://api.nuget.org/v3/index.json
+      - script: dotnet restore --source https://api.nuget.org/v3/index.json /clp:ForceConsoleColor
         displayName: 'Run dotnet restore'
         
     - task: DotNetCoreCLI@2
@@ -71,7 +98,7 @@ stages:
       inputs:
         command: build
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
+        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true /clp:ForceConsoleColor
 
     - task: DotNetCoreCLI@2
       displayName: Create Test artifacts
@@ -82,7 +109,7 @@ stages:
          **/Hl7.FhirPath.R4.Tests/*.csproj
         publishWebProjects: false
         zipAfterPublish: false
-        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK) /clp:ForceConsoleColor
 
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
@@ -108,6 +135,7 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
+        arguments: '/clp:ForceConsoleColor'
     - powershell: |
         if ([string]::IsNullOrEmpty($Env:CurrentSuffix))
         {
@@ -118,12 +146,21 @@ stages:
           $version = "$Env:CurrentVersion-$Env:CurrentSuffix"
         }
 
-        Write-Host "Pack Hl7.Fhir.Specification.* with version $version" 
+        Write-Host "##[section]Packing Hl7.Fhir.Specification.* metapackages with version $version"
 
+        Write-Host "##[command]Packing STU3 specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=STU3 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        
+        Write-Host "##[command]Packing R4 specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        
+        Write-Host "##[command]Packing R4B specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4B -OutputDirectory $(Build.ArtifactStagingDirectory)
+        
+        Write-Host "##[command]Packing R5 specification package..."
         nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        
+        Write-Host "##[section]Metapackage packing completed successfully!"
       name: packMetapackages
       displayName: 'Pack NuGet Metapackages'    
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
@@ -148,6 +185,7 @@ stages:
         version=$(Build.SourceBranchName)
         title_release="${version:1}"
 
+        echo "##[section]Preparing release notes for version: $title_release"
         echo $title_release
         echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
       name: tagnames
@@ -295,11 +333,22 @@ stages:
       runOnce:
         deploy:
             steps:
+            - powershell: |
+                Write-Host "##[section]🚀 Starting deployment to GitHub Packages"
+                Write-Host "##[command]Target: GitHub Packages Registry"
+                Write-Host "##[command]Artifact: NuGetPackages"
+              displayName: 'GitHub Deployment Info'
+              
             - template: push-nuget-package.yml@templates  # Template reference
               parameters:
                 artifact: NuGetPackages
                 source: https://nuget.pkg.github.com/FirelyTeam/index.json
-                apiKey: $(GITHUB_PACKAGES_APIKEY)    
+                apiKey: $(GITHUB_PACKAGES_APIKEY)
+                
+            - powershell: |
+                Write-Host "##[section]✅ Successfully deployed to GitHub Packages!"
+              displayName: 'GitHub Deployment Success'
+              condition: succeeded()    
                 
 - stage: deploy_nuget 
   displayName: Deploy to NuGet
@@ -315,8 +364,21 @@ stages:
       runOnce:
         deploy:
             steps:
+            - powershell: |
+                Write-Host "##[section]🚀 Starting deployment to NuGet.org"
+                Write-Host "##[command]Target: NuGet.org Official Registry"
+                Write-Host "##[command]Artifact: NuGetPackages"
+                Write-Host "##[warning]⚠ This is a PRODUCTION release!"
+              displayName: 'NuGet Deployment Info'
+              
             - template: push-nuget-package.yml@templates
               parameters:
                 artifact: 'NuGetPackages'
                 source: https://api.nuget.org/v3/index.json
                 apiKey: $(NUGET_APIKEY)
+                
+            - powershell: |
+                Write-Host "##[section]🎉 Successfully deployed to NuGet.org!"
+                Write-Host "##[section]🎯 Release is now live and available publicly!"
+              displayName: 'NuGet Deployment Success'
+              condition: succeeded()

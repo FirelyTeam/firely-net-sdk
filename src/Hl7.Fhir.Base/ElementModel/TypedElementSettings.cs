@@ -9,6 +9,8 @@
 using Hl7.Fhir.Utility;
 using System;
 
+#nullable enable
+
 namespace Hl7.Fhir.ElementModel
 {
     public class TypedElementSettings
@@ -68,15 +70,12 @@ namespace Hl7.Fhir.ElementModel
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
             other.ErrorMode = ErrorMode;
-#pragma warning disable CS0618 // Type or member is obsolete
-            other.TruncateDateTimeToDate = TruncateDateTimeToDate;
-#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>Creates a new <see cref="TypedElementSettings"/> object that is a copy of the current instance.</summary>
-        public TypedElementSettings Clone() => new TypedElementSettings(this);
+        public TypedElementSettings Clone() => new(this);
 
         /// <summary>Creates a new <see cref="TypedElementSettings"/> instance with default property values.</summary>
-        public static TypedElementSettings CreateDefault() => new TypedElementSettings();
+        public static TypedElementSettings CreateDefault() => new();
     }
 }

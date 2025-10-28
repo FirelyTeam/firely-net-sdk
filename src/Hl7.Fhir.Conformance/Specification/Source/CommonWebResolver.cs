@@ -38,12 +38,6 @@ namespace Hl7.Fhir.Specification.Source
             _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
         }
 
-        /// <summary>Gets or sets configuration settings that control parsing behavior.</summary>
-        public ParserSettings? ParserSettings { get; set; }
-
-        /// <summary>Gets or sets the request timeout of the internal <see cref="BaseFhirClient"/> instance.</summary>
-        public int TimeOut { get; set; } = DefaultTimeOut;
-
         /// <summary>
         /// Gets the runtime <see cref="Exception"/> from the last call to the
         /// <see cref="ResolveByUri(string)"/> method, if any, or <c>null</c> otherwise.
@@ -52,23 +46,30 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource? ResolveByUri(string uri)
         {
-            if (uri is null) throw Error.ArgumentNull(nameof(uri));
+            return TryResolveByUri(uri).Value;
+        }
+
+        public Resource? ResolveByCanonicalUri(string uri)
+        {
+            return TryResolveByCanonicalUri(uri).Value;
+        }
+
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
             if (!ResourceIdentity.IsRestResourceIdentity(uri))
-            {
-                // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
-                return null;
-            }
-
+                return ResolverException.NotValidResourceIdentity(uri);
+            
             var id = new ResourceIdentity(uri);
-
             var client = _clientFactory(id.BaseUri);
-
-            client.Settings.Timeout = this.TimeOut;
-            client.Settings.ParserSettings = this.ParserSettings;
 
             try
             {
-                var resultResource = TaskHelper.Await( () => client.ReadAsync<Resource>(id));
+                var resultResource = TaskHelper.Await(() => client.ReadAsync<Resource>(id));
+                if (resultResource is null)
+                    return ResolverException.NotFound(client.LastResult?.Outcome as OperationOutcome);
+                
                 resultResource.SetOrigin(uri);
                 LastError = null;
                 return resultResource;
@@ -76,23 +77,36 @@ namespace Hl7.Fhir.Specification.Source
             catch (FhirOperationException foe)
             {
                 LastError = foe;
-                return null;
+                return ResolverException.OperationFailed("Error occurred during Fhir operation", foe);
             }
             catch (WebException we)
             {
                 LastError = we;
-                return null;
+                return ResolverException.OperationFailed("Error occurred during web operation", we);
             }
             // Other runtime exceptions are fatal...
         }
 
-        public Resource? ResolveByCanonicalUri(string uri)
-        {
-            return ResolveByUri(uri);
-        }
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByCanonicalUri(string uri) => TryResolveByUri(uri);
 
-        public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
-        public Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public async Tasks.Task<Resource?> ResolveByUriAsync(string uri)
+        {
+            var result = await TryResolveByUriAsync(uri).ConfigureAwait(false);
+            return result.Value;
+        }
+        
+        public async Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri)
+        {
+            var result = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            return result.Value;
+        }
+        
+        ///<inheritdoc/>
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
+        
+        ///<inheritdoc/>
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

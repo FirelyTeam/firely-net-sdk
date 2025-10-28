@@ -8,9 +8,9 @@
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Dynamic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
@@ -44,12 +44,12 @@ namespace Hl7.FhirPath.Expressions
         /// ensuring that argument evaluation doesn't impact the focus logged in the debug trace in other
         /// calls.
         /// </remarks>
-        public IEnumerable<ITypedElement> focus
+        public IEnumerable<PocoNode> focus
         {
             get
             {
                 if (!_debugTracerActive)
-                    return ElementNode.EmptyList;
+                    return [];
                 return _focus;
             }
             set
@@ -60,57 +60,46 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
-        private IEnumerable<ITypedElement> _focus;
+        private IEnumerable<PocoNode> _focus;
         private bool _debugTracerActive = false;
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
+        public static Closure Root([NotNull] PocoNodeOrList root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
 
-            var node = root as ScopedNode;
-
-            newContext.Resource ??= node != null // if the value has been manually set, we do nothing. Otherwise, if the root is a scoped node:
-                ? getResourceFromNode(node) // we infer the resource from the scoped node
-                : (root?.Definition?.IsResource is true // if we do not have a scoped node, we see if this is even a resource to begin with
-                    ? root // if it is, we use the root as the resource
-                    : null // if not, this breaks the spec in every way (but we will still continue, hopefully we do not need %resource or %rootResource)
-                );
-
+            newContext.Resource ??= root.GetResourceContext();
+            
             // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
-            newContext.RootResource ??= node != null
-                ? getRootResourceFromNode(node)
-                : newContext.Resource;
-
+            newContext.RootResource ??= root.GetRootResourceContext();
+            
             var newClosure = new Closure(ctx ?? new EvaluationContext());
-
-            var input = new[] { root };
 
             foreach (var assignment in newClosure.EvaluationContext.Environment)
             {
                 newClosure.SetValue(assignment.Key, assignment.Value);
             }
-
-            newClosure.SetThis(input);
-            newClosure.SetThat(input);
-            newClosure.SetIndex(ElementNode.CreateList(0));
-            newClosure.SetOriginalContext(input);
-
+            
+            newClosure.SetThis(root);
+            newClosure.SetThat(root);
+            newClosure.SetIndex(PocoNode.ForPrimitive<Integer>(1));
+            newClosure.SetOriginalContext(root);
+            
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
             if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });
 
             return newClosure;
         }
 
-        private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
+        private Dictionary<string, IEnumerable<PocoNode>> _namedValues = new ();
 
-        internal IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> Variables()
+        internal IEnumerable<KeyValuePair<string, IEnumerable<PocoNode>>> Variables()
         {
             return _namedValues;
         }
-
-        public virtual void SetValue(string name, IEnumerable<ITypedElement> value)
+        
+        public virtual void SetValue(string name, IEnumerable<PocoNode> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -125,10 +114,10 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        public virtual IEnumerable<ITypedElement> ResolveValue(string name)
+        public virtual IEnumerable<PocoNode> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            _namedValues.TryGetValue(name, out IEnumerable<ITypedElement> result);
+            _namedValues.TryGetValue(name, out IEnumerable<PocoNode> result);
 
             if (result != null) return result;
 

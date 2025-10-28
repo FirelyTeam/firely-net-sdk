@@ -13,9 +13,8 @@ namespace Firely.Sdk.Benchmarks
     public class SerializationBenchmarks
     {
         internal Patient Patient;
-        JsonSerializerOptions Options;
-        BaseFhirXmlPocoSerializer XmlSerializer;
-
+        private JsonSerializerOptions _options;
+        private FhirXmlSerializer _xmlSerializer;
 
         [GlobalSetup]
         public void BenchmarkSetup()
@@ -25,32 +24,36 @@ namespace Firely.Sdk.Benchmarks
             // For now, deserialize with the existing deserializer, until we have completed
             // the dynamicserializer too.
             Patient = FhirJsonNode.Parse(data).ToPoco<Patient>();
-            Options = new JsonSerializerOptions().ForFhir();
-            XmlSerializer = new FhirXmlPocoSerializer();
+            _options = new JsonSerializerOptions().ForFhir();
+            _xmlSerializer = new FhirXmlSerializer();
         }
 
         [Benchmark]
         public string JsonDictionarySerializer()
         {
-            return JsonSerializer.Serialize(Patient, Options);
+            return JsonSerializer.Serialize(Patient, _options);
         }
 
         [Benchmark]
         public string XmlDictionarySerializer()
         {
-            return SerializationUtil.WriteXmlToString(Patient, (o, w) => XmlSerializer.Serialize(o, w));
+            return SerializationUtil.WriteXmlToString(w => _xmlSerializer.Serialize(Patient, w));
         }
 
         [Benchmark]
         public string TypedElementSerializerJson()
         {
+#pragma warning disable SDK0001
             return Patient.ToTypedElement().ToJson();
+#pragma warning restore SDK0001
         }
 
         [Benchmark]
         public string TypedElementSerializerXml()
         {
+#pragma warning disable SDK0001
             return Patient.ToTypedElement().ToXml();
+#pragma warning restore SDK0001
         }
     }
 }

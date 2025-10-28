@@ -451,12 +451,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async Tasks.Task TestRefreshAll() => await TestRefreshAsync(true);
+        public void TestRefreshAll() => testRefresh(true);
 
         [TestMethod]
-        public async Tasks.Task TestRefreshFile() => await TestRefreshAsync(false);
+        public void TestRefreshFile() => testRefresh(false);
 
-        async Tasks.Task TestRefreshAsync(bool refreshAll)
+        private static void testRefresh(bool refreshAll)
         {
             // Create a temporary folder with a single artifact file
             const string srcFileName = "TestPatient.xml";
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(patient.Id, "pat1");
                 patient.Id = "CHANGED";
                 var serializer = new FhirXmlSerializer();
-                var xml = await serializer.SerializeToStringAsync(patient);
+                var xml = serializer.SerializeToString(patient);
                 File.WriteAllText(tmpFilePath, xml);
 
                 // Verify that Refresh updates the summary information
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async Tasks.Task TestParserSettings()
+        public void TestParserSettings()
         {
             // Create an invalid patient resource on disk
             var obs = new Observation()
@@ -561,14 +561,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Comment = " " // Illegal empty value
             };
             var nav = obs.ToTypedElement();
-            var xml = await nav.ToXmlAsync();
+            var xml = nav.ToXml();
 
             var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
             var filePath = Path.Combine(folderPath, "TestPatient.xml");
 
             try
             {
-
                 Directory.CreateDirectory(folderPath);
                 File.WriteAllText(filePath, xml);
 

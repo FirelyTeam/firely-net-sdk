@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -51,13 +55,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ImagingSelection","http://hl7.org/fhir/StructureDefinition/ImagingSelection", IsResource=true)]
+  [FhirType("ImagingSelection","http://hl7.org/fhir/StructureDefinition/ImagingSelection")]
   public partial class ImagingSelection : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImagingSelection"; } }
+    public override string TypeName => "ImagingSelection";
 
     /// <summary>
     /// The status of the ImagingSelection.
@@ -181,132 +185,157 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#Performer", IsNestedType=true)]
-    [BackboneType("ImagingSelection.performer")]
+    [FhirType("ImagingSelection.performer", IsBackboneType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#Performer"; } }
+      public override string TypeName => "ImagingSelection.performer";
 
       /// <summary>
-      /// Type of performer
+      /// Type of performer.
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("EventPerformerFunction")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Function
+      public Hl7.Fhir.Model.CodeableConcept? Function
       {
-        get { return _Function; }
-        set { _Function = value; OnPropertyChanged("Function"); }
+        get
+        {
+          if(_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["function"]);
+          return _Function;
+        }
+
+        set
+        {
+          if (_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("function");
+          _Function = value;
+          OnPropertyChanged("Function");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Function;
+      private Hl7.Fhir.Model.CodeableConcept? _Function;
 
       /// <summary>
-      /// Author (human or machine)
+      /// Author (human or machine).
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50)]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Device","Organization","CareTeam","Patient","RelatedPerson","HealthcareService")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
-        get { return _Actor; }
-        set { _Actor = value; OnPropertyChanged("Actor"); }
+        get
+        {
+          if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
+          return _Actor;
+        }
+
+        set
+        {
+          if (_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("actor");
+          _Actor = value;
+          OnPropertyChanged("Actor");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PerformerComponent;
-
-        if (dest == null)
-        {
+        if(other is not PerformerComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopy();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Function is not null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)_Function.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new PerformerComponent());
+        var instance = new PerformerComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PerformerComponent;
-        if(otherT == null) return false;
+        if(other is not PerformerComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Function, otherT.Function)) return false;
-        if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Function, otherT._Function)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as PerformerComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
-        if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Function != null) yield return Function;
-          if (Actor != null) yield return Actor;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Function != null) yield return new ElementValue("function", Function);
-          if (Actor != null) yield return new ElementValue("actor", Actor);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "function":
-            value = Function;
-            return Function is not null;
+            if (_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["function"];
+              return true;
+            }
+            value = _Function;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            if (_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["actor"];
+              return true;
+            }
+            value = _Actor;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "function":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Function = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["function"] = value;
+            }
+            else Function = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "actor":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["actor"] = value;
+            }
+            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Function is not null && !_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("function",_Function);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -319,59 +348,81 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#Instance", IsNestedType=true)]
-    [BackboneType("ImagingSelection.instance")]
+    [FhirType("ImagingSelection.instance", IsBackboneType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#Instance"; } }
+      public override string TypeName => "ImagingSelection.instance";
 
       /// <summary>
-      /// DICOM SOP Instance UID
+      /// DICOM SOP Instance UID.
       /// </summary>
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id UidElement
       {
-        get { return _UidElement; }
-        set { _UidElement = value; OnPropertyChanged("UidElement"); }
+        get
+        {
+          if(_UidElement.InOverflow<Hl7.Fhir.Model.Id>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["uid"]);
+          return _UidElement!;
+        }
+
+        set
+        {
+          if (_UidElement.InOverflow<Hl7.Fhir.Model.Id>())
+            Overflow.Remove("uid");
+          _UidElement = value;
+          OnPropertyChanged("UidElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Id _UidElement;
+      private Hl7.Fhir.Model.Id? _UidElement;
 
       /// <summary>
       /// DICOM SOP Instance UID
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Uid
+      public string? Uid
       {
-        get { return UidElement != null ? UidElement.Value : null; }
+        get => UidElement?.Value;
         set
         {
-          if (value == null)
-            UidElement = null;
-          else
-            UidElement = new Hl7.Fhir.Model.Id(value);
+          UidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Uid");
         }
       }
 
       /// <summary>
-      /// DICOM Instance Number
+      /// DICOM Instance Number.
       /// </summary>
       [FhirElement("number", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.UnsignedInt NumberElement
+      public Hl7.Fhir.Model.UnsignedInt? NumberElement
       {
-        get { return _NumberElement; }
-        set { _NumberElement = value; OnPropertyChanged("NumberElement"); }
+        get
+        {
+          if(_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["number"]);
+          return _NumberElement;
+        }
+
+        set
+        {
+          if (_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+            Overflow.Remove("number");
+          _NumberElement = value;
+          OnPropertyChanged("NumberElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.UnsignedInt _NumberElement;
+      private Hl7.Fhir.Model.UnsignedInt? _NumberElement;
 
       /// <summary>
       /// DICOM Instance Number
@@ -380,57 +431,81 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Number
       {
-        get { return NumberElement != null ? NumberElement.Value : null; }
+        get => NumberElement?.Value;
         set
         {
-          if (value == null)
-            NumberElement = null;
-          else
-            NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
+          NumberElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
           OnPropertyChanged("Number");
         }
       }
 
       /// <summary>
-      /// DICOM SOP Class UID
+      /// DICOM SOP Class UID.
       /// </summary>
       [FhirElement("sopClass", Order=60)]
       [Binding("sopClass")]
       [DataMember]
-      public Hl7.Fhir.Model.Coding SopClass
+      public Hl7.Fhir.Model.Coding? SopClass
       {
-        get { return _SopClass; }
-        set { _SopClass = value; OnPropertyChanged("SopClass"); }
+        get
+        {
+          if(_SopClass.InOverflow<Hl7.Fhir.Model.Coding>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["sopClass"]);
+          return _SopClass;
+        }
+
+        set
+        {
+          if (_SopClass.InOverflow<Hl7.Fhir.Model.Coding>())
+            Overflow.Remove("sopClass");
+          _SopClass = value;
+          OnPropertyChanged("SopClass");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Coding _SopClass;
+      private Hl7.Fhir.Model.Coding? _SopClass;
 
       /// <summary>
-      /// The selected subset of the SOP Instance
+      /// The selected subset of the SOP Instance.
       /// </summary>
       [FhirElement("subset", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> SubsetElement
       {
-        get { if(_SubsetElement==null) _SubsetElement = new List<Hl7.Fhir.Model.FhirString>(); return _SubsetElement; }
-        set { _SubsetElement = value; OnPropertyChanged("SubsetElement"); }
+        get
+        {
+          if(_SubsetElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["subset"]);
+          return _SubsetElement ??= [];
+        }
+
+        set
+        {
+          if (_SubsetElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+            Overflow.Remove("subset");
+          _SubsetElement = value;
+          OnPropertyChanged("SubsetElement");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.FhirString> _SubsetElement;
+      private List<Hl7.Fhir.Model.FhirString>? _SubsetElement;
 
       /// <summary>
       /// The selected subset of the SOP Instance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> Subset
+      public IEnumerable<string?> Subset
       {
-        get { return SubsetElement != null ? SubsetElement.Select(elem => elem.Value) : null; }
+        get => _SubsetElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            SubsetElement = null;
+            SubsetElement = null!;
           else
             SubsetElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
           OnPropertyChanged("Subset");
@@ -438,157 +513,225 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A specific 2D region in a DICOM image / frame
+      /// A specific 2D region in a DICOM image / frame.
       /// </summary>
       [FhirElement("imageRegion2D", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent> ImageRegion2D
       {
-        get { if(_ImageRegion2D==null) _ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(); return _ImageRegion2D; }
-        set { _ImageRegion2D = value; OnPropertyChanged("ImageRegion2D"); }
+        get
+        {
+          if(_ImageRegion2D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>), Overflow["imageRegion2D"]);
+          return _ImageRegion2D ??= [];
+        }
+
+        set
+        {
+          if (_ImageRegion2D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>>())
+            Overflow.Remove("imageRegion2D");
+          _ImageRegion2D = value;
+          OnPropertyChanged("ImageRegion2D");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent> _ImageRegion2D;
+      private List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>? _ImageRegion2D;
 
       /// <summary>
-      /// A specific 3D region in a DICOM frame of reference
+      /// A specific 3D region in a DICOM frame of reference.
       /// </summary>
       [FhirElement("imageRegion3D", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent> ImageRegion3D
       {
-        get { if(_ImageRegion3D==null) _ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(); return _ImageRegion3D; }
-        set { _ImageRegion3D = value; OnPropertyChanged("ImageRegion3D"); }
+        get
+        {
+          if(_ImageRegion3D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>), Overflow["imageRegion3D"]);
+          return _ImageRegion3D ??= [];
+        }
+
+        set
+        {
+          if (_ImageRegion3D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>>())
+            Overflow.Remove("imageRegion3D");
+          _ImageRegion3D = value;
+          OnPropertyChanged("ImageRegion3D");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent> _ImageRegion3D;
+      private List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>? _ImageRegion3D;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InstanceComponent;
-
-        if (dest == null)
-        {
+        if(other is not InstanceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Id)UidElement.DeepCopy();
-        if(NumberElement != null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)NumberElement.DeepCopy();
-        if(SopClass != null) dest.SopClass = (Hl7.Fhir.Model.Coding)SopClass.DeepCopy();
-        if(SubsetElement.Any()) dest.SubsetElement = new List<Hl7.Fhir.Model.FhirString>(SubsetElement.DeepCopy());
-        if(ImageRegion2D.Any()) dest.ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(ImageRegion2D.DeepCopy());
-        if(ImageRegion3D.Any()) dest.ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(ImageRegion3D.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_UidElement is not null) dest.UidElement = (Hl7.Fhir.Model.Id)_UidElement.DeepCopyInternal();
+        if(_NumberElement is not null) dest.NumberElement = (Hl7.Fhir.Model.UnsignedInt)_NumberElement.DeepCopyInternal();
+        if(_SopClass is not null) dest.SopClass = (Hl7.Fhir.Model.Coding)_SopClass.DeepCopyInternal();
+        if(_SubsetElement is not null) dest.SubsetElement = new List<Hl7.Fhir.Model.FhirString>(_SubsetElement.DeepCopyInternal());
+        if(_ImageRegion2D is not null) dest.ImageRegion2D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>(_ImageRegion2D.DeepCopyInternal());
+        if(_ImageRegion3D is not null) dest.ImageRegion3D = new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>(_ImageRegion3D.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new InstanceComponent());
+        var instance = new InstanceComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InstanceComponent;
-        if(otherT == null) return false;
+        if(other is not InstanceComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
-        if( !DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
-        if( !DeepComparable.Matches(SopClass, otherT.SopClass)) return false;
-        if( !DeepComparable.Matches(SubsetElement, otherT.SubsetElement)) return false;
-        if( !DeepComparable.Matches(ImageRegion2D, otherT.ImageRegion2D)) return false;
-        if( !DeepComparable.Matches(ImageRegion3D, otherT.ImageRegion3D)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_UidElement, otherT._UidElement)) return false;
+        if(!comparer.Equals(_NumberElement, otherT._NumberElement)) return false;
+        if(!comparer.Equals(_SopClass, otherT._SopClass)) return false;
+        if(!comparer.ListEquals(_SubsetElement, otherT._SubsetElement)) return false;
+        if(!comparer.ListEquals(_ImageRegion2D, otherT._ImageRegion2D)) return false;
+        if(!comparer.ListEquals(_ImageRegion3D, otherT._ImageRegion3D)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as InstanceComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
-        if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
-        if( !DeepComparable.IsExactly(SopClass, otherT.SopClass)) return false;
-        if( !DeepComparable.IsExactly(SubsetElement, otherT.SubsetElement)) return false;
-        if( !DeepComparable.IsExactly(ImageRegion2D, otherT.ImageRegion2D)) return false;
-        if( !DeepComparable.IsExactly(ImageRegion3D, otherT.ImageRegion3D)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (UidElement != null) yield return UidElement;
-          if (NumberElement != null) yield return NumberElement;
-          if (SopClass != null) yield return SopClass;
-          foreach (var elem in SubsetElement) { if (elem != null) yield return elem; }
-          foreach (var elem in ImageRegion2D) { if (elem != null) yield return elem; }
-          foreach (var elem in ImageRegion3D) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (UidElement != null) yield return new ElementValue("uid", UidElement);
-          if (NumberElement != null) yield return new ElementValue("number", NumberElement);
-          if (SopClass != null) yield return new ElementValue("sopClass", SopClass);
-          foreach (var elem in SubsetElement) { if (elem != null) yield return new ElementValue("subset", elem); }
-          foreach (var elem in ImageRegion2D) { if (elem != null) yield return new ElementValue("imageRegion2D", elem); }
-          foreach (var elem in ImageRegion3D) { if (elem != null) yield return new ElementValue("imageRegion3D", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "uid":
-            value = UidElement;
-            return UidElement is not null;
+            if (_UidElement.InOverflow<Hl7.Fhir.Model.Id>())
+            {
+              value = Overflow["uid"];
+              return true;
+            }
+            value = _UidElement;
+            return (value as Hl7.Fhir.Model.Id) is not null;
           case "number":
-            value = NumberElement;
-            return NumberElement is not null;
+            if (_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+            {
+              value = Overflow["number"];
+              return true;
+            }
+            value = _NumberElement;
+            return (value as Hl7.Fhir.Model.UnsignedInt) is not null;
           case "sopClass":
-            value = SopClass;
-            return SopClass is not null;
+            if (_SopClass.InOverflow<Hl7.Fhir.Model.Coding>())
+            {
+              value = Overflow["sopClass"];
+              return true;
+            }
+            value = _SopClass;
+            return (value as Hl7.Fhir.Model.Coding) is not null;
           case "subset":
-            value = SubsetElement;
-            return SubsetElement?.Any() == true;
+            if (_SubsetElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+            {
+              value = Overflow["subset"];
+              return true;
+            }
+            value = _SubsetElement;
+            return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
           case "imageRegion2D":
-            value = ImageRegion2D;
-            return ImageRegion2D?.Any() == true;
+            if (_ImageRegion2D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>>())
+            {
+              value = Overflow["imageRegion2D"];
+              return true;
+            }
+            value = _ImageRegion2D;
+            return (value as List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>)?.Any() is true;
           case "imageRegion3D":
-            value = ImageRegion3D;
-            return ImageRegion3D?.Any() == true;
+            if (_ImageRegion3D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>>())
+            {
+              value = Overflow["imageRegion3D"];
+              return true;
+            }
+            value = _ImageRegion3D;
+            return (value as List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
-        if (NumberElement is not null) yield return new KeyValuePair<string,object>("number",NumberElement);
-        if (SopClass is not null) yield return new KeyValuePair<string,object>("sopClass",SopClass);
-        if (SubsetElement?.Any() == true) yield return new KeyValuePair<string,object>("subset",SubsetElement);
-        if (ImageRegion2D?.Any() == true) yield return new KeyValuePair<string,object>("imageRegion2D",ImageRegion2D);
-        if (ImageRegion3D?.Any() == true) yield return new KeyValuePair<string,object>("imageRegion3D",ImageRegion3D);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "uid":
+            if (value is not (Hl7.Fhir.Model.Id or null))
+            {
+              UidElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+              Overflow["uid"] = value;
+            }
+            else UidElement = (Hl7.Fhir.Model.Id?)value!;
+            return this;
+          case "number":
+            if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
+            {
+              NumberElement = OverflowNull<Hl7.Fhir.Model.UnsignedInt>.INSTANCE;
+              Overflow["number"] = value;
+            }
+            else NumberElement = (Hl7.Fhir.Model.UnsignedInt?)value;
+            return this;
+          case "sopClass":
+            if (value is not (Hl7.Fhir.Model.Coding or null))
+            {
+              SopClass = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+              Overflow["sopClass"] = value;
+            }
+            else SopClass = (Hl7.Fhir.Model.Coding?)value;
+            return this;
+          case "subset":
+            if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+            {
+              SubsetElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+              Overflow["subset"] = value;
+            }
+            else SubsetElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+            return this;
+          case "imageRegion2D":
+            if (value is not (List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent> or null))
+            {
+              ImageRegion2D = OverflowNull<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>>.INSTANCE;
+              Overflow["imageRegion2D"] = value;
+            }
+            else ImageRegion2D = (List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>?)value!;
+            return this;
+          case "imageRegion3D":
+            if (value is not (List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent> or null))
+            {
+              ImageRegion3D = OverflowNull<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>>.INSTANCE;
+              Overflow["imageRegion3D"] = value;
+            }
+            else ImageRegion3D = (List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_UidElement is not null && !_UidElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("uid",_UidElement);
+        if (_NumberElement is not null && !_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("number",_NumberElement);
+        if (_SopClass is not null && !_SopClass.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("sopClass",_SopClass);
+        if (_SubsetElement?.Any() is true && !_SubsetElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("subset",_SubsetElement);
+        if (_ImageRegion2D?.Any() is true && !_ImageRegion2D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>>()) yield return new KeyValuePair<string,object>("imageRegion2D",_ImageRegion2D);
+        if (_ImageRegion3D?.Any() is true && !_ImageRegion3D.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>>()) yield return new KeyValuePair<string,object>("imageRegion3D",_ImageRegion3D);
       }
 
     }
@@ -602,30 +745,41 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#ImageRegion2D", IsNestedType=true)]
-    [BackboneType("ImagingSelection.instance.imageRegion2D")]
+    [FhirType("ImagingSelection.instance.imageRegion2D", IsBackboneType=true)]
     public partial class ImageRegion2DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#ImageRegion2D"; } }
+      public override string TypeName => "ImagingSelection.instance.imageRegion2D";
 
       /// <summary>
-      /// point | polyline | interpolated | circle | ellipse
+      /// point | polyline | interpolated | circle | ellipse.
       /// </summary>
       [FhirElement("regionType", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
       [Binding("ImagingSelection2DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType> RegionTypeElement
       {
-        get { return _RegionTypeElement; }
-        set { _RegionTypeElement = value; OnPropertyChanged("RegionTypeElement"); }
+        get
+        {
+          if(_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>), Overflow["regionType"]);
+          return _RegionTypeElement!;
+        }
+
+        set
+        {
+          if (_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>())
+            Overflow.Remove("regionType");
+          _RegionTypeElement = value;
+          OnPropertyChanged("RegionTypeElement");
+        }
+
       }
 
-      private Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType> _RegionTypeElement;
+      private Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>? _RegionTypeElement;
 
       /// <summary>
       /// point | polyline | interpolated | circle | ellipse
@@ -634,30 +788,41 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType? RegionType
       {
-        get { return RegionTypeElement != null ? RegionTypeElement.Value : null; }
+        get => RegionTypeElement?.Value;
         set
         {
-          if (value == null)
-            RegionTypeElement = null;
-          else
-            RegionTypeElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
+          RegionTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
           OnPropertyChanged("RegionType");
         }
       }
 
       /// <summary>
-      /// Specifies the coordinates that define the image region
+      /// Specifies the coordinates that define the image region.
       /// </summary>
       [FhirElement("coordinate", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirDecimal> CoordinateElement
       {
-        get { if(_CoordinateElement==null) _CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _CoordinateElement; }
-        set { _CoordinateElement = value; OnPropertyChanged("CoordinateElement"); }
+        get
+        {
+          if(_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirDecimal>), Overflow["coordinate"]);
+          return _CoordinateElement ??= [];
+        }
+
+        set
+        {
+          if (_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>())
+            Overflow.Remove("coordinate");
+          _CoordinateElement = value;
+          OnPropertyChanged("CoordinateElement");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.FhirDecimal> _CoordinateElement;
+      private List<Hl7.Fhir.Model.FhirDecimal>? _CoordinateElement;
 
       /// <summary>
       /// Specifies the coordinates that define the image region
@@ -666,105 +831,105 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<decimal?> Coordinate
       {
-        get { return CoordinateElement != null ? CoordinateElement.Select(elem => elem.Value) : null; }
+        get => _CoordinateElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            CoordinateElement = null;
+            CoordinateElement = null!;
           else
             CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
           OnPropertyChanged("Coordinate");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ImageRegion2DComponent;
-
-        if (dest == null)
-        {
+        if(other is not ImageRegion2DComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>)RegionTypeElement.DeepCopy();
-        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_RegionTypeElement is not null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>)_RegionTypeElement.DeepCopyInternal();
+        if(_CoordinateElement is not null) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(_CoordinateElement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ImageRegion2DComponent());
+        var instance = new ImageRegion2DComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ImageRegion2DComponent;
-        if(otherT == null) return false;
+        if(other is not ImageRegion2DComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(RegionTypeElement, otherT.RegionTypeElement)) return false;
-        if( !DeepComparable.Matches(CoordinateElement, otherT.CoordinateElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_RegionTypeElement, otherT._RegionTypeElement)) return false;
+        if(!comparer.ListEquals(_CoordinateElement, otherT._CoordinateElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ImageRegion2DComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(RegionTypeElement, otherT.RegionTypeElement)) return false;
-        if( !DeepComparable.IsExactly(CoordinateElement, otherT.CoordinateElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RegionTypeElement != null) yield return RegionTypeElement;
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RegionTypeElement != null) yield return new ElementValue("regionType", RegionTypeElement);
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return new ElementValue("coordinate", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "regionType":
-            value = RegionTypeElement;
-            return RegionTypeElement is not null;
+            if (_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>())
+            {
+              value = Overflow["regionType"];
+              return true;
+            }
+            value = _RegionTypeElement;
+            return (value as Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>) is not null;
           case "coordinate":
-            value = CoordinateElement;
-            return CoordinateElement?.Any() == true;
+            if (_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>())
+            {
+              value = Overflow["coordinate"];
+              return true;
+            }
+            value = _CoordinateElement;
+            return (value as List<Hl7.Fhir.Model.FhirDecimal>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (RegionTypeElement is not null) yield return new KeyValuePair<string,object>("regionType",RegionTypeElement);
-        if (CoordinateElement?.Any() == true) yield return new KeyValuePair<string,object>("coordinate",CoordinateElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "regionType":
+            if (value is not (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType> or null))
+            {
+              RegionTypeElement = OverflowNull<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>.INSTANCE;
+              Overflow["regionType"] = value;
+            }
+            else RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>?)value!;
+            return this;
+          case "coordinate":
+            if (value is not (List<Hl7.Fhir.Model.FhirDecimal> or null))
+            {
+              CoordinateElement = OverflowNull<List<Hl7.Fhir.Model.FhirDecimal>>.INSTANCE;
+              Overflow["coordinate"] = value;
+            }
+            else CoordinateElement = (List<Hl7.Fhir.Model.FhirDecimal>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_RegionTypeElement is not null && !_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>>()) yield return new KeyValuePair<string,object>("regionType",_RegionTypeElement);
+        if (_CoordinateElement?.Any() is true && !_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>()) yield return new KeyValuePair<string,object>("coordinate",_CoordinateElement);
       }
 
     }
@@ -777,30 +942,41 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImagingSelection#ImageRegion3D", IsNestedType=true)]
-    [BackboneType("ImagingSelection.instance.imageRegion3D")]
+    [FhirType("ImagingSelection.instance.imageRegion3D", IsBackboneType=true)]
     public partial class ImageRegion3DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection#ImageRegion3D"; } }
+      public override string TypeName => "ImagingSelection.instance.imageRegion3D";
 
       /// <summary>
-      /// point | multipoint | polyline | polygon | ellipse | ellipsoid
+      /// point | multipoint | polyline | polygon | ellipse | ellipsoid.
       /// </summary>
       [FhirElement("regionType", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
       [Binding("ImagingSelection3DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType> RegionTypeElement
       {
-        get { return _RegionTypeElement; }
-        set { _RegionTypeElement = value; OnPropertyChanged("RegionTypeElement"); }
+        get
+        {
+          if(_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>), Overflow["regionType"]);
+          return _RegionTypeElement!;
+        }
+
+        set
+        {
+          if (_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>())
+            Overflow.Remove("regionType");
+          _RegionTypeElement = value;
+          OnPropertyChanged("RegionTypeElement");
+        }
+
       }
 
-      private Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType> _RegionTypeElement;
+      private Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>? _RegionTypeElement;
 
       /// <summary>
       /// point | multipoint | polyline | polygon | ellipse | ellipsoid
@@ -809,30 +985,41 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType? RegionType
       {
-        get { return RegionTypeElement != null ? RegionTypeElement.Value : null; }
+        get => RegionTypeElement?.Value;
         set
         {
-          if (value == null)
-            RegionTypeElement = null;
-          else
-            RegionTypeElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
+          RegionTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
           OnPropertyChanged("RegionType");
         }
       }
 
       /// <summary>
-      /// Specifies the coordinates that define the image region
+      /// Specifies the coordinates that define the image region.
       /// </summary>
       [FhirElement("coordinate", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirDecimal> CoordinateElement
       {
-        get { if(_CoordinateElement==null) _CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _CoordinateElement; }
-        set { _CoordinateElement = value; OnPropertyChanged("CoordinateElement"); }
+        get
+        {
+          if(_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirDecimal>), Overflow["coordinate"]);
+          return _CoordinateElement ??= [];
+        }
+
+        set
+        {
+          if (_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>())
+            Overflow.Remove("coordinate");
+          _CoordinateElement = value;
+          OnPropertyChanged("CoordinateElement");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.FhirDecimal> _CoordinateElement;
+      private List<Hl7.Fhir.Model.FhirDecimal>? _CoordinateElement;
 
       /// <summary>
       /// Specifies the coordinates that define the image region
@@ -841,138 +1028,164 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<decimal?> Coordinate
       {
-        get { return CoordinateElement != null ? CoordinateElement.Select(elem => elem.Value) : null; }
+        get => _CoordinateElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            CoordinateElement = null;
+            CoordinateElement = null!;
           else
             CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
           OnPropertyChanged("Coordinate");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ImageRegion3DComponent;
-
-        if (dest == null)
-        {
+        if(other is not ImageRegion3DComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(RegionTypeElement != null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>)RegionTypeElement.DeepCopy();
-        if(CoordinateElement.Any()) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(CoordinateElement.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_RegionTypeElement is not null) dest.RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>)_RegionTypeElement.DeepCopyInternal();
+        if(_CoordinateElement is not null) dest.CoordinateElement = new List<Hl7.Fhir.Model.FhirDecimal>(_CoordinateElement.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ImageRegion3DComponent());
+        var instance = new ImageRegion3DComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ImageRegion3DComponent;
-        if(otherT == null) return false;
+        if(other is not ImageRegion3DComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(RegionTypeElement, otherT.RegionTypeElement)) return false;
-        if( !DeepComparable.Matches(CoordinateElement, otherT.CoordinateElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_RegionTypeElement, otherT._RegionTypeElement)) return false;
+        if(!comparer.ListEquals(_CoordinateElement, otherT._CoordinateElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ImageRegion3DComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(RegionTypeElement, otherT.RegionTypeElement)) return false;
-        if( !DeepComparable.IsExactly(CoordinateElement, otherT.CoordinateElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (RegionTypeElement != null) yield return RegionTypeElement;
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (RegionTypeElement != null) yield return new ElementValue("regionType", RegionTypeElement);
-          foreach (var elem in CoordinateElement) { if (elem != null) yield return new ElementValue("coordinate", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "regionType":
-            value = RegionTypeElement;
-            return RegionTypeElement is not null;
+            if (_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>())
+            {
+              value = Overflow["regionType"];
+              return true;
+            }
+            value = _RegionTypeElement;
+            return (value as Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>) is not null;
           case "coordinate":
-            value = CoordinateElement;
-            return CoordinateElement?.Any() == true;
+            if (_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>())
+            {
+              value = Overflow["coordinate"];
+              return true;
+            }
+            value = _CoordinateElement;
+            return (value as List<Hl7.Fhir.Model.FhirDecimal>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (RegionTypeElement is not null) yield return new KeyValuePair<string,object>("regionType",RegionTypeElement);
-        if (CoordinateElement?.Any() == true) yield return new KeyValuePair<string,object>("coordinate",CoordinateElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "regionType":
+            if (value is not (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType> or null))
+            {
+              RegionTypeElement = OverflowNull<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>.INSTANCE;
+              Overflow["regionType"] = value;
+            }
+            else RegionTypeElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>?)value!;
+            return this;
+          case "coordinate":
+            if (value is not (List<Hl7.Fhir.Model.FhirDecimal> or null))
+            {
+              CoordinateElement = OverflowNull<List<Hl7.Fhir.Model.FhirDecimal>>.INSTANCE;
+              Overflow["coordinate"] = value;
+            }
+            else CoordinateElement = (List<Hl7.Fhir.Model.FhirDecimal>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_RegionTypeElement is not null && !_RegionTypeElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>>()) yield return new KeyValuePair<string,object>("regionType",_RegionTypeElement);
+        if (_CoordinateElement?.Any() is true && !_CoordinateElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>()) yield return new KeyValuePair<string,object>("coordinate",_CoordinateElement);
       }
 
     }
 
     /// <summary>
-    /// Business Identifier for Imaging Selection
+    /// Business Identifier for Imaging Selection.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
-    /// available | entered-in-error | unknown
+    /// available | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("ImagingSelectionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus> StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>), Overflow["status"]);
+        return _StatusElement!;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>? _StatusElement;
 
     /// <summary>
     /// available | entered-in-error | unknown
@@ -981,44 +1194,67 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// Subject of the selected instances
+    /// Subject of the selected instances.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location","Organization","Procedure","Practitioner","Medication","Substance","Specimen")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
-      get { return _Subject; }
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
+        return _Subject;
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
-    /// Date / Time when this imaging selection was created
+    /// Date / Time when this imaging selection was created.
     /// </summary>
     [FhirElement("issued", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant IssuedElement
+    public Hl7.Fhir.Model.Instant? IssuedElement
     {
-      get { return _IssuedElement; }
-      set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
+      get
+      {
+        if(_IssuedElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["issued"]);
+        return _IssuedElement;
+      }
+
+      set
+      {
+        if (_IssuedElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          Overflow.Remove("issued");
+        _IssuedElement = value;
+        OnPropertyChanged("IssuedElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Instant _IssuedElement;
+    private Hl7.Fhir.Model.Instant? _IssuedElement;
 
     /// <summary>
     /// Date / Time when this imaging selection was created
@@ -1027,64 +1263,103 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Issued
     {
-      get { return IssuedElement != null ? IssuedElement.Value : null; }
+      get => IssuedElement?.Value;
       set
       {
-        if (value == null)
-          IssuedElement = null;
-        else
-          IssuedElement = new Hl7.Fhir.Model.Instant(value);
+        IssuedElement = value is null ? null! : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("Issued");
       }
     }
 
     /// <summary>
-    /// Selector of the instances (human or machine)
+    /// Selector of the instances (human or machine).
     /// </summary>
     [FhirElement("performer", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> Performer
     {
-      get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(); return _Performer; }
-      set { _Performer = value; OnPropertyChanged("Performer"); }
+      get
+      {
+        if(_Performer.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>), Overflow["performer"]);
+        return _Performer ??= [];
+      }
+
+      set
+      {
+        if (_Performer.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>>())
+          Overflow.Remove("performer");
+        _Performer = value;
+        OnPropertyChanged("Performer");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> _Performer;
+    private List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>? _Performer;
 
     /// <summary>
-    /// Associated request
+    /// Associated request.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=140, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
-      set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
+      get
+      {
+        if(_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["basedOn"]);
+        return _BasedOn ??= [];
+      }
+
+      set
+      {
+        if (_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("basedOn");
+        _BasedOn = value;
+        OnPropertyChanged("BasedOn");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
-    /// Classifies the imaging selection
+    /// Classifies the imaging selection.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=150)]
     [Binding("ImagingSelectionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
-      set { _Category = value; OnPropertyChanged("Category"); }
+      get
+      {
+        if(_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["category"]);
+        return _Category ??= [];
+      }
+
+      set
+      {
+        if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("category");
+        _Category = value;
+        OnPropertyChanged("Category");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
-    /// Imaging Selection purpose text or code
+    /// Imaging Selection purpose text or code.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=160)]
     [Binding("ImagingSelectionCode")]
@@ -1092,118 +1367,192 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
-      get { return _Code; }
-      set { _Code = value; OnPropertyChanged("Code"); }
+      get
+      {
+        if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+        return _Code!;
+      }
+
+      set
+      {
+        if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("code");
+        _Code = value;
+        OnPropertyChanged("Code");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
-    /// DICOM Study Instance UID
+    /// DICOM Study Instance UID.
     /// </summary>
     [FhirElement("studyUid", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.Id StudyUidElement
+    public Hl7.Fhir.Model.Id? StudyUidElement
     {
-      get { return _StudyUidElement; }
-      set { _StudyUidElement = value; OnPropertyChanged("StudyUidElement"); }
+      get
+      {
+        if(_StudyUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["studyUid"]);
+        return _StudyUidElement;
+      }
+
+      set
+      {
+        if (_StudyUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("studyUid");
+        _StudyUidElement = value;
+        OnPropertyChanged("StudyUidElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Id _StudyUidElement;
+    private Hl7.Fhir.Model.Id? _StudyUidElement;
 
     /// <summary>
     /// DICOM Study Instance UID
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string StudyUid
+    public string? StudyUid
     {
-      get { return StudyUidElement != null ? StudyUidElement.Value : null; }
+      get => StudyUidElement?.Value;
       set
       {
-        if (value == null)
-          StudyUidElement = null;
-        else
-          StudyUidElement = new Hl7.Fhir.Model.Id(value);
+        StudyUidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("StudyUid");
       }
     }
 
     /// <summary>
-    /// The imaging study from which the imaging selection is derived
+    /// The imaging study from which the imaging selection is derived.
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=180)]
     [CLSCompliant(false)]
     [References("ImagingStudy","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
-      get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
-      set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
+      get
+      {
+        if(_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["derivedFrom"]);
+        return _DerivedFrom ??= [];
+      }
+
+      set
+      {
+        if (_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("derivedFrom");
+        _DerivedFrom = value;
+        OnPropertyChanged("DerivedFrom");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
+    private List<Hl7.Fhir.Model.ResourceReference>? _DerivedFrom;
 
     /// <summary>
-    /// The network service providing retrieval for the images referenced in the imaging selection
+    /// The network service providing retrieval for the images referenced in the imaging selection.
     /// </summary>
     [FhirElement("endpoint", InSummary=true, Order=190)]
     [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
-      set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
+      get
+      {
+        if(_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["endpoint"]);
+        return _Endpoint ??= [];
+      }
+
+      set
+      {
+        if (_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("endpoint");
+        _Endpoint = value;
+        OnPropertyChanged("Endpoint");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
     /// <summary>
-    /// DICOM Series Instance UID
+    /// DICOM Series Instance UID.
     /// </summary>
     [FhirElement("seriesUid", InSummary=true, Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.Id SeriesUidElement
+    public Hl7.Fhir.Model.Id? SeriesUidElement
     {
-      get { return _SeriesUidElement; }
-      set { _SeriesUidElement = value; OnPropertyChanged("SeriesUidElement"); }
+      get
+      {
+        if(_SeriesUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["seriesUid"]);
+        return _SeriesUidElement;
+      }
+
+      set
+      {
+        if (_SeriesUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("seriesUid");
+        _SeriesUidElement = value;
+        OnPropertyChanged("SeriesUidElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Id _SeriesUidElement;
+    private Hl7.Fhir.Model.Id? _SeriesUidElement;
 
     /// <summary>
     /// DICOM Series Instance UID
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string SeriesUid
+    public string? SeriesUid
     {
-      get { return SeriesUidElement != null ? SeriesUidElement.Value : null; }
+      get => SeriesUidElement?.Value;
       set
       {
-        if (value == null)
-          SeriesUidElement = null;
-        else
-          SeriesUidElement = new Hl7.Fhir.Model.Id(value);
+        SeriesUidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("SeriesUid");
       }
     }
 
     /// <summary>
-    /// DICOM Series Number
+    /// DICOM Series Number.
     /// </summary>
     [FhirElement("seriesNumber", InSummary=true, Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.UnsignedInt SeriesNumberElement
+    public Hl7.Fhir.Model.UnsignedInt? SeriesNumberElement
     {
-      get { return _SeriesNumberElement; }
-      set { _SeriesNumberElement = value; OnPropertyChanged("SeriesNumberElement"); }
+      get
+      {
+        if(_SeriesNumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["seriesNumber"]);
+        return _SeriesNumberElement;
+      }
+
+      set
+      {
+        if (_SeriesNumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          Overflow.Remove("seriesNumber");
+        _SeriesNumberElement = value;
+        OnPropertyChanged("SeriesNumberElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.UnsignedInt _SeriesNumberElement;
+    private Hl7.Fhir.Model.UnsignedInt? _SeriesNumberElement;
 
     /// <summary>
     /// DICOM Series Number
@@ -1212,317 +1561,515 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? SeriesNumber
     {
-      get { return SeriesNumberElement != null ? SeriesNumberElement.Value : null; }
+      get => SeriesNumberElement?.Value;
       set
       {
-        if (value == null)
-          SeriesNumberElement = null;
-        else
-          SeriesNumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        SeriesNumberElement = value is null ? null! : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("SeriesNumber");
       }
     }
 
     /// <summary>
-    /// The Frame of Reference UID for the selected images
+    /// The Frame of Reference UID for the selected images.
     /// </summary>
     [FhirElement("frameOfReferenceUid", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.Id FrameOfReferenceUidElement
+    public Hl7.Fhir.Model.Id? FrameOfReferenceUidElement
     {
-      get { return _FrameOfReferenceUidElement; }
-      set { _FrameOfReferenceUidElement = value; OnPropertyChanged("FrameOfReferenceUidElement"); }
+      get
+      {
+        if(_FrameOfReferenceUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["frameOfReferenceUid"]);
+        return _FrameOfReferenceUidElement;
+      }
+
+      set
+      {
+        if (_FrameOfReferenceUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("frameOfReferenceUid");
+        _FrameOfReferenceUidElement = value;
+        OnPropertyChanged("FrameOfReferenceUidElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Id _FrameOfReferenceUidElement;
+    private Hl7.Fhir.Model.Id? _FrameOfReferenceUidElement;
 
     /// <summary>
     /// The Frame of Reference UID for the selected images
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string FrameOfReferenceUid
+    public string? FrameOfReferenceUid
     {
-      get { return FrameOfReferenceUidElement != null ? FrameOfReferenceUidElement.Value : null; }
+      get => FrameOfReferenceUidElement?.Value;
       set
       {
-        if (value == null)
-          FrameOfReferenceUidElement = null;
-        else
-          FrameOfReferenceUidElement = new Hl7.Fhir.Model.Id(value);
+        FrameOfReferenceUidElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("FrameOfReferenceUid");
       }
     }
 
     /// <summary>
-    /// Body part examined
+    /// Body part examined.
     /// </summary>
     [FhirElement("bodySite", InSummary=true, Order=230)]
     [Binding("BodySite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference BodySite
+    public Hl7.Fhir.Model.CodeableReference? BodySite
     {
-      get { return _BodySite; }
-      set { _BodySite = value; OnPropertyChanged("BodySite"); }
+      get
+      {
+        if(_BodySite.InOverflow<Hl7.Fhir.Model.CodeableReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["bodySite"]);
+        return _BodySite;
+      }
+
+      set
+      {
+        if (_BodySite.InOverflow<Hl7.Fhir.Model.CodeableReference>())
+          Overflow.Remove("bodySite");
+        _BodySite = value;
+        OnPropertyChanged("BodySite");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableReference _BodySite;
+    private Hl7.Fhir.Model.CodeableReference? _BodySite;
 
     /// <summary>
-    /// Related resource that is the focus for the imaging selection
+    /// Related resource that is the focus for the imaging selection.
     /// </summary>
     [FhirElement("focus", InSummary=true, Order=240)]
     [CLSCompliant(false)]
     [References("ImagingSelection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
-      get { if(_Focus==null) _Focus = new List<Hl7.Fhir.Model.ResourceReference>(); return _Focus; }
-      set { _Focus = value; OnPropertyChanged("Focus"); }
+      get
+      {
+        if(_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["focus"]);
+        return _Focus ??= [];
+      }
+
+      set
+      {
+        if (_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("focus");
+        _Focus = value;
+        OnPropertyChanged("Focus");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Focus;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Focus;
 
     /// <summary>
-    /// The selected instances
+    /// The selected instances.
     /// </summary>
     [FhirElement("instance", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent> Instance
     {
-      get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(); return _Instance; }
-      set { _Instance = value; OnPropertyChanged("Instance"); }
+      get
+      {
+        if(_Instance.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>), Overflow["instance"]);
+        return _Instance ??= [];
+      }
+
+      set
+      {
+        if (_Instance.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>>())
+          Overflow.Remove("instance");
+        _Instance = value;
+        OnPropertyChanged("Instance");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent> _Instance;
+    private List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>? _Instance;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ImagingSelection;
-
-      if (dest == null)
-      {
+      if(other is not ImagingSelection dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>)StatusElement.DeepCopy();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(Performer.DeepCopy());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-      if(StudyUidElement != null) dest.StudyUidElement = (Hl7.Fhir.Model.Id)StudyUidElement.DeepCopy();
-      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
-      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
-      if(SeriesUidElement != null) dest.SeriesUidElement = (Hl7.Fhir.Model.Id)SeriesUidElement.DeepCopy();
-      if(SeriesNumberElement != null) dest.SeriesNumberElement = (Hl7.Fhir.Model.UnsignedInt)SeriesNumberElement.DeepCopy();
-      if(FrameOfReferenceUidElement != null) dest.FrameOfReferenceUidElement = (Hl7.Fhir.Model.Id)FrameOfReferenceUidElement.DeepCopy();
-      if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)BodySite.DeepCopy();
-      if(Focus.Any()) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(Focus.DeepCopy());
-      if(Instance.Any()) dest.Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(Instance.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>)_StatusElement.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_IssuedElement is not null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)_IssuedElement.DeepCopyInternal();
+      if(_Performer is not null) dest.Performer = new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>(_Performer.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_StudyUidElement is not null) dest.StudyUidElement = (Hl7.Fhir.Model.Id)_StudyUidElement.DeepCopyInternal();
+      if(_DerivedFrom is not null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(_DerivedFrom.DeepCopyInternal());
+      if(_Endpoint is not null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(_Endpoint.DeepCopyInternal());
+      if(_SeriesUidElement is not null) dest.SeriesUidElement = (Hl7.Fhir.Model.Id)_SeriesUidElement.DeepCopyInternal();
+      if(_SeriesNumberElement is not null) dest.SeriesNumberElement = (Hl7.Fhir.Model.UnsignedInt)_SeriesNumberElement.DeepCopyInternal();
+      if(_FrameOfReferenceUidElement is not null) dest.FrameOfReferenceUidElement = (Hl7.Fhir.Model.Id)_FrameOfReferenceUidElement.DeepCopyInternal();
+      if(_BodySite is not null) dest.BodySite = (Hl7.Fhir.Model.CodeableReference)_BodySite.DeepCopyInternal();
+      if(_Focus is not null) dest.Focus = new List<Hl7.Fhir.Model.ResourceReference>(_Focus.DeepCopyInternal());
+      if(_Instance is not null) dest.Instance = new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>(_Instance.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ImagingSelection());
+      var instance = new ImagingSelection();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ImagingSelection;
-      if(otherT == null) return false;
+      if(other is not ImagingSelection otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
-      if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
-      if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-      if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-      if( !DeepComparable.Matches(StudyUidElement, otherT.StudyUidElement)) return false;
-      if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
-      if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
-      if( !DeepComparable.Matches(SeriesUidElement, otherT.SeriesUidElement)) return false;
-      if( !DeepComparable.Matches(SeriesNumberElement, otherT.SeriesNumberElement)) return false;
-      if( !DeepComparable.Matches(FrameOfReferenceUidElement, otherT.FrameOfReferenceUidElement)) return false;
-      if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-      if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
-      if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_IssuedElement, otherT._IssuedElement)) return false;
+      if(!comparer.ListEquals(_Performer, otherT._Performer)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_StudyUidElement, otherT._StudyUidElement)) return false;
+      if(!comparer.ListEquals(_DerivedFrom, otherT._DerivedFrom)) return false;
+      if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
+      if(!comparer.Equals(_SeriesUidElement, otherT._SeriesUidElement)) return false;
+      if(!comparer.Equals(_SeriesNumberElement, otherT._SeriesNumberElement)) return false;
+      if(!comparer.Equals(_FrameOfReferenceUidElement, otherT._FrameOfReferenceUidElement)) return false;
+      if(!comparer.Equals(_BodySite, otherT._BodySite)) return false;
+      if(!comparer.ListEquals(_Focus, otherT._Focus)) return false;
+      if(!comparer.ListEquals(_Instance, otherT._Instance)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ImagingSelection;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
-      if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
-      if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-      if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-      if( !DeepComparable.IsExactly(StudyUidElement, otherT.StudyUidElement)) return false;
-      if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
-      if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
-      if( !DeepComparable.IsExactly(SeriesUidElement, otherT.SeriesUidElement)) return false;
-      if( !DeepComparable.IsExactly(SeriesNumberElement, otherT.SeriesNumberElement)) return false;
-      if( !DeepComparable.IsExactly(FrameOfReferenceUidElement, otherT.FrameOfReferenceUidElement)) return false;
-      if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-      if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
-      if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (Subject != null) yield return Subject;
-        if (IssuedElement != null) yield return IssuedElement;
-        foreach (var elem in Performer) { if (elem != null) yield return elem; }
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        if (Code != null) yield return Code;
-        if (StudyUidElement != null) yield return StudyUidElement;
-        foreach (var elem in DerivedFrom) { if (elem != null) yield return elem; }
-        foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
-        if (SeriesUidElement != null) yield return SeriesUidElement;
-        if (SeriesNumberElement != null) yield return SeriesNumberElement;
-        if (FrameOfReferenceUidElement != null) yield return FrameOfReferenceUidElement;
-        if (BodySite != null) yield return BodySite;
-        foreach (var elem in Focus) { if (elem != null) yield return elem; }
-        foreach (var elem in Instance) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (IssuedElement != null) yield return new ElementValue("issued", IssuedElement);
-        foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        if (Code != null) yield return new ElementValue("code", Code);
-        if (StudyUidElement != null) yield return new ElementValue("studyUid", StudyUidElement);
-        foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
-        foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
-        if (SeriesUidElement != null) yield return new ElementValue("seriesUid", SeriesUidElement);
-        if (SeriesNumberElement != null) yield return new ElementValue("seriesNumber", SeriesNumberElement);
-        if (FrameOfReferenceUidElement != null) yield return new ElementValue("frameOfReferenceUid", FrameOfReferenceUidElement);
-        if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
-        foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
-        foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>) is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
+          value = _Subject;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "issued":
-          value = IssuedElement;
-          return IssuedElement is not null;
+          if (_IssuedElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          {
+            value = Overflow["issued"];
+            return true;
+          }
+          value = _IssuedElement;
+          return (value as Hl7.Fhir.Model.Instant) is not null;
         case "performer":
-          value = Performer;
-          return Performer?.Any() == true;
+          if (_Performer.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>>())
+          {
+            value = Overflow["performer"];
+            return true;
+          }
+          value = _Performer;
+          return (value as List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>)?.Any() is true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          if (_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["basedOn"];
+            return true;
+          }
+          value = _BasedOn;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["category"];
+            return true;
+          }
+          value = _Category;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "code":
-          value = Code;
-          return Code is not null;
+          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["code"];
+            return true;
+          }
+          value = _Code;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "studyUid":
-          value = StudyUidElement;
-          return StudyUidElement is not null;
+          if (_StudyUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["studyUid"];
+            return true;
+          }
+          value = _StudyUidElement;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "derivedFrom":
-          value = DerivedFrom;
-          return DerivedFrom?.Any() == true;
+          if (_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["derivedFrom"];
+            return true;
+          }
+          value = _DerivedFrom;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "endpoint":
-          value = Endpoint;
-          return Endpoint?.Any() == true;
+          if (_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["endpoint"];
+            return true;
+          }
+          value = _Endpoint;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "seriesUid":
-          value = SeriesUidElement;
-          return SeriesUidElement is not null;
+          if (_SeriesUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["seriesUid"];
+            return true;
+          }
+          value = _SeriesUidElement;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "seriesNumber":
-          value = SeriesNumberElement;
-          return SeriesNumberElement is not null;
+          if (_SeriesNumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          {
+            value = Overflow["seriesNumber"];
+            return true;
+          }
+          value = _SeriesNumberElement;
+          return (value as Hl7.Fhir.Model.UnsignedInt) is not null;
         case "frameOfReferenceUid":
-          value = FrameOfReferenceUidElement;
-          return FrameOfReferenceUidElement is not null;
+          if (_FrameOfReferenceUidElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["frameOfReferenceUid"];
+            return true;
+          }
+          value = _FrameOfReferenceUidElement;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "bodySite":
-          value = BodySite;
-          return BodySite is not null;
+          if (_BodySite.InOverflow<Hl7.Fhir.Model.CodeableReference>())
+          {
+            value = Overflow["bodySite"];
+            return true;
+          }
+          value = _BodySite;
+          return (value as Hl7.Fhir.Model.CodeableReference) is not null;
         case "focus":
-          value = Focus;
-          return Focus?.Any() == true;
+          if (_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["focus"];
+            return true;
+          }
+          value = _Focus;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "instance":
-          value = Instance;
-          return Instance?.Any() == true;
+          if (_Instance.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>>())
+          {
+            value = Overflow["instance"];
+            return true;
+          }
+          value = _Instance;
+          return (value as List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
-      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (StudyUidElement is not null) yield return new KeyValuePair<string,object>("studyUid",StudyUidElement);
-      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
-      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
-      if (SeriesUidElement is not null) yield return new KeyValuePair<string,object>("seriesUid",SeriesUidElement);
-      if (SeriesNumberElement is not null) yield return new KeyValuePair<string,object>("seriesNumber",SeriesNumberElement);
-      if (FrameOfReferenceUidElement is not null) yield return new KeyValuePair<string,object>("frameOfReferenceUid",FrameOfReferenceUidElement);
-      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
-      if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          return this;
+        case "status":
+          if (value is not (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>?)value!;
+          return this;
+        case "subject":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "issued":
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            IssuedElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["issued"] = value;
+          }
+          else IssuedElement = (Hl7.Fhir.Model.Instant?)value;
+          return this;
+        case "performer":
+          if (value is not (List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> or null))
+          {
+            Performer = OverflowNull<List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>>.INSTANCE;
+            Overflow["performer"] = value;
+          }
+          else Performer = (List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>?)value!;
+          return this;
+        case "basedOn":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            BasedOn = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["basedOn"] = value;
+          }
+          else BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "category":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Category = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["category"] = value;
+          }
+          else Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        case "code":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["code"] = value;
+          }
+          else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
+          return this;
+        case "studyUid":
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            StudyUidElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["studyUid"] = value;
+          }
+          else StudyUidElement = (Hl7.Fhir.Model.Id?)value;
+          return this;
+        case "derivedFrom":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            DerivedFrom = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["derivedFrom"] = value;
+          }
+          else DerivedFrom = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "endpoint":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Endpoint = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["endpoint"] = value;
+          }
+          else Endpoint = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "seriesUid":
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            SeriesUidElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["seriesUid"] = value;
+          }
+          else SeriesUidElement = (Hl7.Fhir.Model.Id?)value;
+          return this;
+        case "seriesNumber":
+          if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
+          {
+            SeriesNumberElement = OverflowNull<Hl7.Fhir.Model.UnsignedInt>.INSTANCE;
+            Overflow["seriesNumber"] = value;
+          }
+          else SeriesNumberElement = (Hl7.Fhir.Model.UnsignedInt?)value;
+          return this;
+        case "frameOfReferenceUid":
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            FrameOfReferenceUidElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["frameOfReferenceUid"] = value;
+          }
+          else FrameOfReferenceUidElement = (Hl7.Fhir.Model.Id?)value;
+          return this;
+        case "bodySite":
+          if (value is not (Hl7.Fhir.Model.CodeableReference or null))
+          {
+            BodySite = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
+            Overflow["bodySite"] = value;
+          }
+          else BodySite = (Hl7.Fhir.Model.CodeableReference?)value;
+          return this;
+        case "focus":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Focus = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["focus"] = value;
+          }
+          else Focus = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "instance":
+          if (value is not (List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent> or null))
+          {
+            Instance = OverflowNull<List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>>.INSTANCE;
+            Overflow["instance"] = value;
+          }
+          else Instance = (List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_IssuedElement is not null && !_IssuedElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("issued",_IssuedElement);
+      if (_Performer?.Any() is true && !_Performer.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_BasedOn?.Any() is true && !_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_StudyUidElement is not null && !_StudyUidElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("studyUid",_StudyUidElement);
+      if (_DerivedFrom?.Any() is true && !_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("derivedFrom",_DerivedFrom);
+      if (_Endpoint?.Any() is true && !_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
+      if (_SeriesUidElement is not null && !_SeriesUidElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("seriesUid",_SeriesUidElement);
+      if (_SeriesNumberElement is not null && !_SeriesNumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("seriesNumber",_SeriesNumberElement);
+      if (_FrameOfReferenceUidElement is not null && !_FrameOfReferenceUidElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("frameOfReferenceUid",_FrameOfReferenceUidElement);
+      if (_BodySite is not null && !_BodySite.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Focus?.Any() is true && !_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("focus",_Focus);
+      if (_Instance?.Any() is true && !_Instance.InOverflow<List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>>()) yield return new KeyValuePair<string,object>("instance",_Instance);
     }
 
   }

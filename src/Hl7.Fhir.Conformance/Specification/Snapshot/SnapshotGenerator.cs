@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(elem.IsRootElement());
                 if (!string.IsNullOrEmpty(elem.SliceName))
                 {
-                    if (sd.Url != Canonical.CanonicalUriForFhirCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
+                    if (sd.Url != Canonical.ForCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
                     {
                         addIssueInvalidSliceNameOnRootElement(elem, sd);
                     }
@@ -2148,7 +2148,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Otherwise, or if the custom type profile is missing, then try to resolve the core type profile
             // [MV 20191217] stop when it is a special type (System.*). Introduced in the technical correction 4.0.1
             var typeCodeElem = typeRef.CodeElement;
-            if (!isValidProfile && typeCodeElem != null && typeCodeElem.ObjectValue is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
+            if (!isValidProfile && typeCodeElem != null && typeCodeElem.JsonValue is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
             {
                 baseStructure = await getStructureDefinitionForTypeCode(AsyncResolver, typeCodeElem).ConfigureAwait(false);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
@@ -2179,7 +2179,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 // Unknown/custom core type; try to resolve from raw object value
-                var typeName = typeCodeElement.ObjectValue as string;
+                var typeName = typeCodeElement.JsonValue as string;
                 if (!string.IsNullOrEmpty(typeName))
                 {
                     sd = await resolver.FindStructureDefinitionForCoreTypeAsync(typeName).ConfigureAwait(false);

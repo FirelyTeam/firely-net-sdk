@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -54,37 +58,49 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Availability"; } }
+    public override string TypeName => "Availability";
 
     /// <summary>
     /// Times the {item} is available
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Availability#AvailableTime", IsNestedType=true)]
-    [BackboneType("Availability.availableTime")]
+    [FhirType("Availability.availableTime", IsBackboneType=true)]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Availability#AvailableTime"; } }
+      public override string TypeName => "Availability.availableTime";
 
       /// <summary>
-      /// mon | tue | wed | thu | fri | sat | sun
+      /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("daysOfWeek", InSummary=true, Order=30)]
-      [DeclaredType(Type = typeof(Code))]
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
-        set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
+        get
+        {
+          if(_DaysOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>())
+            throw CodedValidationException.FromTypes(typeof(List<Code<Hl7.Fhir.Model.DaysOfWeek>>), Overflow["daysOfWeek"]);
+          return _DaysOfWeekElement ??= [];
+        }
+
+        set
+        {
+          if (_DaysOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>())
+            Overflow.Remove("daysOfWeek");
+          _DaysOfWeekElement = value;
+          OnPropertyChanged("DaysOfWeekElement");
+        }
+
       }
 
-      private List<Code<Hl7.Fhir.Model.DaysOfWeek>> _DaysOfWeekElement;
+      private List<Code<Hl7.Fhir.Model.DaysOfWeek>>? _DaysOfWeekElement;
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
@@ -93,11 +109,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DaysOfWeek
       {
-        get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
+        get => _DaysOfWeekElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            DaysOfWeekElement = null;
+            DaysOfWeekElement = null!;
           else
             DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DaysOfWeek");
@@ -105,17 +121,30 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Always available? i.e. 24 hour service
+      /// Always available? i.e. 24 hour service.
       /// </summary>
       [FhirElement("allDay", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean AllDayElement
+      public Hl7.Fhir.Model.FhirBoolean? AllDayElement
       {
-        get { return _AllDayElement; }
-        set { _AllDayElement = value; OnPropertyChanged("AllDayElement"); }
+        get
+        {
+          if(_AllDayElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["allDay"]);
+          return _AllDayElement;
+        }
+
+        set
+        {
+          if (_AllDayElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            Overflow.Remove("allDay");
+          _AllDayElement = value;
+          OnPropertyChanged("AllDayElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _AllDayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _AllDayElement;
 
       /// <summary>
       /// Always available? i.e. 24 hour service
@@ -124,185 +153,222 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AllDay
       {
-        get { return AllDayElement != null ? AllDayElement.Value : null; }
+        get => AllDayElement?.Value;
         set
         {
-          if (value == null)
-            AllDayElement = null;
-          else
-            AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AllDayElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AllDay");
         }
       }
 
       /// <summary>
-      /// Opening time of day (ignored if allDay = true)
+      /// Opening time of day (ignored if allDay = true).
       /// </summary>
       [FhirElement("availableStartTime", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Time AvailableStartTimeElement
+      public Hl7.Fhir.Model.Time? AvailableStartTimeElement
       {
-        get { return _AvailableStartTimeElement; }
-        set { _AvailableStartTimeElement = value; OnPropertyChanged("AvailableStartTimeElement"); }
+        get
+        {
+          if(_AvailableStartTimeElement.InOverflow<Hl7.Fhir.Model.Time>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Time), Overflow["availableStartTime"]);
+          return _AvailableStartTimeElement;
+        }
+
+        set
+        {
+          if (_AvailableStartTimeElement.InOverflow<Hl7.Fhir.Model.Time>())
+            Overflow.Remove("availableStartTime");
+          _AvailableStartTimeElement = value;
+          OnPropertyChanged("AvailableStartTimeElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Time _AvailableStartTimeElement;
+      private Hl7.Fhir.Model.Time? _AvailableStartTimeElement;
 
       /// <summary>
       /// Opening time of day (ignored if allDay = true)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AvailableStartTime
+      public string? AvailableStartTime
       {
-        get { return AvailableStartTimeElement != null ? AvailableStartTimeElement.Value : null; }
+        get => AvailableStartTimeElement?.Value;
         set
         {
-          if (value == null)
-            AvailableStartTimeElement = null;
-          else
-            AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
+          AvailableStartTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableStartTime");
         }
       }
 
       /// <summary>
-      /// Closing time of day (ignored if allDay = true)
+      /// Closing time of day (ignored if allDay = true).
       /// </summary>
       [FhirElement("availableEndTime", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Time AvailableEndTimeElement
+      public Hl7.Fhir.Model.Time? AvailableEndTimeElement
       {
-        get { return _AvailableEndTimeElement; }
-        set { _AvailableEndTimeElement = value; OnPropertyChanged("AvailableEndTimeElement"); }
+        get
+        {
+          if(_AvailableEndTimeElement.InOverflow<Hl7.Fhir.Model.Time>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Time), Overflow["availableEndTime"]);
+          return _AvailableEndTimeElement;
+        }
+
+        set
+        {
+          if (_AvailableEndTimeElement.InOverflow<Hl7.Fhir.Model.Time>())
+            Overflow.Remove("availableEndTime");
+          _AvailableEndTimeElement = value;
+          OnPropertyChanged("AvailableEndTimeElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Time _AvailableEndTimeElement;
+      private Hl7.Fhir.Model.Time? _AvailableEndTimeElement;
 
       /// <summary>
       /// Closing time of day (ignored if allDay = true)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AvailableEndTime
+      public string? AvailableEndTime
       {
-        get { return AvailableEndTimeElement != null ? AvailableEndTimeElement.Value : null; }
+        get => AvailableEndTimeElement?.Value;
         set
         {
-          if (value == null)
-            AvailableEndTimeElement = null;
-          else
-            AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
+          AvailableEndTimeElement = value is null ? null! : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableEndTime");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AvailableTimeComponent;
-
-        if (dest == null)
-        {
+        if(other is not AvailableTimeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(DaysOfWeekElement.Any()) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopy());
-        if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopy();
-        if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopy();
-        if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_DaysOfWeekElement is not null) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(_DaysOfWeekElement.DeepCopyInternal());
+        if(_AllDayElement is not null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)_AllDayElement.DeepCopyInternal();
+        if(_AvailableStartTimeElement is not null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)_AvailableStartTimeElement.DeepCopyInternal();
+        if(_AvailableEndTimeElement is not null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)_AvailableEndTimeElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new AvailableTimeComponent());
+        var instance = new AvailableTimeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AvailableTimeComponent;
-        if(otherT == null) return false;
+        if(other is not AvailableTimeComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
-        if( !DeepComparable.Matches(AllDayElement, otherT.AllDayElement)) return false;
-        if( !DeepComparable.Matches(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
-        if( !DeepComparable.Matches(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_DaysOfWeekElement, otherT._DaysOfWeekElement)) return false;
+        if(!comparer.Equals(_AllDayElement, otherT._AllDayElement)) return false;
+        if(!comparer.Equals(_AvailableStartTimeElement, otherT._AvailableStartTimeElement)) return false;
+        if(!comparer.Equals(_AvailableEndTimeElement, otherT._AvailableEndTimeElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as AvailableTimeComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
-        if( !DeepComparable.IsExactly(AllDayElement, otherT.AllDayElement)) return false;
-        if( !DeepComparable.IsExactly(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
-        if( !DeepComparable.IsExactly(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return elem; }
-          if (AllDayElement != null) yield return AllDayElement;
-          if (AvailableStartTimeElement != null) yield return AvailableStartTimeElement;
-          if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", elem); }
-          if (AllDayElement != null) yield return new ElementValue("allDay", AllDayElement);
-          if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", AvailableStartTimeElement);
-          if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", AvailableEndTimeElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "daysOfWeek":
-            value = DaysOfWeekElement;
-            return DaysOfWeekElement?.Any() == true;
+            if (_DaysOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>())
+            {
+              value = Overflow["daysOfWeek"];
+              return true;
+            }
+            value = _DaysOfWeekElement;
+            return (value as List<Code<Hl7.Fhir.Model.DaysOfWeek>>)?.Any() is true;
           case "allDay":
-            value = AllDayElement;
-            return AllDayElement is not null;
+            if (_AllDayElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            {
+              value = Overflow["allDay"];
+              return true;
+            }
+            value = _AllDayElement;
+            return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
           case "availableStartTime":
-            value = AvailableStartTimeElement;
-            return AvailableStartTimeElement is not null;
+            if (_AvailableStartTimeElement.InOverflow<Hl7.Fhir.Model.Time>())
+            {
+              value = Overflow["availableStartTime"];
+              return true;
+            }
+            value = _AvailableStartTimeElement;
+            return (value as Hl7.Fhir.Model.Time) is not null;
           case "availableEndTime":
-            value = AvailableEndTimeElement;
-            return AvailableEndTimeElement is not null;
+            if (_AvailableEndTimeElement.InOverflow<Hl7.Fhir.Model.Time>())
+            {
+              value = Overflow["availableEndTime"];
+              return true;
+            }
+            value = _AvailableEndTimeElement;
+            return (value as Hl7.Fhir.Model.Time) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
-        if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
-        if (AvailableStartTimeElement is not null) yield return new KeyValuePair<string,object>("availableStartTime",AvailableStartTimeElement);
-        if (AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",AvailableEndTimeElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "daysOfWeek":
+            if (value is not (List<Code<Hl7.Fhir.Model.DaysOfWeek>> or null))
+            {
+              DaysOfWeekElement = OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.INSTANCE;
+              Overflow["daysOfWeek"] = value;
+            }
+            else DaysOfWeekElement = (List<Code<Hl7.Fhir.Model.DaysOfWeek>>?)value!;
+            return this;
+          case "allDay":
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              AllDayElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["allDay"] = value;
+            }
+            else AllDayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            return this;
+          case "availableStartTime":
+            if (value is not (Hl7.Fhir.Model.Time or null))
+            {
+              AvailableStartTimeElement = OverflowNull<Hl7.Fhir.Model.Time>.INSTANCE;
+              Overflow["availableStartTime"] = value;
+            }
+            else AvailableStartTimeElement = (Hl7.Fhir.Model.Time?)value;
+            return this;
+          case "availableEndTime":
+            if (value is not (Hl7.Fhir.Model.Time or null))
+            {
+              AvailableEndTimeElement = OverflowNull<Hl7.Fhir.Model.Time>.INSTANCE;
+              Overflow["availableEndTime"] = value;
+            }
+            else AvailableEndTimeElement = (Hl7.Fhir.Model.Time?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_DaysOfWeekElement?.Any() is true && !_DaysOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>()) yield return new KeyValuePair<string,object>("daysOfWeek",_DaysOfWeekElement);
+        if (_AllDayElement is not null && !_AllDayElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("allDay",_AllDayElement);
+        if (_AvailableStartTimeElement is not null && !_AvailableStartTimeElement.InOverflow<Hl7.Fhir.Model.Time>()) yield return new KeyValuePair<string,object>("availableStartTime",_AvailableStartTimeElement);
+        if (_AvailableEndTimeElement is not null && !_AvailableEndTimeElement.InOverflow<Hl7.Fhir.Model.Time>()) yield return new KeyValuePair<string,object>("availableEndTime",_AvailableEndTimeElement);
       }
 
     }
@@ -312,267 +378,317 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Availability#NotAvailableTime", IsNestedType=true)]
-    [BackboneType("Availability.notAvailableTime")]
+    [FhirType("Availability.notAvailableTime", IsBackboneType=true)]
     public partial class NotAvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Availability#NotAvailableTime"; } }
+      public override string TypeName => "Availability.notAvailableTime";
 
       /// <summary>
-      /// Reason presented to the user explaining why time not available
+      /// Reason presented to the user explaining why time not available.
       /// </summary>
       [FhirElement("description", InSummary=true, Order=30)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DescriptionElement
+      public Hl7.Fhir.Model.FhirString? DescriptionElement
       {
-        get { return _DescriptionElement; }
-        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        get
+        {
+          if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
+          return _DescriptionElement;
+        }
+
+        set
+        {
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("description");
+          _DescriptionElement = value;
+          OnPropertyChanged("DescriptionElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _DescriptionElement;
+      private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
       /// <summary>
       /// Reason presented to the user explaining why time not available
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Description
+      public string? Description
       {
-        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        get => DescriptionElement?.Value;
         set
         {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
 
       /// <summary>
-      /// Service not available during this period
+      /// Service not available during this period.
       /// </summary>
       [FhirElement("during", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Period During
+      public Hl7.Fhir.Model.Period? During
       {
-        get { return _During; }
-        set { _During = value; OnPropertyChanged("During"); }
+        get
+        {
+          if(_During.InOverflow<Hl7.Fhir.Model.Period>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["during"]);
+          return _During;
+        }
+
+        set
+        {
+          if (_During.InOverflow<Hl7.Fhir.Model.Period>())
+            Overflow.Remove("during");
+          _During = value;
+          OnPropertyChanged("During");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Period _During;
+      private Hl7.Fhir.Model.Period? _During;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as NotAvailableTimeComponent;
-
-        if (dest == null)
-        {
+        if(other is not NotAvailableTimeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+        if(_During is not null) dest.During = (Hl7.Fhir.Model.Period)_During.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new NotAvailableTimeComponent());
+        var instance = new NotAvailableTimeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as NotAvailableTimeComponent;
-        if(otherT == null) return false;
+        if(other is not NotAvailableTimeComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.Matches(During, otherT.During)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+        if(!comparer.Equals(_During, otherT._During)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as NotAvailableTimeComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.IsExactly(During, otherT.During)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (DescriptionElement != null) yield return DescriptionElement;
-          if (During != null) yield return During;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-          if (During != null) yield return new ElementValue("during", During);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "description":
-            value = DescriptionElement;
-            return DescriptionElement is not null;
+            if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["description"];
+              return true;
+            }
+            value = _DescriptionElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "during":
-            value = During;
-            return During is not null;
+            if (_During.InOverflow<Hl7.Fhir.Model.Period>())
+            {
+              value = Overflow["during"];
+              return true;
+            }
+            value = _During;
+            return (value as Hl7.Fhir.Model.Period) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (During is not null) yield return new KeyValuePair<string,object>("during",During);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "description":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["description"] = value;
+            }
+            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            return this;
+          case "during":
+            if (value is not (Hl7.Fhir.Model.Period or null))
+            {
+              During = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+              Overflow["during"] = value;
+            }
+            else During = (Hl7.Fhir.Model.Period?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_During is not null && !_During.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("during",_During);
       }
 
     }
 
     /// <summary>
-    /// Times the {item} is available
+    /// Times the {item} is available.
     /// </summary>
     [FhirElement("availableTime", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> AvailableTime
     {
-      get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(); return _AvailableTime; }
-      set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
+      get
+      {
+        if(_AvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>), Overflow["availableTime"]);
+        return _AvailableTime ??= [];
+      }
+
+      set
+      {
+        if (_AvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>())
+          Overflow.Remove("availableTime");
+        _AvailableTime = value;
+        OnPropertyChanged("AvailableTime");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> _AvailableTime;
+    private List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>? _AvailableTime;
 
     /// <summary>
-    /// Not available during this time due to provided reason
+    /// Not available during this time due to provided reason.
     /// </summary>
     [FhirElement("notAvailableTime", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> NotAvailableTime
     {
-      get { if(_NotAvailableTime==null) _NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(); return _NotAvailableTime; }
-      set { _NotAvailableTime = value; OnPropertyChanged("NotAvailableTime"); }
+      get
+      {
+        if(_NotAvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>), Overflow["notAvailableTime"]);
+        return _NotAvailableTime ??= [];
+      }
+
+      set
+      {
+        if (_NotAvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>())
+          Overflow.Remove("notAvailableTime");
+        _NotAvailableTime = value;
+        OnPropertyChanged("NotAvailableTime");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> _NotAvailableTime;
+    private List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>? _NotAvailableTime;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Availability;
-
-      if (dest == null)
-      {
+      if(other is not Availability dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(AvailableTime.Any()) dest.AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(AvailableTime.DeepCopy());
-      if(NotAvailableTime.Any()) dest.NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(NotAvailableTime.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_AvailableTime is not null) dest.AvailableTime = new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>(_AvailableTime.DeepCopyInternal());
+      if(_NotAvailableTime is not null) dest.NotAvailableTime = new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>(_NotAvailableTime.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Availability());
+      var instance = new Availability();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Availability;
-      if(otherT == null) return false;
+      if(other is not Availability otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
-      if( !DeepComparable.Matches(NotAvailableTime, otherT.NotAvailableTime)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_AvailableTime, otherT._AvailableTime)) return false;
+      if(!comparer.ListEquals(_NotAvailableTime, otherT._NotAvailableTime)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Availability;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
-      if( !DeepComparable.IsExactly(NotAvailableTime, otherT.NotAvailableTime)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
-        foreach (var elem in NotAvailableTime) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", elem); }
-        foreach (var elem in NotAvailableTime) { if (elem != null) yield return new ElementValue("notAvailableTime", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "availableTime":
-          value = AvailableTime;
-          return AvailableTime?.Any() == true;
+          if (_AvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>())
+          {
+            value = Overflow["availableTime"];
+            return true;
+          }
+          value = _AvailableTime;
+          return (value as List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>)?.Any() is true;
         case "notAvailableTime":
-          value = NotAvailableTime;
-          return NotAvailableTime?.Any() == true;
+          if (_NotAvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>())
+          {
+            value = Overflow["notAvailableTime"];
+            return true;
+          }
+          value = _NotAvailableTime;
+          return (value as List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (AvailableTime?.Any() == true) yield return new KeyValuePair<string,object>("availableTime",AvailableTime);
-      if (NotAvailableTime?.Any() == true) yield return new KeyValuePair<string,object>("notAvailableTime",NotAvailableTime);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "availableTime":
+          if (value is not (List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> or null))
+          {
+            AvailableTime = OverflowNull<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>.INSTANCE;
+            Overflow["availableTime"] = value;
+          }
+          else AvailableTime = (List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>?)value!;
+          return this;
+        case "notAvailableTime":
+          if (value is not (List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> or null))
+          {
+            NotAvailableTime = OverflowNull<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>.INSTANCE;
+            Overflow["notAvailableTime"] = value;
+          }
+          else NotAvailableTime = (List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_AvailableTime?.Any() is true && !_AvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>()) yield return new KeyValuePair<string,object>("availableTime",_AvailableTime);
+      if (_NotAvailableTime?.Any() is true && !_NotAvailableTime.InOverflow<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>()) yield return new KeyValuePair<string,object>("notAvailableTime",_NotAvailableTime);
     }
 
   }

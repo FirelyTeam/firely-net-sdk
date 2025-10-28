@@ -6,12 +6,14 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using FP = Hl7.FhirPath.Expressions;
-using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.Model.PocoNode>;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -52,7 +54,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
-            return WrapForDebugTracer(InvokeeFactory.Return(ElementNode.ForPrimitive(expression.Value)), expression);
+            return WrapForDebugTracer(InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value)), expression);
         }
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
@@ -73,7 +75,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return WrapForDebugTracer(InvokeeFactory.Return(ElementNode.EmptyList), expression);
+            return WrapForDebugTracer(InvokeeFactory.Return([]), expression);
         }
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression)

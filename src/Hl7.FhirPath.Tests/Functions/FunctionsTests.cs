@@ -502,7 +502,7 @@ namespace HL7.FhirPath.Tests
         [DynamicData(nameof(AllFunctionTestcases), DynamicDataSourceType.Method)]
         public void AssertTestcases(string expression, bool expected, bool invalid = false)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
+            PocoNode dummy = PocoNode.ForPrimitive<FhirBoolean>(true);
 
             if (invalid)
             {
@@ -543,11 +543,11 @@ namespace HL7.FhirPath.Tests
             {
                 iterations++;
 
-                return ElementNode.CreateList(iterations);
+                return PocoNode.ForPrimitive<Integer>(iterations);
             });
 
             var expression = new FhirPathCompiler(symbols).Compile("once()");
-            var result = expression.Scalar(null, new EvaluationContext());
+            var result = expression.Scalar(null!, new EvaluationContext());
 
             Assert.AreEqual(result, 1);
         }

@@ -28,85 +28,127 @@
 
 */
 
+#nullable enable
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.Serialization;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
-using S = Hl7.Fhir.ElementModel.Types;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+/// <summary>
+/// A <see cref="Code"/> that has a limited set of values and which <see cref="Code.Value"/> can therefore
+/// be represented as an enumerated type.
+/// </summary>
+[Serializable]
+[FhirType("codeOfT")]
+[DataContract]
+[System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
+public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 {
-    [Serializable]
-    [FhirType("codeOfT")]
-    [DataContract]
-    [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
-    public class Code<T> : PrimitiveType, INullableValue<T>, ISystemAndCode where T : struct, Enum
+    public override string TypeName => "code";
+
+    public Code() : this(null) { }
+
+    public Code(T? value)
     {
-        static Code()
+        Value = value;
+    }
+
+    [NonSerialized] // To prevent binary serialization from serializing this field
+    private T? _parsedValue = null;
+
+    public override object? JsonValue
+    {
+        get
         {
-            if (!typeof(T).IsEnum())
-                throw new ArgumentException("T must be an enumerated type");
+            if (_parsedValue is not null && base.JsonValue is null)
+                base.JsonValue = _parsedValue.GetLiteral();
+
+            return base.JsonValue;
+        }
+        set
+        {
+            base.JsonValue = value;
+            _parsedValue = null;
+        }
+    }
+
+
+    // Primitive value of element
+    [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
+    [DataMember]
+    new public T? Value
+    {
+        get
+        {
+            if (ValidateObjectValue(null) is { } error)
+                throw error;
+
+            return _parsedValue;
         }
 
-        public override string TypeName => "code";
-
-        public Code() : this(null) { }
-
-        public Code(T? value)
+        set
         {
-            Value = value;
+            _parsedValue = value;
+            base.JsonValue = null;
+            OnPropertyChanged("Value");
         }
+    }
 
-        // Primitive value of element
-        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true, Order = 30)]
-        [DataMember]
-        public T? Value
-        {
-            get => TryParseObjectValue(out var value)
-                    ? value
-                    : throw new InvalidCastException($"Value '{ObjectValue}' cannot be cast to a member of enumeration {typeof(T).Name}.");
-            set
-            {
-                ObjectValue = value?.GetLiteral();
-                OnPropertyChanged("Value");
-            }
-        }
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached enum Value.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
+    {
+        if (_parsedValue is not null || base.JsonValue is null) return null;
 
-        internal bool TryParseObjectValue(out T? value)
-        {
-            value = default;
+        _parsedValue = null;
 
-            if (ObjectValue is string s && EnumUtility.ParseLiteral<T>(s) is { } parsed)
-            {
-                value = parsed;
-                return true;
-            }
-            else return ObjectValue is null;
-        }
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
 
-        string ISystemAndCode.System => Value?.GetSystem();
+        if(string.IsNullOrWhiteSpace(unparsed))
+            return COVE.LITERAL_INVALID(context, unparsed,  this.TypeName);
 
-        string ISystemAndCode.Code => Value?.GetLiteral();
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.INVALID_CODED_VALUE(context, unparsed, EnumUtility.GetName<T>()) : null;
+    }
 
-        public S.Code ToSystemCode() => new(Value?.GetSystem(), Value?.GetLiteral(), display: null, version: null);
+    private static T? doParse(string literal) =>  EnumUtility.ParseLiteral<T>(literal);
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var baseResults = base.Validate(validationContext);
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static new bool IsValidValue(string value) => doParse(value) is not null;
 
-            if (TryParseObjectValue(out _))
-                return baseResults;
-            else
-            {
-                var result = COVE.INVALID_CODED_VALUE(validationContext, ObjectValue, EnumUtility.GetName<T>()).AsResult(validationContext);
-                return baseResults.Append(result);
-            }
-        }
+    /// <inheritdoc />
+    public override IReadOnlyCollection<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
+
+    /// <summary>
+    /// The literal of the code value, taken from the enum that is in <see cref="Value"/>.
+    /// </summary>
+    public override string? Literal => Value?.GetLiteral();
+
+    /// <summary>
+    /// The system of the code value, taken from the enum that is in <see cref="Value"/>.
+    /// </summary>
+    public override string? System => Value?.GetSystem();
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;
+
+    protected internal override Base DeepCopyInternal()
+    {
+        var instance = new Code<T>();
+        CopyToInternal(instance);
+        return instance;
     }
 }

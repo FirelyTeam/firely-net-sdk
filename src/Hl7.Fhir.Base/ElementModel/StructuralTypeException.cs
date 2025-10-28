@@ -10,6 +10,11 @@ using System;
 
 namespace Hl7.Fhir.ElementModel
 {
+    /// <summary>
+    /// An Exception raised while turning an ISourceNode into an ITypedElement.
+    /// </summary>
+    /// <remarks>For backwards compatibility reasons, this exception is also the base of
+    /// DeserializationFailedException, so that existing catch blocks will still catch.</remarks>
     public class StructuralTypeException : FormatException
     {
         public StructuralTypeException() { }

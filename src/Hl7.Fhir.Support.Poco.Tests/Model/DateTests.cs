@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
             dto.Equals(dto2).Should().BeTrue();
 
-            dft.ObjectValue = "2023-07-11";
+            dft.JsonValue = "2023-07-11";
             dft.TryToDateTimeOffset(out dto).Should().BeTrue();
             dto.Month.Should().Be(7);
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
@@ -82,7 +83,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.Value = null;
             dft.TryToDateTimeOffset(out _).Should().BeFalse();
-            dft.ToDateTimeOffset().Should().BeNull();
+            Assert.ThrowsException<InvalidOperationException>(() => dft.ToDateTimeOffset());
         }
 
         [TestMethod]
@@ -90,26 +91,26 @@ namespace Hl7.Fhir.Tests.Model
         {
             var dft = new Date("T45:45:56");
 
-            Assert.ThrowsException<FormatException>(() => dft.ToDateTimeOffset());
+            Assert.ThrowsException<CodedValidationException>(() => dft.ToDateTimeOffset());
 
-            dft.TryToDateTimeOffset(out var _).Should().BeFalse();
+            dft.TryToDateTimeOffset(out _).Should().BeFalse();
         }
 
         [TestMethod]
         public void CanConvertToDateTime()
         {
             var dft = new Date(2023, 07, 11);
-            dft.TryToDate(out var dt).Should().BeTrue();
+            dft.TryToSystemDate(out var dt).Should().BeTrue();
             dt.Days.Should().Be(11);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Day);
 
             dft = new Date(2023, 7);
-            dft.TryToDate(out dt).Should().BeTrue();
+            dft.TryToSystemDate(out dt).Should().BeTrue();
             dt.Days.Should().BeNull();
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Month);
 
             dft = new Date(null);
-            dft.TryToDate(out dt).Should().BeTrue();
+            dft.TryToSystemDate(out dt).Should().BeFalse();
             dt.Should().BeNull();
         }
     }

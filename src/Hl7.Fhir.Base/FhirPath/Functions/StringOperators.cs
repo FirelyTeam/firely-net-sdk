@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,30 +36,31 @@ internal static class StringOperators
         return me.Substring((int)start, (int)l);
     }
 
-    public static ITypedElement FpIndexOf(this string me, string fragment)
-    {
-        return ElementNode.ForPrimitive(me.IndexOf(fragment, StringComparison.Ordinal));
-    }
-
-    public static IEnumerable<ITypedElement> ToChars(this string me) =>
-        me.ToCharArray().Select(c => ElementNode.ForPrimitive(c));
-
-    public static string FpReplace(this string me, string find, string replace)
-    {
-        if (find == String.Empty)
+        public static PocoNode FpIndexOf(this string me, string fragment)
         {
-            // weird, but as specified:  "abc".replace("","x") = "xaxbxcx"
-            return replace + String.Join(replace, me.ToCharArray()) + replace;
+            return PocoNode.ForPrimitive<Integer>(me.IndexOf(fragment, StringComparison.Ordinal));
         }
-        else
-            return me.Replace(find, replace);
-    }
 
-    public static IEnumerable<ITypedElement> FpSplit(this string me, string seperator)
-    {
-        var results = me.Split([seperator], StringSplitOptions.None);
-        return results.Select(ElementNode.ForPrimitive);
-    }
+        public static IEnumerable<PocoNode> ToChars(this string me) =>
+            PocoNode.FromList<FhirString>(me.Select(c => c.ToString()));
+
+        public static string FpReplace(this string me, string find, string replace)
+        {
+            if (find == String.Empty)
+            {
+                // weird, but as specified:  "abc".replace("","x") = "xaxbxcx"
+                // I wonder why adding toCharArray was necessary here...
+                return replace + String.Join(replace, me.ToCharArray()) + replace;
+            }
+            else
+                return me.Replace(find, replace);
+        }
+
+        public static IEnumerable<PocoNode> FpSplit(this string me, string seperator)
+        {
+            var results = me.Split(new[] { seperator }, StringSplitOptions.None).ToArray<object>();
+            return PocoNode.FromList<FhirString>(results);
+        }
 
     public static string FpEncode(this string me, string encoding)
     {

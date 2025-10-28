@@ -8,7 +8,6 @@
 
 #nullable enable
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 
 using Hl7.Fhir.Model;
 using System.Text.Json;
@@ -34,31 +33,16 @@ namespace Hl7.Fhir.Serialization
 #else
         [System.Obsolete("This function is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.")]
 #endif
-        public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, FhirJsonPocoSerializerSettings? serializerSettings = null,
-            FhirJsonPocoDeserializerSettings? deserializerSettings = null) =>
-            options.ForCdsHooks(ModelInfo.ModelInspector, serializerSettings ?? new FhirJsonPocoSerializerSettings(),
-                deserializerSettings ?? new FhirJsonPocoDeserializerSettings());
+        public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options,
+            FhirJsonConverterOptions? converterOptions = null) =>
+            options.ForCdsHooks(ModelInfo.ModelInspector,
+                converterOptions ?? new FhirJsonConverterOptions());
 
-        /// <inheritdoc cref="ForFhir(JsonSerializerOptions)"/>
         public static JsonSerializerOptions ForFhir(
             this JsonSerializerOptions options,
-            FhirJsonPocoSerializerSettings serializerSettings) =>
-            options.ForFhir(ModelInfo.ModelInspector, serializerSettings);
-
-        /// <inheritdoc cref="ForFhir(JsonSerializerOptions)"/>
-        public static JsonSerializerOptions ForFhir(
-            this JsonSerializerOptions options,
-            FhirJsonPocoDeserializerSettings deserializerSettings) =>
-            options.ForFhir(ModelInfo.ModelInspector, deserializerSettings);
-
-        /// <inheritdoc cref="ForFhir(JsonSerializerOptions)"/>
-        public static JsonSerializerOptions ForFhir(
-            this JsonSerializerOptions options,
-            FhirJsonPocoSerializerSettings serializerSettings,
-            FhirJsonPocoDeserializerSettings deserializerSettings) =>
-            options.ForFhir(ModelInfo.ModelInspector, serializerSettings, deserializerSettings);
+            FhirJsonConverterOptions converterOptions) =>
+            options.ForFhir(ModelInfo.ModelInspector, converterOptions);
     }
 }
 
-#endif
 #nullable restore

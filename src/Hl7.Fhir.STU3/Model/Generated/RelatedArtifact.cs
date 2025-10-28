@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -58,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RelatedArtifact"; } }
+    public override string TypeName => "RelatedArtifact";
 
     /// <summary>
     /// The type of relationship to the related artifact
@@ -119,20 +123,32 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
+    /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>), Overflow["type"]);
+        return _TypeElement!;
+      }
+
+      set
+      {
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>())
+          Overflow.Remove("type");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> _TypeElement;
+    private Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>? _TypeElement;
 
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
@@ -141,263 +157,359 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
+        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
         OnPropertyChanged("Type");
       }
     }
 
     /// <summary>
-    /// Brief description of the related artifact
+    /// Brief description of the related artifact.
     /// </summary>
     [FhirElement("display", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DisplayElement
+    public Hl7.Fhir.Model.FhirString? DisplayElement
     {
-      get { return _DisplayElement; }
-      set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+      get
+      {
+        if(_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["display"]);
+        return _DisplayElement;
+      }
+
+      set
+      {
+        if (_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("display");
+        _DisplayElement = value;
+        OnPropertyChanged("DisplayElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _DisplayElement;
+    private Hl7.Fhir.Model.FhirString? _DisplayElement;
 
     /// <summary>
     /// Brief description of the related artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Display
+    public string? Display
     {
-      get { return DisplayElement != null ? DisplayElement.Value : null; }
+      get => DisplayElement?.Value;
       set
       {
-        if (value == null)
-          DisplayElement = null;
-        else
-          DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
 
     /// <summary>
-    /// Bibliographic citation for the artifact
+    /// Bibliographic citation for the artifact.
     /// </summary>
     [FhirElement("citation", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CitationElement
+    public Hl7.Fhir.Model.FhirString? CitationElement
     {
-      get { return _CitationElement; }
-      set { _CitationElement = value; OnPropertyChanged("CitationElement"); }
+      get
+      {
+        if(_CitationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["citation"]);
+        return _CitationElement;
+      }
+
+      set
+      {
+        if (_CitationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("citation");
+        _CitationElement = value;
+        OnPropertyChanged("CitationElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _CitationElement;
+    private Hl7.Fhir.Model.FhirString? _CitationElement;
 
     /// <summary>
     /// Bibliographic citation for the artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Citation
+    public string? Citation
     {
-      get { return CitationElement != null ? CitationElement.Value : null; }
+      get => CitationElement?.Value;
       set
       {
-        if (value == null)
-          CitationElement = null;
-        else
-          CitationElement = new Hl7.Fhir.Model.FhirString(value);
+        CitationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Citation");
       }
     }
 
     /// <summary>
-    /// Where the artifact can be accessed. Note: Element is deprecated since R5, do not use with R5 and newer releases.
+    /// Where the artifact can be accessed.
     /// </summary>
+    /// <remarks>
+    /// Element is deprecated since R5, do not use with R5 and newer releases.
+    /// </remarks>
     [FhirElement("url", InSummary=true, Order=60)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri UrlElement
+    public Hl7.Fhir.Model.FhirUri? UrlElement
     {
-      get { return _UrlElement; }
-      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+      get
+      {
+        if(_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
+        return _UrlElement;
+      }
+
+      set
+      {
+        if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          Overflow.Remove("url");
+        _UrlElement = value;
+        OnPropertyChanged("UrlElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirUri _UrlElement;
+    private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
     /// <summary>
     /// Where the artifact can be accessed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url
+    public string? Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get => UrlElement?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
 
     /// <summary>
-    /// What document is being referenced
+    /// What document is being referenced.
     /// </summary>
     [FhirElement("document", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment Document
+    public Hl7.Fhir.Model.Attachment? Document
     {
-      get { return _Document; }
-      set { _Document = value; OnPropertyChanged("Document"); }
+      get
+      {
+        if(_Document.InOverflow<Hl7.Fhir.Model.Attachment>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Attachment), Overflow["document"]);
+        return _Document;
+      }
+
+      set
+      {
+        if (_Document.InOverflow<Hl7.Fhir.Model.Attachment>())
+          Overflow.Remove("document");
+        _Document = value;
+        OnPropertyChanged("Document");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Attachment _Document;
+    private Hl7.Fhir.Model.Attachment? _Document;
 
     /// <summary>
-    /// What resource is being referenced
+    /// What resource is being referenced.
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=80)]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Resource
+    public Hl7.Fhir.Model.ResourceReference? Resource
     {
-      get { return _Resource; }
-      set { _Resource = value; OnPropertyChanged("Resource"); }
+      get
+      {
+        if(_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["resource"]);
+        return _Resource;
+      }
+
+      set
+      {
+        if (_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("resource");
+        _Resource = value;
+        OnPropertyChanged("Resource");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Resource;
+    private Hl7.Fhir.Model.ResourceReference? _Resource;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as RelatedArtifact;
-
-      if (dest == null)
-      {
+      if(other is not RelatedArtifact dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)TypeElement.DeepCopy();
-      if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-      if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopy();
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-      if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
-      if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)_TypeElement.DeepCopyInternal();
+      if(_DisplayElement is not null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)_DisplayElement.DeepCopyInternal();
+      if(_CitationElement is not null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)_CitationElement.DeepCopyInternal();
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+      if(_Document is not null) dest.Document = (Hl7.Fhir.Model.Attachment)_Document.DeepCopyInternal();
+      if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)_Resource.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new RelatedArtifact());
+      var instance = new RelatedArtifact();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as RelatedArtifact;
-      if(otherT == null) return false;
+      if(other is not RelatedArtifact otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
-      if( !DeepComparable.Matches(CitationElement, otherT.CitationElement)) return false;
-      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.Matches(Document, otherT.Document)) return false;
-      if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
+      if(!comparer.Equals(_CitationElement, otherT._CitationElement)) return false;
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.Equals(_Document, otherT._Document)) return false;
+      if(!comparer.Equals(_Resource, otherT._Resource)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as RelatedArtifact;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
-      if( !DeepComparable.IsExactly(CitationElement, otherT.CitationElement)) return false;
-      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-      if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
-      if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (TypeElement != null) yield return TypeElement;
-        if (DisplayElement != null) yield return DisplayElement;
-        if (CitationElement != null) yield return CitationElement;
-        if (UrlElement != null) yield return UrlElement;
-        if (Document != null) yield return Document;
-        if (Resource != null) yield return Resource;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
-        if (CitationElement != null) yield return new ElementValue("citation", CitationElement);
-        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
-        if (Document != null) yield return new ElementValue("document", Document);
-        if (Resource != null) yield return new ElementValue("resource", Resource);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
+          value = _TypeElement;
+          return (value as Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>) is not null;
         case "display":
-          value = DisplayElement;
-          return DisplayElement is not null;
+          if (_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["display"];
+            return true;
+          }
+          value = _DisplayElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "citation":
-          value = CitationElement;
-          return CitationElement is not null;
+          if (_CitationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["citation"];
+            return true;
+          }
+          value = _CitationElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "url":
-          value = UrlElement;
-          return UrlElement is not null;
+          if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
+            value = Overflow["url"];
+            return true;
+          }
+          value = _UrlElement;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "document":
-          value = Document;
-          return Document is not null;
+          if (_Document.InOverflow<Hl7.Fhir.Model.Attachment>())
+          {
+            value = Overflow["document"];
+            return true;
+          }
+          value = _Document;
+          return (value as Hl7.Fhir.Model.Attachment) is not null;
         case "resource":
-          value = Resource;
-          return Resource is not null;
+          if (_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["resource"];
+            return true;
+          }
+          value = _Resource;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
-      if (CitationElement is not null) yield return new KeyValuePair<string,object>("citation",CitationElement);
-      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
-      if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "type":
+          if (value is not (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value!;
+          return this;
+        case "display":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            DisplayElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["display"] = value;
+          }
+          else DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "citation":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            CitationElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["citation"] = value;
+          }
+          else CitationElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "url":
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["url"] = value;
+          }
+          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+          return this;
+        case "document":
+          if (value is not (Hl7.Fhir.Model.Attachment or null))
+          {
+            Document = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
+            Overflow["document"] = value;
+          }
+          else Document = (Hl7.Fhir.Model.Attachment?)value;
+          return this;
+        case "resource":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Resource = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["resource"] = value;
+          }
+          else Resource = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_DisplayElement is not null && !_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("display",_DisplayElement);
+      if (_CitationElement is not null && !_CitationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("citation",_CitationElement);
+      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Document is not null && !_Document.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("document",_Document);
+      if (_Resource is not null && !_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resource",_Resource);
     }
 
   }

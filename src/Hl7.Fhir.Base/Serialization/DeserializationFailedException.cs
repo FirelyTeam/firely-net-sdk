@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
@@ -15,45 +16,36 @@ using System.Linq;
 
 #nullable enable
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+/// <summary>
+/// Contains the list of errors detected while deserializing data into .NET POCOs.
+/// </summary>
+/// <remarks>The deserializers will continue deserialization in the face of errors, and so will collect the full
+/// set of errors detected using this aggregate exception.</remarks>
+public class DeserializationFailedException(Base? partialResult, IEnumerable<CodedException> innerExceptions)
+    : StructuralTypeException(generateMessage(innerExceptions))
 {
-    /// <summary>
-    /// Contains the list of errors detected while deserializing data into .NET POCOs.
-    /// </summary>
-    /// <remarks>The deserializers will continue deserialization in the face of errors, and so will collect the full
-    /// set of errors detected using this aggregate exception.</remarks>
-    public class DeserializationFailedException : Exception
+    public DeserializationFailedException(Base? partialResult, CodedException innerException) :
+        this(partialResult, [innerException])
     {
-        public DeserializationFailedException(Base? partialResult, CodedException innerException) :
-               this(partialResult, new[] { innerException })
-        {
-            // Nothing
-        }
-
-        public DeserializationFailedException(Base? partialResult, IEnumerable<CodedException> innerExceptions) :
-            base(generateMessage(innerExceptions))
-        {
-            PartialResult = partialResult;
-            Exceptions = innerExceptions.ToList();
-        }
-
-        private static string generateMessage(IEnumerable<CodedException> exceptions)
-        {
-            string b = "One or more errors occurred.";
-            if (exceptions.Any())
-                b += " " + string.Join(" ", exceptions.Select(e => $"({e.Message})"));
-
-            return b;
-        }
-
-
-        /// <summary>
-        /// The best-effort result of deserialization. Maybe invalid or incomplete because of the errors encountered.
-        /// </summary>
-        public Base? PartialResult { get; private set; }
-
-        public IReadOnlyCollection<CodedException> Exceptions { get; }
+        // Nothing
     }
-}
 
-#nullable restore
+    private static string generateMessage(IEnumerable<CodedException> exceptions)
+    {
+        string b = "One or more errors occurred.";
+        if (exceptions.Any())
+            b += " " + string.Join(" ", exceptions.Select(e => $"({e.Message})"));
+
+        return b;
+    }
+
+
+    /// <summary>
+    /// The best-effort result of deserialization. Maybe invalid or incomplete because of the errors encountered.
+    /// </summary>
+    public Base? PartialResult { get; private set; } = partialResult;
+
+    public IReadOnlyCollection<CodedException> Exceptions { get; } = innerExceptions.ToList();
+}

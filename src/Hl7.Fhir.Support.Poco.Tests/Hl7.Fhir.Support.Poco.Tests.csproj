@@ -10,6 +10,12 @@
 		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\testPackage.tgz">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="TestData\fp-test-patient-errors-expected-*.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Serialization/snapshots/*.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>		
@@ -19,6 +25,10 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Serialization\snapshots\" />
 	</ItemGroup>
 	
 </Project>

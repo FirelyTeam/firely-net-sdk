@@ -1,0 +1,65 @@
+Hl7.Fhir.Validation.CodedValidationException: string 'not a valid instant' is not a correct literal for a instant. At Patient.meta.lastUpdated, line 6, position 41.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'resourceType'. At Patient.text, line 9, position 32.
+Hl7.Fhir.Validation.CodedValidationException: Value 'generatedY' is not a correct code for valueset 'NarrativeStatus'. At Patient.text.status, line 10, position 27.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'value'. At Patient.contained[0].active[0], line 17, position 33.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[0].active, line 17, position 18.
+Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[2].active[1], line 27, position 26.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[2].active, line 27, position 18.
+Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[3].active[0], line 32, position 20.
+Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[3].active[1], line 32, position 28.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[3].active, line 32, position 18.
+Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[4].active[1], line 38, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'versionId'. At Patient.contained[4].active[1], line 40, position 29.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[4].active, line 37, position 18.
+Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[5].active[0], line 49, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'versionId'. At Patient.contained[5].active[0], line 51, position 29.
+Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[5].active[1], line 54, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[5].active, line 48, position 18.
+Hl7.Fhir.Serialization.FhirJsonException: Unknown type 'PatientX' found in 'resourceType' property. At Patient.contained[6], line 57, position 6.
+Hl7.Fhir.Serialization.FhirJsonException: Data type 'Meta' in property 'resourceType' is not a type of resource. At Patient.contained[7], line 61, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'versionId'. At Patient.contained[7], line 63, position 23.
+Hl7.Fhir.Serialization.FhirJsonException: Property 'resourceType' should be a string, but found token Number with value 4. At line 66, position 24.
+Hl7.Fhir.Serialization.FhirJsonException: Resource has no 'resourceType' property. At line 71, position 6.
+Hl7.Fhir.Serialization.FhirJsonException: Encountered duplicate property 'active'. At Patient.contained[10].active, line 77, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Value is of type 'string', which is not an allowed choice. At Patient.contained[10].deceased, line 74, position 36.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'url'. At Patient.contained[11].active, line 83, position 36.
+Hl7.Fhir.Serialization.FhirJsonException: Encountered duplicate property 'active'. At Patient.contained[11].active, line 91, position 6.
+Hl7.Fhir.Serialization.FhirJsonException: Duplicate array detected. At Patient.contained[12].name[1], line 100, position 10.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'test'. At Patient.contained[13], line 108, position 20.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element '_test'. At Patient.contained[13], line 109, position 17.
+Hl7.Fhir.Validation.CodedValidationException: string '1.00000000000000000e-24' is not the right type of literal for a decimal. At Patient.contained[14].component[5].value.value, line 172, position 47.
+Hl7.Fhir.Validation.CodedValidationException: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[14].component[6].value.value, line 181, position 48.
+Hl7.Fhir.Serialization.FhirJsonException: Duplicate array detected. At Patient.contained[15].name[0].given[2], line 194, position 28.
+Hl7.Fhir.Serialization.FhirJsonException: Duplicate array detected. At Patient.contained[15].name[0].given[2], line 195, position 27.
+Hl7.Fhir.Validation.CodedValidationException: boolean True is not the right type of literal for a string. At Patient.contained[15].name[0].given, line 195, position 30.
+Hl7.Fhir.Validation.CodedValidationException: boolean True is not the right type of literal for a string. At Patient.contained[16].identifier[0].id, line 204, position 21.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'mother'. At Patient.contained[16].name[0], line 216, position 42.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a collection of string, but found a single string. At Patient.contained[16].name[0].given, line 215, position 45.
+Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single string, but found a collection of string. At Patient.contained[16].name[1].family, line 221, position 22.
+Hl7.Fhir.Serialization.FhirJsonException: Expected a primitive value, not a json null. At Patient.contained[16].telecom[0].use, line 233, position 22.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'incorrect'. At Patient.contained[16].address[0].use, line 241, position 67.
+Hl7.Fhir.Validation.CodedValidationException: Repeating elements should not contain a null value. At Patient.contained[16].address[0].line, line 243, position 21.
+Hl7.Fhir.Serialization.FhirJsonException: Arrays need to have at least one non-null element. At Patient.contained[16].address[1].line[1], line 251, position 10.
+Hl7.Fhir.Validation.CodedValidationException: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri. At Patient.identifier[1].system, line 264, position 44.
+Hl7.Fhir.Validation.CodedValidationException: Repeating elements should not contain a null value. At Patient.name[0].given, line 278, position 17.
+Hl7.Fhir.Validation.CodedValidationException: boolean True is not the right type of literal for a positiveInt. At Patient.telecom[0].rank, line 286, position 19.
+Hl7.Fhir.Serialization.FhirJsonException: Element 'url' is not a FHIR primitive, so it should not use an underscore in the '_url' property. At Patient.gender.extension[0].url, line 293, position 91.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'url'. At Patient.gender.extension[0].url, line 293, position 91.
+Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.gender.extension[0].url' with minimum cardinality 1 must be present. At Patient.gender.extension[0].url, line 293, position 16.
+Hl7.Fhir.Validation.CodedValidationException: integer 28 is not the right type of literal for a code. At Patient.gender.extension[1].valueCode, line 298, position 24.
+Hl7.Fhir.Serialization.FhirJsonException: Choice element 'value should be suffixed by a type. At Patient.gender.extension[2], line 302, position 17.
+Hl7.Fhir.Serialization.FhirJsonException: Choice element 'value' is suffixed with an unrecognized type 'SuperDecimal'. At Patient.gender.extension[3], line 306, position 29.
+Hl7.Fhir.Serialization.FhirJsonException: Choice element 'value' is suffixed with an unrecognized type 'SuperCrap'. At Patient.gender.extension[4], line 310, position 26.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'temperature'. At Patient.gender.extension[4].value, line 311, position 30.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'unit'. At Patient.gender.extension[4].value, line 312, position 28.
+Hl7.Fhir.Validation.CodedValidationException: Value 'ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7' is not parseable as Base64 data. At Patient.photo[0].data, line 331, position 1347.
+Hl7.Fhir.Serialization.FhirJsonException: An array needs to have at least one element. At Patient.communication[1].language.coding[0], line 366, position 33.
+Hl7.Fhir.Validation.CodedValidationException: string '' is not a correct literal for a string. At Patient.managingOrganization.display, line 380, position 18.
+Hl7.Fhir.Serialization.FhirJsonException: An object needs to have at least one property. At Patient.link[0], line 385, position 4.
+Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.link[0].type' with minimum cardinality 1 must be present. At Patient.link[0].type, line 384, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Element 'Patient.link[0].other' with minimum cardinality 1 must be present. At Patient.link[0].other, line 384, position 6.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'data'. At Patient.unknownElement.valued, line 388, position 16.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'valued'. At Patient.unknownElement, line 387, position 16.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'unknownElement'. At Patient, line 386, position 22.
+Hl7.Fhir.Validation.CodedValidationException: string 'false' is not the right type of literal for a boolean. At Patient.deceasedBoolean, line 326, position 29.
+Hl7.Fhir.Validation.CodedValidationException: decimal 3.14 is not the right type of literal for a integer. At Patient.multipleBirthInteger, line 327, position 31.

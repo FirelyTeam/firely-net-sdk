@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             var newType = new ElementDefinition.TypeRefComponent
             {
                 Code = type,
-                Profile = profiles
+                Profile = profiles!
             };
 
             ed.Type.Add(newType);
@@ -115,8 +115,8 @@ namespace Hl7.Fhir.Model
             {
                 Code = REFERENCE_LITERAL,
                 TargetProfile = targetProfiles,
-                Profile = profiles,
-                Aggregation = aggregation?.Cast<ElementDefinition.AggregationMode?>()
+                Profile = profiles!,
+                Aggregation = aggregation?.Cast<ElementDefinition.AggregationMode?>()!
             };
 
             ed.Type.Add(newType);
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines whether the given element is the root element of an extension or modifierExtension.
         /// </summary>
-        public static bool IsExtension(this ElementDefinition defn) => defn != null && IsExtensionPath(defn.Path);
+        public static bool IsExtension(this ElementDefinition? defn) => defn?.Path is {} p && IsExtensionPath(p);
 
         /// <summary>Determines if the specified element path represents a root element.</summary>
         public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains('.');
@@ -213,13 +213,13 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines if the specified element is the root element.
         /// </summary>
-        public static bool IsRootElement(this ElementDefinition defn) => defn != null && IsRootPath(defn.Path);
+        public static bool IsRootElement(this ElementDefinition? defn) => defn?.Path is {} p && IsRootPath(p);
 
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="types">A list of element types.</param>
         /// <returns>A list of type code strings.</returns>
         public static IReadOnlyList<string> DistinctTypeCodes(this List<ElementDefinition.TypeRefComponent> types)
-            => types.Where(t => t.Code != null).Select(t => t.Code).Distinct().ToList();
+            => types.Where(t => t.Code != null).Select(t => t.Code!).Distinct().ToList();
 
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
@@ -260,15 +260,61 @@ namespace Hl7.Fhir.Model
         /// Returns the profile on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
-        public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile.SafeSingleOrDefault() ?? (elemType?.Code is not null ? Canonical.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
+        public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent? elemType) =>
+            elemType?.GetTypeProfiles().SafeSingleOrDefault();
 
         /// <summary>
-        /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
+        /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified,
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
-        public static IEnumerable<string>? GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile.Any() == true ? elemType.Profile : (elemType?.Code is not null ? new[] { Canonical.CanonicalUriForFhirCoreType(elemType.Code).Value } : null);
+        public static IEnumerable<string> GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType)
+        {
+            if (elemType.Profile.Any()) return elemType.Profile.OfType<string>();
+
+            return getCodeFromTypeRef(elemType) is {} reference ? [reference] : [];
+        }
+
+        private const string SYSTEMTYPEURI = "http://hl7.org/fhirpath/System.";
+        private const string SDXMLTYPEEXTENSION = "http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type";
+
+        // TODO: This would probably be useful for the SDK too
+        private static string? getCodeFromTypeRef(this ElementDefinition.TypeRefComponent typeRef)
+        {
+            // Note, in R3, this can be empty for system primitives (so the .value element of datatypes),
+            // and there are some R4 profiles in the wild that still use this old schema too.
+            if (!string.IsNullOrEmpty(typeRef.Code)) return Canonical.ForCoreType(typeRef.Code).Value;
+
+            var r3TypeIndicator = typeRef.CodeElement?.GetStringExtension(SDXMLTYPEEXTENSION);
+            return r3TypeIndicator is not null ? deriveSystemTypeFromXsdType(r3TypeIndicator) : null;
+
+            static string deriveSystemTypeFromXsdType(string xsdTypeName)
+            {
+                // This R3-specific mapping is derived from the possible xsd types from the primitive datatype table
+                // at http://www.hl7.org/fhir/stu3/datatypes.html, and the mapping of these types to
+                // FhirPath from http://hl7.org/fhir/fhirpath.html#types
+                var systemType = xsdTypeName switch
+                {
+                    "xsd:boolean" => "Boolean",
+                    "xsd:int" => "Integer",
+                    "xsd:string" => "String",
+                    "xsd:decimal" => "Decimal",
+                    "xsd:anyURI" => "String",
+                    "xsd:anyUri" => "String",
+                    "xsd:base64Binary" => "String",
+                    "xsd:dateTime" => "DateTime",
+                    "xsd:gYear OR xsd:gYearMonth OR xsd:date" => "DateTime",
+                    "xsd:gYear OR xsd:gYearMonth OR xsd:date OR xsd:dateTime" => "DateTime",
+                    "xsd:time" => "Time",
+                    "xsd:token" => "String",
+                    "xsd:nonNegativeInteger" => "Integer",
+                    "xsd:positiveInteger" => "Integer",
+                    "xhtml:div" => "String", // used in R3 xhtml
+                    _ => throw new NotSupportedException($"The xsd type {xsdTypeName} is not supported as a primitive type in R3.")
+                };
+
+                return SYSTEMTYPEURI + systemType;
+            }
+        }
 
         /// <summary>
         /// Determines if the specified element definition represents a <see cref="ResourceReference"/>.
@@ -283,7 +329,7 @@ namespace Hl7.Fhir.Model
         /// Determines if the specified element is a backbone element.
         /// </summary>
         public static bool IsBackboneElement(this ElementDefinition defn) =>
-            defn.Path.Contains('.') && defn.Type.Count == 1 &&
+            defn.Path?.Contains('.') == true && defn.Type.Count == 1 &&
             (defn.Type[0].Code == "BackboneElement" || defn.Type[0].Code == "Element");
 
         /// <summary>
@@ -296,25 +342,27 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public static string GetNameFromPath(string path)
         {
-            var pos = path.LastIndexOf(".");
+            var pos = path.LastIndexOf(".", StringComparison.Ordinal);
 
-            return pos != -1 ? path.Substring(pos + 1) : path;
+            return pos != -1 ? path[(pos + 1)..] : path;
         }
 
         /// <inheritdoc cref="GetNameFromPath(string)"/>
-        public static string GetNameFromPath(this ElementDefinition defn) => GetNameFromPath(defn.Path);
+        public static string GetNameFromPath(this ElementDefinition defn) =>
+            GetNameFromPath(defn.Path ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(defn)));
 
         /// <summary>
         /// Returns the parent path of the specified element path, or an empty string if there is no parent.
         /// </summary>
         public static string GetParentPath(string child)
         {
-            var dot = child.LastIndexOf(".");
-            return dot != -1 ? child.Substring(0, dot) : string.Empty;
+            var dot = child.LastIndexOf(".", StringComparison.Ordinal);
+            return dot != -1 ? child[..dot] : string.Empty;
         }
 
         /// <inheritdoc cref="GetParentPath(string)"/>
-        public static string GetParentNameFromPath(this ElementDefinition defn) => GetParentPath(defn.Path);
+        public static string GetParentNameFromPath(this ElementDefinition defn) =>
+            GetParentPath(defn.Path ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(defn)) );
 
         /// <summary>
         /// Returns the root element from the specified element list if available, or <c>null</c> otherwise.
@@ -345,7 +393,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This function will match any definition for which the path is a direct match, or matches the element name without suffix.</remarks>
         public static bool MatchesName(this ElementDefinition def, string name)
         {
-            var namePart = GetNameFromPath(def.Path);
+            var namePart = GetNameFromPath(def.Path ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(def)));
 
             // Direct match
             if (namePart == name) return true;
@@ -355,7 +403,7 @@ namespace Hl7.Fhir.Model
             if (namePart == suffixedName) return true;
 
             // Match a constrained choice type name, by looking at the original name of the element
-            if (def.Base != null)
+            if (def.Base?.Path != null)
             {
                 var baseNamePart = GetNameFromPath(def.Base.Path);
                 if (baseNamePart == suffixedName) return true;
@@ -378,7 +426,7 @@ namespace Hl7.Fhir.Model
         /// Determines whether this element is the <c>Value</c> element of a FHIR primitive.
         /// </summary>
         public static bool IsPrimitiveValueConstraint(this ElementDefinition ed) =>
-            ed.Path.EndsWith(".value") && ed.IsPrimitiveConstraint();
+            ed.Path?.EndsWith(".value") == true && ed.IsPrimitiveConstraint();
 
         /// <summary>
         /// Determines whether this element contains a nested resource.
@@ -386,7 +434,7 @@ namespace Hl7.Fhir.Model
         /// <param name="ed"></param>
         /// <returns></returns>
         public static bool IsResourcePlaceholder(this ElementDefinition ed) =>
-            ed.Type is not null && ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
+            ed.Type is not null && ed.Type.Any(t => t.Code is "Resource" or "DomainResource");
 
         /*
          * From TypeRefExtension.cs
@@ -395,7 +443,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Returns the human-readable name for this <see cref="StructureDefinition"/>.
         /// </summary>
-        public static string ReadableName(this StructureDefinition sd) => sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint ? sd.Url : sd.Id;
+        public static string? ReadableName(this StructureDefinition sd) =>
+            sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint ? sd.Url : sd.Id;
 
         /// <summary>
         /// Determines whether the element allows values of more than one type.
@@ -405,7 +454,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines if the specified element definition represents a type choice element by verifying that the element name ends with "[x]".
         /// </summary>
-        public static bool IsChoice(this ElementDefinition defn) => defn.Path.EndsWith("[x]");
+        public static bool IsChoice(this ElementDefinition defn) =>
+            defn.Path?.EndsWith("[x]") ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(defn));
     }
 }
 

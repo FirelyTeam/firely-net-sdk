@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     public interface IPatient
     {
-        Date BirthDate { get; }
+        Date? BirthDate { get; }
     }
 }
 #nullable restore

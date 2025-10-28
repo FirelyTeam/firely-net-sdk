@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
             bool isNested(Type testee)
             {
-                _ = ClassMapping.TryCreate(testee, out var cm);
+                _ = ClassMapping.TryCreate(ModelInfo.ModelInspector, testee, out var cm);
                 return cm.IsBackboneType;
             }
         }
@@ -37,13 +37,13 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void HidesPocoClassNames()
         {
-            _ = ClassMapping.TryCreate(typeof(Patient.ContactComponent), out var mapping);
+            _ = ClassMapping.TryCreate(ModelInfo.ModelInspector, typeof(Patient.ContactComponent), out var mapping);
             Assert.AreEqual("BackboneElement", getName(mapping));
 
-            _ = ClassMapping.TryCreate(typeof(DataRequirement.CodeFilterComponent), out mapping);
+            _ = ClassMapping.TryCreate(ModelInfo.ModelInspector, typeof(DataRequirement.CodeFilterComponent), out mapping);
             Assert.AreEqual("Element", getName(mapping));
 
-            _ = ClassMapping.TryCreate(typeof(Code<AdministrativeGender>), out mapping);
+            _ = ClassMapping.TryCreate(ModelInfo.ModelInspector, typeof(Code<AdministrativeGender>), out mapping);
             Assert.AreEqual("code", getName(mapping));
 
             string getName(ClassMapping mp) => ((IStructureDefinitionSummary)mp).TypeName;
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
             int createMapping(Type t, bool touchProps = false)
             {
-                ClassMapping.TryCreate(t, out var mapping);
+                ClassMapping.TryCreate(ModelInfo.ModelInspector, t, out var mapping);
                 return touchProps ? mapping.PropertyMappings.Count : -1;
             }
         }
@@ -84,7 +84,9 @@ namespace Hl7.Fhir.Tests.Introspection
         public void LoadsDependentSatelliteAssemblies()
         {
             var satellite = typeof(ModelInfo).Assembly;
+#pragma warning disable CS0618 // Type or member is obsolete
             var inspector = ModelInspector.ForAssembly(satellite);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             inspector.FindClassMapping(typeof(Patient)).Should().NotBeNull();
             inspector.FindClassMapping(typeof(StructureDefinition)).Should().NotBeNull();
@@ -98,7 +100,9 @@ namespace Hl7.Fhir.Tests.Introspection
         public void LoadsDependentConformanceAssemblies()
         {
             var satellite = typeof(StructureDefinition).Assembly;
+#pragma warning disable CS0618 // Type or member is obsolete
             var inspector = ModelInspector.ForAssembly(satellite);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             inspector.FindClassMapping(typeof(StructureDefinition)).Should().NotBeNull();
             inspector.FindClassMapping(typeof(ValueSet)).Should().NotBeNull();
@@ -110,9 +114,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void FindsCorrectFhirVersion()
         {
-            var satellite = typeof(ModelInfo).Assembly;
-            IModelInfo mi = ModelInspector.ForAssembly(satellite);  // R5 is arbitrary here
-
+            var mi = ModelInfo.ModelInspector;  // R5 is arbitrary here
             mi.FhirVersion.Should().Be(ModelInfo.Version);
         }
     }

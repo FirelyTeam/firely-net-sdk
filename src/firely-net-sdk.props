@@ -1,12 +1,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;netstandard2.1</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Solution-wide properties for NuGet packaging -->
 	<PropertyGroup>
-		<VersionPrefix>5.13.0</VersionPrefix>
+		<VersionPrefix>6.0.2</VersionPrefix>
 		<VersionSuffix></VersionSuffix>
 		<Authors>Firely (info@fire.ly) and contributors</Authors>
 		<Company>Firely (https://fire.ly)</Company>
@@ -22,12 +22,6 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed. 
-		Consider applying the 'await' operator to the result of the call.	-->
-		<WarningsAsErrors>CS4014</WarningsAsErrors>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<None Include="..\..\icon-firely-sdk-128.png" Pack="true" PackagePath="" />
 		<None Include="..\..\README.md" Pack="true" PackagePath="" />
@@ -39,18 +33,21 @@
 
 	<!-- Compiler settings -->
 	<PropertyGroup>
-		<LangVersion>12.0</LangVersion>
+		<LangVersion>13.0</LangVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<EnablePackageValidation>true</EnablePackageValidation>	
-		<PackageValidationBaselineVersion>5.12.1</PackageValidationBaselineVersion>
+	<!--	<EnablePackageValidation>true</EnablePackageValidation>
+		<PackageValidationBaselineVersion>6.0.0-alpha1</PackageValidationBaselineVersion> -->
+		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed.
+		Consider applying the 'await' operator to the result of the call.	-->
+		<WarningsAsErrors>CS4014</WarningsAsErrors>
+	    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
 		<DebugType>portable</DebugType>
 		<DebugSymbols>True</DebugSymbols>
-		<NoWarn>1591</NoWarn>
+		<NoWarn>1591, SDK0001</NoWarn>
 		<Optimize>false</Optimize>
 		<DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
 	</PropertyGroup>
@@ -62,7 +59,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<NoWarn>1591</NoWarn> <!-- Missing XML comments -->
+		<NoWarn>1591, SDK0001</NoWarn> <!-- Missing XML comments -->
 	</PropertyGroup>
 
 </Project>

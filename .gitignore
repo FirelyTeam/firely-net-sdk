@@ -166,3 +166,5 @@ src/.vs/
 build/runbuild.txt
 
 dist/
+
+*.received.*

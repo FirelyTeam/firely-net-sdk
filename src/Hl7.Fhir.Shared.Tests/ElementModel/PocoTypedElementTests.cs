@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Core.Tests.ElementModel
@@ -47,10 +48,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         [TestMethod]
         public void PocoExtensionTest()
         {
-            Patient p = new Patient
-            {
-                Active = true
-            };
+            Patient p = new Patient { Active = true };
             p.ActiveElement.ElementId = "314";
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
@@ -106,7 +104,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var poco = await (new FhirJsonParser()).ParseAsync<Patient>(json);
+            var poco = (new FhirJsonDeserializer()).Deserialize<Patient>(json);
             var pocoP = poco.ToTypedElement();
             var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
@@ -131,7 +129,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "issue-444-testdata.xml"));
-            var cs = (new FhirXmlParser()).Parse<CapabilityStatement>(xml);
+            var cs = (new FhirXmlDeserializer()).Deserialize<CapabilityStatement>(xml);
             var nav = cs.ToTypedElement();
 
             var rest = nav.Children().Where(c => c.Name == "rest").FirstOrDefault();
@@ -146,7 +144,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void PocoTypedElementPerformance()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+            var cs = FhirXmlDeserializer.RECOVERABLE.Deserialize<Patient>(xml);
             var nav = cs.ToTypedElement();
 
             TypedElementPerformance(nav);
@@ -165,6 +163,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             {
                 extract();
             }
+
             sw.Stop();
 
             Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5} micros");
@@ -179,18 +178,17 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         }
 
         [TestMethod]
-        public async Tasks.Task ValidateFiveWs()
+        public void ValidateFiveWs()
         {
             var json = TestDataHelper.ReadTestData("test-observation.json");
-            var poco = await (new FhirJsonParser()).ParseAsync<Observation>(json);
+            var poco = (new FhirJsonDeserializer()).Deserialize<Observation>(json);
 
             var inspector = ModelInfo.ModelInspector;
             var aResourceMapping = inspector.FindClassMapping(typeof(Observation));
             var fiveWsProp = aResourceMapping.PropertyMappings.Where(p => p.FiveWs != null && p.FiveWs.StartsWith("FiveWs.subject")).FirstOrDefault();
             fiveWsProp.Should().NotBeNull("There should be a fiveW mapping for subject");
 
-            var subjectProp = fiveWsProp.GetValue(poco) as ResourceReference;
-
+            var subjectProp = poco[fiveWsProp.Name];
             Assert.AreEqual(poco.Subject, subjectProp);
         }
 
@@ -205,21 +203,34 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 #endif
             var ed = new ElementDefinition()
             {
-                Mapping = new System.Collections.Generic.List<ElementDefinition.MappingComponent>() {
-                            new ElementDefinition.MappingComponent() {
-                                Comment = "comment"
-                                }
-                            },
+                Mapping = new System.Collections.Generic.List<ElementDefinition.MappingComponent>()
+                {
+                    new ElementDefinition.MappingComponent()
+                    {
+#if !R5
+                        CommentString = "comment"
+#else
+                        Comment = "comment"
+#endif
+                    }
+                },
                 Binding = new ElementDefinition.ElementDefinitionBindingComponent()
                 {
+#if !R5
+                    DescriptionString = "description",
+#else
                     Description = "description",
-
+#endif
                 },
                 Constraint = new System.Collections.Generic.List<ElementDefinition.ConstraintComponent>()
                 {
                     new ElementDefinition.ConstraintComponent()
                     {
+#if !R5
+                        RequirementsString = "requirements"
+#else
                         Requirements = "requirements"
+#endif
                     }
                 }
             };
@@ -228,6 +239,5 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             element.Select("binding.description").First().InstanceType.Should().Be(resultType);
             element.Select("constraint.requirements").First().InstanceType.Should().Be(resultType);
         }
-
     }
 }
