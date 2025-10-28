@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -51,13 +55,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest", IsResource=true)]
+  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest")]
   public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CommunicationRequest"; } }
+    public override string TypeName => "CommunicationRequest";
 
     /// <summary>
     /// Message payload
@@ -67,17 +71,16 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CommunicationRequest#Payload", IsNestedType=true)]
-    [BackboneType("CommunicationRequest.payload")]
+    [FhirType("CommunicationRequest.payload", IsBackboneType=true)]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CommunicationRequest#Payload"; } }
+      public override string TypeName => "CommunicationRequest.payload";
 
       /// <summary>
-      /// Message part content
+      /// Message part content.
       /// </summary>
       [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -87,91 +90,94 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.DataType Content
       {
-        get { return _Content; }
-        set { _Content = value; OnPropertyChanged("Content"); }
+        get
+        {
+          if(_Content.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["content"]);
+          return _Content!;
+        }
+
+        set
+        {
+          if (_Content.InOverflow<DynamicDataType>())
+            Overflow.Remove("content");
+          _Content = value;
+          OnPropertyChanged("Content");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Content;
+      private Hl7.Fhir.Model.DataType? _Content;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PayloadComponent;
-
-        if (dest == null)
-        {
+        if(other is not PayloadComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Content != null) dest.Content = (Hl7.Fhir.Model.DataType)Content.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Content is not null) dest.Content = (Hl7.Fhir.Model.DataType)_Content.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new PayloadComponent());
+        var instance = new PayloadComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PayloadComponent;
-        if(otherT == null) return false;
+        if(other is not PayloadComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Content, otherT._Content)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as PayloadComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Content != null) yield return Content;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Content != null) yield return new ElementValue("content", Content);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "content":
-            value = Content;
-            return Content is not null;
+            if (_Content.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["content"];
+              return true;
+            }
+            value = _Content;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "content":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Content = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["content"] = value;
+            }
+            else Content = (Hl7.Fhir.Model.DataType?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Content is not null && !_Content.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("content",_Content);
       }
 
     }
@@ -184,17 +190,16 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("CommunicationRequest#Requester", IsNestedType=true)]
-    [BackboneType("CommunicationRequest.requester")]
+    [FhirType("CommunicationRequest.requester", IsBackboneType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CommunicationRequest#Requester"; } }
+      public override string TypeName => "CommunicationRequest.requester";
 
       /// <summary>
-      /// Individual making the request
+      /// Individual making the request.
       /// </summary>
       [FhirElement("agent", InSummary=true, Order=40, FiveWs="who.author")]
       [CLSCompliant(false)]
@@ -203,193 +208,286 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference Agent
       {
-        get { return _Agent; }
-        set { _Agent = value; OnPropertyChanged("Agent"); }
+        get
+        {
+          if(_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["agent"]);
+          return _Agent!;
+        }
+
+        set
+        {
+          if (_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("agent");
+          _Agent = value;
+          OnPropertyChanged("Agent");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Agent;
+      private Hl7.Fhir.Model.ResourceReference? _Agent;
 
       /// <summary>
-      /// Organization agent is acting for
+      /// Organization agent is acting for.
       /// </summary>
       [FhirElement("onBehalfOf", InSummary=true, Order=50)]
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+      public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
       {
-        get { return _OnBehalfOf; }
-        set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
+        get
+        {
+          if(_OnBehalfOf.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["onBehalfOf"]);
+          return _OnBehalfOf;
+        }
+
+        set
+        {
+          if (_OnBehalfOf.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("onBehalfOf");
+          _OnBehalfOf = value;
+          OnPropertyChanged("OnBehalfOf");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+      private Hl7.Fhir.Model.ResourceReference? _OnBehalfOf;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RequesterComponent;
-
-        if (dest == null)
-        {
+        if(other is not RequesterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopy();
-        if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Agent is not null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)_Agent.DeepCopyInternal();
+        if(_OnBehalfOf is not null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)_OnBehalfOf.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new RequesterComponent());
+        var instance = new RequesterComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RequesterComponent;
-        if(otherT == null) return false;
+        if(other is not RequesterComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
-        if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Agent, otherT._Agent)) return false;
+        if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as RequesterComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
-        if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Agent != null) yield return Agent;
-          if (OnBehalfOf != null) yield return OnBehalfOf;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Agent != null) yield return new ElementValue("agent", Agent);
-          if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "agent":
-            value = Agent;
-            return Agent is not null;
+            if (_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["agent"];
+              return true;
+            }
+            value = _Agent;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "onBehalfOf":
-            value = OnBehalfOf;
-            return OnBehalfOf is not null;
+            if (_OnBehalfOf.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["onBehalfOf"];
+              return true;
+            }
+            value = _OnBehalfOf;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Agent is not null) yield return new KeyValuePair<string,object>("agent",Agent);
-        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "agent":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Agent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["agent"] = value;
+            }
+            else Agent = (Hl7.Fhir.Model.ResourceReference?)value!;
+            return this;
+          case "onBehalfOf":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              OnBehalfOf = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["onBehalfOf"] = value;
+            }
+            else OnBehalfOf = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Agent is not null && !_Agent.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("agent",_Agent);
+        if (_OnBehalfOf is not null && !_OnBehalfOf.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
       }
 
     }
 
     /// <summary>
-    /// Unique identifier
+    /// Unique identifier.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
-    /// Fulfills plan or proposal
+    /// Fulfills plan or proposal.
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
-      set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
+      get
+      {
+        if(_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["basedOn"]);
+        return _BasedOn ??= [];
+      }
+
+      set
+      {
+        if (_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("basedOn");
+        _BasedOn = value;
+        OnPropertyChanged("BasedOn");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
-    /// Request(s) replaced by this request
+    /// Request(s) replaced by this request.
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("CommunicationRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
-      get { if(_Replaces==null) _Replaces = new List<Hl7.Fhir.Model.ResourceReference>(); return _Replaces; }
-      set { _Replaces = value; OnPropertyChanged("Replaces"); }
+      get
+      {
+        if(_Replaces.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["replaces"]);
+        return _Replaces ??= [];
+      }
+
+      set
+      {
+        if (_Replaces.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("replaces");
+        _Replaces = value;
+        OnPropertyChanged("Replaces");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Replaces;
 
     /// <summary>
-    /// Composite request this is part of
+    /// Composite request this is part of.
     /// </summary>
     [FhirElement("groupIdentifier", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier GroupIdentifier
+    public Hl7.Fhir.Model.Identifier? GroupIdentifier
     {
-      get { return _GroupIdentifier; }
-      set { _GroupIdentifier = value; OnPropertyChanged("GroupIdentifier"); }
+      get
+      {
+        if(_GroupIdentifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["groupIdentifier"]);
+        return _GroupIdentifier;
+      }
+
+      set
+      {
+        if (_GroupIdentifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          Overflow.Remove("groupIdentifier");
+        _GroupIdentifier = value;
+        OnPropertyChanged("GroupIdentifier");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Identifier _GroupIdentifier;
+    private Hl7.Fhir.Model.Identifier? _GroupIdentifier;
 
     /// <summary>
-    /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
+    /// draft | active | suspended | cancelled | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("CommunicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RequestStatus>), Overflow["status"]);
+        return _StatusElement!;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.RequestStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
@@ -398,46 +496,69 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// Message category
+    /// Message category.
     /// </summary>
     [FhirElement("category", Order=140, FiveWs="class")]
     [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
-      set { _Category = value; OnPropertyChanged("Category"); }
+      get
+      {
+        if(_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["category"]);
+        return _Category ??= [];
+      }
+
+      set
+      {
+        if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("category");
+        _Category = value;
+        OnPropertyChanged("Category");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
-    /// Message urgency
+    /// Message urgency.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=150, FiveWs="grade")]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("CommunicationPriority")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
+    public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
     {
-      get { return _PriorityElement; }
-      set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
+      get
+      {
+        if(_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.RequestPriority>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.RequestPriority>), Overflow["priority"]);
+        return _PriorityElement;
+      }
+
+      set
+      {
+        if (_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.RequestPriority>>())
+          Overflow.Remove("priority");
+        _PriorityElement = value;
+        OnPropertyChanged("PriorityElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
+    private Code<Hl7.Fhir.Model.RequestPriority>? _PriorityElement;
 
     /// <summary>
     /// Message urgency
@@ -446,479 +567,829 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestPriority? Priority
     {
-      get { return PriorityElement != null ? PriorityElement.Value : null; }
+      get => PriorityElement?.Value;
       set
       {
-        if (value == null)
-          PriorityElement = null;
-        else
-          PriorityElement = new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null! : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
 
     /// <summary>
-    /// A channel of communication
+    /// A channel of communication.
     /// </summary>
     [FhirElement("medium", Order=160)]
     [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Medium
     {
-      get { if(_Medium==null) _Medium = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Medium; }
-      set { _Medium = value; OnPropertyChanged("Medium"); }
+      get
+      {
+        if(_Medium.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["medium"]);
+        return _Medium ??= [];
+      }
+
+      set
+      {
+        if (_Medium.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("medium");
+        _Medium = value;
+        OnPropertyChanged("Medium");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Medium;
 
     /// <summary>
-    /// Focus of message
+    /// Focus of message.
     /// </summary>
     [FhirElement("subject", Order=170, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
-      get { return _Subject; }
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
+        return _Subject;
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
-    /// Message recipient
+    /// Message recipient.
     /// </summary>
     [FhirElement("recipient", Order=180, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group","CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Recipient
     {
-      get { if(_Recipient==null) _Recipient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Recipient; }
-      set { _Recipient = value; OnPropertyChanged("Recipient"); }
+      get
+      {
+        if(_Recipient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["recipient"]);
+        return _Recipient ??= [];
+      }
+
+      set
+      {
+        if (_Recipient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("recipient");
+        _Recipient = value;
+        OnPropertyChanged("Recipient");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Recipient;
 
     /// <summary>
-    /// Focal resources
+    /// Focal resources.
     /// </summary>
     [FhirElement("topic", Order=190, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Topic
     {
-      get { if(_Topic==null) _Topic = new List<Hl7.Fhir.Model.ResourceReference>(); return _Topic; }
-      set { _Topic = value; OnPropertyChanged("Topic"); }
+      get
+      {
+        if(_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["topic"]);
+        return _Topic ??= [];
+      }
+
+      set
+      {
+        if (_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("topic");
+        _Topic = value;
+        OnPropertyChanged("Topic");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Topic;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Topic;
 
     /// <summary>
-    /// Encounter or episode leading to message
+    /// Encounter or episode leading to message.
     /// </summary>
     [FhirElement("context", InSummary=true, Order=200, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Context
+    public Hl7.Fhir.Model.ResourceReference? Context
     {
-      get { return _Context; }
-      set { _Context = value; OnPropertyChanged("Context"); }
+      get
+      {
+        if(_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["context"]);
+        return _Context;
+      }
+
+      set
+      {
+        if (_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("context");
+        _Context = value;
+        OnPropertyChanged("Context");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Context;
+    private Hl7.Fhir.Model.ResourceReference? _Context;
 
     /// <summary>
-    /// Message payload
+    /// Message payload.
     /// </summary>
     [FhirElement("payload", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent> Payload
     {
-      get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>(); return _Payload; }
-      set { _Payload = value; OnPropertyChanged("Payload"); }
+      get
+      {
+        if(_Payload.InOverflow<List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>), Overflow["payload"]);
+        return _Payload ??= [];
+      }
+
+      set
+      {
+        if (_Payload.InOverflow<List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>>())
+          Overflow.Remove("payload");
+        _Payload = value;
+        OnPropertyChanged("Payload");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent> _Payload;
+    private List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>? _Payload;
 
     /// <summary>
-    /// When scheduled
+    /// When scheduled.
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Occurrence
+    public Hl7.Fhir.Model.DataType? Occurrence
     {
-      get { return _Occurrence; }
-      set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
+      get
+      {
+        if(_Occurrence.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["occurrence"]);
+        return _Occurrence;
+      }
+
+      set
+      {
+        if (_Occurrence.InOverflow<DynamicDataType>())
+          Overflow.Remove("occurrence");
+        _Occurrence = value;
+        OnPropertyChanged("Occurrence");
+      }
+
     }
 
-    private Hl7.Fhir.Model.DataType _Occurrence;
+    private Hl7.Fhir.Model.DataType? _Occurrence;
 
     /// <summary>
-    /// When request transitioned to being actionable
+    /// When request transitioned to being actionable.
     /// </summary>
     [FhirElement("authoredOn", InSummary=true, Order=230, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
+    public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
     {
-      get { return _AuthoredOnElement; }
-      set { _AuthoredOnElement = value; OnPropertyChanged("AuthoredOnElement"); }
+      get
+      {
+        if(_AuthoredOnElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["authoredOn"]);
+        return _AuthoredOnElement;
+      }
+
+      set
+      {
+        if (_AuthoredOnElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("authoredOn");
+        _AuthoredOnElement = value;
+        OnPropertyChanged("AuthoredOnElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _AuthoredOnElement;
+    private Hl7.Fhir.Model.FhirDateTime? _AuthoredOnElement;
 
     /// <summary>
     /// When request transitioned to being actionable
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AuthoredOn
+    public string? AuthoredOn
     {
-      get { return AuthoredOnElement != null ? AuthoredOnElement.Value : null; }
+      get => AuthoredOnElement?.Value;
       set
       {
-        if (value == null)
-          AuthoredOnElement = null;
-        else
-          AuthoredOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
 
     /// <summary>
-    /// Message sender
+    /// Message sender.
     /// </summary>
     [FhirElement("sender", Order=240, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Sender
+    public Hl7.Fhir.Model.ResourceReference? Sender
     {
-      get { return _Sender; }
-      set { _Sender = value; OnPropertyChanged("Sender"); }
+      get
+      {
+        if(_Sender.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["sender"]);
+        return _Sender;
+      }
+
+      set
+      {
+        if (_Sender.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("sender");
+        _Sender = value;
+        OnPropertyChanged("Sender");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Sender;
+    private Hl7.Fhir.Model.ResourceReference? _Sender;
 
     /// <summary>
-    /// Who/what is requesting service
+    /// Who/what is requesting service.
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=250)]
     [DataMember]
-    public Hl7.Fhir.Model.CommunicationRequest.RequesterComponent Requester
+    public Hl7.Fhir.Model.CommunicationRequest.RequesterComponent? Requester
     {
-      get { return _Requester; }
-      set { _Requester = value; OnPropertyChanged("Requester"); }
+      get
+      {
+        if(_Requester.InOverflow<Hl7.Fhir.Model.CommunicationRequest.RequesterComponent>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CommunicationRequest.RequesterComponent), Overflow["requester"]);
+        return _Requester;
+      }
+
+      set
+      {
+        if (_Requester.InOverflow<Hl7.Fhir.Model.CommunicationRequest.RequesterComponent>())
+          Overflow.Remove("requester");
+        _Requester = value;
+        OnPropertyChanged("Requester");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CommunicationRequest.RequesterComponent _Requester;
+    private Hl7.Fhir.Model.CommunicationRequest.RequesterComponent? _Requester;
 
     /// <summary>
-    /// Why is communication needed?
+    /// Why is communication needed?.
     /// </summary>
     [FhirElement("reasonCode", InSummary=true, Order=260, FiveWs="why")]
     [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
-      get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
-      set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+      get
+      {
+        if(_ReasonCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["reasonCode"]);
+        return _ReasonCode ??= [];
+      }
+
+      set
+      {
+        if (_ReasonCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("reasonCode");
+        _ReasonCode = value;
+        OnPropertyChanged("ReasonCode");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ReasonCode;
 
     /// <summary>
-    /// Why is communication needed?
+    /// Why is communication needed?.
     /// </summary>
     [FhirElement("reasonReference", InSummary=true, Order=270, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
-      get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
-      set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
+      get
+      {
+        if(_ReasonReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["reasonReference"]);
+        return _ReasonReference ??= [];
+      }
+
+      set
+      {
+        if (_ReasonReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("reasonReference");
+        _ReasonReference = value;
+        OnPropertyChanged("ReasonReference");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ReasonReference;
 
     /// <summary>
-    /// Comments made about communication request
+    /// Comments made about communication request.
     /// </summary>
     [FhirElement("note", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
-      set { _Note = value; OnPropertyChanged("Note"); }
+      get
+      {
+        if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
+        return _Note ??= [];
+      }
+
+      set
+      {
+        if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          Overflow.Remove("note");
+        _Note = value;
+        OnPropertyChanged("Note");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as CommunicationRequest;
-
-      if (dest == null)
-      {
+      if(other is not CommunicationRequest dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
-      if(Replaces.Any()) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
-      if(GroupIdentifier != null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)GroupIdentifier.DeepCopy();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopy();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
-      if(Medium.Any()) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(Recipient.Any()) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
-      if(Topic.Any()) dest.Topic = new List<Hl7.Fhir.Model.ResourceReference>(Topic.DeepCopy());
-      if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
-      if(Payload.Any()) dest.Payload = new List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>(Payload.DeepCopy());
-      if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
-      if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
-      if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
-      if(Requester != null) dest.Requester = (Hl7.Fhir.Model.CommunicationRequest.RequesterComponent)Requester.DeepCopy();
-      if(ReasonCode.Any()) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
-      if(ReasonReference.Any()) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_Replaces is not null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(_Replaces.DeepCopyInternal());
+      if(_GroupIdentifier is not null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)_GroupIdentifier.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)_StatusElement.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_PriorityElement is not null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)_PriorityElement.DeepCopyInternal();
+      if(_Medium is not null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(_Medium.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Recipient is not null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(_Recipient.DeepCopyInternal());
+      if(_Topic is not null) dest.Topic = new List<Hl7.Fhir.Model.ResourceReference>(_Topic.DeepCopyInternal());
+      if(_Context is not null) dest.Context = (Hl7.Fhir.Model.ResourceReference)_Context.DeepCopyInternal();
+      if(_Payload is not null) dest.Payload = new List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>(_Payload.DeepCopyInternal());
+      if(_Occurrence is not null) dest.Occurrence = (Hl7.Fhir.Model.DataType)_Occurrence.DeepCopyInternal();
+      if(_AuthoredOnElement is not null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)_AuthoredOnElement.DeepCopyInternal();
+      if(_Sender is not null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)_Sender.DeepCopyInternal();
+      if(_Requester is not null) dest.Requester = (Hl7.Fhir.Model.CommunicationRequest.RequesterComponent)_Requester.DeepCopyInternal();
+      if(_ReasonCode is not null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(_ReasonCode.DeepCopyInternal());
+      if(_ReasonReference is not null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(_ReasonReference.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new CommunicationRequest());
+      var instance = new CommunicationRequest();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as CommunicationRequest;
-      if(otherT == null) return false;
+      if(other is not CommunicationRequest otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.Matches(Replaces, otherT.Replaces)) return false;
-      if( !DeepComparable.Matches(GroupIdentifier, otherT.GroupIdentifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-      if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
-      if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
-      if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
-      if( !DeepComparable.Matches(Context, otherT.Context)) return false;
-      if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
-      if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
-      if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
-      if( !DeepComparable.Matches(Sender, otherT.Sender)) return false;
-      if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
-      if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
-      if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
-      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.ListEquals(_Replaces, otherT._Replaces)) return false;
+      if(!comparer.Equals(_GroupIdentifier, otherT._GroupIdentifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_PriorityElement, otherT._PriorityElement)) return false;
+      if(!comparer.ListEquals(_Medium, otherT._Medium)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.ListEquals(_Recipient, otherT._Recipient)) return false;
+      if(!comparer.ListEquals(_Topic, otherT._Topic)) return false;
+      if(!comparer.Equals(_Context, otherT._Context)) return false;
+      if(!comparer.ListEquals(_Payload, otherT._Payload)) return false;
+      if(!comparer.Equals(_Occurrence, otherT._Occurrence)) return false;
+      if(!comparer.Equals(_AuthoredOnElement, otherT._AuthoredOnElement)) return false;
+      if(!comparer.Equals(_Sender, otherT._Sender)) return false;
+      if(!comparer.Equals(_Requester, otherT._Requester)) return false;
+      if(!comparer.ListEquals(_ReasonCode, otherT._ReasonCode)) return false;
+      if(!comparer.ListEquals(_ReasonReference, otherT._ReasonReference)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as CommunicationRequest;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
-      if( !DeepComparable.IsExactly(Replaces, otherT.Replaces)) return false;
-      if( !DeepComparable.IsExactly(GroupIdentifier, otherT.GroupIdentifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-      if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
-      if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
-      if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
-      if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
-      if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
-      if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
-      if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
-      if( !DeepComparable.IsExactly(Sender, otherT.Sender)) return false;
-      if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
-      if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
-      if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
-      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
-        foreach (var elem in Replaces) { if (elem != null) yield return elem; }
-        if (GroupIdentifier != null) yield return GroupIdentifier;
-        if (StatusElement != null) yield return StatusElement;
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        if (PriorityElement != null) yield return PriorityElement;
-        foreach (var elem in Medium) { if (elem != null) yield return elem; }
-        if (Subject != null) yield return Subject;
-        foreach (var elem in Recipient) { if (elem != null) yield return elem; }
-        foreach (var elem in Topic) { if (elem != null) yield return elem; }
-        if (Context != null) yield return Context;
-        foreach (var elem in Payload) { if (elem != null) yield return elem; }
-        if (Occurrence != null) yield return Occurrence;
-        if (AuthoredOnElement != null) yield return AuthoredOnElement;
-        if (Sender != null) yield return Sender;
-        if (Requester != null) yield return Requester;
-        foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
-        foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", elem); }
-        if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
-        foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", elem); }
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
-        foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
-        if (Context != null) yield return new ElementValue("context", Context);
-        foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", elem); }
-        if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
-        if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
-        if (Sender != null) yield return new ElementValue("sender", Sender);
-        if (Requester != null) yield return new ElementValue("requester", Requester);
-        foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
-        foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          if (_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["basedOn"];
+            return true;
+          }
+          value = _BasedOn;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "replaces":
-          value = Replaces;
-          return Replaces?.Any() == true;
+          if (_Replaces.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["replaces"];
+            return true;
+          }
+          value = _Replaces;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "groupIdentifier":
-          value = GroupIdentifier;
-          return GroupIdentifier is not null;
+          if (_GroupIdentifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          {
+            value = Overflow["groupIdentifier"];
+            return true;
+          }
+          value = _GroupIdentifier;
+          return (value as Hl7.Fhir.Model.Identifier) is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.RequestStatus>) is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["category"];
+            return true;
+          }
+          value = _Category;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "priority":
-          value = PriorityElement;
-          return PriorityElement is not null;
+          if (_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.RequestPriority>>())
+          {
+            value = Overflow["priority"];
+            return true;
+          }
+          value = _PriorityElement;
+          return (value as Code<Hl7.Fhir.Model.RequestPriority>) is not null;
         case "medium":
-          value = Medium;
-          return Medium?.Any() == true;
+          if (_Medium.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["medium"];
+            return true;
+          }
+          value = _Medium;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
+          value = _Subject;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "recipient":
-          value = Recipient;
-          return Recipient?.Any() == true;
+          if (_Recipient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["recipient"];
+            return true;
+          }
+          value = _Recipient;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "topic":
-          value = Topic;
-          return Topic?.Any() == true;
+          if (_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["topic"];
+            return true;
+          }
+          value = _Topic;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "context":
-          value = Context;
-          return Context is not null;
+          if (_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["context"];
+            return true;
+          }
+          value = _Context;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "payload":
-          value = Payload;
-          return Payload?.Any() == true;
+          if (_Payload.InOverflow<List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>>())
+          {
+            value = Overflow["payload"];
+            return true;
+          }
+          value = _Payload;
+          return (value as List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>)?.Any() is true;
         case "occurrence":
-          value = Occurrence;
-          return Occurrence is not null;
+          if (_Occurrence.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["occurrence"];
+            return true;
+          }
+          value = _Occurrence;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "authoredOn":
-          value = AuthoredOnElement;
-          return AuthoredOnElement is not null;
+          if (_AuthoredOnElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["authoredOn"];
+            return true;
+          }
+          value = _AuthoredOnElement;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "sender":
-          value = Sender;
-          return Sender is not null;
+          if (_Sender.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["sender"];
+            return true;
+          }
+          value = _Sender;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "requester":
-          value = Requester;
-          return Requester is not null;
+          if (_Requester.InOverflow<Hl7.Fhir.Model.CommunicationRequest.RequesterComponent>())
+          {
+            value = Overflow["requester"];
+            return true;
+          }
+          value = _Requester;
+          return (value as Hl7.Fhir.Model.CommunicationRequest.RequesterComponent) is not null;
         case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
+          if (_ReasonCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["reasonCode"];
+            return true;
+          }
+          value = _ReasonCode;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+          if (_ReasonReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["reasonReference"];
+            return true;
+          }
+          value = _ReasonReference;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          {
+            value = Overflow["note"];
+            return true;
+          }
+          value = _Note;
+          return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
-      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (Medium?.Any() == true) yield return new KeyValuePair<string,object>("medium",Medium);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
-      if (Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",Topic);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Payload?.Any() == true) yield return new KeyValuePair<string,object>("payload",Payload);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
-      if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
-      if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          return this;
+        case "basedOn":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            BasedOn = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["basedOn"] = value;
+          }
+          else BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "replaces":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Replaces = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["replaces"] = value;
+          }
+          else Replaces = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "groupIdentifier":
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            GroupIdentifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["groupIdentifier"] = value;
+          }
+          else GroupIdentifier = (Hl7.Fhir.Model.Identifier?)value;
+          return this;
+        case "status":
+          if (value is not (Code<Hl7.Fhir.Model.RequestStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.RequestStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>?)value!;
+          return this;
+        case "category":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Category = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["category"] = value;
+          }
+          else Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        case "priority":
+          if (value is not (Code<Hl7.Fhir.Model.RequestPriority> or null))
+          {
+            PriorityElement = OverflowNull<Code<Hl7.Fhir.Model.RequestPriority>>.INSTANCE;
+            Overflow["priority"] = value;
+          }
+          else PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>?)value;
+          return this;
+        case "medium":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Medium = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["medium"] = value;
+          }
+          else Medium = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        case "subject":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "recipient":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Recipient = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["recipient"] = value;
+          }
+          else Recipient = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "topic":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Topic = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["topic"] = value;
+          }
+          else Topic = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "context":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Context = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["context"] = value;
+          }
+          else Context = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "payload":
+          if (value is not (List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent> or null))
+          {
+            Payload = OverflowNull<List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>>.INSTANCE;
+            Overflow["payload"] = value;
+          }
+          else Payload = (List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>?)value!;
+          return this;
+        case "occurrence":
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Occurrence = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["occurrence"] = value;
+          }
+          else Occurrence = (Hl7.Fhir.Model.DataType?)value;
+          return this;
+        case "authoredOn":
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            AuthoredOnElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["authoredOn"] = value;
+          }
+          else AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          return this;
+        case "sender":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Sender = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["sender"] = value;
+          }
+          else Sender = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "requester":
+          if (value is not (Hl7.Fhir.Model.CommunicationRequest.RequesterComponent or null))
+          {
+            Requester = OverflowNull<Hl7.Fhir.Model.CommunicationRequest.RequesterComponent>.INSTANCE;
+            Overflow["requester"] = value;
+          }
+          else Requester = (Hl7.Fhir.Model.CommunicationRequest.RequesterComponent?)value;
+          return this;
+        case "reasonCode":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            ReasonCode = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["reasonCode"] = value;
+          }
+          else ReasonCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        case "reasonReference":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            ReasonReference = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["reasonReference"] = value;
+          }
+          else ReasonReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        case "note":
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn?.Any() is true && !_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Replaces?.Any() is true && !_Replaces.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("replaces",_Replaces);
+      if (_GroupIdentifier is not null && !_GroupIdentifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("groupIdentifier",_GroupIdentifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_PriorityElement is not null && !_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.RequestPriority>>()) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
+      if (_Medium?.Any() is true && !_Medium.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("medium",_Medium);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Recipient?.Any() is true && !_Recipient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("recipient",_Recipient);
+      if (_Topic?.Any() is true && !_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("topic",_Topic);
+      if (_Context is not null && !_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Payload?.Any() is true && !_Payload.InOverflow<List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>>()) yield return new KeyValuePair<string,object>("payload",_Payload);
+      if (_Occurrence is not null && !_Occurrence.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_AuthoredOnElement is not null && !_AuthoredOnElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("authoredOn",_AuthoredOnElement);
+      if (_Sender is not null && !_Sender.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("sender",_Sender);
+      if (_Requester is not null && !_Requester.InOverflow<Hl7.Fhir.Model.CommunicationRequest.RequesterComponent>()) yield return new KeyValuePair<string,object>("requester",_Requester);
+      if (_ReasonCode?.Any() is true && !_ReasonCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("reasonCode",_ReasonCode);
+      if (_ReasonReference?.Any() is true && !_ReasonReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("reasonReference",_ReasonReference);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

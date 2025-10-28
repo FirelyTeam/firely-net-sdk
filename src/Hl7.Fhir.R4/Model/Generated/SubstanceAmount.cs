@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -54,318 +58,412 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstanceAmount"; } }
+    public override string TypeName => "SubstanceAmount";
 
     /// <summary>
     /// Reference range of possible or expected values
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceAmount#ReferenceRange", IsNestedType=true)]
-    [BackboneType("SubstanceAmount.referenceRange")]
+    [FhirType("SubstanceAmount.referenceRange", IsBackboneType=true)]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceAmount#ReferenceRange"; } }
+      public override string TypeName => "SubstanceAmount.referenceRange";
 
       /// <summary>
-      /// Lower limit possible or expected
+      /// Lower limit possible or expected.
       /// </summary>
       [FhirElement("lowLimit", InSummary=true, Order=30)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity LowLimit
+      public Hl7.Fhir.Model.Quantity? LowLimit
       {
-        get { return _LowLimit; }
-        set { _LowLimit = value; OnPropertyChanged("LowLimit"); }
+        get
+        {
+          if(_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["lowLimit"]);
+          return _LowLimit;
+        }
+
+        set
+        {
+          if (_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("lowLimit");
+          _LowLimit = value;
+          OnPropertyChanged("LowLimit");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Quantity _LowLimit;
+      private Hl7.Fhir.Model.Quantity? _LowLimit;
 
       /// <summary>
-      /// Upper limit possible or expected
+      /// Upper limit possible or expected.
       /// </summary>
       [FhirElement("highLimit", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity HighLimit
+      public Hl7.Fhir.Model.Quantity? HighLimit
       {
-        get { return _HighLimit; }
-        set { _HighLimit = value; OnPropertyChanged("HighLimit"); }
+        get
+        {
+          if(_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["highLimit"]);
+          return _HighLimit;
+        }
+
+        set
+        {
+          if (_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("highLimit");
+          _HighLimit = value;
+          OnPropertyChanged("HighLimit");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Quantity _HighLimit;
+      private Hl7.Fhir.Model.Quantity? _HighLimit;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ReferenceRangeComponent;
-
-        if (dest == null)
-        {
+        if(other is not ReferenceRangeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(LowLimit != null) dest.LowLimit = (Hl7.Fhir.Model.Quantity)LowLimit.DeepCopy();
-        if(HighLimit != null) dest.HighLimit = (Hl7.Fhir.Model.Quantity)HighLimit.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_LowLimit is not null) dest.LowLimit = (Hl7.Fhir.Model.Quantity)_LowLimit.DeepCopyInternal();
+        if(_HighLimit is not null) dest.HighLimit = (Hl7.Fhir.Model.Quantity)_HighLimit.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ReferenceRangeComponent());
+        var instance = new ReferenceRangeComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ReferenceRangeComponent;
-        if(otherT == null) return false;
+        if(other is not ReferenceRangeComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(LowLimit, otherT.LowLimit)) return false;
-        if( !DeepComparable.Matches(HighLimit, otherT.HighLimit)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_LowLimit, otherT._LowLimit)) return false;
+        if(!comparer.Equals(_HighLimit, otherT._HighLimit)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ReferenceRangeComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(LowLimit, otherT.LowLimit)) return false;
-        if( !DeepComparable.IsExactly(HighLimit, otherT.HighLimit)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (LowLimit != null) yield return LowLimit;
-          if (HighLimit != null) yield return HighLimit;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (LowLimit != null) yield return new ElementValue("lowLimit", LowLimit);
-          if (HighLimit != null) yield return new ElementValue("highLimit", HighLimit);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "lowLimit":
-            value = LowLimit;
-            return LowLimit is not null;
+            if (_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["lowLimit"];
+              return true;
+            }
+            value = _LowLimit;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           case "highLimit":
-            value = HighLimit;
-            return HighLimit is not null;
+            if (_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["highLimit"];
+              return true;
+            }
+            value = _HighLimit;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (LowLimit is not null) yield return new KeyValuePair<string,object>("lowLimit",LowLimit);
-        if (HighLimit is not null) yield return new KeyValuePair<string,object>("highLimit",HighLimit);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "lowLimit":
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              LowLimit = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["lowLimit"] = value;
+            }
+            else LowLimit = (Hl7.Fhir.Model.Quantity?)value;
+            return this;
+          case "highLimit":
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              HighLimit = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["highLimit"] = value;
+            }
+            else HighLimit = (Hl7.Fhir.Model.Quantity?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_LowLimit is not null && !_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("lowLimit",_LowLimit);
+        if (_HighLimit is not null && !_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("highLimit",_HighLimit);
       }
 
     }
 
     /// <summary>
-    /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
+    /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field.
     /// </summary>
     [FhirElement("amount", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Amount
+    public Hl7.Fhir.Model.DataType? Amount
     {
-      get { return _Amount; }
-      set { _Amount = value; OnPropertyChanged("Amount"); }
+      get
+      {
+        if(_Amount.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["amount"]);
+        return _Amount;
+      }
+
+      set
+      {
+        if (_Amount.InOverflow<DynamicDataType>())
+          Overflow.Remove("amount");
+        _Amount = value;
+        OnPropertyChanged("Amount");
+      }
+
     }
 
-    private Hl7.Fhir.Model.DataType _Amount;
+    private Hl7.Fhir.Model.DataType? _Amount;
 
     /// <summary>
-    /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements
+    /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements.
     /// </summary>
     [FhirElement("amountType", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept AmountType
+    public Hl7.Fhir.Model.CodeableConcept? AmountType
     {
-      get { return _AmountType; }
-      set { _AmountType = value; OnPropertyChanged("AmountType"); }
+      get
+      {
+        if(_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["amountType"]);
+        return _AmountType;
+      }
+
+      set
+      {
+        if (_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("amountType");
+        _AmountType = value;
+        OnPropertyChanged("AmountType");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _AmountType;
+    private Hl7.Fhir.Model.CodeableConcept? _AmountType;
 
     /// <summary>
-    /// A textual comment on a numeric value
+    /// A textual comment on a numeric value.
     /// </summary>
     [FhirElement("amountText", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString AmountTextElement
+    public Hl7.Fhir.Model.FhirString? AmountTextElement
     {
-      get { return _AmountTextElement; }
-      set { _AmountTextElement = value; OnPropertyChanged("AmountTextElement"); }
+      get
+      {
+        if(_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["amountText"]);
+        return _AmountTextElement;
+      }
+
+      set
+      {
+        if (_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("amountText");
+        _AmountTextElement = value;
+        OnPropertyChanged("AmountTextElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _AmountTextElement;
+    private Hl7.Fhir.Model.FhirString? _AmountTextElement;
 
     /// <summary>
     /// A textual comment on a numeric value
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AmountText
+    public string? AmountText
     {
-      get { return AmountTextElement != null ? AmountTextElement.Value : null; }
+      get => AmountTextElement?.Value;
       set
       {
-        if (value == null)
-          AmountTextElement = null;
-        else
-          AmountTextElement = new Hl7.Fhir.Model.FhirString(value);
+        AmountTextElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AmountText");
       }
     }
 
     /// <summary>
-    /// Reference range of possible or expected values
+    /// Reference range of possible or expected values.
     /// </summary>
     [FhirElement("referenceRange", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent ReferenceRange
+    public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? ReferenceRange
     {
-      get { return _ReferenceRange; }
-      set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
+      get
+      {
+        if(_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent), Overflow["referenceRange"]);
+        return _ReferenceRange;
+      }
+
+      set
+      {
+        if (_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>())
+          Overflow.Remove("referenceRange");
+        _ReferenceRange = value;
+        OnPropertyChanged("ReferenceRange");
+      }
+
     }
 
-    private Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent _ReferenceRange;
+    private Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? _ReferenceRange;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SubstanceAmount;
-
-      if (dest == null)
-      {
+      if(other is not SubstanceAmount dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
-      if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
-      if(AmountTextElement != null) dest.AmountTextElement = (Hl7.Fhir.Model.FhirString)AmountTextElement.DeepCopy();
-      if(ReferenceRange != null) dest.ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent)ReferenceRange.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.DataType)_Amount.DeepCopyInternal();
+      if(_AmountType is not null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)_AmountType.DeepCopyInternal();
+      if(_AmountTextElement is not null) dest.AmountTextElement = (Hl7.Fhir.Model.FhirString)_AmountTextElement.DeepCopyInternal();
+      if(_ReferenceRange is not null) dest.ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent)_ReferenceRange.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new SubstanceAmount());
+      var instance = new SubstanceAmount();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SubstanceAmount;
-      if(otherT == null) return false;
+      if(other is not SubstanceAmount otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
-      if( !DeepComparable.Matches(AmountType, otherT.AmountType)) return false;
-      if( !DeepComparable.Matches(AmountTextElement, otherT.AmountTextElement)) return false;
-      if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+      if(!comparer.Equals(_AmountType, otherT._AmountType)) return false;
+      if(!comparer.Equals(_AmountTextElement, otherT._AmountTextElement)) return false;
+      if(!comparer.Equals(_ReferenceRange, otherT._ReferenceRange)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as SubstanceAmount;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
-      if( !DeepComparable.IsExactly(AmountType, otherT.AmountType)) return false;
-      if( !DeepComparable.IsExactly(AmountTextElement, otherT.AmountTextElement)) return false;
-      if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Amount != null) yield return Amount;
-        if (AmountType != null) yield return AmountType;
-        if (AmountTextElement != null) yield return AmountTextElement;
-        if (ReferenceRange != null) yield return ReferenceRange;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Amount != null) yield return new ElementValue("amount", Amount);
-        if (AmountType != null) yield return new ElementValue("amountType", AmountType);
-        if (AmountTextElement != null) yield return new ElementValue("amountText", AmountTextElement);
-        if (ReferenceRange != null) yield return new ElementValue("referenceRange", ReferenceRange);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "amount":
-          value = Amount;
-          return Amount is not null;
+          if (_Amount.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["amount"];
+            return true;
+          }
+          value = _Amount;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "amountType":
-          value = AmountType;
-          return AmountType is not null;
+          if (_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["amountType"];
+            return true;
+          }
+          value = _AmountType;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "amountText":
-          value = AmountTextElement;
-          return AmountTextElement is not null;
+          if (_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["amountText"];
+            return true;
+          }
+          value = _AmountTextElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "referenceRange":
-          value = ReferenceRange;
-          return ReferenceRange is not null;
+          if (_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>())
+          {
+            value = Overflow["referenceRange"];
+            return true;
+          }
+          value = _ReferenceRange;
+          return (value as Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-      if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
-      if (AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",AmountTextElement);
-      if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "amount":
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Amount = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["amount"] = value;
+          }
+          else Amount = (Hl7.Fhir.Model.DataType?)value;
+          return this;
+        case "amountType":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            AmountType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["amountType"] = value;
+          }
+          else AmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "amountText":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            AmountTextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["amountText"] = value;
+          }
+          else AmountTextElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "referenceRange":
+          if (value is not (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent or null))
+          {
+            ReferenceRange = OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.INSTANCE;
+            Overflow["referenceRange"] = value;
+          }
+          else ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Amount is not null && !_Amount.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("amount",_Amount);
+      if (_AmountType is not null && !_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("amountType",_AmountType);
+      if (_AmountTextElement is not null && !_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("amountText",_AmountTextElement);
+      if (_ReferenceRange is not null && !_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>()) yield return new KeyValuePair<string,object>("referenceRange",_ReferenceRange);
     }
 
   }

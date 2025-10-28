@@ -58,43 +58,31 @@ namespace Hl7.Fhir.Specification.Tests
 
         static readonly FhirXmlParsingSettings _fhirXmlParserSettings = new FhirXmlParsingSettings()
         {
-            PermissiveParsing = false
+            PermissiveParsing = true
         };
 
-        //static readonly FhirJsonParsingSettings _fhirJsonParserSettings = new FhirJsonParsingSettings()
-        //{
-        //    PermissiveParsing = false
-        //};
-
-        static readonly ParserSettings _parserSettings = new ParserSettings()
-        {
-            PermissiveParsing = false
-        };
+        private static readonly DeserializerSettings _parserSettings =
+            new DeserializerSettings().UsingMode(DeserializationMode.Ostrich);
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
         {
             IncludeSubDirectories = true,
             // Exclude expected output, to prevent canonical url conflicts
             // Also include duplicate input file "t24a", conflicts with "t24a-input"
-            Excludes = new string[] { "manifest.xml", "*-expected*", "*-output*", "t24a.xml" },
-            FormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml,
+            Excludes = ["manifest.xml", "*-expected*", "*-output*", "t24a.xml"],
+            FormatPreference = CommonDirectorySource.DuplicateFilenameResolution.PreferXml,
             XmlParserSettings = _fhirXmlParserSettings
         };
 
-        static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
+        static readonly SnapshotGeneratorSettings _snapGenSettings = new()
         {
             ForceRegenerateSnapshots = true,
             GenerateSnapshotForExternalProfiles = true
         };
 
-        static readonly SerializerSettings _serializerSettings = new SerializerSettings()
-        {
-            Pretty = true
-        };
-
-        static readonly FhirXmlParser _fhirXmlParser = new FhirXmlParser(_parserSettings);
-        static readonly FhirJsonParser _fhirJsonParser = new FhirJsonParser(_parserSettings);
-        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer(_serializerSettings);
+        private static readonly FhirXmlDeserializer FHIR_XML_DESERIALIZER = new(_parserSettings);
+        private static readonly FhirJsonDeserializer FHIR_JSON_DESERIALIZER = new(_parserSettings);
+        private static readonly FhirXmlSerializer FHIR_XML_SERIALIZER = new();
 
         string _testPath;
         DirectorySource _dirSource;
@@ -557,7 +545,7 @@ namespace Hl7.Fhir.Specification.Tests
             var expected = test.Fail ? null : Load(test.Id, expectedFileNameFormat);
             Assert.IsTrue(test.Fail || expected.HasSnapshot);
 
-            var output = (StructureDefinition)input.DeepCopy();
+            var output = input.DeepCopy();
             Exception exception = null;
             try
             {
@@ -581,7 +569,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 #if SERIALIZE_OUTPUT
             // Serialize the generated output to disk, for debugging purposes
-            SaveOutput(test.Id, output);
+            saveOutput(test.Id, output);
 #endif
 #if LOG_OUTPUT
             // Log the generated and expected output to the console, for debugging purposes
@@ -627,10 +615,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var rule = test.Rule[i];
             Console.WriteLine($"Verify rule {i}: '{rule.Text}'");
-
-            var nav = output.ToTypedElement();
+            
             var expr = _fhirPathCompiler.Compile(rule.FhirPath);
-            Assert.IsTrue(expr.Predicate(nav, ctx), $"FAILED Rule {i}: '{rule.Text}'");
+            Assert.IsTrue(expr.Predicate(output, ctx), $"FAILED Rule {i}: '{rule.Text}'");
         }
 
         StructureDefinition Load(string id, string fileNameFormat)
@@ -649,20 +636,15 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var stream = File.OpenRead(filePath))
                 using (var reader = new XmlTextReader(stream))
                 {
-                    return _fhirXmlParser.Parse<StructureDefinition>(reader);
+                    return FHIR_XML_DESERIALIZER.Deserialize<StructureDefinition>(reader);
                 }
             }
 
             filePath = Path.ChangeExtension(filePath, "json");
             if (File.Exists(filePath))
             {
-                //using (var stream = _dirSource.LoadArtifactByName(filePath))
-                using (var stream = File.OpenRead(filePath))
-                using (var textReader = new StreamReader(stream))
-                using (var reader = new JsonTextReader(textReader))
-                {
-                    return _fhirJsonParser.Parse<StructureDefinition>(reader);
-                }
+                var text = File.ReadAllText(filePath);
+                return FHIR_JSON_DESERIALIZER.Deserialize<StructureDefinition>(text);
             }
 
             Assert.Fail($"File not found: '{filePath}'");
@@ -670,7 +652,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Conditional("SERIALIZE_OUTPUT")]
-        static void SaveOutput(string id, StructureDefinition output)
+        private static void saveOutput(string id, StructureDefinition output)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
             var outputFilePath = Path.Combine(path, string.Format(outputFileNameFormat, id));
@@ -680,7 +662,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static void Save(string filePath, Base output)
         {
-            var xml = _fhirXmlSerializer.SerializeToString(output);
+            var xml = FHIR_XML_SERIALIZER.SerializeToString(output, pretty: true);
             File.WriteAllText(filePath, xml);
         }
 
@@ -783,7 +765,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Custom context for accessing input & expected result
         class SnapshotEvaluationContext : FhirEvaluationContext
         {
-            Dictionary<string, ITypedElement> _aliases;
+            Dictionary<string, PocoNode> _aliases;
             string _testPath;
 
             public SnapshotEvaluationContext(
@@ -794,19 +776,21 @@ namespace Hl7.Fhir.Specification.Tests
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
                 if (input is null) { throw new ArgumentNullException(nameof(input)); }
                 if (generated is null) { throw new ArgumentNullException(nameof(generated)); }
-                Input = input.ToTypedElement();
-                Generated = generated.ToTypedElement();
+                Input = input.ToPocoNode();
+                Generated = generated.ToPocoNode();
                 Id = id ?? throw new ArgumentNullException(nameof(id));
                 Assert.AreEqual(id, generated.Id);
                 this.Tracer = this.Trace;
+
+                this.WithResourceOverrides(Generated);
             }
 
-            void Trace(string msg, IEnumerable<ITypedElement> elems)
+            void Trace(string msg, IEnumerable<PocoNode> elems)
             {
                 Console.WriteLine($"[TRACE] {msg}:");
                 foreach (var elem in elems)
                 {
-                    Console.WriteLine($"[TRACE] '{elem.Name}' : {elem.InstanceType}{(elem.HasValue() ? $" = '{elem.Value.ToString()}'" : null)}");
+                    Console.WriteLine($"[TRACE] '{elem.Name}' : {elem.Poco.TypeName}{(elem.HasValue() ? $" = '{elem.GetValue()!}'" : null)}");
                 }
             }
 
@@ -814,19 +798,19 @@ namespace Hl7.Fhir.Specification.Tests
 
             public IResourceResolver TestResolver { get; }
 
-            public ITypedElement Input { get; }
+            public PocoNode Input { get; }
 
-            public ITypedElement Generated { get; }
+            public PocoNode Generated { get; }
 
             // Custom FhirPath method implementations
 
-            Dictionary<string, ITypedElement> Aliases => _aliases ?? (_aliases = new Dictionary<string, ITypedElement>());
+            Dictionary<string, PocoNode> Aliases => _aliases ?? (_aliases = new Dictionary<string, PocoNode>());
 
-            void AddAlias(string alias, ITypedElement elem) => Aliases[alias] = elem;
+            void AddAlias(string alias, PocoNode elem) => Aliases[alias] = elem;
 
-            ITypedElement Alias(string alias) => Aliases[alias];
+            PocoNode Alias(string alias) => Aliases[alias];
 
-            ITypedElement Fixture(string name)
+            PocoNode Fixture(string name)
             {
                 if (name == $"{Id}-input") { return Input; }
                 if (name == $"{Id}-output") { return Generated; }
@@ -840,7 +824,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         filePath = Path.ChangeExtension(filePath, "json");
                     }
-                    return Load(filePath).ToTypedElement();
+                    return Load(filePath).ToPocoNode();
                 }
 
                 // Otherwise assume name refers to a core resource, e.g. 'patient'
@@ -849,7 +833,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (!(typeName is null))
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToTypedElement();
+                    return TestResolver.FindStructureDefinitionForCoreType(typeName).ToPocoNode();
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
 
@@ -860,18 +844,18 @@ namespace Hl7.Fhir.Specification.Tests
             // Add custom FHIRPath methods for unit testing
             public static void AddSymbols(SymbolTable symbols)
             {
-                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("fixture", Fixture);
-                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("aliasAs", AliasAs);
-                symbols.Add<ITypedElement, string, EvaluationContext, ITypedElement>("alias", Alias);
-                symbols.Add<ITypedElement, bool, string, EvaluationContext, ITypedElement>("check", Check);
+                symbols.Add<PocoNode, string, EvaluationContext, PocoNode>("fixture", Fixture);
+                symbols.Add<PocoNode, string, EvaluationContext, PocoNode>("aliasAs", AliasAs);
+                symbols.Add<PocoNode, string, EvaluationContext, PocoNode>("alias", Alias);
+                symbols.Add<PocoNode, bool, string, EvaluationContext, PocoNode>("check", Check);
             }
 
             // Custom FHIRPath methods for unit testing
 
-            public static ITypedElement Fixture(ITypedElement elem, string name, EvaluationContext ctx)
+            public static PocoNode Fixture(PocoNode elem, string name, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Fixture(name) : null;
 
-            public static ITypedElement AliasAs(ITypedElement elem, string id, EvaluationContext ctx)
+            public static PocoNode AliasAs(PocoNode elem, string id, EvaluationContext ctx)
             {
                 if (ctx is SnapshotEvaluationContext sctx)
                 {
@@ -880,10 +864,10 @@ namespace Hl7.Fhir.Specification.Tests
                 return elem;
             }
 
-            public static ITypedElement Alias(ITypedElement elem, string id, EvaluationContext ctx)
+            public static PocoNode Alias(PocoNode elem, string id, EvaluationContext ctx)
                 => ctx is SnapshotEvaluationContext sctx ? sctx.Alias(id) : null;
 
-            public static ITypedElement Check(ITypedElement elem, bool condition, string message, EvaluationContext ctx)
+            public static PocoNode Check(PocoNode elem, bool condition, string message, EvaluationContext ctx)
             {
                 Assert.IsTrue(condition, $"[CHECK] '{elem.Name}' {message}");
                 //if (!condition)

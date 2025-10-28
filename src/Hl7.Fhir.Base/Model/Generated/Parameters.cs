@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,13 +56,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Parameters","http://hl7.org/fhir/StructureDefinition/Parameters", IsResource=true)]
+  [FhirType("Parameters","http://hl7.org/fhir/StructureDefinition/Parameters")]
   public partial class Parameters : Hl7.Fhir.Model.Resource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Parameters"; } }
+    public override string TypeName => "Parameters";
 
     /// <summary>
     /// Operation Parameter
@@ -68,292 +72,365 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Parameters#Parameter", IsNestedType=true)]
-    [BackboneType("Parameters.parameter")]
+    [FhirType("Parameters.parameter", IsBackboneType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Parameters#Parameter"; } }
+      public override string TypeName => "Parameters.parameter";
 
       /// <summary>
-      /// Name from the definition
+      /// Name from the definition.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
-        get { return _NameElement; }
-        set { _NameElement = value; OnPropertyChanged("NameElement"); }
+        get
+        {
+          if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
+          return _NameElement!;
+        }
+
+        set
+        {
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("name");
+          _NameElement = value;
+          OnPropertyChanged("NameElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Name from the definition
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
 
       /// <summary>
-      /// If parameter is a data type
+      /// If parameter is a data type.
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
+      [AllowedTypes(OpenChoice = true)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
-        get { return _Value; }
-        set { _Value = value; OnPropertyChanged("Value"); }
+        get
+        {
+          if(_Value.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
+          return _Value;
+        }
+
+        set
+        {
+          if (_Value.InOverflow<DynamicDataType>())
+            Overflow.Remove("value");
+          _Value = value;
+          OnPropertyChanged("Value");
+        }
+
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       /// <summary>
-      /// If parameter is a whole resource
+      /// If parameter is a whole resource.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
-      [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
-      public Hl7.Fhir.Model.Resource Resource
+      public Hl7.Fhir.Model.Resource? Resource
       {
-        get { return _Resource; }
-        set { _Resource = value; OnPropertyChanged("Resource"); }
+        get
+        {
+          if(_Resource.InOverflow<DynamicResource>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Resource), Overflow["resource"]);
+          return _Resource;
+        }
+
+        set
+        {
+          if (_Resource.InOverflow<DynamicResource>())
+            Overflow.Remove("resource");
+          _Resource = value;
+          OnPropertyChanged("Resource");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Resource _Resource;
+      private Hl7.Fhir.Model.Resource? _Resource;
 
       /// <summary>
-      /// Named part of a multi-part parameter
+      /// Named part of a multi-part parameter.
       /// </summary>
       [FhirElement("part", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
       {
-        get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Part; }
-        set { _Part = value; OnPropertyChanged("Part"); }
+        get
+        {
+          if(_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Parameters.ParameterComponent>), Overflow["part"]);
+          return _Part ??= [];
+        }
+
+        set
+        {
+          if (_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+            Overflow.Remove("part");
+          _Part = value;
+          OnPropertyChanged("Part");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Part;
+      private List<Hl7.Fhir.Model.Parameters.ParameterComponent>? _Part;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParameterComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParameterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-        if(Part.Any()) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
+        if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.Resource)_Resource.DeepCopyInternal();
+        if(_Part is not null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(_Part.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ParameterComponent());
+        var instance = new ParameterComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParameterComponent;
-        if(otherT == null) return false;
+        if(other is not ParameterComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-        if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-        if( !DeepComparable.Matches(Part, otherT.Part)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        if(!comparer.Equals(_Resource, otherT._Resource)) return false;
+        if(!comparer.ListEquals(_Part, otherT._Part)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ParameterComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-        if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-        if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-        if( !DeepComparable.IsExactly(Part, otherT.Part)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (NameElement != null) yield return NameElement;
-          if (Value != null) yield return Value;
-          if (Resource != null) yield return Resource;
-          foreach (var elem in Part) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (NameElement != null) yield return new ElementValue("name", NameElement);
-          if (Value != null) yield return new ElementValue("value", Value);
-          if (Resource != null) yield return new ElementValue("resource", Resource);
-          foreach (var elem in Part) { if (elem != null) yield return new ElementValue("part", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["name"];
+              return true;
+            }
+            value = _NameElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            if (_Value.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
+            value = _Value;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "resource":
-            value = Resource;
-            return Resource is not null;
+            if (_Resource.InOverflow<DynamicResource>())
+            {
+              value = Overflow["resource"];
+              return true;
+            }
+            value = _Resource;
+            return (value as Hl7.Fhir.Model.Resource) is not null;
           case "part":
-            value = Part;
-            return Part?.Any() == true;
+            if (_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+            {
+              value = Overflow["part"];
+              return true;
+            }
+            value = _Part;
+            return (value as List<Hl7.Fhir.Model.Parameters.ParameterComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Part?.Any() == true) yield return new KeyValuePair<string,object>("part",Part);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "name":
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["name"] = value;
+            }
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value!;
+            return this;
+          case "value":
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Value = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else Value = (Hl7.Fhir.Model.DataType?)value;
+            return this;
+          case "resource":
+            if (value is not (Hl7.Fhir.Model.Resource or null))
+            {
+              Resource = OverflowNull<DynamicResource>.INSTANCE;
+              Overflow["resource"] = value;
+            }
+            else Resource = (Hl7.Fhir.Model.Resource?)value;
+            return this;
+          case "part":
+            if (value is not (List<Hl7.Fhir.Model.Parameters.ParameterComponent> or null))
+            {
+              Part = OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.INSTANCE;
+              Overflow["part"] = value;
+            }
+            else Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Resource is not null && !_Resource.InOverflow<DynamicResource>()) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Part?.Any() is true && !_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>()) yield return new KeyValuePair<string,object>("part",_Part);
       }
 
     }
 
     /// <summary>
-    /// Operation Parameter
+    /// Operation Parameter.
     /// </summary>
     [FhirElement("parameter", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
     {
-      get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Parameter; }
-      set { _Parameter = value; OnPropertyChanged("Parameter"); }
+      get
+      {
+        if(_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Parameters.ParameterComponent>), Overflow["parameter"]);
+        return _Parameter ??= [];
+      }
+
+      set
+      {
+        if (_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+          Overflow.Remove("parameter");
+        _Parameter = value;
+        OnPropertyChanged("Parameter");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
+    private List<Hl7.Fhir.Model.Parameters.ParameterComponent>? _Parameter;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Parameters;
-
-      if (dest == null)
-      {
+      if(other is not Parameters dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Parameter is not null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(_Parameter.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Parameters());
+      var instance = new Parameters();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Parameters;
-      if(otherT == null) return false;
+      if(other is not Parameters otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Parameters;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Parameter) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "parameter":
-          value = Parameter;
-          return Parameter?.Any() == true;
+          if (_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+          {
+            value = Overflow["parameter"];
+            return true;
+          }
+          value = _Parameter;
+          return (value as List<Hl7.Fhir.Model.Parameters.ParameterComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "parameter":
+          if (value is not (List<Hl7.Fhir.Model.Parameters.ParameterComponent> or null))
+          {
+            Parameter = OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.INSTANCE;
+            Overflow["parameter"] = value;
+          }
+          else Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Parameter?.Any() is true && !_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>()) yield return new KeyValuePair<string,object>("parameter",_Parameter);
     }
 
   }

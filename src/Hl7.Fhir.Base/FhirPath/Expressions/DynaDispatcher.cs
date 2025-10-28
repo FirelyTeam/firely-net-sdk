@@ -6,12 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.Model.PocoNode>;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -32,13 +33,13 @@ namespace Hl7.FhirPath.Expressions
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
             context.focus = focus;
-            if (!focus.Any()) return ElementNode.EmptyList;
+            if (!focus.Any()) return [];
 
             actualArgs.Add(focus);
             var newCtx = context.Nest(focus);
 
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa => !aa.Any())) return ElementNode.EmptyList;
+            if (actualArgs.Any(aa => !aa.Any())) return [];
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 

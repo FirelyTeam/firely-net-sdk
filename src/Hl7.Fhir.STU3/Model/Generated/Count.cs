@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -58,11 +62,13 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Count"; } }
+    public override string TypeName => "Count";
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Count());
+      var instance = new Count();
+      CopyToInternal(instance);
+      return instance;
     }
 
   }

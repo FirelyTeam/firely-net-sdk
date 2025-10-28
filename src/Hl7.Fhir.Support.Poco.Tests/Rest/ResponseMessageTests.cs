@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Test
     public class ResponseMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
         private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngineFactory.Legacy.Permissive(TESTINSPECTOR);
         private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Test
             extracted.Response.LastModified.Should().Be(response.Content.Headers.LastModified);
             extracted.Response.Location.Should().Be(response.Headers.Location.OriginalString);
             response.GetRequestUri().Should().Be(response.RequestMessage.RequestUri);
-            Enum.Parse<HttpStatusCode>(extracted.Response.Status).Should().Be(response.StatusCode);
+            Enum.Parse<HttpStatusCode>(extracted.Response.Status!).Should().Be(response.StatusCode);
             extracted.Response.GetHttpHeaders().GetValues("Test-key").Should().BeEquivalentTo("Test-value");
         }
 
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Test
             var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
 
-            response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
+            response = makeJsonMessage(json: """{"resourceType":"Patient","activex":4}""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
 
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Test
         public async Task TurnsNewParsingFailureIntoDFE()
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
-            await assertIssue<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, suggestVersionOnParsingError: true, version: "1.0.0");
+            await assertIssue<DeserializationFailedException>(response, "*Element has no namespace*", engine: POCOENGINE, suggestVersionOnParsingError: true, version: "1.0.0");
         }
 
         [TestMethod]
@@ -361,9 +361,9 @@ namespace Hl7.Fhir.Test
 
             b.Content.Should().BeNull();
             b.Data.Should().BeEquivalentTo(data);
-            b.SecurityContext.Reference.Should().Be("http://nu.nl");
+            b.SecurityContext!.Reference.Should().Be("http://nu.nl");
             b.ContentType.Should().Be("application/crap");
-            b.Meta.VersionId.Should().Be("123");
+            b.Meta!.VersionId.Should().Be("123");
             b.Meta.LastUpdated.Should().Be(when);
             b.Id.Should().Be("4");
 

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -54,169 +58,242 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ProductShelfLife"; } }
+    public override string TypeName => "ProductShelfLife";
 
     /// <summary>
-    /// Unique identifier for the packaged Medicinal Product
+    /// Unique identifier for the packaged Medicinal Product.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
-      get { return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
+        return _Identifier;
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
-    /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
+    /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
-      get { return _Type; }
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+        return _Type!;
+      }
+
+      set
+      {
+        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
-    /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+    /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Period
     {
-      get { return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(_Period.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["period"]);
+        return _Period!;
+      }
+
+      set
+      {
+        if (_Period.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Quantity _Period;
+    private Hl7.Fhir.Model.Quantity? _Period;
 
     /// <summary>
-    /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
+    /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
     /// </summary>
     [FhirElement("specialPrecautionsForStorage", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialPrecautionsForStorage
     {
-      get { if(_SpecialPrecautionsForStorage==null) _SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SpecialPrecautionsForStorage; }
-      set { _SpecialPrecautionsForStorage = value; OnPropertyChanged("SpecialPrecautionsForStorage"); }
+      get
+      {
+        if(_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["specialPrecautionsForStorage"]);
+        return _SpecialPrecautionsForStorage ??= [];
+      }
+
+      set
+      {
+        if (_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("specialPrecautionsForStorage");
+        _SpecialPrecautionsForStorage = value;
+        OnPropertyChanged("SpecialPrecautionsForStorage");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _SpecialPrecautionsForStorage;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _SpecialPrecautionsForStorage;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ProductShelfLife;
-
-      if (dest == null)
-      {
+      if(other is not ProductShelfLife dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Quantity)Period.DeepCopy();
-      if(SpecialPrecautionsForStorage.Any()) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialPrecautionsForStorage.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Quantity)_Period.DeepCopyInternal();
+      if(_SpecialPrecautionsForStorage is not null) dest.SpecialPrecautionsForStorage = new List<Hl7.Fhir.Model.CodeableConcept>(_SpecialPrecautionsForStorage.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ProductShelfLife());
+      var instance = new ProductShelfLife();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ProductShelfLife;
-      if(otherT == null) return false;
+      if(other is not ProductShelfLife otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(SpecialPrecautionsForStorage, otherT.SpecialPrecautionsForStorage)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.ListEquals(_SpecialPrecautionsForStorage, otherT._SpecialPrecautionsForStorage)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ProductShelfLife;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(SpecialPrecautionsForStorage, otherT.SpecialPrecautionsForStorage)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Identifier != null) yield return Identifier;
-        if (Type != null) yield return Type;
-        if (Period != null) yield return Period;
-        foreach (var elem in SpecialPrecautionsForStorage) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (Period != null) yield return new ElementValue("period", Period);
-        foreach (var elem in SpecialPrecautionsForStorage) { if (elem != null) yield return new ElementValue("specialPrecautionsForStorage", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as Hl7.Fhir.Model.Identifier) is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
+          value = _Type;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          if (_Period.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["period"];
+            return true;
+          }
+          value = _Period;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "specialPrecautionsForStorage":
-          value = SpecialPrecautionsForStorage;
-          return SpecialPrecautionsForStorage?.Any() == true;
+          if (_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["specialPrecautionsForStorage"];
+            return true;
+          }
+          value = _SpecialPrecautionsForStorage;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (SpecialPrecautionsForStorage?.Any() == true) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",SpecialPrecautionsForStorage);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (Hl7.Fhir.Model.Identifier?)value;
+          return this;
+        case "type":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
+          return this;
+        case "period":
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Quantity?)value!;
+          return this;
+        case "specialPrecautionsForStorage":
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            SpecialPrecautionsForStorage = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["specialPrecautionsForStorage"] = value;
+          }
+          else SpecialPrecautionsForStorage = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_SpecialPrecautionsForStorage?.Any() is true && !_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",_SpecialPrecautionsForStorage);
     }
 
   }

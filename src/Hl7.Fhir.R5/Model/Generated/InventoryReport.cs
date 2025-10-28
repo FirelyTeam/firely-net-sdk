@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -48,13 +52,13 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("InventoryReport","http://hl7.org/fhir/StructureDefinition/InventoryReport", IsResource=true)]
+  [FhirType("InventoryReport","http://hl7.org/fhir/StructureDefinition/InventoryReport")]
   public partial class InventoryReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "InventoryReport"; } }
+    public override string TypeName => "InventoryReport";
 
     /// <summary>
     /// The status of the InventoryReport.
@@ -117,194 +121,263 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryReport#InventoryListing", IsNestedType=true)]
-    [BackboneType("InventoryReport.inventoryListing")]
+    [FhirType("InventoryReport.inventoryListing", IsBackboneType=true)]
     public partial class InventoryListingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryReport#InventoryListing"; } }
+      public override string TypeName => "InventoryReport.inventoryListing";
 
       /// <summary>
-      /// Location of the inventory items
+      /// Location of the inventory items.
       /// </summary>
       [FhirElement("location", Order=40)]
       [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Location
+      public Hl7.Fhir.Model.ResourceReference? Location
       {
-        get { return _Location; }
-        set { _Location = value; OnPropertyChanged("Location"); }
+        get
+        {
+          if(_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["location"]);
+          return _Location;
+        }
+
+        set
+        {
+          if (_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("location");
+          _Location = value;
+          OnPropertyChanged("Location");
+        }
+
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Location;
+      private Hl7.Fhir.Model.ResourceReference? _Location;
 
       /// <summary>
-      /// The status of the items that are being reported
+      /// The status of the items that are being reported.
       /// </summary>
       [FhirElement("itemStatus", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept ItemStatus
+      public Hl7.Fhir.Model.CodeableConcept? ItemStatus
       {
-        get { return _ItemStatus; }
-        set { _ItemStatus = value; OnPropertyChanged("ItemStatus"); }
+        get
+        {
+          if(_ItemStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["itemStatus"]);
+          return _ItemStatus;
+        }
+
+        set
+        {
+          if (_ItemStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("itemStatus");
+          _ItemStatus = value;
+          OnPropertyChanged("ItemStatus");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _ItemStatus;
+      private Hl7.Fhir.Model.CodeableConcept? _ItemStatus;
 
       /// <summary>
-      /// The date and time when the items were counted
+      /// The date and time when the items were counted.
       /// </summary>
       [FhirElement("countingDateTime", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime CountingDateTimeElement
+      public Hl7.Fhir.Model.FhirDateTime? CountingDateTimeElement
       {
-        get { return _CountingDateTimeElement; }
-        set { _CountingDateTimeElement = value; OnPropertyChanged("CountingDateTimeElement"); }
+        get
+        {
+          if(_CountingDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["countingDateTime"]);
+          return _CountingDateTimeElement;
+        }
+
+        set
+        {
+          if (_CountingDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            Overflow.Remove("countingDateTime");
+          _CountingDateTimeElement = value;
+          OnPropertyChanged("CountingDateTimeElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _CountingDateTimeElement;
+      private Hl7.Fhir.Model.FhirDateTime? _CountingDateTimeElement;
 
       /// <summary>
       /// The date and time when the items were counted
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string CountingDateTime
+      public string? CountingDateTime
       {
-        get { return CountingDateTimeElement != null ? CountingDateTimeElement.Value : null; }
+        get => CountingDateTimeElement?.Value;
         set
         {
-          if (value == null)
-            CountingDateTimeElement = null;
-          else
-            CountingDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          CountingDateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("CountingDateTime");
         }
       }
 
       /// <summary>
-      /// The item or items in this listing
+      /// The item or items in this listing.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InventoryReport.ItemComponent> Item
       {
-        get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(); return _Item; }
-        set { _Item = value; OnPropertyChanged("Item"); }
+        get
+        {
+          if(_Item.InOverflow<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.InventoryReport.ItemComponent>), Overflow["item"]);
+          return _Item ??= [];
+        }
+
+        set
+        {
+          if (_Item.InOverflow<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>())
+            Overflow.Remove("item");
+          _Item = value;
+          OnPropertyChanged("Item");
+        }
+
       }
 
-      private List<Hl7.Fhir.Model.InventoryReport.ItemComponent> _Item;
+      private List<Hl7.Fhir.Model.InventoryReport.ItemComponent>? _Item;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InventoryListingComponent;
-
-        if (dest == null)
-        {
+        if(other is not InventoryListingComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-        if(ItemStatus != null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)ItemStatus.DeepCopy();
-        if(CountingDateTimeElement != null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)CountingDateTimeElement.DeepCopy();
-        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(Item.DeepCopy());
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+        if(_ItemStatus is not null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)_ItemStatus.DeepCopyInternal();
+        if(_CountingDateTimeElement is not null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)_CountingDateTimeElement.DeepCopyInternal();
+        if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(_Item.DeepCopyInternal());
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new InventoryListingComponent());
+        var instance = new InventoryListingComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InventoryListingComponent;
-        if(otherT == null) return false;
+        if(other is not InventoryListingComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-        if( !DeepComparable.Matches(ItemStatus, otherT.ItemStatus)) return false;
-        if( !DeepComparable.Matches(CountingDateTimeElement, otherT.CountingDateTimeElement)) return false;
-        if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Location, otherT._Location)) return false;
+        if(!comparer.Equals(_ItemStatus, otherT._ItemStatus)) return false;
+        if(!comparer.Equals(_CountingDateTimeElement, otherT._CountingDateTimeElement)) return false;
+        if(!comparer.ListEquals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as InventoryListingComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-        if( !DeepComparable.IsExactly(ItemStatus, otherT.ItemStatus)) return false;
-        if( !DeepComparable.IsExactly(CountingDateTimeElement, otherT.CountingDateTimeElement)) return false;
-        if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Location != null) yield return Location;
-          if (ItemStatus != null) yield return ItemStatus;
-          if (CountingDateTimeElement != null) yield return CountingDateTimeElement;
-          foreach (var elem in Item) { if (elem != null) yield return elem; }
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Location != null) yield return new ElementValue("location", Location);
-          if (ItemStatus != null) yield return new ElementValue("itemStatus", ItemStatus);
-          if (CountingDateTimeElement != null) yield return new ElementValue("countingDateTime", CountingDateTimeElement);
-          foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "location":
-            value = Location;
-            return Location is not null;
+            if (_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["location"];
+              return true;
+            }
+            value = _Location;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "itemStatus":
-            value = ItemStatus;
-            return ItemStatus is not null;
+            if (_ItemStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["itemStatus"];
+              return true;
+            }
+            value = _ItemStatus;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "countingDateTime":
-            value = CountingDateTimeElement;
-            return CountingDateTimeElement is not null;
+            if (_CountingDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            {
+              value = Overflow["countingDateTime"];
+              return true;
+            }
+            value = _CountingDateTimeElement;
+            return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
           case "item":
-            value = Item;
-            return Item?.Any() == true;
+            if (_Item.InOverflow<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>())
+            {
+              value = Overflow["item"];
+              return true;
+            }
+            value = _Item;
+            return (value as List<Hl7.Fhir.Model.InventoryReport.ItemComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-        if (ItemStatus is not null) yield return new KeyValuePair<string,object>("itemStatus",ItemStatus);
-        if (CountingDateTimeElement is not null) yield return new KeyValuePair<string,object>("countingDateTime",CountingDateTimeElement);
-        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "location":
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Location = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["location"] = value;
+            }
+            else Location = (Hl7.Fhir.Model.ResourceReference?)value;
+            return this;
+          case "itemStatus":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              ItemStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["itemStatus"] = value;
+            }
+            else ItemStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "countingDateTime":
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              CountingDateTimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["countingDateTime"] = value;
+            }
+            else CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            return this;
+          case "item":
+            if (value is not (List<Hl7.Fhir.Model.InventoryReport.ItemComponent> or null))
+            {
+              Item = OverflowNull<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>.INSTANCE;
+              Overflow["item"] = value;
+            }
+            else Item = (List<Hl7.Fhir.Model.InventoryReport.ItemComponent>?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
+        if (_ItemStatus is not null && !_ItemStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("itemStatus",_ItemStatus);
+        if (_CountingDateTimeElement is not null && !_CountingDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("countingDateTime",_CountingDateTimeElement);
+        if (_Item?.Any() is true && !_Item.InOverflow<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>()) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -314,186 +387,260 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("InventoryReport#Item", IsNestedType=true)]
-    [BackboneType("InventoryReport.inventoryListing.item")]
+    [FhirType("InventoryReport.inventoryListing.item", IsBackboneType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryReport#Item"; } }
+      public override string TypeName => "InventoryReport.inventoryListing.item";
 
       /// <summary>
-      /// The inventory category or classification of the items being reported
+      /// The inventory category or classification of the items being reported.
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Category
+      public Hl7.Fhir.Model.CodeableConcept? Category
       {
-        get { return _Category; }
-        set { _Category = value; OnPropertyChanged("Category"); }
+        get
+        {
+          if(_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["category"]);
+          return _Category;
+        }
+
+        set
+        {
+          if (_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("category");
+          _Category = value;
+          OnPropertyChanged("Category");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Category;
+      private Hl7.Fhir.Model.CodeableConcept? _Category;
 
       /// <summary>
-      /// The quantity of the item or items being reported
+      /// The quantity of the item or items being reported.
       /// </summary>
       [FhirElement("quantity", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Quantity
       {
-        get { return _Quantity; }
-        set { _Quantity = value; OnPropertyChanged("Quantity"); }
+        get
+        {
+          if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
+          return _Quantity!;
+        }
+
+        set
+        {
+          if (_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("quantity");
+          _Quantity = value;
+          OnPropertyChanged("Quantity");
+        }
+
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
-      /// The code or reference to the item type
+      /// The code or reference to the item type.
       /// </summary>
       [FhirElement("item", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Item
       {
-        get { return _Item; }
-        set { _Item = value; OnPropertyChanged("Item"); }
+        get
+        {
+          if(_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["item"]);
+          return _Item!;
+        }
+
+        set
+        {
+          if (_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>())
+            Overflow.Remove("item");
+          _Item = value;
+          OnPropertyChanged("Item");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableReference _Item;
+      private Hl7.Fhir.Model.CodeableReference? _Item;
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ItemComponent;
-
-        if (dest == null)
-        {
+        if(other is not ItemComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.CodeableReference)_Item.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ItemComponent());
+        var instance = new ItemComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ItemComponent;
-        if(otherT == null) return false;
+        if(other is not ItemComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-        if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-        if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Category, otherT._Category)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ItemComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-        if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-        if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Category != null) yield return Category;
-          if (Quantity != null) yield return Quantity;
-          if (Item != null) yield return Item;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Category != null) yield return new ElementValue("category", Category);
-          if (Quantity != null) yield return new ElementValue("quantity", Quantity);
-          if (Item != null) yield return new ElementValue("item", Item);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "category":
-            value = Category;
-            return Category is not null;
+            if (_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["category"];
+              return true;
+            }
+            value = _Category;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            if (_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["quantity"];
+              return true;
+            }
+            value = _Quantity;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           case "item":
-            value = Item;
-            return Item is not null;
+            if (_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>())
+            {
+              value = Overflow["item"];
+              return true;
+            }
+            value = _Item;
+            return (value as Hl7.Fhir.Model.CodeableReference) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "category":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["category"] = value;
+            }
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "quantity":
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["quantity"] = value;
+            }
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value!;
+            return this;
+          case "item":
+            if (value is not (Hl7.Fhir.Model.CodeableReference or null))
+            {
+              Item = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
+              Overflow["item"] = value;
+            }
+            else Item = (Hl7.Fhir.Model.CodeableReference?)value!;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Category is not null && !_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("category",_Category);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Item is not null && !_Item.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
 
     /// <summary>
-    /// Business identifier for the report
+    /// Business identifier for the report.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
-    /// draft | requested | active | entered-in-error
+    /// draft | requested | active | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("InventoryReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>), Overflow["status"]);
+        return _StatusElement!;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>? _StatusElement;
 
     /// <summary>
     /// draft | requested | active | entered-in-error
@@ -502,32 +649,41 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryReportStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// snapshot | difference
+    /// snapshot | difference.
     /// </summary>
     [FhirElement("countType", InSummary=true, IsModifier=true, Order=110)]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("InventoryCountType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> CountTypeElement
     {
-      get { return _CountTypeElement; }
-      set { _CountTypeElement = value; OnPropertyChanged("CountTypeElement"); }
+      get
+      {
+        if(_CountTypeElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>), Overflow["countType"]);
+        return _CountTypeElement!;
+      }
+
+      set
+      {
+        if (_CountTypeElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>())
+          Overflow.Remove("countType");
+        _CountTypeElement = value;
+        OnPropertyChanged("CountTypeElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> _CountTypeElement;
+    private Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>? _CountTypeElement;
 
     /// <summary>
     /// snapshot | difference
@@ -536,293 +692,460 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryCountType? CountType
     {
-      get { return CountTypeElement != null ? CountTypeElement.Value : null; }
+      get => CountTypeElement?.Value;
       set
       {
-        if (value == null)
-          CountTypeElement = null;
-        else
-          CountTypeElement = new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
+        CountTypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
         OnPropertyChanged("CountType");
       }
     }
 
     /// <summary>
-    /// addition | subtraction
+    /// addition | subtraction.
     /// </summary>
     [FhirElement("operationType", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept OperationType
+    public Hl7.Fhir.Model.CodeableConcept? OperationType
     {
-      get { return _OperationType; }
-      set { _OperationType = value; OnPropertyChanged("OperationType"); }
+      get
+      {
+        if(_OperationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["operationType"]);
+        return _OperationType;
+      }
+
+      set
+      {
+        if (_OperationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("operationType");
+        _OperationType = value;
+        OnPropertyChanged("OperationType");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _OperationType;
+    private Hl7.Fhir.Model.CodeableConcept? _OperationType;
 
     /// <summary>
-    /// The reason for this count - regular count, ad-hoc count, new arrivals, etc
+    /// The reason for this count - regular count, ad-hoc count, new arrivals, etc.
     /// </summary>
     [FhirElement("operationTypeReason", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept OperationTypeReason
+    public Hl7.Fhir.Model.CodeableConcept? OperationTypeReason
     {
-      get { return _OperationTypeReason; }
-      set { _OperationTypeReason = value; OnPropertyChanged("OperationTypeReason"); }
+      get
+      {
+        if(_OperationTypeReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["operationTypeReason"]);
+        return _OperationTypeReason;
+      }
+
+      set
+      {
+        if (_OperationTypeReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("operationTypeReason");
+        _OperationTypeReason = value;
+        OnPropertyChanged("OperationTypeReason");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _OperationTypeReason;
+    private Hl7.Fhir.Model.CodeableConcept? _OperationTypeReason;
 
     /// <summary>
-    /// When the report has been submitted
+    /// When the report has been submitted.
     /// </summary>
     [FhirElement("reportedDateTime", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime ReportedDateTimeElement
     {
-      get { return _ReportedDateTimeElement; }
-      set { _ReportedDateTimeElement = value; OnPropertyChanged("ReportedDateTimeElement"); }
+      get
+      {
+        if(_ReportedDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["reportedDateTime"]);
+        return _ReportedDateTimeElement!;
+      }
+
+      set
+      {
+        if (_ReportedDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("reportedDateTime");
+        _ReportedDateTimeElement = value;
+        OnPropertyChanged("ReportedDateTimeElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _ReportedDateTimeElement;
+    private Hl7.Fhir.Model.FhirDateTime? _ReportedDateTimeElement;
 
     /// <summary>
     /// When the report has been submitted
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ReportedDateTime
+    public string? ReportedDateTime
     {
-      get { return ReportedDateTimeElement != null ? ReportedDateTimeElement.Value : null; }
+      get => ReportedDateTimeElement?.Value;
       set
       {
-        if (value == null)
-          ReportedDateTimeElement = null;
-        else
-          ReportedDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        ReportedDateTimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReportedDateTime");
       }
     }
 
     /// <summary>
-    /// Who submits the report
+    /// Who submits the report.
     /// </summary>
     [FhirElement("reporter", Order=150)]
     [CLSCompliant(false)]
     [References("Practitioner","Patient","RelatedPerson","Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Reporter
+    public Hl7.Fhir.Model.ResourceReference? Reporter
     {
-      get { return _Reporter; }
-      set { _Reporter = value; OnPropertyChanged("Reporter"); }
+      get
+      {
+        if(_Reporter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reporter"]);
+        return _Reporter;
+      }
+
+      set
+      {
+        if (_Reporter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("reporter");
+        _Reporter = value;
+        OnPropertyChanged("Reporter");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Reporter;
+    private Hl7.Fhir.Model.ResourceReference? _Reporter;
 
     /// <summary>
-    /// The period the report refers to
+    /// The period the report refers to.
     /// </summary>
     [FhirElement("reportingPeriod", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Period ReportingPeriod
+    public Hl7.Fhir.Model.Period? ReportingPeriod
     {
-      get { return _ReportingPeriod; }
-      set { _ReportingPeriod = value; OnPropertyChanged("ReportingPeriod"); }
+      get
+      {
+        if(_ReportingPeriod.InOverflow<Hl7.Fhir.Model.Period>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["reportingPeriod"]);
+        return _ReportingPeriod;
+      }
+
+      set
+      {
+        if (_ReportingPeriod.InOverflow<Hl7.Fhir.Model.Period>())
+          Overflow.Remove("reportingPeriod");
+        _ReportingPeriod = value;
+        OnPropertyChanged("ReportingPeriod");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Period _ReportingPeriod;
+    private Hl7.Fhir.Model.Period? _ReportingPeriod;
 
     /// <summary>
-    /// An inventory listing section (grouped by any of the attributes)
+    /// An inventory listing section (grouped by any of the attributes).
     /// </summary>
     [FhirElement("inventoryListing", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> InventoryListing
     {
-      get { if(_InventoryListing==null) _InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(); return _InventoryListing; }
-      set { _InventoryListing = value; OnPropertyChanged("InventoryListing"); }
+      get
+      {
+        if(_InventoryListing.InOverflow<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>), Overflow["inventoryListing"]);
+        return _InventoryListing ??= [];
+      }
+
+      set
+      {
+        if (_InventoryListing.InOverflow<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>())
+          Overflow.Remove("inventoryListing");
+        _InventoryListing = value;
+        OnPropertyChanged("InventoryListing");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> _InventoryListing;
+    private List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>? _InventoryListing;
 
     /// <summary>
-    /// A note associated with the InventoryReport
+    /// A note associated with the InventoryReport.
     /// </summary>
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
-      set { _Note = value; OnPropertyChanged("Note"); }
+      get
+      {
+        if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
+        return _Note ??= [];
+      }
+
+      set
+      {
+        if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          Overflow.Remove("note");
+        _Note = value;
+        OnPropertyChanged("Note");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as InventoryReport;
-
-      if (dest == null)
-      {
+      if(other is not InventoryReport dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)StatusElement.DeepCopy();
-      if(CountTypeElement != null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)CountTypeElement.DeepCopy();
-      if(OperationType != null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)OperationType.DeepCopy();
-      if(OperationTypeReason != null) dest.OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)OperationTypeReason.DeepCopy();
-      if(ReportedDateTimeElement != null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReportedDateTimeElement.DeepCopy();
-      if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
-      if(ReportingPeriod != null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)ReportingPeriod.DeepCopy();
-      if(InventoryListing.Any()) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(InventoryListing.DeepCopy());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)_StatusElement.DeepCopyInternal();
+      if(_CountTypeElement is not null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)_CountTypeElement.DeepCopyInternal();
+      if(_OperationType is not null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)_OperationType.DeepCopyInternal();
+      if(_OperationTypeReason is not null) dest.OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)_OperationTypeReason.DeepCopyInternal();
+      if(_ReportedDateTimeElement is not null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)_ReportedDateTimeElement.DeepCopyInternal();
+      if(_Reporter is not null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)_Reporter.DeepCopyInternal();
+      if(_ReportingPeriod is not null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)_ReportingPeriod.DeepCopyInternal();
+      if(_InventoryListing is not null) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(_InventoryListing.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new InventoryReport());
+      var instance = new InventoryReport();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as InventoryReport;
-      if(otherT == null) return false;
+      if(other is not InventoryReport otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(CountTypeElement, otherT.CountTypeElement)) return false;
-      if( !DeepComparable.Matches(OperationType, otherT.OperationType)) return false;
-      if( !DeepComparable.Matches(OperationTypeReason, otherT.OperationTypeReason)) return false;
-      if( !DeepComparable.Matches(ReportedDateTimeElement, otherT.ReportedDateTimeElement)) return false;
-      if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
-      if( !DeepComparable.Matches(ReportingPeriod, otherT.ReportingPeriod)) return false;
-      if( !DeepComparable.Matches(InventoryListing, otherT.InventoryListing)) return false;
-      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_CountTypeElement, otherT._CountTypeElement)) return false;
+      if(!comparer.Equals(_OperationType, otherT._OperationType)) return false;
+      if(!comparer.Equals(_OperationTypeReason, otherT._OperationTypeReason)) return false;
+      if(!comparer.Equals(_ReportedDateTimeElement, otherT._ReportedDateTimeElement)) return false;
+      if(!comparer.Equals(_Reporter, otherT._Reporter)) return false;
+      if(!comparer.Equals(_ReportingPeriod, otherT._ReportingPeriod)) return false;
+      if(!comparer.ListEquals(_InventoryListing, otherT._InventoryListing)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as InventoryReport;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(CountTypeElement, otherT.CountTypeElement)) return false;
-      if( !DeepComparable.IsExactly(OperationType, otherT.OperationType)) return false;
-      if( !DeepComparable.IsExactly(OperationTypeReason, otherT.OperationTypeReason)) return false;
-      if( !DeepComparable.IsExactly(ReportedDateTimeElement, otherT.ReportedDateTimeElement)) return false;
-      if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
-      if( !DeepComparable.IsExactly(ReportingPeriod, otherT.ReportingPeriod)) return false;
-      if( !DeepComparable.IsExactly(InventoryListing, otherT.InventoryListing)) return false;
-      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        if (CountTypeElement != null) yield return CountTypeElement;
-        if (OperationType != null) yield return OperationType;
-        if (OperationTypeReason != null) yield return OperationTypeReason;
-        if (ReportedDateTimeElement != null) yield return ReportedDateTimeElement;
-        if (Reporter != null) yield return Reporter;
-        if (ReportingPeriod != null) yield return ReportingPeriod;
-        foreach (var elem in InventoryListing) { if (elem != null) yield return elem; }
-        foreach (var elem in Note) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        if (CountTypeElement != null) yield return new ElementValue("countType", CountTypeElement);
-        if (OperationType != null) yield return new ElementValue("operationType", OperationType);
-        if (OperationTypeReason != null) yield return new ElementValue("operationTypeReason", OperationTypeReason);
-        if (ReportedDateTimeElement != null) yield return new ElementValue("reportedDateTime", ReportedDateTimeElement);
-        if (Reporter != null) yield return new ElementValue("reporter", Reporter);
-        if (ReportingPeriod != null) yield return new ElementValue("reportingPeriod", ReportingPeriod);
-        foreach (var elem in InventoryListing) { if (elem != null) yield return new ElementValue("inventoryListing", elem); }
-        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>) is not null;
         case "countType":
-          value = CountTypeElement;
-          return CountTypeElement is not null;
+          if (_CountTypeElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>())
+          {
+            value = Overflow["countType"];
+            return true;
+          }
+          value = _CountTypeElement;
+          return (value as Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>) is not null;
         case "operationType":
-          value = OperationType;
-          return OperationType is not null;
+          if (_OperationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["operationType"];
+            return true;
+          }
+          value = _OperationType;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "operationTypeReason":
-          value = OperationTypeReason;
-          return OperationTypeReason is not null;
+          if (_OperationTypeReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["operationTypeReason"];
+            return true;
+          }
+          value = _OperationTypeReason;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "reportedDateTime":
-          value = ReportedDateTimeElement;
-          return ReportedDateTimeElement is not null;
+          if (_ReportedDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["reportedDateTime"];
+            return true;
+          }
+          value = _ReportedDateTimeElement;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "reporter":
-          value = Reporter;
-          return Reporter is not null;
+          if (_Reporter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["reporter"];
+            return true;
+          }
+          value = _Reporter;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "reportingPeriod":
-          value = ReportingPeriod;
-          return ReportingPeriod is not null;
+          if (_ReportingPeriod.InOverflow<Hl7.Fhir.Model.Period>())
+          {
+            value = Overflow["reportingPeriod"];
+            return true;
+          }
+          value = _ReportingPeriod;
+          return (value as Hl7.Fhir.Model.Period) is not null;
         case "inventoryListing":
-          value = InventoryListing;
-          return InventoryListing?.Any() == true;
+          if (_InventoryListing.InOverflow<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>())
+          {
+            value = Overflow["inventoryListing"];
+            return true;
+          }
+          value = _InventoryListing;
+          return (value as List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>)?.Any() is true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          {
+            value = Overflow["note"];
+            return true;
+          }
+          value = _Note;
+          return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (CountTypeElement is not null) yield return new KeyValuePair<string,object>("countType",CountTypeElement);
-      if (OperationType is not null) yield return new KeyValuePair<string,object>("operationType",OperationType);
-      if (OperationTypeReason is not null) yield return new KeyValuePair<string,object>("operationTypeReason",OperationTypeReason);
-      if (ReportedDateTimeElement is not null) yield return new KeyValuePair<string,object>("reportedDateTime",ReportedDateTimeElement);
-      if (Reporter is not null) yield return new KeyValuePair<string,object>("reporter",Reporter);
-      if (ReportingPeriod is not null) yield return new KeyValuePair<string,object>("reportingPeriod",ReportingPeriod);
-      if (InventoryListing?.Any() == true) yield return new KeyValuePair<string,object>("inventoryListing",InventoryListing);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          return this;
+        case "status":
+          if (value is not (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>?)value!;
+          return this;
+        case "countType":
+          if (value is not (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> or null))
+          {
+            CountTypeElement = OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>.INSTANCE;
+            Overflow["countType"] = value;
+          }
+          else CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>?)value!;
+          return this;
+        case "operationType":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            OperationType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["operationType"] = value;
+          }
+          else OperationType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "operationTypeReason":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            OperationTypeReason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["operationTypeReason"] = value;
+          }
+          else OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "reportedDateTime":
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            ReportedDateTimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["reportedDateTime"] = value;
+          }
+          else ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value!;
+          return this;
+        case "reporter":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Reporter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["reporter"] = value;
+          }
+          else Reporter = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        case "reportingPeriod":
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            ReportingPeriod = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["reportingPeriod"] = value;
+          }
+          else ReportingPeriod = (Hl7.Fhir.Model.Period?)value;
+          return this;
+        case "inventoryListing":
+          if (value is not (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> or null))
+          {
+            InventoryListing = OverflowNull<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>.INSTANCE;
+            Overflow["inventoryListing"] = value;
+          }
+          else InventoryListing = (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>?)value!;
+          return this;
+        case "note":
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CountTypeElement is not null && !_CountTypeElement.InOverflow<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>()) yield return new KeyValuePair<string,object>("countType",_CountTypeElement);
+      if (_OperationType is not null && !_OperationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("operationType",_OperationType);
+      if (_OperationTypeReason is not null && !_OperationTypeReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("operationTypeReason",_OperationTypeReason);
+      if (_ReportedDateTimeElement is not null && !_ReportedDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("reportedDateTime",_ReportedDateTimeElement);
+      if (_Reporter is not null && !_Reporter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reporter",_Reporter);
+      if (_ReportingPeriod is not null && !_ReportingPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("reportingPeriod",_ReportingPeriod);
+      if (_InventoryListing?.Any() is true && !_InventoryListing.InOverflow<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>()) yield return new KeyValuePair<string,object>("inventoryListing",_InventoryListing);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

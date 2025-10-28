@@ -1852,7 +1852,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Otherwise, or if the custom type profile is missing, then try to resolve the core type profile
             var typeCodeElem = typeRef.CodeElement;
-            if (!isValidProfile && typeCodeElem != null && typeCodeElem.ObjectValue is string typeName)
+            if (!isValidProfile && typeCodeElem != null && typeCodeElem.JsonValue is string typeName)
             {
                 baseStructure = await getStructureDefinitionForTypeCode(AsyncResolver, typeCodeElem).ConfigureAwait(false);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
@@ -1883,7 +1883,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 // Unknown/custom core type; try to resolve from raw object value
-                var typeName = typeCodeElement.ObjectValue as string;
+                var typeName = typeCodeElement.JsonValue as string;
                 if (!string.IsNullOrEmpty(typeName))
                 {
                     sd = await resolver.FindStructureDefinitionForCoreTypeAsync(typeName).ConfigureAwait(false);

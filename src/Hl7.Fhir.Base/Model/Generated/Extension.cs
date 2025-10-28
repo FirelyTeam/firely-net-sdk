@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -57,125 +61,166 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Extension"; } }
+    public override string TypeName => "Extension";
+
+    /// <summary>
+    /// identifies the meaning of the extension.
+    /// </summary>
+    [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [Cardinality(Min=1,Max=1)]
+    [DataMember]
+    public Hl7.Fhir.Model.FhirUri UrlElement
+    {
+      get
+      {
+        if(_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
+        return _UrlElement!;
+      }
+
+      set
+      {
+        if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          Overflow.Remove("url");
+        _UrlElement = value;
+        OnPropertyChanged("UrlElement");
+      }
+
+    }
+
+    private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
     /// <summary>
     /// identifies the meaning of the extension
     /// </summary>
-    [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
-    [UriPattern]
-    [Cardinality(Min=1,Max=1)]
-    [DataMember]
-    public string Url
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string? Url
     {
-      get { return _Url; }
-      set { _Url = value; OnPropertyChanged("Url"); }
+      get => UrlElement?.Value;
+      set
+      {
+        UrlElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
+        OnPropertyChanged("Url");
+      }
     }
-
-    private string _Url;
 
     /// <summary>
-    /// Value of extension
+    /// Value of extension.
     /// </summary>
     [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
+    [AllowedTypes(OpenChoice = true)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Value
+    public Hl7.Fhir.Model.DataType? Value
     {
-      get { return _Value; }
-      set { _Value = value; OnPropertyChanged("Value"); }
+      get
+      {
+        if(_Value.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
+        return _Value;
+      }
+
+      set
+      {
+        if (_Value.InOverflow<DynamicDataType>())
+          Overflow.Remove("value");
+        _Value = value;
+        OnPropertyChanged("Value");
+      }
+
     }
 
-    private Hl7.Fhir.Model.DataType _Value;
+    private Hl7.Fhir.Model.DataType? _Value;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Extension;
-
-      if (dest == null)
-      {
+      if(other is not Extension dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Url != null) dest.Url = Url;
-      if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+      if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Extension());
+      var instance = new Extension();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Extension;
-      if(otherT == null) return false;
+      if(other is not Extension otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( Url != otherT.Url ) return false;
-      if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.Equals(_Value, otherT._Value)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Extension;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if(Url != otherT.Url) return false;
-      if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (Url != null) yield return new FhirUri(Url);
-        if (Value != null) yield return Value;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (Url != null) yield return new ElementValue("url", new FhirUri(Url));
-        if (Value != null) yield return new ElementValue("value", Value);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "url":
-          value = Url;
-          return Url is not null;
+          if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
+            value = Overflow["url"];
+            return true;
+          }
+          value = _UrlElement;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "value":
-          value = Value;
-          return Value is not null;
+          if (_Value.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["value"];
+            return true;
+          }
+          value = _Value;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Url is not null) yield return new KeyValuePair<string,object>("url",Url);
-      if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "url":
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["url"] = value;
+          }
+          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value!;
+          return this;
+        case "value":
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Value = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else Value = (Hl7.Fhir.Model.DataType?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
     }
 
   }

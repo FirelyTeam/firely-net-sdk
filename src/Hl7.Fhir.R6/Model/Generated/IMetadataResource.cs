@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,68 +56,78 @@ namespace Hl7.Fhir.Model
     /// Describes the clinical usage of the MetadataResource
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Usage { get; set; }
+    string? Usage { get; set; }
 
     /// <summary>
-    /// Describes the clinical usage of the MetadataResource
+    /// Describes the clinical usage of the MetadataResource.
     /// </summary>
-    Hl7.Fhir.Model.Markdown UsageElement { get; set; }
+    [AllowNull]
+    Hl7.Fhir.Model.Markdown? UsageElement { get; set; }
 
     /// <summary>
     /// When the MetadataResource was approved by publisher
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string ApprovalDate { get; set; }
+    string? ApprovalDate { get; set; }
 
     /// <summary>
-    /// When the MetadataResource was approved by publisher
+    /// When the MetadataResource was approved by publisher.
     /// </summary>
-    Hl7.Fhir.Model.Date ApprovalDateElement { get; set; }
+    [AllowNull]
+    Hl7.Fhir.Model.Date? ApprovalDateElement { get; set; }
 
     /// <summary>
     /// When the MetadataResource was last reviewed by the publisher
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string LastReviewDate { get; set; }
+    string? LastReviewDate { get; set; }
 
     /// <summary>
-    /// When the MetadataResource was last reviewed by the publisher
+    /// When the MetadataResource was last reviewed by the publisher.
     /// </summary>
-    Hl7.Fhir.Model.Date LastReviewDateElement { get; set; }
+    [AllowNull]
+    Hl7.Fhir.Model.Date? LastReviewDateElement { get; set; }
 
     /// <summary>
-    /// When the MetadataResource is expected to be used
+    /// When the MetadataResource is expected to be used.
     /// </summary>
-    Hl7.Fhir.Model.Period EffectivePeriod { get; set; }
+    [AllowNull]
+    Hl7.Fhir.Model.Period? EffectivePeriod { get; set; }
 
     /// <summary>
-    /// E.g. Education, Treatment, Assessment, etc
+    /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.CodeableConcept> Topic { get; set; }
 
     /// <summary>
-    /// Who authored the MetadataResource
+    /// Who authored the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Author { get; set; }
 
     /// <summary>
-    /// Who edited the MetadataResource
+    /// Who edited the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Editor { get; set; }
 
     /// <summary>
-    /// Who reviewed the MetadataResource
+    /// Who reviewed the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Reviewer { get; set; }
 
     /// <summary>
-    /// Who endorsed the MetadataResource
+    /// Who endorsed the MetadataResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Endorser { get; set; }
 
     /// <summary>
-    /// Additional documentation, citations, etc
+    /// Additional documentation, citations, etc.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact { get; set; }
 
   }
@@ -121,121 +135,201 @@ namespace Hl7.Fhir.Model
   public partial class ActivityDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement { get => UsageElement; set { UsageElement =  value; } }
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
+    {
+      get => UsageElement;
+      set => UsageElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage { get => Usage; set { Usage =  value; } }
+    string? IMetadataResource.Usage
+    {
+      get => Usage;
+      set => Usage = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class ChargeItemDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
-
-    [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
-
-    [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.effectivePeriod");}
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
     }
 
+    [IgnoreDataMember]
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.effectivePeriod");
+    }
+
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.author");}
+      get => [];
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.editor");}
+      get => [];
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.reviewer");}
+      get => [];
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.endorser");}
+      get => [];
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource ChargeItemDefinition does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -243,58 +337,100 @@ namespace Hl7.Fhir.Model
   public partial class Citation : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Citation does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource Citation does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Citation does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource Citation does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Citation does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource Citation does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Citation does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource Citation does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -302,145 +438,201 @@ namespace Hl7.Fhir.Model
   public partial class ConceptMap : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConceptMap does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConceptMap does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConceptMap does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConceptMap does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class ConditionDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.approvalDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.approvalDate");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate
+    string? IMetadataResource.ApprovalDate
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.approvalDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.approvalDate");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.lastReviewDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.lastReviewDate");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate
+    string? IMetadataResource.LastReviewDate
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.lastReviewDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.lastReviewDate");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.effectivePeriod");}
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.author");}
+      get => [];
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.editor");}
+      get => [];
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.reviewer");}
+      get => [];
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.endorser");}
+      get => [];
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -448,105 +640,201 @@ namespace Hl7.Fhir.Model
   public partial class EventDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement { get => UsageElement; set { UsageElement =  value; } }
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
+    {
+      get => UsageElement;
+      set => UsageElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage { get => Usage; set { Usage =  value; } }
+    string? IMetadataResource.Usage
+    {
+      get => Usage;
+      set => Usage = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class Evidence : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
-
-    [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
-
-    [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.effectivePeriod");}
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
     }
 
+    [IgnoreDataMember]
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.effectivePeriod");
+    }
+
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource Evidence does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -554,58 +842,100 @@ namespace Hl7.Fhir.Model
   public partial class EvidenceVariable : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource EvidenceVariable does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -613,191 +943,310 @@ namespace Hl7.Fhir.Model
   public partial class Library : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement { get => UsageElement; set { UsageElement =  value; } }
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
+    {
+      get => UsageElement;
+      set => UsageElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage { get => Usage; set { Usage =  value; } }
+    string? IMetadataResource.Usage
+    {
+      get => Usage;
+      set => Usage = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class Measure : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement { get => UsageElement; set { UsageElement =  value; } }
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
+    {
+      get => UsageElement;
+      set => UsageElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage { get => Usage; set { Usage =  value; } }
+    string? IMetadataResource.Usage
+    {
+      get => Usage;
+      set => Usage = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class MedicationKnowledge : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.approvalDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.approvalDate");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate
+    string? IMetadataResource.ApprovalDate
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.approvalDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.approvalDate");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.lastReviewDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.lastReviewDate");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate
+    string? IMetadataResource.LastReviewDate
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.lastReviewDate");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.lastReviewDate");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.effectivePeriod");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.effectivePeriod");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get
-      {
-        if (Author == null) return new List<Hl7.Fhir.Model.ContactDetail>();
-        return new List<Hl7.Fhir.Model.ContactDetail>() { Author };
-      }
-
+      get => Author is null ? [] : [Author];
       set
       {
-        if (value.Count == 0) { Author = null; }
-        else if (value.Count == 1) { Author = value.First(); }
-        else { throw new NotImplementedException("Resource MedicationKnowledge can only have a single IMetadataResource.Author value"); }
+        Author = value switch
+        {
+          { Count: 0 } => null,
+          { Count: 1 } => value.First(),
+          _ => throw new NotImplementedException("Resource MedicationKnowledge can only have a single Author value")
+        };
       }
-
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.editor");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.reviewer");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.endorser");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -805,130 +1254,207 @@ namespace Hl7.Fhir.Model
   public partial class NamingSystem : IMetadataResource
   {
     /// <remarks>
-    /// NamingSystem.UsageElement (PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string }) is incompatible with
-    /// IMetadataResource.usage (PrimitiveTypeReference { Name = markdown, PropertyTypeString = Hl7.Fhir.Model.Markdown, PocoTypeName = Markdown, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string })
+    /// NamingSystem.UsageElement is incompatible with IMetadataResource.usage.
     /// </remarks>
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("NamingSystem.UsageElement (PrimitiveTypeReference { Name = string, PropertyTypeString = Hl7.Fhir.Model.FhirString, PocoTypeName = FhirString, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string }) is incompatible with IMetadataResource.usage (PrimitiveTypeReference { Name = markdown, PropertyTypeString = Hl7.Fhir.Model.Markdown, PocoTypeName = Markdown, ConveniencePropertyType = System.String, ConveniencePropertyTypeString = string })");}
+      get => null;
+      set => throw new NotImplementedException("NamingSystem.UsageElement is incompatible with IMetadataResource.usage.");
     }
 
-    // NamingSystem.UsageElement (string) is incompatible with IMetadataResource.usage (string)
+    /// <remarks>
+    /// NamingSystem.UsageElement is incompatible with IMetadataResource.usage.
+    /// </remarks>
     [IgnoreDataMember]
-     string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("NamingSystem.UsageElement (Hl7.Fhir.Model.FhirString) is incompatible with IMetadataResource.usage (Hl7.Fhir.Model.Markdown)");}
+      get => null;
+      set => throw new NotImplementedException("NamingSystem.UsageElement is incompatible with IMetadataResource.usage.");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class ObservationDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.author");}
+      get => [];
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.editor");}
+      get => [];
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.reviewer");}
+      get => [];
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.endorser");}
+      get => [];
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource ObservationDefinition does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -936,117 +1462,201 @@ namespace Hl7.Fhir.Model
   public partial class PlanDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement { get => UsageElement; set { UsageElement =  value; } }
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
+    {
+      get => UsageElement;
+      set => UsageElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage { get => Usage; set { Usage =  value; } }
+    string? IMetadataResource.Usage
+    {
+      get => Usage;
+      set => Usage = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic { get => Topic; set { Topic =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
+    {
+      get => Topic;
+      set => Topic = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author { get => Author; set { Author =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
+    {
+      get => Author;
+      set => Author = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor { get => Editor; set { Editor =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
+    {
+      get => Editor;
+      set => Editor = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer { get => Reviewer; set { Reviewer =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
+    {
+      get => Reviewer;
+      set => Reviewer = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser { get => Endorser; set { Endorser =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
+    {
+      get => Endorser;
+      set => Endorser = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact { get => RelatedArtifact; set { RelatedArtifact =  value; } }
+    List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
+    {
+      get => RelatedArtifact;
+      set => RelatedArtifact = value;
+    }
 
   }
 
   public partial class Questionnaire : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.author");}
+      get => [];
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.editor");}
+      get => [];
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.reviewer");}
+      get => [];
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.endorser");}
+      get => [];
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource Questionnaire does not implement IMetadataResource.relatedArtifact");
     }
 
   }
@@ -1054,74 +1664,100 @@ namespace Hl7.Fhir.Model
   public partial class SpecimenDefinition : IMetadataResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown IMetadataResource.UsageElement
+    Hl7.Fhir.Model.Markdown? IMetadataResource.UsageElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    string IMetadataResource.Usage
+    string? IMetadataResource.Usage
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.usage");}
+      get => null;
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.usage");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.ApprovalDateElement { get => ApprovalDateElement; set { ApprovalDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.ApprovalDateElement
+    {
+      get => ApprovalDateElement;
+      set => ApprovalDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.ApprovalDate { get => ApprovalDate; set { ApprovalDate =  value; } }
+    string? IMetadataResource.ApprovalDate
+    {
+      get => ApprovalDate;
+      set => ApprovalDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Date IMetadataResource.LastReviewDateElement { get => LastReviewDateElement; set { LastReviewDateElement =  value; } }
+    Hl7.Fhir.Model.Date? IMetadataResource.LastReviewDateElement
+    {
+      get => LastReviewDateElement;
+      set => LastReviewDateElement = value;
+    }
 
     [IgnoreDataMember]
-    string IMetadataResource.LastReviewDate { get => LastReviewDate; set { LastReviewDate =  value; } }
+    string? IMetadataResource.LastReviewDate
+    {
+      get => LastReviewDate;
+      set => LastReviewDate = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Period IMetadataResource.EffectivePeriod { get => EffectivePeriod; set { EffectivePeriod =  value; } }
+    Hl7.Fhir.Model.Period? IMetadataResource.EffectivePeriod
+    {
+      get => EffectivePeriod;
+      set => EffectivePeriod = value;
+    }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> IMetadataResource.Topic
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.topic");}
+      get => [];
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.topic");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Author
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.author");}
+      get => [];
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.author");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Editor
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.editor");}
+      get => [];
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.editor");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Reviewer
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.reviewer");}
+      get => [];
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.reviewer");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> IMetadataResource.Endorser
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.endorser");}
+      get => [];
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.endorser");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.RelatedArtifact> IMetadataResource.RelatedArtifact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.relatedArtifact");}
+      get => [];
+      set => throw new NotImplementedException("Resource SpecimenDefinition does not implement IMetadataResource.relatedArtifact");
     }
 
   }

@@ -318,15 +318,16 @@ public class LocalTerminologyService : ITerminologyService
     {
         if (code is null)
         {
-            var resultParam = new Parameters
-            {
-                { "message", new FhirString("No code supplied.") }, { "result", new FhirBoolean(false) }
-            };
+            var resultParam = new Parameters();
+            resultParam.Add("message", new FhirString("No code supplied."));
+            resultParam.Add("result", new FhirBoolean(false));
             return resultParam;
         }
 
         var component = vs.FindInExpansion(code, system);
-        var codeLabel = $"Code '{code}'" + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
+        var codeLabel = $"Code '{code}'"
+            + (string.IsNullOrEmpty(display) ? string.Empty : $" (display '{display}')") 
+            + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
         var result = new Parameters();
         var success = true;
         var messages = new StringBuilder();

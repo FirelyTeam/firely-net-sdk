@@ -14,101 +14,66 @@ using System.Reflection.Emit;
 
 #nullable enable
 
-namespace Hl7.Fhir.Utility
+namespace Hl7.Fhir.Utility;
+
+/// <summary>
+/// Utility methods for generating delegates to support the deserializer.
+/// </summary>
+public static class PropertyInfoExtensions
 {
+    // Will be set to true when we detect the platform has no codegen support.
+    // This happens the first time we catch a PlatformNotSupportedException.
+    public static bool NoCodeGenSupport { get; set; } = false;
+
     /// <summary>
-    /// Utility methods for generating delegates to support the deserializer.
+    /// Generates a function that creates an instance of the given type.
     /// </summary>
-    public static class PropertyInfoExtensions
+    public static Func<object> BuildFactoryMethod(this Type type)
     {
-        // Will be set to true when we detect the platform has no codegen support.
-        // This happens the first time we catch a PlatformNotSupportedException.
-        public static bool NoCodeGenSupport { get; set; } = false;
+        var ti = type.GetTypeInfo();
 
-        /// <summary>
-        /// Generates a function that creates an instance of the given type.
-        /// </summary>
-        public static Func<object> BuildFactoryMethod(this Type type)
+        if (!ti.IsClass) throw new NotSupportedException($"Can only create factory methods for classes (which {type} is not).");
+
+        var constructor = ti.GetConstructor(Type.EmptyTypes);
+        if (constructor is null) throw new NotSupportedException($"Cannot generate factory method for type {type}: there is no default constructor.");
+
+        try
         {
-            var ti = type.GetTypeInfo();
+            if (NoCodeGenSupport) return createInstance;
 
-            if (!ti.IsClass) throw new NotSupportedException($"Can only create factory methods for classes (which {type} is not).");
+            DynamicMethod getter = new($"{type.Name}_new", typeof(object), Type.EmptyTypes);
+            ILGenerator il = getter.GetILGenerator();
 
-            var constructor = ti.GetConstructor(Type.EmptyTypes);
-            if (constructor is null) throw new NotSupportedException($"Cannot generate factory method for type {type}: there is no default constructor.");
+            il.Emit(OpCodes.Newobj, constructor);
+            if (ti.IsValueType)
+                il.Emit(OpCodes.Box, type);
 
-            try
-            {
-                if (NoCodeGenSupport) return createInstance;
+            il.Emit(OpCodes.Ret);
 
-                DynamicMethod getter = new($"{type.Name}_new", typeof(object), Type.EmptyTypes);
-                ILGenerator il = getter.GetILGenerator();
-
-                il.Emit(OpCodes.Newobj, constructor);
-                if (ti.IsValueType)
-                    il.Emit(OpCodes.Box, type);
-
-                il.Emit(OpCodes.Ret);
-
-                return (Func<object>)getter.CreateDelegate(typeof(Func<object>));
-            }
-            catch (PlatformNotSupportedException)
-            {
-                NoCodeGenSupport = true;
-                return createInstance;
-            }
-
-            object createInstance() => Activator.CreateInstance(type)!;
+            return (Func<object>)getter.CreateDelegate(typeof(Func<object>));
+        }
+        catch (PlatformNotSupportedException)
+        {
+            NoCodeGenSupport = true;
+            return createInstance;
         }
 
-        /// <summary>
-        /// Generates a function that creates an instance of a list of the given type.
-        /// </summary>
-        /// <remarks>The returned instance will actually be of type <see cref="List{T}"/> where T is the given type.</remarks>
-        public static Func<IList> BuildListFactoryMethod(this Type type)
-        {
-            // Note that MakeGenericType() will return the same Type instance for the same List<T> type instantiations,
-            // so we don't have to cache the result.
-            var listType = typeof(List<>).MakeGenericType(type);
-            var constructor = listType.GetTypeInfo().GetConstructor(Type.EmptyTypes)
-                ?? throw new ArgumentException($"Type {type.Name} does not have a parameterless constructor.");
-
-            try
-            {
-                if (NoCodeGenSupport) return createList;
-
-                DynamicMethod getter = new($"new_list_of_{type.Name}", typeof(IList), Type.EmptyTypes);
-                ILGenerator il = getter.GetILGenerator();
-
-                il.Emit(OpCodes.Newobj, constructor);
-                il.Emit(OpCodes.Ret);
-
-                return (Func<IList>)getter.CreateDelegate(typeof(Func<IList>));
-            }
-            catch (PlatformNotSupportedException)
-            {
-                NoCodeGenSupport = true;
-                return createList;
-            }
-
-            IList createList() => (IList)Activator.CreateInstance(listType)!;
-        }
+        object createInstance() => Activator.CreateInstance(type)!;
+    }
 
         /// <summary>
         /// Generates a function that, when passed an instance, gets the value of the given property.
         /// </summary>
-        public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
+        /// <returns><c>null</c> if the platform does not support code generation.</returns>
+        public static Func<T, object>? GetValueGetter<T>(this PropertyInfo propertyInfo)
         {
             MethodInfo getMethod = propertyInfo.GetMethod ?? throw new InvalidOperationException($"Property {propertyInfo.Name} does not have a getter.");
 
-            if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
-                throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
-
             try
             {
-                if (NoCodeGenSupport) return getValue;
+                if (NoCodeGenSupport) return null;
 
-                DynamicMethod getter = new($"{propertyInfo.Name}_get", typeof(object), new Type[] { typeof(object) },
+                DynamicMethod getter = new($"{propertyInfo.Name}_get", typeof(object), [typeof(object)],
                     propertyInfo.DeclaringType!);
 
                 ILGenerator il = getter.GetILGenerator();
@@ -126,33 +91,26 @@ namespace Hl7.Fhir.Utility
             catch (PlatformNotSupportedException)
             {
                 NoCodeGenSupport = true;
-                return getValue;
+                return null;
             }
-
-            object getValue(T instance) => propertyInfo.GetValue(instance, null)!;
         }
-
-        /// <summary>
-        /// Generates a function that, when passed an object instance, gets the value of the given property.
-        /// </summary>   
-        public static Func<object, object?> GetValueGetter(this PropertyInfo propertyInfo) =>
-            GetValueGetter<object?>(propertyInfo);
 
         /// <summary>
         /// Generates a function that, when passed an instance and a value, sets the value of the given property.
         /// </summary>
-        public static Action<T, object?> GetValueSetter<T>(this PropertyInfo propertyInfo)
+        /// <returns><c>null</c> if the platform does not support code generation.</returns>
+        public static Action<T, object?>? GetValueSetter<T>(this PropertyInfo propertyInfo)
         {
             MethodInfo setMethod = propertyInfo.SetMethod ?? throw new InvalidOperationException($"Property {propertyInfo.Name} does not have a setter."); ;
 
-            if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
-                throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
+         //   if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
+         //       throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
 
             try
             {
-                if (NoCodeGenSupport) return setValue;
+                if (NoCodeGenSupport) return null;
 
-                Type[] arguments = new Type[] { typeof(object), typeof(object) };
+                Type[] arguments = [typeof(object), typeof(object)];
                 DynamicMethod setter = new($"{propertyInfo.Name}_set", typeof(object), arguments, propertyInfo.DeclaringType!, true);
                 ILGenerator il = setter.GetILGenerator();
 
@@ -178,48 +136,69 @@ namespace Hl7.Fhir.Utility
             catch (PlatformNotSupportedException)
             {
                 NoCodeGenSupport = true;
-                return setValue;
+                return null;
             }
-
-            void setValue(T instance, object? value) => propertyInfo.SetValue(instance, value, null);
         }
 
-        /// <summary>
-        /// Generates a function that, when passed an object instance and a value, sets the value of the given property.
-        /// </summary>
-        public static Action<object, object?> GetValueSetter(this PropertyInfo propertyInfo) => GetValueSetter<object>(propertyInfo);
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
+    /// <summary>
+    /// Generates a function that creates an instance of a list of the given type.
+    /// </summary>
+    /// <remarks>The returned instance will actually be of type <see cref="List{T}"/> where T is the given type.</remarks>
+    public static Func<IList> BuildListFactoryMethod(this Type type)
+    {
+        // Note that MakeGenericType() will return the same Type instance for the same List<T> type instantiations,
+        // so we don't have to cache the result.
+        var listType = typeof(List<>).MakeGenericType(type);
+        var constructor = listType.GetTypeInfo().GetConstructor(Type.EmptyTypes)
+                          ?? throw new ArgumentException($"Type {type.Name} does not have a parameterless constructor.");
 
-        public static Func<C, T> GetField<C, T>(string fieldName)
+        try
         {
-            FieldInfo? field = typeof(C).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            if (field is null) throw new ArgumentException($"Cannot find field {fieldName} in type {typeof(C).Name}.", nameof(fieldName));
+            if (NoCodeGenSupport) return createList;
 
-            try
-            {
-                if (NoCodeGenSupport) return getField;
+            DynamicMethod getter = new($"new_list_of_{type.Name}", typeof(IList), Type.EmptyTypes);
+            ILGenerator il = getter.GetILGenerator();
 
-                Type[] arguments = new Type[] { typeof(C) };
-                DynamicMethod setter = new($"getField_{fieldName}", typeof(T), arguments, typeof(C), true);
-                ILGenerator il = setter.GetILGenerator();
+            il.Emit(OpCodes.Newobj, constructor);
+            il.Emit(OpCodes.Ret);
 
-                il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Ldfld, field);
-                il.Emit(OpCodes.Ret);
-
-                return (Func<C, T>)setter.CreateDelegate(typeof(Func<C, T>));
-            }
-            catch (PlatformNotSupportedException)
-            {
-                NoCodeGenSupport = true;
-                return getField;
-            }
-
-            T getField(C instance) => (T)field.GetValue(instance)!;
+            return (Func<IList>)getter.CreateDelegate(typeof(Func<IList>));
         }
-#endif
+        catch (PlatformNotSupportedException)
+        {
+            NoCodeGenSupport = true;
+            return createList;
+        }
+
+        IList createList() => (IList)Activator.CreateInstance(listType)!;
+    }
+
+    public static Func<C, T> GetField<C, T>(string fieldName)
+    {
+        FieldInfo? field = typeof(C).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        if (field is null) throw new ArgumentException($"Cannot find field {fieldName} in type {typeof(C).Name}.", nameof(fieldName));
+
+        try
+        {
+            if (NoCodeGenSupport) return getField;
+
+            Type[] arguments = [typeof(C)];
+            DynamicMethod setter = new($"getField_{fieldName}", typeof(T), arguments, typeof(C), true);
+            ILGenerator il = setter.GetILGenerator();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldfld, field);
+            il.Emit(OpCodes.Ret);
+
+            return (Func<C, T>)setter.CreateDelegate(typeof(Func<C, T>));
+        }
+        catch (PlatformNotSupportedException)
+        {
+            NoCodeGenSupport = true;
+            return getField;
+        }
+
+        T getField(C instance) => (T)field.GetValue(instance)!;
     }
 }
-
-#nullable restore

@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Serialization
     public class ConfigurableNavigatorStreamFactory
     {
         /// <summary>Create a new <see cref="ConfigurableNavigatorStreamFactory"/> instance for the default parser settings.</summary>
-        internal static ConfigurableNavigatorStreamFactory CreateDefault() => new ConfigurableNavigatorStreamFactory(null, null);
+        internal static ConfigurableNavigatorStreamFactory CreateDefault() => new(null, null);
 
         /// <summary>Determines serialization format by inspecting the file extension.</summary>
         /// <param name="path">File path to a FHIR artifact.</param>

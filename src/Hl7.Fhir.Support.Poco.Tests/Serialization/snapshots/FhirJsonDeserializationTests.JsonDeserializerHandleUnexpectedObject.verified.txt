@@ -1,0 +1,94 @@
+﻿{
+  Errors: [
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered an unexpected json object while reading the value for primitive element 'active'.,
+      Display: Expected primitive,
+      LineNumber: 1,
+      Position: 37,
+      InstancePath: Patient.active,
+      ErrorCode: JSON132,
+      Message: Encountered an unexpected json object while reading the value for primitive element 'active'. At Patient.active, line 1, position 37.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'value'.,
+      Display: Unknown element,
+      LineNumber: 1,
+      Position: 45,
+      InstancePath: Patient.active.value,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'value'. At Patient.active.value, line 1, position 45.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: amount,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'amount'.,
+      Display: Unknown element,
+      LineNumber: 1,
+      Position: 86,
+      InstancePath: Patient.valueQuantity.value.amount,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'amount'. At Patient.valueQuantity.value.amount, line 1, position 86.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'value'.,
+      Display: Unknown element,
+      LineNumber: 1,
+      Position: 76,
+      InstancePath: Patient.valueQuantity.value,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'value'. At Patient.valueQuantity.value, line 1, position 76.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: unit,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'unit'.,
+      Display: Unknown element,
+      LineNumber: 1,
+      Position: 97,
+      InstancePath: Patient.valueQuantity.unit,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'unit'. At Patient.valueQuantity.unit, line 1, position 97.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: valueQuantity,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'valueQuantity'.,
+      Display: Unknown element,
+      LineNumber: 1,
+      Position: 67,
+      InstancePath: Patient.valueQuantity,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'valueQuantity'. At Patient.valueQuantity, line 1, position 67.
+    }
+  ],
+  Obj:
+{
+  "resourceType": "Patient",
+  "valueQuantity": {
+    "value": {
+      "amount": 73
+    },
+    "unit": "bpm"
+  },
+  "_active": {
+  "value": true
+}
+}
+}

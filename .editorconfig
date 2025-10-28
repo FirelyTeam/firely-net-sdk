@@ -243,3 +243,13 @@ dotnet_naming_style.allupper.required_prefix =
 dotnet_naming_style.allupper.required_suffix = 
 dotnet_naming_style.allupper.word_separator = 
 dotnet_naming_style.allupper.capitalization = all_upper
+
+# Verify settings
+[*.{received,verified}.{json,txt,xml}]
+charset = utf-8-bom
+end_of_line = lf
+indent_size = unset
+indent_style = unset
+insert_final_newline = false
+tab_width = unset
+trim_trailing_whitespace = false

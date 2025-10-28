@@ -31,8 +31,8 @@ namespace Hl7.Fhir.Rest
 
         public static HttpContent CreateContentFromBinary(Binary b)
         {
-            var content = new ByteArrayContent(b.Data ?? b.Content);
-            content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType);
+            var content = new ByteArrayContent(b.Data ?? b.Content ?? throw new InvalidOperationException("Binary resource has no content"));
+            content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType ?? "application/octet-stream");
             content.Headers.LastModified = b.Meta?.LastUpdated;
 
             if (b.SecurityContext?.Reference is { } secRef)
@@ -51,7 +51,10 @@ namespace Hl7.Fhir.Rest
         {
             var bodyParameters = pars.Parameter
                 .Where(p => p.Name is not null && p.Value is not null)
-                .Select(p => new KeyValuePair<string, string>(p.Name, p.Value.ToString()!))
+                .Select(p =>
+                    new KeyValuePair<string, string>(
+                        p.Name!,
+                        p.Value!.ToString()!))
                 .ToList();
 
             var content = new FormUrlEncodedContent(bodyParameters);

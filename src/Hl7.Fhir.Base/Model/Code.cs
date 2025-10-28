@@ -30,24 +30,60 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using P=Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class Code : ICoded
 {
-    [Bindable(true)]
-    public partial class Code
-    {
-        /// <summary>
-        /// Creates a <see cref="ElementModel.Types.Code"/> from an instance of a <see cref="Code"/>.
-        /// </summary>
-        public ElementModel.Types.Code ToSystemCode() => new(system: null, code: Value, display: null, version: null);
+    /// <summary>
+    /// Converts this Code to a <see cref="P.Code"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The value of this code is null,
+    /// which is not valid for System Codes.</exception>
+    public P.Code ToSystemCode() =>
+        (P.Code?)TryConvertToSystemTypeInternal() ??
+        throw new InvalidOperationException("Value is null.");
 
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
-    }
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null
+            ? new P.Code(system: null, code: Value, display: null, version: null)
+            : null;
+
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
+        JsonValue switch
+        {
+            null => null,
+            string unparsed => IsValidValue(unparsed)
+                ? null
+                : COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
+        };
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+
+    /// <inheritdoc cref="ICoded.ToCodings"/>
+    public virtual IReadOnlyCollection<Coding> ToCodings() => [new(system: null, code: Value)];
+
+    /// <summary>
+    /// The literal of the code value, which is the same as the <see cref="Value"/>.
+    /// </summary>
+    public virtual string? Literal => Value;
+
+    /// <summary>
+    /// The system of the code value, which is always null for a Code.
+    /// </summary>
+    public virtual string? System => null;
 }
-
-#nullable restore

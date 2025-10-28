@@ -27,10 +27,7 @@
           </telecom>
         </contact>
         <code value="_text" />
-        <base value="DomainResource" />
         <type value="string" />
-        <description value="Search on the narrative of the resource" />
-        <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -58,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Identifier"; } }
+    public override string TypeName => "Identifier";
 
     /// <summary>
     /// Identifies the purpose for this identifier, if known .
@@ -101,19 +105,31 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// usual | official | temp | secondary | old (If known)
+    /// usual | official | temp | secondary | old (If known).
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("IdentifierUse")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Identifier.IdentifierUse> UseElement
+    public Code<Hl7.Fhir.Model.Identifier.IdentifierUse>? UseElement
     {
-      get { return _UseElement; }
-      set { _UseElement = value; OnPropertyChanged("UseElement"); }
+      get
+      {
+        if(_UseElement.InOverflow<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Identifier.IdentifierUse>), Overflow["use"]);
+        return _UseElement;
+      }
+
+      set
+      {
+        if (_UseElement.InOverflow<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>())
+          Overflow.Remove("use");
+        _UseElement = value;
+        OnPropertyChanged("UseElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.Identifier.IdentifierUse> _UseElement;
+    private Code<Hl7.Fhir.Model.Identifier.IdentifierUse>? _UseElement;
 
     /// <summary>
     /// usual | official | temp | secondary | old (If known)
@@ -122,245 +138,341 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Identifier.IdentifierUse? Use
     {
-      get { return UseElement != null ? UseElement.Value : null; }
+      get => UseElement?.Value;
       set
       {
-        if (value == null)
-          UseElement = null;
-        else
-          UseElement = new Code<Hl7.Fhir.Model.Identifier.IdentifierUse>(value);
+        UseElement = value is null ? null! : new Code<Hl7.Fhir.Model.Identifier.IdentifierUse>(value);
         OnPropertyChanged("Use");
       }
     }
 
     /// <summary>
-    /// Description of identifier
+    /// Description of identifier.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
     [Binding("IdentifierType")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
-      get { return _Type; }
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+        return _Type;
+      }
+
+      set
+      {
+        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
-    /// The namespace for the identifier value
+    /// The namespace for the identifier value.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri SystemElement
+    public Hl7.Fhir.Model.FhirUri? SystemElement
     {
-      get { return _SystemElement; }
-      set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+      get
+      {
+        if(_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["system"]);
+        return _SystemElement;
+      }
+
+      set
+      {
+        if (_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          Overflow.Remove("system");
+        _SystemElement = value;
+        OnPropertyChanged("SystemElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirUri _SystemElement;
+    private Hl7.Fhir.Model.FhirUri? _SystemElement;
 
     /// <summary>
     /// The namespace for the identifier value
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string System
+    public string? System
     {
-      get { return SystemElement != null ? SystemElement.Value : null; }
+      get => SystemElement?.Value;
       set
       {
-        if (value == null)
-          SystemElement = null;
-        else
-          SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+        SystemElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("System");
       }
     }
 
     /// <summary>
-    /// The value that is unique
+    /// The value that is unique.
     /// </summary>
     [FhirElement("value", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ValueElement
+    public Hl7.Fhir.Model.FhirString? ValueElement
     {
-      get { return _ValueElement; }
-      set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+      get
+      {
+        if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
+        return _ValueElement;
+      }
+
+      set
+      {
+        if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("value");
+        _ValueElement = value;
+        OnPropertyChanged("ValueElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.FhirString _ValueElement;
+    private Hl7.Fhir.Model.FhirString? _ValueElement;
 
     /// <summary>
     /// The value that is unique
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Value
+    public string? Value
     {
-      get { return ValueElement != null ? ValueElement.Value : null; }
+      get => ValueElement?.Value;
       set
       {
-        if (value == null)
-          ValueElement = null;
-        else
-          ValueElement = new Hl7.Fhir.Model.FhirString(value);
+        ValueElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Value");
       }
     }
 
     /// <summary>
-    /// Time period when id is/was valid for use
+    /// Time period when id is/was valid for use.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
-      get { return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
+        return _Period;
+      }
+
+      set
+      {
+        if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
-    /// Organization that issued id (may be just text)
+    /// Organization that issued id (may be just text).
     /// </summary>
     [FhirElement("assigner", InSummary=true, Order=80)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Assigner
+    public Hl7.Fhir.Model.ResourceReference? Assigner
     {
-      get { return _Assigner; }
-      set { _Assigner = value; OnPropertyChanged("Assigner"); }
+      get
+      {
+        if(_Assigner.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["assigner"]);
+        return _Assigner;
+      }
+
+      set
+      {
+        if (_Assigner.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("assigner");
+        _Assigner = value;
+        OnPropertyChanged("Assigner");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Assigner;
+    private Hl7.Fhir.Model.ResourceReference? _Assigner;
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Identifier;
-
-      if (dest == null)
-      {
+      if(other is not Identifier dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>)UseElement.DeepCopy();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Assigner != null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)Assigner.DeepCopy();
-      return dest;
+      base.CopyToInternal(dest);
+      if(_UseElement is not null) dest.UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>)_UseElement.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_SystemElement is not null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)_SystemElement.DeepCopyInternal();
+      if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)_ValueElement.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Assigner is not null) dest.Assigner = (Hl7.Fhir.Model.ResourceReference)_Assigner.DeepCopyInternal();
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new Identifier());
+      var instance = new Identifier();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Identifier;
-      if(otherT == null) return false;
+      if(other is not Identifier otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
-      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
-      if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(Assigner, otherT.Assigner)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Assigner, otherT._Assigner)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as Identifier;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
-      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
-      if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(Assigner, otherT.Assigner)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        if (UseElement != null) yield return UseElement;
-        if (Type != null) yield return Type;
-        if (SystemElement != null) yield return SystemElement;
-        if (ValueElement != null) yield return ValueElement;
-        if (Period != null) yield return Period;
-        if (Assigner != null) yield return Assigner;
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        if (UseElement != null) yield return new ElementValue("use", UseElement);
-        if (Type != null) yield return new ElementValue("type", Type);
-        if (SystemElement != null) yield return new ElementValue("system", SystemElement);
-        if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-        if (Period != null) yield return new ElementValue("period", Period);
-        if (Assigner != null) yield return new ElementValue("assigner", Assigner);
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "use":
-          value = UseElement;
-          return UseElement is not null;
+          if (_UseElement.InOverflow<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>())
+          {
+            value = Overflow["use"];
+            return true;
+          }
+          value = _UseElement;
+          return (value as Code<Hl7.Fhir.Model.Identifier.IdentifierUse>) is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
+          value = _Type;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "system":
-          value = SystemElement;
-          return SystemElement is not null;
+          if (_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
+            value = Overflow["system"];
+            return true;
+          }
+          value = _SystemElement;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "value":
-          value = ValueElement;
-          return ValueElement is not null;
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["value"];
+            return true;
+          }
+          value = _ValueElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          {
+            value = Overflow["period"];
+            return true;
+          }
+          value = _Period;
+          return (value as Hl7.Fhir.Model.Period) is not null;
         case "assigner":
-          value = Assigner;
-          return Assigner is not null;
+          if (_Assigner.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["assigner"];
+            return true;
+          }
+          value = _Assigner;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (SystemElement is not null) yield return new KeyValuePair<string,object>("system",SystemElement);
-      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Assigner is not null) yield return new KeyValuePair<string,object>("assigner",Assigner);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "use":
+          if (value is not (Code<Hl7.Fhir.Model.Identifier.IdentifierUse> or null))
+          {
+            UseElement = OverflowNull<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>.INSTANCE;
+            Overflow["use"] = value;
+          }
+          else UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>?)value;
+          return this;
+        case "type":
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          return this;
+        case "system":
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            SystemElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["system"] = value;
+          }
+          else SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
+          return this;
+        case "value":
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+          return this;
+        case "period":
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
+          return this;
+        case "assigner":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Assigner = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["assigner"] = value;
+          }
+          else Assigner = (Hl7.Fhir.Model.ResourceReference?)value;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_UseElement is not null && !_UseElement.InOverflow<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>()) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_SystemElement is not null && !_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Assigner is not null && !_Assigner.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("assigner",_Assigner);
     }
 
   }

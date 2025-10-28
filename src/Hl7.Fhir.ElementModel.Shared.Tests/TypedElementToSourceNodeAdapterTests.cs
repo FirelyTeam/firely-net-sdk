@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.ElementModel.Adapters;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Tasks = System.Threading.Tasks;
@@ -20,7 +20,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void AnnotationsTest()
         {
             var patient = new Patient() { Active = true };
-            var typedElement = patient.ToTypedElement();
+            var typedElement = patient.ToTypedElementLegacy();
             var sourceNode = typedElement.ToSourceNode();
 
             var result = sourceNode.Annotation<ISourceNode>();
@@ -110,10 +110,50 @@ namespace Hl7.Fhir.ElementModel.Tests
             var poco = new Patient();
             poco.Extension.Add(new Extension("http://hl7.org/fhir/StructureDefinition/patient-birthTime", new FhirDateTime("2021-01-01T00:00:00Z")));
 
-            var result = poco.ToSourceNode(ModelInspector.ForType<Patient>());
+            var result = poco.ToSourceNode(ModelInfo.ModelInspector);
             result.Children("extension").First().Children("valueDateTime").First().Location.Should()
                 .Be(extensionValueSourceLocation,
                     "On a SourceNode from a TypedElement, a choice type should again have the same Location as if it was constructed as SourceNode");
+        }
+        
+        [TestMethod]
+        public void UnknownResource_ContainsPatient_CanRetrievePoco()
+        {
+            var sourceNode = 
+                SourceNode.Resource("Test", "Unknown", 
+                SourceNode.Resource("resource", "Patient",
+                SourceNode.Valued("active", "true"),
+                SourceNode.Node("extension",
+                SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/patient-birthTime"),
+                SourceNode.Valued("valueDateTime", "2021-01-01T00:00:00Z"))));
+
+            var sourcePoco = sourceNode.Children("resource").First().ToPoco<Resource>();
+            var typedElement = sourceNode.ToTypedElement(ModelInfo.ModelInspector);
+            ISourceNode fhirPath = typedElement.Select("resource").First().ToPocoNode();
+            var patient = fhirPath.ToPoco<Patient>();
+            patient.Should().NotBeNull();
+            patient.Active.Should().BeTrue();
+        }
+        
+        [TestMethod]
+        public void DynamicDataType_CanConvertToPoco()
+        {
+            var sourceNode = SourceNode.Resource("Test", "CustomCodeableConcept", 
+                SourceNode.Node("coding",
+                    SourceNode.Valued("system", "http://loinc.org"),
+                    SourceNode.Valued("code", "8302-2"),
+                    SourceNode.Valued("display", "Testing")
+                    ));
+            var pn = sourceNode.ToTypedElement().Select("coding").First().ToPocoNode();
+            pn.Poco.Should().BeOfType<DynamicDataType>();
+            ISourceNode sn = pn;
+            ITypedElement te = pn;
+            var teCC = te.ToPoco<Coding>();
+            var cc = sn.ToPoco<Coding>();
+            cc.HasOverflow.Should().Be(teCC.HasOverflow);
+            cc.Display.Should().Be("Testing").And.Be(teCC.Display);
+            cc.System.Should().Be("http://loinc.org").And.Be(teCC.System);
+            cc.Code.Should().Be("8302-2").And.Be(teCC.Code);
         }
     }
 }
