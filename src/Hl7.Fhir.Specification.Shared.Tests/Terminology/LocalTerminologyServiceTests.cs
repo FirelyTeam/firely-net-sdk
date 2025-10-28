@@ -166,5 +166,45 @@ namespace Hl7.Fhir.Specification.Tests
             // but we're called with the correct version before that.
             await resolver.Received().FindValueSetAsync(Arg.Is<string>(u => u == resolved));
         }
+
+        [TestMethod]
+        public async Task Expand_PreservesStatus404ForNonexistentValueSet()
+        {
+            // Test for issue: LocalTerminologyService.Expand hides internally reported 404 HttpStatus FhirOperationException
+            var localTerminology = new LocalTerminologyService(ZipSource.CreateValidationSource());
+            var valueSetUrl = "http://hl7.org/fhir/ValueSet/nonexistent";
+
+            var expandAction = async () => await localTerminology.Expand(
+                new ExpandParameters().WithValueSet(valueSetUrl).Build());
+
+            var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
+            ex.Which.Status.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [TestMethod]
+        public async Task Expand_PreservesStatus422ForInvalidValueSet()
+        {
+            // Test for issue: LocalTerminologyService.Expand hides internally reported 422 HttpStatus FhirOperationException
+            var localTerminology = new LocalTerminologyService(ZipSource.CreateValidationSource());
+            var valueSetUrl = "http://hl7.org/fhir/ValueSet/nonexistent";
+
+            var valueSet = new ValueSet
+            {
+                Url = valueSetUrl,
+                Compose = new ValueSet.ComposeComponent
+                {
+                    Include = new System.Collections.Generic.List<ValueSet.ConceptSetComponent>
+                    {
+                        new ValueSet.ConceptSetComponent { System = "http://hl7.org/fhir/CodeSystem/nonexistent" }
+                    }
+                }
+            };
+
+            var expandAction = async () => await localTerminology.Expand(
+                new ExpandParameters().WithValueSet(valueSet: valueSet).Build());
+
+            var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
+            ex.Which.Status.Should().Be((System.Net.HttpStatusCode)422);
+        }
     }
 }
