@@ -79,6 +79,22 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(a.IsExactly(c));
             Assert.IsTrue(a.Matches(c));
         }
+
+        [TestMethod]
+        public void CheckCompareSameReferenceIsExactly()
+        {
+            // Test that comparing an object with itself returns true due to ReferenceEquals optimization
+            var patient = new Patient { Active = true };
+            Assert.IsTrue(patient.IsExactly(patient), "Same reference should be exactly equal");
+        }
+
+        [TestMethod]
+        public void CheckCompareSameReferenceMatches()
+        {
+            // Test that comparing an object with itself returns true due to ReferenceEquals optimization
+            var patient = new Patient { Active = true };
+            Assert.IsTrue(patient.Matches(patient), "Same reference should match");
+        }
         
     }
 }

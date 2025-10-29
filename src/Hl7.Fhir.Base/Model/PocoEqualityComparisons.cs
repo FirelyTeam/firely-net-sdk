@@ -28,6 +28,7 @@ public class ExactMatchEqualityComparer: IEqualityComparer<Base>, IEqualityCompa
     public bool Equals(Base? x, Base? y)
     {
         if (x == null || y == null) return x==y;
+        if (ReferenceEquals(x, y)) return true;
         return x.CompareChildren(y, this);
     }
 
@@ -64,6 +65,7 @@ public class PatternMatchEqualityComparer: IEqualityComparer<Base>, IEqualityCom
     public bool Equals(Base? x, Base? pattern)
     {
         if (pattern == null) return true;
+        if (ReferenceEquals(x, pattern)) return true;
         return x != null && x.CompareChildren(pattern, this);
     }
 
