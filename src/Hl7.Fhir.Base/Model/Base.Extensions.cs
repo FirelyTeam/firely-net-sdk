@@ -43,7 +43,18 @@ public static partial class BaseExtensions
         }
     }
 
-    public static T DeepCopy<T>(this T source) where T : Base => (T)source.DeepCopyInternal();
+    /// <summary>
+    /// Creates a deep copy of the specified object. The resulting object is a new instance with all
+    /// of the source's data recursively duplicated.
+    /// </summary>
+    /// <param name="source">The object to copy.</param>
+    /// <typeparam name="T">The concrete type cast the copy of <paramref name="source"/> to.</typeparam>
+    /// <return> A deep copy of the source object, or <c>null</c> if the source is <c>null</c>. </return>
+    /// <remarks>
+    /// We do null conditional access operator to not throw on nulls, then ignore if it is null to keep default nullability.
+    /// Should not happen unless someone explicitly assigned null on poco then ignored warnings.
+    /// </remarks>
+    public static T DeepCopy<T>(this T source) where T : Base => (T)source?.DeepCopyInternal()!;
 
     public static void CopyTo(this Base source, Base target) => source.CopyToInternal(target);
 

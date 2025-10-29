@@ -703,8 +703,9 @@ public static class SerializationUtil
         addSubsetted(instance, true);
         return;
 
-        static void addSubsetted(Base instance, bool atRoot)
+        static void addSubsetted(Base? instance, bool atRoot)
         {
+            if (instance is null) return;
             var isBundleAtRoot = instance is Bundle && atRoot;
 
             if (instance is Resource resource && !isBundleAtRoot)

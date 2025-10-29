@@ -32,6 +32,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
         
         [TestMethod]
+        public void SerializationWontCrashWithFilterAndNullListElements()
+        {
+            var patient = new Patient
+            {
+                BirthDateElement = new Date("1990")
+                {
+                    Extension = [ null, new Extension("birthTime", new Instant(DateTimeOffset.Now)) ]
+                }
+            };
+            var (_, summarized) = runSummarize<Patient>(patient, SerializationFilter.ForSummary);
+            summarized.Extension.Should().BeEmpty();
+        }
+        
+        [TestMethod]
         public void Basics()
         {
             // This bundle should get through unfiltered
