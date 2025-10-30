@@ -121,8 +121,13 @@ namespace Hl7.Fhir.ElementModel
 
             IEnumerable<PocoElementNode> createChildNodes(string childName, object value)
             {
-                var elts = returnElements(childName, value);
                 var elementDef = _myClassMapping.FindMappedElementByName(childName);
+                
+                // it is an unknown element, so we ignore it
+                if (elementDef is null)
+                    return [];
+                
+                var elts = returnElements(childName, value);
                 //Create the list of child nodes differently based on:
                 //- whether multiple children are allowed or not
                 //- whether a parent location is known or not (i.e: root nodes have an empty location) 

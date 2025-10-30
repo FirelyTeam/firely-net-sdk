@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using System;
@@ -812,7 +813,47 @@ namespace Hl7.Fhir.Specification.Tests
               .WithValueSet(new Canonical("#fragment"));
             parameters.Url.Value.Should().Be("#fragment");
         }
+        
+        /// <summary>
+        /// Test for issue with ValueSet expansion causing NullReferenceException during serialization 
+        /// when the expansion contains property field that doesn't exist in R4/R4B.
+        /// The Property field in ValueSet.expansion.contains was introduced in R5.
+        /// Uses item-type ValueSet which has properties in R5.
+        /// </summary>
+        [Fact]
+        public async Tasks.Task ExpandedValueSetShouldSerializeSuccessfully()
+        {
+            var server = new LocalTerminologyService(_resolver);
+            var parameters = new Parameters
+            {
+                Parameter = [ new() { Name = "url", Value = new FhirUri("http://hl7.org/fhir/ValueSet/item-type") }],
+            };
 
+            var resource = await server.Expand(parameters);
+
+            // This should not throw a NullReferenceException
+            var json = resource.ToJson();
+
+            // Verify the expansion was successful
+            Assert.NotNull(json);
+            Assert.NotEmpty(json);
+            var valueSet = resource as ValueSet;
+            Assert.NotNull(valueSet);
+            Assert.True(valueSet.HasExpansion);
+            Assert.True(valueSet.Expansion.Contains.Any());
+
+#if R5 || R6
+            // In R5 and R6, verify that the Property element is correctly set in the expansion
+            // when the CodeSystem has properties defined. The item-type CodeSystem has the
+            // "notSelectable" property defined for some concepts (e.g., "question").
+            var containsWithProperties = valueSet.Expansion.Contains
+                .Where(c => c.Property != null && c.Property.Any())
+                .ToList();
+
+            // The item-type ValueSet should have at least one concept with properties in R5+
+            Assert.NotEmpty(containsWithProperties);
+#endif
+        }
 
         #region helper functions
         private static Tasks.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
