@@ -128,8 +128,11 @@ namespace Hl7.Fhir.Specification.Terminology
             tryMulti((s, p) => s.Expand(p, id, useGet), parameters);
 
         /// <inheritdoc/>
-        public Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
-            tryMulti((s, p) => s.Lookup(p, useGet), parameters);
+        public Task<Parameters> Lookup(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.Lookup(p, id, useGet), parameters);
+
+        public Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false) =>
+            tryMulti((s, p) => s.FindMatches(p, id, useGet), parameters);
 
         /// <inheritdoc/>
         public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) =>
@@ -150,11 +153,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private static bool matchVs(IEnumerable<string>? preferredValueSets, string inputVsUrl)
         {
-#if NETSTANDARD2_0
-            return preferredValueSets?.Any(vs => FileSystemName.MatchesSimpleExpression(vs.AsSpan(), inputVsUrl.AsSpan())) ?? false;
-#else
             return preferredValueSets?.Any(vs => System.IO.Enumeration.FileSystemName.MatchesSimpleExpression(vs, inputVsUrl)) ?? false;
-#endif
         }
 
         private static IEnumerable<T> reorderList<T>(IEnumerable<T> originalList, IEnumerable<T> itemsToMoveToFront)
@@ -168,7 +167,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             // check if any preferedServices
             var inputVsUrl = new ValidateCodeParameters(parameters).Url?.Value;
-            var preferred = (inputVsUrl != null) ? preferredService(inputVsUrl) : Enumerable.Empty<ITerminologyService>();
+            var preferred = (inputVsUrl != null) ? preferredService(inputVsUrl) : [];
 
             var services = _termServices.Select(s => s.Service);
             var orderedTermServices = preferred.Any() ?
