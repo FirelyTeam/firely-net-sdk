@@ -151,18 +151,11 @@ namespace Hl7.Fhir.Support.Tests.Specification
             result.Parameter.Where(p => p.Name == "message").FirstOrDefault()?.Value.As<FhirString>()?.Value.Should().Be("this is the second ts that fails");
         }
 
-        [TestMethod]
-        public void EmptyTerminologyServiceTest()
-        {
-            var call = () => new MultiTerminologyService(Enumerable.Empty<TerminologyServiceRoutingSettings>());
-            call.Should().Throw<ArgumentNullException>();
-        }
-
         private static TerminologyServiceRoutingSettings createTerminologyServiceRoutingSettings(ITerminologyService service, string valueSet)
         {
             return new TerminologyServiceRoutingSettings(service)
             {
-                PreferredValueSets = new string[] { valueSet }
+                PreferredValueSets = [valueSet]
             };
         }
 

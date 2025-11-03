@@ -35,65 +35,83 @@ public class ExternalTerminologyService : ITerminologyService
     public BaseFhirClient Endpoint { get; set; }
 
     ///<inheritdoc />
-    public async Task<Parameters?> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+    public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
-        if (string.IsNullOrEmpty(id))
-            return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
-        else
-            return await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.VALUESET_NAME,id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false))
+            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.VALUESET_NAME,id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false));
+    }
+
+    private static T assertIs<T>(object? result)
+    {
+        if (result is T t)
+            return t;
+
+        throw new InvalidOperationException($"Expected result of type {typeof(T).Name}, but got {result?.GetType().Name}");
     }
 
     ///<inheritdoc />
-    public async Task<Parameters?> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+    public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
-        if (string.IsNullOrEmpty(id))
-            return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
-        else
-            return await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false))
+            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false));
     }
 
     private static Uri constructUri(string resourceName, string id) =>
         ResourceIdentity.Build(resourceName, id);
 
     ///<inheritdoc />
-    public Task<Resource?> Expand(Parameters parameters, string? id = null, bool useGet = false)
+    public async Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
     {
-        if (string.IsNullOrEmpty(id))
-            return Endpoint.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet);
-        else
-            return Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.VALUESET_NAME,id), RestOperation.EXPAND_VALUESET, parameters, useGet);
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Resource>(
+                await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet)
+                    .ConfigureAwait(false))
+            : assertIs<Resource>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.VALUESET_NAME, id),
+                RestOperation.EXPAND_VALUESET, parameters, useGet).ConfigureAwait(false));
     }
 
     ///<inheritdoc />
-    public async Task<Parameters?> Lookup(Parameters parameters, bool useGet = false)
+    public async Task<Parameters> Lookup(Parameters parameters, string? id=null, bool useGet = false)
     {
-        return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false) as Parameters;
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false))
+            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false));
     }
 
     ///<inheritdoc />
-    public async Task<Parameters?> Translate(Parameters parameters, string? id = null, bool useGet = false)
+    public async Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false)
     {
-        if (string.IsNullOrEmpty(id))
-            return await Endpoint.TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, parameters, useGet).ConfigureAwait(false) as Parameters;
-        else
-            return await Endpoint.InstanceOperationAsync(
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.FIND_MATCHES, parameters, useGet).ConfigureAwait(false))
+            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.FIND_MATCHES, parameters, useGet).ConfigureAwait(false));
+    }
+
+    ///<inheritdoc />
+    public async Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
+    {
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Parameters>(await Endpoint
+                .TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, parameters, useGet)
+                .ConfigureAwait(false))
+            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(
                     ResourceIdentity.Build(FhirTypeNames.CONCEPTMAP_NAME, id),
                     RestOperation.TRANSLATE, parameters, useGet)
-                .ConfigureAwait(false) as Parameters;
+                .ConfigureAwait(false));
     }
 
     ///<inheritdoc />
-    public async Task<Parameters?> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
+    public async Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
     {
-        if (string.IsNullOrEmpty(id))
-            return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
-        else
-            return await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME,id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
+        return string.IsNullOrEmpty(id)
+            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false))
+            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME,id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false));
     }
 
     /// <inheritdoc />
-    public Task<Resource?> Closure(Parameters parameters, bool useGet = false)
+    public async Task<Resource> Closure(Parameters parameters, bool useGet = false)
     {
-        return Endpoint.WholeSystemOperationAsync(RestOperation.CLOSURE, parameters, useGet);
+        return assertIs<Resource>(await Endpoint.WholeSystemOperationAsync(RestOperation.CLOSURE, parameters, useGet).ConfigureAwait(false));
     }
 }
