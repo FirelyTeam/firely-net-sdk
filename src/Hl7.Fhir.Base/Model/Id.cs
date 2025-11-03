@@ -31,42 +31,18 @@
 
 #nullable enable
 
-using Hl7.Fhir.Validation;
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using P = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
-namespace Hl7.Fhir.Model;
 
-public partial class Id
+namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Validates the JsonValue and updates the internal cached Date value.
-    /// </summary>
-    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        JsonValue switch
-        {
-            null => null,
-            string unparsed when IsValidValue(unparsed) => null,
-            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
-        };
-
-    /// <summary>
-    /// Checks whether the given literal is correctly formatted.
-    /// </summary>
-    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
-
-    /// <summary>
-    /// Converts this Id to a <see cref="P.String" />.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">The Value of this Id is null,
-    /// which is not valid for System strings.</exception>
-    public P.String ToSystemString() =>
-        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
-
-    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
-        Value is not null ? new P.String(Value) : null;
+    public partial class Id
+    {
+        /// <summary>
+        /// Checks whether the given literal is correctly formatted.
+        /// </summary>
+        public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+    }
 }
+
+#nullable restore

@@ -30,34 +30,16 @@
 
 #nullable enable
 
-using Hl7.Fhir.Validation;
-using System;
-using System.ComponentModel.DataAnnotations;
-using P = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-namespace Hl7.Fhir.Model;
-
-public partial class FhirDecimal
+namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Validates the JsonValue.
-    /// </summary>
-    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        JsonValue switch
-        {
-            null or decimal => null,
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
-        };
+    public partial class FhirDecimal
+    {
+        /// <summary>
+        /// Checks whether the given literal is correctly formatted.
+        /// </summary>
+        public static bool IsValidValue(string value) => ElementModel.Types.Decimal.TryParse(value, out _);
+    }
 
-    /// <summary>
-    /// Converts this FhirDecimal to a <see cref="P.Decimal" />.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">The Value of this decimal is null,
-    /// which is not valid for System decimals.</exception>
-    public P.Decimal ToSystemDecimal() =>
-        (P.Decimal?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
-
-    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
-        Value is not null ? new P.Decimal(Value.Value) : null;
 }
+
+#nullable restore

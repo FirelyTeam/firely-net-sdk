@@ -88,7 +88,16 @@ namespace Hl7.Fhir.Tests.Model
             // This exact line was failing with "Object reference not set to an instance of an object"
             // in netstandard2.0 and earlier .NET versions, due to GetHashCode() being called
             // on primitive types with null values during validation
-            patient.Validate(); // Should not throw NullReferenceException anymore
+            patient.Validate(true); // Should not throw NullReferenceException anymore
+
+            // Ensure patient.Validate(false) still works as it did before
+            patient.Validate(false); // This was working before the fix
+
+            // Also test with TryValidate to ensure both validation paths work
+            ICollection<ValidationResult> results = new List<ValidationResult>();
+            bool isValid = DotNetAttributeValidation.TryValidate(patient, results, true);
+            // The validation may or may not pass (depends on other validation rules), 
+            // but it should not throw an exception
         }
 
         [TestMethod]

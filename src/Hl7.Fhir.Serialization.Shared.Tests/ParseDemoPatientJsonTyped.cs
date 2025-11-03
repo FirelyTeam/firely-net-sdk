@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        private async Task<ITypedElement> getJsonNode(string json, FhirJsonParsingSettings settings = null) 
+        public async Task<ITypedElement> getJsonNode(string json, FhirJsonParsingSettings settings = null) 
             => await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
@@ -81,26 +81,26 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             // will allow whitespace and comments to come through      
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
-            var xml = navJson.ToXml();
+            var xml = await navJson.ToXmlAsync();
 
             var navXml = XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider());
-            var json = navXml.ToJson();
+            var json = await navXml.ToJsonAsync();
 
-            List<string> errors = [];
+            List<string> errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, json, errors);
             Console.WriteLine(String.Join("\r\n", errors));
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
-        public void WillIgnoreUnknownElements()
+        public async Task IgnoreElements()
         {
             var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
-            var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson();
+            var jsonBare = await patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJsonAsync(new FhirJsonSerializationSettings { IgnoreUnknownElements = false });
             Assert.IsTrue(jsonBare.Contains("pat1"));
 
             patient.Add(SourceNode.Valued("unknownElement", "someValue"));
-            var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson();
+            var jsonUnknown = await patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJsonAsync(new FhirJsonSerializationSettings { IgnoreUnknownElements = true });
             Assert.IsFalse(jsonUnknown.Contains("unknownElement"));
         }
 

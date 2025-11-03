@@ -19,10 +19,10 @@ namespace Hl7.Fhir.Tests.Serialization
     public partial class ResourceParsingTests
     {
         [TestMethod]
-        public void ParseBinaryForR4andHigher()
+        public async Tasks.Task ParseBinaryForR4andHigher()
         {
-            var json = "{\"resourceType\":\"Binary\",\"contentType\":\"text/plain\",\"data\":\"ZGF0YQ==\"}";
-            var binary = new FhirJsonDeserializer().Deserialize<Binary>(json);
+            var json = "{\"resourceType\":\"Binary\",\"data\":\"ZGF0YQ==\"}";
+            var binary = await new FhirJsonParser().ParseAsync<Binary>(json);
 
             var result = new FhirJsonSerializer().SerializeToString(binary);
 
@@ -35,9 +35,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public async Tasks.Task ParseBinaryForR4andHigherWithUnknownSTU3Element()
         {
             var json = "{\"resourceType\":\"Binary\",\"content\":\"ZGF0YQ==\"}";
-#pragma warning disable CS0618 // Type or member is obsolete
             Func<Tasks.Task> act = () => new FhirJsonParser().ParseAsync<Binary>(json);
-#pragma warning restore CS0618 // Type or member is obsolete
 
             await act.Should().ThrowAsync<StructuralTypeException>();
         }

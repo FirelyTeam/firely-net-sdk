@@ -32,13 +32,9 @@ namespace Hl7.Fhir.Specification.Tests
             public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?)) => _source.ListResourceUris(filter);
             // => measureDuration(() => _source.ListResourceUris(filter));
 
-            public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
-            
-            public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;   
-            
-            public ResolverResult TryResolveByUri(string uri) => measureDuration(() => _source.TryResolveByUri(uri));
+            public Resource ResolveByCanonicalUri(string uri) => measureDuration(() => _source.ResolveByCanonicalUri(uri));
 
-            public ResolverResult TryResolveByCanonicalUri(string uri) => measureDuration(() => _source.TryResolveByCanonicalUri(uri));
+            public Resource ResolveByUri(string uri) => measureDuration(() => _source.ResolveByUri(uri));
 
             T measureDuration<T>(Func<T> f)
             {

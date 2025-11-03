@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -61,148 +57,122 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "CodeableReference";
+    public override string TypeName { get { return "CodeableReference"; } }
 
     /// <summary>
-    /// Reference to a concept (by class).
+    /// Reference to a concept (by class)
     /// </summary>
     [FhirElement("concept", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Concept
+    public Hl7.Fhir.Model.CodeableConcept Concept
     {
-      get
-      {
-        if(_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["concept"]);
-        return _Concept;
-      }
-
-      set
-      {
-        if (_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("concept");
-        _Concept = value;
-        OnPropertyChanged("Concept");
-      }
-
+      get { return _Concept; }
+      set { _Concept = value; OnPropertyChanged("Concept"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Concept;
+    private Hl7.Fhir.Model.CodeableConcept _Concept;
 
     /// <summary>
-    /// Reference to a resource (by instance).
+    /// Reference to a resource (by instance)
     /// </summary>
     [FhirElement("reference", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Reference
+    public Hl7.Fhir.Model.ResourceReference Reference
     {
-      get
-      {
-        if(_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
-        return _Reference;
-      }
-
-      set
-      {
-        if (_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("reference");
-        _Reference = value;
-        OnPropertyChanged("Reference");
-      }
-
+      get { return _Reference; }
+      set { _Reference = value; OnPropertyChanged("Reference"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Reference;
+    private Hl7.Fhir.Model.ResourceReference _Reference;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not CodeableReference dest)
+      var dest = other as CodeableReference;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Concept is not null) dest.Concept = (Hl7.Fhir.Model.CodeableConcept)_Concept.DeepCopyInternal();
-      if(_Reference is not null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)_Reference.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Concept != null) dest.Concept = (Hl7.Fhir.Model.CodeableConcept)Concept.DeepCopy();
+      if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new CodeableReference();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new CodeableReference());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not CodeableReference otherT) return false;
+      var otherT = other as CodeableReference;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Concept, otherT._Concept)) return false;
-      if(!comparer.Equals(_Reference, otherT._Reference)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
+      if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as CodeableReference;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
+      if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Concept != null) yield return Concept;
+        if (Reference != null) yield return Reference;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Concept != null) yield return new ElementValue("concept", Concept);
+        if (Reference != null) yield return new ElementValue("reference", Reference);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "concept":
-          if (_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["concept"];
-            return true;
-          }
-          value = _Concept;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Concept;
+          return Concept is not null;
         case "reference":
-          if (_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["reference"];
-            return true;
-          }
-          value = _Reference;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Reference;
+          return Reference is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "concept":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Concept = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["concept"] = value;
-          }
-          else Concept = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "reference":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["reference"] = value;
-          }
-          else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Concept is not null && !_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("concept",_Concept);
-      if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Concept is not null) yield return new KeyValuePair<string,object>("concept",Concept);
+      if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
     }
 
   }

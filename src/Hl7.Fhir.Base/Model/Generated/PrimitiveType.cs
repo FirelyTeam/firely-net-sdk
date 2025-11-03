@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -58,24 +54,40 @@ namespace Hl7.Fhir.Model
   [FhirType("PrimitiveType","http://hl7.org/fhir/StructureDefinition/PrimitiveType")]
   public abstract partial class PrimitiveType : Hl7.Fhir.Model.DataType
   {
-    protected internal override void CopyToInternal(Base other)
-    {
-      if(other is not PrimitiveType dest)
-        throw new ArgumentException("Can only copy to an object of the same type", "other");
+    /// <summary>
+    /// FHIR Type Name
+    /// </summary>
+    public override string TypeName { get { return "PrimitiveType"; } }
 
-      base.CopyToInternal(dest);
-      if (JsonValue != null) dest.JsonValue = JsonValue;
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    {
+      var dest = other as PrimitiveType;
+
+      if (dest == null)
+      {
+        throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
+
+      base.CopyTo(dest);
+      if (ObjectValue != null) dest.ObjectValue = ObjectValue;
+      return dest;
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other) => IsExactly(other);
+
+    public override bool IsExactly(IDeepComparable other)
     {
-      if(other is not PrimitiveType otherT) return false;
+      var otherT = other as PrimitiveType;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.IsExactly(otherT)) return false;
 
-      return Equals(JsonValue, otherT.JsonValue);
+      var otherValue = otherT.ObjectValue;
+      if (ObjectValue is byte[] bytes && otherValue is byte[] bytesOther)
+        return Enumerable.SequenceEqual(bytes, bytesOther);
+      else
+        return Equals(ObjectValue, otherT.ObjectValue);
 
     }
 

@@ -25,8 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.IsExactly(new FhirString($"'ned' is not a valid language."))
-                .Should().BeTrue();
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"'ned' is not a valid language."));
 
 
             parameters = new ValidateCodeParameters()
@@ -36,9 +35,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
-                .Subject.Value.IsExactly(new FhirBoolean(true))
-                .Should().BeTrue();
-            
+                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+
             parameters = new ValidateCodeParameters()
                 .WithValueSet(LANGUAGE_VS)
                 .WithCode(code: "fr-CH", context: "context")
@@ -46,8 +44,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
-                .Subject.Value.IsExactly(new FhirBoolean(true)).Should()
-                .BeTrue();
+                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
 
             parameters = new ValidateCodeParameters()
                    .WithValueSet(ADMINGENDERVS)

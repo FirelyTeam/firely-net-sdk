@@ -30,43 +30,21 @@
 
 #nullable enable
 
-using Hl7.Fhir.Validation;
-using System;
-using System.ComponentModel.DataAnnotations;
-using P = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
-namespace Hl7.Fhir.Model;
-
-public partial class Markdown
+namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Validates the JsonValue.
-    /// </summary>
-    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        JsonValue switch
-        {
-            null => null,
-            string s when IsValidValue(s) => null,
-            string s => COVE.LITERAL_INVALID(context, s, this.TypeName),
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
-        };
+    public partial class Markdown
+    {
+        /// <summary>
+        /// Checks whether the given literal is correctly formatted.
+        /// </summary>
+        public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
 
-    public static implicit operator string?(Markdown? md) => md?.Value;
-    public static implicit operator Markdown?(string? s) => s is not null ? new Markdown(s) : null;
+        public static implicit operator string?(Markdown? md) => md?.Value;
+        public static implicit operator Markdown?(string? s) => s is not null ? new(s) : null;
 
-    /// <summary>
-    /// Converts this Markdown to a <see cref="P.String" />.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">The Value of this Markdown is null,
-    /// which is not valid for System strings.</exception>
-    public P.String ToSystemString() =>
-        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+    }
 
-    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
-
-    /// <summary>
-    /// Checks whether the given literal is correctly formatted.
-    /// </summary>
-    public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
 }
+
+#nullable restore

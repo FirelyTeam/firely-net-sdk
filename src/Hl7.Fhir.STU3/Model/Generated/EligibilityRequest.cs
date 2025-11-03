@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,68 +51,42 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("EligibilityRequest","http://hl7.org/fhir/StructureDefinition/EligibilityRequest")]
+  [FhirType("EligibilityRequest","http://hl7.org/fhir/StructureDefinition/EligibilityRequest", IsResource=true)]
   public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "EligibilityRequest";
+    public override string TypeName { get { return "EligibilityRequest"; } }
 
     /// <summary>
-    /// Business Identifier.
+    /// Business Identifier
     /// </summary>
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// active | cancelled | draft | entered-in-error.
+    /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
+    [DeclaredType(Type = typeof(Code))]
     [Binding("EligibilityRequestStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
-      get
-      {
-        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>), Overflow["status"]);
-        return _StatusElement;
-      }
-
-      set
-      {
-        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
-          Overflow.Remove("status");
-        _StatusElement = value;
-        OnPropertyChanged("StatusElement");
-      }
-
+      get { return _StatusElement; }
+      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
+    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error
@@ -125,738 +95,448 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => StatusElement?.Value;
+      get { return StatusElement != null ? StatusElement.Value : null; }
       set
       {
-        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        if (value == null)
+          StatusElement = null;
+        else
+          StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// Desired processing priority.
+    /// Desired processing priority
     /// </summary>
     [FhirElement("priority", Order=110, FiveWs="class")]
     [Binding("ProcessPriority")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Priority
+    public Hl7.Fhir.Model.CodeableConcept Priority
     {
-      get
-      {
-        if(_Priority.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["priority"]);
-        return _Priority;
-      }
-
-      set
-      {
-        if (_Priority.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("priority");
-        _Priority = value;
-        OnPropertyChanged("Priority");
-      }
-
+      get { return _Priority; }
+      set { _Priority = value; OnPropertyChanged("Priority"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Priority;
+    private Hl7.Fhir.Model.CodeableConcept _Priority;
 
     /// <summary>
-    /// The subject of the Products and Services.
+    /// The subject of the Products and Services
     /// </summary>
     [FhirElement("patient", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
-      get
-      {
-        if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
-      }
-
-      set
-      {
-        if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("patient");
-        _Patient = value;
-        OnPropertyChanged("Patient");
-      }
-
+      get { return _Patient; }
+      set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Patient;
+    private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Estimated date or dates of Service.
+    /// Estimated date or dates of Service
     /// </summary>
     [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Serviced
+    public Hl7.Fhir.Model.DataType Serviced
     {
-      get
-      {
-        if(_Serviced.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["serviced"]);
-        return _Serviced;
-      }
-
-      set
-      {
-        if (_Serviced.InOverflow<DynamicDataType>())
-          Overflow.Remove("serviced");
-        _Serviced = value;
-        OnPropertyChanged("Serviced");
-      }
-
+      get { return _Serviced; }
+      set { _Serviced = value; OnPropertyChanged("Serviced"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _Serviced;
+    private Hl7.Fhir.Model.DataType _Serviced;
 
     /// <summary>
-    /// Creation date.
+    /// Creation date
     /// </summary>
     [FhirElement("created", Order=140, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
-      get
-      {
-        if(_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["created"]);
-        return _CreatedElement;
-      }
-
-      set
-      {
-        if (_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("created");
-        _CreatedElement = value;
-        OnPropertyChanged("CreatedElement");
-      }
-
+      get { return _CreatedElement; }
+      set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
 
     /// <summary>
     /// Creation date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Created
+    public string Created
     {
-      get => CreatedElement?.Value;
+      get { return CreatedElement != null ? CreatedElement.Value : null; }
       set
       {
-        CreatedElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          CreatedElement = null;
+        else
+          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
 
     /// <summary>
-    /// Author.
+    /// Author
     /// </summary>
     [FhirElement("enterer", Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Enterer
+    public Hl7.Fhir.Model.ResourceReference Enterer
     {
-      get
-      {
-        if(_Enterer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["enterer"]);
-        return _Enterer;
-      }
-
-      set
-      {
-        if (_Enterer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("enterer");
-        _Enterer = value;
-        OnPropertyChanged("Enterer");
-      }
-
+      get { return _Enterer; }
+      set { _Enterer = value; OnPropertyChanged("Enterer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Enterer;
+    private Hl7.Fhir.Model.ResourceReference _Enterer;
 
     /// <summary>
-    /// Responsible practitioner.
+    /// Responsible practitioner
     /// </summary>
     [FhirElement("provider", Order=160, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Provider
+    public Hl7.Fhir.Model.ResourceReference Provider
     {
-      get
-      {
-        if(_Provider.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["provider"]);
-        return _Provider;
-      }
-
-      set
-      {
-        if (_Provider.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("provider");
-        _Provider = value;
-        OnPropertyChanged("Provider");
-      }
-
+      get { return _Provider; }
+      set { _Provider = value; OnPropertyChanged("Provider"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Provider;
+    private Hl7.Fhir.Model.ResourceReference _Provider;
 
     /// <summary>
-    /// Responsible organization.
+    /// Responsible organization
     /// </summary>
     [FhirElement("organization", Order=170, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Organization
+    public Hl7.Fhir.Model.ResourceReference Organization
     {
-      get
-      {
-        if(_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["organization"]);
-        return _Organization;
-      }
-
-      set
-      {
-        if (_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("organization");
-        _Organization = value;
-        OnPropertyChanged("Organization");
-      }
-
+      get { return _Organization; }
+      set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Organization;
+    private Hl7.Fhir.Model.ResourceReference _Organization;
 
     /// <summary>
-    /// Target.
+    /// Target
     /// </summary>
     [FhirElement("insurer", Order=180, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Insurer
+    public Hl7.Fhir.Model.ResourceReference Insurer
     {
-      get
-      {
-        if(_Insurer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["insurer"]);
-        return _Insurer;
-      }
-
-      set
-      {
-        if (_Insurer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("insurer");
-        _Insurer = value;
-        OnPropertyChanged("Insurer");
-      }
-
+      get { return _Insurer; }
+      set { _Insurer = value; OnPropertyChanged("Insurer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Insurer;
+    private Hl7.Fhir.Model.ResourceReference _Insurer;
 
     /// <summary>
-    /// Servicing Facility.
+    /// Servicing Facility
     /// </summary>
     [FhirElement("facility", Order=190, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Facility
+    public Hl7.Fhir.Model.ResourceReference Facility
     {
-      get
-      {
-        if(_Facility.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["facility"]);
-        return _Facility;
-      }
-
-      set
-      {
-        if (_Facility.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("facility");
-        _Facility = value;
-        OnPropertyChanged("Facility");
-      }
-
+      get { return _Facility; }
+      set { _Facility = value; OnPropertyChanged("Facility"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Facility;
+    private Hl7.Fhir.Model.ResourceReference _Facility;
 
     /// <summary>
-    /// Insurance or medical plan.
+    /// Insurance or medical plan
     /// </summary>
     [FhirElement("coverage", Order=200)]
     [CLSCompliant(false)]
     [References("Coverage")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Coverage
+    public Hl7.Fhir.Model.ResourceReference Coverage
     {
-      get
-      {
-        if(_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["coverage"]);
-        return _Coverage;
-      }
-
-      set
-      {
-        if (_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("coverage");
-        _Coverage = value;
-        OnPropertyChanged("Coverage");
-      }
-
+      get { return _Coverage; }
+      set { _Coverage = value; OnPropertyChanged("Coverage"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Coverage;
+    private Hl7.Fhir.Model.ResourceReference _Coverage;
 
     /// <summary>
-    /// Business agreement.
+    /// Business agreement
     /// </summary>
     [FhirElement("businessArrangement", Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? BusinessArrangementElement
+    public Hl7.Fhir.Model.FhirString BusinessArrangementElement
     {
-      get
-      {
-        if(_BusinessArrangementElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["businessArrangement"]);
-        return _BusinessArrangementElement;
-      }
-
-      set
-      {
-        if (_BusinessArrangementElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("businessArrangement");
-        _BusinessArrangementElement = value;
-        OnPropertyChanged("BusinessArrangementElement");
-      }
-
+      get { return _BusinessArrangementElement; }
+      set { _BusinessArrangementElement = value; OnPropertyChanged("BusinessArrangementElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _BusinessArrangementElement;
+    private Hl7.Fhir.Model.FhirString _BusinessArrangementElement;
 
     /// <summary>
     /// Business agreement
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? BusinessArrangement
+    public string BusinessArrangement
     {
-      get => BusinessArrangementElement?.Value;
+      get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
       set
       {
-        BusinessArrangementElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          BusinessArrangementElement = null;
+        else
+          BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("BusinessArrangement");
       }
     }
 
     /// <summary>
-    /// Type of services covered.
+    /// Type of services covered
     /// </summary>
     [FhirElement("benefitCategory", Order=220)]
     [Binding("BenefitCategory")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? BenefitCategory
+    public Hl7.Fhir.Model.CodeableConcept BenefitCategory
     {
-      get
-      {
-        if(_BenefitCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["benefitCategory"]);
-        return _BenefitCategory;
-      }
-
-      set
-      {
-        if (_BenefitCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("benefitCategory");
-        _BenefitCategory = value;
-        OnPropertyChanged("BenefitCategory");
-      }
-
+      get { return _BenefitCategory; }
+      set { _BenefitCategory = value; OnPropertyChanged("BenefitCategory"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _BenefitCategory;
+    private Hl7.Fhir.Model.CodeableConcept _BenefitCategory;
 
     /// <summary>
-    /// Detailed services covered within the type.
+    /// Detailed services covered within the type
     /// </summary>
     [FhirElement("benefitSubCategory", Order=230)]
     [Binding("BenefitSubCategory")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? BenefitSubCategory
+    public Hl7.Fhir.Model.CodeableConcept BenefitSubCategory
     {
-      get
-      {
-        if(_BenefitSubCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["benefitSubCategory"]);
-        return _BenefitSubCategory;
-      }
-
-      set
-      {
-        if (_BenefitSubCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("benefitSubCategory");
-        _BenefitSubCategory = value;
-        OnPropertyChanged("BenefitSubCategory");
-      }
-
+      get { return _BenefitSubCategory; }
+      set { _BenefitSubCategory = value; OnPropertyChanged("BenefitSubCategory"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _BenefitSubCategory;
+    private Hl7.Fhir.Model.CodeableConcept _BenefitSubCategory;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not EligibilityRequest dest)
+      var dest = other as EligibilityRequest;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)_StatusElement.DeepCopyInternal();
-      if(_Priority is not null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)_Priority.DeepCopyInternal();
-      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
-      if(_Serviced is not null) dest.Serviced = (Hl7.Fhir.Model.DataType)_Serviced.DeepCopyInternal();
-      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
-      if(_Enterer is not null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)_Enterer.DeepCopyInternal();
-      if(_Provider is not null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)_Provider.DeepCopyInternal();
-      if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
-      if(_Insurer is not null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)_Insurer.DeepCopyInternal();
-      if(_Facility is not null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)_Facility.DeepCopyInternal();
-      if(_Coverage is not null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)_Coverage.DeepCopyInternal();
-      if(_BusinessArrangementElement is not null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)_BusinessArrangementElement.DeepCopyInternal();
-      if(_BenefitCategory is not null) dest.BenefitCategory = (Hl7.Fhir.Model.CodeableConcept)_BenefitCategory.DeepCopyInternal();
-      if(_BenefitSubCategory is not null) dest.BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept)_BenefitSubCategory.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
+      if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
+      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+      if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
+      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
+      if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();
+      if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
+      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
+      if(Insurer != null) dest.Insurer = (Hl7.Fhir.Model.ResourceReference)Insurer.DeepCopy();
+      if(Facility != null) dest.Facility = (Hl7.Fhir.Model.ResourceReference)Facility.DeepCopy();
+      if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
+      if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
+      if(BenefitCategory != null) dest.BenefitCategory = (Hl7.Fhir.Model.CodeableConcept)BenefitCategory.DeepCopy();
+      if(BenefitSubCategory != null) dest.BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept)BenefitSubCategory.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new EligibilityRequest();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new EligibilityRequest());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not EligibilityRequest otherT) return false;
+      var otherT = other as EligibilityRequest;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
-      if(!comparer.Equals(_Priority, otherT._Priority)) return false;
-      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
-      if(!comparer.Equals(_Serviced, otherT._Serviced)) return false;
-      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
-      if(!comparer.Equals(_Enterer, otherT._Enterer)) return false;
-      if(!comparer.Equals(_Provider, otherT._Provider)) return false;
-      if(!comparer.Equals(_Organization, otherT._Organization)) return false;
-      if(!comparer.Equals(_Insurer, otherT._Insurer)) return false;
-      if(!comparer.Equals(_Facility, otherT._Facility)) return false;
-      if(!comparer.Equals(_Coverage, otherT._Coverage)) return false;
-      if(!comparer.Equals(_BusinessArrangementElement, otherT._BusinessArrangementElement)) return false;
-      if(!comparer.Equals(_BenefitCategory, otherT._BenefitCategory)) return false;
-      if(!comparer.Equals(_BenefitSubCategory, otherT._BenefitSubCategory)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
+      if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+      if( !DeepComparable.Matches(Serviced, otherT.Serviced)) return false;
+      if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+      if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
+      if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
+      if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
+      if( !DeepComparable.Matches(Insurer, otherT.Insurer)) return false;
+      if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
+      if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
+      if( !DeepComparable.Matches(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+      if( !DeepComparable.Matches(BenefitCategory, otherT.BenefitCategory)) return false;
+      if( !DeepComparable.Matches(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as EligibilityRequest;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
+      if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+      if( !DeepComparable.IsExactly(Serviced, otherT.Serviced)) return false;
+      if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+      if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
+      if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
+      if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
+      if( !DeepComparable.IsExactly(Insurer, otherT.Insurer)) return false;
+      if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
+      if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
+      if( !DeepComparable.IsExactly(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+      if( !DeepComparable.IsExactly(BenefitCategory, otherT.BenefitCategory)) return false;
+      if( !DeepComparable.IsExactly(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (StatusElement != null) yield return StatusElement;
+        if (Priority != null) yield return Priority;
+        if (Patient != null) yield return Patient;
+        if (Serviced != null) yield return Serviced;
+        if (CreatedElement != null) yield return CreatedElement;
+        if (Enterer != null) yield return Enterer;
+        if (Provider != null) yield return Provider;
+        if (Organization != null) yield return Organization;
+        if (Insurer != null) yield return Insurer;
+        if (Facility != null) yield return Facility;
+        if (Coverage != null) yield return Coverage;
+        if (BusinessArrangementElement != null) yield return BusinessArrangementElement;
+        if (BenefitCategory != null) yield return BenefitCategory;
+        if (BenefitSubCategory != null) yield return BenefitSubCategory;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+        if (Priority != null) yield return new ElementValue("priority", Priority);
+        if (Patient != null) yield return new ElementValue("patient", Patient);
+        if (Serviced != null) yield return new ElementValue("serviced", Serviced);
+        if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
+        if (Enterer != null) yield return new ElementValue("enterer", Enterer);
+        if (Provider != null) yield return new ElementValue("provider", Provider);
+        if (Organization != null) yield return new ElementValue("organization", Organization);
+        if (Insurer != null) yield return new ElementValue("insurer", Insurer);
+        if (Facility != null) yield return new ElementValue("facility", Facility);
+        if (Coverage != null) yield return new ElementValue("coverage", Coverage);
+        if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", BusinessArrangementElement);
+        if (BenefitCategory != null) yield return new ElementValue("benefitCategory", BenefitCategory);
+        if (BenefitSubCategory != null) yield return new ElementValue("benefitSubCategory", BenefitSubCategory);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "status":
-          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _StatusElement;
-          return (value as Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>) is not null;
+          value = StatusElement;
+          return StatusElement is not null;
         case "priority":
-          if (_Priority.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["priority"];
-            return true;
-          }
-          value = _Priority;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Priority;
+          return Priority is not null;
         case "patient":
-          if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["patient"];
-            return true;
-          }
-          value = _Patient;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Patient;
+          return Patient is not null;
         case "serviced":
-          if (_Serviced.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["serviced"];
-            return true;
-          }
-          value = _Serviced;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = Serviced;
+          return Serviced is not null;
         case "created":
-          if (_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["created"];
-            return true;
-          }
-          value = _CreatedElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = CreatedElement;
+          return CreatedElement is not null;
         case "enterer":
-          if (_Enterer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["enterer"];
-            return true;
-          }
-          value = _Enterer;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Enterer;
+          return Enterer is not null;
         case "provider":
-          if (_Provider.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["provider"];
-            return true;
-          }
-          value = _Provider;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Provider;
+          return Provider is not null;
         case "organization":
-          if (_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["organization"];
-            return true;
-          }
-          value = _Organization;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Organization;
+          return Organization is not null;
         case "insurer":
-          if (_Insurer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["insurer"];
-            return true;
-          }
-          value = _Insurer;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Insurer;
+          return Insurer is not null;
         case "facility":
-          if (_Facility.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["facility"];
-            return true;
-          }
-          value = _Facility;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Facility;
+          return Facility is not null;
         case "coverage":
-          if (_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["coverage"];
-            return true;
-          }
-          value = _Coverage;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Coverage;
+          return Coverage is not null;
         case "businessArrangement":
-          if (_BusinessArrangementElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["businessArrangement"];
-            return true;
-          }
-          value = _BusinessArrangementElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = BusinessArrangementElement;
+          return BusinessArrangementElement is not null;
         case "benefitCategory":
-          if (_BenefitCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["benefitCategory"];
-            return true;
-          }
-          value = _BenefitCategory;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = BenefitCategory;
+          return BenefitCategory is not null;
         case "benefitSubCategory":
-          if (_BenefitSubCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["benefitSubCategory"];
-            return true;
-          }
-          value = _BenefitSubCategory;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = BenefitSubCategory;
+          return BenefitSubCategory is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "status":
-          if (value is not (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> or null))
-          {
-            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
-          return this;
-        case "priority":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Priority = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["priority"] = value;
-          }
-          else Priority = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "patient":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["patient"] = value;
-          }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "serviced":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            Serviced = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["serviced"] = value;
-          }
-          else Serviced = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "created":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            CreatedElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["created"] = value;
-          }
-          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "enterer":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Enterer = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["enterer"] = value;
-          }
-          else Enterer = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "provider":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Provider = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["provider"] = value;
-          }
-          else Provider = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "organization":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Organization = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["organization"] = value;
-          }
-          else Organization = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "insurer":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Insurer = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["insurer"] = value;
-          }
-          else Insurer = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "facility":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Facility = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["facility"] = value;
-          }
-          else Facility = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "coverage":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Coverage = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["coverage"] = value;
-          }
-          else Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "businessArrangement":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            BusinessArrangementElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["businessArrangement"] = value;
-          }
-          else BusinessArrangementElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "benefitCategory":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            BenefitCategory = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["benefitCategory"] = value;
-          }
-          else BenefitCategory = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "benefitSubCategory":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            BenefitSubCategory = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["benefitSubCategory"] = value;
-          }
-          else BenefitSubCategory = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_Priority is not null && !_Priority.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("priority",_Priority);
-      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (_Serviced is not null && !_Serviced.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("serviced",_Serviced);
-      if (_CreatedElement is not null && !_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("created",_CreatedElement);
-      if (_Enterer is not null && !_Enterer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("enterer",_Enterer);
-      if (_Provider is not null && !_Provider.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("provider",_Provider);
-      if (_Organization is not null && !_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("organization",_Organization);
-      if (_Insurer is not null && !_Insurer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("insurer",_Insurer);
-      if (_Facility is not null && !_Facility.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("facility",_Facility);
-      if (_Coverage is not null && !_Coverage.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("coverage",_Coverage);
-      if (_BusinessArrangementElement is not null && !_BusinessArrangementElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("businessArrangement",_BusinessArrangementElement);
-      if (_BenefitCategory is not null && !_BenefitCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("benefitCategory",_BenefitCategory);
-      if (_BenefitSubCategory is not null && !_BenefitSubCategory.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("benefitSubCategory",_BenefitSubCategory);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
+      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+      if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
+      if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
+      if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      if (BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",BusinessArrangementElement);
+      if (BenefitCategory is not null) yield return new KeyValuePair<string,object>("benefitCategory",BenefitCategory);
+      if (BenefitSubCategory is not null) yield return new KeyValuePair<string,object>("benefitSubCategory",BenefitSubCategory);
     }
 
   }

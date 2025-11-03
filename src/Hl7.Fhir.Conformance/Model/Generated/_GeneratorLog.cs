@@ -208,7 +208,6 @@
   // Used in model class (resource): Measure.status
   // Used in model class (resource): MedicinalProductDefinition.status
   // Used in model class (resource): MessageDefinition.status
-  // Used in model class (resource): MetadataResource.status
   // Used in model class (resource): NamingSystem.status
   // Used in model class (resource): ObservationDefinition.status
   // Used in model class (resource): OperationDefinition.status
@@ -285,7 +284,7 @@
   // Used in model class (resource): Subscription.filterBy.modifier
   // Used in model class (resource): SubscriptionTopic.canFilterBy.modifier
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
+// Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type

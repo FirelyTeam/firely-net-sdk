@@ -208,7 +208,6 @@
   // Used in model class (resource): Measure.status
   // Used in model class (resource): MedicinalProductDefinition.status
   // Used in model class (resource): MessageDefinition.status
-  // Used in model class (resource): MetadataResource.status
   // Used in model class (resource): NamingSystem.status
   // Used in model class (resource): ObservationDefinition.status
   // Used in model class (resource): OperationDefinition.status
@@ -298,13 +297,14 @@
   // Used in model class (resource): Evidence.statistic.modelCharacteristic.variable.handling
   // Used in model class (resource): EvidenceVariable.handling
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
+// Generated Shared Enumeration: VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
   // Used in model class (resource): GraphDefinition.node.type
   // Used in model class (resource): OperationDefinition.resource
   // Used in model class (resource): SearchParameter.base
   // Used in model class (resource): SearchParameter.target
 
 // Generated items
+// Address.cs
 // Age.cs
 // Annotation.cs
 // Availability.cs
@@ -313,13 +313,16 @@
 // DataRequirement.cs
 // Distance.cs
 // Dosage.cs
+// Duration.cs
 // Expression.cs
 // ExtendedContactDetail.cs
+// HumanName.cs
 // MarketingStatus.cs
 // MonetaryComponent.cs
 // Money.cs
 // ParameterDefinition.cs
 // ProductShelfLife.cs
+// Ratio.cs
 // RatioRange.cs
 // SampledData.cs
 // Timing.cs

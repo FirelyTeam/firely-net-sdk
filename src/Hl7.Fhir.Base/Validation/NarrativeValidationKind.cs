@@ -7,25 +7,30 @@
  */
 
 
-namespace Hl7.Fhir.Validation;
+#nullable enable
 
-/// <summary>
-/// Determine the kind of narrative validation is done.
-/// </summary>
-public enum NarrativeValidationKind
+namespace Hl7.Fhir.Validation
 {
     /// <summary>
-    /// No validation is performed.
+    /// Determine the kind of narrative validation is done.
     /// </summary>
-    None,
+    public enum NarrativeValidationKind
+    {
+        /// <summary>
+        /// No validation is performed.
+        /// </summary>
+        None,
 
-    /// <summary>
-    /// Value is validated to be well-formed xml.
-    /// </summary>
-    Xml,
+        /// <summary>
+        /// Value is validated to be well-formed xml.
+        /// </summary>
+        Xml,
 
-    /// <summary>
-    /// Value is well-formed Xml and is valid against the FHIR rules for Narrative Xhtml.
-    /// </summary>
-    FhirXhtml
+        /// <summary>
+        /// Value is well-formed Xml and is valid against the FHIR rules for Narrative Xhtml.
+        /// </summary>
+        FhirXhtml
+    }
 }
+
+#nullable restore

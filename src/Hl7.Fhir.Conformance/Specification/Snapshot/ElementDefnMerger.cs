@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             static string getExtensionString(Extension extension, string url)
             {
                 var subExtension = extension.Extension?.FirstOrDefault(e => e.Url == url);
-                return (subExtension?.Value as PrimitiveType)?.JsonValue as string;
+                return (subExtension?.Value as PrimitiveType)?.ObjectValue as string;
             }
 
             List<ElementDefinition.ConstraintComponent> mergeConstraints(
@@ -793,12 +793,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         result = (T)snap?.DeepCopy();
 
-                        var diffValue = diff.JsonValue;
+                        var diffValue = diff.ObjectValue;
                         if (allowAppend && diffValue is string diffText)
                         {
                             if (diffText.StartsWith("..."))
                             {
-                                var prefix = snap?.JsonValue as string;
+                                var prefix = snap?.ObjectValue as string;
 
                                 if (snap?.HasAppendedText() == true)
                                 {
@@ -822,14 +822,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 }
                             }
 
-                            result.JsonValue = diffText;
+                            result.ObjectValue = diffText;
                         }
                         else
                         {
                             // Only overwrite snap value if diff actually has a value (Java validator logic)
                             if (diffValue != null)
                             {
-                                result.JsonValue = diffValue;
+                                result.ObjectValue = diffValue;
                             }
                         }
                         // Also merge element id and extensions on primitives
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             //static bool matchExactly<T>(T x, T y) where T : class, IDeepComparable => !(x is null) && x.IsExactly(y);
-            static bool matchExactly(Base x, Base y) => !(x is null) && x.IsExactly(y);
+            static bool matchExactly(IDeepComparable x, IDeepComparable y) => !(x is null) && x.IsExactly(y);
 
             //static bool matchExtensions<T>(T x, T y) where T : Extension => !(x is null) && !(y is null) && IsEqualString(x.Url, y.Url);
             static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && IsEqualUri(x.Url, y.Url);

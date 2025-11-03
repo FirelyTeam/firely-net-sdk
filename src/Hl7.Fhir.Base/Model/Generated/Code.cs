@@ -7,11 +7,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -48,6 +44,9 @@ namespace Hl7.Fhir.Model
   /// Primitive Type code
   /// A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents
   /// </summary>
+  /// <remarks>
+  /// Note that FHIR strings SHALL NOT exceed 1,048,576 (1024*1024) characters in size
+  /// </remarks>
   [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
   [Serializable]
   [DataContract]
@@ -57,34 +56,29 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "code";
+    public override string TypeName { get { return "code"; } }
 
     /// Must conform to the pattern "[^\s]+( [^\s]+)*"
     public const string PATTERN = @"[^\s]+( [^\s]+)*";
 
-    public Code(string? value)
+    public Code(string value)
     {
       Value = value;
     }
 
-    public Code(): this((string?)null) {}
+    public Code(): this((string)null) {}
 
     /// <summary>
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(SystemPrimitive.String))]
+    [CodePattern]
     [DataMember]
-    public string? Value
+    public string Value
     {
-      get { return JsonValue is string or null ? (string?)JsonValue : throw COVE.FromTypes(typeof(Code), JsonValue); }
-      set { JsonValue = value; OnPropertyChanged("Value"); }
-    }
-
-    protected internal override Base DeepCopyInternal()
-    {
-      var instance = new Code();
-      CopyToInternal(instance);
-      return instance;
+      get { return (string)ObjectValue; }
+      set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
   }

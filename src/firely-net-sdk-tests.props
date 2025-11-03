@@ -1,13 +1,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<LangVersion>13.0</LangVersion>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<TargetFramework>net8.0</TargetFramework>
+		<LangVersion>12.0</LangVersion>
+		<EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<ContainsTests>true</ContainsTests>
-		<NoWarn>1591, SDK0001, SDK0002</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
@@ -17,13 +16,14 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='FullDebug|netcoreapp2.1|AnyCPU'">
 		<DefineConstants>DEBUG;TRACE</DefineConstants>
 		<Optimize>false</Optimize>
+		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
 
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-		<PackageReference Include="MSTest.TestFramework" Version="3.9.3" />
-		<PackageReference Include="MSTest.TestAdapter" Version="3.9.3" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.8.0" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.8.0" />
 		<PackageReference Include="xunit" Version="2.9.2" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -31,12 +31,7 @@
 		</PackageReference>
 		<PackageReference Include="FluentAssertions" Version="7.2.0" />
 		<PackageReference Include="NSubstitute" Version="5.3.0" />
-		<PackageReference Include="Verify.MSTest" Version="30.5.0" />
 	</ItemGroup>
-
-	<PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
-		<DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
-	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 		<SignAssembly>True</SignAssembly>
@@ -44,6 +39,6 @@
 		<AssemblyOriginatorKeyFile>..\FhirNetApi.publickey</AssemblyOriginatorKeyFile>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<!-- Missing XML comments -->
-		<NoWarn>1591, SDK0001, SDK0002</NoWarn>
+		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 </Project>

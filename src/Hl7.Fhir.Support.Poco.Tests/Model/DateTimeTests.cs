@@ -8,7 +8,6 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -99,7 +98,7 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
             dto.Equals(dto2).Should().BeTrue();
 
-            dft.JsonValue = "2023-07-11T15:00:00Z";
+            dft.ObjectValue = "2023-07-11T15:00:00Z";
             dft.TryToDateTimeOffset(out dto).Should().BeTrue();
             dto.Hour.Should().Be(15);
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
@@ -115,7 +114,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             var dft = new FhirDateTime("T45:45:56");
 
-            Assert.ThrowsException<CodedValidationException>(() => dft.ToDateTimeOffset(TimeSpan.Zero));
+            Assert.ThrowsException<FormatException>(() => dft.ToDateTimeOffset(TimeSpan.Zero));
 
             dft.TryToDateTimeOffset(out var _).Should().BeFalse();
         }
@@ -135,16 +134,16 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void TimeZoneHandlingPartial()
+        public void TimeZoneHandlingNoTZ()
         {
-            var dft = new FhirDateTime("2023-07-11");
+            var dft = new FhirDateTime("2023-07-11T13:00:00");
 
-            // Assume UTC, so +2 is midnight + 2
-            dft.ToDateTimeOffset(TimeSpan.FromHours(2)).Hour.Should().Be(2);
+            // Assume UTC, so +2 is 15:00
+            dft.ToDateTimeOffset(TimeSpan.FromHours(2)).Hour.Should().Be(15);
             dft.TryToDateTimeOffset(out _).Should().BeFalse();  // only works with a TZ present.
 
             dft.TryToDateTimeOffset(TimeSpan.FromHours(1), out var dto).Should().BeTrue();
-            dto.Hour.Should().Be(0);  // unchanged
+            dto.Hour.Should().Be(13);  // unchanged
             dto.Offset.Hours.Should().Be(1);
         }
 
@@ -152,22 +151,22 @@ namespace Hl7.Fhir.Tests.Model
         public void CanConvertToDateTime()
         {
             var dft = new FhirDateTime(2023, 07, 11, 13, 0, 0, TimeSpan.FromHours(1));
-            dft.TryToSystemDateTime(out var dt).Should().BeTrue();
+            dft.TryToDateTime(out var dt).Should().BeTrue();
             dt.Hours.Should().Be(13);
             dt.Offset.Value.Hours.Should().Be(1);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Second);
 
             dft = new FhirDateTime(2023, 07, 11);
-            dft.TryToSystemDateTime(out dt).Should().BeTrue();
+            dft.TryToDateTime(out dt).Should().BeTrue();
             dt.Days.Should().Be(11);
             dt.HasOffset.Should().BeFalse();
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Day);
 
             dft = new FhirDateTime("crap");
-            dft.TryToSystemDateTime(out dt).Should().BeFalse();
+            dft.TryToDateTime(out dt).Should().BeFalse();
 
             dft = new FhirDateTime(null);
-            dft.TryToSystemDateTime(out dt).Should().BeFalse();
+            dft.TryToDateTime(out dt).Should().BeTrue();
             dt.Should().BeNull();
         }
     }

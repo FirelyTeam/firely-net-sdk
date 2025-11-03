@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -63,178 +59,158 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Period";
+    public override string TypeName { get { return "Period"; } }
 
     /// <summary>
-    /// Starting time with inclusive boundary.
+    /// Starting time with inclusive boundary
     /// </summary>
     [FhirElement("start", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? StartElement
+    public Hl7.Fhir.Model.FhirDateTime StartElement
     {
-      get
-      {
-        if(_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["start"]);
-        return _StartElement;
-      }
-
-      set
-      {
-        if (_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("start");
-        _StartElement = value;
-        OnPropertyChanged("StartElement");
-      }
-
+      get { return _StartElement; }
+      set { _StartElement = value; OnPropertyChanged("StartElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _StartElement;
+    private Hl7.Fhir.Model.FhirDateTime _StartElement;
 
     /// <summary>
     /// Starting time with inclusive boundary
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Start
+    public string Start
     {
-      get => StartElement?.Value;
+      get { return StartElement != null ? StartElement.Value : null; }
       set
       {
-        StartElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          StartElement = null;
+        else
+          StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Start");
       }
     }
 
     /// <summary>
-    /// End time with inclusive boundary, if not ongoing.
+    /// End time with inclusive boundary, if not ongoing
     /// </summary>
     [FhirElement("end", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? EndElement
+    public Hl7.Fhir.Model.FhirDateTime EndElement
     {
-      get
-      {
-        if(_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["end"]);
-        return _EndElement;
-      }
-
-      set
-      {
-        if (_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("end");
-        _EndElement = value;
-        OnPropertyChanged("EndElement");
-      }
-
+      get { return _EndElement; }
+      set { _EndElement = value; OnPropertyChanged("EndElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _EndElement;
+    private Hl7.Fhir.Model.FhirDateTime _EndElement;
 
     /// <summary>
     /// End time with inclusive boundary, if not ongoing
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? End
+    public string End
     {
-      get => EndElement?.Value;
+      get { return EndElement != null ? EndElement.Value : null; }
       set
       {
-        EndElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          EndElement = null;
+        else
+          EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("End");
       }
     }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Period dest)
+      var dest = other as Period;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)_StartElement.DeepCopyInternal();
-      if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)_EndElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)StartElement.DeepCopy();
+      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)EndElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Period();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Period());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Period otherT) return false;
+      var otherT = other as Period;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
-      if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
+      if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Period;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
+      if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (StartElement != null) yield return StartElement;
+        if (EndElement != null) yield return EndElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (StartElement != null) yield return new ElementValue("start", StartElement);
+        if (EndElement != null) yield return new ElementValue("end", EndElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "start":
-          if (_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["start"];
-            return true;
-          }
-          value = _StartElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = StartElement;
+          return StartElement is not null;
         case "end":
-          if (_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["end"];
-            return true;
-          }
-          value = _EndElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = EndElement;
+          return EndElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "start":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            StartElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["start"] = value;
-          }
-          else StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "end":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            EndElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["end"] = value;
-          }
-          else EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("start",_StartElement);
-      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
     }
 
   }

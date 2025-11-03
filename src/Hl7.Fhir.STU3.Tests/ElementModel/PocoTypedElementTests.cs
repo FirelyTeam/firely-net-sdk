@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var poco = (new FhirJsonDeserializer()).Deserialize<Patient>(json);
+            var poco = await (new FhirJsonParser()).ParseAsync<Patient>(json);
             var pocoP = poco.ToTypedElement();
             var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "issue-444-testdata.xml"));
-            var cs = (new FhirXmlDeserializer()).Deserialize<CapabilityStatement>(xml);
+            var cs = (new FhirXmlParser()).Parse<CapabilityStatement>(xml);
             var nav = cs.ToTypedElement();
 
             var rest = nav.Children().Where(c => c.Name == "rest").FirstOrDefault();
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void PocoTypedElementPerformance()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var cs = FhirXmlDeserializer.OSTRICH.Deserialize<Patient>(xml);
+            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
             var nav = cs.ToTypedElement();
 
             TypedElementPerformance(nav);

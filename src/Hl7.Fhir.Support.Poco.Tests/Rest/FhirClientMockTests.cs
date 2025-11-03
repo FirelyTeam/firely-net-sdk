@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
     [TestClass]
     public class FhirClientMockTest
     {
-        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
+        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
         private static readonly string TESTVERSION = "3.0.1";
 
         private static async Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)
@@ -162,7 +162,11 @@ namespace Hl7.Fhir.Core.Tests.Rest
         {
             yield return new object[] { "http://example.com/Patient/example/_history", "HistoryAsync", "Patient/example" };
             yield return new object[] { "http://example.com/Patient/example/_history", "HistoryAsync", new Uri("http://example.com/Patient/example") };
+            yield return new object[] { "http://example.com/Patient/example/_history", "History", "Patient/example" };
+            yield return new object[] { "http://example.com/Patient/example/_history", "History", new Uri("http://example.com/Patient/example") };
+            yield return new object[] { "http://example.com/Patient/_history", "TypeHistory", "Patient" };
             yield return new object[] { "http://example.com/Patient/_history", "TypeHistoryAsync", "Patient" };
+            yield return new object?[] { "http://example.com/_history", "WholeSystemHistory", null };
             yield return new object?[] { "http://example.com/_history", "WholeSystemHistoryAsync", null };
         }
 

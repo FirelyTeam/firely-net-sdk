@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -61,240 +57,168 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Population";
+    public override string TypeName { get { return "Population"; } }
 
     /// <summary>
-    /// The age of the specific population.
+    /// The age of the specific population
     /// </summary>
     [FhirElement("age", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Age
+    public Hl7.Fhir.Model.DataType Age
     {
-      get
-      {
-        if(_Age.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["age"]);
-        return _Age;
-      }
-
-      set
-      {
-        if (_Age.InOverflow<DynamicDataType>())
-          Overflow.Remove("age");
-        _Age = value;
-        OnPropertyChanged("Age");
-      }
-
+      get { return _Age; }
+      set { _Age = value; OnPropertyChanged("Age"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _Age;
+    private Hl7.Fhir.Model.DataType _Age;
 
     /// <summary>
-    /// The gender of the specific population.
+    /// The gender of the specific population
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Gender
+    public Hl7.Fhir.Model.CodeableConcept Gender
     {
-      get
-      {
-        if(_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["gender"]);
-        return _Gender;
-      }
-
-      set
-      {
-        if (_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("gender");
-        _Gender = value;
-        OnPropertyChanged("Gender");
-      }
-
+      get { return _Gender; }
+      set { _Gender = value; OnPropertyChanged("Gender"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Gender;
+    private Hl7.Fhir.Model.CodeableConcept _Gender;
 
     /// <summary>
-    /// Race of the specific population.
+    /// Race of the specific population
     /// </summary>
     [FhirElement("race", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Race
+    public Hl7.Fhir.Model.CodeableConcept Race
     {
-      get
-      {
-        if(_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["race"]);
-        return _Race;
-      }
-
-      set
-      {
-        if (_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("race");
-        _Race = value;
-        OnPropertyChanged("Race");
-      }
-
+      get { return _Race; }
+      set { _Race = value; OnPropertyChanged("Race"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Race;
+    private Hl7.Fhir.Model.CodeableConcept _Race;
 
     /// <summary>
-    /// The existing physiological conditions of the specific population to which this applies.
+    /// The existing physiological conditions of the specific population to which this applies
     /// </summary>
     [FhirElement("physiologicalCondition", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? PhysiologicalCondition
+    public Hl7.Fhir.Model.CodeableConcept PhysiologicalCondition
     {
-      get
-      {
-        if(_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["physiologicalCondition"]);
-        return _PhysiologicalCondition;
-      }
-
-      set
-      {
-        if (_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("physiologicalCondition");
-        _PhysiologicalCondition = value;
-        OnPropertyChanged("PhysiologicalCondition");
-      }
-
+      get { return _PhysiologicalCondition; }
+      set { _PhysiologicalCondition = value; OnPropertyChanged("PhysiologicalCondition"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _PhysiologicalCondition;
+    private Hl7.Fhir.Model.CodeableConcept _PhysiologicalCondition;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Population dest)
+      var dest = other as Population;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Age is not null) dest.Age = (Hl7.Fhir.Model.DataType)_Age.DeepCopyInternal();
-      if(_Gender is not null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)_Gender.DeepCopyInternal();
-      if(_Race is not null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)_Race.DeepCopyInternal();
-      if(_PhysiologicalCondition is not null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)_PhysiologicalCondition.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Age != null) dest.Age = (Hl7.Fhir.Model.DataType)Age.DeepCopy();
+      if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
+      if(Race != null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)Race.DeepCopy();
+      if(PhysiologicalCondition != null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)PhysiologicalCondition.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Population();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Population());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Population otherT) return false;
+      var otherT = other as Population;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Age, otherT._Age)) return false;
-      if(!comparer.Equals(_Gender, otherT._Gender)) return false;
-      if(!comparer.Equals(_Race, otherT._Race)) return false;
-      if(!comparer.Equals(_PhysiologicalCondition, otherT._PhysiologicalCondition)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Age, otherT.Age)) return false;
+      if( !DeepComparable.Matches(Gender, otherT.Gender)) return false;
+      if( !DeepComparable.Matches(Race, otherT.Race)) return false;
+      if( !DeepComparable.Matches(PhysiologicalCondition, otherT.PhysiologicalCondition)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Population;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
+      if( !DeepComparable.IsExactly(Gender, otherT.Gender)) return false;
+      if( !DeepComparable.IsExactly(Race, otherT.Race)) return false;
+      if( !DeepComparable.IsExactly(PhysiologicalCondition, otherT.PhysiologicalCondition)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Age != null) yield return Age;
+        if (Gender != null) yield return Gender;
+        if (Race != null) yield return Race;
+        if (PhysiologicalCondition != null) yield return PhysiologicalCondition;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Age != null) yield return new ElementValue("age", Age);
+        if (Gender != null) yield return new ElementValue("gender", Gender);
+        if (Race != null) yield return new ElementValue("race", Race);
+        if (PhysiologicalCondition != null) yield return new ElementValue("physiologicalCondition", PhysiologicalCondition);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "age":
-          if (_Age.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["age"];
-            return true;
-          }
-          value = _Age;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = Age;
+          return Age is not null;
         case "gender":
-          if (_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["gender"];
-            return true;
-          }
-          value = _Gender;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Gender;
+          return Gender is not null;
         case "race":
-          if (_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["race"];
-            return true;
-          }
-          value = _Race;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Race;
+          return Race is not null;
         case "physiologicalCondition":
-          if (_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["physiologicalCondition"];
-            return true;
-          }
-          value = _PhysiologicalCondition;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = PhysiologicalCondition;
+          return PhysiologicalCondition is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "age":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            Age = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["age"] = value;
-          }
-          else Age = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "gender":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Gender = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["gender"] = value;
-          }
-          else Gender = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "race":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Race = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["race"] = value;
-          }
-          else Race = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "physiologicalCondition":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            PhysiologicalCondition = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["physiologicalCondition"] = value;
-          }
-          else PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Age is not null && !_Age.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("age",_Age);
-      if (_Gender is not null && !_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("gender",_Gender);
-      if (_Race is not null && !_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("race",_Race);
-      if (_PhysiologicalCondition is not null && !_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("physiologicalCondition",_PhysiologicalCondition);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+      if (Gender is not null) yield return new KeyValuePair<string,object>("gender",Gender);
+      if (Race is not null) yield return new KeyValuePair<string,object>("race",Race);
+      if (PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",PhysiologicalCondition);
     }
 
   }

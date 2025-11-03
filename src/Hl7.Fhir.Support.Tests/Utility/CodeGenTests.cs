@@ -47,10 +47,10 @@ namespace Hl7.Fhir.Utility.Tests
         {
             var testee = new Extension();
 
-            var valueSetter = ValuePropInfo.GetValueSetter<Extension>()!;
+            var valueSetter = ValuePropInfo.GetValueSetter<Extension>();
             valueSetter(testee, new FhirDecimal(3.14m));
 
-            var valueGetter = ValuePropInfo.GetValueGetter<Extension>()!;
+            var valueGetter = ValuePropInfo.GetValueGetter<Extension>();
             valueGetter(testee).Should().BeOfType<FhirDecimal>().Which.Value.Should().Be(3.14m);
 
             // These tests run against a target that support codegen.

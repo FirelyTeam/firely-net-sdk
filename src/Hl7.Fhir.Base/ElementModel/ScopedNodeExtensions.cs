@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -6,8 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support.Poco;
 using Hl7.FhirPath.Sprache;
 using System;
 using System.Linq;
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 foreach (var parent in scopedNode.ParentResources())
                 {
-                    if (parent.InstanceType == FhirTypeNames.BUNDLE)
+                    if (parent.InstanceType == FhirTypeConstants.BUNDLE)
                     {
                         return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(identity.ToString()); // safe cast but we cannot change the signature
                     }
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.ElementModel
             string? url = element switch
             {
                 { Value: string s } => s,
-                { InstanceType: FhirTypeNames.REFERENCE } => element.ParseResourceReference()?.Reference,
+                { InstanceType: FhirTypeConstants.REFERENCE } => element.ParseResourceReference()?.Reference,
                 _ => null
             };
 

@@ -6,50 +6,72 @@ using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Support.Poco.Tests;
-
-[TestClass]
-public class ValidatableObjectTests
+namespace Hl7.Fhir.Support.Poco.Tests
 {
-    [TestMethod]
-    public void TestCodeOfT()
+
+    [TestClass]
+    public class ValidatableObjectTests
     {
-        var c = new Code<FilterOperator>(null);
-        // assertValid(c); NOT valid, no value or children!
-        c.Value.Should().BeNull();
+        [TestMethod]
+        public void TestCodeOfT()
+        {
+            var c = new Code<FilterOperator>(null);
+            assertValid(c);
+            c.Value.Should().BeNull();
 
-        c = new Code<FilterOperator>(FilterOperator.DescendentOf);
-        assertValid(c);
-        c.Value.Should().Be(FilterOperator.DescendentOf);
+            c = new(FilterOperator.DescendentOf);
+            assertValid(c);
+            c.Value.Should().Be(FilterOperator.DescendentOf);
 
-        c.JsonValue = null;
-        // assertValid(c); Idem
-        c.Value.Should().BeNull();
+            c.ObjectValue = null;
+            assertValid(c);
+            c.Value.Should().BeNull();
 
-        c.JsonValue = FilterOperator.ChildOf.GetLiteral();
-        assertValid(c);
-        c.Value.Should().Be(FilterOperator.ChildOf);
+            c.ObjectValue = FilterOperator.ChildOf.GetLiteral();
+            assertValid(c);
+            c.Value.Should().Be(FilterOperator.ChildOf);
 
-        c.JsonValue = "wrong";
-        assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
-        Assert.ThrowsExactly<COVE>(() => _ = c.Value);
+            c.ObjectValue = "wrong";
+            assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
+            Assert.ThrowsException<InvalidCastException>(() => c.Value);
 
-        c.JsonValue = 4;
-        assertValid(c, errorCode: COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
-        Assert.ThrowsExactly<COVE>(() => _ = c.Value);
+            c.ObjectValue = 4;
+            assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
+            Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        }
+
+
+        private static void assertValid(IValidatableObject o, string? errorCode = null)
+        {
+            var validationResult = o.Validate(new ValidationContext(o));
+            if (errorCode is null)
+                validationResult.Should().BeEmpty();
+            else
+            {
+                validationResult.Should().AllBeOfType<CodedValidationResult>();
+                validationResult.Should().ContainSingle(vr => ((CodedValidationResult)vr).ValidationException.ErrorCode == errorCode);
+            }
+        }
+        
+        [TestMethod]
+        public void Test()
+        {
+            var bundle = new Patient{Name = new () {new () {Family = ""}}};
+            const string bundleString = """{ "resourceType":"Patient", "name":[{"family":""}] }""";
+            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+            
+            var shouldThrowOnValidate = () => bundle.Validate(true);
+            var shouldThrowOnDeserialize = () => _ = JsonSerializer.Deserialize<Bundle>(bundleString, options);
+            
+            shouldThrowOnValidate.Should().Throw<ValidationException>();
+            shouldThrowOnDeserialize.Should().Throw<DeserializationFailedException>();
+        }
     }
 
-    private static void assertValid(Base o, string? errorCode = null)
-    {
-        var validationResult = o.Validate();
-        if (errorCode is null)
-            validationResult.Should().BeEmpty();
-        else
-            validationResult.Should().ContainSingle(vr => vr.ErrorCode == errorCode);
-    }
 }

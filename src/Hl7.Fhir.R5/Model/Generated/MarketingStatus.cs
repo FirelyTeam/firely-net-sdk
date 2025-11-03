@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -58,299 +54,207 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "MarketingStatus";
+    public override string TypeName { get { return "MarketingStatus"; } }
 
     /// <summary>
-    /// The country in which the marketing authorization has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements.
+    /// The country in which the marketing authorization has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
     /// </summary>
     [FhirElement("country", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Country
+    public Hl7.Fhir.Model.CodeableConcept Country
     {
-      get
-      {
-        if(_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["country"]);
-        return _Country;
-      }
-
-      set
-      {
-        if (_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("country");
-        _Country = value;
-        OnPropertyChanged("Country");
-      }
-
+      get { return _Country; }
+      set { _Country = value; OnPropertyChanged("Country"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Country;
+    private Hl7.Fhir.Model.CodeableConcept _Country;
 
     /// <summary>
-    /// Where a Medicines Regulatory Agency has granted a marketing authorization for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified.
+    /// Where a Medicines Regulatory Agency has granted a marketing authorization for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Jurisdiction
+    public Hl7.Fhir.Model.CodeableConcept Jurisdiction
     {
-      get
-      {
-        if(_Jurisdiction.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["jurisdiction"]);
-        return _Jurisdiction;
-      }
-
-      set
-      {
-        if (_Jurisdiction.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("jurisdiction");
-        _Jurisdiction = value;
-        OnPropertyChanged("Jurisdiction");
-      }
-
+      get { return _Jurisdiction; }
+      set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Jurisdiction;
+    private Hl7.Fhir.Model.CodeableConcept _Jurisdiction;
 
     /// <summary>
-    /// This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples.
+    /// This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
     /// </summary>
     [FhirElement("status", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
     {
-      get
-      {
-        if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-        return _Status!;
-      }
-
-      set
-      {
-        if (_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("status");
-        _Status = value;
-        OnPropertyChanged("Status");
-      }
-
+      get { return _Status; }
+      set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Status;
+    private Hl7.Fhir.Model.CodeableConcept _Status;
 
     /// <summary>
-    /// The date when the Medicinal Product is placed on the market by the Marketing Authorization Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain.
+    /// The date when the Medicinal Product is placed on the market by the Marketing Authorization Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
     /// </summary>
     [FhirElement("dateRange", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Period? DateRange
+    public Hl7.Fhir.Model.Period DateRange
     {
-      get
-      {
-        if(_DateRange.InOverflow<Hl7.Fhir.Model.Period>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["dateRange"]);
-        return _DateRange;
-      }
-
-      set
-      {
-        if (_DateRange.InOverflow<Hl7.Fhir.Model.Period>())
-          Overflow.Remove("dateRange");
-        _DateRange = value;
-        OnPropertyChanged("DateRange");
-      }
-
+      get { return _DateRange; }
+      set { _DateRange = value; OnPropertyChanged("DateRange"); }
     }
 
-    private Hl7.Fhir.Model.Period? _DateRange;
+    private Hl7.Fhir.Model.Period _DateRange;
 
     /// <summary>
-    /// The date when the Medicinal Product is placed on the market by the Marketing Authorization Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain.
+    /// The date when the Medicinal Product is placed on the market by the Marketing Authorization Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
     /// </summary>
     [FhirElement("restoreDate", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? RestoreDateElement
+    public Hl7.Fhir.Model.FhirDateTime RestoreDateElement
     {
-      get
-      {
-        if(_RestoreDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["restoreDate"]);
-        return _RestoreDateElement;
-      }
-
-      set
-      {
-        if (_RestoreDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("restoreDate");
-        _RestoreDateElement = value;
-        OnPropertyChanged("RestoreDateElement");
-      }
-
+      get { return _RestoreDateElement; }
+      set { _RestoreDateElement = value; OnPropertyChanged("RestoreDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _RestoreDateElement;
+    private Hl7.Fhir.Model.FhirDateTime _RestoreDateElement;
 
     /// <summary>
     /// The date when the Medicinal Product is placed on the market by the Marketing Authorization Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? RestoreDate
+    public string RestoreDate
     {
-      get => RestoreDateElement?.Value;
+      get { return RestoreDateElement != null ? RestoreDateElement.Value : null; }
       set
       {
-        RestoreDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          RestoreDateElement = null;
+        else
+          RestoreDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RestoreDate");
       }
     }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not MarketingStatus dest)
+      var dest = other as MarketingStatus;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Country is not null) dest.Country = (Hl7.Fhir.Model.CodeableConcept)_Country.DeepCopyInternal();
-      if(_Jurisdiction is not null) dest.Jurisdiction = (Hl7.Fhir.Model.CodeableConcept)_Jurisdiction.DeepCopyInternal();
-      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
-      if(_DateRange is not null) dest.DateRange = (Hl7.Fhir.Model.Period)_DateRange.DeepCopyInternal();
-      if(_RestoreDateElement is not null) dest.RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime)_RestoreDateElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Country != null) dest.Country = (Hl7.Fhir.Model.CodeableConcept)Country.DeepCopy();
+      if(Jurisdiction != null) dest.Jurisdiction = (Hl7.Fhir.Model.CodeableConcept)Jurisdiction.DeepCopy();
+      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
+      if(DateRange != null) dest.DateRange = (Hl7.Fhir.Model.Period)DateRange.DeepCopy();
+      if(RestoreDateElement != null) dest.RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime)RestoreDateElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new MarketingStatus();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new MarketingStatus());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not MarketingStatus otherT) return false;
+      var otherT = other as MarketingStatus;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Country, otherT._Country)) return false;
-      if(!comparer.Equals(_Jurisdiction, otherT._Jurisdiction)) return false;
-      if(!comparer.Equals(_Status, otherT._Status)) return false;
-      if(!comparer.Equals(_DateRange, otherT._DateRange)) return false;
-      if(!comparer.Equals(_RestoreDateElement, otherT._RestoreDateElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Country, otherT.Country)) return false;
+      if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
+      if( !DeepComparable.Matches(Status, otherT.Status)) return false;
+      if( !DeepComparable.Matches(DateRange, otherT.DateRange)) return false;
+      if( !DeepComparable.Matches(RestoreDateElement, otherT.RestoreDateElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as MarketingStatus;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
+      if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
+      if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
+      if( !DeepComparable.IsExactly(DateRange, otherT.DateRange)) return false;
+      if( !DeepComparable.IsExactly(RestoreDateElement, otherT.RestoreDateElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Country != null) yield return Country;
+        if (Jurisdiction != null) yield return Jurisdiction;
+        if (Status != null) yield return Status;
+        if (DateRange != null) yield return DateRange;
+        if (RestoreDateElement != null) yield return RestoreDateElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Country != null) yield return new ElementValue("country", Country);
+        if (Jurisdiction != null) yield return new ElementValue("jurisdiction", Jurisdiction);
+        if (Status != null) yield return new ElementValue("status", Status);
+        if (DateRange != null) yield return new ElementValue("dateRange", DateRange);
+        if (RestoreDateElement != null) yield return new ElementValue("restoreDate", RestoreDateElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "country":
-          if (_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["country"];
-            return true;
-          }
-          value = _Country;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Country;
+          return Country is not null;
         case "jurisdiction":
-          if (_Jurisdiction.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["jurisdiction"];
-            return true;
-          }
-          value = _Jurisdiction;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Jurisdiction;
+          return Jurisdiction is not null;
         case "status":
-          if (_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _Status;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Status;
+          return Status is not null;
         case "dateRange":
-          if (_DateRange.InOverflow<Hl7.Fhir.Model.Period>())
-          {
-            value = Overflow["dateRange"];
-            return true;
-          }
-          value = _DateRange;
-          return (value as Hl7.Fhir.Model.Period) is not null;
+          value = DateRange;
+          return DateRange is not null;
         case "restoreDate":
-          if (_RestoreDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["restoreDate"];
-            return true;
-          }
-          value = _RestoreDateElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = RestoreDateElement;
+          return RestoreDateElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "country":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Country = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["country"] = value;
-          }
-          else Country = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "jurisdiction":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Jurisdiction = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["jurisdiction"] = value;
-          }
-          else Jurisdiction = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "status":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else Status = (Hl7.Fhir.Model.CodeableConcept?)value!;
-          return this;
-        case "dateRange":
-          if (value is not (Hl7.Fhir.Model.Period or null))
-          {
-            DateRange = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
-            Overflow["dateRange"] = value;
-          }
-          else DateRange = (Hl7.Fhir.Model.Period?)value;
-          return this;
-        case "restoreDate":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            RestoreDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["restoreDate"] = value;
-          }
-          else RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Country is not null && !_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("country",_Country);
-      if (_Jurisdiction is not null && !_Jurisdiction.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-      if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
-      if (_DateRange is not null && !_DateRange.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("dateRange",_DateRange);
-      if (_RestoreDateElement is not null && !_RestoreDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("restoreDate",_RestoreDateElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
+      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+      if (DateRange is not null) yield return new KeyValuePair<string,object>("dateRange",DateRange);
+      if (RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",RestoreDateElement);
     }
 
   }

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -61,197 +57,144 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Coding";
+    public override string TypeName { get { return "Coding"; } }
 
     /// <summary>
-    /// Identity of the terminology system.
+    /// Identity of the terminology system
     /// </summary>
     [FhirElement("system", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri? SystemElement
+    public Hl7.Fhir.Model.FhirUri SystemElement
     {
-      get
-      {
-        if(_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["system"]);
-        return _SystemElement;
-      }
-
-      set
-      {
-        if (_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
-          Overflow.Remove("system");
-        _SystemElement = value;
-        OnPropertyChanged("SystemElement");
-      }
-
+      get { return _SystemElement; }
+      set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri? _SystemElement;
+    private Hl7.Fhir.Model.FhirUri _SystemElement;
 
     /// <summary>
     /// Identity of the terminology system
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? System
+    public string System
     {
-      get => SystemElement?.Value;
+      get { return SystemElement != null ? SystemElement.Value : null; }
       set
       {
-        SystemElement = value is null ? null! : new Hl7.Fhir.Model.FhirUri(value);
+        if (value == null)
+          SystemElement = null;
+        else
+          SystemElement = new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("System");
       }
     }
 
     /// <summary>
-    /// Version of the system - if relevant.
+    /// Version of the system - if relevant
     /// </summary>
     [FhirElement("version", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? VersionElement
+    public Hl7.Fhir.Model.FhirString VersionElement
     {
-      get
-      {
-        if(_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["version"]);
-        return _VersionElement;
-      }
-
-      set
-      {
-        if (_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("version");
-        _VersionElement = value;
-        OnPropertyChanged("VersionElement");
-      }
-
+      get { return _VersionElement; }
+      set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _VersionElement;
+    private Hl7.Fhir.Model.FhirString _VersionElement;
 
     /// <summary>
     /// Version of the system - if relevant
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Version
+    public string Version
     {
-      get => VersionElement?.Value;
+      get { return VersionElement != null ? VersionElement.Value : null; }
       set
       {
-        VersionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          VersionElement = null;
+        else
+          VersionElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
 
     /// <summary>
-    /// Symbol in syntax defined by the system.
+    /// Symbol in syntax defined by the system
     /// </summary>
     [FhirElement("code", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? CodeElement
+    public Hl7.Fhir.Model.Code CodeElement
     {
-      get
-      {
-        if(_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["code"]);
-        return _CodeElement;
-      }
-
-      set
-      {
-        if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
-          Overflow.Remove("code");
-        _CodeElement = value;
-        OnPropertyChanged("CodeElement");
-      }
-
+      get { return _CodeElement; }
+      set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code? _CodeElement;
+    private Hl7.Fhir.Model.Code _CodeElement;
 
     /// <summary>
     /// Symbol in syntax defined by the system
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Code
+    public string Code
     {
-      get => CodeElement?.Value;
+      get { return CodeElement != null ? CodeElement.Value : null; }
       set
       {
-        CodeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
+        if (value == null)
+          CodeElement = null;
+        else
+          CodeElement = new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Code");
       }
     }
 
     /// <summary>
-    /// Representation defined by the system.
+    /// Representation defined by the system
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? DisplayElement
+    public Hl7.Fhir.Model.FhirString DisplayElement
     {
-      get
-      {
-        if(_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["display"]);
-        return _DisplayElement;
-      }
-
-      set
-      {
-        if (_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("display");
-        _DisplayElement = value;
-        OnPropertyChanged("DisplayElement");
-      }
-
+      get { return _DisplayElement; }
+      set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _DisplayElement;
+    private Hl7.Fhir.Model.FhirString _DisplayElement;
 
     /// <summary>
     /// Representation defined by the system
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Display
+    public string Display
     {
-      get => DisplayElement?.Value;
+      get { return DisplayElement != null ? DisplayElement.Value : null; }
       set
       {
-        DisplayElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          DisplayElement = null;
+        else
+          DisplayElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
 
     /// <summary>
-    /// If this coding was chosen directly by the user.
+    /// If this coding was chosen directly by the user
     /// </summary>
     [FhirElement("userSelected", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? UserSelectedElement
+    public Hl7.Fhir.Model.FhirBoolean UserSelectedElement
     {
-      get
-      {
-        if(_UserSelectedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["userSelected"]);
-        return _UserSelectedElement;
-      }
-
-      set
-      {
-        if (_UserSelectedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          Overflow.Remove("userSelected");
-        _UserSelectedElement = value;
-        OnPropertyChanged("UserSelectedElement");
-      }
-
+      get { return _UserSelectedElement; }
+      set { _UserSelectedElement = value; OnPropertyChanged("UserSelectedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean? _UserSelectedElement;
+    private Hl7.Fhir.Model.FhirBoolean _UserSelectedElement;
 
     /// <summary>
     /// If this coding was chosen directly by the user
@@ -260,159 +203,132 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? UserSelected
     {
-      get => UserSelectedElement?.Value;
+      get { return UserSelectedElement != null ? UserSelectedElement.Value : null; }
       set
       {
-        UserSelectedElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
+        if (value == null)
+          UserSelectedElement = null;
+        else
+          UserSelectedElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("UserSelected");
       }
     }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Coding dest)
+      var dest = other as Coding;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_SystemElement is not null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)_SystemElement.DeepCopyInternal();
-      if(_VersionElement is not null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)_VersionElement.DeepCopyInternal();
-      if(_CodeElement is not null) dest.CodeElement = (Hl7.Fhir.Model.Code)_CodeElement.DeepCopyInternal();
-      if(_DisplayElement is not null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)_DisplayElement.DeepCopyInternal();
-      if(_UserSelectedElement is not null) dest.UserSelectedElement = (Hl7.Fhir.Model.FhirBoolean)_UserSelectedElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
+      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
+      if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+      if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
+      if(UserSelectedElement != null) dest.UserSelectedElement = (Hl7.Fhir.Model.FhirBoolean)UserSelectedElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Coding();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Coding());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Coding otherT) return false;
+      var otherT = other as Coding;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
-      if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
-      if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
-      if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
-      if(!comparer.Equals(_UserSelectedElement, otherT._UserSelectedElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
+      if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
+      if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+      if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+      if( !DeepComparable.Matches(UserSelectedElement, otherT.UserSelectedElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Coding;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
+      if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
+      if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+      if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+      if( !DeepComparable.IsExactly(UserSelectedElement, otherT.UserSelectedElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (SystemElement != null) yield return SystemElement;
+        if (VersionElement != null) yield return VersionElement;
+        if (CodeElement != null) yield return CodeElement;
+        if (DisplayElement != null) yield return DisplayElement;
+        if (UserSelectedElement != null) yield return UserSelectedElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (SystemElement != null) yield return new ElementValue("system", SystemElement);
+        if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+        if (CodeElement != null) yield return new ElementValue("code", CodeElement);
+        if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
+        if (UserSelectedElement != null) yield return new ElementValue("userSelected", UserSelectedElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "system":
-          if (_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
-          {
-            value = Overflow["system"];
-            return true;
-          }
-          value = _SystemElement;
-          return (value as Hl7.Fhir.Model.FhirUri) is not null;
+          value = SystemElement;
+          return SystemElement is not null;
         case "version":
-          if (_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["version"];
-            return true;
-          }
-          value = _VersionElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = VersionElement;
+          return VersionElement is not null;
         case "code":
-          if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
-          {
-            value = Overflow["code"];
-            return true;
-          }
-          value = _CodeElement;
-          return (value as Hl7.Fhir.Model.Code) is not null;
+          value = CodeElement;
+          return CodeElement is not null;
         case "display":
-          if (_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["display"];
-            return true;
-          }
-          value = _DisplayElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = DisplayElement;
+          return DisplayElement is not null;
         case "userSelected":
-          if (_UserSelectedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          {
-            value = Overflow["userSelected"];
-            return true;
-          }
-          value = _UserSelectedElement;
-          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+          value = UserSelectedElement;
+          return UserSelectedElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "system":
-          if (value is not (Hl7.Fhir.Model.FhirUri or null))
-          {
-            SystemElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
-            Overflow["system"] = value;
-          }
-          else SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
-          return this;
-        case "version":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            VersionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["version"] = value;
-          }
-          else VersionElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "code":
-          if (value is not (Hl7.Fhir.Model.Code or null))
-          {
-            CodeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
-            Overflow["code"] = value;
-          }
-          else CodeElement = (Hl7.Fhir.Model.Code?)value;
-          return this;
-        case "display":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            DisplayElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["display"] = value;
-          }
-          else DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "userSelected":
-          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-          {
-            UserSelectedElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-            Overflow["userSelected"] = value;
-          }
-          else UserSelectedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_SystemElement is not null && !_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("system",_SystemElement);
-      if (_VersionElement is not null && !_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("version",_VersionElement);
-      if (_CodeElement is not null && !_CodeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("code",_CodeElement);
-      if (_DisplayElement is not null && !_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("display",_DisplayElement);
-      if (_UserSelectedElement is not null && !_UserSelectedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("userSelected",_UserSelectedElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SystemElement is not null) yield return new KeyValuePair<string,object>("system",SystemElement);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
+      if (UserSelectedElement is not null) yield return new KeyValuePair<string,object>("userSelected",UserSelectedElement);
     }
 
   }

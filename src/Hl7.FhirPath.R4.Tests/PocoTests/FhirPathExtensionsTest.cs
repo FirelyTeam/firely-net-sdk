@@ -15,7 +15,6 @@ using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -29,7 +28,7 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            _bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
+            _bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
         }
 
 
@@ -55,7 +54,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var result = _bundle.Select(statement, new FhirEvaluationContext() { ElementResolver = resolver });
             Assert.IsTrue(called);
 
-            PocoNode resolver(string url)
+            ITypedElement resolver(string url)
             {
                 called = true;
                 return null;

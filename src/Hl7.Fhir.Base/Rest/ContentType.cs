@@ -52,6 +52,9 @@ namespace Hl7.Fhir.Rest
 
         public const string VERSION_CONTENT_HEADER_NAME = "fhirVersion";
 
+        [Obsolete("Use VERSION_CONTENT_HEADER_NAME instead.")]
+        public const string VERSION_CONTENT_HEADER = "fhirVersion=";
+
         public static string DecompressionMethodHeaderValue(DecompressionMethods method) =>
             method.ToString().ToLowerInvariant();
 

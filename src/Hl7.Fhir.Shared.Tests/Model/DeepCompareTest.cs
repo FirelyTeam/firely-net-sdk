@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             Assert.IsTrue(p2.IsExactly(p));
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             p2.ActiveElement.Value = !p2.ActiveElement.Value;
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlDeserializer().Deserialize<Patient>(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             var rel = (CodeableConcept)p.Contact[0].Relationship[0].DeepCopy();
@@ -78,22 +78,6 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(a.Matches(b));
             Assert.IsTrue(a.IsExactly(c));
             Assert.IsTrue(a.Matches(c));
-        }
-
-        [TestMethod]
-        public void CheckCompareSameReferenceIsExactly()
-        {
-            // Test that comparing an object with itself returns true due to ReferenceEquals optimization
-            var patient = new Patient { Active = true };
-            Assert.IsTrue(patient.IsExactly(patient), "Same reference should be exactly equal");
-        }
-
-        [TestMethod]
-        public void CheckCompareSameReferenceMatches()
-        {
-            // Test that comparing an object with itself returns true due to ReferenceEquals optimization
-            var patient = new Patient { Active = true };
-            Assert.IsTrue(patient.Matches(patient), "Same reference should match");
         }
         
     }

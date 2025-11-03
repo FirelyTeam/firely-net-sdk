@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private static IEnumerable<CSDC> applyDescentantsOfFilterToANestedHierarchy(IEnumerable<CSDC> concepts, ValueSet.FilterComponent filter)
         {
             // look for the code and return it's children (which have their children included already)
-            return (filter.Value is not null && concepts.FindCode(filter.Value) is { } concept) ? concept.Concept : [];
+            return (concepts.FindCode(filter.Value) is { } concept) ? concept.Concept : [];
         }
 
         private static IEnumerable<CSDC> applyIsAfFilterUsingSubsumedBy(IEnumerable<CSDC> flattened, ValueSet.FilterComponent filter)
@@ -95,12 +95,11 @@ namespace Hl7.Fhir.Specification.Terminology
             var result = new List<CSDC>();
 
             //first find the parent itself (if it's in the CodeSystem)
-            var conceptDefinitionComponents = flattened.ToList();
-            if (filter.Value is not null && conceptDefinitionComponents.FindCode(filter.Value) is { } concept)
+            if (flattened.FindCode(filter.Value) is { } concept)
                 result.Add(concept);
 
             //then find the descendants
-            List<CSDC> descendants = applyDescendantsOfFilterUsingSubsumedBy(conceptDefinitionComponents, filter);
+            List<CSDC> descendants = applyDescendantsOfFilterUsingSubsumedBy(flattened, filter);
             result.AddRange(descendants);
 
             return result;
@@ -109,19 +108,17 @@ namespace Hl7.Fhir.Specification.Terminology
         private static IEnumerable<CSDC> applyIsAFilterToANestedHierarchy(IEnumerable<CSDC> concepts, ValueSet.FilterComponent filter)
         {
             //just look for the code, because descendants are included
-            return filter.Value is not null && concepts.FindCode(filter.Value) is { } concept ? [concept] : [];
+            return concepts.FindCode(filter.Value) is { } concept ? [concept] : [];
         }
 
         private static IEnumerable<CSDC> applyIsNotAFilterUsingSubsumedBy(IEnumerable<CSDC> flattened, ValueSet.FilterComponent filter)
         {
-            var conceptDefinitionComponents = flattened.ToList();
-            var result = new List<CSDC>(conceptDefinitionComponents);
-
+            var result = flattened.ToList();
             //first find the parent itself (if it's in the CodeSystem) and remove it
-            if (filter.Value is not null && conceptDefinitionComponents.FindCode(filter.Value) is { } concept)
+            if (flattened.FindCode(filter.Value) is { } concept)
                 result.Remove(concept);
             //then find the descendants, and remove them
-            List<CSDC> descendants = applyDescendantsOfFilterUsingSubsumedBy(conceptDefinitionComponents, filter);
+            List<CSDC> descendants = applyDescendantsOfFilterUsingSubsumedBy(flattened, filter);
 
             result.RemoveAll(descendants.Contains);
             return result;
@@ -130,25 +127,25 @@ namespace Hl7.Fhir.Specification.Terminology
         private static IEnumerable<CSDC> applyIsNotAFilterToANestedHierarchy(IEnumerable<CSDC> concepts, ValueSet.FilterComponent filter)
         {
             //We should only check for a nested hierarchy, and exclude the code and thereby it's included descendants
-            return concepts.ToList().RemoveCode(filter.Value ?? throw new InvalidOperationException("Filter value is null"));
+            return concepts.ToList().RemoveCode(filter.Value);
         }
 
         private static List<CSDC> applyDescendantsOfFilterUsingSubsumedBy(IEnumerable<CSDC> flattened, ValueSet.FilterComponent filter)
         {
             //Create a lookup which lists children by parent.              
-            var childrenLookup = createSubsumedByLookup(flattened);
+            var childrenLookup = CreateSubsumedByLookup(flattened);
 
             //find descendants based on that lookup
             var descendants = applySubsumedBy(childrenLookup, filter);
             return descendants;
         }
 
-        private static ILookup<string, CSDC> createSubsumedByLookup(IEnumerable<CSDC> flattenedConcepts)
+        private static ILookup<string, CSDC> CreateSubsumedByLookup(IEnumerable<CSDC> flattenedConcepts)
         {
             return flattenedConcepts
                 .SelectMany(concept => concept.Property
-                    .Where(p => p is { Code: SUBSUMEDBYCODE, Value: Code { Value: not null } })
-                    .Select(p => new { SubsumedByValue = ((Code)p.Value!).Value!, Concept = concept }))
+                    .Where(p => p.Code == SUBSUMEDBYCODE && p.Value is Code && ((Code)p.Value).Value is not null)
+                    .Select(p => new { SubsumedByValue = ((Code)p.Value).Value, Concept = concept }))
                 .ToLookup(x => x.SubsumedByValue, x => x.Concept);
         }
 
@@ -166,14 +163,11 @@ namespace Hl7.Fhir.Specification.Terminology
         //recursively loop through all the children to eventually find all descendants.
         private static void addDescendants(ILookup<string, CSDC> lookup, string parent, List<CSDC> result)
         {
-            if (lookup[parent] is not { } children) return;
-
-            foreach (var child in children)
+            if (lookup[parent] is { } children)
             {
-                result.Add(child);
-
-                if (child.Code is not null)
+                foreach (var child in children)
                 {
+                    result.Add(child);
                     parent = child.Code;
                     addDescendants(lookup, parent, result);
                 }

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,52 +48,40 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceProtein","http://hl7.org/fhir/StructureDefinition/SubstanceProtein")]
+  [FhirType("SubstanceProtein","http://hl7.org/fhir/StructureDefinition/SubstanceProtein", IsResource=true)]
   public partial class SubstanceProtein : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "SubstanceProtein";
+    public override string TypeName { get { return "SubstanceProtein"; } }
 
     /// <summary>
     /// This subclause refers to the description of each subunit constituting the SubstanceProtein. A subunit is a linear sequence of amino acids linked through peptide bonds. The Subunit information shall be provided when the finished SubstanceProtein is a complex of multiple sequences; subunits are not used to delineate domains within a single sequence. Subunits are listed in order of decreasing length; sequences of the same length will be ordered by decreasing molecular weight; subunits that have identical sequences will be repeated multiple times
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("SubstanceProtein.subunit", IsBackboneType=true)]
+    [FhirType("SubstanceProtein#Subunit", IsNestedType=true)]
+    [BackboneType("SubstanceProtein.subunit")]
     public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "SubstanceProtein.subunit";
+      public override string TypeName { get { return "SubstanceProtein#Subunit"; } }
 
       /// <summary>
-      /// Index of primary sequences of amino acids linked through peptide bonds in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts.
+      /// Index of primary sequences of amino acids linked through peptide bonds in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
       /// </summary>
       [FhirElement("subunit", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer? SubunitElement
+      public Hl7.Fhir.Model.Integer SubunitElement
       {
-        get
-        {
-          if(_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["subunit"]);
-          return _SubunitElement;
-        }
-
-        set
-        {
-          if (_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>())
-            Overflow.Remove("subunit");
-          _SubunitElement = value;
-          OnPropertyChanged("SubunitElement");
-        }
-
+        get { return _SubunitElement; }
+        set { _SubunitElement = value; OnPropertyChanged("SubunitElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer? _SubunitElement;
+      private Hl7.Fhir.Model.Integer _SubunitElement;
 
       /// <summary>
       /// Index of primary sequences of amino acids linked through peptide bonds in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
@@ -106,80 +90,60 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Subunit
       {
-        get => SubunitElement?.Value;
+        get { return SubunitElement != null ? SubunitElement.Value : null; }
         set
         {
-          SubunitElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
+          if (value == null)
+            SubunitElement = null;
+          else
+            SubunitElement = new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Subunit");
         }
       }
 
       /// <summary>
-      /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence.
+      /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? SequenceElement
+      public Hl7.Fhir.Model.FhirString SequenceElement
       {
-        get
-        {
-          if(_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["sequence"]);
-          return _SequenceElement;
-        }
-
-        set
-        {
-          if (_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("sequence");
-          _SequenceElement = value;
-          OnPropertyChanged("SequenceElement");
-        }
-
+        get { return _SequenceElement; }
+        set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _SequenceElement;
+      private Hl7.Fhir.Model.FhirString _SequenceElement;
 
       /// <summary>
       /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Sequence
+      public string Sequence
       {
-        get => SequenceElement?.Value;
+        get { return SequenceElement != null ? SequenceElement.Value : null; }
         set
         {
-          SequenceElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            SequenceElement = null;
+          else
+            SequenceElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Sequence");
         }
       }
 
       /// <summary>
-      /// Length of linear sequences of amino acids contained in the subunit.
+      /// Length of linear sequences of amino acids contained in the subunit
       /// </summary>
       [FhirElement("length", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer? LengthElement
+      public Hl7.Fhir.Model.Integer LengthElement
       {
-        get
-        {
-          if(_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["length"]);
-          return _LengthElement;
-        }
-
-        set
-        {
-          if (_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>())
-            Overflow.Remove("length");
-          _LengthElement = value;
-          OnPropertyChanged("LengthElement");
-        }
-
+        get { return _LengthElement; }
+        set { _LengthElement = value; OnPropertyChanged("LengthElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer? _LengthElement;
+      private Hl7.Fhir.Model.Integer _LengthElement;
 
       /// <summary>
       /// Length of linear sequences of amino acids contained in the subunit
@@ -188,431 +152,289 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Length
       {
-        get => LengthElement?.Value;
+        get { return LengthElement != null ? LengthElement.Value : null; }
         set
         {
-          LengthElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
+          if (value == null)
+            LengthElement = null;
+          else
+            LengthElement = new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Length");
         }
       }
 
       /// <summary>
-      /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence.
+      /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence
       /// </summary>
       [FhirElement("sequenceAttachment", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Attachment? SequenceAttachment
+      public Hl7.Fhir.Model.Attachment SequenceAttachment
       {
-        get
-        {
-          if(_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Attachment), Overflow["sequenceAttachment"]);
-          return _SequenceAttachment;
-        }
-
-        set
-        {
-          if (_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>())
-            Overflow.Remove("sequenceAttachment");
-          _SequenceAttachment = value;
-          OnPropertyChanged("SequenceAttachment");
-        }
-
+        get { return _SequenceAttachment; }
+        set { _SequenceAttachment = value; OnPropertyChanged("SequenceAttachment"); }
       }
 
-      private Hl7.Fhir.Model.Attachment? _SequenceAttachment;
+      private Hl7.Fhir.Model.Attachment _SequenceAttachment;
 
       /// <summary>
-      /// Unique identifier for molecular fragment modification based on the ISO 11238 Substance ID.
+      /// Unique identifier for molecular fragment modification based on the ISO 11238 Substance ID
       /// </summary>
       [FhirElement("nTerminalModificationId", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier? NTerminalModificationId
+      public Hl7.Fhir.Model.Identifier NTerminalModificationId
       {
-        get
-        {
-          if(_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["nTerminalModificationId"]);
-          return _NTerminalModificationId;
-        }
-
-        set
-        {
-          if (_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
-            Overflow.Remove("nTerminalModificationId");
-          _NTerminalModificationId = value;
-          OnPropertyChanged("NTerminalModificationId");
-        }
-
+        get { return _NTerminalModificationId; }
+        set { _NTerminalModificationId = value; OnPropertyChanged("NTerminalModificationId"); }
       }
 
-      private Hl7.Fhir.Model.Identifier? _NTerminalModificationId;
+      private Hl7.Fhir.Model.Identifier _NTerminalModificationId;
 
       /// <summary>
-      /// The name of the fragment modified at the N-terminal of the SubstanceProtein shall be specified.
+      /// The name of the fragment modified at the N-terminal of the SubstanceProtein shall be specified
       /// </summary>
       [FhirElement("nTerminalModification", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? NTerminalModificationElement
+      public Hl7.Fhir.Model.FhirString NTerminalModificationElement
       {
-        get
-        {
-          if(_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["nTerminalModification"]);
-          return _NTerminalModificationElement;
-        }
-
-        set
-        {
-          if (_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("nTerminalModification");
-          _NTerminalModificationElement = value;
-          OnPropertyChanged("NTerminalModificationElement");
-        }
-
+        get { return _NTerminalModificationElement; }
+        set { _NTerminalModificationElement = value; OnPropertyChanged("NTerminalModificationElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _NTerminalModificationElement;
+      private Hl7.Fhir.Model.FhirString _NTerminalModificationElement;
 
       /// <summary>
       /// The name of the fragment modified at the N-terminal of the SubstanceProtein shall be specified
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? NTerminalModification
+      public string NTerminalModification
       {
-        get => NTerminalModificationElement?.Value;
+        get { return NTerminalModificationElement != null ? NTerminalModificationElement.Value : null; }
         set
         {
-          NTerminalModificationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            NTerminalModificationElement = null;
+          else
+            NTerminalModificationElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("NTerminalModification");
         }
       }
 
       /// <summary>
-      /// Unique identifier for molecular fragment modification based on the ISO 11238 Substance ID.
+      /// Unique identifier for molecular fragment modification based on the ISO 11238 Substance ID
       /// </summary>
       [FhirElement("cTerminalModificationId", InSummary=true, Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier? CTerminalModificationId
+      public Hl7.Fhir.Model.Identifier CTerminalModificationId
       {
-        get
-        {
-          if(_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["cTerminalModificationId"]);
-          return _CTerminalModificationId;
-        }
-
-        set
-        {
-          if (_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
-            Overflow.Remove("cTerminalModificationId");
-          _CTerminalModificationId = value;
-          OnPropertyChanged("CTerminalModificationId");
-        }
-
+        get { return _CTerminalModificationId; }
+        set { _CTerminalModificationId = value; OnPropertyChanged("CTerminalModificationId"); }
       }
 
-      private Hl7.Fhir.Model.Identifier? _CTerminalModificationId;
+      private Hl7.Fhir.Model.Identifier _CTerminalModificationId;
 
       /// <summary>
-      /// The modification at the C-terminal shall be specified.
+      /// The modification at the C-terminal shall be specified
       /// </summary>
       [FhirElement("cTerminalModification", InSummary=true, Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? CTerminalModificationElement
+      public Hl7.Fhir.Model.FhirString CTerminalModificationElement
       {
-        get
-        {
-          if(_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["cTerminalModification"]);
-          return _CTerminalModificationElement;
-        }
-
-        set
-        {
-          if (_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("cTerminalModification");
-          _CTerminalModificationElement = value;
-          OnPropertyChanged("CTerminalModificationElement");
-        }
-
+        get { return _CTerminalModificationElement; }
+        set { _CTerminalModificationElement = value; OnPropertyChanged("CTerminalModificationElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _CTerminalModificationElement;
+      private Hl7.Fhir.Model.FhirString _CTerminalModificationElement;
 
       /// <summary>
       /// The modification at the C-terminal shall be specified
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? CTerminalModification
+      public string CTerminalModification
       {
-        get => CTerminalModificationElement?.Value;
+        get { return CTerminalModificationElement != null ? CTerminalModificationElement.Value : null; }
         set
         {
-          CTerminalModificationElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            CTerminalModificationElement = null;
+          else
+            CTerminalModificationElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("CTerminalModification");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not SubunitComponent dest)
+        var dest = other as SubunitComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_SubunitElement is not null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)_SubunitElement.DeepCopyInternal();
-        if(_SequenceElement is not null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)_SequenceElement.DeepCopyInternal();
-        if(_LengthElement is not null) dest.LengthElement = (Hl7.Fhir.Model.Integer)_LengthElement.DeepCopyInternal();
-        if(_SequenceAttachment is not null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)_SequenceAttachment.DeepCopyInternal();
-        if(_NTerminalModificationId is not null) dest.NTerminalModificationId = (Hl7.Fhir.Model.Identifier)_NTerminalModificationId.DeepCopyInternal();
-        if(_NTerminalModificationElement is not null) dest.NTerminalModificationElement = (Hl7.Fhir.Model.FhirString)_NTerminalModificationElement.DeepCopyInternal();
-        if(_CTerminalModificationId is not null) dest.CTerminalModificationId = (Hl7.Fhir.Model.Identifier)_CTerminalModificationId.DeepCopyInternal();
-        if(_CTerminalModificationElement is not null) dest.CTerminalModificationElement = (Hl7.Fhir.Model.FhirString)_CTerminalModificationElement.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(SubunitElement != null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)SubunitElement.DeepCopy();
+        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
+        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopy();
+        if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopy();
+        if(NTerminalModificationId != null) dest.NTerminalModificationId = (Hl7.Fhir.Model.Identifier)NTerminalModificationId.DeepCopy();
+        if(NTerminalModificationElement != null) dest.NTerminalModificationElement = (Hl7.Fhir.Model.FhirString)NTerminalModificationElement.DeepCopy();
+        if(CTerminalModificationId != null) dest.CTerminalModificationId = (Hl7.Fhir.Model.Identifier)CTerminalModificationId.DeepCopy();
+        if(CTerminalModificationElement != null) dest.CTerminalModificationElement = (Hl7.Fhir.Model.FhirString)CTerminalModificationElement.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new SubunitComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new SubunitComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not SubunitComponent otherT) return false;
+        var otherT = other as SubunitComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_SubunitElement, otherT._SubunitElement)) return false;
-        if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
-        if(!comparer.Equals(_LengthElement, otherT._LengthElement)) return false;
-        if(!comparer.Equals(_SequenceAttachment, otherT._SequenceAttachment)) return false;
-        if(!comparer.Equals(_NTerminalModificationId, otherT._NTerminalModificationId)) return false;
-        if(!comparer.Equals(_NTerminalModificationElement, otherT._NTerminalModificationElement)) return false;
-        if(!comparer.Equals(_CTerminalModificationId, otherT._CTerminalModificationId)) return false;
-        if(!comparer.Equals(_CTerminalModificationElement, otherT._CTerminalModificationElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(SubunitElement, otherT.SubunitElement)) return false;
+        if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
+        if( !DeepComparable.Matches(LengthElement, otherT.LengthElement)) return false;
+        if( !DeepComparable.Matches(SequenceAttachment, otherT.SequenceAttachment)) return false;
+        if( !DeepComparable.Matches(NTerminalModificationId, otherT.NTerminalModificationId)) return false;
+        if( !DeepComparable.Matches(NTerminalModificationElement, otherT.NTerminalModificationElement)) return false;
+        if( !DeepComparable.Matches(CTerminalModificationId, otherT.CTerminalModificationId)) return false;
+        if( !DeepComparable.Matches(CTerminalModificationElement, otherT.CTerminalModificationElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as SubunitComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(SubunitElement, otherT.SubunitElement)) return false;
+        if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
+        if( !DeepComparable.IsExactly(LengthElement, otherT.LengthElement)) return false;
+        if( !DeepComparable.IsExactly(SequenceAttachment, otherT.SequenceAttachment)) return false;
+        if( !DeepComparable.IsExactly(NTerminalModificationId, otherT.NTerminalModificationId)) return false;
+        if( !DeepComparable.IsExactly(NTerminalModificationElement, otherT.NTerminalModificationElement)) return false;
+        if( !DeepComparable.IsExactly(CTerminalModificationId, otherT.CTerminalModificationId)) return false;
+        if( !DeepComparable.IsExactly(CTerminalModificationElement, otherT.CTerminalModificationElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (SubunitElement != null) yield return SubunitElement;
+          if (SequenceElement != null) yield return SequenceElement;
+          if (LengthElement != null) yield return LengthElement;
+          if (SequenceAttachment != null) yield return SequenceAttachment;
+          if (NTerminalModificationId != null) yield return NTerminalModificationId;
+          if (NTerminalModificationElement != null) yield return NTerminalModificationElement;
+          if (CTerminalModificationId != null) yield return CTerminalModificationId;
+          if (CTerminalModificationElement != null) yield return CTerminalModificationElement;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (SubunitElement != null) yield return new ElementValue("subunit", SubunitElement);
+          if (SequenceElement != null) yield return new ElementValue("sequence", SequenceElement);
+          if (LengthElement != null) yield return new ElementValue("length", LengthElement);
+          if (SequenceAttachment != null) yield return new ElementValue("sequenceAttachment", SequenceAttachment);
+          if (NTerminalModificationId != null) yield return new ElementValue("nTerminalModificationId", NTerminalModificationId);
+          if (NTerminalModificationElement != null) yield return new ElementValue("nTerminalModification", NTerminalModificationElement);
+          if (CTerminalModificationId != null) yield return new ElementValue("cTerminalModificationId", CTerminalModificationId);
+          if (CTerminalModificationElement != null) yield return new ElementValue("cTerminalModification", CTerminalModificationElement);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "subunit":
-            if (_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>())
-            {
-              value = Overflow["subunit"];
-              return true;
-            }
-            value = _SubunitElement;
-            return (value as Hl7.Fhir.Model.Integer) is not null;
+            value = SubunitElement;
+            return SubunitElement is not null;
           case "sequence":
-            if (_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["sequence"];
-              return true;
-            }
-            value = _SequenceElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = SequenceElement;
+            return SequenceElement is not null;
           case "length":
-            if (_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>())
-            {
-              value = Overflow["length"];
-              return true;
-            }
-            value = _LengthElement;
-            return (value as Hl7.Fhir.Model.Integer) is not null;
+            value = LengthElement;
+            return LengthElement is not null;
           case "sequenceAttachment":
-            if (_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>())
-            {
-              value = Overflow["sequenceAttachment"];
-              return true;
-            }
-            value = _SequenceAttachment;
-            return (value as Hl7.Fhir.Model.Attachment) is not null;
+            value = SequenceAttachment;
+            return SequenceAttachment is not null;
           case "nTerminalModificationId":
-            if (_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
-            {
-              value = Overflow["nTerminalModificationId"];
-              return true;
-            }
-            value = _NTerminalModificationId;
-            return (value as Hl7.Fhir.Model.Identifier) is not null;
+            value = NTerminalModificationId;
+            return NTerminalModificationId is not null;
           case "nTerminalModification":
-            if (_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["nTerminalModification"];
-              return true;
-            }
-            value = _NTerminalModificationElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = NTerminalModificationElement;
+            return NTerminalModificationElement is not null;
           case "cTerminalModificationId":
-            if (_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
-            {
-              value = Overflow["cTerminalModificationId"];
-              return true;
-            }
-            value = _CTerminalModificationId;
-            return (value as Hl7.Fhir.Model.Identifier) is not null;
+            value = CTerminalModificationId;
+            return CTerminalModificationId is not null;
           case "cTerminalModification":
-            if (_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["cTerminalModification"];
-              return true;
-            }
-            value = _CTerminalModificationElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = CTerminalModificationElement;
+            return CTerminalModificationElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "subunit":
-            if (value is not (Hl7.Fhir.Model.Integer or null))
-            {
-              SubunitElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
-              Overflow["subunit"] = value;
-            }
-            else SubunitElement = (Hl7.Fhir.Model.Integer?)value;
-            return this;
-          case "sequence":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              SequenceElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["sequence"] = value;
-            }
-            else SequenceElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          case "length":
-            if (value is not (Hl7.Fhir.Model.Integer or null))
-            {
-              LengthElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
-              Overflow["length"] = value;
-            }
-            else LengthElement = (Hl7.Fhir.Model.Integer?)value;
-            return this;
-          case "sequenceAttachment":
-            if (value is not (Hl7.Fhir.Model.Attachment or null))
-            {
-              SequenceAttachment = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
-              Overflow["sequenceAttachment"] = value;
-            }
-            else SequenceAttachment = (Hl7.Fhir.Model.Attachment?)value;
-            return this;
-          case "nTerminalModificationId":
-            if (value is not (Hl7.Fhir.Model.Identifier or null))
-            {
-              NTerminalModificationId = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
-              Overflow["nTerminalModificationId"] = value;
-            }
-            else NTerminalModificationId = (Hl7.Fhir.Model.Identifier?)value;
-            return this;
-          case "nTerminalModification":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              NTerminalModificationElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["nTerminalModification"] = value;
-            }
-            else NTerminalModificationElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          case "cTerminalModificationId":
-            if (value is not (Hl7.Fhir.Model.Identifier or null))
-            {
-              CTerminalModificationId = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
-              Overflow["cTerminalModificationId"] = value;
-            }
-            else CTerminalModificationId = (Hl7.Fhir.Model.Identifier?)value;
-            return this;
-          case "cTerminalModification":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              CTerminalModificationElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["cTerminalModification"] = value;
-            }
-            else CTerminalModificationElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_SubunitElement is not null && !_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
-        if (_SequenceElement is not null && !_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-        if (_LengthElement is not null && !_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("length",_LengthElement);
-        if (_SequenceAttachment is not null && !_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
-        if (_NTerminalModificationId is not null && !_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("nTerminalModificationId",_NTerminalModificationId);
-        if (_NTerminalModificationElement is not null && !_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("nTerminalModification",_NTerminalModificationElement);
-        if (_CTerminalModificationId is not null && !_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("cTerminalModificationId",_CTerminalModificationId);
-        if (_CTerminalModificationElement is not null && !_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("cTerminalModification",_CTerminalModificationElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",SubunitElement);
+        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+        if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
+        if (SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",SequenceAttachment);
+        if (NTerminalModificationId is not null) yield return new KeyValuePair<string,object>("nTerminalModificationId",NTerminalModificationId);
+        if (NTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("nTerminalModification",NTerminalModificationElement);
+        if (CTerminalModificationId is not null) yield return new KeyValuePair<string,object>("cTerminalModificationId",CTerminalModificationId);
+        if (CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",CTerminalModificationElement);
       }
 
     }
 
     /// <summary>
-    /// The SubstanceProtein descriptive elements will only be used when a complete or partial amino acid sequence is available or derivable from a nucleic acid sequence.
+    /// The SubstanceProtein descriptive elements will only be used when a complete or partial amino acid sequence is available or derivable from a nucleic acid sequence
     /// </summary>
     [FhirElement("sequenceType", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? SequenceType
+    public Hl7.Fhir.Model.CodeableConcept SequenceType
     {
-      get
-      {
-        if(_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["sequenceType"]);
-        return _SequenceType;
-      }
-
-      set
-      {
-        if (_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("sequenceType");
-        _SequenceType = value;
-        OnPropertyChanged("SequenceType");
-      }
-
+      get { return _SequenceType; }
+      set { _SequenceType = value; OnPropertyChanged("SequenceType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _SequenceType;
+    private Hl7.Fhir.Model.CodeableConcept _SequenceType;
 
     /// <summary>
-    /// Number of linear sequences of amino acids linked through peptide bonds. The number of subunits constituting the SubstanceProtein shall be described. It is possible that the number of subunits can be variable.
+    /// Number of linear sequences of amino acids linked through peptide bonds. The number of subunits constituting the SubstanceProtein shall be described. It is possible that the number of subunits can be variable
     /// </summary>
     [FhirElement("numberOfSubunits", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer? NumberOfSubunitsElement
+    public Hl7.Fhir.Model.Integer NumberOfSubunitsElement
     {
-      get
-      {
-        if(_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["numberOfSubunits"]);
-        return _NumberOfSubunitsElement;
-      }
-
-      set
-      {
-        if (_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>())
-          Overflow.Remove("numberOfSubunits");
-        _NumberOfSubunitsElement = value;
-        OnPropertyChanged("NumberOfSubunitsElement");
-      }
-
+      get { return _NumberOfSubunitsElement; }
+      set { _NumberOfSubunitsElement = value; OnPropertyChanged("NumberOfSubunitsElement"); }
     }
 
-    private Hl7.Fhir.Model.Integer? _NumberOfSubunitsElement;
+    private Hl7.Fhir.Model.Integer _NumberOfSubunitsElement;
 
     /// <summary>
     /// Number of linear sequences of amino acids linked through peptide bonds. The number of subunits constituting the SubstanceProtein shall be described. It is possible that the number of subunits can be variable
@@ -621,54 +443,43 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? NumberOfSubunits
     {
-      get => NumberOfSubunitsElement?.Value;
+      get { return NumberOfSubunitsElement != null ? NumberOfSubunitsElement.Value : null; }
       set
       {
-        NumberOfSubunitsElement = value is null ? null! : new Hl7.Fhir.Model.Integer(value);
+        if (value == null)
+          NumberOfSubunitsElement = null;
+        else
+          NumberOfSubunitsElement = new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("NumberOfSubunits");
       }
     }
 
     /// <summary>
-    /// The disulphide bond between two cysteine residues either on the same subunit or on two different subunits shall be described. The position of the disulfide bonds in the SubstanceProtein shall be listed in increasing order of subunit number and position within subunit followed by the abbreviation of the amino acids involved. The disulfide linkage positions shall actually contain the amino acid Cysteine at the respective positions.
+    /// The disulphide bond between two cysteine residues either on the same subunit or on two different subunits shall be described. The position of the disulfide bonds in the SubstanceProtein shall be listed in increasing order of subunit number and position within subunit followed by the abbreviation of the amino acids involved. The disulfide linkage positions shall actually contain the amino acid Cysteine at the respective positions
     /// </summary>
     [FhirElement("disulfideLinkage", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> DisulfideLinkageElement
     {
-      get
-      {
-        if(_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["disulfideLinkage"]);
-        return _DisulfideLinkageElement ??= [];
-      }
-
-      set
-      {
-        if (_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
-          Overflow.Remove("disulfideLinkage");
-        _DisulfideLinkageElement = value;
-        OnPropertyChanged("DisulfideLinkageElement");
-      }
-
+      get { if(_DisulfideLinkageElement==null) _DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(); return _DisulfideLinkageElement; }
+      set { _DisulfideLinkageElement = value; OnPropertyChanged("DisulfideLinkageElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString>? _DisulfideLinkageElement;
+    private List<Hl7.Fhir.Model.FhirString> _DisulfideLinkageElement;
 
     /// <summary>
     /// The disulphide bond between two cysteine residues either on the same subunit or on two different subunits shall be described. The position of the disulfide bonds in the SubstanceProtein shall be listed in increasing order of subunit number and position within subunit followed by the abbreviation of the amino acids involved. The disulfide linkage positions shall actually contain the amino acid Cysteine at the respective positions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?> DisulfideLinkage
+    public IEnumerable<string> DisulfideLinkage
     {
-      get => _DisulfideLinkageElement?.Select(elem => elem.Value) ?? [];
+      get { return DisulfideLinkageElement != null ? DisulfideLinkageElement.Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
-          DisulfideLinkageElement = null!;
+          DisulfideLinkageElement = null;
         else
           DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("DisulfideLinkage");
@@ -676,159 +487,125 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// This subclause refers to the description of each subunit constituting the SubstanceProtein. A subunit is a linear sequence of amino acids linked through peptide bonds. The Subunit information shall be provided when the finished SubstanceProtein is a complex of multiple sequences; subunits are not used to delineate domains within a single sequence. Subunits are listed in order of decreasing length; sequences of the same length will be ordered by decreasing molecular weight; subunits that have identical sequences will be repeated multiple times.
+    /// This subclause refers to the description of each subunit constituting the SubstanceProtein. A subunit is a linear sequence of amino acids linked through peptide bonds. The Subunit information shall be provided when the finished SubstanceProtein is a complex of multiple sequences; subunits are not used to delineate domains within a single sequence. Subunits are listed in order of decreasing length; sequences of the same length will be ordered by decreasing molecular weight; subunits that have identical sequences will be repeated multiple times
     /// </summary>
     [FhirElement("subunit", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> Subunit
     {
-      get
-      {
-        if(_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>), Overflow["subunit"]);
-        return _Subunit ??= [];
-      }
-
-      set
-      {
-        if (_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>())
-          Overflow.Remove("subunit");
-        _Subunit = value;
-        OnPropertyChanged("Subunit");
-      }
-
+      get { if(_Subunit==null) _Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(); return _Subunit; }
+      set { _Subunit = value; OnPropertyChanged("Subunit"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>? _Subunit;
+    private List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> _Subunit;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not SubstanceProtein dest)
+      var dest = other as SubstanceProtein;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_SequenceType is not null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)_SequenceType.DeepCopyInternal();
-      if(_NumberOfSubunitsElement is not null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)_NumberOfSubunitsElement.DeepCopyInternal();
-      if(_DisulfideLinkageElement is not null) dest.DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(_DisulfideLinkageElement.DeepCopyInternal());
-      if(_Subunit is not null) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(_Subunit.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopy();
+      if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopy();
+      if(DisulfideLinkageElement.Any()) dest.DisulfideLinkageElement = new List<Hl7.Fhir.Model.FhirString>(DisulfideLinkageElement.DeepCopy());
+      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>(Subunit.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new SubstanceProtein();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new SubstanceProtein());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not SubstanceProtein otherT) return false;
+      var otherT = other as SubstanceProtein;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_SequenceType, otherT._SequenceType)) return false;
-      if(!comparer.Equals(_NumberOfSubunitsElement, otherT._NumberOfSubunitsElement)) return false;
-      if(!comparer.ListEquals(_DisulfideLinkageElement, otherT._DisulfideLinkageElement)) return false;
-      if(!comparer.ListEquals(_Subunit, otherT._Subunit)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(SequenceType, otherT.SequenceType)) return false;
+      if( !DeepComparable.Matches(NumberOfSubunitsElement, otherT.NumberOfSubunitsElement)) return false;
+      if( !DeepComparable.Matches(DisulfideLinkageElement, otherT.DisulfideLinkageElement)) return false;
+      if( !DeepComparable.Matches(Subunit, otherT.Subunit)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as SubstanceProtein;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(SequenceType, otherT.SequenceType)) return false;
+      if( !DeepComparable.IsExactly(NumberOfSubunitsElement, otherT.NumberOfSubunitsElement)) return false;
+      if( !DeepComparable.IsExactly(DisulfideLinkageElement, otherT.DisulfideLinkageElement)) return false;
+      if( !DeepComparable.IsExactly(Subunit, otherT.Subunit)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (SequenceType != null) yield return SequenceType;
+        if (NumberOfSubunitsElement != null) yield return NumberOfSubunitsElement;
+        foreach (var elem in DisulfideLinkageElement) { if (elem != null) yield return elem; }
+        foreach (var elem in Subunit) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (SequenceType != null) yield return new ElementValue("sequenceType", SequenceType);
+        if (NumberOfSubunitsElement != null) yield return new ElementValue("numberOfSubunits", NumberOfSubunitsElement);
+        foreach (var elem in DisulfideLinkageElement) { if (elem != null) yield return new ElementValue("disulfideLinkage", elem); }
+        foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "sequenceType":
-          if (_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["sequenceType"];
-            return true;
-          }
-          value = _SequenceType;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = SequenceType;
+          return SequenceType is not null;
         case "numberOfSubunits":
-          if (_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>())
-          {
-            value = Overflow["numberOfSubunits"];
-            return true;
-          }
-          value = _NumberOfSubunitsElement;
-          return (value as Hl7.Fhir.Model.Integer) is not null;
+          value = NumberOfSubunitsElement;
+          return NumberOfSubunitsElement is not null;
         case "disulfideLinkage":
-          if (_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
-          {
-            value = Overflow["disulfideLinkage"];
-            return true;
-          }
-          value = _DisulfideLinkageElement;
-          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
+          value = DisulfideLinkageElement;
+          return DisulfideLinkageElement?.Any() == true;
         case "subunit":
-          if (_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>())
-          {
-            value = Overflow["subunit"];
-            return true;
-          }
-          value = _Subunit;
-          return (value as List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>)?.Any() is true;
+          value = Subunit;
+          return Subunit?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "sequenceType":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            SequenceType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["sequenceType"] = value;
-          }
-          else SequenceType = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "numberOfSubunits":
-          if (value is not (Hl7.Fhir.Model.Integer or null))
-          {
-            NumberOfSubunitsElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
-            Overflow["numberOfSubunits"] = value;
-          }
-          else NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer?)value;
-          return this;
-        case "disulfideLinkage":
-          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
-          {
-            DisulfideLinkageElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
-            Overflow["disulfideLinkage"] = value;
-          }
-          else DisulfideLinkageElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
-          return this;
-        case "subunit":
-          if (value is not (List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> or null))
-          {
-            Subunit = OverflowNull<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>.INSTANCE;
-            Overflow["subunit"] = value;
-          }
-          else Subunit = (List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_SequenceType is not null && !_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
-      if (_NumberOfSubunitsElement is not null && !_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
-      if (_DisulfideLinkageElement?.Any() is true && !_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("disulfideLinkage",_DisulfideLinkageElement);
-      if (_Subunit?.Any() is true && !_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>()) yield return new KeyValuePair<string,object>("subunit",_Subunit);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
+      if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
+      if (DisulfideLinkageElement?.Any() == true) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
+      if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
     }
 
   }

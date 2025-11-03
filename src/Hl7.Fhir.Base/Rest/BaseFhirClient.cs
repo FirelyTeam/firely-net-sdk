@@ -241,8 +241,8 @@ public partial class BaseFhirClient : IDisposable
 
         var upd = new TransactionBuilder(Endpoint);
 
-        if (versionAware && resource.VersionId is { } vid)
-            upd.Update(resource.Id, resource, versionId: vid);
+        if (versionAware && resource.HasVersionId)
+            upd.Update(resource.Id, resource, versionId: resource.VersionId);
         else
             upd.Update(resource.Id, resource);
 
@@ -267,8 +267,8 @@ public partial class BaseFhirClient : IDisposable
 
         var upd = new TransactionBuilder(Endpoint);
 
-        if (versionAware && resource.VersionId is {} vid)
-            upd.ConditionalUpdate(condition, resource, versionId: vid);
+        if (versionAware && resource.HasVersionId)
+            upd.ConditionalUpdate(condition, resource, versionId: resource.VersionId);
         else
             upd.ConditionalUpdate(condition, resource);
 
@@ -787,7 +787,7 @@ public partial class BaseFhirClient : IDisposable
 
     public Task<TResource?> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect, CancellationToken? ct) where TResource : Model.Resource
     {
-        return executeAsync<TResource>(tx, [expect], ct);
+        return executeAsync<TResource>(tx, new[] { expect }, ct);
     }
 
     private async Task<TResource?> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect, CancellationToken? ct) where TResource : Resource
@@ -798,9 +798,8 @@ public partial class BaseFhirClient : IDisposable
 
         await verifyServerVersion(cancellation).ConfigureAwait(false);
 
-        var request = tx.Entry.FirstOrDefault() ?? throw new ArgumentException("Should have at least one entry in the bundle", nameof(tx));
-        var maybeBinaryInteraction = request.Request?.Url is not null &&
-                                     new ResourceIdentity(request.Request.Url).ResourceType == "Binary";
+        var request = tx.Entry[0];
+        var maybeBinaryInteraction = new ResourceIdentity(request.Request.Url).ResourceType == "Binary";
         var requestMessage = request.ToHttpRequestMessage(
             Requester.BaseUrl,
             getSerializationEngine(),
@@ -889,7 +888,7 @@ public partial class BaseFhirClient : IDisposable
 
         // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
         // and all state (e.g. Last Result etc) will be overwritten from this point on.
-        var execResult = shouldFetchFullRepresentation && LastResult?.Location is not null ?
+        var execResult = shouldFetchFullRepresentation ?
             await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
 
         // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
@@ -909,7 +908,7 @@ public partial class BaseFhirClient : IDisposable
             _ => throw new FhirOperationException(entryComponent is not null ? unexpectedBodyTypeForBundle(entryComponent.Request, execResult) : unexpectedBodyTypeForMessage(msg!, execResult), responseMessage.StatusCode)
         };
 
-        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent? rc, Resource result) => $"Operation {rc?.Method} on {rc?.Url} " +
+        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent rc, Resource result) => $"Operation {rc.Method} on {rc.Url} " +
                                                                         $"expected a body of type {typeof(TResource).Name} but a {result.GetType().Name} was returned.";
 
         static string unexpectedBodyTypeForMessage(HttpRequestMessage msg, Resource result) => $"Operation {msg.Method} on {msg.RequestUri} " +
@@ -964,7 +963,7 @@ public partial class BaseFhirClient : IDisposable
     }
 
     private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>
-        interaction.Request?.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
+        interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
 
     private static bool isPostOrPutOrPatch(HttpMethod method) =>
         method == HttpMethod.Post || method == HttpMethod.Put || method == new HttpMethod("PATCH");
@@ -974,9 +973,7 @@ public partial class BaseFhirClient : IDisposable
 
     private IFhirSerializationEngine getSerializationEngine()
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings);
-#pragma warning restore CS0618 // Type or member is obsolete
+        return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new());
     }
 
     private async Task verifyServerVersion(CancellationToken ct)
@@ -987,12 +984,12 @@ public partial class BaseFhirClient : IDisposable
         _versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
         string? serverVersion;
-        var originalEngine = Settings.SerializationEngine;
+        var settings = Settings;
 
         try
         {
-            // Temporarily set the engine to ignore most errors.
-            Settings.SerializationEngine = FhirSerializationEngineFactory.Ostrich(Inspector);
+            Settings = Settings.Clone();
+            Settings.ParserSettings = new() { AllowUnrecognizedEnums = true };
             serverVersion = await getFhirVersionOfServer(ct).ConfigureAwait(false);
         }
         catch (FormatException fe)
@@ -1002,8 +999,8 @@ public partial class BaseFhirClient : IDisposable
         }
         finally
         {
-            // put back the original engine
-            Settings.SerializationEngine = originalEngine;
+            // put back the original settings
+            Settings = settings;
         }
 
         if (serverVersion == null)
@@ -1023,8 +1020,7 @@ public partial class BaseFhirClient : IDisposable
         var capabilityStatement = await executeAsync<Resource>(tx, HttpStatusCode.OK, ct).ConfigureAwait(false);
         if (capabilityStatement is null) return null;
 
-        return capabilityStatement.TryGetValue("fhirVersion", out var value) &&
-               value is PrimitiveType { JsonValue: string version }
+        return capabilityStatement.AsReadOnlyDictionary().TryGetValue("fhirVersion", out var value) && value is PrimitiveType pt && pt.ObjectValue is string version
             ? version
             : null;
     }
@@ -1062,3 +1058,5 @@ public partial class BaseFhirClient : IDisposable
     }
     #endregion
 }
+
+#nullable restore

@@ -10,7 +10,6 @@
 //extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -24,7 +23,7 @@ namespace Hl7.FhirPath.Tests
     {
         private static void isB(string expr, object value = null)
         {
-            var dummy = PocoNode.ForAnyPrimitive(value ?? true);
+            ITypedElement dummy = ElementNode.ForPrimitive(value ?? true).ToScopedNode();
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
             Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
@@ -32,14 +31,15 @@ namespace Hl7.FhirPath.Tests
 
         private static object scalar(string expr)
         {
-            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
+            ITypedElement dummy = ElementNode.ForPrimitive(true).ToScopedNode();
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
             return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
-        private static object scalar(PocoNode dummy, string expr)
+        private static object scalar(ITypedElement dummy, string expr)
         {
+            dummy = dummy.ToScopedNode();
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
             return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
@@ -51,9 +51,9 @@ namespace Hl7.FhirPath.Tests
 #pragma warning disable CS0618 // Type or member is internal
             var input = SourceNode.Node("root",
                     SourceNode.Valued("child", "Hello world!"),
-                    SourceNode.Valued("child", "4")).ToTypedElementLegacy();
+                    SourceNode.Valued("child", "4")).ToTypedElement();
 #pragma warning restore CS0618 // Type or member is internal
-            Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
+            Assert.AreEqual("ello", scalar(input, @"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
         [TestMethod]
@@ -227,7 +227,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void StringConcatenationAndEmpty()
         {
-            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
+            ITypedElement dummy = ElementNode.ForPrimitive(true);
 
             Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' + '' + 'DEF'"));
             Assert.AreEqual("DEF", scalar(dummy, "'' + 'DEF'"));
@@ -295,21 +295,21 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestStringJoin()
         {
-            var dummy = PocoNode.FromList<FhirString>(["This ", "is ", "one ", "sentence", "."]);
+            var dummy = ElementNode.CreateList("This ", "is ", "one ", "sentence", ".");
             var result = dummy.FpJoin(string.Empty);
             Assert.IsNotNull(result);
             Assert.AreEqual("This is one sentence.", result);
 
-            dummy = PocoNode.FromList<FhirString>(["a", "b", "c"]);
+            dummy = ElementNode.CreateList("a", "b", "c");
             result = dummy.FpJoin();
             Assert.IsNotNull(result);
             Assert.AreEqual("abc", result);
 
-            dummy = PocoNode.FromList<FhirString>([]);
+            dummy = ElementNode.CreateList();
             result = dummy.FpJoin(string.Empty);
             Assert.AreEqual(string.Empty, result);
 
-            dummy = PocoNode.FromList<FhirString>(["This", "is", "a", "separated", "sentence."]);
+            dummy = ElementNode.CreateList("This", "is", "a", "separated", "sentence.");
             result = dummy.FpJoin(";");
             Assert.IsNotNull(result);
             Assert.AreEqual("This;is;a;separated;sentence.", result);
@@ -319,7 +319,7 @@ namespace Hl7.FhirPath.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestStringJoinError()
         {
-            var dummy = PocoNode.FromList<FhirString>(["This", "is", "sentence", "with", 1, "number."]);
+            var dummy = ElementNode.CreateList("This", "is", "sentence", "with", 1, "number.");
             dummy.FpJoin(string.Empty);
         }
     }

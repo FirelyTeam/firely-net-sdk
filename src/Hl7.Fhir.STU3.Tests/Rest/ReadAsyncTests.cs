@@ -20,7 +20,9 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.ReturnPreference = ReturnPreference.Representation;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+
+
 
             var pat = new Patient()
             {
@@ -54,8 +56,8 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             // Create the patient
             Console.WriteLine("Creating patient...");
-            Patient p = client.UpdateAsync(pat).WaitResult();
-            Location l = client.UpdateAsync(loc).WaitResult();
+            Patient p = client.Update(pat);
+            Location l = client.Update(loc);
             Assert.IsNotNull(p);
         }
 
@@ -66,7 +68,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await readUsingResourceId(client);
             }
         }
@@ -88,7 +90,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await readUsingLocationString(client);
             }
         }

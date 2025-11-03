@@ -4,7 +4,6 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -27,8 +26,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async Tasks.Task ExpansionOfWholeSystem()
         {
-            var result = await _resolverWithoutExpansions.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type");
-            var issueTypeVs = result.Value.DeepCopy() as ValueSet;
+            var issueTypeVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
@@ -78,8 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async Tasks.Task ExpansionOfComposeInclude()
         {
-            var result = await _resolver.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/resource-security-category");
-            var testVs = result.Value.DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/resource-security-category")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
@@ -91,8 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async Tasks.Task ExpansionOfComposeImport()
         {
-            var result = await _resolverWithoutExpansions.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version");
-            var testVs = result.Value.DeepCopy() as ValueSet;
+            var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
@@ -109,8 +105,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async Tasks.Task TestIncludeDesignation()
         {
-            var result = await _resolver.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus");
-            var testVs = result.Value.DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
 
@@ -897,13 +892,8 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 return await Tasks.Task.FromResult(uri == _myOnlyVS.Url) ? _myOnlyVS : null;
             }
-            
+
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
-
-            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
-
-            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _myOnlyVS.Url ? _myOnlyVS : ResolverException.NotFound());
-
         }
 
         private class OnlyCodeSystemResolver : IAsyncResourceResolver, ICommonConformanceSource
@@ -950,20 +940,10 @@ namespace Hl7.Fhir.Specification.Tests
             }
             public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => throw new NotImplementedException();
             public Resource ResolveByCanonicalUri(string uri) => throw new NotImplementedException();
-            public ResolverResult TryResolveByUri(string uri) => throw new NotImplementedException();
-
-            public ResolverResult TryResolveByCanonicalUri(string uri) => throw new NotImplementedException();
-
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                var resource = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
-                return resource.Value;
+                return await Tasks.Task.FromResult(uri == _onlyCs.Url ? _onlyCs : null);
             }
-
-            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
-
-            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _onlyCs.Url ? _onlyCs : ResolverException.NotFound());
-
             public Resource ResolveByUri(string uri) => throw new NotImplementedException();
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
             public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();

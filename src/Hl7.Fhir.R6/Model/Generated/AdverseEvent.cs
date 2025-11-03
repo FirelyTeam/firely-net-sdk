@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,13 +51,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent")]
+  [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "AdverseEvent";
+    public override string TypeName { get { return "AdverseEvent"; } }
 
     /// <summary>
     /// Codes identifying the lifecycle stage of an adverse event.
@@ -128,158 +124,133 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent.participant", IsBackboneType=true)]
+    [FhirType("AdverseEvent#Participant", IsNestedType=true)]
+    [BackboneType("AdverseEvent.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "AdverseEvent.participant";
+      public override string TypeName { get { return "AdverseEvent#Participant"; } }
 
       /// <summary>
-      /// Type of involvement.
+      /// Type of involvement
       /// </summary>
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("AdverseEventParticipantFunction")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Function
+      public Hl7.Fhir.Model.CodeableConcept Function
       {
-        get
-        {
-          if(_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["function"]);
-          return _Function;
-        }
-
-        set
-        {
-          if (_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("function");
-          _Function = value;
-          OnPropertyChanged("Function");
-        }
-
+        get { return _Function; }
+        set { _Function = value; OnPropertyChanged("Function"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Function;
+      private Hl7.Fhir.Model.CodeableConcept _Function;
 
       /// <summary>
-      /// Who was involved in the adverse event or the potential adverse event.
+      /// Who was involved in the adverse event or the potential adverse event
       /// </summary>
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson","Group")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Actor
+      public Hl7.Fhir.Model.ResourceReference Actor
       {
-        get
-        {
-          if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
-          return _Actor;
-        }
-
-        set
-        {
-          if (_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            Overflow.Remove("actor");
-          _Actor = value;
-          OnPropertyChanged("Actor");
-        }
-
+        get { return _Actor; }
+        set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference? _Actor;
+      private Hl7.Fhir.Model.ResourceReference _Actor;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ParticipantComponent dest)
+        var dest = other as ParticipantComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Function is not null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)_Function.DeepCopyInternal();
-        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopy();
+        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ParticipantComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ParticipantComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ParticipantComponent otherT) return false;
+        var otherT = other as ParticipantComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Function, otherT._Function)) return false;
-        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Function, otherT.Function)) return false;
+        if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ParticipantComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
+        if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Function != null) yield return Function;
+          if (Actor != null) yield return Actor;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Function != null) yield return new ElementValue("function", Function);
+          if (Actor != null) yield return new ElementValue("actor", Actor);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "function":
-            if (_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["function"];
-              return true;
-            }
-            value = _Function;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Function;
+            return Function is not null;
           case "actor":
-            if (_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            {
-              value = Overflow["actor"];
-              return true;
-            }
-            value = _Actor;
-            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+            value = Actor;
+            return Actor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "function":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Function = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["function"] = value;
-            }
-            else Function = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "actor":
-            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-            {
-              Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-              Overflow["actor"] = value;
-            }
-            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Function is not null && !_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("function",_Function);
-        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
     }
@@ -292,155 +263,130 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent.suspectEntity", IsBackboneType=true)]
+    [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "AdverseEvent.suspectEntity";
+      public override string TypeName { get { return "AdverseEvent#SuspectEntity"; } }
 
       /// <summary>
-      /// Refers to the specific entity that caused the adverse event.
+      /// Refers to the specific entity that caused the adverse event
       /// </summary>
       [FhirElement("instance", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference? Instance
+      public Hl7.Fhir.Model.CodeableReference Instance
       {
-        get
-        {
-          if(_Instance.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["instance"]);
-          return _Instance;
-        }
-
-        set
-        {
-          if (_Instance.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-            Overflow.Remove("instance");
-          _Instance = value;
-          OnPropertyChanged("Instance");
-        }
-
+        get { return _Instance; }
+        set { _Instance = value; OnPropertyChanged("Instance"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference? _Instance;
+      private Hl7.Fhir.Model.CodeableReference _Instance;
 
       /// <summary>
-      /// Information on the possible cause of the event.
+      /// Information on the possible cause of the event
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.AdverseEvent.CausalityComponent? Causality
+      public Hl7.Fhir.Model.AdverseEvent.CausalityComponent Causality
       {
-        get
-        {
-          if(_Causality.InOverflow<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.AdverseEvent.CausalityComponent), Overflow["causality"]);
-          return _Causality;
-        }
-
-        set
-        {
-          if (_Causality.InOverflow<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>())
-            Overflow.Remove("causality");
-          _Causality = value;
-          OnPropertyChanged("Causality");
-        }
-
+        get { return _Causality; }
+        set { _Causality = value; OnPropertyChanged("Causality"); }
       }
 
-      private Hl7.Fhir.Model.AdverseEvent.CausalityComponent? _Causality;
+      private Hl7.Fhir.Model.AdverseEvent.CausalityComponent _Causality;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not SuspectEntityComponent dest)
+        var dest = other as SuspectEntityComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Instance is not null) dest.Instance = (Hl7.Fhir.Model.CodeableReference)_Instance.DeepCopyInternal();
-        if(_Causality is not null) dest.Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent)_Causality.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(Instance != null) dest.Instance = (Hl7.Fhir.Model.CodeableReference)Instance.DeepCopy();
+        if(Causality != null) dest.Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent)Causality.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new SuspectEntityComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new SuspectEntityComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not SuspectEntityComponent otherT) return false;
+        var otherT = other as SuspectEntityComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Instance, otherT._Instance)) return false;
-        if(!comparer.Equals(_Causality, otherT._Causality)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
+        if( !DeepComparable.Matches(Causality, otherT.Causality)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as SuspectEntityComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
+        if( !DeepComparable.IsExactly(Causality, otherT.Causality)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Instance != null) yield return Instance;
+          if (Causality != null) yield return Causality;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Instance != null) yield return new ElementValue("instance", Instance);
+          if (Causality != null) yield return new ElementValue("causality", Causality);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "instance":
-            if (_Instance.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-            {
-              value = Overflow["instance"];
-              return true;
-            }
-            value = _Instance;
-            return (value as Hl7.Fhir.Model.CodeableReference) is not null;
+            value = Instance;
+            return Instance is not null;
           case "causality":
-            if (_Causality.InOverflow<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>())
-            {
-              value = Overflow["causality"];
-              return true;
-            }
-            value = _Causality;
-            return (value as Hl7.Fhir.Model.AdverseEvent.CausalityComponent) is not null;
+            value = Causality;
+            return Causality is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "instance":
-            if (value is not (Hl7.Fhir.Model.CodeableReference or null))
-            {
-              Instance = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
-              Overflow["instance"] = value;
-            }
-            else Instance = (Hl7.Fhir.Model.CodeableReference?)value;
-            return this;
-          case "causality":
-            if (value is not (Hl7.Fhir.Model.AdverseEvent.CausalityComponent or null))
-            {
-              Causality = OverflowNull<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>.INSTANCE;
-              Overflow["causality"] = value;
-            }
-            else Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Instance is not null && !_Instance.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("instance",_Instance);
-        if (_Causality is not null && !_Causality.InOverflow<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>()) yield return new KeyValuePair<string,object>("causality",_Causality);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
+        if (Causality is not null) yield return new KeyValuePair<string,object>("causality",Causality);
       }
 
     }
@@ -450,262 +396,188 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("AdverseEvent.suspectEntity.causality", IsBackboneType=true)]
+    [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity.causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "AdverseEvent.suspectEntity.causality";
+      public override string TypeName { get { return "AdverseEvent#Causality"; } }
 
       /// <summary>
-      /// Method of evaluating the relatedness of the suspected entity to the event.
+      /// Method of evaluating the relatedness of the suspected entity to the event
       /// </summary>
       [FhirElement("assessmentMethod", InSummary=true, Order=40)]
       [Binding("AdverseEventCausalityMethod")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? AssessmentMethod
+      public Hl7.Fhir.Model.CodeableConcept AssessmentMethod
       {
-        get
-        {
-          if(_AssessmentMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["assessmentMethod"]);
-          return _AssessmentMethod;
-        }
-
-        set
-        {
-          if (_AssessmentMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("assessmentMethod");
-          _AssessmentMethod = value;
-          OnPropertyChanged("AssessmentMethod");
-        }
-
+        get { return _AssessmentMethod; }
+        set { _AssessmentMethod = value; OnPropertyChanged("AssessmentMethod"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _AssessmentMethod;
+      private Hl7.Fhir.Model.CodeableConcept _AssessmentMethod;
 
       /// <summary>
-      /// Result of the assessment regarding the relatedness of the suspected entity to the event.
+      /// Result of the assessment regarding the relatedness of the suspected entity to the event
       /// </summary>
       [FhirElement("entityRelatedness", InSummary=true, Order=50)]
       [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? EntityRelatedness
+      public Hl7.Fhir.Model.CodeableConcept EntityRelatedness
       {
-        get
-        {
-          if(_EntityRelatedness.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["entityRelatedness"]);
-          return _EntityRelatedness;
-        }
-
-        set
-        {
-          if (_EntityRelatedness.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("entityRelatedness");
-          _EntityRelatedness = value;
-          OnPropertyChanged("EntityRelatedness");
-        }
-
+        get { return _EntityRelatedness; }
+        set { _EntityRelatedness = value; OnPropertyChanged("EntityRelatedness"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _EntityRelatedness;
+      private Hl7.Fhir.Model.CodeableConcept _EntityRelatedness;
 
       /// <summary>
-      /// Author of the information on the possible cause of the event.
+      /// Author of the information on the possible cause of the event
       /// </summary>
       [FhirElement("author", InSummary=true, Order=60)]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference? Author
+      public Hl7.Fhir.Model.ResourceReference Author
       {
-        get
-        {
-          if(_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["author"]);
-          return _Author;
-        }
-
-        set
-        {
-          if (_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            Overflow.Remove("author");
-          _Author = value;
-          OnPropertyChanged("Author");
-        }
-
+        get { return _Author; }
+        set { _Author = value; OnPropertyChanged("Author"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference? _Author;
+      private Hl7.Fhir.Model.ResourceReference _Author;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not CausalityComponent dest)
+        var dest = other as CausalityComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_AssessmentMethod is not null) dest.AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept)_AssessmentMethod.DeepCopyInternal();
-        if(_EntityRelatedness is not null) dest.EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept)_EntityRelatedness.DeepCopyInternal();
-        if(_Author is not null) dest.Author = (Hl7.Fhir.Model.ResourceReference)_Author.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(AssessmentMethod != null) dest.AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept)AssessmentMethod.DeepCopy();
+        if(EntityRelatedness != null) dest.EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept)EntityRelatedness.DeepCopy();
+        if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new CausalityComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new CausalityComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not CausalityComponent otherT) return false;
+        var otherT = other as CausalityComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_AssessmentMethod, otherT._AssessmentMethod)) return false;
-        if(!comparer.Equals(_EntityRelatedness, otherT._EntityRelatedness)) return false;
-        if(!comparer.Equals(_Author, otherT._Author)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(AssessmentMethod, otherT.AssessmentMethod)) return false;
+        if( !DeepComparable.Matches(EntityRelatedness, otherT.EntityRelatedness)) return false;
+        if( !DeepComparable.Matches(Author, otherT.Author)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as CausalityComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(AssessmentMethod, otherT.AssessmentMethod)) return false;
+        if( !DeepComparable.IsExactly(EntityRelatedness, otherT.EntityRelatedness)) return false;
+        if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (AssessmentMethod != null) yield return AssessmentMethod;
+          if (EntityRelatedness != null) yield return EntityRelatedness;
+          if (Author != null) yield return Author;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (AssessmentMethod != null) yield return new ElementValue("assessmentMethod", AssessmentMethod);
+          if (EntityRelatedness != null) yield return new ElementValue("entityRelatedness", EntityRelatedness);
+          if (Author != null) yield return new ElementValue("author", Author);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "assessmentMethod":
-            if (_AssessmentMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["assessmentMethod"];
-              return true;
-            }
-            value = _AssessmentMethod;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = AssessmentMethod;
+            return AssessmentMethod is not null;
           case "entityRelatedness":
-            if (_EntityRelatedness.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["entityRelatedness"];
-              return true;
-            }
-            value = _EntityRelatedness;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = EntityRelatedness;
+            return EntityRelatedness is not null;
           case "author":
-            if (_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            {
-              value = Overflow["author"];
-              return true;
-            }
-            value = _Author;
-            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+            value = Author;
+            return Author is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "assessmentMethod":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              AssessmentMethod = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["assessmentMethod"] = value;
-            }
-            else AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "entityRelatedness":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              EntityRelatedness = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["entityRelatedness"] = value;
-            }
-            else EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "author":
-            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-            {
-              Author = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-              Overflow["author"] = value;
-            }
-            else Author = (Hl7.Fhir.Model.ResourceReference?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_AssessmentMethod is not null && !_AssessmentMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("assessmentMethod",_AssessmentMethod);
-        if (_EntityRelatedness is not null && !_EntityRelatedness.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("entityRelatedness",_EntityRelatedness);
-        if (_Author is not null && !_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("author",_Author);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AssessmentMethod is not null) yield return new KeyValuePair<string,object>("assessmentMethod",AssessmentMethod);
+        if (EntityRelatedness is not null) yield return new KeyValuePair<string,object>("entityRelatedness",EntityRelatedness);
+        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
       }
 
     }
 
     /// <summary>
-    /// Business identifier for the event.
+    /// Business identifier for the event
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// in-progress | completed | entered-in-error | unknown.
+    /// in-progress | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [DeclaredType(Type = typeof(Code))]
     [Binding("AdverseEventStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> StatusElement
     {
-      get
-      {
-        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>), Overflow["status"]);
-        return _StatusElement;
-      }
-
-      set
-      {
-        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>())
-          Overflow.Remove("status");
-        _StatusElement = value;
-        OnPropertyChanged("StatusElement");
-      }
-
+      get { return _StatusElement; }
+      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>? _StatusElement;
+    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> _StatusElement;
 
     /// <summary>
     /// in-progress | completed | entered-in-error | unknown
@@ -714,41 +586,32 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus? Status
     {
-      get => StatusElement?.Value;
+      get { return StatusElement != null ? StatusElement.Value : null; }
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
+        if (value == null)
+          StatusElement = null;
+        else
+          StatusElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// actual | potential.
+    /// actual | potential
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
+    [DeclaredType(Type = typeof(Code))]
     [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>? ActualityElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
     {
-      get
-      {
-        if(_ActualityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>), Overflow["actuality"]);
-        return _ActualityElement;
-      }
-
-      set
-      {
-        if (_ActualityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>())
-          Overflow.Remove("actuality");
-        _ActualityElement = value;
-        OnPropertyChanged("ActualityElement");
-      }
-
+      get { return _ActualityElement; }
+      set { _ActualityElement = value; OnPropertyChanged("ActualityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>? _ActualityElement;
+    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> _ActualityElement;
 
     /// <summary>
     /// actual | potential
@@ -757,489 +620,285 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
     {
-      get => ActualityElement?.Value;
+      get { return ActualityElement != null ? ActualityElement.Value : null; }
       set
       {
-        ActualityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+        if (value == null)
+          ActualityElement = null;
+        else
+          ActualityElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
         OnPropertyChanged("Actuality");
       }
     }
 
     /// <summary>
-    /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site.
+    /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("AdverseEventCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get
-      {
-        if(_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["category"]);
-        return _Category ??= [];
-      }
-
-      set
-      {
-        if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("category");
-        _Category = value;
-        OnPropertyChanged("Category");
-      }
-
+      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
 
     /// <summary>
-    /// Event or incident that occurred or was averted.
+    /// Event or incident that occurred or was averted
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("AdverseEventType")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Code
+    public Hl7.Fhir.Model.CodeableConcept Code
     {
-      get
-      {
-        if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-        return _Code;
-      }
-
-      set
-      {
-        if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("code");
-        _Code = value;
-        OnPropertyChanged("Code");
-      }
-
+      get { return _Code; }
+      set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Code;
+    private Hl7.Fhir.Model.CodeableConcept _Code;
 
     /// <summary>
-    /// Subject impacted by event.
+    /// Subject impacted by event
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","RelatedPerson")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
-      get
-      {
-        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
-      }
-
-      set
-      {
-        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("subject");
-        _Subject = value;
-        OnPropertyChanged("Subject");
-      }
-
+      get { return _Subject; }
+      set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Subject;
+    private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The Encounter associated with the start of the AdverseEvent.
+    /// The Encounter associated with the start of the AdverseEvent
     /// </summary>
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Encounter
+    public Hl7.Fhir.Model.ResourceReference Encounter
     {
-      get
-      {
-        if(_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["encounter"]);
-        return _Encounter;
-      }
-
-      set
-      {
-        if (_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("encounter");
-        _Encounter = value;
-        OnPropertyChanged("Encounter");
-      }
-
+      get { return _Encounter; }
+      set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Encounter;
+    private Hl7.Fhir.Model.ResourceReference _Encounter;
 
     /// <summary>
-    /// When the cause of the AdverseEvent occurred.
+    /// When the cause of the AdverseEvent occurred
     /// </summary>
     [FhirElement("cause", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Cause
+    public Hl7.Fhir.Model.DataType Cause
     {
-      get
-      {
-        if(_Cause.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["cause"]);
-        return _Cause;
-      }
-
-      set
-      {
-        if (_Cause.InOverflow<DynamicDataType>())
-          Overflow.Remove("cause");
-        _Cause = value;
-        OnPropertyChanged("Cause");
-      }
-
+      get { return _Cause; }
+      set { _Cause = value; OnPropertyChanged("Cause"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _Cause;
+    private Hl7.Fhir.Model.DataType _Cause;
 
     /// <summary>
-    /// When the effect of the AdverseEvent occurred.
+    /// When the effect of the AdverseEvent occurred
     /// </summary>
     [FhirElement("effect", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Effect
+    public Hl7.Fhir.Model.DataType Effect
     {
-      get
-      {
-        if(_Effect.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["effect"]);
-        return _Effect;
-      }
-
-      set
-      {
-        if (_Effect.InOverflow<DynamicDataType>())
-          Overflow.Remove("effect");
-        _Effect = value;
-        OnPropertyChanged("Effect");
-      }
-
+      get { return _Effect; }
+      set { _Effect = value; OnPropertyChanged("Effect"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _Effect;
+    private Hl7.Fhir.Model.DataType _Effect;
 
     /// <summary>
-    /// When the event was detected.
+    /// When the event was detected
     /// </summary>
     [FhirElement("detected", InSummary=true, Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? DetectedElement
+    public Hl7.Fhir.Model.FhirDateTime DetectedElement
     {
-      get
-      {
-        if(_DetectedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["detected"]);
-        return _DetectedElement;
-      }
-
-      set
-      {
-        if (_DetectedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("detected");
-        _DetectedElement = value;
-        OnPropertyChanged("DetectedElement");
-      }
-
+      get { return _DetectedElement; }
+      set { _DetectedElement = value; OnPropertyChanged("DetectedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _DetectedElement;
+    private Hl7.Fhir.Model.FhirDateTime _DetectedElement;
 
     /// <summary>
     /// When the event was detected
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Detected
+    public string Detected
     {
-      get => DetectedElement?.Value;
+      get { return DetectedElement != null ? DetectedElement.Value : null; }
       set
       {
-        DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          DetectedElement = null;
+        else
+          DetectedElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Detected");
       }
     }
 
     /// <summary>
-    /// When the event was recorded.
+    /// When the event was recorded
     /// </summary>
     [FhirElement("recordedDate", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? RecordedDateElement
+    public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
     {
-      get
-      {
-        if(_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["recordedDate"]);
-        return _RecordedDateElement;
-      }
-
-      set
-      {
-        if (_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("recordedDate");
-        _RecordedDateElement = value;
-        OnPropertyChanged("RecordedDateElement");
-      }
-
+      get { return _RecordedDateElement; }
+      set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _RecordedDateElement;
+    private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
 
     /// <summary>
     /// When the event was recorded
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? RecordedDate
+    public string RecordedDate
     {
-      get => RecordedDateElement?.Value;
+      get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
       set
       {
-        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          RecordedDateElement = null;
+        else
+          RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
 
     /// <summary>
-    /// Effect on the subject due to this event.
+    /// Effect on the subject due to this event
     /// </summary>
     [FhirElement("resultingEffect", InSummary=true, Order=200)]
     [Binding("AdverseEventResultingEffect")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> ResultingEffect
     {
-      get
-      {
-        if(_ResultingEffect.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["resultingEffect"]);
-        return _ResultingEffect ??= [];
-      }
-
-      set
-      {
-        if (_ResultingEffect.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          Overflow.Remove("resultingEffect");
-        _ResultingEffect = value;
-        OnPropertyChanged("ResultingEffect");
-      }
-
+      get { if(_ResultingEffect==null) _ResultingEffect = new List<Hl7.Fhir.Model.CodeableReference>(); return _ResultingEffect; }
+      set { _ResultingEffect = value; OnPropertyChanged("ResultingEffect"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference>? _ResultingEffect;
+    private List<Hl7.Fhir.Model.CodeableReference> _ResultingEffect;
 
     /// <summary>
-    /// Location where adverse event occurred.
+    /// Location where adverse event occurred
     /// </summary>
     [FhirElement("location", InSummary=true, Order=210)]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Location
+    public Hl7.Fhir.Model.ResourceReference Location
     {
-      get
-      {
-        if(_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["location"]);
-        return _Location;
-      }
-
-      set
-      {
-        if (_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("location");
-        _Location = value;
-        OnPropertyChanged("Location");
-      }
-
+      get { return _Location; }
+      set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Location;
+    private Hl7.Fhir.Model.ResourceReference _Location;
 
     /// <summary>
-    /// Seriousness or gravity of the event.
+    /// Seriousness or gravity of the event
     /// </summary>
     [FhirElement("seriousness", InSummary=true, Order=220)]
     [Binding("AdverseEventSeriousness")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Seriousness
+    public Hl7.Fhir.Model.CodeableConcept Seriousness
     {
-      get
-      {
-        if(_Seriousness.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["seriousness"]);
-        return _Seriousness;
-      }
-
-      set
-      {
-        if (_Seriousness.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("seriousness");
-        _Seriousness = value;
-        OnPropertyChanged("Seriousness");
-      }
-
+      get { return _Seriousness; }
+      set { _Seriousness = value; OnPropertyChanged("Seriousness"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Seriousness;
+    private Hl7.Fhir.Model.CodeableConcept _Seriousness;
 
     /// <summary>
-    /// Type of outcome from the adverse event.
+    /// Type of outcome from the adverse event
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=230)]
     [Binding("AdverseEventOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Outcome
     {
-      get
-      {
-        if(_Outcome.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["outcome"]);
-        return _Outcome ??= [];
-      }
-
-      set
-      {
-        if (_Outcome.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("outcome");
-        _Outcome = value;
-        OnPropertyChanged("Outcome");
-      }
-
+      get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Outcome; }
+      set { _Outcome = value; OnPropertyChanged("Outcome"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Outcome;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Outcome;
 
     /// <summary>
-    /// Who recorded the adverse event.
+    /// Who recorded the adverse event
     /// </summary>
     [FhirElement("recorder", InSummary=true, Order=240, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Recorder
+    public Hl7.Fhir.Model.ResourceReference Recorder
     {
-      get
-      {
-        if(_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["recorder"]);
-        return _Recorder;
-      }
-
-      set
-      {
-        if (_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("recorder");
-        _Recorder = value;
-        OnPropertyChanged("Recorder");
-      }
-
+      get { return _Recorder; }
+      set { _Recorder = value; OnPropertyChanged("Recorder"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Recorder;
+    private Hl7.Fhir.Model.ResourceReference _Recorder;
 
     /// <summary>
-    /// Who was involved in the adverse event or the potential adverse event and what they did.
+    /// Who was involved in the adverse event or the potential adverse event and what they did
     /// </summary>
     [FhirElement("participant", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> Participant
     {
-      get
-      {
-        if(_Participant.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>), Overflow["participant"]);
-        return _Participant ??= [];
-      }
-
-      set
-      {
-        if (_Participant.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>>())
-          Overflow.Remove("participant");
-        _Participant = value;
-        OnPropertyChanged("Participant");
-      }
-
+      get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(); return _Participant; }
+      set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>? _Participant;
+    private List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> _Participant;
 
     /// <summary>
-    /// Research study that the subject is enrolled in.
+    /// Research study that the subject is enrolled in
     /// </summary>
     [FhirElement("study", InSummary=true, Order=260)]
     [CLSCompliant(false)]
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Study
     {
-      get
-      {
-        if(_Study.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["study"]);
-        return _Study ??= [];
-      }
-
-      set
-      {
-        if (_Study.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("study");
-        _Study = value;
-        OnPropertyChanged("Study");
-      }
-
+      get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.ResourceReference>(); return _Study; }
+      set { _Study = value; OnPropertyChanged("Study"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Study;
+    private List<Hl7.Fhir.Model.ResourceReference> _Study;
 
     /// <summary>
-    /// Considered likely or probable or anticipated in the research study.
+    /// Considered likely or probable or anticipated in the research study
     /// </summary>
     [FhirElement("expectedInResearchStudy", Order=270)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? ExpectedInResearchStudyElement
+    public Hl7.Fhir.Model.FhirBoolean ExpectedInResearchStudyElement
     {
-      get
-      {
-        if(_ExpectedInResearchStudyElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["expectedInResearchStudy"]);
-        return _ExpectedInResearchStudyElement;
-      }
-
-      set
-      {
-        if (_ExpectedInResearchStudyElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          Overflow.Remove("expectedInResearchStudy");
-        _ExpectedInResearchStudyElement = value;
-        OnPropertyChanged("ExpectedInResearchStudyElement");
-      }
-
+      get { return _ExpectedInResearchStudyElement; }
+      set { _ExpectedInResearchStudyElement = value; OnPropertyChanged("ExpectedInResearchStudyElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean? _ExpectedInResearchStudyElement;
+    private Hl7.Fhir.Model.FhirBoolean _ExpectedInResearchStudyElement;
 
     /// <summary>
     /// Considered likely or probable or anticipated in the research study
@@ -1248,713 +907,402 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? ExpectedInResearchStudy
     {
-      get => ExpectedInResearchStudyElement?.Value;
+      get { return ExpectedInResearchStudyElement != null ? ExpectedInResearchStudyElement.Value : null; }
       set
       {
-        ExpectedInResearchStudyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        if (value == null)
+          ExpectedInResearchStudyElement = null;
+        else
+          ExpectedInResearchStudyElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ExpectedInResearchStudy");
       }
     }
 
     /// <summary>
-    /// The suspected agent causing the adverse event.
+    /// The suspected agent causing the adverse event
     /// </summary>
     [FhirElement("suspectEntity", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> SuspectEntity
     {
-      get
-      {
-        if(_SuspectEntity.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>), Overflow["suspectEntity"]);
-        return _SuspectEntity ??= [];
-      }
-
-      set
-      {
-        if (_SuspectEntity.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>())
-          Overflow.Remove("suspectEntity");
-        _SuspectEntity = value;
-        OnPropertyChanged("SuspectEntity");
-      }
-
+      get { if(_SuspectEntity==null) _SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(); return _SuspectEntity; }
+      set { _SuspectEntity = value; OnPropertyChanged("SuspectEntity"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>? _SuspectEntity;
+    private List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> _SuspectEntity;
 
     /// <summary>
-    /// Contributing factors suspected to have increased the probability or severity of the adverse event.
+    /// Contributing factors suspected to have increased the probability or severity of the adverse event
     /// </summary>
     [FhirElement("contributingFactor", InSummary=true, Order=290)]
     [Binding("AdverseEventContributingFactor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> ContributingFactor
     {
-      get
-      {
-        if(_ContributingFactor.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["contributingFactor"]);
-        return _ContributingFactor ??= [];
-      }
-
-      set
-      {
-        if (_ContributingFactor.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          Overflow.Remove("contributingFactor");
-        _ContributingFactor = value;
-        OnPropertyChanged("ContributingFactor");
-      }
-
+      get { if(_ContributingFactor==null) _ContributingFactor = new List<Hl7.Fhir.Model.CodeableReference>(); return _ContributingFactor; }
+      set { _ContributingFactor = value; OnPropertyChanged("ContributingFactor"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference>? _ContributingFactor;
+    private List<Hl7.Fhir.Model.CodeableReference> _ContributingFactor;
 
     /// <summary>
-    /// Preventive actions that contributed to avoiding the adverse event.
+    /// Preventive actions that contributed to avoiding the adverse event
     /// </summary>
     [FhirElement("preventiveAction", InSummary=true, Order=300)]
     [Binding("AdverseEventPreventiveAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> PreventiveAction
     {
-      get
-      {
-        if(_PreventiveAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["preventiveAction"]);
-        return _PreventiveAction ??= [];
-      }
-
-      set
-      {
-        if (_PreventiveAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          Overflow.Remove("preventiveAction");
-        _PreventiveAction = value;
-        OnPropertyChanged("PreventiveAction");
-      }
-
+      get { if(_PreventiveAction==null) _PreventiveAction = new List<Hl7.Fhir.Model.CodeableReference>(); return _PreventiveAction; }
+      set { _PreventiveAction = value; OnPropertyChanged("PreventiveAction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference>? _PreventiveAction;
+    private List<Hl7.Fhir.Model.CodeableReference> _PreventiveAction;
 
     /// <summary>
-    /// Ameliorating actions taken after the adverse event occurred in order to reduce the extent of harm.
+    /// Ameliorating actions taken after the adverse event occurred in order to reduce the extent of harm
     /// </summary>
     [FhirElement("mitigatingAction", InSummary=true, Order=310)]
     [Binding("AdverseEventMitigatingAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> MitigatingAction
     {
-      get
-      {
-        if(_MitigatingAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["mitigatingAction"]);
-        return _MitigatingAction ??= [];
-      }
-
-      set
-      {
-        if (_MitigatingAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          Overflow.Remove("mitigatingAction");
-        _MitigatingAction = value;
-        OnPropertyChanged("MitigatingAction");
-      }
-
+      get { if(_MitigatingAction==null) _MitigatingAction = new List<Hl7.Fhir.Model.CodeableReference>(); return _MitigatingAction; }
+      set { _MitigatingAction = value; OnPropertyChanged("MitigatingAction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference>? _MitigatingAction;
+    private List<Hl7.Fhir.Model.CodeableReference> _MitigatingAction;
 
     /// <summary>
-    /// Subject medical history or document relevant to this adverse event.
+    /// Subject medical history or document relevant to this adverse event
     /// </summary>
     [FhirElement("supportingInfo", InSummary=true, Order=320)]
     [Binding("AdverseEventSupportingInfo")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> SupportingInfo
     {
-      get
-      {
-        if(_SupportingInfo.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["supportingInfo"]);
-        return _SupportingInfo ??= [];
-      }
-
-      set
-      {
-        if (_SupportingInfo.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          Overflow.Remove("supportingInfo");
-        _SupportingInfo = value;
-        OnPropertyChanged("SupportingInfo");
-      }
-
+      get { if(_SupportingInfo==null) _SupportingInfo = new List<Hl7.Fhir.Model.CodeableReference>(); return _SupportingInfo; }
+      set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference>? _SupportingInfo;
+    private List<Hl7.Fhir.Model.CodeableReference> _SupportingInfo;
 
     /// <summary>
-    /// Comment on adverse event.
+    /// Comment on adverse event
     /// </summary>
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get
-      {
-        if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
-        return _Note ??= [];
-      }
-
-      set
-      {
-        if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
-          Overflow.Remove("note");
-        _Note = value;
-        OnPropertyChanged("Note");
-      }
-
+      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation>? _Note;
+    private List<Hl7.Fhir.Model.Annotation> _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not AdverseEvent dest)
+      var dest = other as AdverseEvent;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>)_StatusElement.DeepCopyInternal();
-      if(_ActualityElement is not null) dest.ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)_ActualityElement.DeepCopyInternal();
-      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
-      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
-      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
-      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
-      if(_Cause is not null) dest.Cause = (Hl7.Fhir.Model.DataType)_Cause.DeepCopyInternal();
-      if(_Effect is not null) dest.Effect = (Hl7.Fhir.Model.DataType)_Effect.DeepCopyInternal();
-      if(_DetectedElement is not null) dest.DetectedElement = (Hl7.Fhir.Model.FhirDateTime)_DetectedElement.DeepCopyInternal();
-      if(_RecordedDateElement is not null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)_RecordedDateElement.DeepCopyInternal();
-      if(_ResultingEffect is not null) dest.ResultingEffect = new List<Hl7.Fhir.Model.CodeableReference>(_ResultingEffect.DeepCopyInternal());
-      if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
-      if(_Seriousness is not null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)_Seriousness.DeepCopyInternal();
-      if(_Outcome is not null) dest.Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(_Outcome.DeepCopyInternal());
-      if(_Recorder is not null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)_Recorder.DeepCopyInternal();
-      if(_Participant is not null) dest.Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(_Participant.DeepCopyInternal());
-      if(_Study is not null) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(_Study.DeepCopyInternal());
-      if(_ExpectedInResearchStudyElement is not null) dest.ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean)_ExpectedInResearchStudyElement.DeepCopyInternal();
-      if(_SuspectEntity is not null) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(_SuspectEntity.DeepCopyInternal());
-      if(_ContributingFactor is not null) dest.ContributingFactor = new List<Hl7.Fhir.Model.CodeableReference>(_ContributingFactor.DeepCopyInternal());
-      if(_PreventiveAction is not null) dest.PreventiveAction = new List<Hl7.Fhir.Model.CodeableReference>(_PreventiveAction.DeepCopyInternal());
-      if(_MitigatingAction is not null) dest.MitigatingAction = new List<Hl7.Fhir.Model.CodeableReference>(_MitigatingAction.DeepCopyInternal());
-      if(_SupportingInfo is not null) dest.SupportingInfo = new List<Hl7.Fhir.Model.CodeableReference>(_SupportingInfo.DeepCopyInternal());
-      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>)StatusElement.DeepCopy();
+      if(ActualityElement != null) dest.ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)ActualityElement.DeepCopy();
+      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+      if(Cause != null) dest.Cause = (Hl7.Fhir.Model.DataType)Cause.DeepCopy();
+      if(Effect != null) dest.Effect = (Hl7.Fhir.Model.DataType)Effect.DeepCopy();
+      if(DetectedElement != null) dest.DetectedElement = (Hl7.Fhir.Model.FhirDateTime)DetectedElement.DeepCopy();
+      if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
+      if(ResultingEffect.Any()) dest.ResultingEffect = new List<Hl7.Fhir.Model.CodeableReference>(ResultingEffect.DeepCopy());
+      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+      if(Seriousness != null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)Seriousness.DeepCopy();
+      if(Outcome.Any()) dest.Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(Outcome.DeepCopy());
+      if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
+      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(Participant.DeepCopy());
+      if(Study.Any()) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(Study.DeepCopy());
+      if(ExpectedInResearchStudyElement != null) dest.ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean)ExpectedInResearchStudyElement.DeepCopy();
+      if(SuspectEntity.Any()) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(SuspectEntity.DeepCopy());
+      if(ContributingFactor.Any()) dest.ContributingFactor = new List<Hl7.Fhir.Model.CodeableReference>(ContributingFactor.DeepCopy());
+      if(PreventiveAction.Any()) dest.PreventiveAction = new List<Hl7.Fhir.Model.CodeableReference>(PreventiveAction.DeepCopy());
+      if(MitigatingAction.Any()) dest.MitigatingAction = new List<Hl7.Fhir.Model.CodeableReference>(MitigatingAction.DeepCopy());
+      if(SupportingInfo.Any()) dest.SupportingInfo = new List<Hl7.Fhir.Model.CodeableReference>(SupportingInfo.DeepCopy());
+      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new AdverseEvent();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new AdverseEvent());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not AdverseEvent otherT) return false;
+      var otherT = other as AdverseEvent;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
-      if(!comparer.Equals(_ActualityElement, otherT._ActualityElement)) return false;
-      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
-      if(!comparer.Equals(_Code, otherT._Code)) return false;
-      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
-      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
-      if(!comparer.Equals(_Cause, otherT._Cause)) return false;
-      if(!comparer.Equals(_Effect, otherT._Effect)) return false;
-      if(!comparer.Equals(_DetectedElement, otherT._DetectedElement)) return false;
-      if(!comparer.Equals(_RecordedDateElement, otherT._RecordedDateElement)) return false;
-      if(!comparer.ListEquals(_ResultingEffect, otherT._ResultingEffect)) return false;
-      if(!comparer.Equals(_Location, otherT._Location)) return false;
-      if(!comparer.Equals(_Seriousness, otherT._Seriousness)) return false;
-      if(!comparer.ListEquals(_Outcome, otherT._Outcome)) return false;
-      if(!comparer.Equals(_Recorder, otherT._Recorder)) return false;
-      if(!comparer.ListEquals(_Participant, otherT._Participant)) return false;
-      if(!comparer.ListEquals(_Study, otherT._Study)) return false;
-      if(!comparer.Equals(_ExpectedInResearchStudyElement, otherT._ExpectedInResearchStudyElement)) return false;
-      if(!comparer.ListEquals(_SuspectEntity, otherT._SuspectEntity)) return false;
-      if(!comparer.ListEquals(_ContributingFactor, otherT._ContributingFactor)) return false;
-      if(!comparer.ListEquals(_PreventiveAction, otherT._PreventiveAction)) return false;
-      if(!comparer.ListEquals(_MitigatingAction, otherT._MitigatingAction)) return false;
-      if(!comparer.ListEquals(_SupportingInfo, otherT._SupportingInfo)) return false;
-      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.Matches(ActualityElement, otherT.ActualityElement)) return false;
+      if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+      if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+      if( !DeepComparable.Matches(Cause, otherT.Cause)) return false;
+      if( !DeepComparable.Matches(Effect, otherT.Effect)) return false;
+      if( !DeepComparable.Matches(DetectedElement, otherT.DetectedElement)) return false;
+      if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
+      if( !DeepComparable.Matches(ResultingEffect, otherT.ResultingEffect)) return false;
+      if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+      if( !DeepComparable.Matches(Seriousness, otherT.Seriousness)) return false;
+      if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
+      if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
+      if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+      if( !DeepComparable.Matches(Study, otherT.Study)) return false;
+      if( !DeepComparable.Matches(ExpectedInResearchStudyElement, otherT.ExpectedInResearchStudyElement)) return false;
+      if( !DeepComparable.Matches(SuspectEntity, otherT.SuspectEntity)) return false;
+      if( !DeepComparable.Matches(ContributingFactor, otherT.ContributingFactor)) return false;
+      if( !DeepComparable.Matches(PreventiveAction, otherT.PreventiveAction)) return false;
+      if( !DeepComparable.Matches(MitigatingAction, otherT.MitigatingAction)) return false;
+      if( !DeepComparable.Matches(SupportingInfo, otherT.SupportingInfo)) return false;
+      if( !DeepComparable.Matches(Note, otherT.Note)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as AdverseEvent;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.IsExactly(ActualityElement, otherT.ActualityElement)) return false;
+      if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+      if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+      if( !DeepComparable.IsExactly(Cause, otherT.Cause)) return false;
+      if( !DeepComparable.IsExactly(Effect, otherT.Effect)) return false;
+      if( !DeepComparable.IsExactly(DetectedElement, otherT.DetectedElement)) return false;
+      if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
+      if( !DeepComparable.IsExactly(ResultingEffect, otherT.ResultingEffect)) return false;
+      if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+      if( !DeepComparable.IsExactly(Seriousness, otherT.Seriousness)) return false;
+      if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
+      if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
+      if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+      if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
+      if( !DeepComparable.IsExactly(ExpectedInResearchStudyElement, otherT.ExpectedInResearchStudyElement)) return false;
+      if( !DeepComparable.IsExactly(SuspectEntity, otherT.SuspectEntity)) return false;
+      if( !DeepComparable.IsExactly(ContributingFactor, otherT.ContributingFactor)) return false;
+      if( !DeepComparable.IsExactly(PreventiveAction, otherT.PreventiveAction)) return false;
+      if( !DeepComparable.IsExactly(MitigatingAction, otherT.MitigatingAction)) return false;
+      if( !DeepComparable.IsExactly(SupportingInfo, otherT.SupportingInfo)) return false;
+      if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (StatusElement != null) yield return StatusElement;
+        if (ActualityElement != null) yield return ActualityElement;
+        foreach (var elem in Category) { if (elem != null) yield return elem; }
+        if (Code != null) yield return Code;
+        if (Subject != null) yield return Subject;
+        if (Encounter != null) yield return Encounter;
+        if (Cause != null) yield return Cause;
+        if (Effect != null) yield return Effect;
+        if (DetectedElement != null) yield return DetectedElement;
+        if (RecordedDateElement != null) yield return RecordedDateElement;
+        foreach (var elem in ResultingEffect) { if (elem != null) yield return elem; }
+        if (Location != null) yield return Location;
+        if (Seriousness != null) yield return Seriousness;
+        foreach (var elem in Outcome) { if (elem != null) yield return elem; }
+        if (Recorder != null) yield return Recorder;
+        foreach (var elem in Participant) { if (elem != null) yield return elem; }
+        foreach (var elem in Study) { if (elem != null) yield return elem; }
+        if (ExpectedInResearchStudyElement != null) yield return ExpectedInResearchStudyElement;
+        foreach (var elem in SuspectEntity) { if (elem != null) yield return elem; }
+        foreach (var elem in ContributingFactor) { if (elem != null) yield return elem; }
+        foreach (var elem in PreventiveAction) { if (elem != null) yield return elem; }
+        foreach (var elem in MitigatingAction) { if (elem != null) yield return elem; }
+        foreach (var elem in SupportingInfo) { if (elem != null) yield return elem; }
+        foreach (var elem in Note) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+        if (ActualityElement != null) yield return new ElementValue("actuality", ActualityElement);
+        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
+        if (Code != null) yield return new ElementValue("code", Code);
+        if (Subject != null) yield return new ElementValue("subject", Subject);
+        if (Encounter != null) yield return new ElementValue("encounter", Encounter);
+        if (Cause != null) yield return new ElementValue("cause", Cause);
+        if (Effect != null) yield return new ElementValue("effect", Effect);
+        if (DetectedElement != null) yield return new ElementValue("detected", DetectedElement);
+        if (RecordedDateElement != null) yield return new ElementValue("recordedDate", RecordedDateElement);
+        foreach (var elem in ResultingEffect) { if (elem != null) yield return new ElementValue("resultingEffect", elem); }
+        if (Location != null) yield return new ElementValue("location", Location);
+        if (Seriousness != null) yield return new ElementValue("seriousness", Seriousness);
+        foreach (var elem in Outcome) { if (elem != null) yield return new ElementValue("outcome", elem); }
+        if (Recorder != null) yield return new ElementValue("recorder", Recorder);
+        foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
+        foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", elem); }
+        if (ExpectedInResearchStudyElement != null) yield return new ElementValue("expectedInResearchStudy", ExpectedInResearchStudyElement);
+        foreach (var elem in SuspectEntity) { if (elem != null) yield return new ElementValue("suspectEntity", elem); }
+        foreach (var elem in ContributingFactor) { if (elem != null) yield return new ElementValue("contributingFactor", elem); }
+        foreach (var elem in PreventiveAction) { if (elem != null) yield return new ElementValue("preventiveAction", elem); }
+        foreach (var elem in MitigatingAction) { if (elem != null) yield return new ElementValue("mitigatingAction", elem); }
+        foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
+        foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "status":
-          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _StatusElement;
-          return (value as Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>) is not null;
+          value = StatusElement;
+          return StatusElement is not null;
         case "actuality":
-          if (_ActualityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>())
-          {
-            value = Overflow["actuality"];
-            return true;
-          }
-          value = _ActualityElement;
-          return (value as Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>) is not null;
+          value = ActualityElement;
+          return ActualityElement is not null;
         case "category":
-          if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["category"];
-            return true;
-          }
-          value = _Category;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Category;
+          return Category?.Any() == true;
         case "code":
-          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["code"];
-            return true;
-          }
-          value = _Code;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Code;
+          return Code is not null;
         case "subject":
-          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["subject"];
-            return true;
-          }
-          value = _Subject;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Subject;
+          return Subject is not null;
         case "encounter":
-          if (_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["encounter"];
-            return true;
-          }
-          value = _Encounter;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Encounter;
+          return Encounter is not null;
         case "cause":
-          if (_Cause.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["cause"];
-            return true;
-          }
-          value = _Cause;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = Cause;
+          return Cause is not null;
         case "effect":
-          if (_Effect.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["effect"];
-            return true;
-          }
-          value = _Effect;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = Effect;
+          return Effect is not null;
         case "detected":
-          if (_DetectedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["detected"];
-            return true;
-          }
-          value = _DetectedElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = DetectedElement;
+          return DetectedElement is not null;
         case "recordedDate":
-          if (_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["recordedDate"];
-            return true;
-          }
-          value = _RecordedDateElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = RecordedDateElement;
+          return RecordedDateElement is not null;
         case "resultingEffect":
-          if (_ResultingEffect.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          {
-            value = Overflow["resultingEffect"];
-            return true;
-          }
-          value = _ResultingEffect;
-          return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
+          value = ResultingEffect;
+          return ResultingEffect?.Any() == true;
         case "location":
-          if (_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["location"];
-            return true;
-          }
-          value = _Location;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Location;
+          return Location is not null;
         case "seriousness":
-          if (_Seriousness.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["seriousness"];
-            return true;
-          }
-          value = _Seriousness;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Seriousness;
+          return Seriousness is not null;
         case "outcome":
-          if (_Outcome.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["outcome"];
-            return true;
-          }
-          value = _Outcome;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Outcome;
+          return Outcome?.Any() == true;
         case "recorder":
-          if (_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["recorder"];
-            return true;
-          }
-          value = _Recorder;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Recorder;
+          return Recorder is not null;
         case "participant":
-          if (_Participant.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>>())
-          {
-            value = Overflow["participant"];
-            return true;
-          }
-          value = _Participant;
-          return (value as List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>)?.Any() is true;
+          value = Participant;
+          return Participant?.Any() == true;
         case "study":
-          if (_Study.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["study"];
-            return true;
-          }
-          value = _Study;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Study;
+          return Study?.Any() == true;
         case "expectedInResearchStudy":
-          if (_ExpectedInResearchStudyElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          {
-            value = Overflow["expectedInResearchStudy"];
-            return true;
-          }
-          value = _ExpectedInResearchStudyElement;
-          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+          value = ExpectedInResearchStudyElement;
+          return ExpectedInResearchStudyElement is not null;
         case "suspectEntity":
-          if (_SuspectEntity.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>())
-          {
-            value = Overflow["suspectEntity"];
-            return true;
-          }
-          value = _SuspectEntity;
-          return (value as List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>)?.Any() is true;
+          value = SuspectEntity;
+          return SuspectEntity?.Any() == true;
         case "contributingFactor":
-          if (_ContributingFactor.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          {
-            value = Overflow["contributingFactor"];
-            return true;
-          }
-          value = _ContributingFactor;
-          return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
+          value = ContributingFactor;
+          return ContributingFactor?.Any() == true;
         case "preventiveAction":
-          if (_PreventiveAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          {
-            value = Overflow["preventiveAction"];
-            return true;
-          }
-          value = _PreventiveAction;
-          return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
+          value = PreventiveAction;
+          return PreventiveAction?.Any() == true;
         case "mitigatingAction":
-          if (_MitigatingAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          {
-            value = Overflow["mitigatingAction"];
-            return true;
-          }
-          value = _MitigatingAction;
-          return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
+          value = MitigatingAction;
+          return MitigatingAction?.Any() == true;
         case "supportingInfo":
-          if (_SupportingInfo.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-          {
-            value = Overflow["supportingInfo"];
-            return true;
-          }
-          value = _SupportingInfo;
-          return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
         case "note":
-          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
-          {
-            value = Overflow["note"];
-            return true;
-          }
-          value = _Note;
-          return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
+          value = Note;
+          return Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "status":
-          if (value is not (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> or null))
-          {
-            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>?)value;
-          return this;
-        case "actuality":
-          if (value is not (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> or null))
-          {
-            ActualityElement = OverflowNull<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>.INSTANCE;
-            Overflow["actuality"] = value;
-          }
-          else ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>?)value;
-          return this;
-        case "category":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Category = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["category"] = value;
-          }
-          else Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "code":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["code"] = value;
-          }
-          else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "subject":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["subject"] = value;
-          }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "encounter":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Encounter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["encounter"] = value;
-          }
-          else Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "cause":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            Cause = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["cause"] = value;
-          }
-          else Cause = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "effect":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            Effect = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["effect"] = value;
-          }
-          else Effect = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "detected":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            DetectedElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["detected"] = value;
-          }
-          else DetectedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "recordedDate":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            RecordedDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["recordedDate"] = value;
-          }
-          else RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "resultingEffect":
-          if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
-          {
-            ResultingEffect = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
-            Overflow["resultingEffect"] = value;
-          }
-          else ResultingEffect = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
-          return this;
-        case "location":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Location = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["location"] = value;
-          }
-          else Location = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "seriousness":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Seriousness = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["seriousness"] = value;
-          }
-          else Seriousness = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "outcome":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Outcome = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["outcome"] = value;
-          }
-          else Outcome = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "recorder":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Recorder = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["recorder"] = value;
-          }
-          else Recorder = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "participant":
-          if (value is not (List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> or null))
-          {
-            Participant = OverflowNull<List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>>.INSTANCE;
-            Overflow["participant"] = value;
-          }
-          else Participant = (List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>?)value!;
-          return this;
-        case "study":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Study = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["study"] = value;
-          }
-          else Study = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "expectedInResearchStudy":
-          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-          {
-            ExpectedInResearchStudyElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-            Overflow["expectedInResearchStudy"] = value;
-          }
-          else ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-          return this;
-        case "suspectEntity":
-          if (value is not (List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> or null))
-          {
-            SuspectEntity = OverflowNull<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>.INSTANCE;
-            Overflow["suspectEntity"] = value;
-          }
-          else SuspectEntity = (List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>?)value!;
-          return this;
-        case "contributingFactor":
-          if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
-          {
-            ContributingFactor = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
-            Overflow["contributingFactor"] = value;
-          }
-          else ContributingFactor = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
-          return this;
-        case "preventiveAction":
-          if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
-          {
-            PreventiveAction = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
-            Overflow["preventiveAction"] = value;
-          }
-          else PreventiveAction = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
-          return this;
-        case "mitigatingAction":
-          if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
-          {
-            MitigatingAction = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
-            Overflow["mitigatingAction"] = value;
-          }
-          else MitigatingAction = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
-          return this;
-        case "supportingInfo":
-          if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
-          {
-            SupportingInfo = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
-            Overflow["supportingInfo"] = value;
-          }
-          else SupportingInfo = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
-          return this;
-        case "note":
-          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
-          {
-            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
-            Overflow["note"] = value;
-          }
-          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_ActualityElement is not null && !_ActualityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>>()) yield return new KeyValuePair<string,object>("actuality",_ActualityElement);
-      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
-      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
-      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (_Cause is not null && !_Cause.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("cause",_Cause);
-      if (_Effect is not null && !_Effect.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("effect",_Effect);
-      if (_DetectedElement is not null && !_DetectedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("detected",_DetectedElement);
-      if (_RecordedDateElement is not null && !_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("recordedDate",_RecordedDateElement);
-      if (_ResultingEffect?.Any() is true && !_ResultingEffect.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("resultingEffect",_ResultingEffect);
-      if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
-      if (_Seriousness is not null && !_Seriousness.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("seriousness",_Seriousness);
-      if (_Outcome?.Any() is true && !_Outcome.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("outcome",_Outcome);
-      if (_Recorder is not null && !_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("recorder",_Recorder);
-      if (_Participant?.Any() is true && !_Participant.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>>()) yield return new KeyValuePair<string,object>("participant",_Participant);
-      if (_Study?.Any() is true && !_Study.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("study",_Study);
-      if (_ExpectedInResearchStudyElement is not null && !_ExpectedInResearchStudyElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("expectedInResearchStudy",_ExpectedInResearchStudyElement);
-      if (_SuspectEntity?.Any() is true && !_SuspectEntity.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>()) yield return new KeyValuePair<string,object>("suspectEntity",_SuspectEntity);
-      if (_ContributingFactor?.Any() is true && !_ContributingFactor.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("contributingFactor",_ContributingFactor);
-      if (_PreventiveAction?.Any() is true && !_PreventiveAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("preventiveAction",_PreventiveAction);
-      if (_MitigatingAction?.Any() is true && !_MitigatingAction.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("mitigatingAction",_MitigatingAction);
-      if (_SupportingInfo?.Any() is true && !_SupportingInfo.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("supportingInfo",_SupportingInfo);
-      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ActualityElement is not null) yield return new KeyValuePair<string,object>("actuality",ActualityElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Cause is not null) yield return new KeyValuePair<string,object>("cause",Cause);
+      if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
+      if (DetectedElement is not null) yield return new KeyValuePair<string,object>("detected",DetectedElement);
+      if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
+      if (ResultingEffect?.Any() == true) yield return new KeyValuePair<string,object>("resultingEffect",ResultingEffect);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",Seriousness);
+      if (Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
+      if (ExpectedInResearchStudyElement is not null) yield return new KeyValuePair<string,object>("expectedInResearchStudy",ExpectedInResearchStudyElement);
+      if (SuspectEntity?.Any() == true) yield return new KeyValuePair<string,object>("suspectEntity",SuspectEntity);
+      if (ContributingFactor?.Any() == true) yield return new KeyValuePair<string,object>("contributingFactor",ContributingFactor);
+      if (PreventiveAction?.Any() == true) yield return new KeyValuePair<string,object>("preventiveAction",PreventiveAction);
+      if (MitigatingAction?.Any() == true) yield return new KeyValuePair<string,object>("mitigatingAction",MitigatingAction);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

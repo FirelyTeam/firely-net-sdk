@@ -6,10 +6,9 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-#nullable enable
-
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;
@@ -24,15 +23,15 @@ namespace Hl7.Fhir.Specification.Source
         public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
 
         /// <summary>Default value of the <see cref="Masks"/> configuration setting (*.*)</summary>
-        public readonly static string[] DefaultMasks = ["*.*"];
+        public readonly static string[] DefaultMasks = new[] { "*.*" };
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
         // Instance fields
-        private DeserializerSettings _parserSettings = new();
-        private FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
-        private FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
+        ParserSettings _parserSettings = ParserSettings.CreateDefault();
+        FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
+        FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
 
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
@@ -61,24 +60,20 @@ namespace Hl7.Fhir.Specification.Source
 
             // [WMR 20181025] Clone state
             other.IncludeSubDirectories = this.IncludeSubDirectories;
-            other.Masks = (string[]?)this.Masks?.Clone();
-            other.Includes = (string[]?)this.Includes?.Clone();
-            other.Excludes = (string[]?)this.Excludes?.Clone();
+            other.Masks = (string[])this.Masks.Clone();
+            other.Includes = (string[])this.Includes?.Clone();
+            other.Excludes = (string[])this.Excludes?.Clone();
             other.FormatPreference = this.FormatPreference;
             other.MultiThreaded = this.MultiThreaded;
-            other.SummaryDetailsHarvesters = (ArtifactSummaryHarvester[]?)this.SummaryDetailsHarvesters?.Clone();
+            other.SummaryDetailsHarvesters = (ArtifactSummaryHarvester[])this.SummaryDetailsHarvesters?.Clone();
             other.ExcludeSummariesForUnknownArtifacts = this.ExcludeSummariesForUnknownArtifacts;
-            other.ParserSettings = this.ParserSettings is not null ? this.ParserSettings with { } : null;
-            other.XmlParserSettings = this.XmlParserSettings is not null
-                ? new FhirXmlParsingSettings(this.XmlParserSettings)
-                : null;
-            other.JsonParserSettings = this.JsonParserSettings is not null
-                ? new FhirJsonParsingSettings(this.JsonParserSettings)
-                : null;
+            other.ParserSettings = new ParserSettings(this.ParserSettings);
+            other.XmlParserSettings = new FhirXmlParsingSettings(this.XmlParserSettings);
+            other.JsonParserSettings = new FhirJsonParsingSettings(this.JsonParserSettings);
         }
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
-        public DirectorySourceSettings Clone() => new(this);
+        public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
 
         /// <summary>Returns the default content directory of the <see cref="DirectorySource"/>.</summary>
         public static string SpecificationDirectory
@@ -147,15 +142,11 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string Mask
         {
-            get => String.Join("|", Masks ?? []);
-            set { Masks = splitMask(value); }
+            get => String.Join("|", Masks);
+            set { Masks = SplitMask(value); }
         }
 
-        private static string[]? splitMask(string? mask) => mask?
-            .Split('|')
-            .Select(s => s.Trim())
-            .Where(s => !String.IsNullOrEmpty(s))
-            .ToArray();
+        static string[] SplitMask(string mask) => mask?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
 
         /// <summary>
         /// Gets or sets an array of search strings to match against the names of files in the content directory.
@@ -184,7 +175,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <example>
         /// <code>Masks = new string[] { "v2*.*", "*.StructureDefinition.*" };</code>
         /// </example>
-        public string[]? Masks { get; set; } = DefaultMasks;
+        public string[] Masks { get; set; } = DefaultMasks;
 
         /// <summary>
         /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
@@ -213,7 +204,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <example>
         /// <code>Includes = new string[] { "profiles/**/*", "**/valuesets" };</code>
         /// </example>
-        public string[]? Includes { get; set; }
+        public string[] Includes { get; set; }
 
         /// <summary>
         /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
@@ -242,7 +233,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <example>
         /// <code>Excludes = new string[] { "profiles/**/old", "temp/**/*" };</code>
         /// </example>
-        public string[]? Excludes { get; set; }
+        public string[] Excludes { get; set; }
 
         /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.</summary>
         /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
@@ -277,7 +268,7 @@ namespace Hl7.Fhir.Specification.Source
         /// A custom delegate array may include one or more of the default harvesters.
         /// </para>
         /// </remarks>
-        public ArtifactSummaryHarvester[]? SummaryDetailsHarvesters { get; set; }
+        public ArtifactSummaryHarvester[] SummaryDetailsHarvesters { get; set; }
 
         // [WMR 20180813] NEW
 
@@ -302,10 +293,10 @@ namespace Hl7.Fhir.Specification.Source
         /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
         /// </summary>
         /// <value>A <see cref="ParserSettings"/> instance.</value>
-        public DeserializerSettings? ParserSettings
+        public ParserSettings ParserSettings
         {
             get => _parserSettings;
-            set => _parserSettings = value ?? new DeserializerSettings().UsingMode(DeserializationMode.Recoverable);
+            set => _parserSettings = value ?? ParserSettings.CreateDefault();
         }
 
         /// <summary>
@@ -313,7 +304,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
         /// </summary>
         /// <value>A <see cref="FhirXmlParsingSettings"/> instance.</value>
-        public FhirXmlParsingSettings? XmlParserSettings
+        public FhirXmlParsingSettings XmlParserSettings
         {
             get => _xmlParserSettings;
             set => _xmlParserSettings = value?.Clone() ?? FhirXmlParsingSettings.CreateDefault();
@@ -325,11 +316,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
         /// </summary>
         /// <value>A <see cref="FhirJsonParsingSettings"/> instance.</value>
-        public FhirJsonParsingSettings? JsonParserSettings
+        public FhirJsonParsingSettings JsonParserSettings
         {
             get => _jsonParserSettings;
             set => _jsonParserSettings = value?.Clone() ?? FhirJsonParsingSettings.CreateDefault();
         }
+
+        
     }
 
 }

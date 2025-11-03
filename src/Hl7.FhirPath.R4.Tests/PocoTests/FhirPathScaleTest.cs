@@ -21,7 +21,7 @@ namespace Hl7.Fhir
         {
             var xml = File.ReadAllText(@"TestData/Large-QuestionnaireResponse.xml");
 
-            var qr = (new FhirXmlDeserializer()).Deserialize<QuestionnaireResponse>(xml);
+            var qr = (new FhirXmlParser()).Parse<QuestionnaireResponse>(xml);
 
             FhirPathExtensions.GetSymbols().Add("dateadd",
                 (P.Date f, string field, long amount) =>

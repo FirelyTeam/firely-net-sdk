@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,261 +48,189 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient")]
-  public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
+  [FhirType("MedicinalProductIngredient","http://hl7.org/fhir/StructureDefinition/MedicinalProductIngredient", IsResource=true)]
+  public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "MedicinalProductIngredient";
+    public override string TypeName { get { return "MedicinalProductIngredient"; } }
 
     /// <summary>
     /// A specified substance that comprises this ingredient
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient.specifiedSubstance", IsBackboneType=true)]
+    [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance")]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "MedicinalProductIngredient.specifiedSubstance";
+      public override string TypeName { get { return "MedicinalProductIngredient#SpecifiedSubstance"; } }
 
       /// <summary>
-      /// The specified substance.
+      /// The specified substance
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
-        get
-        {
-          if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code!;
-        }
-
-        set
-        {
-          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("code");
-          _Code = value;
-          OnPropertyChanged("Code");
-        }
-
+        get { return _Code; }
+        set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Code;
+      private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// The group of specified substance, e.g. group 1 to 4.
+      /// The group of specified substance, e.g. group 1 to 4
       /// </summary>
       [FhirElement("group", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Group
       {
-        get
-        {
-          if(_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["group"]);
-          return _Group!;
-        }
-
-        set
-        {
-          if (_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("group");
-          _Group = value;
-          OnPropertyChanged("Group");
-        }
-
+        get { return _Group; }
+        set { _Group = value; OnPropertyChanged("Group"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Group;
+      private Hl7.Fhir.Model.CodeableConcept _Group;
 
       /// <summary>
-      /// Confidentiality level of the specified substance as the ingredient.
+      /// Confidentiality level of the specified substance as the ingredient
       /// </summary>
       [FhirElement("confidentiality", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Confidentiality
+      public Hl7.Fhir.Model.CodeableConcept Confidentiality
       {
-        get
-        {
-          if(_Confidentiality.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["confidentiality"]);
-          return _Confidentiality;
-        }
-
-        set
-        {
-          if (_Confidentiality.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("confidentiality");
-          _Confidentiality = value;
-          OnPropertyChanged("Confidentiality");
-        }
-
+        get { return _Confidentiality; }
+        set { _Confidentiality = value; OnPropertyChanged("Confidentiality"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Confidentiality;
+      private Hl7.Fhir.Model.CodeableConcept _Confidentiality;
 
       /// <summary>
-      /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product.
+      /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
-        get
-        {
-          if(_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>), Overflow["strength"]);
-          return _Strength ??= [];
-        }
-
-        set
-        {
-          if (_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>())
-            Overflow.Remove("strength");
-          _Strength = value;
-          OnPropertyChanged("Strength");
-        }
-
+        get { if(_Strength==null) _Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(); return _Strength; }
+        set { _Strength = value; OnPropertyChanged("Strength"); }
       }
 
-      private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>? _Strength;
+      private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> _Strength;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not SpecifiedSubstanceComponent dest)
+        var dest = other as SpecifiedSubstanceComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
-        if(_Group is not null) dest.Group = (Hl7.Fhir.Model.CodeableConcept)_Group.DeepCopyInternal();
-        if(_Confidentiality is not null) dest.Confidentiality = (Hl7.Fhir.Model.CodeableConcept)_Confidentiality.DeepCopyInternal();
-        if(_Strength is not null) dest.Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(_Strength.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+        if(Group != null) dest.Group = (Hl7.Fhir.Model.CodeableConcept)Group.DeepCopy();
+        if(Confidentiality != null) dest.Confidentiality = (Hl7.Fhir.Model.CodeableConcept)Confidentiality.DeepCopy();
+        if(Strength.Any()) dest.Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(Strength.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new SpecifiedSubstanceComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new SpecifiedSubstanceComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not SpecifiedSubstanceComponent otherT) return false;
+        var otherT = other as SpecifiedSubstanceComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Code, otherT._Code)) return false;
-        if(!comparer.Equals(_Group, otherT._Group)) return false;
-        if(!comparer.Equals(_Confidentiality, otherT._Confidentiality)) return false;
-        if(!comparer.ListEquals(_Strength, otherT._Strength)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+        if( !DeepComparable.Matches(Group, otherT.Group)) return false;
+        if( !DeepComparable.Matches(Confidentiality, otherT.Confidentiality)) return false;
+        if( !DeepComparable.Matches(Strength, otherT.Strength)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as SpecifiedSubstanceComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+        if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
+        if( !DeepComparable.IsExactly(Confidentiality, otherT.Confidentiality)) return false;
+        if( !DeepComparable.IsExactly(Strength, otherT.Strength)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Code != null) yield return Code;
+          if (Group != null) yield return Group;
+          if (Confidentiality != null) yield return Confidentiality;
+          foreach (var elem in Strength) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Code != null) yield return new ElementValue("code", Code);
+          if (Group != null) yield return new ElementValue("group", Group);
+          if (Confidentiality != null) yield return new ElementValue("confidentiality", Confidentiality);
+          foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "code":
-            if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["code"];
-              return true;
-            }
-            value = _Code;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Code;
+            return Code is not null;
           case "group":
-            if (_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["group"];
-              return true;
-            }
-            value = _Group;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Group;
+            return Group is not null;
           case "confidentiality":
-            if (_Confidentiality.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["confidentiality"];
-              return true;
-            }
-            value = _Confidentiality;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Confidentiality;
+            return Confidentiality is not null;
           case "strength":
-            if (_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>())
-            {
-              value = Overflow["strength"];
-              return true;
-            }
-            value = _Strength;
-            return (value as List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>)?.Any() is true;
+            value = Strength;
+            return Strength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "code":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["code"] = value;
-            }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
-            return this;
-          case "group":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Group = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["group"] = value;
-            }
-            else Group = (Hl7.Fhir.Model.CodeableConcept?)value!;
-            return this;
-          case "confidentiality":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Confidentiality = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["confidentiality"] = value;
-            }
-            else Confidentiality = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "strength":
-            if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> or null))
-            {
-              Strength = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.INSTANCE;
-              Overflow["strength"] = value;
-            }
-            else Strength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
-        if (_Group is not null && !_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("group",_Group);
-        if (_Confidentiality is not null && !_Confidentiality.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("confidentiality",_Confidentiality);
-        if (_Strength?.Any() is true && !_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>()) yield return new KeyValuePair<string,object>("strength",_Strength);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Group is not null) yield return new KeyValuePair<string,object>("group",Group);
+        if (Confidentiality is not null) yield return new KeyValuePair<string,object>("confidentiality",Confidentiality);
+        if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
     }
@@ -316,399 +240,260 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient.specifiedSubstance.strength", IsBackboneType=true)]
+    [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength")]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "MedicinalProductIngredient.specifiedSubstance.strength";
+      public override string TypeName { get { return "MedicinalProductIngredient#Strength"; } }
 
       /// <summary>
-      /// The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item.
+      /// The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item
       /// </summary>
       [FhirElement("presentation", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio Presentation
       {
-        get
-        {
-          if(_Presentation.InOverflow<Hl7.Fhir.Model.Ratio>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["presentation"]);
-          return _Presentation!;
-        }
-
-        set
-        {
-          if (_Presentation.InOverflow<Hl7.Fhir.Model.Ratio>())
-            Overflow.Remove("presentation");
-          _Presentation = value;
-          OnPropertyChanged("Presentation");
-        }
-
+        get { return _Presentation; }
+        set { _Presentation = value; OnPropertyChanged("Presentation"); }
       }
 
-      private Hl7.Fhir.Model.Ratio? _Presentation;
+      private Hl7.Fhir.Model.Ratio _Presentation;
 
       /// <summary>
-      /// A lower limit for the quantity of substance in the unit of presentation. For use when there is a range of strengths, this is the lower limit, with the presentation attribute becoming the upper limit.
+      /// A lower limit for the quantity of substance in the unit of presentation. For use when there is a range of strengths, this is the lower limit, with the presentation attribute becoming the upper limit
       /// </summary>
       [FhirElement("presentationLowLimit", InSummary=true, IsModifier=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio? PresentationLowLimit
+      public Hl7.Fhir.Model.Ratio PresentationLowLimit
       {
-        get
-        {
-          if(_PresentationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["presentationLowLimit"]);
-          return _PresentationLowLimit;
-        }
-
-        set
-        {
-          if (_PresentationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            Overflow.Remove("presentationLowLimit");
-          _PresentationLowLimit = value;
-          OnPropertyChanged("PresentationLowLimit");
-        }
-
+        get { return _PresentationLowLimit; }
+        set { _PresentationLowLimit = value; OnPropertyChanged("PresentationLowLimit"); }
       }
 
-      private Hl7.Fhir.Model.Ratio? _PresentationLowLimit;
+      private Hl7.Fhir.Model.Ratio _PresentationLowLimit;
 
       /// <summary>
-      /// The strength per unitary volume (or mass).
+      /// The strength per unitary volume (or mass)
       /// </summary>
       [FhirElement("concentration", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio? Concentration
+      public Hl7.Fhir.Model.Ratio Concentration
       {
-        get
-        {
-          if(_Concentration.InOverflow<Hl7.Fhir.Model.Ratio>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["concentration"]);
-          return _Concentration;
-        }
-
-        set
-        {
-          if (_Concentration.InOverflow<Hl7.Fhir.Model.Ratio>())
-            Overflow.Remove("concentration");
-          _Concentration = value;
-          OnPropertyChanged("Concentration");
-        }
-
+        get { return _Concentration; }
+        set { _Concentration = value; OnPropertyChanged("Concentration"); }
       }
 
-      private Hl7.Fhir.Model.Ratio? _Concentration;
+      private Hl7.Fhir.Model.Ratio _Concentration;
 
       /// <summary>
-      /// A lower limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the upper limit.
+      /// A lower limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the upper limit
       /// </summary>
       [FhirElement("concentrationLowLimit", InSummary=true, IsModifier=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio? ConcentrationLowLimit
+      public Hl7.Fhir.Model.Ratio ConcentrationLowLimit
       {
-        get
-        {
-          if(_ConcentrationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["concentrationLowLimit"]);
-          return _ConcentrationLowLimit;
-        }
-
-        set
-        {
-          if (_ConcentrationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            Overflow.Remove("concentrationLowLimit");
-          _ConcentrationLowLimit = value;
-          OnPropertyChanged("ConcentrationLowLimit");
-        }
-
+        get { return _ConcentrationLowLimit; }
+        set { _ConcentrationLowLimit = value; OnPropertyChanged("ConcentrationLowLimit"); }
       }
 
-      private Hl7.Fhir.Model.Ratio? _ConcentrationLowLimit;
+      private Hl7.Fhir.Model.Ratio _ConcentrationLowLimit;
 
       /// <summary>
-      /// For when strength is measured at a particular point or distance.
+      /// For when strength is measured at a particular point or distance
       /// </summary>
       [FhirElement("measurementPoint", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? MeasurementPointElement
+      public Hl7.Fhir.Model.FhirString MeasurementPointElement
       {
-        get
-        {
-          if(_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["measurementPoint"]);
-          return _MeasurementPointElement;
-        }
-
-        set
-        {
-          if (_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("measurementPoint");
-          _MeasurementPointElement = value;
-          OnPropertyChanged("MeasurementPointElement");
-        }
-
+        get { return _MeasurementPointElement; }
+        set { _MeasurementPointElement = value; OnPropertyChanged("MeasurementPointElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _MeasurementPointElement;
+      private Hl7.Fhir.Model.FhirString _MeasurementPointElement;
 
       /// <summary>
       /// For when strength is measured at a particular point or distance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? MeasurementPoint
+      public string MeasurementPoint
       {
-        get => MeasurementPointElement?.Value;
+        get { return MeasurementPointElement != null ? MeasurementPointElement.Value : null; }
         set
         {
-          MeasurementPointElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            MeasurementPointElement = null;
+          else
+            MeasurementPointElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MeasurementPoint");
         }
       }
 
       /// <summary>
-      /// The country or countries for which the strength range applies.
+      /// The country or countries for which the strength range applies
       /// </summary>
       [FhirElement("country", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get
-        {
-          if(_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["country"]);
-          return _Country ??= [];
-        }
-
-        set
-        {
-          if (_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("country");
-          _Country = value;
-          OnPropertyChanged("Country");
-        }
-
+        get { if(_Country==null) _Country = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Country; }
+        set { _Country = value; OnPropertyChanged("Country"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _Country;
+      private List<Hl7.Fhir.Model.CodeableConcept> _Country;
 
       /// <summary>
-      /// Strength expressed in terms of a reference substance.
+      /// Strength expressed in terms of a reference substance
       /// </summary>
       [FhirElement("referenceStrength", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> ReferenceStrength
       {
-        get
-        {
-          if(_ReferenceStrength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>), Overflow["referenceStrength"]);
-          return _ReferenceStrength ??= [];
-        }
-
-        set
-        {
-          if (_ReferenceStrength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>())
-            Overflow.Remove("referenceStrength");
-          _ReferenceStrength = value;
-          OnPropertyChanged("ReferenceStrength");
-        }
-
+        get { if(_ReferenceStrength==null) _ReferenceStrength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>(); return _ReferenceStrength; }
+        set { _ReferenceStrength = value; OnPropertyChanged("ReferenceStrength"); }
       }
 
-      private List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>? _ReferenceStrength;
+      private List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> _ReferenceStrength;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not StrengthComponent dest)
+        var dest = other as StrengthComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Presentation is not null) dest.Presentation = (Hl7.Fhir.Model.Ratio)_Presentation.DeepCopyInternal();
-        if(_PresentationLowLimit is not null) dest.PresentationLowLimit = (Hl7.Fhir.Model.Ratio)_PresentationLowLimit.DeepCopyInternal();
-        if(_Concentration is not null) dest.Concentration = (Hl7.Fhir.Model.Ratio)_Concentration.DeepCopyInternal();
-        if(_ConcentrationLowLimit is not null) dest.ConcentrationLowLimit = (Hl7.Fhir.Model.Ratio)_ConcentrationLowLimit.DeepCopyInternal();
-        if(_MeasurementPointElement is not null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)_MeasurementPointElement.DeepCopyInternal();
-        if(_Country is not null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(_Country.DeepCopyInternal());
-        if(_ReferenceStrength is not null) dest.ReferenceStrength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>(_ReferenceStrength.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Presentation != null) dest.Presentation = (Hl7.Fhir.Model.Ratio)Presentation.DeepCopy();
+        if(PresentationLowLimit != null) dest.PresentationLowLimit = (Hl7.Fhir.Model.Ratio)PresentationLowLimit.DeepCopy();
+        if(Concentration != null) dest.Concentration = (Hl7.Fhir.Model.Ratio)Concentration.DeepCopy();
+        if(ConcentrationLowLimit != null) dest.ConcentrationLowLimit = (Hl7.Fhir.Model.Ratio)ConcentrationLowLimit.DeepCopy();
+        if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
+        if(Country.Any()) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
+        if(ReferenceStrength.Any()) dest.ReferenceStrength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>(ReferenceStrength.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new StrengthComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new StrengthComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not StrengthComponent otherT) return false;
+        var otherT = other as StrengthComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Presentation, otherT._Presentation)) return false;
-        if(!comparer.Equals(_PresentationLowLimit, otherT._PresentationLowLimit)) return false;
-        if(!comparer.Equals(_Concentration, otherT._Concentration)) return false;
-        if(!comparer.Equals(_ConcentrationLowLimit, otherT._ConcentrationLowLimit)) return false;
-        if(!comparer.Equals(_MeasurementPointElement, otherT._MeasurementPointElement)) return false;
-        if(!comparer.ListEquals(_Country, otherT._Country)) return false;
-        if(!comparer.ListEquals(_ReferenceStrength, otherT._ReferenceStrength)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Presentation, otherT.Presentation)) return false;
+        if( !DeepComparable.Matches(PresentationLowLimit, otherT.PresentationLowLimit)) return false;
+        if( !DeepComparable.Matches(Concentration, otherT.Concentration)) return false;
+        if( !DeepComparable.Matches(ConcentrationLowLimit, otherT.ConcentrationLowLimit)) return false;
+        if( !DeepComparable.Matches(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
+        if( !DeepComparable.Matches(Country, otherT.Country)) return false;
+        if( !DeepComparable.Matches(ReferenceStrength, otherT.ReferenceStrength)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as StrengthComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Presentation, otherT.Presentation)) return false;
+        if( !DeepComparable.IsExactly(PresentationLowLimit, otherT.PresentationLowLimit)) return false;
+        if( !DeepComparable.IsExactly(Concentration, otherT.Concentration)) return false;
+        if( !DeepComparable.IsExactly(ConcentrationLowLimit, otherT.ConcentrationLowLimit)) return false;
+        if( !DeepComparable.IsExactly(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
+        if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
+        if( !DeepComparable.IsExactly(ReferenceStrength, otherT.ReferenceStrength)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Presentation != null) yield return Presentation;
+          if (PresentationLowLimit != null) yield return PresentationLowLimit;
+          if (Concentration != null) yield return Concentration;
+          if (ConcentrationLowLimit != null) yield return ConcentrationLowLimit;
+          if (MeasurementPointElement != null) yield return MeasurementPointElement;
+          foreach (var elem in Country) { if (elem != null) yield return elem; }
+          foreach (var elem in ReferenceStrength) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Presentation != null) yield return new ElementValue("presentation", Presentation);
+          if (PresentationLowLimit != null) yield return new ElementValue("presentationLowLimit", PresentationLowLimit);
+          if (Concentration != null) yield return new ElementValue("concentration", Concentration);
+          if (ConcentrationLowLimit != null) yield return new ElementValue("concentrationLowLimit", ConcentrationLowLimit);
+          if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
+          foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
+          foreach (var elem in ReferenceStrength) { if (elem != null) yield return new ElementValue("referenceStrength", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "presentation":
-            if (_Presentation.InOverflow<Hl7.Fhir.Model.Ratio>())
-            {
-              value = Overflow["presentation"];
-              return true;
-            }
-            value = _Presentation;
-            return (value as Hl7.Fhir.Model.Ratio) is not null;
+            value = Presentation;
+            return Presentation is not null;
           case "presentationLowLimit":
-            if (_PresentationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            {
-              value = Overflow["presentationLowLimit"];
-              return true;
-            }
-            value = _PresentationLowLimit;
-            return (value as Hl7.Fhir.Model.Ratio) is not null;
+            value = PresentationLowLimit;
+            return PresentationLowLimit is not null;
           case "concentration":
-            if (_Concentration.InOverflow<Hl7.Fhir.Model.Ratio>())
-            {
-              value = Overflow["concentration"];
-              return true;
-            }
-            value = _Concentration;
-            return (value as Hl7.Fhir.Model.Ratio) is not null;
+            value = Concentration;
+            return Concentration is not null;
           case "concentrationLowLimit":
-            if (_ConcentrationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            {
-              value = Overflow["concentrationLowLimit"];
-              return true;
-            }
-            value = _ConcentrationLowLimit;
-            return (value as Hl7.Fhir.Model.Ratio) is not null;
+            value = ConcentrationLowLimit;
+            return ConcentrationLowLimit is not null;
           case "measurementPoint":
-            if (_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["measurementPoint"];
-              return true;
-            }
-            value = _MeasurementPointElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = MeasurementPointElement;
+            return MeasurementPointElement is not null;
           case "country":
-            if (_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["country"];
-              return true;
-            }
-            value = _Country;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = Country;
+            return Country?.Any() == true;
           case "referenceStrength":
-            if (_ReferenceStrength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>())
-            {
-              value = Overflow["referenceStrength"];
-              return true;
-            }
-            value = _ReferenceStrength;
-            return (value as List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>)?.Any() is true;
+            value = ReferenceStrength;
+            return ReferenceStrength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "presentation":
-            if (value is not (Hl7.Fhir.Model.Ratio or null))
-            {
-              Presentation = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
-              Overflow["presentation"] = value;
-            }
-            else Presentation = (Hl7.Fhir.Model.Ratio?)value!;
-            return this;
-          case "presentationLowLimit":
-            if (value is not (Hl7.Fhir.Model.Ratio or null))
-            {
-              PresentationLowLimit = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
-              Overflow["presentationLowLimit"] = value;
-            }
-            else PresentationLowLimit = (Hl7.Fhir.Model.Ratio?)value;
-            return this;
-          case "concentration":
-            if (value is not (Hl7.Fhir.Model.Ratio or null))
-            {
-              Concentration = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
-              Overflow["concentration"] = value;
-            }
-            else Concentration = (Hl7.Fhir.Model.Ratio?)value;
-            return this;
-          case "concentrationLowLimit":
-            if (value is not (Hl7.Fhir.Model.Ratio or null))
-            {
-              ConcentrationLowLimit = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
-              Overflow["concentrationLowLimit"] = value;
-            }
-            else ConcentrationLowLimit = (Hl7.Fhir.Model.Ratio?)value;
-            return this;
-          case "measurementPoint":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              MeasurementPointElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["measurementPoint"] = value;
-            }
-            else MeasurementPointElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          case "country":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              Country = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["country"] = value;
-            }
-            else Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "referenceStrength":
-            if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> or null))
-            {
-              ReferenceStrength = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>.INSTANCE;
-              Overflow["referenceStrength"] = value;
-            }
-            else ReferenceStrength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Presentation is not null && !_Presentation.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("presentation",_Presentation);
-        if (_PresentationLowLimit is not null && !_PresentationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("presentationLowLimit",_PresentationLowLimit);
-        if (_Concentration is not null && !_Concentration.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("concentration",_Concentration);
-        if (_ConcentrationLowLimit is not null && !_ConcentrationLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("concentrationLowLimit",_ConcentrationLowLimit);
-        if (_MeasurementPointElement is not null && !_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("measurementPoint",_MeasurementPointElement);
-        if (_Country?.Any() is true && !_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("country",_Country);
-        if (_ReferenceStrength?.Any() is true && !_ReferenceStrength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>()) yield return new KeyValuePair<string,object>("referenceStrength",_ReferenceStrength);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Presentation is not null) yield return new KeyValuePair<string,object>("presentation",Presentation);
+        if (PresentationLowLimit is not null) yield return new KeyValuePair<string,object>("presentationLowLimit",PresentationLowLimit);
+        if (Concentration is not null) yield return new KeyValuePair<string,object>("concentration",Concentration);
+        if (ConcentrationLowLimit is not null) yield return new KeyValuePair<string,object>("concentrationLowLimit",ConcentrationLowLimit);
+        if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
+        if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
+        if (ReferenceStrength?.Any() == true) yield return new KeyValuePair<string,object>("referenceStrength",ReferenceStrength);
       }
 
     }
@@ -718,307 +503,215 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength", IsBackboneType=true)]
+    [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength")]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength";
+      public override string TypeName { get { return "MedicinalProductIngredient#ReferenceStrength"; } }
 
       /// <summary>
-      /// Relevant reference substance.
+      /// Relevant reference substance
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Substance
+      public Hl7.Fhir.Model.CodeableConcept Substance
       {
-        get
-        {
-          if(_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["substance"]);
-          return _Substance;
-        }
-
-        set
-        {
-          if (_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("substance");
-          _Substance = value;
-          OnPropertyChanged("Substance");
-        }
-
+        get { return _Substance; }
+        set { _Substance = value; OnPropertyChanged("Substance"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Substance;
+      private Hl7.Fhir.Model.CodeableConcept _Substance;
 
       /// <summary>
-      /// Strength expressed in terms of a reference substance.
+      /// Strength expressed in terms of a reference substance
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio Strength
       {
-        get
-        {
-          if(_Strength.InOverflow<Hl7.Fhir.Model.Ratio>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["strength"]);
-          return _Strength!;
-        }
-
-        set
-        {
-          if (_Strength.InOverflow<Hl7.Fhir.Model.Ratio>())
-            Overflow.Remove("strength");
-          _Strength = value;
-          OnPropertyChanged("Strength");
-        }
-
+        get { return _Strength; }
+        set { _Strength = value; OnPropertyChanged("Strength"); }
       }
 
-      private Hl7.Fhir.Model.Ratio? _Strength;
+      private Hl7.Fhir.Model.Ratio _Strength;
 
       /// <summary>
-      /// Strength expressed in terms of a reference substance.
+      /// Strength expressed in terms of a reference substance
       /// </summary>
       [FhirElement("strengthLowLimit", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio? StrengthLowLimit
+      public Hl7.Fhir.Model.Ratio StrengthLowLimit
       {
-        get
-        {
-          if(_StrengthLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["strengthLowLimit"]);
-          return _StrengthLowLimit;
-        }
-
-        set
-        {
-          if (_StrengthLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            Overflow.Remove("strengthLowLimit");
-          _StrengthLowLimit = value;
-          OnPropertyChanged("StrengthLowLimit");
-        }
-
+        get { return _StrengthLowLimit; }
+        set { _StrengthLowLimit = value; OnPropertyChanged("StrengthLowLimit"); }
       }
 
-      private Hl7.Fhir.Model.Ratio? _StrengthLowLimit;
+      private Hl7.Fhir.Model.Ratio _StrengthLowLimit;
 
       /// <summary>
-      /// For when strength is measured at a particular point or distance.
+      /// For when strength is measured at a particular point or distance
       /// </summary>
       [FhirElement("measurementPoint", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? MeasurementPointElement
+      public Hl7.Fhir.Model.FhirString MeasurementPointElement
       {
-        get
-        {
-          if(_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["measurementPoint"]);
-          return _MeasurementPointElement;
-        }
-
-        set
-        {
-          if (_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("measurementPoint");
-          _MeasurementPointElement = value;
-          OnPropertyChanged("MeasurementPointElement");
-        }
-
+        get { return _MeasurementPointElement; }
+        set { _MeasurementPointElement = value; OnPropertyChanged("MeasurementPointElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _MeasurementPointElement;
+      private Hl7.Fhir.Model.FhirString _MeasurementPointElement;
 
       /// <summary>
       /// For when strength is measured at a particular point or distance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? MeasurementPoint
+      public string MeasurementPoint
       {
-        get => MeasurementPointElement?.Value;
+        get { return MeasurementPointElement != null ? MeasurementPointElement.Value : null; }
         set
         {
-          MeasurementPointElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            MeasurementPointElement = null;
+          else
+            MeasurementPointElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MeasurementPoint");
         }
       }
 
       /// <summary>
-      /// The country or countries for which the strength range applies.
+      /// The country or countries for which the strength range applies
       /// </summary>
       [FhirElement("country", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get
-        {
-          if(_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["country"]);
-          return _Country ??= [];
-        }
-
-        set
-        {
-          if (_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("country");
-          _Country = value;
-          OnPropertyChanged("Country");
-        }
-
+        get { if(_Country==null) _Country = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Country; }
+        set { _Country = value; OnPropertyChanged("Country"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _Country;
+      private List<Hl7.Fhir.Model.CodeableConcept> _Country;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ReferenceStrengthComponent dest)
+        var dest = other as ReferenceStrengthComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Substance is not null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)_Substance.DeepCopyInternal();
-        if(_Strength is not null) dest.Strength = (Hl7.Fhir.Model.Ratio)_Strength.DeepCopyInternal();
-        if(_StrengthLowLimit is not null) dest.StrengthLowLimit = (Hl7.Fhir.Model.Ratio)_StrengthLowLimit.DeepCopyInternal();
-        if(_MeasurementPointElement is not null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)_MeasurementPointElement.DeepCopyInternal();
-        if(_Country is not null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(_Country.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)Substance.DeepCopy();
+        if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
+        if(StrengthLowLimit != null) dest.StrengthLowLimit = (Hl7.Fhir.Model.Ratio)StrengthLowLimit.DeepCopy();
+        if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
+        if(Country.Any()) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ReferenceStrengthComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ReferenceStrengthComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ReferenceStrengthComponent otherT) return false;
+        var otherT = other as ReferenceStrengthComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Substance, otherT._Substance)) return false;
-        if(!comparer.Equals(_Strength, otherT._Strength)) return false;
-        if(!comparer.Equals(_StrengthLowLimit, otherT._StrengthLowLimit)) return false;
-        if(!comparer.Equals(_MeasurementPointElement, otherT._MeasurementPointElement)) return false;
-        if(!comparer.ListEquals(_Country, otherT._Country)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
+        if( !DeepComparable.Matches(Strength, otherT.Strength)) return false;
+        if( !DeepComparable.Matches(StrengthLowLimit, otherT.StrengthLowLimit)) return false;
+        if( !DeepComparable.Matches(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
+        if( !DeepComparable.Matches(Country, otherT.Country)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ReferenceStrengthComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
+        if( !DeepComparable.IsExactly(Strength, otherT.Strength)) return false;
+        if( !DeepComparable.IsExactly(StrengthLowLimit, otherT.StrengthLowLimit)) return false;
+        if( !DeepComparable.IsExactly(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
+        if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Substance != null) yield return Substance;
+          if (Strength != null) yield return Strength;
+          if (StrengthLowLimit != null) yield return StrengthLowLimit;
+          if (MeasurementPointElement != null) yield return MeasurementPointElement;
+          foreach (var elem in Country) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Substance != null) yield return new ElementValue("substance", Substance);
+          if (Strength != null) yield return new ElementValue("strength", Strength);
+          if (StrengthLowLimit != null) yield return new ElementValue("strengthLowLimit", StrengthLowLimit);
+          if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
+          foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "substance":
-            if (_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["substance"];
-              return true;
-            }
-            value = _Substance;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Substance;
+            return Substance is not null;
           case "strength":
-            if (_Strength.InOverflow<Hl7.Fhir.Model.Ratio>())
-            {
-              value = Overflow["strength"];
-              return true;
-            }
-            value = _Strength;
-            return (value as Hl7.Fhir.Model.Ratio) is not null;
+            value = Strength;
+            return Strength is not null;
           case "strengthLowLimit":
-            if (_StrengthLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>())
-            {
-              value = Overflow["strengthLowLimit"];
-              return true;
-            }
-            value = _StrengthLowLimit;
-            return (value as Hl7.Fhir.Model.Ratio) is not null;
+            value = StrengthLowLimit;
+            return StrengthLowLimit is not null;
           case "measurementPoint":
-            if (_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["measurementPoint"];
-              return true;
-            }
-            value = _MeasurementPointElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = MeasurementPointElement;
+            return MeasurementPointElement is not null;
           case "country":
-            if (_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["country"];
-              return true;
-            }
-            value = _Country;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = Country;
+            return Country?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "substance":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Substance = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["substance"] = value;
-            }
-            else Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "strength":
-            if (value is not (Hl7.Fhir.Model.Ratio or null))
-            {
-              Strength = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
-              Overflow["strength"] = value;
-            }
-            else Strength = (Hl7.Fhir.Model.Ratio?)value!;
-            return this;
-          case "strengthLowLimit":
-            if (value is not (Hl7.Fhir.Model.Ratio or null))
-            {
-              StrengthLowLimit = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
-              Overflow["strengthLowLimit"] = value;
-            }
-            else StrengthLowLimit = (Hl7.Fhir.Model.Ratio?)value;
-            return this;
-          case "measurementPoint":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              MeasurementPointElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["measurementPoint"] = value;
-            }
-            else MeasurementPointElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          case "country":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              Country = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["country"] = value;
-            }
-            else Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Substance is not null && !_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("substance",_Substance);
-        if (_Strength is not null && !_Strength.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("strength",_Strength);
-        if (_StrengthLowLimit is not null && !_StrengthLowLimit.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("strengthLowLimit",_StrengthLowLimit);
-        if (_MeasurementPointElement is not null && !_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("measurementPoint",_MeasurementPointElement);
-        if (_Country?.Any() is true && !_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("country",_Country);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
+        if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
+        if (StrengthLowLimit is not null) yield return new KeyValuePair<string,object>("strengthLowLimit",StrengthLowLimit);
+        if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
+        if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
       }
 
     }
@@ -1028,239 +721,174 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductIngredient.substance", IsBackboneType=true)]
+    [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.substance")]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "MedicinalProductIngredient.substance";
+      public override string TypeName { get { return "MedicinalProductIngredient#Substance"; } }
 
       /// <summary>
-      /// The ingredient substance.
+      /// The ingredient substance
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
-        get
-        {
-          if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code!;
-        }
-
-        set
-        {
-          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("code");
-          _Code = value;
-          OnPropertyChanged("Code");
-        }
-
+        get { return _Code; }
+        set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Code;
+      private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product.
+      /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
-        get
-        {
-          if(_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>), Overflow["strength"]);
-          return _Strength ??= [];
-        }
-
-        set
-        {
-          if (_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>())
-            Overflow.Remove("strength");
-          _Strength = value;
-          OnPropertyChanged("Strength");
-        }
-
+        get { if(_Strength==null) _Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(); return _Strength; }
+        set { _Strength = value; OnPropertyChanged("Strength"); }
       }
 
-      private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>? _Strength;
+      private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> _Strength;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not SubstanceComponent dest)
+        var dest = other as SubstanceComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
-        if(_Strength is not null) dest.Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(_Strength.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+        if(Strength.Any()) dest.Strength = new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>(Strength.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new SubstanceComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new SubstanceComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not SubstanceComponent otherT) return false;
+        var otherT = other as SubstanceComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Code, otherT._Code)) return false;
-        if(!comparer.ListEquals(_Strength, otherT._Strength)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+        if( !DeepComparable.Matches(Strength, otherT.Strength)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as SubstanceComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+        if( !DeepComparable.IsExactly(Strength, otherT.Strength)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Code != null) yield return Code;
+          foreach (var elem in Strength) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Code != null) yield return new ElementValue("code", Code);
+          foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "code":
-            if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["code"];
-              return true;
-            }
-            value = _Code;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Code;
+            return Code is not null;
           case "strength":
-            if (_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>())
-            {
-              value = Overflow["strength"];
-              return true;
-            }
-            value = _Strength;
-            return (value as List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>)?.Any() is true;
+            value = Strength;
+            return Strength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "code":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["code"] = value;
-            }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value!;
-            return this;
-          case "strength":
-            if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> or null))
-            {
-              Strength = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.INSTANCE;
-              Overflow["strength"] = value;
-            }
-            else Strength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
-        if (_Strength?.Any() is true && !_Strength.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>()) yield return new KeyValuePair<string,object>("strength",_Strength);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
     }
 
     /// <summary>
-    /// Identifier for the ingredient.
+    /// Identifier for the ingredient
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier? Identifier
+    public Hl7.Fhir.Model.Identifier Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
-        return _Identifier;
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier? _Identifier;
+    private Hl7.Fhir.Model.Identifier _Identifier;
 
     /// <summary>
-    /// Ingredient role e.g. Active ingredient, excipient.
+    /// Ingredient role e.g. Active ingredient, excipient
     /// </summary>
     [FhirElement("role", InSummary=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Role
     {
-      get
-      {
-        if(_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["role"]);
-        return _Role!;
-      }
-
-      set
-      {
-        if (_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("role");
-        _Role = value;
-        OnPropertyChanged("Role");
-      }
-
+      get { return _Role; }
+      set { _Role = value; OnPropertyChanged("Role"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Role;
+    private Hl7.Fhir.Model.CodeableConcept _Role;
 
     /// <summary>
-    /// If the ingredient is a known or suspected allergen.
+    /// If the ingredient is a known or suspected allergen
     /// </summary>
     [FhirElement("allergenicIndicator", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? AllergenicIndicatorElement
+    public Hl7.Fhir.Model.FhirBoolean AllergenicIndicatorElement
     {
-      get
-      {
-        if(_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["allergenicIndicator"]);
-        return _AllergenicIndicatorElement;
-      }
-
-      set
-      {
-        if (_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          Overflow.Remove("allergenicIndicator");
-        _AllergenicIndicatorElement = value;
-        OnPropertyChanged("AllergenicIndicatorElement");
-      }
-
+      get { return _AllergenicIndicatorElement; }
+      set { _AllergenicIndicatorElement = value; OnPropertyChanged("AllergenicIndicatorElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean? _AllergenicIndicatorElement;
+    private Hl7.Fhir.Model.FhirBoolean _AllergenicIndicatorElement;
 
     /// <summary>
     /// If the ingredient is a known or suspected allergen
@@ -1269,264 +897,186 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AllergenicIndicator
     {
-      get => AllergenicIndicatorElement?.Value;
+      get { return AllergenicIndicatorElement != null ? AllergenicIndicatorElement.Value : null; }
       set
       {
-        AllergenicIndicatorElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
+        if (value == null)
+          AllergenicIndicatorElement = null;
+        else
+          AllergenicIndicatorElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AllergenicIndicator");
       }
     }
 
     /// <summary>
-    /// Manufacturer of this Ingredient.
+    /// Manufacturer of this Ingredient
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=120)]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get
-      {
-        if(_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturer"]);
-        return _Manufacturer ??= [];
-      }
-
-      set
-      {
-        if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("manufacturer");
-        _Manufacturer = value;
-        OnPropertyChanged("Manufacturer");
-      }
-
+      get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+      set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
+    private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
 
     /// <summary>
-    /// A specified substance that comprises this ingredient.
+    /// A specified substance that comprises this ingredient
     /// </summary>
     [FhirElement("specifiedSubstance", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> SpecifiedSubstance
     {
-      get
-      {
-        if(_SpecifiedSubstance.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>), Overflow["specifiedSubstance"]);
-        return _SpecifiedSubstance ??= [];
-      }
-
-      set
-      {
-        if (_SpecifiedSubstance.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>())
-          Overflow.Remove("specifiedSubstance");
-        _SpecifiedSubstance = value;
-        OnPropertyChanged("SpecifiedSubstance");
-      }
-
+      get { if(_SpecifiedSubstance==null) _SpecifiedSubstance = new List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>(); return _SpecifiedSubstance; }
+      set { _SpecifiedSubstance = value; OnPropertyChanged("SpecifiedSubstance"); }
     }
 
-    private List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>? _SpecifiedSubstance;
+    private List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> _SpecifiedSubstance;
 
     /// <summary>
-    /// The ingredient substance.
+    /// The ingredient substance
     /// </summary>
     [FhirElement("substance", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent? Substance
+    public Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent Substance
     {
-      get
-      {
-        if(_Substance.InOverflow<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent), Overflow["substance"]);
-        return _Substance;
-      }
-
-      set
-      {
-        if (_Substance.InOverflow<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>())
-          Overflow.Remove("substance");
-        _Substance = value;
-        OnPropertyChanged("Substance");
-      }
-
+      get { return _Substance; }
+      set { _Substance = value; OnPropertyChanged("Substance"); }
     }
 
-    private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent? _Substance;
+    private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent _Substance;
 
-    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value!; }
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not MedicinalProductIngredient dest)
+      var dest = other as MedicinalProductIngredient;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
-      if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
-      if(_AllergenicIndicatorElement is not null) dest.AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)_AllergenicIndicatorElement.DeepCopyInternal();
-      if(_Manufacturer is not null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(_Manufacturer.DeepCopyInternal());
-      if(_SpecifiedSubstance is not null) dest.SpecifiedSubstance = new List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>(_SpecifiedSubstance.DeepCopyInternal());
-      if(_Substance is not null) dest.Substance = (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent)_Substance.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+      if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+      if(AllergenicIndicatorElement != null) dest.AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)AllergenicIndicatorElement.DeepCopy();
+      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+      if(SpecifiedSubstance.Any()) dest.SpecifiedSubstance = new List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>(SpecifiedSubstance.DeepCopy());
+      if(Substance != null) dest.Substance = (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent)Substance.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new MedicinalProductIngredient();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new MedicinalProductIngredient());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not MedicinalProductIngredient otherT) return false;
+      var otherT = other as MedicinalProductIngredient;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_Role, otherT._Role)) return false;
-      if(!comparer.Equals(_AllergenicIndicatorElement, otherT._AllergenicIndicatorElement)) return false;
-      if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
-      if(!comparer.ListEquals(_SpecifiedSubstance, otherT._SpecifiedSubstance)) return false;
-      if(!comparer.Equals(_Substance, otherT._Substance)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+      if( !DeepComparable.Matches(AllergenicIndicatorElement, otherT.AllergenicIndicatorElement)) return false;
+      if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
+      if( !DeepComparable.Matches(SpecifiedSubstance, otherT.SpecifiedSubstance)) return false;
+      if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as MedicinalProductIngredient;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+      if( !DeepComparable.IsExactly(AllergenicIndicatorElement, otherT.AllergenicIndicatorElement)) return false;
+      if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
+      if( !DeepComparable.IsExactly(SpecifiedSubstance, otherT.SpecifiedSubstance)) return false;
+      if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Identifier != null) yield return Identifier;
+        if (Role != null) yield return Role;
+        if (AllergenicIndicatorElement != null) yield return AllergenicIndicatorElement;
+        foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
+        foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return elem; }
+        if (Substance != null) yield return Substance;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+        if (Role != null) yield return new ElementValue("role", Role);
+        if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", AllergenicIndicatorElement);
+        foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+        foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return new ElementValue("specifiedSubstance", elem); }
+        if (Substance != null) yield return new ElementValue("substance", Substance);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as Hl7.Fhir.Model.Identifier) is not null;
+          value = Identifier;
+          return Identifier is not null;
         case "role":
-          if (_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["role"];
-            return true;
-          }
-          value = _Role;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Role;
+          return Role is not null;
         case "allergenicIndicator":
-          if (_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          {
-            value = Overflow["allergenicIndicator"];
-            return true;
-          }
-          value = _AllergenicIndicatorElement;
-          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+          value = AllergenicIndicatorElement;
+          return AllergenicIndicatorElement is not null;
         case "manufacturer":
-          if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["manufacturer"];
-            return true;
-          }
-          value = _Manufacturer;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
         case "specifiedSubstance":
-          if (_SpecifiedSubstance.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>())
-          {
-            value = Overflow["specifiedSubstance"];
-            return true;
-          }
-          value = _SpecifiedSubstance;
-          return (value as List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>)?.Any() is true;
+          value = SpecifiedSubstance;
+          return SpecifiedSubstance?.Any() == true;
         case "substance":
-          if (_Substance.InOverflow<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>())
-          {
-            value = Overflow["substance"];
-            return true;
-          }
-          value = _Substance;
-          return (value as Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent) is not null;
+          value = Substance;
+          return Substance is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (Hl7.Fhir.Model.Identifier or null))
-          {
-            Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (Hl7.Fhir.Model.Identifier?)value;
-          return this;
-        case "role":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Role = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["role"] = value;
-          }
-          else Role = (Hl7.Fhir.Model.CodeableConcept?)value!;
-          return this;
-        case "allergenicIndicator":
-          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-          {
-            AllergenicIndicatorElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-            Overflow["allergenicIndicator"] = value;
-          }
-          else AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-          return this;
-        case "manufacturer":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Manufacturer = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["manufacturer"] = value;
-          }
-          else Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "specifiedSubstance":
-          if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> or null))
-          {
-            SpecifiedSubstance = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>.INSTANCE;
-            Overflow["specifiedSubstance"] = value;
-          }
-          else SpecifiedSubstance = (List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>?)value!;
-          return this;
-        case "substance":
-          if (value is not (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent or null))
-          {
-            Substance = OverflowNull<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>.INSTANCE;
-            Overflow["substance"] = value;
-          }
-          else Substance = (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("role",_Role);
-      if (_AllergenicIndicatorElement is not null && !_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("allergenicIndicator",_AllergenicIndicatorElement);
-      if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (_SpecifiedSubstance?.Any() is true && !_SpecifiedSubstance.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>()) yield return new KeyValuePair<string,object>("specifiedSubstance",_SpecifiedSubstance);
-      if (_Substance is not null && !_Substance.InOverflow<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>()) yield return new KeyValuePair<string,object>("substance",_Substance);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+      if (AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",AllergenicIndicatorElement);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (SpecifiedSubstance?.Any() == true) yield return new KeyValuePair<string,object>("specifiedSubstance",SpecifiedSubstance);
+      if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
     }
 
   }

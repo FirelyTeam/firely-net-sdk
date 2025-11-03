@@ -7,11 +7,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -48,6 +44,9 @@ namespace Hl7.Fhir.Model
   /// Primitive Type positiveInt
   /// An integer with a value that is positive (e.g. &gt;0)
   /// </summary>
+  /// <remarks>
+  /// 32 bit number; for values larger than this, use decimal
+  /// </remarks>
   [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
   [Serializable]
   [DataContract]
@@ -57,7 +56,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "positiveInt";
+    public override string TypeName { get { return "positiveInt"; } }
 
     /// Must conform to the pattern "[1-9][0-9]*"
     public const string PATTERN = @"[1-9][0-9]*";
@@ -73,18 +72,12 @@ namespace Hl7.Fhir.Model
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(SystemPrimitive.Integer))]
     [DataMember]
     public int? Value
     {
-      get { return JsonValue is int or null ? (int?)JsonValue : throw COVE.FromTypes(typeof(PositiveInt), JsonValue); }
-      set { JsonValue = value; OnPropertyChanged("Value"); }
-    }
-
-    protected internal override Base DeepCopyInternal()
-    {
-      var instance = new PositiveInt();
-      CopyToInternal(instance);
-      return instance;
+      get { return (int?)ObjectValue; }
+      set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
   }

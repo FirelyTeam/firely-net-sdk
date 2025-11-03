@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            var bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
             _bundleNode = new ScopedNode(bundle.ToTypedElement());
         }
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             var exampleUri = "http://example.org/fhir/Bundle/1";
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            var bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             var bundleNode = new ScopedNode(bundle.ToTypedElement(), exampleUri);
             Assert.AreEqual(exampleUri, bundleNode.InstanceUri);
 
@@ -322,14 +322,8 @@ namespace Hl7.Fhir.ElementModel.Tests
                     new DirectorySource("TestData/TestSd")));
             }
 
-            public async Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri)
+            public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                var result = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
-                return result.Value;
-            }
-
-            public async Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
-            { 
                 if (_cache.TryGetValue(uri, out StructureDefinition? sd))
                     return sd;
 
@@ -338,15 +332,13 @@ namespace Hl7.Fhir.ElementModel.Tests
                 {
                     var snapShotGenerator = new SnapshotGenerator(_coreResolver);
                     await snapShotGenerator.UpdateAsync(sd);
-                    _cache.Add(sd.Url ?? throw new InvalidOperationException("SD without url, which has just been resolved by url?"), sd);
+                    _cache.Add(sd.Url, sd);
                 }
 
                 return sd;
             }
-            
-            public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
-            public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+            public Tasks.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
         private class TypedElementWithoutDefinition : ITypedElement, IResourceTypeSupplier

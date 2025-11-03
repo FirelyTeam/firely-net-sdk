@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        private ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
+        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
         {
             settings = settings ?? FhirXmlParsingSettings.CreateDefault();
             settings.PermissiveParsing = false;
@@ -91,15 +91,15 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
-            var node = getXmlNode(bundle, new FhirXmlParsingSettings{PermissiveParsing = true});
+            var node = getXmlNode(bundle);
             ParseDemoPatient.CheckBundleEntryNavigation(node);
         }
 
 
         [TestMethod]
-        public void RoundtripXml()
+        public async Task RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
+            await ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
@@ -108,10 +108,10 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             // will allow whitespace and comments to come through      
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
-            var json = navXml.ToJson();
+            var json = await navXml.ToJsonAsync();
 
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider());
-            var xml = navJson.ToXml();
+            var xml = await navJson.ToXmlAsync();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
         }
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "typeErrors.xml"));
             var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(9, result.Count);
+            Assert.AreEqual(10, result.Count);
         }
 
         [TestMethod]
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Serialization.Tests
              "<status value='generated' />" +
              "<div><p>Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.AreEqual(3, errors.Count);
+            Assert.AreEqual(2, errors.Count);
             Assert.IsTrue(errors.Any(e => e.Message.Contains("should be an XHTML element")));
 
             // Active content

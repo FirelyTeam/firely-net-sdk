@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,60 +58,34 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "SampledData";
+    public override string TypeName { get { return "SampledData"; } }
 
     /// <summary>
-    /// Zero value and units.
+    /// Zero value and units
     /// </summary>
     [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Origin
+    public Hl7.Fhir.Model.Quantity Origin
     {
-      get
-      {
-        if(_Origin.InOverflow<Hl7.Fhir.Model.Quantity>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["origin"]);
-        return _Origin;
-      }
-
-      set
-      {
-        if (_Origin.InOverflow<Hl7.Fhir.Model.Quantity>())
-          Overflow.Remove("origin");
-        _Origin = value;
-        OnPropertyChanged("Origin");
-      }
-
+      get { return _Origin; }
+      set { _Origin = value; OnPropertyChanged("Origin"); }
     }
 
-    private Hl7.Fhir.Model.Quantity? _Origin;
+    private Hl7.Fhir.Model.Quantity _Origin;
 
     /// <summary>
-    /// Number of intervalUnits between samples.
+    /// Number of intervalUnits between samples
     /// </summary>
     [FhirElement("interval", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal? IntervalElement
+    public Hl7.Fhir.Model.FhirDecimal IntervalElement
     {
-      get
-      {
-        if(_IntervalElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["interval"]);
-        return _IntervalElement;
-      }
-
-      set
-      {
-        if (_IntervalElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          Overflow.Remove("interval");
-        _IntervalElement = value;
-        OnPropertyChanged("IntervalElement");
-      }
-
+      get { return _IntervalElement; }
+      set { _IntervalElement = value; OnPropertyChanged("IntervalElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal? _IntervalElement;
+    private Hl7.Fhir.Model.FhirDecimal _IntervalElement;
 
     /// <summary>
     /// Number of intervalUnits between samples
@@ -124,82 +94,62 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Interval
     {
-      get => IntervalElement?.Value;
+      get { return IntervalElement != null ? IntervalElement.Value : null; }
       set
       {
-        IntervalElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        if (value == null)
+          IntervalElement = null;
+        else
+          IntervalElement = new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Interval");
       }
     }
 
     /// <summary>
-    /// The measurement unit of the interval between samples.
+    /// The measurement unit of the interval between samples
     /// </summary>
     [FhirElement("intervalUnit", InSummary=true, Order=50)]
     [Binding("Units")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Code? IntervalUnitElement
+    public Hl7.Fhir.Model.Code IntervalUnitElement
     {
-      get
-      {
-        if(_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["intervalUnit"]);
-        return _IntervalUnitElement;
-      }
-
-      set
-      {
-        if (_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>())
-          Overflow.Remove("intervalUnit");
-        _IntervalUnitElement = value;
-        OnPropertyChanged("IntervalUnitElement");
-      }
-
+      get { return _IntervalUnitElement; }
+      set { _IntervalUnitElement = value; OnPropertyChanged("IntervalUnitElement"); }
     }
 
-    private Hl7.Fhir.Model.Code? _IntervalUnitElement;
+    private Hl7.Fhir.Model.Code _IntervalUnitElement;
 
     /// <summary>
     /// The measurement unit of the interval between samples
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? IntervalUnit
+    public string IntervalUnit
     {
-      get => IntervalUnitElement?.Value;
+      get { return IntervalUnitElement != null ? IntervalUnitElement.Value : null; }
       set
       {
-        IntervalUnitElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
+        if (value == null)
+          IntervalUnitElement = null;
+        else
+          IntervalUnitElement = new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("IntervalUnit");
       }
     }
 
     /// <summary>
-    /// Multiply data by this before adding to origin.
+    /// Multiply data by this before adding to origin
     /// </summary>
     [FhirElement("factor", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal? FactorElement
+    public Hl7.Fhir.Model.FhirDecimal FactorElement
     {
-      get
-      {
-        if(_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["factor"]);
-        return _FactorElement;
-      }
-
-      set
-      {
-        if (_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          Overflow.Remove("factor");
-        _FactorElement = value;
-        OnPropertyChanged("FactorElement");
-      }
-
+      get { return _FactorElement; }
+      set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal? _FactorElement;
+    private Hl7.Fhir.Model.FhirDecimal _FactorElement;
 
     /// <summary>
     /// Multiply data by this before adding to origin
@@ -208,39 +158,29 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Factor
     {
-      get => FactorElement?.Value;
+      get { return FactorElement != null ? FactorElement.Value : null; }
       set
       {
-        FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        if (value == null)
+          FactorElement = null;
+        else
+          FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Factor");
       }
     }
 
     /// <summary>
-    /// Lower limit of detection.
+    /// Lower limit of detection
     /// </summary>
     [FhirElement("lowerLimit", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal? LowerLimitElement
+    public Hl7.Fhir.Model.FhirDecimal LowerLimitElement
     {
-      get
-      {
-        if(_LowerLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["lowerLimit"]);
-        return _LowerLimitElement;
-      }
-
-      set
-      {
-        if (_LowerLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          Overflow.Remove("lowerLimit");
-        _LowerLimitElement = value;
-        OnPropertyChanged("LowerLimitElement");
-      }
-
+      get { return _LowerLimitElement; }
+      set { _LowerLimitElement = value; OnPropertyChanged("LowerLimitElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal? _LowerLimitElement;
+    private Hl7.Fhir.Model.FhirDecimal _LowerLimitElement;
 
     /// <summary>
     /// Lower limit of detection
@@ -249,39 +189,29 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? LowerLimit
     {
-      get => LowerLimitElement?.Value;
+      get { return LowerLimitElement != null ? LowerLimitElement.Value : null; }
       set
       {
-        LowerLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        if (value == null)
+          LowerLimitElement = null;
+        else
+          LowerLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("LowerLimit");
       }
     }
 
     /// <summary>
-    /// Upper limit of detection.
+    /// Upper limit of detection
     /// </summary>
     [FhirElement("upperLimit", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal? UpperLimitElement
+    public Hl7.Fhir.Model.FhirDecimal UpperLimitElement
     {
-      get
-      {
-        if(_UpperLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["upperLimit"]);
-        return _UpperLimitElement;
-      }
-
-      set
-      {
-        if (_UpperLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          Overflow.Remove("upperLimit");
-        _UpperLimitElement = value;
-        OnPropertyChanged("UpperLimitElement");
-      }
-
+      get { return _UpperLimitElement; }
+      set { _UpperLimitElement = value; OnPropertyChanged("UpperLimitElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal? _UpperLimitElement;
+    private Hl7.Fhir.Model.FhirDecimal _UpperLimitElement;
 
     /// <summary>
     /// Upper limit of detection
@@ -290,40 +220,30 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? UpperLimit
     {
-      get => UpperLimitElement?.Value;
+      get { return UpperLimitElement != null ? UpperLimitElement.Value : null; }
       set
       {
-        UpperLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
+        if (value == null)
+          UpperLimitElement = null;
+        else
+          UpperLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("UpperLimit");
       }
     }
 
     /// <summary>
-    /// Number of sample points at each time point.
+    /// Number of sample points at each time point
     /// </summary>
     [FhirElement("dimensions", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.PositiveInt? DimensionsElement
+    public Hl7.Fhir.Model.PositiveInt DimensionsElement
     {
-      get
-      {
-        if(_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["dimensions"]);
-        return _DimensionsElement;
-      }
-
-      set
-      {
-        if (_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
-          Overflow.Remove("dimensions");
-        _DimensionsElement = value;
-        OnPropertyChanged("DimensionsElement");
-      }
-
+      get { return _DimensionsElement; }
+      set { _DimensionsElement = value; OnPropertyChanged("DimensionsElement"); }
     }
 
-    private Hl7.Fhir.Model.PositiveInt? _DimensionsElement;
+    private Hl7.Fhir.Model.PositiveInt _DimensionsElement;
 
     /// <summary>
     /// Number of sample points at each time point
@@ -332,377 +252,270 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => DimensionsElement?.Value;
+      get { return DimensionsElement != null ? DimensionsElement.Value : null; }
       set
       {
-        DimensionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
+        if (value == null)
+          DimensionsElement = null;
+        else
+          DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
         OnPropertyChanged("Dimensions");
       }
     }
 
     /// <summary>
-    /// Defines the codes used in the data.
+    /// Defines the codes used in the data
     /// </summary>
     [FhirElement("codeMap", Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical? CodeMapElement
+    public Hl7.Fhir.Model.Canonical CodeMapElement
     {
-      get
-      {
-        if(_CodeMapElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["codeMap"]);
-        return _CodeMapElement;
-      }
-
-      set
-      {
-        if (_CodeMapElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-          Overflow.Remove("codeMap");
-        _CodeMapElement = value;
-        OnPropertyChanged("CodeMapElement");
-      }
-
+      get { return _CodeMapElement; }
+      set { _CodeMapElement = value; OnPropertyChanged("CodeMapElement"); }
     }
 
-    private Hl7.Fhir.Model.Canonical? _CodeMapElement;
+    private Hl7.Fhir.Model.Canonical _CodeMapElement;
 
     /// <summary>
     /// Defines the codes used in the data
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? CodeMap
+    public string CodeMap
     {
-      get => CodeMapElement?.Value;
+      get { return CodeMapElement != null ? CodeMapElement.Value : null; }
       set
       {
-        CodeMapElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+        if (value == null)
+          CodeMapElement = null;
+        else
+          CodeMapElement = new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("CodeMap");
       }
     }
 
     /// <summary>
-    /// Offsets, typically in time, at which data values were taken.
+    /// Offsets, typically in time, at which data values were taken
     /// </summary>
     [FhirElement("offsets", Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? OffsetsElement
+    public Hl7.Fhir.Model.FhirString OffsetsElement
     {
-      get
-      {
-        if(_OffsetsElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["offsets"]);
-        return _OffsetsElement;
-      }
-
-      set
-      {
-        if (_OffsetsElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("offsets");
-        _OffsetsElement = value;
-        OnPropertyChanged("OffsetsElement");
-      }
-
+      get { return _OffsetsElement; }
+      set { _OffsetsElement = value; OnPropertyChanged("OffsetsElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _OffsetsElement;
+    private Hl7.Fhir.Model.FhirString _OffsetsElement;
 
     /// <summary>
     /// Offsets, typically in time, at which data values were taken
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Offsets
+    public string Offsets
     {
-      get => OffsetsElement?.Value;
+      get { return OffsetsElement != null ? OffsetsElement.Value : null; }
       set
       {
-        OffsetsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          OffsetsElement = null;
+        else
+          OffsetsElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Offsets");
       }
     }
 
     /// <summary>
-    /// Decimal values with spaces, or "E" | "U" | "L", or another code.
+    /// Decimal values with spaces, or "E" | "U" | "L", or another code
     /// </summary>
     [FhirElement("data", Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? DataElement
+    public Hl7.Fhir.Model.FhirString DataElement
     {
-      get
-      {
-        if(_DataElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["data"]);
-        return _DataElement;
-      }
-
-      set
-      {
-        if (_DataElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("data");
-        _DataElement = value;
-        OnPropertyChanged("DataElement");
-      }
-
+      get { return _DataElement; }
+      set { _DataElement = value; OnPropertyChanged("DataElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _DataElement;
+    private Hl7.Fhir.Model.FhirString _DataElement;
 
     /// <summary>
     /// Decimal values with spaces, or "E" | "U" | "L", or another code
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Data
+    public string Data
     {
-      get => DataElement?.Value;
+      get { return DataElement != null ? DataElement.Value : null; }
       set
       {
-        DataElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          DataElement = null;
+        else
+          DataElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Data");
       }
     }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not SampledData dest)
+      var dest = other as SampledData;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Origin is not null) dest.Origin = (Hl7.Fhir.Model.Quantity)_Origin.DeepCopyInternal();
-      if(_IntervalElement is not null) dest.IntervalElement = (Hl7.Fhir.Model.FhirDecimal)_IntervalElement.DeepCopyInternal();
-      if(_IntervalUnitElement is not null) dest.IntervalUnitElement = (Hl7.Fhir.Model.Code)_IntervalUnitElement.DeepCopyInternal();
-      if(_FactorElement is not null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)_FactorElement.DeepCopyInternal();
-      if(_LowerLimitElement is not null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)_LowerLimitElement.DeepCopyInternal();
-      if(_UpperLimitElement is not null) dest.UpperLimitElement = (Hl7.Fhir.Model.FhirDecimal)_UpperLimitElement.DeepCopyInternal();
-      if(_DimensionsElement is not null) dest.DimensionsElement = (Hl7.Fhir.Model.PositiveInt)_DimensionsElement.DeepCopyInternal();
-      if(_CodeMapElement is not null) dest.CodeMapElement = (Hl7.Fhir.Model.Canonical)_CodeMapElement.DeepCopyInternal();
-      if(_OffsetsElement is not null) dest.OffsetsElement = (Hl7.Fhir.Model.FhirString)_OffsetsElement.DeepCopyInternal();
-      if(_DataElement is not null) dest.DataElement = (Hl7.Fhir.Model.FhirString)_DataElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Origin != null) dest.Origin = (Hl7.Fhir.Model.Quantity)Origin.DeepCopy();
+      if(IntervalElement != null) dest.IntervalElement = (Hl7.Fhir.Model.FhirDecimal)IntervalElement.DeepCopy();
+      if(IntervalUnitElement != null) dest.IntervalUnitElement = (Hl7.Fhir.Model.Code)IntervalUnitElement.DeepCopy();
+      if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
+      if(LowerLimitElement != null) dest.LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal)LowerLimitElement.DeepCopy();
+      if(UpperLimitElement != null) dest.UpperLimitElement = (Hl7.Fhir.Model.FhirDecimal)UpperLimitElement.DeepCopy();
+      if(DimensionsElement != null) dest.DimensionsElement = (Hl7.Fhir.Model.PositiveInt)DimensionsElement.DeepCopy();
+      if(CodeMapElement != null) dest.CodeMapElement = (Hl7.Fhir.Model.Canonical)CodeMapElement.DeepCopy();
+      if(OffsetsElement != null) dest.OffsetsElement = (Hl7.Fhir.Model.FhirString)OffsetsElement.DeepCopy();
+      if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.FhirString)DataElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new SampledData();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new SampledData());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not SampledData otherT) return false;
+      var otherT = other as SampledData;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Origin, otherT._Origin)) return false;
-      if(!comparer.Equals(_IntervalElement, otherT._IntervalElement)) return false;
-      if(!comparer.Equals(_IntervalUnitElement, otherT._IntervalUnitElement)) return false;
-      if(!comparer.Equals(_FactorElement, otherT._FactorElement)) return false;
-      if(!comparer.Equals(_LowerLimitElement, otherT._LowerLimitElement)) return false;
-      if(!comparer.Equals(_UpperLimitElement, otherT._UpperLimitElement)) return false;
-      if(!comparer.Equals(_DimensionsElement, otherT._DimensionsElement)) return false;
-      if(!comparer.Equals(_CodeMapElement, otherT._CodeMapElement)) return false;
-      if(!comparer.Equals(_OffsetsElement, otherT._OffsetsElement)) return false;
-      if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
+      if( !DeepComparable.Matches(IntervalElement, otherT.IntervalElement)) return false;
+      if( !DeepComparable.Matches(IntervalUnitElement, otherT.IntervalUnitElement)) return false;
+      if( !DeepComparable.Matches(FactorElement, otherT.FactorElement)) return false;
+      if( !DeepComparable.Matches(LowerLimitElement, otherT.LowerLimitElement)) return false;
+      if( !DeepComparable.Matches(UpperLimitElement, otherT.UpperLimitElement)) return false;
+      if( !DeepComparable.Matches(DimensionsElement, otherT.DimensionsElement)) return false;
+      if( !DeepComparable.Matches(CodeMapElement, otherT.CodeMapElement)) return false;
+      if( !DeepComparable.Matches(OffsetsElement, otherT.OffsetsElement)) return false;
+      if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as SampledData;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
+      if( !DeepComparable.IsExactly(IntervalElement, otherT.IntervalElement)) return false;
+      if( !DeepComparable.IsExactly(IntervalUnitElement, otherT.IntervalUnitElement)) return false;
+      if( !DeepComparable.IsExactly(FactorElement, otherT.FactorElement)) return false;
+      if( !DeepComparable.IsExactly(LowerLimitElement, otherT.LowerLimitElement)) return false;
+      if( !DeepComparable.IsExactly(UpperLimitElement, otherT.UpperLimitElement)) return false;
+      if( !DeepComparable.IsExactly(DimensionsElement, otherT.DimensionsElement)) return false;
+      if( !DeepComparable.IsExactly(CodeMapElement, otherT.CodeMapElement)) return false;
+      if( !DeepComparable.IsExactly(OffsetsElement, otherT.OffsetsElement)) return false;
+      if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Origin != null) yield return Origin;
+        if (IntervalElement != null) yield return IntervalElement;
+        if (IntervalUnitElement != null) yield return IntervalUnitElement;
+        if (FactorElement != null) yield return FactorElement;
+        if (LowerLimitElement != null) yield return LowerLimitElement;
+        if (UpperLimitElement != null) yield return UpperLimitElement;
+        if (DimensionsElement != null) yield return DimensionsElement;
+        if (CodeMapElement != null) yield return CodeMapElement;
+        if (OffsetsElement != null) yield return OffsetsElement;
+        if (DataElement != null) yield return DataElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Origin != null) yield return new ElementValue("origin", Origin);
+        if (IntervalElement != null) yield return new ElementValue("interval", IntervalElement);
+        if (IntervalUnitElement != null) yield return new ElementValue("intervalUnit", IntervalUnitElement);
+        if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
+        if (LowerLimitElement != null) yield return new ElementValue("lowerLimit", LowerLimitElement);
+        if (UpperLimitElement != null) yield return new ElementValue("upperLimit", UpperLimitElement);
+        if (DimensionsElement != null) yield return new ElementValue("dimensions", DimensionsElement);
+        if (CodeMapElement != null) yield return new ElementValue("codeMap", CodeMapElement);
+        if (OffsetsElement != null) yield return new ElementValue("offsets", OffsetsElement);
+        if (DataElement != null) yield return new ElementValue("data", DataElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "origin":
-          if (_Origin.InOverflow<Hl7.Fhir.Model.Quantity>())
-          {
-            value = Overflow["origin"];
-            return true;
-          }
-          value = _Origin;
-          return (value as Hl7.Fhir.Model.Quantity) is not null;
+          value = Origin;
+          return Origin is not null;
         case "interval":
-          if (_IntervalElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          {
-            value = Overflow["interval"];
-            return true;
-          }
-          value = _IntervalElement;
-          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
+          value = IntervalElement;
+          return IntervalElement is not null;
         case "intervalUnit":
-          if (_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>())
-          {
-            value = Overflow["intervalUnit"];
-            return true;
-          }
-          value = _IntervalUnitElement;
-          return (value as Hl7.Fhir.Model.Code) is not null;
+          value = IntervalUnitElement;
+          return IntervalUnitElement is not null;
         case "factor":
-          if (_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          {
-            value = Overflow["factor"];
-            return true;
-          }
-          value = _FactorElement;
-          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
+          value = FactorElement;
+          return FactorElement is not null;
         case "lowerLimit":
-          if (_LowerLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          {
-            value = Overflow["lowerLimit"];
-            return true;
-          }
-          value = _LowerLimitElement;
-          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
+          value = LowerLimitElement;
+          return LowerLimitElement is not null;
         case "upperLimit":
-          if (_UpperLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
-          {
-            value = Overflow["upperLimit"];
-            return true;
-          }
-          value = _UpperLimitElement;
-          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
+          value = UpperLimitElement;
+          return UpperLimitElement is not null;
         case "dimensions":
-          if (_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
-          {
-            value = Overflow["dimensions"];
-            return true;
-          }
-          value = _DimensionsElement;
-          return (value as Hl7.Fhir.Model.PositiveInt) is not null;
+          value = DimensionsElement;
+          return DimensionsElement is not null;
         case "codeMap":
-          if (_CodeMapElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-          {
-            value = Overflow["codeMap"];
-            return true;
-          }
-          value = _CodeMapElement;
-          return (value as Hl7.Fhir.Model.Canonical) is not null;
+          value = CodeMapElement;
+          return CodeMapElement is not null;
         case "offsets":
-          if (_OffsetsElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["offsets"];
-            return true;
-          }
-          value = _OffsetsElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = OffsetsElement;
+          return OffsetsElement is not null;
         case "data":
-          if (_DataElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["data"];
-            return true;
-          }
-          value = _DataElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = DataElement;
+          return DataElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "origin":
-          if (value is not (Hl7.Fhir.Model.Quantity or null))
-          {
-            Origin = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
-            Overflow["origin"] = value;
-          }
-          else Origin = (Hl7.Fhir.Model.Quantity?)value;
-          return this;
-        case "interval":
-          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
-          {
-            IntervalElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
-            Overflow["interval"] = value;
-          }
-          else IntervalElement = (Hl7.Fhir.Model.FhirDecimal?)value;
-          return this;
-        case "intervalUnit":
-          if (value is not (Hl7.Fhir.Model.Code or null))
-          {
-            IntervalUnitElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
-            Overflow["intervalUnit"] = value;
-          }
-          else IntervalUnitElement = (Hl7.Fhir.Model.Code?)value;
-          return this;
-        case "factor":
-          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
-          {
-            FactorElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
-            Overflow["factor"] = value;
-          }
-          else FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
-          return this;
-        case "lowerLimit":
-          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
-          {
-            LowerLimitElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
-            Overflow["lowerLimit"] = value;
-          }
-          else LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal?)value;
-          return this;
-        case "upperLimit":
-          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
-          {
-            UpperLimitElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
-            Overflow["upperLimit"] = value;
-          }
-          else UpperLimitElement = (Hl7.Fhir.Model.FhirDecimal?)value;
-          return this;
-        case "dimensions":
-          if (value is not (Hl7.Fhir.Model.PositiveInt or null))
-          {
-            DimensionsElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
-            Overflow["dimensions"] = value;
-          }
-          else DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value;
-          return this;
-        case "codeMap":
-          if (value is not (Hl7.Fhir.Model.Canonical or null))
-          {
-            CodeMapElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
-            Overflow["codeMap"] = value;
-          }
-          else CodeMapElement = (Hl7.Fhir.Model.Canonical?)value;
-          return this;
-        case "offsets":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            OffsetsElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["offsets"] = value;
-          }
-          else OffsetsElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "data":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            DataElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["data"] = value;
-          }
-          else DataElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Origin is not null && !_Origin.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("origin",_Origin);
-      if (_IntervalElement is not null && !_IntervalElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("interval",_IntervalElement);
-      if (_IntervalUnitElement is not null && !_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("intervalUnit",_IntervalUnitElement);
-      if (_FactorElement is not null && !_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("factor",_FactorElement);
-      if (_LowerLimitElement is not null && !_LowerLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("lowerLimit",_LowerLimitElement);
-      if (_UpperLimitElement is not null && !_UpperLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("upperLimit",_UpperLimitElement);
-      if (_DimensionsElement is not null && !_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("dimensions",_DimensionsElement);
-      if (_CodeMapElement is not null && !_CodeMapElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("codeMap",_CodeMapElement);
-      if (_OffsetsElement is not null && !_OffsetsElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("offsets",_OffsetsElement);
-      if (_DataElement is not null && !_DataElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("data",_DataElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
+      if (IntervalElement is not null) yield return new KeyValuePair<string,object>("interval",IntervalElement);
+      if (IntervalUnitElement is not null) yield return new KeyValuePair<string,object>("intervalUnit",IntervalUnitElement);
+      if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
+      if (LowerLimitElement is not null) yield return new KeyValuePair<string,object>("lowerLimit",LowerLimitElement);
+      if (UpperLimitElement is not null) yield return new KeyValuePair<string,object>("upperLimit",UpperLimitElement);
+      if (DimensionsElement is not null) yield return new KeyValuePair<string,object>("dimensions",DimensionsElement);
+      if (CodeMapElement is not null) yield return new KeyValuePair<string,object>("codeMap",CodeMapElement);
+      if (OffsetsElement is not null) yield return new KeyValuePair<string,object>("offsets",OffsetsElement);
+      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
     }
 
   }

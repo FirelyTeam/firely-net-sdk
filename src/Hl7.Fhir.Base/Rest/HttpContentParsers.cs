@@ -72,14 +72,11 @@ namespace Hl7.Fhir.Rest
 
             foreach (var extension in extensionValues)
             {
-                if (extension.Value is not null)
-                {
-                    var pair = extension.Value.Split(HEADERSPLIT, 2);
-                    var key = pair[0];
-                    var value = pair[1];
+                var pair = extension.Value.Split(HEADERSPLIT, 2);
+                var key = pair[0];
+                var value = pair[1];
 
-                    msg.Headers.TryAddWithoutValidation(key, value);
-                }
+                msg.Headers.TryAddWithoutValidation(key, value);
             }
 
             return msg.Headers;

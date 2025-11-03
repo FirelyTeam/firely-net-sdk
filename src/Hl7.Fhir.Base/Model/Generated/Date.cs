@@ -7,11 +7,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -57,34 +53,29 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "date";
+    public override string TypeName { get { return "date"; } }
 
     /// Must conform to the pattern "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?"
     public const string PATTERN = @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?";
 
-    public Date(string? value)
+    public Date(string value)
     {
       Value = value;
     }
 
-    public Date(): this((string?)null) {}
+    public Date(): this((string)null) {}
 
     /// <summary>
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(SystemPrimitive.Date))]
+    [DatePattern]
     [DataMember]
-    public string? Value
+    public string Value
     {
-      get { return JsonValue is string or null ? (string?)JsonValue : throw COVE.FromTypes(typeof(Date), JsonValue); }
-      set { JsonValue = value; OnPropertyChanged("Value"); }
-    }
-
-    protected internal override Base DeepCopyInternal()
-    {
-      var instance = new Date();
-      CopyToInternal(instance);
-      return instance;
+      get { return (string)ObjectValue; }
+      set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
   }

@@ -13,7 +13,6 @@ using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -25,23 +24,23 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Tasks.Task InvokeTestPatientGetEverythingHttpClient()
+        public void InvokeTestPatientGetEverythingHttpClient()
         {
             using (var client = new FhirClient(testEndpoint))
             {
-                await patientGetEverything(client);
+                patientGetEverything(client);
             }
         }
 
-        private async Tasks.Task patientGetEverything(BaseFhirClient client)
+        private void patientGetEverything(BaseFhirClient client)
         {
             var start = new FhirDateTime(2014, 11, 1);
             var end = new FhirDateTime(2015, 1, 1);
             var par = new Parameters().Add("start", start).Add("end", end);
-            var bundle = (Bundle)await client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "example"), "everything", par);
+            var bundle = (Bundle)client.InstanceOperation(ResourceIdentity.Build("Patient", "example"), "everything", par);
             Assert.IsTrue(bundle.Entry.Any());
 
-            var bundle2 = await client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "example"), start, end);
+            var bundle2 = client.FetchPatientRecord(ResourceIdentity.Build("Patient", "example"), start, end);
             Assert.IsTrue(bundle2.Entry.Any());
         }
 
@@ -63,18 +62,18 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Tasks.Task InvokeExpandParameterValueSetHttpClient()
+        public void InvokeExpandParameterValueSetHttpClient()
         {
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
-                await expandParameterValueSet(client);
+                expandParameterValueSet(client);
             }
         }
 
-        private static async Tasks.Task expandParameterValueSet(BaseFhirClient client)
+        private static void expandParameterValueSet(BaseFhirClient client)
         {
-            var vs = await client.ReadAsync<ValueSet>("ValueSet/administrative-gender");
-            var vsX = await client.ExpandValueSetAsync(vs);
+            var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
+            var vsX = client.ExpandValueSet(vs);
 
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
@@ -174,39 +173,39 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Tasks.Task InvokeValidateCodeWithVSHttpClient()
+        public void InvokeValidateCodeWithVSHttpClient()
         {
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
-                await validateCodeWithVS(client);
+                validateCodeWithVS(client);
             };
         }
 
-        private static async Tasks.Task validateCodeWithVS(BaseFhirClient client)
+        private static void validateCodeWithVS(BaseFhirClient client)
         {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var vs = await client.ReadAsync<ValueSet>("ValueSet/c80-facilitycodes");
+            var vs = client.Read<ValueSet>("ValueSet/c80-facilitycodes");
             Assert.IsNotNull(vs);
 
-            var result = await client.ValidateCodeAsync(valueSet: vs, coding: coding);
+            var result = client.ValidateCode(valueSet: vs, coding: coding);
             Assert.IsTrue(result.Result?.Value == true);
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Tasks.Task InvokeResourceValidationHttpClient()
+        public void InvokeResourceValidationHttpClient()
         {
             using (var client = new FhirClient(testEndpoint))
             {
-                await validateResource(client);
+                validateResource(client);
             }
         }
 
-        private static async Tasks.Task validateResource(BaseFhirClient client)
+        private static void validateResource(BaseFhirClient client)
         {
-            var pat = await client.ReadAsync<Patient>("Patient/pat1");
-            var vresult = await client.ValidateResourceAsync(pat, null,
+            var pat = client.Read<Patient>("Patient/pat1");
+            var vresult = client.ValidateResource(pat, null,
                 new FhirUri("http://hl7.org/fhir/StructureDefinition/Patient"));
             Assert.IsTrue(vresult.Success);
         }

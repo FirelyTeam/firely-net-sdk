@@ -28,47 +28,56 @@
 
 */
 
-#nullable enable
-
 using Hl7.Fhir.Utility;
 using System;
 
-namespace Hl7.Fhir.Model;
-
-[System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\"}")]
-public partial class Resource
+namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// This is the base URL of the FHIR server that this resource is hosted on
-    /// </summary>
-    public Uri? ResourceBase
+    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\"}")]
+    public partial class Resource
     {
-        get
+        /// <summary>
+        /// This is the base URL of the FHIR server that this resource is hosted on
+        /// </summary>
+        public Uri ResourceBase
         {
-            var bd = this.Annotation<ResourceBaseData>();
-            return bd?.Base;
+            get
+            {
+                var bd = this.Annotation<ResourceBaseData>();
+                return bd?.Base;
+            }
+
+            set
+            {
+                this.RemoveAnnotations<ResourceBaseData>();
+                AddAnnotation(new ResourceBaseData { Base = value });
+            }
         }
 
-        set
+        private class ResourceBaseData
         {
-            this.RemoveAnnotations<ResourceBaseData>();
-
-            if(value is not null)
-                AddAnnotation(new ResourceBaseData(value));
+            public Uri Base;
         }
+
+        /// <summary>
+        /// This object is internally used for locking the resource in a multithreaded environment.
+        /// </summary>
+        /// <remarks>
+        /// As a consumer of this API, please do not use this object.
+        /// </remarks>
+        public readonly object SyncLock = new object();
+
+        public string VersionId
+        {
+            get => HasVersionId ? Meta.VersionId : null;
+            set
+            {
+                if (Meta == null) Meta = new Meta();
+                Meta.VersionId = value;
+            }
+        }
+
+        public bool HasVersionId => Meta?.VersionId != null;
     }
 
-    private record ResourceBaseData(Uri Base);
-
-    /// <summary>
-    /// Returns the Meta.VersionId, if available.
-    /// </summary>
-    public string? VersionId
-    {
-        get => Meta?.VersionId;
-        set
-        {
-            Meta ??= new Meta { VersionId = value };
-        }
-    }
 }

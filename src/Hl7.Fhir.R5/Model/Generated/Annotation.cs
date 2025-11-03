@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,227 +58,184 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Annotation";
+    public override string TypeName { get { return "Annotation"; } }
 
     /// <summary>
-    /// Individual responsible for the annotation.
+    /// Individual responsible for the annotation
     /// </summary>
     [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? Author
+    public Hl7.Fhir.Model.DataType Author
     {
-      get
-      {
-        if(_Author.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["author"]);
-        return _Author;
-      }
-
-      set
-      {
-        if (_Author.InOverflow<DynamicDataType>())
-          Overflow.Remove("author");
-        _Author = value;
-        OnPropertyChanged("Author");
-      }
-
+      get { return _Author; }
+      set { _Author = value; OnPropertyChanged("Author"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _Author;
+    private Hl7.Fhir.Model.DataType _Author;
 
     /// <summary>
-    /// When the annotation was made.
+    /// When the annotation was made
     /// </summary>
     [FhirElement("time", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? TimeElement
+    public Hl7.Fhir.Model.FhirDateTime TimeElement
     {
-      get
-      {
-        if(_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["time"]);
-        return _TimeElement;
-      }
-
-      set
-      {
-        if (_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("time");
-        _TimeElement = value;
-        OnPropertyChanged("TimeElement");
-      }
-
+      get { return _TimeElement; }
+      set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _TimeElement;
+    private Hl7.Fhir.Model.FhirDateTime _TimeElement;
 
     /// <summary>
     /// When the annotation was made
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Time
+    public string Time
     {
-      get => TimeElement?.Value;
+      get { return TimeElement != null ? TimeElement.Value : null; }
       set
       {
-        TimeElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          TimeElement = null;
+        else
+          TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Time");
       }
     }
 
     /// <summary>
-    /// The annotation  - text content (as markdown).
+    /// The annotation  - text content (as markdown)
     /// </summary>
     [FhirElement("text", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown TextElement
     {
-      get
-      {
-        if(_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["text"]);
-        return _TextElement!;
-      }
-
-      set
-      {
-        if (_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          Overflow.Remove("text");
-        _TextElement = value;
-        OnPropertyChanged("TextElement");
-      }
-
+      get { return _TextElement; }
+      set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown? _TextElement;
+    private Hl7.Fhir.Model.Markdown _TextElement;
 
     /// <summary>
     /// The annotation  - text content (as markdown)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Text
+    public string Text
     {
-      get => TextElement?.Value;
+      get { return TextElement != null ? TextElement.Value : null; }
       set
       {
-        TextElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
+        if (value == null)
+          TextElement = null;
+        else
+          TextElement = new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Text");
       }
     }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Annotation dest)
+      var dest = other as Annotation;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Author is not null) dest.Author = (Hl7.Fhir.Model.DataType)_Author.DeepCopyInternal();
-      if(_TimeElement is not null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)_TimeElement.DeepCopyInternal();
-      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.Markdown)_TextElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Author != null) dest.Author = (Hl7.Fhir.Model.DataType)Author.DeepCopy();
+      if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
+      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.Markdown)TextElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Annotation();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Annotation());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Annotation otherT) return false;
+      var otherT = other as Annotation;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Author, otherT._Author)) return false;
-      if(!comparer.Equals(_TimeElement, otherT._TimeElement)) return false;
-      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+      if( !DeepComparable.Matches(TimeElement, otherT.TimeElement)) return false;
+      if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Annotation;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+      if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
+      if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Author != null) yield return Author;
+        if (TimeElement != null) yield return TimeElement;
+        if (TextElement != null) yield return TextElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Author != null) yield return new ElementValue("author", Author);
+        if (TimeElement != null) yield return new ElementValue("time", TimeElement);
+        if (TextElement != null) yield return new ElementValue("text", TextElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "author":
-          if (_Author.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["author"];
-            return true;
-          }
-          value = _Author;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = Author;
+          return Author is not null;
         case "time":
-          if (_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["time"];
-            return true;
-          }
-          value = _TimeElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = TimeElement;
+          return TimeElement is not null;
         case "text":
-          if (_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          {
-            value = Overflow["text"];
-            return true;
-          }
-          value = _TextElement;
-          return (value as Hl7.Fhir.Model.Markdown) is not null;
+          value = TextElement;
+          return TextElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "author":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            Author = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["author"] = value;
-          }
-          else Author = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "time":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            TimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["time"] = value;
-          }
-          else TimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "text":
-          if (value is not (Hl7.Fhir.Model.Markdown or null))
-          {
-            TextElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-            Overflow["text"] = value;
-          }
-          else TextElement = (Hl7.Fhir.Model.Markdown?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Author is not null && !_Author.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("author",_Author);
-      if (_TimeElement is not null && !_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("time",_TimeElement);
-      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("text",_TextElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
+      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
     }
 
   }

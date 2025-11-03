@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,13 +51,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("RegulatedAuthorization","http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization")]
+  [FhirType("RegulatedAuthorization","http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization", IsResource=true)]
   public partial class RegulatedAuthorization : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "RegulatedAuthorization";
+    public override string TypeName { get { return "RegulatedAuthorization"; } }
 
     /// <summary>
     /// The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
@@ -71,1030 +67,635 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("RegulatedAuthorization.case", IsBackboneType=true)]
+    [FhirType("RegulatedAuthorization#Case", IsNestedType=true)]
+    [BackboneType("RegulatedAuthorization.case")]
     public partial class CaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "RegulatedAuthorization.case";
+      public override string TypeName { get { return "RegulatedAuthorization#Case"; } }
 
       /// <summary>
-      /// Identifier by which this case can be referenced.
+      /// Identifier by which this case can be referenced
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier? Identifier
+      public Hl7.Fhir.Model.Identifier Identifier
       {
-        get
-        {
-          if(_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
-          return _Identifier;
-        }
-
-        set
-        {
-          if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
-            Overflow.Remove("identifier");
-          _Identifier = value;
-          OnPropertyChanged("Identifier");
-        }
-
+        get { return _Identifier; }
+        set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier? _Identifier;
+      private Hl7.Fhir.Model.Identifier _Identifier;
 
       /// <summary>
-      /// The defining type of case.
+      /// The defining type of case
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("RegulatedAuthorizationCaseType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Type
+      public Hl7.Fhir.Model.CodeableConcept Type
       {
-        get
-        {
-          if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type;
-        }
-
-        set
-        {
-          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("type");
-          _Type = value;
-          OnPropertyChanged("Type");
-        }
-
+        get { return _Type; }
+        set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Type;
+      private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The status associated with the case.
+      /// The status associated with the case
       /// </summary>
       [FhirElement("status", InSummary=true, Order=60)]
       [Binding("PublicationStatus")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Status
+      public Hl7.Fhir.Model.CodeableConcept Status
       {
-        get
-        {
-          if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-          return _Status;
-        }
-
-        set
-        {
-          if (_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("status");
-          _Status = value;
-          OnPropertyChanged("Status");
-        }
-
+        get { return _Status; }
+        set { _Status = value; OnPropertyChanged("Status"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Status;
+      private Hl7.Fhir.Model.CodeableConcept _Status;
 
       /// <summary>
-      /// Relevant date for this case.
+      /// Relevant date for this case
       /// </summary>
       [FhirElement("date", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Date
+      public Hl7.Fhir.Model.DataType Date
       {
-        get
-        {
-          if(_Date.InOverflow<DynamicDataType>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["date"]);
-          return _Date;
-        }
-
-        set
-        {
-          if (_Date.InOverflow<DynamicDataType>())
-            Overflow.Remove("date");
-          _Date = value;
-          OnPropertyChanged("Date");
-        }
-
+        get { return _Date; }
+        set { _Date = value; OnPropertyChanged("Date"); }
       }
 
-      private Hl7.Fhir.Model.DataType? _Date;
+      private Hl7.Fhir.Model.DataType _Date;
 
       /// <summary>
-      /// Applications submitted to obtain a regulated authorization. Steps within the longer running case or procedure.
+      /// Applications submitted to obtain a regulated authorization. Steps within the longer running case or procedure
       /// </summary>
       [FhirElement("application", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> Application
       {
-        get
-        {
-          if(_Application.InOverflow<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>), Overflow["application"]);
-          return _Application ??= [];
-        }
-
-        set
-        {
-          if (_Application.InOverflow<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>())
-            Overflow.Remove("application");
-          _Application = value;
-          OnPropertyChanged("Application");
-        }
-
+        get { if(_Application==null) _Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(); return _Application; }
+        set { _Application = value; OnPropertyChanged("Application"); }
       }
 
-      private List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>? _Application;
+      private List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> _Application;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not CaseComponent dest)
+        var dest = other as CaseComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
-        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
-        if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
-        if(_Date is not null) dest.Date = (Hl7.Fhir.Model.DataType)_Date.DeepCopyInternal();
-        if(_Application is not null) dest.Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(_Application.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
+        if(Date != null) dest.Date = (Hl7.Fhir.Model.DataType)Date.DeepCopy();
+        if(Application.Any()) dest.Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(Application.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new CaseComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new CaseComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not CaseComponent otherT) return false;
+        var otherT = other as CaseComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
-        if(!comparer.Equals(_Type, otherT._Type)) return false;
-        if(!comparer.Equals(_Status, otherT._Status)) return false;
-        if(!comparer.Equals(_Date, otherT._Date)) return false;
-        if(!comparer.ListEquals(_Application, otherT._Application)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+        if( !DeepComparable.Matches(Status, otherT.Status)) return false;
+        if( !DeepComparable.Matches(Date, otherT.Date)) return false;
+        if( !DeepComparable.Matches(Application, otherT.Application)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as CaseComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+        if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
+        if( !DeepComparable.IsExactly(Date, otherT.Date)) return false;
+        if( !DeepComparable.IsExactly(Application, otherT.Application)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Identifier != null) yield return Identifier;
+          if (Type != null) yield return Type;
+          if (Status != null) yield return Status;
+          if (Date != null) yield return Date;
+          foreach (var elem in Application) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Identifier != null) yield return new ElementValue("identifier", Identifier);
+          if (Type != null) yield return new ElementValue("type", Type);
+          if (Status != null) yield return new ElementValue("status", Status);
+          if (Date != null) yield return new ElementValue("date", Date);
+          foreach (var elem in Application) { if (elem != null) yield return new ElementValue("application", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "identifier":
-            if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
-            {
-              value = Overflow["identifier"];
-              return true;
-            }
-            value = _Identifier;
-            return (value as Hl7.Fhir.Model.Identifier) is not null;
+            value = Identifier;
+            return Identifier is not null;
           case "type":
-            if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["type"];
-              return true;
-            }
-            value = _Type;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Type;
+            return Type is not null;
           case "status":
-            if (_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["status"];
-              return true;
-            }
-            value = _Status;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Status;
+            return Status is not null;
           case "date":
-            if (_Date.InOverflow<DynamicDataType>())
-            {
-              value = Overflow["date"];
-              return true;
-            }
-            value = _Date;
-            return (value as Hl7.Fhir.Model.DataType) is not null;
+            value = Date;
+            return Date is not null;
           case "application":
-            if (_Application.InOverflow<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>())
-            {
-              value = Overflow["application"];
-              return true;
-            }
-            value = _Application;
-            return (value as List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>)?.Any() is true;
+            value = Application;
+            return Application?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "identifier":
-            if (value is not (Hl7.Fhir.Model.Identifier or null))
-            {
-              Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
-              Overflow["identifier"] = value;
-            }
-            else Identifier = (Hl7.Fhir.Model.Identifier?)value;
-            return this;
-          case "type":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["type"] = value;
-            }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "status":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["status"] = value;
-            }
-            else Status = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "date":
-            if (value is not (Hl7.Fhir.Model.DataType or null))
-            {
-              Date = OverflowNull<DynamicDataType>.INSTANCE;
-              Overflow["date"] = value;
-            }
-            else Date = (Hl7.Fhir.Model.DataType?)value;
-            return this;
-          case "application":
-            if (value is not (List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> or null))
-            {
-              Application = OverflowNull<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>.INSTANCE;
-              Overflow["application"] = value;
-            }
-            else Application = (List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
-        if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
-        if (_Date is not null && !_Date.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("date",_Date);
-        if (_Application?.Any() is true && !_Application.InOverflow<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>()) yield return new KeyValuePair<string,object>("application",_Application);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+        if (Date is not null) yield return new KeyValuePair<string,object>("date",Date);
+        if (Application?.Any() == true) yield return new KeyValuePair<string,object>("application",Application);
       }
 
     }
 
     /// <summary>
-    /// Business identifier for the authorization, typically assigned by the authorizing body.
+    /// Business identifier for the authorization, typically assigned by the authorizing body
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// The product type, treatment, facility or activity that is being authorized.
+    /// The product type, treatment, facility or activity that is being authorized
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("MedicinalProductDefinition","BiologicallyDerivedProduct","NutritionProduct","PackagedProductDefinition","SubstanceDefinition","DeviceDefinition","ResearchStudy","ActivityDefinition","PlanDefinition","ObservationDefinition","Practitioner","Organization","Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get
-      {
-        if(_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
-        return _Subject ??= [];
-      }
-
-      set
-      {
-        if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("subject");
-        _Subject = value;
-        OnPropertyChanged("Subject");
-      }
-
+      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
 
     /// <summary>
-    /// Overall type of this authorization, for example drug marketing approval, orphan drug designation.
+    /// Overall type of this authorization, for example drug marketing approval, orphan drug designation
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
     [Binding("RegulatedAuthorizationType")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Type
+    public Hl7.Fhir.Model.CodeableConcept Type
     {
-      get
-      {
-        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-        return _Type;
-      }
-
-      set
-      {
-        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("type");
-        _Type = value;
-        OnPropertyChanged("Type");
-      }
-
+      get { return _Type; }
+      set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Type;
+    private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// General textual supporting information.
+    /// General textual supporting information
     /// </summary>
     [FhirElement("description", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown? DescriptionElement
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get
-      {
-        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["description"]);
-        return _DescriptionElement;
-      }
-
-      set
-      {
-        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          Overflow.Remove("description");
-        _DescriptionElement = value;
-        OnPropertyChanged("DescriptionElement");
-      }
-
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
 
     /// <summary>
     /// General textual supporting information
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Description
+    public string Description
     {
-      get => DescriptionElement?.Value;
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
       set
       {
-        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.Markdown(value);
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
 
     /// <summary>
-    /// The territory in which the authorization has been granted.
+    /// The territory in which the authorization has been granted
     /// </summary>
     [FhirElement("region", InSummary=true, Order=130)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
     {
-      get
-      {
-        if(_Region.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["region"]);
-        return _Region ??= [];
-      }
-
-      set
-      {
-        if (_Region.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("region");
-        _Region = value;
-        OnPropertyChanged("Region");
-      }
-
+      get { if(_Region==null) _Region = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Region; }
+      set { _Region = value; OnPropertyChanged("Region"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Region;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Region;
 
     /// <summary>
-    /// The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications.
+    /// The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
     [Binding("PublicationStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Status
+    public Hl7.Fhir.Model.CodeableConcept Status
     {
-      get
-      {
-        if(_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
-        return _Status;
-      }
-
-      set
-      {
-        if (_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("status");
-        _Status = value;
-        OnPropertyChanged("Status");
-      }
-
+      get { return _Status; }
+      set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Status;
+    private Hl7.Fhir.Model.CodeableConcept _Status;
 
     /// <summary>
-    /// The date at which the current status was assigned.
+    /// The date at which the current status was assigned
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
+    public Hl7.Fhir.Model.FhirDateTime StatusDateElement
     {
-      get
-      {
-        if(_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["statusDate"]);
-        return _StatusDateElement;
-      }
-
-      set
-      {
-        if (_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("statusDate");
-        _StatusDateElement = value;
-        OnPropertyChanged("StatusDateElement");
-      }
-
+      get { return _StatusDateElement; }
+      set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _StatusDateElement;
+    private Hl7.Fhir.Model.FhirDateTime _StatusDateElement;
 
     /// <summary>
     /// The date at which the current status was assigned
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? StatusDate
+    public string StatusDate
     {
-      get => StatusDateElement?.Value;
+      get { return StatusDateElement != null ? StatusDateElement.Value : null; }
       set
       {
-        StatusDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          StatusDateElement = null;
+        else
+          StatusDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
 
     /// <summary>
-    /// The time period in which the regulatory approval etc. is in effect, e.g. a Marketing Authorization includes the date of authorization and/or expiration date.
+    /// The time period in which the regulatory approval etc. is in effect, e.g. a Marketing Authorization includes the date of authorization and/or expiration date
     /// </summary>
     [FhirElement("validityPeriod", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Period? ValidityPeriod
+    public Hl7.Fhir.Model.Period ValidityPeriod
     {
-      get
-      {
-        if(_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["validityPeriod"]);
-        return _ValidityPeriod;
-      }
-
-      set
-      {
-        if (_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>())
-          Overflow.Remove("validityPeriod");
-        _ValidityPeriod = value;
-        OnPropertyChanged("ValidityPeriod");
-      }
-
+      get { return _ValidityPeriod; }
+      set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period? _ValidityPeriod;
+    private Hl7.Fhir.Model.Period _ValidityPeriod;
 
     /// <summary>
-    /// Condition for which the use of the regulated product applies.
+    /// Condition for which the use of the regulated product applies
     /// </summary>
     [FhirElement("indication", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference? Indication
+    public Hl7.Fhir.Model.CodeableReference Indication
     {
-      get
-      {
-        if(_Indication.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["indication"]);
-        return _Indication;
-      }
-
-      set
-      {
-        if (_Indication.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-          Overflow.Remove("indication");
-        _Indication = value;
-        OnPropertyChanged("Indication");
-      }
-
+      get { return _Indication; }
+      set { _Indication = value; OnPropertyChanged("Indication"); }
     }
 
-    private Hl7.Fhir.Model.CodeableReference? _Indication;
+    private Hl7.Fhir.Model.CodeableReference _Indication;
 
     /// <summary>
-    /// The intended use of the product, e.g. prevention, treatment.
+    /// The intended use of the product, e.g. prevention, treatment
     /// </summary>
     [FhirElement("intendedUse", InSummary=true, Order=180)]
     [Binding("ProductIntendedUse")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? IntendedUse
+    public Hl7.Fhir.Model.CodeableConcept IntendedUse
     {
-      get
-      {
-        if(_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["intendedUse"]);
-        return _IntendedUse;
-      }
-
-      set
-      {
-        if (_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("intendedUse");
-        _IntendedUse = value;
-        OnPropertyChanged("IntendedUse");
-      }
-
+      get { return _IntendedUse; }
+      set { _IntendedUse = value; OnPropertyChanged("IntendedUse"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _IntendedUse;
+    private Hl7.Fhir.Model.CodeableConcept _IntendedUse;
 
     /// <summary>
-    /// The legal/regulatory framework or reasons under which this authorization is granted.
+    /// The legal/regulatory framework or reasons under which this authorization is granted
     /// </summary>
     [FhirElement("basis", InSummary=true, Order=190)]
     [Binding("RegulatedAuthorizationBasis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Basis
     {
-      get
-      {
-        if(_Basis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["basis"]);
-        return _Basis ??= [];
-      }
-
-      set
-      {
-        if (_Basis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("basis");
-        _Basis = value;
-        OnPropertyChanged("Basis");
-      }
-
+      get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Basis; }
+      set { _Basis = value; OnPropertyChanged("Basis"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Basis;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Basis;
 
     /// <summary>
-    /// The organization that has been granted this authorization, by the regulator.
+    /// The organization that has been granted this authorization, by the regulator
     /// </summary>
     [FhirElement("holder", InSummary=true, Order=200)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Holder
+    public Hl7.Fhir.Model.ResourceReference Holder
     {
-      get
-      {
-        if(_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["holder"]);
-        return _Holder;
-      }
-
-      set
-      {
-        if (_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("holder");
-        _Holder = value;
-        OnPropertyChanged("Holder");
-      }
-
+      get { return _Holder; }
+      set { _Holder = value; OnPropertyChanged("Holder"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Holder;
+    private Hl7.Fhir.Model.ResourceReference _Holder;
 
     /// <summary>
-    /// The regulatory authority or authorizing body granting the authorization.
+    /// The regulatory authority or authorizing body granting the authorization
     /// </summary>
     [FhirElement("regulator", InSummary=true, Order=210)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Regulator
+    public Hl7.Fhir.Model.ResourceReference Regulator
     {
-      get
-      {
-        if(_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["regulator"]);
-        return _Regulator;
-      }
-
-      set
-      {
-        if (_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("regulator");
-        _Regulator = value;
-        OnPropertyChanged("Regulator");
-      }
-
+      get { return _Regulator; }
+      set { _Regulator = value; OnPropertyChanged("Regulator"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Regulator;
+    private Hl7.Fhir.Model.ResourceReference _Regulator;
 
     /// <summary>
-    /// The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page).
+    /// The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
     /// </summary>
     [FhirElement("case", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent? Case
+    public Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent Case
     {
-      get
-      {
-        if(_Case.InOverflow<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent), Overflow["case"]);
-        return _Case;
-      }
-
-      set
-      {
-        if (_Case.InOverflow<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>())
-          Overflow.Remove("case");
-        _Case = value;
-        OnPropertyChanged("Case");
-      }
-
+      get { return _Case; }
+      set { _Case = value; OnPropertyChanged("Case"); }
     }
 
-    private Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent? _Case;
+    private Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent _Case;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not RegulatedAuthorization dest)
+      var dest = other as RegulatedAuthorization;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
-      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
-      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
-      if(_Region is not null) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(_Region.DeepCopyInternal());
-      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
-      if(_StatusDateElement is not null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)_StatusDateElement.DeepCopyInternal();
-      if(_ValidityPeriod is not null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)_ValidityPeriod.DeepCopyInternal();
-      if(_Indication is not null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)_Indication.DeepCopyInternal();
-      if(_IntendedUse is not null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)_IntendedUse.DeepCopyInternal();
-      if(_Basis is not null) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(_Basis.DeepCopyInternal());
-      if(_Holder is not null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)_Holder.DeepCopyInternal();
-      if(_Regulator is not null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)_Regulator.DeepCopyInternal();
-      if(_Case is not null) dest.Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)_Case.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+      if(Region.Any()) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopy());
+      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
+      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
+      if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
+      if(Indication != null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)Indication.DeepCopy();
+      if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopy();
+      if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopy());
+      if(Holder != null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)Holder.DeepCopy();
+      if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopy();
+      if(Case != null) dest.Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)Case.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new RegulatedAuthorization();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new RegulatedAuthorization());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not RegulatedAuthorization otherT) return false;
+      var otherT = other as RegulatedAuthorization;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
-      if(!comparer.Equals(_Type, otherT._Type)) return false;
-      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
-      if(!comparer.ListEquals(_Region, otherT._Region)) return false;
-      if(!comparer.Equals(_Status, otherT._Status)) return false;
-      if(!comparer.Equals(_StatusDateElement, otherT._StatusDateElement)) return false;
-      if(!comparer.Equals(_ValidityPeriod, otherT._ValidityPeriod)) return false;
-      if(!comparer.Equals(_Indication, otherT._Indication)) return false;
-      if(!comparer.Equals(_IntendedUse, otherT._IntendedUse)) return false;
-      if(!comparer.ListEquals(_Basis, otherT._Basis)) return false;
-      if(!comparer.Equals(_Holder, otherT._Holder)) return false;
-      if(!comparer.Equals(_Regulator, otherT._Regulator)) return false;
-      if(!comparer.Equals(_Case, otherT._Case)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.Matches(Region, otherT.Region)) return false;
+      if( !DeepComparable.Matches(Status, otherT.Status)) return false;
+      if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
+      if( !DeepComparable.Matches(ValidityPeriod, otherT.ValidityPeriod)) return false;
+      if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+      if( !DeepComparable.Matches(IntendedUse, otherT.IntendedUse)) return false;
+      if( !DeepComparable.Matches(Basis, otherT.Basis)) return false;
+      if( !DeepComparable.Matches(Holder, otherT.Holder)) return false;
+      if( !DeepComparable.Matches(Regulator, otherT.Regulator)) return false;
+      if( !DeepComparable.Matches(Case, otherT.Case)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as RegulatedAuthorization;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.IsExactly(Region, otherT.Region)) return false;
+      if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
+      if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
+      if( !DeepComparable.IsExactly(ValidityPeriod, otherT.ValidityPeriod)) return false;
+      if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+      if( !DeepComparable.IsExactly(IntendedUse, otherT.IntendedUse)) return false;
+      if( !DeepComparable.IsExactly(Basis, otherT.Basis)) return false;
+      if( !DeepComparable.IsExactly(Holder, otherT.Holder)) return false;
+      if( !DeepComparable.IsExactly(Regulator, otherT.Regulator)) return false;
+      if( !DeepComparable.IsExactly(Case, otherT.Case)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        foreach (var elem in Subject) { if (elem != null) yield return elem; }
+        if (Type != null) yield return Type;
+        if (DescriptionElement != null) yield return DescriptionElement;
+        foreach (var elem in Region) { if (elem != null) yield return elem; }
+        if (Status != null) yield return Status;
+        if (StatusDateElement != null) yield return StatusDateElement;
+        if (ValidityPeriod != null) yield return ValidityPeriod;
+        if (Indication != null) yield return Indication;
+        if (IntendedUse != null) yield return IntendedUse;
+        foreach (var elem in Basis) { if (elem != null) yield return elem; }
+        if (Holder != null) yield return Holder;
+        if (Regulator != null) yield return Regulator;
+        if (Case != null) yield return Case;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+        if (Type != null) yield return new ElementValue("type", Type);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+        foreach (var elem in Region) { if (elem != null) yield return new ElementValue("region", elem); }
+        if (Status != null) yield return new ElementValue("status", Status);
+        if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
+        if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
+        if (Indication != null) yield return new ElementValue("indication", Indication);
+        if (IntendedUse != null) yield return new ElementValue("intendedUse", IntendedUse);
+        foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
+        if (Holder != null) yield return new ElementValue("holder", Holder);
+        if (Regulator != null) yield return new ElementValue("regulator", Regulator);
+        if (Case != null) yield return new ElementValue("case", Case);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "subject":
-          if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["subject"];
-            return true;
-          }
-          value = _Subject;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Subject;
+          return Subject?.Any() == true;
         case "type":
-          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["type"];
-            return true;
-          }
-          value = _Type;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Type;
+          return Type is not null;
         case "description":
-          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          {
-            value = Overflow["description"];
-            return true;
-          }
-          value = _DescriptionElement;
-          return (value as Hl7.Fhir.Model.Markdown) is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "region":
-          if (_Region.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["region"];
-            return true;
-          }
-          value = _Region;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Region;
+          return Region?.Any() == true;
         case "status":
-          if (_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _Status;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Status;
+          return Status is not null;
         case "statusDate":
-          if (_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["statusDate"];
-            return true;
-          }
-          value = _StatusDateElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = StatusDateElement;
+          return StatusDateElement is not null;
         case "validityPeriod":
-          if (_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>())
-          {
-            value = Overflow["validityPeriod"];
-            return true;
-          }
-          value = _ValidityPeriod;
-          return (value as Hl7.Fhir.Model.Period) is not null;
+          value = ValidityPeriod;
+          return ValidityPeriod is not null;
         case "indication":
-          if (_Indication.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-          {
-            value = Overflow["indication"];
-            return true;
-          }
-          value = _Indication;
-          return (value as Hl7.Fhir.Model.CodeableReference) is not null;
+          value = Indication;
+          return Indication is not null;
         case "intendedUse":
-          if (_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["intendedUse"];
-            return true;
-          }
-          value = _IntendedUse;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = IntendedUse;
+          return IntendedUse is not null;
         case "basis":
-          if (_Basis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["basis"];
-            return true;
-          }
-          value = _Basis;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Basis;
+          return Basis?.Any() == true;
         case "holder":
-          if (_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["holder"];
-            return true;
-          }
-          value = _Holder;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Holder;
+          return Holder is not null;
         case "regulator":
-          if (_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["regulator"];
-            return true;
-          }
-          value = _Regulator;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Regulator;
+          return Regulator is not null;
         case "case":
-          if (_Case.InOverflow<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>())
-          {
-            value = Overflow["case"];
-            return true;
-          }
-          value = _Case;
-          return (value as Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent) is not null;
+          value = Case;
+          return Case is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "subject":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Subject = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["subject"] = value;
-          }
-          else Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "type":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["type"] = value;
-          }
-          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "description":
-          if (value is not (Hl7.Fhir.Model.Markdown or null))
-          {
-            DescriptionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-            Overflow["description"] = value;
-          }
-          else DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
-          return this;
-        case "region":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Region = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["region"] = value;
-          }
-          else Region = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "status":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Status = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else Status = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "statusDate":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            StatusDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["statusDate"] = value;
-          }
-          else StatusDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "validityPeriod":
-          if (value is not (Hl7.Fhir.Model.Period or null))
-          {
-            ValidityPeriod = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
-            Overflow["validityPeriod"] = value;
-          }
-          else ValidityPeriod = (Hl7.Fhir.Model.Period?)value;
-          return this;
-        case "indication":
-          if (value is not (Hl7.Fhir.Model.CodeableReference or null))
-          {
-            Indication = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
-            Overflow["indication"] = value;
-          }
-          else Indication = (Hl7.Fhir.Model.CodeableReference?)value;
-          return this;
-        case "intendedUse":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            IntendedUse = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["intendedUse"] = value;
-          }
-          else IntendedUse = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "basis":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Basis = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["basis"] = value;
-          }
-          else Basis = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "holder":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Holder = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["holder"] = value;
-          }
-          else Holder = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "regulator":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Regulator = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["regulator"] = value;
-          }
-          else Regulator = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "case":
-          if (value is not (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent or null))
-          {
-            Case = OverflowNull<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>.INSTANCE;
-            Overflow["case"] = value;
-          }
-          else Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
-      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (_Region?.Any() is true && !_Region.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("region",_Region);
-      if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
-      if (_StatusDateElement is not null && !_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
-      if (_ValidityPeriod is not null && !_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
-      if (_Indication is not null && !_Indication.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("indication",_Indication);
-      if (_IntendedUse is not null && !_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("intendedUse",_IntendedUse);
-      if (_Basis?.Any() is true && !_Basis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("basis",_Basis);
-      if (_Holder is not null && !_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("holder",_Holder);
-      if (_Regulator is not null && !_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("regulator",_Regulator);
-      if (_Case is not null && !_Case.InOverflow<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>()) yield return new KeyValuePair<string,object>("case",_Case);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Region?.Any() == true) yield return new KeyValuePair<string,object>("region",Region);
+      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
+      if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+      if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
+      if (IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",IntendedUse);
+      if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
+      if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
+      if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
+      if (Case is not null) yield return new KeyValuePair<string,object>("case",Case);
     }
 
   }

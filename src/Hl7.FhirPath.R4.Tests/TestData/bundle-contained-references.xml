@@ -41,6 +41,10 @@
 						<id value="orgY" />
 					</Organization>
 				</contained>
+				<managingOrganization>
+					<!-- reference to the contained organization -->
+					<reference value="#orgY"/>
+				</managingOrganization>
 				<generalPractitioner>
 					<!-- reference to the contained organization -->
 					<reference value="#orgX"/>
@@ -49,10 +53,6 @@
 					<!-- reference to the contained organization -->
 					<reference value="#orgY"/>
 				</generalPractitioner>
-				<managingOrganization>
-					<!-- reference to the contained organization -->
-					<reference value="#orgY"/>
-				</managingOrganization>
 			</Patient>
 		</resource>
 	</entry>

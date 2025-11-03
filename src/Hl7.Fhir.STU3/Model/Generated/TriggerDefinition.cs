@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -61,7 +57,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "TriggerDefinition";
+    public override string TypeName { get { return "TriggerDefinition"; } }
 
     /// <summary>
     /// The type of trigger
@@ -116,32 +112,20 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended.
+    /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(Code))]
     [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement
     {
-      get
-      {
-        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
-        return _TypeElement!;
-      }
-
-      set
-      {
-        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
-          Overflow.Remove("type");
-        _TypeElement = value;
-        OnPropertyChanged("TypeElement");
-      }
-
+      get { return _TypeElement; }
+      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? _TypeElement;
+    private Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> _TypeElement;
 
     /// <summary>
     /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended
@@ -150,236 +134,183 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TriggerDefinition.TriggerType? Type
     {
-      get => TypeElement?.Value;
+      get { return TypeElement != null ? TypeElement.Value : null; }
       set
       {
-        TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
+        if (value == null)
+          TypeElement = null;
+        else
+          TypeElement = new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
         OnPropertyChanged("Type");
       }
     }
 
     /// <summary>
-    /// Triggering event name.
+    /// Triggering event name
     /// </summary>
     [FhirElement("eventName", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? EventNameElement
+    public Hl7.Fhir.Model.FhirString EventNameElement
     {
-      get
-      {
-        if(_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["eventName"]);
-        return _EventNameElement;
-      }
-
-      set
-      {
-        if (_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("eventName");
-        _EventNameElement = value;
-        OnPropertyChanged("EventNameElement");
-      }
-
+      get { return _EventNameElement; }
+      set { _EventNameElement = value; OnPropertyChanged("EventNameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _EventNameElement;
+    private Hl7.Fhir.Model.FhirString _EventNameElement;
 
     /// <summary>
     /// Triggering event name
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? EventName
+    public string EventName
     {
-      get => EventNameElement?.Value;
+      get { return EventNameElement != null ? EventNameElement.Value : null; }
       set
       {
-        EventNameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          EventNameElement = null;
+        else
+          EventNameElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("EventName");
       }
     }
 
     /// <summary>
-    /// Timing of the event.
+    /// Timing of the event
     /// </summary>
     [FhirElement("eventTiming", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Schedule")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? EventTiming
+    public Hl7.Fhir.Model.DataType EventTiming
     {
-      get
-      {
-        if(_EventTiming.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["eventTiming"]);
-        return _EventTiming;
-      }
-
-      set
-      {
-        if (_EventTiming.InOverflow<DynamicDataType>())
-          Overflow.Remove("eventTiming");
-        _EventTiming = value;
-        OnPropertyChanged("EventTiming");
-      }
-
+      get { return _EventTiming; }
+      set { _EventTiming = value; OnPropertyChanged("EventTiming"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _EventTiming;
+    private Hl7.Fhir.Model.DataType _EventTiming;
 
     /// <summary>
-    /// Triggering data of the event.
+    /// Triggering data of the event
     /// </summary>
     [FhirElement("eventData", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.DataRequirement? EventData
+    public Hl7.Fhir.Model.DataRequirement EventData
     {
-      get
-      {
-        if(_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataRequirement), Overflow["eventData"]);
-        return _EventData;
-      }
-
-      set
-      {
-        if (_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
-          Overflow.Remove("eventData");
-        _EventData = value;
-        OnPropertyChanged("EventData");
-      }
-
+      get { return _EventData; }
+      set { _EventData = value; OnPropertyChanged("EventData"); }
     }
 
-    private Hl7.Fhir.Model.DataRequirement? _EventData;
+    private Hl7.Fhir.Model.DataRequirement _EventData;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not TriggerDefinition dest)
+      var dest = other as TriggerDefinition;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)_TypeElement.DeepCopyInternal();
-      if(_EventNameElement is not null) dest.EventNameElement = (Hl7.Fhir.Model.FhirString)_EventNameElement.DeepCopyInternal();
-      if(_EventTiming is not null) dest.EventTiming = (Hl7.Fhir.Model.DataType)_EventTiming.DeepCopyInternal();
-      if(_EventData is not null) dest.EventData = (Hl7.Fhir.Model.DataRequirement)_EventData.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopy();
+      if(EventNameElement != null) dest.EventNameElement = (Hl7.Fhir.Model.FhirString)EventNameElement.DeepCopy();
+      if(EventTiming != null) dest.EventTiming = (Hl7.Fhir.Model.DataType)EventTiming.DeepCopy();
+      if(EventData != null) dest.EventData = (Hl7.Fhir.Model.DataRequirement)EventData.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new TriggerDefinition();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new TriggerDefinition());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not TriggerDefinition otherT) return false;
+      var otherT = other as TriggerDefinition;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
-      if(!comparer.Equals(_EventNameElement, otherT._EventNameElement)) return false;
-      if(!comparer.Equals(_EventTiming, otherT._EventTiming)) return false;
-      if(!comparer.Equals(_EventData, otherT._EventData)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+      if( !DeepComparable.Matches(EventNameElement, otherT.EventNameElement)) return false;
+      if( !DeepComparable.Matches(EventTiming, otherT.EventTiming)) return false;
+      if( !DeepComparable.Matches(EventData, otherT.EventData)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as TriggerDefinition;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+      if( !DeepComparable.IsExactly(EventNameElement, otherT.EventNameElement)) return false;
+      if( !DeepComparable.IsExactly(EventTiming, otherT.EventTiming)) return false;
+      if( !DeepComparable.IsExactly(EventData, otherT.EventData)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (TypeElement != null) yield return TypeElement;
+        if (EventNameElement != null) yield return EventNameElement;
+        if (EventTiming != null) yield return EventTiming;
+        if (EventData != null) yield return EventData;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+        if (EventNameElement != null) yield return new ElementValue("eventName", EventNameElement);
+        if (EventTiming != null) yield return new ElementValue("eventTiming", EventTiming);
+        if (EventData != null) yield return new ElementValue("eventData", EventData);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "type":
-          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
-          {
-            value = Overflow["type"];
-            return true;
-          }
-          value = _TypeElement;
-          return (value as Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>) is not null;
+          value = TypeElement;
+          return TypeElement is not null;
         case "eventName":
-          if (_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["eventName"];
-            return true;
-          }
-          value = _EventNameElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = EventNameElement;
+          return EventNameElement is not null;
         case "eventTiming":
-          if (_EventTiming.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["eventTiming"];
-            return true;
-          }
-          value = _EventTiming;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = EventTiming;
+          return EventTiming is not null;
         case "eventData":
-          if (_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
-          {
-            value = Overflow["eventData"];
-            return true;
-          }
-          value = _EventData;
-          return (value as Hl7.Fhir.Model.DataRequirement) is not null;
+          value = EventData;
+          return EventData is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "type":
-          if (value is not (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> or null))
-          {
-            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.INSTANCE;
-            Overflow["type"] = value;
-          }
-          else TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value!;
-          return this;
-        case "eventName":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            EventNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["eventName"] = value;
-          }
-          else EventNameElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "eventTiming":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            EventTiming = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["eventTiming"] = value;
-          }
-          else EventTiming = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "eventData":
-          if (value is not (Hl7.Fhir.Model.DataRequirement or null))
-          {
-            EventData = OverflowNull<Hl7.Fhir.Model.DataRequirement>.INSTANCE;
-            Overflow["eventData"] = value;
-          }
-          else EventData = (Hl7.Fhir.Model.DataRequirement?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_EventNameElement is not null && !_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("eventName",_EventNameElement);
-      if (_EventTiming is not null && !_EventTiming.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("eventTiming",_EventTiming);
-      if (_EventData is not null && !_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>()) yield return new KeyValuePair<string,object>("eventData",_EventData);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",EventNameElement);
+      if (EventTiming is not null) yield return new KeyValuePair<string,object>("eventTiming",EventTiming);
+      if (EventData is not null) yield return new KeyValuePair<string,object>("eventData",EventData);
     }
 
   }

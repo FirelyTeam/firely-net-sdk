@@ -10,9 +10,13 @@
 
 using Hl7.Fhir.Model;
 
-namespace Hl7.Fhir.Serialization;
-
-public class FhirJsonSerializer() : BaseFhirJsonSerializer(ModelInfo.ModelInspector)
+namespace Hl7.Fhir.Serialization
 {
-    public static readonly FhirJsonSerializer Default = new();
+    public class FhirJsonSerializer : CommonFhirJsonSerializer
+    {
+        public FhirJsonSerializer(SerializerSettings? settings = null) : base(ModelInfo.ModelInspector, settings)
+        {
+        }
+    }
 }
+#nullable restore

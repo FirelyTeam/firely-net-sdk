@@ -64,7 +64,11 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         #region IConformanceSource
-        
+        // Obsoleted since 2022-11-21, EK
+        [Obsolete("ZipSource itself implements IConformanceSource, use that implementation instead of this property.")]
+        public IConformanceSource Source => this;
+
+
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null) =>
             FileSource.ListResourceUris(filter?.GetLiteral());
         public IEnumerable<ConceptMap> FindConceptMaps(string? sourceUri = null, string? targetUri = null) =>

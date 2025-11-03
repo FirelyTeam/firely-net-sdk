@@ -191,6 +191,10 @@ namespace Hl7.FhirPath.Parser
             from _ in Parse.Char('$')
             from name in Parse.String("this").XOr(Parse.String("index")).Or(Parse.String("total")).Text()
             select name;
+
+        [Obsolete("This lexer is no longer used by the fhirpath parser as it processes the tokens correctly", false)]
+        public static readonly Parser<string> Quantity =
+           Parse.Regex(P.Quantity.QUANTITYREGEX);
     }
 
 

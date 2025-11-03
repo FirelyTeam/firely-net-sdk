@@ -6,15 +6,15 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.FhirPath.Functions;
 using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
 using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
@@ -33,24 +33,24 @@ public static class SymbolTableInit
         t.Add("exists", (IEnumerable<object> f) => f.Any());
 
         t.Add("count", (IEnumerable<object> f) => f.Count());
-        t.Add("trace", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx)
+        t.Add("trace", (IEnumerable<ITypedElement> f, string name, EvaluationContext ctx)
             => f.Trace(name, ctx));
 
-        t.Add("allTrue", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is true));
-        t.Add("anyTrue", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is true));
-        t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is false));
-        t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is false));
-        t.Add("combine", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.Concat(r));
-        t.Add("binary.|", (object _, IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
-        t.Add("union", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
-        t.Add("binary.contains", (object _, IEnumerable<PocoNode> a, PocoNode b) => a.Contains(b));
-        t.Add("binary.in", (object _, PocoNode a, IEnumerable<PocoNode> b) => b.Contains(a));
-        t.Add("distinct", (IEnumerable<PocoNode> f) => f.Distinct());
-        t.Add("isDistinct", (IEnumerable<PocoNode> f) => f.IsDistinct());
-        t.Add("subsetOf", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => f.SubsetOf(a));
-        t.Add("supersetOf", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => a.SubsetOf(f));
-        t.Add("intersect", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => f.Intersect(a));
-        t.Add("exclude", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => f.Exclude(a));
+        t.Add("allTrue", (IEnumerable<ITypedElement> f) => f.All(e => e.Value as bool? == true));
+        t.Add("anyTrue", (IEnumerable<ITypedElement> f) => f.Any(e => e.Value as bool? == true));
+        t.Add("allFalse", (IEnumerable<ITypedElement> f) => f.All(e => e.Value as bool? == false));
+        t.Add("anyFalse", (IEnumerable<ITypedElement> f) => f.Any(e => e.Value as bool? == false));
+        t.Add("combine", (IEnumerable<ITypedElement> l, IEnumerable<ITypedElement> r) => l.Concat(r));
+        t.Add("binary.|", (object _, IEnumerable<ITypedElement> l, IEnumerable<ITypedElement> r) => l.DistinctUnion(r));
+        t.Add("union", (IEnumerable<ITypedElement> l, IEnumerable<ITypedElement> r) => l.DistinctUnion(r));
+        t.Add("binary.contains", (object _, IEnumerable<ITypedElement> a, ITypedElement b) => a.Contains(b));
+        t.Add("binary.in", (object _, ITypedElement a, IEnumerable<ITypedElement> b) => b.Contains(a));
+        t.Add("distinct", (IEnumerable<ITypedElement> f) => f.Distinct());
+        t.Add("isDistinct", (IEnumerable<ITypedElement> f) => f.IsDistinct());
+        t.Add("subsetOf", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => f.SubsetOf(a));
+        t.Add("supersetOf", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => a.SubsetOf(f));
+        t.Add("intersect", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => f.Intersect(a));
+        t.Add("exclude", (IEnumerable<ITypedElement> f, IEnumerable<ITypedElement> a) => f.Exclude(a));
 
         t.Add("today", (object _) => P.Date.Today());
         t.Add("now", (object _) => P.DateTime.Now());
@@ -58,21 +58,21 @@ public static class SymbolTableInit
 
         t.Add("binary.&", (object _, string a, string b) => (a ?? "") + (b ?? ""));
 
-        t.Add(new CallSignature("iif", typeof(IEnumerable<PocoNode>), typeof(object), typeof(bool?), typeof(Invokee), typeof(Invokee)), runIif);
-        t.Add(new CallSignature("iif", typeof(IEnumerable<PocoNode>), typeof(object), typeof(bool?), typeof(Invokee)), runIif);
+        t.Add(new CallSignature("iif", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(bool?), typeof(Invokee), typeof(Invokee)), runIif);
+        t.Add(new CallSignature("iif", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(bool?), typeof(Invokee)), runIif);
 
         // Functions that use normal null propagation and work with the focus (buy may ignore it)
-        t.Add("not", (IEnumerable<PocoNode> f) => f.Not(), doNullProp: true);
-        // t.Add("builtin.children", (IEnumerable<PocoNode> f, string a) => f.Navigate(a), doNullProp: true);
+        t.Add("not", (IEnumerable<ITypedElement> f) => f.Not(), doNullProp: true);
+        // t.Add("builtin.children", (IEnumerable<ITypedElement> f, string a) => f.Navigate(a), doNullProp: true);
         t.AddBuiltinChildren();
 
-        t.Add("children", (IEnumerable<PocoNode> f) => f.SelectMany(node => node.Children().SelectMany(n => n)), doNullProp: true);
-        t.Add("descendants", (IEnumerable<PocoNode> f) => f.Descendants(), doNullProp: true);
+        t.Add("children", (IEnumerable<ITypedElement> f) => f.Children(), doNullProp: true);
+        t.Add("descendants", (IEnumerable<ITypedElement> f) => f.Descendants(), doNullProp: true);
 
-        t.Add("binary.=", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => a.IsEqualTo(b), doNullProp: true);
-        t.Add("binary.!=", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => !a.IsEqualTo(b), doNullProp: true);
-        t.Add("binary.~", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => a.IsEquivalentTo(b), doNullProp: false);
-        t.Add("binary.!~", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => !a.IsEquivalentTo(b), doNullProp: false);
+        t.Add("binary.=", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => a.IsEqualTo(b), doNullProp: true);
+        t.Add("binary.!=", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => !a.IsEqualTo(b), doNullProp: true);
+        t.Add("binary.~", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => a.IsEquivalentTo(b), doNullProp: false);
+        t.Add("binary.!~", (object f, IEnumerable<ITypedElement> a, IEnumerable<ITypedElement> b) => !a.IsEquivalentTo(b), doNullProp: false);
 
         t.Add("unary.-", (object f, int a) => -a, doNullProp: true);
         t.Add("unary.-", (object f, long a) => -a, doNullProp: true);
@@ -86,10 +86,10 @@ public static class SymbolTableInit
         t.Add("binary.*", (object f, int a, int b) => a * b, doNullProp: true);
         t.Add("binary.*", (object f, long a, long b) => a * b, doNullProp: true);
         t.Add("binary.*", (object f, decimal a, decimal b) => a * b, doNullProp: true);
-        // t.Add("binary.*", (object f, P.Quantity a, P.Quantity b) => a * b, doNullProp: true);
+        t.Add("binary.*", (object f, P.Quantity a, P.Quantity b) => a * b, doNullProp: true);
 
         t.Add("binary./", (object f, decimal a, decimal b) => b != 0 ? a / b : (decimal?)null, doNullProp: true);
-        // t.Add("binary./", (object f, P.Quantity a, P.Quantity b) => a / b, doNullProp: true);
+        t.Add("binary./", (object f, P.Quantity a, P.Quantity b) => a / b, doNullProp: true);
 
         t.Add("binary.+", (object f, int a, int b) => a + b, doNullProp: true);
         t.Add("binary.+", (object f, long a, long b) => a + b, doNullProp: true);
@@ -97,14 +97,14 @@ public static class SymbolTableInit
         t.Add("binary.+", (object f, string a, string b) => a + b, doNullProp: true);
         t.Add("binary.+", (object f, P.DateTime a, P.Quantity b) => a + b, doNullProp: true);
         t.Add("binary.+", (object f, P.Date a, P.Quantity b) => a + b, doNullProp: true);
-        // t.Add("binary.+", (object f, P.Quantity a, P.Quantity b) => a + b, doNullProp: true);
+        t.Add("binary.+", (object f, P.Quantity a, P.Quantity b) => a + b, doNullProp: true);
 
         t.Add("binary.-", (object f, int a, int b) => a - b, doNullProp: true);
         t.Add("binary.-", (object f, long a, long b) => a - b, doNullProp: true);
         t.Add("binary.-", (object f, decimal a, decimal b) => a - b, doNullProp: true);
         t.Add("binary.-", (object f, P.DateTime a, P.Quantity b) => a - b, doNullProp: true);
         t.Add("binary.-", (object f, P.Date a, P.Quantity b) => a - b, doNullProp: true);
-        // t.Add("binary.-", (object f, P.Quantity a, P.Quantity b) => a - b, doNullProp: true);
+        t.Add("binary.-", (object f, P.Quantity a, P.Quantity b) => a - b, doNullProp: true);
 
         t.Add("binary.div", (object f, int a, int b) => b != 0 ? a / b : (int?)null, doNullProp: true);
         t.Add("binary.div", (object f, long a, long b) => b != 0 ? a / b : (long?)null, doNullProp: true);
@@ -119,13 +119,13 @@ public static class SymbolTableInit
         t.Add("binary.<=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, "<="), doNullProp: true);
         t.Add("binary.>=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, ">="), doNullProp: true);
 
-        t.Add("single", (IEnumerable<PocoNode> f) => f.Single(), doNullProp: true);
-        t.Add("skip", (IEnumerable<PocoNode> f, long a) => f.Skip((int)a), doNullProp: true);
-        t.Add("first", (IEnumerable<PocoNode> f) => f.First(), doNullProp: true);
-        t.Add("last", (IEnumerable<PocoNode> f) => f.Last(), doNullProp: true);
-        t.Add("tail", (IEnumerable<PocoNode> f) => f.Tail(), doNullProp: true);
-        t.Add("take", (IEnumerable<PocoNode> f, long a) => f.Take((int)a), doNullProp: true);
-        t.Add("builtin.item", (IEnumerable<PocoNode> f, long a) => f.Item((int)a), doNullProp: true);
+        t.Add("single", (IEnumerable<ITypedElement> f) => f.Single(), doNullProp: true);
+        t.Add("skip", (IEnumerable<ITypedElement> f, long a) => f.Skip((int)a), doNullProp: true);
+        t.Add("first", (IEnumerable<ITypedElement> f) => f.First(), doNullProp: true);
+        t.Add("last", (IEnumerable<ITypedElement> f) => f.Last(), doNullProp: true);
+        t.Add("tail", (IEnumerable<ITypedElement> f) => f.Tail(), doNullProp: true);
+        t.Add("take", (IEnumerable<ITypedElement> f, long a) => f.Take((int)a), doNullProp: true);
+        t.Add("builtin.item", (IEnumerable<ITypedElement> f, long a) => f.Item((int)a), doNullProp: true);
 
         t.Add("toBoolean", (P.Any f) => f.ToBoolean(), doNullProp: true);
         t.Add("convertsToBoolean", (P.Any f) => f.ConvertsToBoolean(), doNullProp: true);
@@ -168,12 +168,12 @@ public static class SymbolTableInit
         t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
         t.Add("length", (string f) => f.Length, doNullProp: true);
         t.Add("split", (string f, string seperator) => f.FpSplit(seperator), doNullProp: true);
-        t.Add("join", (IEnumerable<PocoNode> f, string separator) => f.FpJoin(separator), doNullProp: true);
-        t.Add("join", (IEnumerable<PocoNode> f) => f.FpJoin(), doNullProp: true);
-        t.Add("indexOf", (IEnumerable<PocoNode> f, PocoNode elem, int start) => f.IndexOf(elem, start), doNullProp: true);
-        t.Add("indexOf", (IEnumerable<PocoNode> f, PocoNode elem) => f.IndexOf(elem), doNullProp: true);
-        t.Add("lastIndexOf", (IEnumerable<PocoNode> f, PocoNode elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
-        t.Add("lastIndexOf", (IEnumerable<PocoNode> f, PocoNode elem) => f.LastIndexOf(elem), doNullProp: true);
+        t.Add("join", (IEnumerable<ITypedElement> f, string separator) => f.FpJoin(separator), doNullProp: true);
+        t.Add("join", (IEnumerable<ITypedElement> f) => f.FpJoin(), doNullProp: true);
+        t.Add("indexOf", (IEnumerable<ITypedElement> f, ITypedElement elem, int start) => f.IndexOf(elem, start), doNullProp: true);
+        t.Add("indexOf", (IEnumerable<ITypedElement> f, ITypedElement elem) => f.IndexOf(elem), doNullProp: true);
+        t.Add("lastIndexOf", (IEnumerable<ITypedElement> f, ITypedElement elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
+        t.Add("lastIndexOf", (IEnumerable<ITypedElement> f, ITypedElement elem) => f.LastIndexOf(elem), doNullProp: true);
 
         // Math functions
         t.Add("abs", (decimal f) => Math.Abs(f), doNullProp: true);
@@ -184,23 +184,24 @@ public static class SymbolTableInit
         t.Add("ln", (decimal f) => Math.Log((double)f), doNullProp: true);
         t.Add("log", (decimal f, decimal @base) => Math.Log((double)f, (double)@base), doNullProp: true);
         t.Add("power", (decimal f, decimal exponent) => f.Power(exponent), doNullProp: true);
+
         t.Add("round", (decimal f, long precision) => Math.Round(f, (int)precision), doNullProp: true);
         t.Add("round", (decimal f) => Math.Round(f), doNullProp: true);
         t.Add("sqrt", (decimal f) => f.Sqrt(), doNullProp: true);
         t.Add("truncate", (decimal f) => Math.Truncate((double)f), doNullProp: true);
 
         // The next two functions existed pre-normative, so we have kept them.
-        t.Add("is", (PocoNode f, string name) => f.Is(name), doNullProp: true);
-        t.Add("as", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
+        t.Add("is", (ITypedElement f, string name) => f.Is(name), doNullProp: true);
+        t.Add("as", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
 
-        t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
-        t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
-        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
+        t.Add("ofType", (IEnumerable<ITypedElement> f, string name) => f.FilterType(name), doNullProp: true);
+        t.Add("binary.is", (object f, ITypedElement left, string name) => left.Is(name), doNullProp: true);
+        t.Add("binary.as", (object f, IEnumerable<ITypedElement> left, string name) => left.FilterType(name), doNullProp: true);
 
         // Kept for backwards compatibility, but no longer part of the spec
-        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
+        t.Add("binary.as", (object f, IEnumerable<ITypedElement> left, string name) => left.FilterType(name), doNullProp: true);
 
-        t.Add("extension", (IEnumerable<PocoNode> f, string url) => f.Extension(url), doNullProp: true);
+        t.Add("extension", (IEnumerable<ITypedElement> f, string url) => f.Extension(url), doNullProp: true);
 
         // Logic operators do not use null propagation and may do short-cut eval
         t.AddLogic("binary.and", (a, b) => a.And(b));
@@ -209,25 +210,25 @@ public static class SymbolTableInit
         t.AddLogic("binary.implies", (a, b) => a.Implies(b));
 
         // Special late-bound functions
-        t.Add(new CallSignature("where", typeof(IEnumerable<PocoNode>), typeof(object), typeof(Invokee)), runWhere);
-        t.Add(new CallSignature("select", typeof(IEnumerable<PocoNode>), typeof(object), typeof(Invokee)), runSelect);
+        t.Add(new CallSignature("where", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runWhere);
+        t.Add(new CallSignature("select", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runSelect);
         t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
         t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
         t.Add(new CallSignature("exists", typeof(bool), typeof(object), typeof(Invokee)), runAny);
-        t.Add(new CallSignature("repeat", typeof(IEnumerable<PocoNode>), typeof(object), typeof(Invokee)), runRepeat);
-        t.Add(new CallSignature("trace", typeof(IEnumerable<PocoNode>), typeof(string), typeof(object), typeof(Invokee)), Trace);
-        t.Add(new CallSignature("defineVariable", typeof(IEnumerable<PocoNode>), typeof(object), typeof(string)), DefineVariable);
-        t.Add(new CallSignature("defineVariable", typeof(IEnumerable<PocoNode>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
+        t.Add(new CallSignature("repeat", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(Invokee)), runRepeat);
+        t.Add(new CallSignature("trace", typeof(IEnumerable<ITypedElement>), typeof(string), typeof(object), typeof(Invokee)), Trace);
+        t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string)), DefineVariable);
+        t.Add(new CallSignature("defineVariable", typeof(IEnumerable<ITypedElement>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
 
         // Co-alesce and sort have variable number of arguments.
-        t.Add(new UnknownArgCountCallSignature("coalesce", typeof(IEnumerable<PocoNode>)), runCoalesce);
-        t.Add(new UnknownArgCountCallSignature("sort", typeof(IEnumerable<PocoNode>)), runSort);
+        t.Add(new UnknownArgCountCallSignature("coalesce", typeof(IEnumerable<ITypedElement>)), runCoalesce);
+        t.Add(new UnknownArgCountCallSignature("sort", typeof(IEnumerable<ITypedElement>)), runSort);
         // these unary operators just inject an ordering node that includes which direction the sort if processing
-        t.Add("unary.asc", (object f, PocoNode a) => OrderedNode.FromPrimitiveNode(a), doNullProp: true);
-        t.Add("unary.desc", (object f, PocoNode a) => OrderedNode.FromPrimitiveNode(a, true), doNullProp: true);
+        t.Add("unary.asc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a }), doNullProp: true);
+        t.Add("unary.desc", (object f, ITypedElement a) => ElementNode.CreateList(new OrderedValue() { value = a, Descending = true }), doNullProp: true);
 
-        t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
-        t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
+        t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee)), runAggregate);
+        t.Add(new CallSignature("aggregate", typeof(IEnumerable<ITypedElement>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
 
         t.AddVar("sct", "http://snomed.info/sct");
         t.AddVar("loinc", "http://loinc.org");
@@ -240,7 +241,7 @@ public static class SymbolTableInit
     }
 
     /// <summary>
-    /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;PocoNode&gt;.
+    /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;ITypedElement&gt;.
     /// For 'builtin.children' we know that the focus and the result are already of the correct type,
     /// so we created an optimized implementation avoiding the Wrap.
     /// </summary>
@@ -248,16 +249,15 @@ public static class SymbolTableInit
     internal static void AddBuiltinChildren(this SymbolTable table)
     {
         table.Add(new CallSignature("builtin.children",
-            typeof(IEnumerable<PocoNode>),
-            typeof(IEnumerable<PocoNode>),
-            typeof(string)), (
-            ctx, invokees) =>
+            typeof(IEnumerable<ITypedElement>),
+            typeof(IEnumerable<ITypedElement>),
+            typeof(string)), (Closure ctx, IEnumerable<Invokee> invokees) =>
         {
             var iks = invokees.ToArray();
-            var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
+            var focus = iks[0](ctx, InvokeeFactory.EmptyArgs);
             ctx.focus = focus;
-            var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().GetValue();
-            var result= focus.Navigate(name);
+            var name = (string?)iks[1](ctx, InvokeeFactory.EmptyArgs).First().Value;
+            var result = focus.Navigate(name);
 
             return result;
         });
@@ -273,7 +273,7 @@ public static class SymbolTableInit
         return "http://hl7.org/fhir/ValueSet/" + id;
     }
 
-    private static IEnumerable<PocoNode> runSort(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runSort(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         var lambda = arguments.Skip(1);
@@ -285,7 +285,7 @@ public static class SymbolTableInit
         }
 
         var keySelector = lambda.First();
-        IOrderedEnumerable<PocoNode> orderedResult = focus.OrderBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
+        IOrderedEnumerable<ITypedElement> orderedResult = focus.OrderBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
         lambda = lambda.Skip(1);
         while (lambda.Any())
         {
@@ -299,16 +299,17 @@ public static class SymbolTableInit
         return orderedResult.ToList();
     }
 
-    private static IEnumerable<PocoNode> readElement(Closure ctx, PocoNode element, Invokee selectProp)
+    private static IEnumerable<ITypedElement> readElement(Closure ctx, ITypedElement element, Invokee selectProp)
     {
-        var newContext = ctx.Nest(element);
-        newContext.SetThis(element);
+        var newFocus = ElementNode.CreateList(element);
+        var newContext = ctx.Nest(newFocus);
+        newContext.SetThis(newFocus);
         var result = selectProp(newContext, InvokeeFactory.EmptyArgs);
         foreach (var resultElement in result)       // implement SelectMany()
             yield return resultElement;
     }
 
-    private static IEnumerable<PocoNode> runCoalesce(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runCoalesce(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         var lambda = arguments.Skip(1);
@@ -324,14 +325,14 @@ public static class SymbolTableInit
             lambda = lambda.Skip(1);
         }
 
-        return [];
+        return ElementNode.EmptyList;
     }
-    private static IEnumerable<PocoNode> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
         var incrExpre = arguments.Skip(1).First();
-        IEnumerable<PocoNode> initialValue = [];
+        IEnumerable<ITypedElement> initialValue = ElementNode.EmptyList;
         if (arguments.Count() > 2)
         {
             var initialValueExpr = arguments.Skip(2).First();
@@ -341,9 +342,9 @@ public static class SymbolTableInit
         var totalContext = ctx.Nest();
         totalContext.SetTotal(initialValue);
 
-        foreach (PocoNode element in focus)
+        foreach (ITypedElement element in focus)
         {
-            IEnumerable<PocoNode> newFocus = element;
+            var newFocus = ElementNode.CreateList(element);
             var newContext = totalContext.Nest(newFocus);
             newContext.focus = newFocus;
             newContext.SetThis(newFocus);
@@ -355,11 +356,11 @@ public static class SymbolTableInit
         return totalContext.GetTotal();
     }
 
-    private static IEnumerable<PocoNode> Trace(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> Trace(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
-        var name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
+        var name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
 
         List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
         var selectResults = runSelect(ctx, selectArgs);
@@ -367,16 +368,16 @@ public static class SymbolTableInit
 
         return focus;
     }
-        
-    private static IEnumerable<PocoNode> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
+
+    private static IEnumerable<ITypedElement> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
     {
         Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
         var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
-        var name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
+        var name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
 
         if(ctx.ResolveValue(name) is not null) throw new InvalidOperationException($"Variable {name} is already defined in this scope");
-            
+
         if (enumerable.Length == 2)
         {
             ctx.SetValue(name, focus);
@@ -393,7 +394,7 @@ public static class SymbolTableInit
         return focus;
     }
 
-    private static IEnumerable<PocoNode> runIif(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runIif(Closure ctx, IEnumerable<Invokee> arguments)
     {
         // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
         // note: short-circuit behavior is expected in this function
@@ -403,7 +404,7 @@ public static class SymbolTableInit
         var newContext = ctx.Nest(focus);
         newContext.focus = focus;
         newContext.SetThis(focus);
-            
+
         var expression = arguments.Skip(1).First()(newContext, InvokeeFactory.EmptyArgs);
         var trueResult = arguments.Skip(2).First();
         var otherResult = arguments.Skip(3).FirstOrDefault();
@@ -413,10 +414,10 @@ public static class SymbolTableInit
 
         return (expression.BooleanEval() ?? false)
             ? trueResult(newContext, InvokeeFactory.EmptyArgs) // share focus with this function
-            : otherResult == null ? [] : otherResult(newContext, InvokeeFactory.EmptyArgs);
+            : otherResult == null ? ElementNode.EmptyList : otherResult(newContext, InvokeeFactory.EmptyArgs);
     }
 
-    private static IEnumerable<PocoNode> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
@@ -424,17 +425,17 @@ public static class SymbolTableInit
 
         return CachedEnumerable.Create(runForeach());
 
-        IEnumerable<PocoNode> runForeach()
+        IEnumerable<ITypedElement> runForeach()
         {
             var index = 0;
 
-            foreach (PocoNode element in focus)
+            foreach (ITypedElement element in focus)
             {
-                PocoNode[] newFocus = [element];
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
+                newContext.SetIndex(ElementNode.CreateList(index));
                 index++;
 
                 if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
@@ -443,7 +444,7 @@ public static class SymbolTableInit
         }
     }
 
-    private static IEnumerable<PocoNode> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
@@ -451,17 +452,17 @@ public static class SymbolTableInit
 
         return CachedEnumerable.Create(runForeach());
 
-        IEnumerable<PocoNode> runForeach()
+        IEnumerable<ITypedElement> runForeach()
         {
             var index = 0;
 
-            foreach (PocoNode element in focus)
+            foreach (ITypedElement element in focus)
             {
-                IEnumerable<PocoNode> newFocus = [element];
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
+                newContext.SetIndex(ElementNode.CreateList(index));
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs);
@@ -470,14 +471,14 @@ public static class SymbolTableInit
             }
         }
     }
-        
-    private static IEnumerable<PocoNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
+
+    private static IEnumerable<ITypedElement> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
         ctx.focus = newNodes;
         var lambda = arguments.Skip(1).First();
 
-        var fullResult = new List<PocoNode>();
+        var fullResult = new List<ITypedElement>();
 
         while (newNodes.Any())
         {
@@ -485,17 +486,17 @@ public static class SymbolTableInit
             var current = newNodes;
             newNodes = [];
 
-            foreach (PocoNode element in current)
+            foreach (ITypedElement element in current)
             {
-                IEnumerable<PocoNode> newFocus = [element];
+                var newFocus = ElementNode.CreateList(element);
                 var newContext = ctx.Nest(newFocus);
                 newContext.focus = newFocus;
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
+                newContext.SetIndex(ElementNode.CreateList(index));
                 index++;
 
                 var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
-                var uniqueNewNodes = candidates.Except<PocoNode>(fullResult, EqualityOperators.TypedElementEqualityComparer);
+                var uniqueNewNodes = candidates.Except(fullResult, EqualityOperators.TypedElementEqualityComparer);
 
                 newNodes.AddRange(uniqueNewNodes);
             }
@@ -506,50 +507,50 @@ public static class SymbolTableInit
         return fullResult;
     }
 
-    private static IEnumerable<PocoNode> runAll(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runAll(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
-        foreach (PocoNode element in focus)
+        foreach (ITypedElement element in focus)
         {
-            IEnumerable<PocoNode> newFocus = [element];
+            var newFocus = ElementNode.CreateList(element);
             var newContext = ctx.Nest(newFocus);
             newContext.focus = newFocus;
             newContext.SetThis(newFocus);
-            newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
+            newContext.SetIndex(ElementNode.CreateList(index));
             index++;
 
             var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-            if (result == null) return [];
-            if (result == false) return PocoNode.ForPrimitive<FhirBoolean>(false);
+            if (result == null) return ElementNode.EmptyList;
+            if (result == false) return ElementNode.CreateList(false);
         }
 
-        return PocoNode.ForPrimitive<FhirBoolean>(true);
+        return ElementNode.CreateList(true);
     }
 
-    private static IEnumerable<PocoNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
+    private static IEnumerable<ITypedElement> runAny(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
         ctx.focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
-        foreach (PocoNode element in focus)
+        foreach (ITypedElement element in focus)
         {
-            IEnumerable<PocoNode> newFocus = [element];
+            var newFocus = ElementNode.CreateList(element);
             var newContext = ctx.Nest(newFocus);
             newContext.focus = newFocus;
             newContext.SetThis(newFocus);
-            newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
+            newContext.SetIndex(ElementNode.CreateList(index));
             index++;
 
             var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-            if (result == true) return PocoNode.ForPrimitive<FhirBoolean>(true);
+            if (result == true) return ElementNode.CreateList(true);
         }
-            
-        return PocoNode.Root(new FhirBoolean(false));
+
+        return ElementNode.CreateList(false);
     }
 }

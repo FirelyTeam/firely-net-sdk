@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -59,16 +55,16 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Binary","http://hl7.org/fhir/StructureDefinition/Binary")]
+  [FhirType("Binary","http://hl7.org/fhir/StructureDefinition/Binary", IsResource=true)]
   public partial class Binary : Hl7.Fhir.Model.Resource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Binary";
+    public override string TypeName { get { return "Binary"; } }
 
     /// <summary>
-    /// MimeType of the binary content.
+    /// MimeType of the binary content
     /// </summary>
     [FhirElement("contentType", InSummary=true, Order=50)]
     [Binding("MimeType")]
@@ -76,283 +72,214 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code ContentTypeElement
     {
-      get
-      {
-        if(_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
-        return _ContentTypeElement!;
-      }
-
-      set
-      {
-        if (_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
-          Overflow.Remove("contentType");
-        _ContentTypeElement = value;
-        OnPropertyChanged("ContentTypeElement");
-      }
-
+      get { return _ContentTypeElement; }
+      set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code? _ContentTypeElement;
+    private Hl7.Fhir.Model.Code _ContentTypeElement;
 
     /// <summary>
     /// MimeType of the binary content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? ContentType
+    public string ContentType
     {
-      get => ContentTypeElement?.Value;
+      get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
       set
       {
-        ContentTypeElement = value is null ? null! : new Hl7.Fhir.Model.Code(value);
+        if (value == null)
+          ContentTypeElement = null;
+        else
+          ContentTypeElement = new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("ContentType");
       }
     }
 
     /// <summary>
-    /// Identifies another resource to use as proxy when enforcing access control.
+    /// Identifies another resource to use as proxy when enforcing access control
     /// </summary>
     [FhirElement("securityContext", InSummary=true, Order=60)]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? SecurityContext
+    public Hl7.Fhir.Model.ResourceReference SecurityContext
     {
-      get
-      {
-        if(_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["securityContext"]);
-        return _SecurityContext;
-      }
-
-      set
-      {
-        if (_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("securityContext");
-        _SecurityContext = value;
-        OnPropertyChanged("SecurityContext");
-      }
-
+      get { return _SecurityContext; }
+      set { _SecurityContext = value; OnPropertyChanged("SecurityContext"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _SecurityContext;
+    private Hl7.Fhir.Model.ResourceReference _SecurityContext;
 
     /// <summary>
-    /// The actual content.
+    /// The actual content. Note: Element is replaced by 'Binary.data' since R4. Do not use this element 'content' with R4 and newer releases.
     /// </summary>
-    /// <remarks>
-    /// Element is replaced by 'Binary.data' since R4. Do not use this element 'content' with R4 and newer releases.
-    /// </remarks>
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary? ContentElement
+    public Hl7.Fhir.Model.Base64Binary ContentElement
     {
-      get
-      {
-        if(_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["content"]);
-        return _ContentElement;
-      }
-
-      set
-      {
-        if (_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
-          Overflow.Remove("content");
-        _ContentElement = value;
-        OnPropertyChanged("ContentElement");
-      }
-
+      get { return _ContentElement; }
+      set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary? _ContentElement;
+    private Hl7.Fhir.Model.Base64Binary _ContentElement;
 
     /// <summary>
     /// The actual content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[]? Content
+    public byte[] Content
     {
-      get => ContentElement?.Value;
+      get { return ContentElement != null ? ContentElement.Value : null; }
       set
       {
-        ContentElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
+        if (value == null)
+          ContentElement = null;
+        else
+          ContentElement = new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Content");
       }
     }
 
     /// <summary>
-    /// The actual content.
+    /// The actual content. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
-    /// <remarks>
-    /// Element was introduced in R4, do not use when working with older releases.
-    /// </remarks>
     [FhirElement("data", Order=70, Since=FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.Base64Binary? DataElement
+    public Hl7.Fhir.Model.Base64Binary DataElement
     {
-      get
-      {
-        if(_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["data"]);
-        return _DataElement;
-      }
-
-      set
-      {
-        if (_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
-          Overflow.Remove("data");
-        _DataElement = value;
-        OnPropertyChanged("DataElement");
-      }
-
+      get { return _DataElement; }
+      set { _DataElement = value; OnPropertyChanged("DataElement"); }
     }
 
-    private Hl7.Fhir.Model.Base64Binary? _DataElement;
+    private Hl7.Fhir.Model.Base64Binary _DataElement;
 
     /// <summary>
     /// The actual content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public byte[]? Data
+    public byte[] Data
     {
-      get => DataElement?.Value;
+      get { return DataElement != null ? DataElement.Value : null; }
       set
       {
-        DataElement = value is null ? null! : new Hl7.Fhir.Model.Base64Binary(value);
+        if (value == null)
+          DataElement = null;
+        else
+          DataElement = new Hl7.Fhir.Model.Base64Binary(value);
         OnPropertyChanged("Data");
       }
     }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Binary dest)
+      var dest = other as Binary;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_ContentTypeElement is not null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)_ContentTypeElement.DeepCopyInternal();
-      if(_SecurityContext is not null) dest.SecurityContext = (Hl7.Fhir.Model.ResourceReference)_SecurityContext.DeepCopyInternal();
-      if(_ContentElement is not null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)_ContentElement.DeepCopyInternal();
-      if(_DataElement is not null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)_DataElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
+      if(SecurityContext != null) dest.SecurityContext = (Hl7.Fhir.Model.ResourceReference)SecurityContext.DeepCopy();
+      if(ContentElement != null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)ContentElement.DeepCopy();
+      if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Binary();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Binary());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Binary otherT) return false;
+      var otherT = other as Binary;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_ContentTypeElement, otherT._ContentTypeElement)) return false;
-      if(!comparer.Equals(_SecurityContext, otherT._SecurityContext)) return false;
-      if(!comparer.Equals(_ContentElement, otherT._ContentElement)) return false;
-      if(!comparer.Equals(_DataElement, otherT._DataElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
+      if( !DeepComparable.Matches(SecurityContext, otherT.SecurityContext)) return false;
+      if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
+      if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Binary;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
+      if( !DeepComparable.IsExactly(SecurityContext, otherT.SecurityContext)) return false;
+      if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
+      if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (ContentTypeElement != null) yield return ContentTypeElement;
+        if (SecurityContext != null) yield return SecurityContext;
+        if (ContentElement != null) yield return ContentElement;
+        if (DataElement != null) yield return DataElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+        if (SecurityContext != null) yield return new ElementValue("securityContext", SecurityContext);
+        if (ContentElement != null) yield return new ElementValue("content", ContentElement);
+        if (DataElement != null) yield return new ElementValue("data", DataElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "contentType":
-          if (_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
-          {
-            value = Overflow["contentType"];
-            return true;
-          }
-          value = _ContentTypeElement;
-          return (value as Hl7.Fhir.Model.Code) is not null;
+          value = ContentTypeElement;
+          return ContentTypeElement is not null;
         case "securityContext":
-          if (_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["securityContext"];
-            return true;
-          }
-          value = _SecurityContext;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = SecurityContext;
+          return SecurityContext is not null;
         case "content":
-          if (_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
-          {
-            value = Overflow["content"];
-            return true;
-          }
-          value = _ContentElement;
-          return (value as Hl7.Fhir.Model.Base64Binary) is not null;
+          value = ContentElement;
+          return ContentElement is not null;
         case "data":
-          if (_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
-          {
-            value = Overflow["data"];
-            return true;
-          }
-          value = _DataElement;
-          return (value as Hl7.Fhir.Model.Base64Binary) is not null;
+          value = DataElement;
+          return DataElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "contentType":
-          if (value is not (Hl7.Fhir.Model.Code or null))
-          {
-            ContentTypeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
-            Overflow["contentType"] = value;
-          }
-          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value!;
-          return this;
-        case "securityContext":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            SecurityContext = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["securityContext"] = value;
-          }
-          else SecurityContext = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "content":
-          if (value is not (Hl7.Fhir.Model.Base64Binary or null))
-          {
-            ContentElement = OverflowNull<Hl7.Fhir.Model.Base64Binary>.INSTANCE;
-            Overflow["content"] = value;
-          }
-          else ContentElement = (Hl7.Fhir.Model.Base64Binary?)value;
-          return this;
-        case "data":
-          if (value is not (Hl7.Fhir.Model.Base64Binary or null))
-          {
-            DataElement = OverflowNull<Hl7.Fhir.Model.Base64Binary>.INSTANCE;
-            Overflow["data"] = value;
-          }
-          else DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-      if (_SecurityContext is not null && !_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("securityContext",_SecurityContext);
-      if (_ContentElement is not null && !_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("content",_ContentElement);
-      if (_DataElement is not null && !_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("data",_DataElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
+      if (SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",SecurityContext);
+      if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);
+      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
     }
 
   }
