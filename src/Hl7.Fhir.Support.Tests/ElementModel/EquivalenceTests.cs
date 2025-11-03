@@ -51,8 +51,8 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsFalse(EqualityOperators.IsEquivalentTo(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R")));
             Assert.IsFalse(EqualityOperators.IsEquivalentTo(new Integer(0), new String("hi!")));
 
-            Assert.ThrowsException<System.ArgumentException>(() => EqualityOperators.Compare(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R"), "="));
-            Assert.ThrowsException<System.ArgumentException>(() => EqualityOperators.Compare(new Integer(0), new String("hi!"), ">="));
+            Assert.ThrowsException<System.InvalidOperationException>(() => EqualityOperators.Compare(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R"), "="));
+            Assert.ThrowsException<System.InvalidOperationException>(() => EqualityOperators.Compare(new Integer(0), new String("hi!"), ">="));
         }
 
         internal static IEnumerable<object[]> equalityTestcases() =>
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DynamicData(nameof(orderingTestcases), DynamicDataSourceType.Method)]
         public void OrderingTest(object a, object b, int? s)
         {
-            if (s == 1 || s == -1)
+            if (s is 1 or -1)
             {
                 doOrderingTest(a, b, s);
                 doOrderingTest(b, a, -s);

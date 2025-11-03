@@ -29,33 +29,57 @@
 
 #nullable enable
 
+using Hl7.Fhir.Validation;
 using System;
+using System.ComponentModel.DataAnnotations;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
+using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class FhirUrl
 {
-    public partial class FhirUrl
+    public FhirUrl(Uri uri)
     {
-        public FhirUrl(Uri uri)
-        {
-            Value = uri.OriginalString;
-        }
+        Value = uri.OriginalString;
+    }
 
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value)
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
+        JsonValue switch
         {
-            try
-            {
-                var uri = new Uri(value, UriKind.RelativeOrAbsolute);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            null => null,
+            string unparsed when IsValidValue(unparsed) => null,
+            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
+        };
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value)
+    {
+        try
+        {
+            _ = new Uri(value, UriKind.RelativeOrAbsolute);
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
-}
 
-#nullable restore
+    /// <summary>
+    /// Converts this FhirUrl to a <see cref="P.String" />.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The Value of this FhirUrl is null,
+    /// which is not valid for System strings.</exception>
+    public P.String ToSystemString() =>
+        (P.String?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        Value is not null ? new P.String(Value) : null;
+}

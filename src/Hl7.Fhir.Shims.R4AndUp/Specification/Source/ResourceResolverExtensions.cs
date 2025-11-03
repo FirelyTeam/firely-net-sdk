@@ -42,7 +42,11 @@ namespace Hl7.Fhir.Specification.Source
             {
                 var resourceType = EnumUtility.ParseLiteral<ResourceType>(typeName);
                 var uris = source.ListResourceUris(resourceType);
-                return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
+                return uris
+                    .Select(source.TryResolveByUri)
+                    .Where(x => x.Success)
+                    .Select(x => x.Value as T)
+                    .Where(r => r != null);
             }
             else
                 return null;

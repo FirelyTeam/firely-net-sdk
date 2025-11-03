@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
+        private ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
         {
             settings ??= FhirXmlParsingSettings.CreateDefault();
             settings.PermissiveParsing = false;
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlUntyped(tpXml);
 #pragma warning disable 612,618
-            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElement(), typed: false);
+            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElementLegacy(), typed: false);
 #pragma warning restore 612, 618
         }
 
@@ -192,9 +192,9 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public async Task RoundtripXmlUntyped()
+        public void RoundtripXmlUntyped()
         {
-            await ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNode.Parse(xmlText));
+            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNode.Parse(xmlText));
         }
 
         [TestMethod]
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var output = await jsonNav.ToXmlAsync();
+                var output = jsonNav.ToXml();
                 Assert.Fail();
             }
             catch (NotSupportedException)
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
             var node = getXmlUntyped(bundle);
 #pragma warning disable 612, 618
-            ParseDemoPatient.CheckBundleEntryNavigation(node.ToTypedElement());
+            ParseDemoPatient.CheckBundleEntryNavigation(node.ToTypedElementLegacy());
 #pragma warning restore 612, 618
         }
 

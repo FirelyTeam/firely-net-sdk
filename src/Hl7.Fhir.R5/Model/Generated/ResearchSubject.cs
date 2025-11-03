@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,13 +56,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ResearchSubject","http://hl7.org/fhir/StructureDefinition/ResearchSubject", IsResource=true)]
+  [FhirType("ResearchSubject","http://hl7.org/fhir/StructureDefinition/ResearchSubject")]
   public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ResearchSubject"; } }
+    public override string TypeName => "ResearchSubject";
 
     /// <summary>
     /// Indicates the progression of a study subject through a study.
@@ -158,290 +162,427 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ResearchSubject#Progress", IsNestedType=true)]
-    [BackboneType("ResearchSubject.progress")]
+    [FhirType("ResearchSubject.progress", IsBackboneType=true)]
     public partial class ProgressComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchSubject#Progress"; } }
+      public override string TypeName => "ResearchSubject.progress";
 
       /// <summary>
-      /// state | milestone
+      /// state | milestone.
       /// </summary>
       [FhirElement("type", Order=40)]
       [Binding("ResearchSubjectStateType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
-        get { return _Type; }
-        set { _Type = value; OnPropertyChanged("Type"); }
+        get
+        {
+          if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+          return _Type;
+        }
+
+        set
+        {
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("type");
+          _Type = value;
+          OnPropertyChanged("Type");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
-      /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
+      /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn.
       /// </summary>
       [FhirElement("subjectState", Order=50, FiveWs="FiveWs.status")]
       [Binding("ResearchSubjectProgresss")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept SubjectState
+      public Hl7.Fhir.Model.CodeableConcept? SubjectState
       {
-        get { return _SubjectState; }
-        set { _SubjectState = value; OnPropertyChanged("SubjectState"); }
+        get
+        {
+          if(_SubjectState.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["subjectState"]);
+          return _SubjectState;
+        }
+
+        set
+        {
+          if (_SubjectState.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("subjectState");
+          _SubjectState = value;
+          OnPropertyChanged("SubjectState");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _SubjectState;
+      private Hl7.Fhir.Model.CodeableConcept? _SubjectState;
 
       /// <summary>
-      /// SignedUp | Screened | Randomized
+      /// SignedUp | Screened | Randomized.
       /// </summary>
       [FhirElement("milestone", Order=60, FiveWs="FiveWs.status")]
       [Binding("ResearchSubjectMilestone")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Milestone
+      public Hl7.Fhir.Model.CodeableConcept? Milestone
       {
-        get { return _Milestone; }
-        set { _Milestone = value; OnPropertyChanged("Milestone"); }
+        get
+        {
+          if(_Milestone.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["milestone"]);
+          return _Milestone;
+        }
+
+        set
+        {
+          if (_Milestone.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("milestone");
+          _Milestone = value;
+          OnPropertyChanged("Milestone");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Milestone;
+      private Hl7.Fhir.Model.CodeableConcept? _Milestone;
 
       /// <summary>
-      /// State change reason
+      /// State change reason.
       /// </summary>
       [FhirElement("reason", Order=70)]
       [Binding("StateChangeReason")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Reason
+      public Hl7.Fhir.Model.CodeableConcept? Reason
       {
-        get { return _Reason; }
-        set { _Reason = value; OnPropertyChanged("Reason"); }
+        get
+        {
+          if(_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["reason"]);
+          return _Reason;
+        }
+
+        set
+        {
+          if (_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("reason");
+          _Reason = value;
+          OnPropertyChanged("Reason");
+        }
+
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Reason;
+      private Hl7.Fhir.Model.CodeableConcept? _Reason;
 
       /// <summary>
-      /// State change date
+      /// State change date.
       /// </summary>
       [FhirElement("startDate", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime StartDateElement
+      public Hl7.Fhir.Model.FhirDateTime? StartDateElement
       {
-        get { return _StartDateElement; }
-        set { _StartDateElement = value; OnPropertyChanged("StartDateElement"); }
+        get
+        {
+          if(_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["startDate"]);
+          return _StartDateElement;
+        }
+
+        set
+        {
+          if (_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            Overflow.Remove("startDate");
+          _StartDateElement = value;
+          OnPropertyChanged("StartDateElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _StartDateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _StartDateElement;
 
       /// <summary>
       /// State change date
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string StartDate
+      public string? StartDate
       {
-        get { return StartDateElement != null ? StartDateElement.Value : null; }
+        get => StartDateElement?.Value;
         set
         {
-          if (value == null)
-            StartDateElement = null;
-          else
-            StartDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          StartDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("StartDate");
         }
       }
 
       /// <summary>
-      /// State change date
+      /// State change date.
       /// </summary>
       [FhirElement("endDate", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime EndDateElement
+      public Hl7.Fhir.Model.FhirDateTime? EndDateElement
       {
-        get { return _EndDateElement; }
-        set { _EndDateElement = value; OnPropertyChanged("EndDateElement"); }
+        get
+        {
+          if(_EndDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["endDate"]);
+          return _EndDateElement;
+        }
+
+        set
+        {
+          if (_EndDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            Overflow.Remove("endDate");
+          _EndDateElement = value;
+          OnPropertyChanged("EndDateElement");
+        }
+
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _EndDateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _EndDateElement;
 
       /// <summary>
       /// State change date
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string EndDate
+      public string? EndDate
       {
-        get { return EndDateElement != null ? EndDateElement.Value : null; }
+        get => EndDateElement?.Value;
         set
         {
-          if (value == null)
-            EndDateElement = null;
-          else
-            EndDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          EndDateElement = value is null ? null! : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EndDate");
         }
       }
 
-      public override IDeepCopyable CopyTo(IDeepCopyable other)
+      protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ProgressComponent;
-
-        if (dest == null)
-        {
+        if(other is not ProgressComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
-        base.CopyTo(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-        if(SubjectState != null) dest.SubjectState = (Hl7.Fhir.Model.CodeableConcept)SubjectState.DeepCopy();
-        if(Milestone != null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)Milestone.DeepCopy();
-        if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopy();
-        if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopy();
-        if(EndDateElement != null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)EndDateElement.DeepCopy();
-        return dest;
+        base.CopyToInternal(dest);
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_SubjectState is not null) dest.SubjectState = (Hl7.Fhir.Model.CodeableConcept)_SubjectState.DeepCopyInternal();
+        if(_Milestone is not null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)_Milestone.DeepCopyInternal();
+        if(_Reason is not null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)_Reason.DeepCopyInternal();
+        if(_StartDateElement is not null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)_StartDateElement.DeepCopyInternal();
+        if(_EndDateElement is not null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)_EndDateElement.DeepCopyInternal();
       }
 
-      public override IDeepCopyable DeepCopy()
+      protected internal override Base DeepCopyInternal()
       {
-        return CopyTo(new ProgressComponent());
+        var instance = new ProgressComponent();
+        CopyToInternal(instance);
+        return instance;
       }
 
-      ///<inheritdoc />
-      public override bool Matches(IDeepComparable other)
+      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ProgressComponent;
-        if(otherT == null) return false;
+        if(other is not ProgressComponent otherT) return false;
 
-        if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-        if( !DeepComparable.Matches(SubjectState, otherT.SubjectState)) return false;
-        if( !DeepComparable.Matches(Milestone, otherT.Milestone)) return false;
-        if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-        if( !DeepComparable.Matches(StartDateElement, otherT.StartDateElement)) return false;
-        if( !DeepComparable.Matches(EndDateElement, otherT.EndDateElement)) return false;
+        if(!base.CompareChildren(otherT, comparer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_SubjectState, otherT._SubjectState)) return false;
+        if(!comparer.Equals(_Milestone, otherT._Milestone)) return false;
+        if(!comparer.Equals(_Reason, otherT._Reason)) return false;
+        if(!comparer.Equals(_StartDateElement, otherT._StartDateElement)) return false;
+        if(!comparer.Equals(_EndDateElement, otherT._EndDateElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool IsExactly(IDeepComparable other)
-      {
-        var otherT = other as ProgressComponent;
-        if(otherT == null) return false;
-
-        if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-        if( !DeepComparable.IsExactly(SubjectState, otherT.SubjectState)) return false;
-        if( !DeepComparable.IsExactly(Milestone, otherT.Milestone)) return false;
-        if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-        if( !DeepComparable.IsExactly(StartDateElement, otherT.StartDateElement)) return false;
-        if( !DeepComparable.IsExactly(EndDateElement, otherT.EndDateElement)) return false;
-
-        return true;
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<Base> Children
-      {
-        get
-        {
-          foreach (var item in base.Children) yield return item;
-          if (Type != null) yield return Type;
-          if (SubjectState != null) yield return SubjectState;
-          if (Milestone != null) yield return Milestone;
-          if (Reason != null) yield return Reason;
-          if (StartDateElement != null) yield return StartDateElement;
-          if (EndDateElement != null) yield return EndDateElement;
-        }
-      }
-
-      [IgnoreDataMember]
-      public override IEnumerable<ElementValue> NamedChildren
-      {
-        get
-        {
-          foreach (var item in base.NamedChildren) yield return item;
-          if (Type != null) yield return new ElementValue("type", Type);
-          if (SubjectState != null) yield return new ElementValue("subjectState", SubjectState);
-          if (Milestone != null) yield return new ElementValue("milestone", Milestone);
-          if (Reason != null) yield return new ElementValue("reason", Reason);
-          if (StartDateElement != null) yield return new ElementValue("startDate", StartDateElement);
-          if (EndDateElement != null) yield return new ElementValue("endDate", EndDateElement);
-        }
-      }
-
-      protected override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["type"];
+              return true;
+            }
+            value = _Type;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "subjectState":
-            value = SubjectState;
-            return SubjectState is not null;
+            if (_SubjectState.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["subjectState"];
+              return true;
+            }
+            value = _SubjectState;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "milestone":
-            value = Milestone;
-            return Milestone is not null;
+            if (_Milestone.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["milestone"];
+              return true;
+            }
+            value = _Milestone;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "reason":
-            value = Reason;
-            return Reason is not null;
+            if (_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["reason"];
+              return true;
+            }
+            value = _Reason;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "startDate":
-            value = StartDateElement;
-            return StartDateElement is not null;
+            if (_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            {
+              value = Overflow["startDate"];
+              return true;
+            }
+            value = _StartDateElement;
+            return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
           case "endDate":
-            value = EndDateElement;
-            return EndDateElement is not null;
+            if (_EndDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+            {
+              value = Overflow["endDate"];
+              return true;
+            }
+            value = _EndDateElement;
+            return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      public override Base SetValue(string key, object? value)
       {
-        foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (SubjectState is not null) yield return new KeyValuePair<string,object>("subjectState",SubjectState);
-        if (Milestone is not null) yield return new KeyValuePair<string,object>("milestone",Milestone);
-        if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
-        if (StartDateElement is not null) yield return new KeyValuePair<string,object>("startDate",StartDateElement);
-        if (EndDateElement is not null) yield return new KeyValuePair<string,object>("endDate",EndDateElement);
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+        switch (key)
+        {
+          case "type":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "subjectState":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              SubjectState = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["subjectState"] = value;
+            }
+            else SubjectState = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "milestone":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Milestone = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["milestone"] = value;
+            }
+            else Milestone = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "reason":
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Reason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["reason"] = value;
+            }
+            else Reason = (Hl7.Fhir.Model.CodeableConcept?)value;
+            return this;
+          case "startDate":
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              StartDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["startDate"] = value;
+            }
+            else StartDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            return this;
+          case "endDate":
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              EndDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["endDate"] = value;
+            }
+            else EndDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            return this;
+          default:
+            return base.SetValue(key, value);
+        }
+
+      }
+
+      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+      {
+        foreach (var kvp in base.EnumerateElements()) yield return kvp;
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_SubjectState is not null && !_SubjectState.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("subjectState",_SubjectState);
+        if (_Milestone is not null && !_Milestone.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("milestone",_Milestone);
+        if (_Reason is not null && !_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+        if (_StartDateElement is not null && !_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("startDate",_StartDateElement);
+        if (_EndDateElement is not null && !_EndDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("endDate",_EndDateElement);
       }
 
     }
 
     /// <summary>
-    /// Business Identifier for research subject in a study
+    /// Business Identifier for research subject in a study.
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
+        return _StatusElement!;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -450,46 +591,70 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// Subject status
+    /// Subject status.
     /// </summary>
     [FhirElement("progress", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> Progress
     {
-      get { if(_Progress==null) _Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(); return _Progress; }
-      set { _Progress = value; OnPropertyChanged("Progress"); }
+      get
+      {
+        if(_Progress.InOverflow<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>), Overflow["progress"]);
+        return _Progress ??= [];
+      }
+
+      set
+      {
+        if (_Progress.InOverflow<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>())
+          Overflow.Remove("progress");
+        _Progress = value;
+        OnPropertyChanged("Progress");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> _Progress;
+    private List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>? _Progress;
 
     /// <summary>
-    /// Start and end of participation
+    /// Start and end of participation.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
-      get { return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
+        return _Period;
+      }
+
+      set
+      {
+        if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
-    /// Study subject is part of
+    /// Study subject is part of.
     /// </summary>
     [FhirElement("study", InSummary=true, Order=130)]
     [CLSCompliant(false)]
@@ -498,14 +663,27 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference Study
     {
-      get { return _Study; }
-      set { _Study = value; OnPropertyChanged("Study"); }
+      get
+      {
+        if(_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["study"]);
+        return _Study!;
+      }
+
+      set
+      {
+        if (_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("study");
+        _Study = value;
+        OnPropertyChanged("Study");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Study;
+    private Hl7.Fhir.Model.ResourceReference? _Study;
 
     /// <summary>
-    /// Who or what is part of study
+    /// Who or what is part of study.
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=140)]
     [CLSCompliant(false)]
@@ -514,243 +692,360 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference Subject
     {
-      get { return _Subject; }
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
+        return _Subject!;
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
-    /// What path should be followed
+    /// What path should be followed.
     /// </summary>
     [FhirElement("assignedComparisonGroup", Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.Id AssignedComparisonGroupElement
+    public Hl7.Fhir.Model.Id? AssignedComparisonGroupElement
     {
-      get { return _AssignedComparisonGroupElement; }
-      set { _AssignedComparisonGroupElement = value; OnPropertyChanged("AssignedComparisonGroupElement"); }
+      get
+      {
+        if(_AssignedComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["assignedComparisonGroup"]);
+        return _AssignedComparisonGroupElement;
+      }
+
+      set
+      {
+        if (_AssignedComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("assignedComparisonGroup");
+        _AssignedComparisonGroupElement = value;
+        OnPropertyChanged("AssignedComparisonGroupElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Id _AssignedComparisonGroupElement;
+    private Hl7.Fhir.Model.Id? _AssignedComparisonGroupElement;
 
     /// <summary>
     /// What path should be followed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AssignedComparisonGroup
+    public string? AssignedComparisonGroup
     {
-      get { return AssignedComparisonGroupElement != null ? AssignedComparisonGroupElement.Value : null; }
+      get => AssignedComparisonGroupElement?.Value;
       set
       {
-        if (value == null)
-          AssignedComparisonGroupElement = null;
-        else
-          AssignedComparisonGroupElement = new Hl7.Fhir.Model.Id(value);
+        AssignedComparisonGroupElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("AssignedComparisonGroup");
       }
     }
 
     /// <summary>
-    /// What path was followed
+    /// What path was followed.
     /// </summary>
     [FhirElement("actualComparisonGroup", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Id ActualComparisonGroupElement
+    public Hl7.Fhir.Model.Id? ActualComparisonGroupElement
     {
-      get { return _ActualComparisonGroupElement; }
-      set { _ActualComparisonGroupElement = value; OnPropertyChanged("ActualComparisonGroupElement"); }
+      get
+      {
+        if(_ActualComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["actualComparisonGroup"]);
+        return _ActualComparisonGroupElement;
+      }
+
+      set
+      {
+        if (_ActualComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("actualComparisonGroup");
+        _ActualComparisonGroupElement = value;
+        OnPropertyChanged("ActualComparisonGroupElement");
+      }
+
     }
 
-    private Hl7.Fhir.Model.Id _ActualComparisonGroupElement;
+    private Hl7.Fhir.Model.Id? _ActualComparisonGroupElement;
 
     /// <summary>
     /// What path was followed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ActualComparisonGroup
+    public string? ActualComparisonGroup
     {
-      get { return ActualComparisonGroupElement != null ? ActualComparisonGroupElement.Value : null; }
+      get => ActualComparisonGroupElement?.Value;
       set
       {
-        if (value == null)
-          ActualComparisonGroupElement = null;
-        else
-          ActualComparisonGroupElement = new Hl7.Fhir.Model.Id(value);
+        ActualComparisonGroupElement = value is null ? null! : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("ActualComparisonGroup");
       }
     }
 
     /// <summary>
-    /// Agreement to participate in study
+    /// Agreement to participate in study.
     /// </summary>
     [FhirElement("consent", Order=170)]
     [CLSCompliant(false)]
     [References("Consent")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Consent
     {
-      get { if(_Consent==null) _Consent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Consent; }
-      set { _Consent = value; OnPropertyChanged("Consent"); }
+      get
+      {
+        if(_Consent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["consent"]);
+        return _Consent ??= [];
+      }
+
+      set
+      {
+        if (_Consent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("consent");
+        _Consent = value;
+        OnPropertyChanged("Consent");
+      }
+
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Consent;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Consent;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
 
-    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ResearchSubject;
-
-      if (dest == null)
-      {
+      if(other is not ResearchSubject dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
-      base.CopyTo(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
-      if(Progress.Any()) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopy());
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-      if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopy();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-      if(AssignedComparisonGroupElement != null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)AssignedComparisonGroupElement.DeepCopy();
-      if(ActualComparisonGroupElement != null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)ActualComparisonGroupElement.DeepCopy();
-      if(Consent.Any()) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(Consent.DeepCopy());
-      return dest;
+      base.CopyToInternal(dest);
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
+      if(_Progress is not null) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(_Progress.DeepCopyInternal());
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Study is not null) dest.Study = (Hl7.Fhir.Model.ResourceReference)_Study.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_AssignedComparisonGroupElement is not null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)_AssignedComparisonGroupElement.DeepCopyInternal();
+      if(_ActualComparisonGroupElement is not null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)_ActualComparisonGroupElement.DeepCopyInternal();
+      if(_Consent is not null) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(_Consent.DeepCopyInternal());
     }
 
-    public override IDeepCopyable DeepCopy()
+    protected internal override Base DeepCopyInternal()
     {
-      return CopyTo(new ResearchSubject());
+      var instance = new ResearchSubject();
+      CopyToInternal(instance);
+      return instance;
     }
 
-    ///<inheritdoc />
-    public override bool Matches(IDeepComparable other)
+    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ResearchSubject;
-      if(otherT == null) return false;
+      if(other is not ResearchSubject otherT) return false;
 
-      if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.Matches(Progress, otherT.Progress)) return false;
-      if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-      if( !DeepComparable.Matches(Study, otherT.Study)) return false;
-      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.Matches(AssignedComparisonGroupElement, otherT.AssignedComparisonGroupElement)) return false;
-      if( !DeepComparable.Matches(ActualComparisonGroupElement, otherT.ActualComparisonGroupElement)) return false;
-      if( !DeepComparable.Matches(Consent, otherT.Consent)) return false;
+      if(!base.CompareChildren(otherT, comparer)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.ListEquals(_Progress, otherT._Progress)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Study, otherT._Study)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_AssignedComparisonGroupElement, otherT._AssignedComparisonGroupElement)) return false;
+      if(!comparer.Equals(_ActualComparisonGroupElement, otherT._ActualComparisonGroupElement)) return false;
+      if(!comparer.ListEquals(_Consent, otherT._Consent)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool IsExactly(IDeepComparable other)
-    {
-      var otherT = other as ResearchSubject;
-      if(otherT == null) return false;
-
-      if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-      if( !DeepComparable.IsExactly(Progress, otherT.Progress)) return false;
-      if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-      if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
-      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-      if( !DeepComparable.IsExactly(AssignedComparisonGroupElement, otherT.AssignedComparisonGroupElement)) return false;
-      if( !DeepComparable.IsExactly(ActualComparisonGroupElement, otherT.ActualComparisonGroupElement)) return false;
-      if( !DeepComparable.IsExactly(Consent, otherT.Consent)) return false;
-
-      return true;
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<Base> Children
-    {
-      get
-      {
-        foreach (var item in base.Children) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-        if (StatusElement != null) yield return StatusElement;
-        foreach (var elem in Progress) { if (elem != null) yield return elem; }
-        if (Period != null) yield return Period;
-        if (Study != null) yield return Study;
-        if (Subject != null) yield return Subject;
-        if (AssignedComparisonGroupElement != null) yield return AssignedComparisonGroupElement;
-        if (ActualComparisonGroupElement != null) yield return ActualComparisonGroupElement;
-        foreach (var elem in Consent) { if (elem != null) yield return elem; }
-      }
-    }
-
-    [IgnoreDataMember]
-    public override IEnumerable<ElementValue> NamedChildren
-    {
-      get
-      {
-        foreach (var item in base.NamedChildren) yield return item;
-        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
-        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
-        foreach (var elem in Progress) { if (elem != null) yield return new ElementValue("progress", elem); }
-        if (Period != null) yield return new ElementValue("period", Period);
-        if (Study != null) yield return new ElementValue("study", Study);
-        if (Subject != null) yield return new ElementValue("subject", Subject);
-        if (AssignedComparisonGroupElement != null) yield return new ElementValue("assignedComparisonGroup", AssignedComparisonGroupElement);
-        if (ActualComparisonGroupElement != null) yield return new ElementValue("actualComparisonGroup", ActualComparisonGroupElement);
-        foreach (var elem in Consent) { if (elem != null) yield return new ElementValue("consent", elem); }
-      }
-    }
-
-    protected override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.PublicationStatus>) is not null;
         case "progress":
-          value = Progress;
-          return Progress?.Any() == true;
+          if (_Progress.InOverflow<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>())
+          {
+            value = Overflow["progress"];
+            return true;
+          }
+          value = _Progress;
+          return (value as List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>)?.Any() is true;
         case "period":
-          value = Period;
-          return Period is not null;
+          if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          {
+            value = Overflow["period"];
+            return true;
+          }
+          value = _Period;
+          return (value as Hl7.Fhir.Model.Period) is not null;
         case "study":
-          value = Study;
-          return Study is not null;
+          if (_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["study"];
+            return true;
+          }
+          value = _Study;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
+          value = _Subject;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "assignedComparisonGroup":
-          value = AssignedComparisonGroupElement;
-          return AssignedComparisonGroupElement is not null;
+          if (_AssignedComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["assignedComparisonGroup"];
+            return true;
+          }
+          value = _AssignedComparisonGroupElement;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "actualComparisonGroup":
-          value = ActualComparisonGroupElement;
-          return ActualComparisonGroupElement is not null;
+          if (_ActualComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["actualComparisonGroup"];
+            return true;
+          }
+          value = _ActualComparisonGroupElement;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "consent":
-          value = Consent;
-          return Consent?.Any() == true;
+          if (_Consent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["consent"];
+            return true;
+          }
+          value = _Consent;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    public override Base SetValue(string key, object? value)
     {
-      foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",Progress);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (AssignedComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("assignedComparisonGroup",AssignedComparisonGroupElement);
-      if (ActualComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("actualComparisonGroup",ActualComparisonGroupElement);
-      if (Consent?.Any() == true) yield return new KeyValuePair<string,object>("consent",Consent);
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
+      switch (key)
+      {
+        case "identifier":
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          return this;
+        case "status":
+          if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
+          return this;
+        case "progress":
+          if (value is not (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> or null))
+          {
+            Progress = OverflowNull<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>.INSTANCE;
+            Overflow["progress"] = value;
+          }
+          else Progress = (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>?)value!;
+          return this;
+        case "period":
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
+          return this;
+        case "study":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Study = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["study"] = value;
+          }
+          else Study = (Hl7.Fhir.Model.ResourceReference?)value!;
+          return this;
+        case "subject":
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value!;
+          return this;
+        case "assignedComparisonGroup":
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            AssignedComparisonGroupElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["assignedComparisonGroup"] = value;
+          }
+          else AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
+          return this;
+        case "actualComparisonGroup":
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            ActualComparisonGroupElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["actualComparisonGroup"] = value;
+          }
+          else ActualComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
+          return this;
+        case "consent":
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Consent = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["consent"] = value;
+          }
+          else Consent = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          return this;
+        default:
+          return base.SetValue(key, value);
+      }
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
+    {
+      foreach (var kvp in base.EnumerateElements()) yield return kvp;
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Progress?.Any() is true && !_Progress.InOverflow<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>()) yield return new KeyValuePair<string,object>("progress",_Progress);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Study is not null && !_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_AssignedComparisonGroupElement is not null && !_AssignedComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("assignedComparisonGroup",_AssignedComparisonGroupElement);
+      if (_ActualComparisonGroupElement is not null && !_ActualComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("actualComparisonGroup",_ActualComparisonGroupElement);
+      if (_Consent?.Any() is true && !_Consent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("consent",_Consent);
     }
 
   }

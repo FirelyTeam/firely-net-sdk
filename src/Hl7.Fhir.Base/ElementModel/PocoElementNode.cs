@@ -14,7 +14,6 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
@@ -32,12 +31,12 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             _inspector = inspector;
-            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType());
+            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType())!;
 
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
 
-            Location = InstanceType;
+            Location = InstanceType!;
             ShortPath = InstanceType;
         }
 
@@ -50,9 +49,9 @@ namespace Hl7.Fhir.ElementModel
             var instanceType = definition.Choice != ChoiceType.None
                 ? instance.GetType()
                 : determineInstanceType(definition);
-            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType);
+            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType)!;
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
-            Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
+            Definition = definition;
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
@@ -62,23 +61,13 @@ namespace Hl7.Fhir.ElementModel
         private Type determineInstanceType(PropertyMapping definition)
         {
             if (!definition.IsPrimitive) return definition.PropertyTypeMapping.NativeType;
-
-            // Backwards compat hack: the primitives (since .value is never queried, this
-            // means Element.id, Narrative.div and Extension.url) should be returned as FHIR types, not
-            // system (CQL) type.
-            return definition.Name switch
-            {
-                "url" => typeof(FhirUri),
-                "id" => typeof(FhirString),
-                "div" => typeof(XHtml),
-                _ => throw new NotSupportedException(
-                    $"Encountered unexpected primitive type {Name} in backward compat behaviour for PocoElementNode.InstanceType.")
-            };
+            throw new NotSupportedException(
+                $"Encountered unexpected primitive type {Name} for PocoElementNode.InstanceType.");
         }
 
-        public IElementDefinitionSummary Definition { get; private set; }
+        public IElementDefinitionSummary Definition { get; }
 
-        public string ShortPath { get; private set; }
+        public string ShortPath { get; }
 
         /// <summary>
         /// Elements from the IReadOnlyDictionary can be of type <see cref="Base"/>, IEnumerable&lt;Base&gt; or string.
@@ -93,8 +82,6 @@ namespace Hl7.Fhir.ElementModel
             {
                 (Base @base, _, _)  => new[] { (@base, 0) },
                 (IEnumerable<Base> bases, _, _)  => bases.Select((e, i) => (e, i)),
-                (string s, Extension, "url")  => new[]{ ( (Base)new FhirUri(s), 0)},
-                (string s, Element, "id")  => new[]{ ((Base)new FhirString(s), 0)},
                 _ => Enumerable.Empty<(Base, int)>(),
             };
         }
@@ -108,15 +95,13 @@ namespace Hl7.Fhir.ElementModel
         {
             if (Current is null) return Enumerable.Empty<PocoElementNode>();
 
-            var rod = Current.AsReadOnlyDictionary();
-
             if (name is null)
             {
-                return rod.SelectMany(kvp
+                return Current.EnumerateElements().SelectMany(kvp
                     => createChildNodes(kvp.Key, kvp.Value));
             }
 
-            rod.TryGetValue(name, out var dictValue);
+            Current.TryGetValue(name, out var dictValue);
             return createChildNodes(name, dictValue);
 
             IEnumerable<PocoElementNode> createChildNodes(string childName, object value)
@@ -191,18 +176,13 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (Current is PrimitiveType p && p.ObjectValue != null)
-                {
-                    if (p.ObjectValue != _lastCachedValue)
-                    {
-                        _value = ToITypedElementValue();
-                        _lastCachedValue = p.ObjectValue;
-                    }
+                if (Current is not PrimitiveType { JsonValue: not null } p) return null;
 
-                    return _value;
-                }
-                else
-                    return null;
+                if (p.JsonValue == _lastCachedValue) return _value;
+
+                _value = ToITypedElementValue();
+                _lastCachedValue = p.JsonValue;
+                return _value;
             }
         }
 
@@ -210,67 +190,47 @@ namespace Hl7.Fhir.ElementModel
         {
             try
             {
-                switch (Current)
+                return Current switch
                 {
-                    case Hl7.Fhir.Model.Instant ins when ins.Value.HasValue:
-                        return P.DateTime.FromDateTimeOffset(ins.Value.Value);
-                    case Hl7.Fhir.Model.Time time when time.Value is { }:
-                        return P.Time.Parse(time.Value);
-                    case Hl7.Fhir.Model.Date dt when dt.Value is { }:
-                        return P.Date.Parse(dt.Value);
-                    case FhirDateTime fdt when fdt.Value is { }:
-                        return P.DateTime.Parse(fdt.Value);
-                    case Hl7.Fhir.Model.Integer fint:
-                        if (!fint.Value.HasValue)
-                            return null;
-                        return (int)fint.Value;
-                    case Hl7.Fhir.Model.Integer64 fint64:
-                        if (!fint64.Value.HasValue)
-                            return null;
-                        return (long)fint64.Value;
-                    case Hl7.Fhir.Model.PositiveInt pint:
-                        if (!pint.Value.HasValue)
-                            return null;
-                        return (int)pint.Value;
-                    case Hl7.Fhir.Model.UnsignedInt unsint:
-                        if (!unsint.Value.HasValue)
-                            return null;
-                        return (int)unsint.Value;
-                    case Hl7.Fhir.Model.Base64Binary b64:
-                        return b64.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(b64.Value) : null;
-                    case PrimitiveType prim:
-                        return prim.ObjectValue;
-                    default:
-                        return null;
-                }
+                    Instant { Value: { } ins } => P.DateTime.FromDateTimeOffset(ins),
+                    Time { Value: { } time } => P.Time.Parse(time),
+                    Date { Value: { } dt } => P.Date.Parse(dt),
+                    FhirDateTime { Value: { } fdt } => P.DateTime.Parse(fdt),
+                    Integer fint => fint.Value,
+                    Integer64 fint64 => fint64.Value,
+                    PositiveInt pint => pint.Value,
+                    UnsignedInt unsint => unsint.Value,
+                    Base64Binary { JsonValue: { } b64 } => b64,
+                    PrimitiveType prim => prim.JsonValue,
+                    _ => null
+                };
             }
             catch (FormatException)
             {
                 // If it fails, just return the unparsed contents
-                return (Current as PrimitiveType)?.ObjectValue;
+                return (Current as PrimitiveType)?.JsonValue;
             }
         }
 
 
-        public string InstanceType { get; private set; }
+        public string InstanceType { get; }
 
-        public string Location { get; private set; }
+        public string Location { get; }
 
         public string ResourceType => Current is Resource ? InstanceType : null;
 
         public IEnumerable<object> Annotations(Type type)
         {
             if (type == typeof(PocoElementNode) || type == typeof(ITypedElement) || type == typeof(IShortPathGenerator))
-                return new[] { this };
+                return [this];
             else if (type == typeof(IFhirValueProvider))
-                return new[] { this };
+                return [this];
             else if (type == typeof(IResourceTypeSupplier))
-                return new[] { this };
+                return [this];
             else if (FhirValue is IAnnotated ia)
                 return ia.Annotations(type);
-
             else
-                return Enumerable.Empty<object>();
+                return [];
         }
     }
 }

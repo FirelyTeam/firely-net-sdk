@@ -10,27 +10,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System.Runtime.CompilerServices;
+
+#nullable enable
 
 namespace Hl7.FhirPath.Functions
-{
+{ 
     internal static class TypeOperators
     {
-        public static bool Is(this ITypedElement focus, string type)
+        public static bool Is(this PocoNode? focus, string type)
         {
-            if (focus.InstanceType != null)
+            if (focus is null) return false;
+
+            var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
+#pragma warning disable CS0618 // Type or member is obsolete
+                .Select(t => ModelInspector.ForAssembly(t.Assembly).GetFhirTypeNameForType(t))
+#pragma warning restore CS0618 // Type or member is obsolete
+                .Prepend(((ITypedElement)focus).InstanceType);
+            return selfAndBaseClasses.Any(typeString => Is(typeString, type));
+            
+            static IEnumerable<Type> getBaseClasses(Type t)
             {
-                return Is(focus.InstanceType, type);     // I have no information about classes/subclasses
+                return t.BaseType == null ? [] : getBaseClasses(t.BaseType).Append(t);
             }
-            else
-                throw Error.InvalidOperation("Is operator is called on untyped data");
         }
 
-        public static bool Is(string instanceType, string declaredType)
+        public static bool Is(string? instanceType, string declaredType)
         {
             // Bit of a hack, this hardwires the FhirPath implementation to FHIR
-            if (!instanceType.Contains(".")) instanceType = "FHIR." + instanceType;
-            if (declaredType.Contains("."))
+            if (instanceType?.Contains('.') is false) instanceType = "FHIR." + instanceType;
+            if (declaredType.Contains('.'))
                 return instanceType == declaredType;
             else
             {
@@ -39,10 +51,7 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-        public static IEnumerable<ITypedElement> FilterType(this IEnumerable<ITypedElement> focus, string typeName)
+        public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));
-
-        public static ITypedElement CastAs(this ITypedElement focus, string typeName)
-            => focus.Is(typeName) ? focus : null;
     }
 }

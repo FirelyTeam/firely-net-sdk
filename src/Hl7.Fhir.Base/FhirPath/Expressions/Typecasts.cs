@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -23,34 +24,30 @@ namespace Hl7.FhirPath.Expressions
         private static Cast makeNativeCast(Type to) =>
             source => Convert.ChangeType(source, to);
 
-        private static ITypedElement any2primitiveTypedElement(object source) => ElementNode.ForPrimitive(source);
+        private static PocoNode any2primitiveTypedElement(object source) => PocoNode.ForAnyPrimitive(source);
 
-        private static IEnumerable<ITypedElement> any2List(object source) => ElementNode.CreateList(source);
+        private static IEnumerable<PocoNode> any2SingleItemList(object source) => PocoNode.ForAnyPrimitive(source);
 
         private static P.Quantity tryQuantity(object source)
         {
-            if (source is ITypedElement element)
+            if (source is PocoNode element)
             {
-                if (element.InstanceType == "Quantity")
+                if (element is {Poco: Quantity})
                 {
                     // Need to downcast from a FHIR Quantity to a System.Quantity
                     return ParseQuantity(element);
                 }
                 else
-                    throw new InvalidCastException($"Cannot convert from '{element.InstanceType}' to Quantity");
+                    throw new InvalidCastException($"Cannot convert from '{element.Poco.TypeName}' to Quantity");
             }
 
             throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity");
         }
 
 
-        internal static P.Quantity ParseQuantity(ITypedElement qe)
+        internal static P.Quantity ParseQuantity(PocoNode qe)
         {
-            var value = qe.Children("value").SingleOrDefault()?.Value as decimal?;
-            if (value == null) return null;
-
-            var unit = qe.Children("code").SingleOrDefault()?.Value as string;
-            return new P.Quantity(value.Value, unit);
+            return (qe.Poco as Quantity)?.ToSystemQuantity();
         }
 
         private static Cast getImplicitCast(object f, Type to)
@@ -60,10 +57,11 @@ namespace Hl7.FhirPath.Expressions
             if (to == typeof(object)) return id;
             if (from.CanBeTreatedAsType(to)) return id;
 
-            bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>));
-            if (to == typeof(P.Quantity) && from.CanBeTreatedAsType(typeof(ITypedElement))) return tryQuantity;
-            if (to == typeof(ITypedElement) && (!fromElemList)) return any2primitiveTypedElement;
-            if (to == typeof(IEnumerable<ITypedElement>)) return any2List;
+            // this check seems weird, but PocoElementNode both implements PocoNode and IEnumerable<PocoNode> for the sake of backwards compatibility
+            bool fromElemList = from.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>)) && !from.CanBeTreatedAsType(typeof(PocoNode));
+            if (to.CanBeTreatedAsType(typeof(P.Quantity)) && from.CanBeTreatedAsType(typeof(PocoNode))) return tryQuantity;
+            if (to == typeof(PocoNode) && !fromElemList) return any2primitiveTypedElement;
+            if (to == typeof(IEnumerable<PocoNode>)) return any2SingleItemList;
 
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
             if (from == typeof(long?) && to == typeof(decimal?)) return makeNativeCast(typeof(decimal?));
@@ -77,7 +75,14 @@ namespace Hl7.FhirPath.Expressions
 
             if (typeof(P.Any).IsAssignableFrom(to) && !fromElemList)
             {
-                if (f is ITypedElement te && te.InstanceType == "Quantity") return o => ParseQuantity((ITypedElement)o);
+                if (f is PrimitiveNode { Value: null })
+                    return _ => null;
+                
+                if (f is PocoNode {Poco: P.IToSystemPrimitive tsp} && tsp.TryConvertToSystemType(out var result))
+                {
+                    return _ => result;
+                }
+
                 return o => P.Any.Convert(o);
             }
 
@@ -101,38 +106,33 @@ namespace Hl7.FhirPath.Expressions
         /// <param name="to">The level to unbox to.</param>
         /// <returns></returns>
         /// <remarks>The level of unboxing is specified using a type. The highest level
-        /// being an <see cref="IEnumerable{ITypedElement}"/> followed by 
-        /// <see cref="ITypedElement"/> followed by a primitive runtime type.
+        /// being an <see cref="IEnumerable{PocoNode}"/> followed by 
+        /// <see cref="PocoNode"/> followed by a primitive runtime type.
         /// </remarks>
         internal static object UnboxTo(object instance, Type to)
         {
             if (instance == null) return null;
-
-            if (instance is IEnumerable<ITypedElement> list)
+            
+            if (instance is IEnumerable<PocoNode> list)
             {
                 var cachedEnum = CachedEnumerable.Create(list);
-                if (to.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>))) return cachedEnum;
 
+                if (!to.CanBeTreatedAsType(typeof(PocoNode)) && to.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>))) return cachedEnum;
+                
                 if (!cachedEnum.Any()) return null;
                 if (cachedEnum.Count() == 1)
                     instance = cachedEnum.Single();
             }
-
-            if (instance is ITypedElement element)
+            
+            if (instance is PocoNode element)
             {
-                if (to.CanBeTreatedAsType(typeof(ITypedElement))) return instance;
+                if (to.CanBeTreatedAsType(typeof(PocoNode))) return instance;
                 if (to == typeof(object)) return instance;
 
-                // HACK - We assume the primitives
-                // start with a lower-case letter, which is true in FHIR but not
-                // in general. When this is a System.* type, we know this is supposed
-                // to represent the object in Value.
-
-                var isPrimitive = element.Value != null ||
-                    (element.InstanceType != null &&
-                        Char.IsLower(element.InstanceType[0]) || element.InstanceType.StartsWith("System."));
-                if (isPrimitive)
-                    instance = element.Value;
+                if (element is PrimitiveNode pn)
+                {
+                    instance = pn.Value;
+                }
             }
 
             return instance;
@@ -190,8 +190,8 @@ namespace Hl7.FhirPath.Expressions
             }
 
             //if source == null, or unboxed source == null....
-            if (to == typeof(IEnumerable<ITypedElement>))
-                return ElementNode.EmptyList;
+            if (to == typeof(IEnumerable<PocoNode>))
+                return Array.Empty<PocoNode>();
             if (to.IsNullable())
                 return null;
             else
@@ -200,7 +200,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static bool IsNullable(this Type t)
         {
-            if (!t.IsAValueType()) return true; // ref-type
+            if (!t.IsValueType) return true; // ref-type
             if (Nullable.GetUnderlyingType(t) != null) return true; // Nullable<T>
             return false; // value-type
         }
@@ -209,24 +209,25 @@ namespace Hl7.FhirPath.Expressions
 
         public static string ReadableFhirPathName(object value)
         {
-            if (value is IEnumerable<ITypedElement> ete)
+            if (value is PocoNode te)
+                return te.Poco.TypeName;
+            
+            if (value is IEnumerable<PocoNode> ete)
             {
                 var values = ete.ToList();
                 var types = ete.Select(te => ReadableFhirPathName(te)).Distinct();
 
                 return values.Count > 1 ? "collection of " + String.Join("/", types) : types.Single();
             }
-            else if (value is ITypedElement te)
-                return te.InstanceType;
-            else
-                return value.GetType().Name;
+            
+            return value.GetType().Name;
         }
 
         public static string ReadableTypeName(Type t)
         {
-            if (t.CanBeTreatedAsType(typeof(IEnumerable<ITypedElement>)))
+            if (t.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>)))
                 return "collection";
-            else if (t.CanBeTreatedAsType(typeof(ITypedElement)))
+            else if (t.CanBeTreatedAsType(typeof(PocoNode)))
                 return "any type";
             else if (t.CanBeTreatedAsType(typeof(P.Any)))
                 return "FhirPath type " + t.Name;

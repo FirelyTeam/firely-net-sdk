@@ -208,6 +208,7 @@
   // Used in model class (resource): Measure.status
   // Used in model class (resource): MedicinalProductDefinition.status
   // Used in model class (resource): MessageDefinition.status
+  // Used in model class (resource): MetadataResource.status
   // Used in model class (resource): NamingSystem.status
   // Used in model class (resource): ObservationDefinition.status
   // Used in model class (resource): OperationDefinition.status
@@ -284,7 +285,7 @@
   // Used in model class (resource): Subscription.filterBy.modifier
   // Used in model class (resource): SubscriptionTopic.canFilterBy.modifier
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
+// Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
@@ -297,7 +298,7 @@
   // Used in model class (resource): Evidence.statistic.modelCharacteristic.variable.handling
   // Used in model class (resource): EvidenceVariable.handling
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
+// Generated Shared Enumeration: VersionIndependentResourceTypesAll (http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
   // Used in model class (resource): GraphDefinition.node.type
   // Used in model class (resource): OperationDefinition.resource
   // Used in model class (resource): SearchParameter.base
@@ -325,6 +326,7 @@
 // FhirUrl.cs
 // Uuid.cs
 // XHtml.cs
+// Address.cs
 // Attachment.cs
 // BackboneElement.cs
 // BackboneType.cs
@@ -335,8 +337,10 @@
 // ContactDetail.cs
 // ContactPoint.cs
 // DataType.cs
+// Duration.cs
 // Element.cs
 // Extension.cs
+// HumanName.cs
 // Identifier.cs
 // Meta.cs
 // Narrative.cs
@@ -344,6 +348,7 @@
 // PrimitiveType.cs
 // Quantity.cs
 // Range.cs
+// Ratio.cs
 // ResourceReference.cs
 // Signature.cs
 // UsageContext.cs

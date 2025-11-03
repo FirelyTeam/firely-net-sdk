@@ -11,10 +11,10 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,10 +22,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.Fhir.FhirPath.R4.Tests
 {
     public class PatientFixture : IDisposable
     {
@@ -38,19 +37,19 @@ namespace Hl7.FhirPath.R4.Tests
 
         public PatientFixture()
         {
-            var parser = new FhirXmlParser();
+            var parser = FhirXmlDeserializer.OSTRICH; // There are tons of errors in de demo files
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
-            TestInput = parser.Parse<Patient>(tpXml);
+            TestInput = parser.Deserialize<Patient>(tpXml);
 
             var epXml = TestData.ReadTextFile("patient-example.xml");
-            PatientExample = parser.Parse<Patient>(epXml);
+            PatientExample = parser.Deserialize<Patient>(epXml);
 
             tpXml = TestData.ReadTextFile("questionnaire-example.xml");
-            Questionnaire = parser.Parse<Questionnaire>(tpXml);
+            Questionnaire = parser.Deserialize<Questionnaire>(tpXml);
 
             tpXml = TestData.ReadTextFile("uuid.profile.xml");
-            UuidProfile = parser.Parse<StructureDefinition>(tpXml);
+            UuidProfile = parser.Deserialize<StructureDefinition>(tpXml);
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -89,9 +88,9 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.IsTrue(IsBoolean(TestInput, expr, result));
         }
 
-        public bool IsBoolean(Base baseInput, string expression, bool value, EvaluationContext? ctx = null)
+        public bool IsBoolean(Base baseInput, string expression, bool value, EvaluationContext ctx = null)
         {
-            var input = baseInput.ToTypedElement().ToScopedNode();
+            var input = baseInput.ToPocoNode();
 
             // Don't use the expression cache as we need to inject the debug tracer
             var compiler = new FhirPathCompiler();
@@ -271,7 +270,7 @@ namespace Hl7.FhirPath.R4.Tests
         public void TestAny()
         {
             fixture.IsTrue(@"Patient.identifier.any(use = 'official')");
-            fixture.IsTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() aways returns true
+            fixture.IsTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() always returns false
             fixture.IsTrue(@"Patient.contained.skip(1).item.any(code.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 
@@ -298,19 +297,19 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
                        Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
                         Patient.identifier.first())");
-
+            
             fixture.IsTrue(@"(1|2|3|4|5).where($this > 2 and $this <= 4) = (3|4)");
-
+            
             fixture.IsTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
                         3 + Patient.identifier.count()");
-
+            
             fixture.IsTrue(@"(Patient.identifier.where(use='official').last() in Patient.identifier) and
                        (Patient.identifier.first() in Patient.identifier.tail()).not()");
-
+            
             fixture.IsTrue(@"Patient.identifier.any(use='official') and identifier.where(use='usual').exists()");
-
+            
             fixture.IsTrue(@"Patient.descendants().where($this.as(string).contains('222'))[1] = %context.contained.address.line");
-
+            
             fixture.IsTrue(@"Patient.name.select(given|family).count() = 2");
             fixture.IsTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
             fixture.IsTrue(@"Patient.descendants().where(($this is code) and ($this.contains('wne'))).trace('them') = contact.relationship.coding.code");
@@ -583,7 +582,6 @@ namespace Hl7.FhirPath.R4.Tests
         {
             var expr = "Patient.name.defineVariable('n2', skip(1).first()).defineVariable('res', %n2.given+%n2.given).select(%res)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            foreach (var item in r) { Console.WriteLine(item.ToXml()); }
             Assert.AreEqual(2, r.Count());
             Assert.AreEqual("JimJim", r.First().ToString());
             Assert.AreEqual("JimJim", r.Skip(1).First().ToString());
@@ -621,10 +619,10 @@ namespace Hl7.FhirPath.R4.Tests
             var expr = "defineVariable('root', 'r1-').select(defineVariable('v1', 'v1').defineVariable('v2', 'v2').select(%v1 | %v2)).select(%root & $this)";
             var compiler = new FhirPathCompiler();
             var exprCompiled = compiler.Compile(expr);
-            var r = exprCompiled(fixture.PatientExample.ToTypedElement(), new FhirEvaluationContext());
+            var r = exprCompiled(fixture.PatientExample.ToPocoNode(), new FhirEvaluationContext());
             Assert.AreEqual(2, r.Count());
-            Assert.AreEqual("r1-v1", r.First().ToString());
-            Assert.AreEqual("r1-v2", r.Skip(1).First().ToString());
+            Assert.AreEqual("r1-v1", r.First().GetValue());
+            Assert.AreEqual("r1-v2", r.Skip(1).First().GetValue());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
         }
         /*

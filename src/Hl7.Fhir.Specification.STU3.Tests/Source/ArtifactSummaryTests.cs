@@ -335,8 +335,7 @@ namespace Hl7.Fhir.Specification.Tests
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        var parser = new BaseFhirParser(ModelInfo.ModelInspector);
-                        var corePatient = parser.Parse<StructureDefinition>(nav);
+                        var corePatient = nav.ToPoco<StructureDefinition>();
                         Assert.IsNotNull(corePatient);
                         Assert.AreEqual(corePatientUrl, corePatient.Url);
                     }
@@ -369,7 +368,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestSummarizeAnonymousResources()
         {
             // Parse anonymous resources & bundles entries (w/o ResourceId)
-            string path = Path.GetFullPath(@"TestData\summary-test");
+            string path = Path.GetFullPath(@"TestData/summary-test");
 
             Console.WriteLine("Extracting summaries from path: " + path);
             var dirSource = new DirectorySource(path, new DirectorySourceSettings()
@@ -412,7 +411,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestErrorSummaries()
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\grahame-validation-examples");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), @"TestData/grahame-validation-examples");
             var dirSource = new DirectorySource(path, new DirectorySourceSettings(includeSubdirectories: false));
             var summaries = dirSource.ListSummaries().ToList();
             Assert.IsNotNull(summaries);

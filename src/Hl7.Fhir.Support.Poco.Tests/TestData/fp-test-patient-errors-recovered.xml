@@ -1,0 +1,146 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <contained>
+    <PatientX />
+  </contained>
+  <contained>
+    <Patient>
+      <active value="true" />
+      <active value="false" />
+    </Patient>
+  </contained>
+  <contained>
+    <Patient>
+      <active value="not-checked" />
+    </Patient>
+  </contained>
+  <contained>
+    <anotherElement value="incontained" />
+  </contained>
+  <contained>
+    <Patient />
+  </contained>
+  <contained>
+    <PatientId>
+      <id value="1" />
+    </PatientId>
+  </contained>
+  <contained>
+    <Patient>
+      <id value="1" />
+      <id value="2" />
+      <id value="3" />
+      <name />
+      <name />
+    </Patient>
+  </contained>
+  <contained>
+    <Patient>
+      <active value="false" anotherAttribute="true" />
+      <birthDate value="February" />
+    </Patient>
+  </contained>
+  <contained>
+    <Patient>
+      <id value="PrimitiveWhenComplex" />
+      <active value="true">
+        <name value="false" />
+        <data value="testData" />
+      </active>
+      <gender value="cat" />
+      <address value="123 Main St" />
+    </Patient>
+  </contained>
+  <contained>
+    <Patient no="yes">
+      <id />
+      <name value="Doe" />
+      <unknown />
+    </Patient>
+  </contained>
+  <contained>
+    <OperationOutcome>
+      <id value="shouldhaveissues" />
+    </OperationOutcome>
+  </contained>
+  <contained>
+    <Observation valueString="not here">
+      <status value="final" />
+      <code>
+        <text value="Decimal Testing Observation" />
+      </code>
+      <valueUnknown>
+        <highest value="1234" />
+      </valueUnknown>
+    </Observation>
+  </contained>
+  <contained>
+    <Observation>
+      <code>
+        <text value="Decimal Testing Observation" />
+      </code>
+      <component>
+        <code>
+          <text value="Component" />
+        </code>
+        <valueQuantity>
+          <value value="10000000000000000" />
+          <unit value="g" />
+        </valueQuantity>
+      </component>
+      <component>
+        <code>
+          <text value="Component" />
+        </code>
+        <valueQuantity>
+          <value value="0.0000000000000000000000010000" />
+          <unit value="g" />
+        </valueQuantity>
+      </component>
+      <component>
+        <code>
+          <text value="Component" />
+        </code>
+        <valueQuantity>
+          <value value="-1.00000000000000000e245" />
+          <unit value="g" />
+        </valueQuantity>
+      </component>
+    </Observation>
+  </contained>
+  <identifier>
+    <use value="official" />
+    <system value="urn:oid:9.0.1.2.3.4.5.6.7" />
+    <value value="7654321" />
+  </identifier>
+  <identifier>
+    <use value="official" />
+    <system value="http://some.other/system" />
+    <value value="11223344" />
+  </identifier>
+  <active value="true" />
+  <name>
+    <use value="official" />
+    <family value="Donald" />
+    <given value="Duck" />
+  </name>
+  <telecom>
+    <system value="phone" />
+    <value value="555-555-2003" />
+    <use value="work" />
+    <rank value="1" />
+  </telecom>
+  <gender value="male">
+    <extension url="http://example.org/StructureDefinition/real-gender">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="urn:oid:crap">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="http://then.nl" huh="hi!">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="http://nu.nl">
+      <valueCode value="metrosexual" />
+    </extension>
+  </gender>
+</Patient>

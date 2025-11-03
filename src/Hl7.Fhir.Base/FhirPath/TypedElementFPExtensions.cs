@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 
@@ -21,25 +22,25 @@ namespace Hl7.FhirPath
 
         private static Lazy<FhirPathCompilerCache> CACHE = new(() => new(compiler: null, cacheSize: MAX_FP_EXPRESSION_CACHE_SIZE));
 
-        /// <inheritdoc cref="FhirPathCompilerCache.Select(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.Select(PocoNode, string, EvaluationContext?)"/>
         public static IEnumerable<ITypedElement> Select(this ITypedElement input, string expression, EvaluationContext? ctx = null)
-            => CACHE.Value.Select(input, expression, ctx);
+            => CACHE.Value.Select(input.ToPocoNode(rootName: input.Location), expression, ctx);
 
-        /// <inheritdoc cref="FhirPathCompilerCache.Scalar(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.Scalar(PocoNode, string, EvaluationContext?)"/>
         public static object? Scalar(this ITypedElement input, string expression, EvaluationContext? ctx = null)
-            => CACHE.Value.Scalar(input, expression, ctx);
+            => CACHE.Value.Scalar(input.ToPocoNode(rootName: input.Location), expression, ctx);
 
-        /// <inheritdoc cref="FhirPathCompilerCache.Predicate(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.Predicate(PocoNode, string, EvaluationContext?)"/>
         public static bool Predicate(this ITypedElement input, string expression, EvaluationContext? ctx = null)
-            => CACHE.Value.Predicate(input, expression, ctx);
+            => CACHE.Value.Predicate(input.ToPocoNode(rootName: input.Location), expression, ctx);
 
-        /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(ITypedElement, string, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(PocoNode, string, EvaluationContext?)"/>
         public static bool IsTrue(this ITypedElement input, string expression, EvaluationContext? ctx = null)
-            => CACHE.Value.IsTrue(input, expression, ctx);
+            => CACHE.Value.IsTrue(input.ToPocoNode(rootName: input.Location), expression, ctx);
 
-        /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(ITypedElement, string, bool, EvaluationContext?)"/>
+        /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(PocoNode, string, bool, EvaluationContext?)"/>
         public static bool IsBoolean(this ITypedElement input, string expression, bool value, EvaluationContext? ctx = null)
-            => CACHE.Value.IsBoolean(input, expression, value, ctx);
+            => CACHE.Value.IsBoolean(input.ToPocoNode(rootName: input.Location), expression, value, ctx);
 
         /// <summary>
         /// Reinitialize the cache. This method is only meant for the unit tests, but can be made public later. We need some refactoring here, I (MV) think.

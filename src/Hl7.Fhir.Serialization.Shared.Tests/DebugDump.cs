@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 Console.WriteLine("(null)");
             else
             {
-                Console.WriteLine(new FhirJsonSerializer(new SerializerSettings() { Pretty = true }).SerializeToString(fragment));
+                Console.WriteLine(new FhirJsonSerializer().SerializeToString(fragment, pretty: true));
             }
         }
     }

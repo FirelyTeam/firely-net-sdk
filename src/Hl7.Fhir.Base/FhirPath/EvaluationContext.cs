@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 
@@ -24,7 +25,7 @@ public class EvaluationContext
     /// </summary>
     /// <param name="resource">The data that will be represented by %resource</param>
     [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method.")]
-    public EvaluationContext(ITypedElement? resource) : this(resource, null) { }
+    public EvaluationContext(PocoNode? resource) : this(resource, null) { }
 
     /// <summary>
     /// Create an EvaluationContext with the given value for <c>%resource</c> and <c>%rootResource</c>.
@@ -32,14 +33,14 @@ public class EvaluationContext
     /// <param name="resource">The data that will be represented by <c>%resource</c>.</param>
     /// <param name="rootResource">The data that will be represented by <c>%rootResource</c>.</param>
     [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method.")]
-    public EvaluationContext(ITypedElement? resource, ITypedElement? rootResource)
+    public EvaluationContext(PocoNode? resource, PocoNode? rootResource)
     {
         Resource = resource;
         RootResource = rootResource ?? resource;
     }
 
     [Obsolete("%resource and %rootResource are inferred from scoped nodes by the evaluator. If you do not have access to a scoped node, or if you wish to explicitly override this behaviour, use the EvaluationContext.WithResourceOverrides() method. Environment can be set explicitly after construction of the base context")]
-    public EvaluationContext(ITypedElement? resource, ITypedElement? rootResource, IDictionary<string, IEnumerable<ITypedElement>> environment) : this(resource, rootResource)
+    public EvaluationContext(PocoNode? resource, PocoNode? rootResource, IDictionary<string, IEnumerable<PocoNode>> environment) : this(resource, rootResource)
     {
         Environment = environment;
     }
@@ -47,22 +48,22 @@ public class EvaluationContext
     /// <summary>
     /// The data represented by <c>%rootResource</c>.
     /// </summary>
-    public ITypedElement? RootResource { get; set; }
+    public PocoNode? RootResource { get; set; }
 
     /// <summary>
     /// The data represented by <c>%resource</c>.
     /// </summary>
-    public ITypedElement? Resource { get; set; }
+    public PocoNode? Resource { get; set; }
 
     /// <summary>
     /// The environment variables that are available to the FHIRPath expressions.
     /// </summary>
-    public IDictionary<string, IEnumerable<ITypedElement>> Environment { get; set; } = new Dictionary<string, IEnumerable<ITypedElement>>();
+    public IDictionary<string, IEnumerable<PocoNode>> Environment { get; set; } = new Dictionary<string, IEnumerable<PocoNode>>();
 
     /// <summary>
     /// A delegate that handles the output for the <c>trace()</c> function.
     /// </summary>
-    public Action<string?, IEnumerable<ITypedElement>>? Tracer { get; set; }
+    public Action<string?, IEnumerable<PocoNode>>? Tracer { get; set; }
 
     /// <summary>
     /// Gets or sets the tracer used for capturing debug information during evaluation
@@ -72,7 +73,7 @@ public class EvaluationContext
 
 public static class EvaluationContextExtensions
 {
-    public static T WithResourceOverrides<T>(this T context, ITypedElement? resource, ITypedElement? rootResource = null) where T : EvaluationContext
+    public static T WithResourceOverrides<T>(this T context, PocoNode? resource, PocoNode? rootResource = null) where T : EvaluationContext
     {
         context.Resource = resource;
         context.RootResource = rootResource ?? resource;

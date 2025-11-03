@@ -1,0 +1,1352 @@
+﻿{
+  Errors: [
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'extension'.,
+      Display: Expected object,
+      LineNumber: 3,
+      Position: 18,
+      InstancePath: Patient.extension[0],
+      ErrorCode: JSON131,
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'extension'. At Patient.extension[0], line 3, position 18.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Required,
+      BaseErrorMessage: Element 'Patient.extension[0].url' with minimum cardinality 1 must be present.,
+      Display: Mandatory field cannot be null,
+      LineNumber: 3,
+      Position: 28,
+      InstancePath: Patient.extension[0].url,
+      ErrorCode: PVAL105,
+      Message: Element 'Patient.extension[0].url' with minimum cardinality 1 must be present. At Patient.extension[0].url, line 3, position 28.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: string 'not a valid instant' is not a correct literal for a instant.,
+      Display: Invalid literal,
+      LineNumber: 6,
+      Position: 41,
+      InstancePath: Patient.meta.lastUpdated,
+      ErrorCode: PVAL124,
+      Message: string 'not a valid instant' is not a correct literal for a instant. At Patient.meta.lastUpdated, line 6, position 41.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: resourceType,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'resourceType'.,
+      Display: Unknown element,
+      LineNumber: 9,
+      Position: 20,
+      InstancePath: Patient.text.resourceType,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'resourceType'. At Patient.text.resourceType, line 9, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: CodeInvalid,
+      BaseErrorMessage: Value 'generatedY' is not a correct code for valueset 'NarrativeStatus'.,
+      Display: Invalid code,
+      LineNumber: 10,
+      Position: 27,
+      InstancePath: Patient.text.status,
+      ErrorCode: PVAL116,
+      Message: Value 'generatedY' is not a correct code for valueset 'NarrativeStatus'. At Patient.text.status, line 10, position 27.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered an unexpected json object while reading the value for primitive element 'active'.,
+      Display: Expected primitive,
+      LineNumber: 17,
+      Position: 20,
+      InstancePath: Patient.contained[0].active,
+      ErrorCode: JSON132,
+      Message: Encountered an unexpected json object while reading the value for primitive element 'active'. At Patient.contained[0].active, line 17, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'value'.,
+      Display: Unknown element,
+      LineNumber: 17,
+      Position: 28,
+      InstancePath: Patient.contained[0].active.value,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'value'. At Patient.contained[0].active.value, line 17, position 28.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: active,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
+      Display: Type mismatch,
+      LineNumber: 17,
+      Position: 16,
+      InstancePath: Patient.contained[0].active[2],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[0].active[2], line 17, position 16.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered a json primitive while expecting a json object for non-primitive element 'name'.,
+      Display: Expected object,
+      LineNumber: 22,
+      Position: 16,
+      InstancePath: Patient.contained[1].name[0],
+      ErrorCode: JSON131,
+      Message: Encountered a json primitive while expecting a json object for non-primitive element 'name'. At Patient.contained[1].name[0], line 22, position 16.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Nested array detected.,
+      Display: Invalid nested array,
+      LineNumber: 27,
+      Position: 26,
+      InstancePath: Patient.contained[2].active[1],
+      ErrorCode: JSON130,
+      Message: Nested array detected. At Patient.contained[2].active[1], line 27, position 26.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: active,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
+      Display: Type mismatch,
+      LineNumber: 27,
+      Position: 16,
+      InstancePath: Patient.contained[2].active[2],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[2].active[2], line 27, position 16.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Nested array detected.,
+      Display: Invalid nested array,
+      LineNumber: 32,
+      Position: 20,
+      InstancePath: Patient.contained[3].active,
+      ErrorCode: JSON130,
+      Message: Nested array detected. At Patient.contained[3].active, line 32, position 20.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Nested array detected.,
+      Display: Invalid nested array,
+      LineNumber: 32,
+      Position: 28,
+      InstancePath: Patient.contained[3].active[1],
+      ErrorCode: JSON130,
+      Message: Nested array detected. At Patient.contained[3].active[1], line 32, position 28.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: active,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
+      Display: Type mismatch,
+      LineNumber: 32,
+      Position: 16,
+      InstancePath: Patient.contained[3].active[2],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[3].active[2], line 32, position 16.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: active,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
+      Display: Type mismatch,
+      LineNumber: 37,
+      Position: 16,
+      InstancePath: Patient.contained[4].active[2],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[4].active[2], line 37, position 16.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Nested array detected.,
+      Display: Invalid nested array,
+      LineNumber: 38,
+      Position: 10,
+      InstancePath: Patient.contained[4].active[1],
+      ErrorCode: JSON130,
+      Message: Nested array detected. At Patient.contained[4].active[1], line 38, position 10.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered an unexpected json object while reading the value for primitive element 'active'.,
+      Display: Expected primitive,
+      LineNumber: 39,
+      Position: 12,
+      InstancePath: Patient.contained[4].active[1],
+      ErrorCode: JSON132,
+      Message: Encountered an unexpected json object while reading the value for primitive element 'active'. At Patient.contained[4].active[1], line 39, position 12.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: versionId,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'versionId'.,
+      Display: Unknown element,
+      LineNumber: 40,
+      Position: 25,
+      InstancePath: Patient.contained[4].active[1].versionId,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'versionId'. At Patient.contained[4].active[1].versionId, line 40, position 25.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: active,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
+      Display: Type mismatch,
+      LineNumber: 48,
+      Position: 16,
+      InstancePath: Patient.contained[5].active[2],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[5].active[2], line 48, position 16.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Nested array detected.,
+      Display: Invalid nested array,
+      LineNumber: 49,
+      Position: 10,
+      InstancePath: Patient.contained[5].active,
+      ErrorCode: JSON130,
+      Message: Nested array detected. At Patient.contained[5].active, line 49, position 10.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered an unexpected json object while reading the value for primitive element 'active'.,
+      Display: Expected primitive,
+      LineNumber: 50,
+      Position: 12,
+      InstancePath: Patient.contained[5].active,
+      ErrorCode: JSON132,
+      Message: Encountered an unexpected json object while reading the value for primitive element 'active'. At Patient.contained[5].active, line 50, position 12.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: versionId,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'versionId'.,
+      Display: Unknown element,
+      LineNumber: 51,
+      Position: 25,
+      InstancePath: Patient.contained[5].active.versionId,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'versionId'. At Patient.contained[5].active.versionId, line 51, position 25.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Nested array detected.,
+      Display: Invalid nested array,
+      LineNumber: 54,
+      Position: 10,
+      InstancePath: Patient.contained[5].active[1],
+      ErrorCode: JSON130,
+      Message: Nested array detected. At Patient.contained[5].active[1], line 54, position 10.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Encountered unknown resource type 'PatientX'.,
+      Display: Unknown resource,
+      LineNumber: 57,
+      Position: 6,
+      InstancePath: Patient.contained[6],
+      ErrorCode: PVAL130,
+      Message: Encountered unknown resource type 'PatientX'. At Patient.contained[6], line 57, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Encountered unknown resource type 'Meta'.,
+      Display: Unknown resource,
+      LineNumber: 61,
+      Position: 6,
+      InstancePath: Patient.contained[7],
+      ErrorCode: PVAL130,
+      Message: Encountered unknown resource type 'Meta'. At Patient.contained[7], line 61, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: versionId,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'versionId'.,
+      Display: Unknown element,
+      LineNumber: 63,
+      Position: 19,
+      InstancePath: Patient.contained[7].versionId,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'versionId'. At Patient.contained[7].versionId, line 63, position 19.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Encountered unknown resource type '4'.,
+      Display: Unknown resource,
+      LineNumber: 65,
+      Position: 6,
+      InstancePath: Patient.contained[8],
+      ErrorCode: PVAL130,
+      Message: Encountered unknown resource type '4'. At Patient.contained[8], line 65, position 6.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Property 'resourceType' should be a string, but found token Number with value 4.,
+      Display: Invalid resource type,
+      LineNumber: 66,
+      Position: 23,
+      InstancePath: Patient.contained[8],
+      ErrorCode: JSON102,
+      Message: Property 'resourceType' should be a string, but found token Number with value 4. At Patient.contained[8], line 66, position 23.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Resource has no 'resourceType' property.,
+      Display: Missing ResourceType,
+      LineNumber: 71,
+      Position: 6,
+      InstancePath: ,
+      ErrorCode: JSON103,
+      Message: Resource has no 'resourceType' property. At line 71, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: deceased,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Value is of type 'string', which is not an allowed choice.,
+      Display: Invalid datatype used,
+      LineNumber: 74,
+      Position: 24,
+      InstancePath: Patient.contained[10].deceased,
+      ErrorCode: PVAL101,
+      Message: Value is of type 'string', which is not an allowed choice. At Patient.contained[10].deceased, line 74, position 24.
+    },
+    {
+      Type: FhirJsonException,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered duplicate property 'active'.,
+      Display: Duplicate property,
+      LineNumber: 76,
+      Position: 17,
+      InstancePath: Patient.contained[10],
+      ErrorCode: JSON129,
+      Message: Encountered duplicate property 'active'. At Patient.contained[10], line 76, position 17.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: url,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'url'.,
+      Display: Unknown element,
+      LineNumber: 83,
+      Position: 15,
+      InstancePath: Patient.contained[11].active.url,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'url'. At Patient.contained[11].active.url, line 83, position 15.
+    },
+    {
+      Type: FhirJsonException,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered duplicate property 'active'.,
+      Display: Duplicate property,
+      LineNumber: 90,
+      Position: 17,
+      InstancePath: Patient.contained[11],
+      ErrorCode: JSON129,
+      Message: Encountered duplicate property 'active'. At Patient.contained[11], line 90, position 17.
+    },
+    {
+      Type: FhirJsonException,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered duplicate property 'name'.,
+      Display: Duplicate property,
+      LineNumber: 99,
+      Position: 16,
+      InstancePath: Patient.contained[12],
+      ErrorCode: JSON129,
+      Message: Encountered duplicate property 'name'. At Patient.contained[12], line 99, position 16.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: test,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'test'.,
+      Display: Unknown element,
+      LineNumber: 109,
+      Position: 15,
+      InstancePath: Patient.contained[13].test,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'test'. At Patient.contained[13].test, line 109, position 15.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: string '1.00000000000000000e-24' is not the right type of literal for a decimal.,
+      Display: Invalid literal type,
+      LineNumber: 172,
+      Position: 47,
+      InstancePath: Patient.contained[14].component[5].value.value,
+      ErrorCode: PVAL123,
+      Message: string '1.00000000000000000e-24' is not the right type of literal for a decimal. At Patient.contained[14].component[5].value.value, line 172, position 47.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: string '-1.00000000000000000e245' is not the right type of literal for a decimal.,
+      Display: Invalid literal type,
+      LineNumber: 181,
+      Position: 48,
+      InstancePath: Patient.contained[14].component[6].value.value,
+      ErrorCode: PVAL123,
+      Message: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[14].component[6].value.value, line 181, position 48.
+    },
+    {
+      Type: FhirJsonException,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered duplicate property 'given'.,
+      Display: Duplicate property,
+      LineNumber: 194,
+      Position: 21,
+      InstancePath: Patient.contained[15].name[0],
+      ErrorCode: JSON129,
+      Message: Encountered duplicate property 'given'. At Patient.contained[15].name[0], line 194, position 21.
+    },
+    {
+      Type: FhirJsonException,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered duplicate property '_given'.,
+      Display: Duplicate property,
+      LineNumber: 195,
+      Position: 22,
+      InstancePath: Patient.contained[15].name[0],
+      ErrorCode: JSON129,
+      Message: Encountered duplicate property '_given'. At Patient.contained[15].name[0], line 195, position 22.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: boolean True is not the right type of literal for a string.,
+      Display: Invalid literal type,
+      LineNumber: 204,
+      Position: 21,
+      InstancePath: Patient.contained[16].identifier[0].id,
+      ErrorCode: PVAL123,
+      Message: boolean True is not the right type of literal for a string. At Patient.contained[16].identifier[0].id, line 204, position 21.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: given,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a collection of string, but found a single string.,
+      Display: Type mismatch,
+      LineNumber: 215,
+      Position: 19,
+      InstancePath: Patient.contained[16].name[0].given[0],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a collection of string, but found a single string. At Patient.contained[16].name[0].given[0], line 215, position 19.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: mother,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'mother'.,
+      Display: Unknown element,
+      LineNumber: 216,
+      Position: 20,
+      InstancePath: Patient.contained[16].name[0].mother,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'mother'. At Patient.contained[16].name[0].mother, line 216, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: family,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Expected property to be a single string, but found a collection of string.,
+      Display: Type mismatch,
+      LineNumber: 221,
+      Position: 20,
+      InstancePath: Patient.contained[16].name[1].family[1],
+      ErrorCode: PVAL127,
+      Message: Expected property to be a single string, but found a collection of string. At Patient.contained[16].name[1].family[1], line 221, position 20.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Expected a primitive value, not a json null.,
+      Display: Null not allowed,
+      LineNumber: 233,
+      Position: 22,
+      InstancePath: Patient.contained[16].telecom[0].use,
+      ErrorCode: JSON109,
+      Message: Expected a primitive value, not a json null. At Patient.contained[16].telecom[0].use, line 233, position 22.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
+      Display: Element cannot be empty,
+      LineNumber: 233,
+      Position: 22,
+      InstancePath: Patient.contained[16].telecom[0].use,
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid. At Patient.contained[16].telecom[0].use, line 233, position 22.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Encountered an unexpected json object while reading the value for primitive element 'use'.,
+      Display: Expected primitive,
+      LineNumber: 241,
+      Position: 19,
+      InstancePath: Patient.contained[16].address[0].use,
+      ErrorCode: JSON132,
+      Message: Encountered an unexpected json object while reading the value for primitive element 'use'. At Patient.contained[16].address[0].use, line 241, position 19.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: incorrect,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'incorrect'.,
+      Display: Unknown element,
+      LineNumber: 241,
+      Position: 32,
+      InstancePath: Patient.contained[16].address[0].use.incorrect,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'incorrect'. At Patient.contained[16].address[0].use.incorrect, line 241, position 32.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: line,
+      IssueSeverity: Error,
+      IssueType: BusinessRule,
+      BaseErrorMessage: Repeating elements should not contain a null value.,
+      Display: Cannot be null,
+      LineNumber: 243,
+      Position: 19,
+      InstancePath: Patient.contained[16].address[0].line[2],
+      ErrorCode: PVAL104,
+      Message: Repeating elements should not contain a null value. At Patient.contained[16].address[0].line[2], line 243, position 19.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Arrays need to have at least one non-null element.,
+      Display: Only nulls in array,
+      LineNumber: 250,
+      Position: 28,
+      InstancePath: Patient.contained[16].address[1].line[1],
+      ErrorCode: JSON125,
+      Message: Arrays need to have at least one non-null element. At Patient.contained[16].address[1].line[1], line 250, position 28.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri.,
+      Display: Invalid literal,
+      LineNumber: 264,
+      Position: 44,
+      InstancePath: Patient.identifier[1].system,
+      ErrorCode: PVAL124,
+      Message: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri. At Patient.identifier[1].system, line 264, position 44.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: given,
+      IssueSeverity: Error,
+      IssueType: BusinessRule,
+      BaseErrorMessage: Repeating elements should not contain a null value.,
+      Display: Cannot be null,
+      LineNumber: 278,
+      Position: 15,
+      InstancePath: Patient.name[0].given[2],
+      ErrorCode: PVAL104,
+      Message: Repeating elements should not contain a null value. At Patient.name[0].given[2], line 278, position 15.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: boolean True is not the right type of literal for a positiveInt.,
+      Display: Invalid literal type,
+      LineNumber: 286,
+      Position: 19,
+      InstancePath: Patient.telecom[0].rank,
+      ErrorCode: PVAL123,
+      Message: boolean True is not the right type of literal for a positiveInt. At Patient.telecom[0].rank, line 286, position 19.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Property '_url' has an underscore, which should be a (an array of) Json object or null.,
+      Display: Property should be an object,
+      LineNumber: 293,
+      Position: 17,
+      InstancePath: Patient.gender.extension[0].url,
+      ErrorCode: JSON134,
+      Message: Property '_url' has an underscore, which should be a (an array of) Json object or null. At Patient.gender.extension[0].url, line 293, position 17.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: integer 28 is not the right type of literal for a code.,
+      Display: Invalid literal type,
+      LineNumber: 298,
+      Position: 24,
+      InstancePath: Patient.gender.extension[1].value,
+      ErrorCode: PVAL123,
+      Message: integer 28 is not the right type of literal for a code. At Patient.gender.extension[1].value, line 298, position 24.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: Choice element 'value' should be suffixed by a type.,
+      Display: Expected type suffix,
+      LineNumber: 302,
+      Position: 18,
+      InstancePath: Patient.gender.extension[2].value,
+      ErrorCode: JSON114,
+      Message: Choice element 'value' should be suffixed by a type. At Patient.gender.extension[2].value, line 302, position 18.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Value is of type 'UnknownType_Patient.gender.extension[2].value', which is not an allowed choice.,
+      Display: Invalid datatype used,
+      LineNumber: 302,
+      Position: 17,
+      InstancePath: Patient.gender.extension[2].value,
+      ErrorCode: PVAL101,
+      Message: Value is of type 'UnknownType_Patient.gender.extension[2].value', which is not an allowed choice. At Patient.gender.extension[2].value, line 302, position 17.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Value is of type 'SuperDecimal', which is not an allowed choice.,
+      Display: Invalid datatype used,
+      LineNumber: 306,
+      Position: 29,
+      InstancePath: Patient.gender.extension[3].value,
+      ErrorCode: PVAL101,
+      Message: Value is of type 'SuperDecimal', which is not an allowed choice. At Patient.gender.extension[3].value, line 306, position 29.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: value,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Value is of type 'SuperCrap', which is not an allowed choice.,
+      Display: Invalid datatype used,
+      LineNumber: 310,
+      Position: 26,
+      InstancePath: Patient.gender.extension[4].value,
+      ErrorCode: PVAL101,
+      Message: Value is of type 'SuperCrap', which is not an allowed choice. At Patient.gender.extension[4].value, line 310, position 26.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: temperature,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'temperature'.,
+      Display: Unknown element,
+      LineNumber: 311,
+      Position: 25,
+      InstancePath: Patient.gender.extension[4].value.temperature,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'temperature'. At Patient.gender.extension[4].value.temperature, line 311, position 25.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: unit,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'unit'.,
+      Display: Unknown element,
+      LineNumber: 312,
+      Position: 18,
+      InstancePath: Patient.gender.extension[4].value.unit,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'unit'. At Patient.gender.extension[4].value.unit, line 312, position 18.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: string 'false' is not the right type of literal for a boolean.,
+      Display: Invalid literal type,
+      LineNumber: 326,
+      Position: 29,
+      InstancePath: Patient.deceased,
+      ErrorCode: PVAL123,
+      Message: string 'false' is not the right type of literal for a boolean. At Patient.deceased, line 326, position 29.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: decimal 3.14 is not the right type of literal for a integer.,
+      Display: Invalid literal type,
+      LineNumber: 327,
+      Position: 31,
+      InstancePath: Patient.multipleBirth,
+      ErrorCode: PVAL123,
+      Message: decimal 3.14 is not the right type of literal for a integer. At Patient.multipleBirth, line 327, position 31.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Value 'ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7' is not parseable as Base64 data.,
+      Display: Invalid Base64 data,
+      LineNumber: 331,
+      Position: 1347,
+      InstancePath: Patient.photo[0].data,
+      ErrorCode: PVAL120,
+      Message: Value 'ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7' is not parseable as Base64 data. At Patient.photo[0].data, line 331, position 1347.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: An array needs to have at least one element.,
+      Display: Array cannot be empty,
+      LineNumber: 366,
+      Position: 33,
+      InstancePath: Patient.communication[1].language.coding[0],
+      ErrorCode: JSON121,
+      Message: An array needs to have at least one element. At Patient.communication[1].language.coding[0], line 366, position 33.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
+      Display: Element cannot be empty,
+      LineNumber: 366,
+      Position: 20,
+      InstancePath: Patient.communication[1].language,
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid. At Patient.communication[1].language, line 366, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: string '' is not a correct literal for a string.,
+      Display: Invalid literal,
+      LineNumber: 380,
+      Position: 18,
+      InstancePath: Patient.managingOrganization.display,
+      ErrorCode: PVAL124,
+      Message: string '' is not a correct literal for a string. At Patient.managingOrganization.display, line 380, position 18.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Required,
+      BaseErrorMessage: Element 'Patient.link[0].type' with minimum cardinality 1 must be present.,
+      Display: Mandatory field cannot be null,
+      LineNumber: 383,
+      Position: 6,
+      InstancePath: Patient.link[0].type,
+      ErrorCode: PVAL105,
+      Message: Element 'Patient.link[0].type' with minimum cardinality 1 must be present. At Patient.link[0].type, line 383, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Required,
+      BaseErrorMessage: Element 'Patient.link[0].other' with minimum cardinality 1 must be present.,
+      Display: Mandatory field cannot be null,
+      LineNumber: 383,
+      Position: 6,
+      InstancePath: Patient.link[0].other,
+      ErrorCode: PVAL105,
+      Message: Element 'Patient.link[0].other' with minimum cardinality 1 must be present. At Patient.link[0].other, line 383, position 6.
+    },
+    {
+      Type: CodedValidationException,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Empty FHIR elements are invalid.,
+      Display: Element cannot be empty,
+      LineNumber: 383,
+      Position: 6,
+      InstancePath: Patient.link[0],
+      ErrorCode: PVAL129,
+      Message: Empty FHIR elements are invalid. At Patient.link[0], line 383, position 6.
+    },
+    {
+      Type: FhirJsonException,
+      IssueSeverity: Error,
+      IssueType: Structure,
+      BaseErrorMessage: An object needs to have at least one property.,
+      Display: Objects cannot be empty,
+      LineNumber: 385,
+      Position: 4,
+      InstancePath: Patient.link[0],
+      ErrorCode: JSON120,
+      Message: An object needs to have at least one property. At Patient.link[0], line 385, position 4.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: unknownElement,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'unknownElement'.,
+      Display: Unknown element,
+      LineNumber: 386,
+      Position: 20,
+      InstancePath: Patient.unknownElement,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'unknownElement'. At Patient.unknownElement, line 386, position 20.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: valued,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'valued'.,
+      Display: Unknown element,
+      LineNumber: 387,
+      Position: 14,
+      InstancePath: Patient.unknownElement.valued,
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'valued'. At Patient.unknownElement.valued, line 387, position 14.
+    },
+    {
+      Type: CodedValidationException,
+      MemberName: data,
+      IssueSeverity: Error,
+      IssueType: Value,
+      BaseErrorMessage: Found unknown element 'data'.,
+      Display: Unknown element,
+      LineNumber: 388,
+      Position: 14,
+      InstancePath: Patient.unknownElement.valued.data[2],
+      ErrorCode: PVAL128,
+      Message: Found unknown element 'data'. At Patient.unknownElement.valued.data[2], line 388, position 14.
+    }
+  ],
+  Obj:
+{
+  "resourceType": "Patient",
+  "unknownElement": {
+    "valued": {
+      "data": [
+        true,
+        null
+      ]
+    }
+  },
+  "id": "pat1-with-errors",
+  "meta": {
+    "lastUpdated": "not a valid instant"
+  },
+  "text": {
+    "resourceType": "Narrative",
+    "status": "generatedY",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"
+  },
+  "contained": [
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "_active": [
+        {
+          "value": true
+        },
+        null
+      ],
+      "id": "PrimitiveArrayContainsComplex"
+    },
+    {
+      "resourceType": "Patient",
+      "id": "ComplexArrayContainsPrimitive",
+      "name": [
+        {
+          "value": "John"
+        },
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "id": "MultiLevelArrayPrimitive"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        true,
+        false
+      ],
+      "id": "MultiLevelArrayPrimitiveNoNull"
+    },
+    {
+      "resourceType": "Patient",
+      "_active": [
+        null,
+        {
+          "versionId": "2"
+        }
+      ],
+      "id": "MultiLevelArrayWithComplex"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "_active": [
+        {
+          "versionId": "2"
+        },
+        null
+      ],
+      "id": "MultiLevelArrayWithComplexNoNull"
+    },
+    {
+      "resourceType": "PatientX",
+      "id": "1"
+    },
+    {
+      "resourceType": "Meta",
+      "versionId": "1"
+    },
+    {
+      "resourceType": "4",
+      "id": "1"
+    },
+    {
+      "resourceType": "UnnamedResource_Patient.contained[9]",
+      "id": "1"
+    },
+    {
+      "resourceType": "Patient",
+      "active": true,
+      "deceasedString": "yesterday"
+    },
+    {
+      "resourceType": "Patient",
+      "active": false,
+      "_active": {
+  "url": "http://example.com",
+  "id": "duped"
+},
+      "name": [
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "name": [
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "test": false,
+      "_test": {
+  "id": "duped",
+  "extension": [
+    {
+      "url": "http://example.com"
+    }
+  ]
+},
+      "id": "pat1"
+    },
+    {
+      "resourceType": "Observation",
+      "id": "decimal",
+      "status": "final",
+      "code": {
+        "text": "Decimal Testing Observation"
+      },
+      "component": [
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.00,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 0.00000000000000001,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 10000000000000000,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": "1.00000000000000000e-24",
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": "-1.00000000000000000e245",
+            "unit": "g"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "pat1",
+      "name": [
+        {
+          "given": [
+            "Jane",
+            "John"
+          ],
+          "_given": [
+            null,
+            {
+              "id": "e1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "1",
+      "identifier": [
+        {
+          "id": true,
+          "system": "http://hl7.org/fhir/sid/us-ssn",
+          "value": "444222222"
+        }
+      ],
+      "active": true,
+      "name": [
+        {
+          "given": "This should be an array",
+          "mother": "this does not exist",
+          "id": "firstname",
+          "use": "official",
+          "family": "Everywoman"
+        },
+        {
+          "family": [
+            "error: array is unexpected here"
+          ],
+          "id": "anothername",
+          "use": "usual",
+          "given": [
+            "Eveline",
+            null
+          ],
+          "_given": [
+            null,
+            {
+              "id": "a1"
+            }
+          ]
+        }
+      ],
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "555-555-2003",
+          "rank": 1
+        }
+      ],
+      "gender": "female",
+      "birthDate": "1973-05-31",
+      "address": [
+        {
+          "_use": {
+  "incorrect": "should have been a simple string"
+},
+          "line": [
+            "2222 Home Street",
+            null
+          ],
+          "_line": [
+            {
+              "id": "bla"
+            },
+            null
+          ]
+        },
+        {
+          "line": [
+            "Wodanstraat"
+          ]
+        }
+      ],
+      "managingOrganization": {
+        "reference": "Organization/hl7"
+      }
+    }
+  ],
+  "extension": [
+    {
+      "valueString": "try this"
+    }
+  ],
+  "identifier": [
+    {
+      "use": "usual",
+      "system": "urn:oid:0.1.2.3.4.5.6.7",
+      "value": "654321"
+    },
+    {
+      "use": "official",
+      "system": "urn:oid:9.0.1.2.3.4.5.6.7",
+      "value": "7654321"
+    },
+    {
+      "use": "official",
+      "system": "http://some.other/system",
+      "value": "11223344"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Donald",
+      "given": [
+        "Duck",
+        null
+      ]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "555-555-2003",
+      "use": "work",
+      "rank": true
+    }
+  ],
+  "gender": "male",
+  "_gender": {
+  "extension": [
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
+      "valueCode": "metrosexual"
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
+      "valueCode": 28
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-without-type",
+      "valueUnknownType_Patient.gender.extension[2].value": 28
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-unknown-type",
+      "valueSuperDecimal": 28
+    },
+    {
+      "url": "http://example.org/StructureDefinition/extension-with-unknown-cplx-type",
+      "valueSuperCrap": {
+        "temperature": 38.9,
+        "unit": "celcius"
+      }
+    }
+  ]
+},
+  "birthDate": "1974-12-25",
+  "_birthDate": {
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+      "valueDateTime": "1974-12-25T14:35:45-05:00"
+    }
+  ]
+},
+  "deceasedBoolean": "false",
+  "multipleBirthInteger": 3.14,
+  "photo": [
+    {
+      "contentType": "image/gif",
+      "data": "ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/patient-contact-relationship",
+              "code": "owner"
+            }
+          ]
+        }
+      ],
+      "organization": {
+        "reference": "Organization/1",
+        "display": "Walt Disney Corporation"
+      }
+    }
+  ],
+  "communication": [
+    {
+      "language": {
+        "coding": [
+          {
+            "code": "nl-nl"
+          }
+        ]
+      },
+      "preferred": true,
+      "_preferred": {
+  "extension": [
+    {
+      "url": "http://example.org/StructureDefinition/language-preference",
+      "valueCode": "in-writing"
+    }
+  ]
+}
+    },
+    {
+      "language": {},
+      "preferred": true,
+      "_preferred": {
+  "extension": [
+    {
+      "url": "http://example.org/StructureDefinition/language-preference",
+      "valueCode": "oral"
+    }
+  ]
+}
+    }
+  ],
+  "managingOrganization": {
+    "reference": "Organization/1",
+    "display": ""
+  },
+  "link": [
+    {}
+  ]
+}
+}

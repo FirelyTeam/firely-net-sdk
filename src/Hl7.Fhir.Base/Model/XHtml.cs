@@ -29,49 +29,91 @@
 */
 
 using Hl7.Fhir.Utility;
+using System;
+using Hl7.Fhir.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml;
-
+using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 #nullable enable
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+/// <summary>
+/// Helper functions to work with FHIR XHtml in narrative.
+/// </summary>
+public partial class XHtml
 {
     /// <summary>
-    /// Helper functions to work with FHIR XHtml in narrative.
+    /// Validates the JsonValue.
     /// </summary>
-    public partial class XHtml
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
+        JsonValue switch
+        {
+            null => null,
+            string xml => ValidateXmlLiteral(xml, context),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
+        };
+
+    internal static COVE? ValidateXmlLiteral(string xml, PocoValidationContext? context)
     {
-        /// <summary>
-        /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html. 
-        /// </summary>
-        public static bool IsValidNarrativeXhtml(string value, out string[] errors)
+        return context?.NarrativeValidation switch
         {
-            errors = SerializationUtil.RunFhirXhtmlSchemaValidation(value);
-            return !errors.Any();
+            null => null,
+            NarrativeValidationKind.None => null,
+            NarrativeValidationKind.Xml => IsValidXml(xml, out var error) ? null : make(error, null),
+            NarrativeValidationKind.FhirXhtml => IsValidNarrativeXhtml(xml, out var malformedXmlError,
+                    out var invalidNarrativeErrors) ? null : make(malformedXmlError, invalidNarrativeErrors),
+            var kind => throw new NotSupportedException($"Encountered unknown narrative validation kind '{kind}'.")
+        };
+
+        COVE? make(string? malformedXmlError, string[]? invalidNarrativeErrors) =>
+            malformedXmlError is not null
+                ? COVE.NARRATIVE_XML_IS_MALFORMED(context, malformedXmlError)
+                : invalidNarrativeErrors?.Any() == true
+                    ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Join(", ", invalidNarrativeErrors))
+                    : null;
+    }
+
+    /// <summary>
+    /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html.
+    /// </summary>
+    public static bool IsValidNarrativeXhtml(string text, out string? malformedXmlError, out string[] invalidNarrativeErrors)
+    {
+        try
+        {
+            var doc = SerializationUtil.XDocumentFromXmlText(text);
+            malformedXmlError = null;
+            invalidNarrativeErrors = SerializationUtil.RunFhirXhtmlSchemaValidation(doc);
+            return !invalidNarrativeErrors.Any();
         }
-
-        /// <inheritdoc cref="IsValidNarrativeXhtml(string, out string[])"/>
-        public static bool IsValidNarrativeXhtml(string value) => IsValidNarrativeXhtml(value, out _);
-
-        /// <summary>
-        /// Validates whether the given string of Xml is well-formatted.
-        /// </summary>
-        public static bool IsValidXml(string value, out string? error)
+        catch (FormatException fe)
         {
-            try
-            {
-                using var reader = SerializationUtil.XmlReaderFromXmlText(value);
-                while (reader.Read()) ;
-                error = default;
-                return true;
-            }
-            catch (XmlException xmlE)
-            {
-                error = xmlE.Message;
-                return false;
-            }
+            malformedXmlError = fe.Message;
+            invalidNarrativeErrors = [];
+            return false;
         }
     }
-}
 
-#nullable restore
+    /// <summary>
+    /// Validates whether the given string of Xml is well-formatted.
+    /// </summary>
+    public static bool IsValidXml(string value, out string? malformedXmlError)
+    {
+        try
+        {
+            using var reader = SerializationUtil.XmlReaderFromXmlText(value);
+            while (reader.Read()) ;
+            malformedXmlError = null;
+            return true;
+        }
+        catch (XmlException xmlE)
+        {
+            malformedXmlError = xmlE.Message;
+            return false;
+        }
+    }
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
+}
