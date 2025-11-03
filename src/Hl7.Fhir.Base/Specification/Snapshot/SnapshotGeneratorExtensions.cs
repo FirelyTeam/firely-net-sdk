@@ -88,6 +88,20 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+        internal static bool HasAnyNonInheritableExtensions(this Element element)
+        {
+            if (element == null) return false;
+            if (element.HasNonInheritableExtensions()) return true;
+#pragma warning disable CS0618 // Type or member is obsolete
+            return element.Children().OfType<Element>().Any(child => child.HasAnyNonInheritableExtensions());
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        internal static bool HasNonInheritableExtensions(this IExtendable element)
+        {
+            return element != null && _nonInheritableExtensions.Any(ext => element.GetExtension(ext) != null);
+        }
+
         /// <summary>
         /// This extension removes all non-inheritable extensions from the specified element definition and all it's child objects.
         /// Non-inheritable extensions are extensions that should not be inherited by derived profiles.
