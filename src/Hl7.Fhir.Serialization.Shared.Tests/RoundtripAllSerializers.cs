@@ -189,7 +189,7 @@ public class RoundtripAllSerializers
         if(result is not null)
             compare(input, result, name, errors);
 
-        Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
+        Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
     }
 
     private static ZipArchive openTestZip(string filename)

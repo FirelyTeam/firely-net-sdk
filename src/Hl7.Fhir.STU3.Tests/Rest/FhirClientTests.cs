@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Tests.Rest
                         includes: new string[] { "DiagnosticReport.subject" }).Result;
             Assert.IsNotNull(result);
 
-            Assert.HasCount(result.Entry, 2);  // should have subject too
+            Assert.HasCount(2, result.Entry);  // should have subject too
 
             Assert.IsNotNull(result.Entry.Single(entry => new ResourceIdentity(entry.Resource.Id).Collection ==
                         typeof(DiagnosticReport).GetCollectionName()));
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Tests.Rest
                             includes: new string[] { "DiagnosticReport.subject" }).Result;
                 Assert.IsNotNull(result);
 
-                Assert.HasCount(result.Entry, 2);  // should have subject too
+                Assert.HasCount(2, result.Entry);  // should have subject too
 
                 Assert.IsNotNull(result.Entry.Single(entry => new ResourceIdentity(entry.Id).Collection ==
                             typeof(DiagnosticReport).GetCollectionName()));
@@ -644,12 +644,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.ResourceIdentity(), fe2.ResourceIdentity());
-            Assert.HasCount(fe2.Identifier, 2);
+            Assert.HasCount(2, fe2.Identifier);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = await client.UpdateAsync(fe);
             Assert.IsNotNull(fe3);
-            Assert.HasCount(fe3.Identifier, 3);
+            Assert.HasCount(3, fe3.Identifier);
 
             await client.DeleteAsync(fe3);
 
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Tests.Rest
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = client.UpdateAsync(fe2).Result;
             Assert.IsNotNull(fe3);
-            Assert.HasCount(fe3.Identifier, 3);
+            Assert.HasCount(3, fe3.Identifier);
 
             client.DeleteAsync(fe3).Wait();
 
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
 
-            Assert.HasCount(history.Entry, 4);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = await client.TypeHistoryAsync("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.HasCount(history.Entry, 4);   // there's a race condition here, sometimes this is 5.
+            Assert.HasCount(4, history.Entry);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = await client.TypeHistoryAsync<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.HasCount(history.Entry, 4);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 

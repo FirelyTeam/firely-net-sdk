@@ -40,16 +40,16 @@ namespace Hl7.Fhir.Utility.Tests
             list.AddAnnotation(new object());
 
             Assert.IsFalse(list.IsEmpty);
-            Assert.HasCount(list.OfType(typeof(int)), 2);
-            Assert.HasCount(list.OfType(typeof(bool)), 1);
-            Assert.HasCount(list.OfType(typeof(object)), 1);
+            Assert.HasCount(2, list.OfType(typeof(int)));
+            Assert.HasCount(1, list.OfType(typeof(bool)));
+            Assert.HasCount(1, list.OfType(typeof(object)));
 
             // Remove annontations of type
             list.RemoveAnnotations(typeof(bool));
             Assert.IsFalse(list.IsEmpty);
-            Assert.HasCount(list.OfType(typeof(bool)), 0);
-            Assert.HasCount(list.OfType(typeof(int)), 2);
-            Assert.HasCount(list.OfType(typeof(object)), 1);
+            Assert.HasCount(0, list.OfType(typeof(bool)));
+            Assert.HasCount(2, list.OfType(typeof(int)));
+            Assert.HasCount(1, list.OfType(typeof(object)));
         }
 
         [TestMethod()]

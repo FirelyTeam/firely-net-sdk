@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, json, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
+            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Serialization.Tests
                  "'status': 'generated', " +
                  "'div': 'crap' } }", new FhirJsonParsingSettings { PermissiveParsing = true });
                 var errors = nav.VisitAndCatch();
-                Assert.HasCount(errors, 0);
+                Assert.HasCount(0, errors);
 
                 // Total crap - now with validation
                 nav = await getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +

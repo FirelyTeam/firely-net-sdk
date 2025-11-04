@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = new List<string>();
             JsonAssert.AreSame(filename, expected, output, errors);
             Console.WriteLine(string.Join("\r\n", errors));
-            Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
+            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
         }
 
         public static void CanReadThroughTypedElement(ITypedElement n, bool typed)

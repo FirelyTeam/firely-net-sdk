@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Specification.Tests
             path = Path.GetFullPath(path);
             var summaries = ArtifactSummaryGenerator.Default.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
-            Assert.HasCount(summaries, 1);
+            Assert.HasCount(1, summaries);
             var summary = summaries[0];
             Assert.IsFalse(summary.IsFaulted);
             Assert.AreEqual(path, summary.Origin);
@@ -266,8 +266,8 @@ namespace Hl7.Fhir.Specification.Tests
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries().ToList();
             Assert.IsNotNull(summaries);
-            Assert.HasCount(summaries, 4253);
-            Assert.HasCount(summaries.OfResourceType(ResourceType.StructureDefinition), 581);
+            Assert.HasCount(4253, summaries);
+            Assert.HasCount(581, summaries.OfResourceType(ResourceType.StructureDefinition));
             Assert.IsFalse(summaries.Errors().Any());
         }
 
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify invalid files in folder 'grahame-validation-examples' are excluded
             var errors = dirSource.ListSummaryErrors().ToList();
-            Assert.HasCount(errors, 0);
+            Assert.HasCount(0, errors);
         }
 
         // [WMR 20190305] Belongs to pull request #890
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
             }
-            Assert.HasCount(AnonymousArtefacts, 6);
+            Assert.HasCount(6, AnonymousArtefacts);
         }
 
         [TestMethod]

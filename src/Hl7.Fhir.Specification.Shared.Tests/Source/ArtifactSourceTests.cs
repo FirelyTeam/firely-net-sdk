@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
             var names = fa.ListArtifactNames();
 
-            Assert.HasCount(names, 5);
+            Assert.HasCount(5, names);
             Assert.Contains("profiles-types.xml", names);
             Assert.Contains("flag.xsd", names);
             Assert.IsFalse(names.Contains("patient.sch"));
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var names = fa.ListArtifactNames();
 
-            Assert.HasCount(names, 4);
+            Assert.HasCount(4, names);
             Assert.Contains("profiles-types.xml", names);
             Assert.Contains("TestPatient.xml", names);
             Assert.IsFalse(names.Contains("nonfhir.xml"));
@@ -173,12 +173,12 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var names = fa.ListArtifactNames();
-            Assert.HasCount(names, 1);
+            Assert.HasCount(1, names);
 
             fa.Excludes = new[] { "/sub/" };
 
             names = fa.ListArtifactNames();
-            Assert.HasCount(names, 0);
+            Assert.HasCount(0, names);
         }
 
         [TestMethod]
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
             var names = fa.ListArtifactNames();
 
-            Assert.HasCount(names, 4);
+            Assert.HasCount(4, names);
             Assert.Contains("profiles-types.xml", names);
             Assert.Contains("TestPatient.xml", names);
             Assert.Contains("nonfhir.xml", names);
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
-            Assert.HasCount(errors, 1);
+            Assert.HasCount(1, errors);
             var error = errors[0];
             Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));

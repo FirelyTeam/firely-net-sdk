@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Tests.Serialization
             List<string> errors = [];
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
+            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]

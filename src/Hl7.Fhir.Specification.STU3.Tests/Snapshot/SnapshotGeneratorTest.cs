@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(_generator.Outcome);
 
             var elems = expanded.Snapshot.Element;
-            Assert.HasCount(elems, 5);
+            Assert.HasCount(5, elems);
             Assert.AreEqual("Extension", elems[0].Path);
             Assert.AreEqual("Extension.id", elems[1].Path);
             Assert.AreEqual("Extension.extension", elems[2].Path);
@@ -499,13 +499,13 @@ namespace Hl7.Fhir.Specification.Tests
             var snapElems = snapshot.Snapshot.Element;
             Debug.WriteLine($"Default snapshot: {snapElems.Count} elements");
             dumpBaseElems(snapElems);
-            Assert.HasCount(snapElems, 52);
+            Assert.HasCount(52, snapElems);
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
             var fullElems = await fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
-            Assert.HasCount(fullElems, 310);
+            Assert.HasCount(310, fullElems);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Default snapshot: {snapElems.Count} elements");
                 dumpBaseElems(snapElems);
                 dumpIssues(_generator.Outcome?.Issue);
-                Assert.HasCount(snapElems, 62);
+                Assert.HasCount(62, snapElems);
                 Assert.IsNull(_generator.Outcome);
 
                 var issues = new List<OperationOutcome.IssueComponent>();
@@ -556,8 +556,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
                 dumpBaseElems(fullElems);
                 dumpIssues(issues);
-                Assert.HasCount(fullElems, 347);
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(347, fullElems);
+                Assert.HasCount(0, issues);
 
                 // Verify
                 for (int j = 1; j < fullElems.Count; j++)
@@ -967,7 +967,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var extensionElements = sd.Differential.Element.Where(e => e.IsExtension());
             Assert.IsNotNull(extensionElements);
-            Assert.HasCount(extensionElements, 2); // Extension slicing entry + first extension definition
+            Assert.HasCount(2, extensionElements); // Extension slicing entry + first extension definition
             var extensionElement = extensionElements.Skip(1).FirstOrDefault();
             var extensionType = extensionElement.Type.FirstOrDefault();
             Assert.IsNotNull(extensionType);
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Specification.Tests
             dumpOutcome(outcome);
 
             Assert.IsNotNull(outcome);
-            Assert.HasCount(outcome.Issue, 3);
+            Assert.HasCount(3, outcome.Issue);
 
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyMissingExtension");
             // Note: the extension reference to MyExtensionNoSnapshot should not generate an Issue,
@@ -1167,7 +1167,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(tree);
 
             var nav = new ElementDefinitionNavigator(tree);
-            Assert.HasCount(nav, 10);
+            Assert.HasCount(10, nav);
 
             Assert.IsTrue(nav.MoveToChild("A"));
             Assert.IsTrue(nav.MoveToChild("B"));
@@ -1228,7 +1228,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
 
-            Assert.HasCount(tree, 10);
+            Assert.HasCount(10, tree);
             var verifier = new ElementVerifier(tree, _settings);
 
             verifier.VerifyElement("Patient");                      // Added: root element
@@ -3358,7 +3358,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(outcome);
 
-            Assert.HasCount(outcome.Issue, 1);
+            Assert.HasCount(1, outcome.Issue);
             assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
@@ -3475,7 +3475,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that the snapshot contains three extension elements 
             var obsExtensions = elems.Where(e => e.Path == "Observation.extension").ToList();
             Assert.IsNotNull(obsExtensions);
-            Assert.HasCount(obsExtensions, 4); // 1 extension slice + 3 extensions
+            Assert.HasCount(4, obsExtensions); // 1 extension slice + 3 extensions
 
             var extSliceElem = obsExtensions[0];
             Assert.IsNotNull(extSliceElem);
@@ -3734,7 +3734,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(_generator.Outcome);
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
             Assert.IsNotNull(issues);
-            Assert.HasCount(issues, 1);
+            Assert.HasCount(1, issues);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
@@ -3746,7 +3746,7 @@ namespace Hl7.Fhir.Specification.Tests
             expanded.Snapshot.Element.Dump();
 
             // Full expansion should also generate same outcome issue
-            Assert.HasCount(issues, 1);
+            Assert.HasCount(1, issues);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
         }
 
@@ -4621,7 +4621,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elems = expanded.Snapshot.Element;
             elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
             // Generator should report same issue as during regular snapshot expansion
-            Assert.HasCount(issues, 0);
+            Assert.HasCount(0, issues);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -4630,7 +4630,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Snapshot should contain renamed elements
             Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
             Assert.IsNotNull(nav.Current.Type);
-            Assert.HasCount(nav.Current.Type, 1);
+            Assert.HasCount(1, nav.Current.Type);
             Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), nav.Current.Type[0].Code);
 
             var type = nav.Current.Type.First();
@@ -4824,7 +4824,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // IMPORTANT: also hook elementHandler event during fullExpansion, to emit (custom) base element annotations
                 var issues = new List<OperationOutcome.IssueComponent>();
                 elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(0, issues);
                 Debug.WriteLine($"Full expansion: #{elems.Count} elements");
                 dumpBaseElems(elems);
 
@@ -4949,7 +4949,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(0, issues);
 
                 Debug.WriteLine("Patient with type slice:");
                 foreach (var elem in expanded.Snapshot.Element)
@@ -5037,7 +5037,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(0, issues);
             }
             finally
             {
@@ -5117,7 +5117,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(0, issues);
             }
             finally
             {
@@ -5159,7 +5159,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 sd.Snapshot.Element = await fullyExpand(sd.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(0, issues);
             }
             finally
             {
@@ -5404,7 +5404,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x]
             var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.item.answer.value[x]").ToList();
-            Assert.HasCount(answerValues, 3);
+            Assert.HasCount(3, answerValues);
             foreach (var elem in answerValues)
             {
                 var binding = elem.Binding;
@@ -6037,7 +6037,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify merged constraints on valueString
             Assert.IsTrue(nav.MoveToNext("valueString"));
             Assert.AreEqual("NameSuffix", nav.Current.Short);
-            Assert.HasCount(nav.Current.Type, 1);
+            Assert.HasCount(1, nav.Current.Type);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
             Assert.IsNotNull(nav.Current.Binding);
             Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
@@ -6087,13 +6087,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Expecting single issue about invalid sliceName on SimpleQuantity root (error in core spec)
             dumpOutcome(_generator.Outcome);
             // Assert.IsNotNull(_generator.Outcome);
-            // Assert.HasCount(_generator.Outcome.Issue, 1);
+            // Assert.HasCount(1, _generator.Outcome.Issue);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            // Assert.HasCount(issues, 1);
+            // Assert.HasCount(1, issues);
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             // Verify inherited constraints on Observation.component.referenceRange.low
@@ -6217,7 +6217,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.HasCount(issues, 0);
+            Assert.HasCount(0, issues);
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.JumpToFirst("Patient.name.extension"));
@@ -6279,7 +6279,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(_generator.Outcome);
             Assert.IsNotNull(_generator.Outcome.Issue);
-            Assert.HasCount(_generator.Outcome.Issue, 1);
+            Assert.HasCount(1, _generator.Outcome.Issue);
 
             assertIssue(_generator.Outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE, extensionUrl, sd.Differential.Element[1].Path);
 
@@ -6287,7 +6287,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.HasCount(issues, 1);
+            Assert.HasCount(1, issues);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE, extensionUrl, sd.Differential.Element[1].Path);
 
             // Expecting a single warning about incompatible type profile on element Extension.valueSetReference
@@ -6375,7 +6375,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.HasCount(issues, 0);
+            Assert.HasCount(0, issues);
 
 
             // Verify element renaming is not affected
@@ -6445,7 +6445,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.HasCount(issues, 0);
+            Assert.HasCount(0, issues);
 
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -6580,7 +6580,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // The snapshot generator should fully expand resource children if the resource is different from
                 // the base resource or when we override the behaviour in the event BeforeExpandElement.
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                Assert.HasCount(issues, 0);
+                Assert.HasCount(0, issues);
 
                 // Verify that Bundle.entry.resource : fhir type was properly expanded (or not)
                 var expectExpanded = !string.IsNullOrEmpty(differentialElement) || alwaysExpand;
@@ -7105,7 +7105,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem);
             // Verify that both codings are included in the snapshot
-            Assert.HasCount(elem.Code, 2);
+            Assert.HasCount(2, elem.Code);
             Assert.AreEqual("foo", elem.Code[0].Display);
             Assert.AreEqual("bar", elem.Code[1].Display);
         }
@@ -7296,7 +7296,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that snapshot generator merges constraints from external ReferenceProfile
             Assert.AreEqual("CustomReference", nav.Current.Comment);
             Assert.IsNotNull(nav.Current.Type);
-            Assert.HasCount(nav.Current.Type, 1);
+            Assert.HasCount(1, nav.Current.Type);
             Assert.AreEqual(FHIRAllTypes.Reference.GetLiteral(), nav.Current.Type[0].Code);
             Assert.AreEqual(ReferenceProfile.Url, nav.Current.Type[0].Profile);
             // By default, snapshot generator does not expand children of element DiagnosticReport.imagingStudy
@@ -7876,7 +7876,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
-            Assert.HasCount(valuexEld.Type, 1);
+            Assert.HasCount(1, valuexEld.Type);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
         }
 
@@ -7988,7 +7988,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
-            Assert.HasCount(valuexEld.Type, 1);
+            Assert.HasCount(1, valuexEld.Type);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
@@ -8480,7 +8480,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elementDefinitions = await _generator.GenerateAsync(structure);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
-            Assert.HasCount(valuexEld.Type, 1);
+            Assert.HasCount(1, valuexEld.Type);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));

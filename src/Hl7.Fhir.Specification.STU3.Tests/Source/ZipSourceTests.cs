@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
             var summaries = zip.ListSummaries();
 
             Assert.IsNotNull(summaries, "Collection of summaries should not be null");
-            Assert.HasCount(summaries, 20, "In the zipfile there are 20 resources distrubuted over several folders in the zipfile.");
+            Assert.HasCount(20, summaries, "In the zipfile there are 20 resources distrubuted over several folders in the zipfile.");
             summaries.First().Origin.Should().StartWith(zip.ExtractPath);
         }
 
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
             var summaries = zip.ListSummaries();
 
             Assert.IsNotNull(summaries, "Collection of summaries should not be null");
-            Assert.HasCount(summaries, 1, "In the zipfile there is 1 resource in the root folder.");
+            Assert.HasCount(1, summaries, "In the zipfile there is 1 resource in the root folder.");
             summaries.First().Origin.Should().StartWith(zip.ExtractPath);
         }
 

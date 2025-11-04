@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", json, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
+            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);
-            Assert.HasCount(doc.DescendantsAndSelf(), 17);
+            Assert.HasCount(17, doc.DescendantsAndSelf());
         }
 
        
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
+            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]

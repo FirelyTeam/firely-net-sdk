@@ -310,8 +310,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(p);
 
             var p2 = (new FhirXmlDeserializer()).Deserialize<Patient>(xml);
-            Assert.HasCount(p2.Extension, 1);
-            Assert.HasCount(p2.Contact, 1);
+            Assert.HasCount(1, p2.Extension);
+            Assert.HasCount(1, p2.Contact);
         }
 
         [TestMethod]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var root = doc.Root;
             Assert.AreEqual("Patient", root.Name.LocalName);
             Assert.IsTrue(root.HasElements);
-            Assert.HasCount(root.Elements(), 7);
+            Assert.HasCount(7, root.Elements());
         }
         // #endif
 
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(jsonText);
 
             var doc = JObject.Parse(jsonText);
-            Assert.HasCount(doc, 8); // Including resourceType
+            Assert.HasCount(8, doc); // Including resourceType
 
             static JToken assertProperty(JToken t, string expectedName)
             {
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var poco = fhirJsonParser.Deserialize<Patient>(json);
 
-            Assert.HasCount(poco.Name, 1);
+            Assert.HasCount(1, poco.Name);
 
             poco.Meta = new Meta();
 
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var newPoco = fhirJsonParser.Deserialize<Patient>(reserialized);
 
-            Assert.HasCount(newPoco.Name, 1);
+            Assert.HasCount(1, newPoco.Name);
         }
         
         [TestMethod]

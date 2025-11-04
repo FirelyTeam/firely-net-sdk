@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Model
             data.AddAnnotation(new AnnotationData { Data = "hi!" });
             Assert.IsNotNull(data.Annotation(typeof(AnnotationData)));
             Assert.AreEqual("hi!", data.Annotation<AnnotationData>().Data);
-            Assert.HasCount(data.Annotations(typeof(AnnotationData)), 1);
+            Assert.HasCount(1, data.Annotations(typeof(AnnotationData)));
 
             data.AddAnnotation(new AnnotationData { Data = "hi2!" });
 
@@ -42,16 +42,16 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNotNull(data.Annotation(typeof(AnnotationData)));
             Assert.AreEqual("hi!", data.Annotation<AnnotationData>().Data);
 
-            Assert.HasCount(data.Annotations(typeof(AnnotationData)), 2);
+            Assert.HasCount(2, data.Annotations(typeof(AnnotationData)));
             Assert.AreEqual("hi2!", data.Annotations<AnnotationData>().Skip(1).First().Data);
 
             data.AddAnnotation("Bare string");
 
-            Assert.HasCount(data.Annotations(typeof(AnnotationData)), 2);
+            Assert.HasCount(2, data.Annotations(typeof(AnnotationData)));
             Assert.AreEqual("hi!", data.Annotation<AnnotationData>().Data);
 
             data.RemoveAnnotations<AnnotationData>();
-            Assert.HasCount(data.Annotations(typeof(AnnotationData)), 0);
+            Assert.HasCount(0, data.Annotations(typeof(AnnotationData)));
 
             Assert.AreEqual("Bare string", data.Annotation<string>());
         }
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.Fail($"AddAnnotation should not throw an exception, but it did: {ex.Message}");
             }
 
-            Assert.HasCount(element.Annotations(typeof(AnnotationData)), 1);
+            Assert.HasCount(1, element.Annotations(typeof(AnnotationData)));
 
         }
     }

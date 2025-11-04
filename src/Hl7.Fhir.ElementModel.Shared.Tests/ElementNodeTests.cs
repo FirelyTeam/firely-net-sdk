@@ -320,7 +320,7 @@ namespace Hl7.FhirPath.Tests
             var patient = createPatient();
 
             var newElement = ElementNode.FromElement(patient, recursive: true, annotationsToCopy: new[] { typeof(string) });
-            Assert.HasCount(newElement.Children(), 4);
+            Assert.HasCount(4, newElement.Children());
 
             var activeChild = newElement["active"].Single();
             Assert.IsTrue((bool)activeChild.Value);

@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
             var familyNames = summary.GetValueOrDefault<IReadOnlyList<string>>(PatientFamilyNameKey);
             Assert.IsNotNull(familyNames);
-            Assert.HasCount(familyNames, 1);
+            Assert.HasCount(1, familyNames);
             Assert.IsTrue(expectedNames.SequenceEqual(familyNames));
         }
 
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Specification.Tests
             path = Path.GetFullPath(path);
             var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path, harvesters);
             Assert.IsNotNull(summaries);
-            Assert.HasCount(summaries, 1);
+            Assert.HasCount(1, summaries);
             var summary = summaries[0];
             Assert.IsFalse(summary.IsFaulted);
             Assert.AreEqual(path, summary.Origin);
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify invalid files in folder 'grahame-validation-examples' are excluded
             var errors = dirSource.ListSummaryErrors().ToList();
-            Assert.HasCount(errors, 0);
+            Assert.HasCount(0, errors);
         }
 
         // [WMR 20190305] Belongs to pull request #890
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceTypeName} : {summary.ResourceUri}");
             }
-            Assert.HasCount(AnonymousArtefacts, 6);
+            Assert.HasCount(6, AnonymousArtefacts);
         }
 
         [TestMethod]
