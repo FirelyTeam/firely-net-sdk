@@ -7,7 +7,7 @@
 
 	<PropertyGroup>
 		<ContainsTests>true</ContainsTests>
-		<NoWarn>1591, SDK0001, SDK0002, MSTEST0001, MSTEST0017, MSTEST0023, MSTEST0025, MSTEST0030, MSTEST0032, MSTEST0037, MSTEST0044, MSTEST0052, MSTEST0055</NoWarn>
+		<NoWarn>1591, SDK0001, SDK0002</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
