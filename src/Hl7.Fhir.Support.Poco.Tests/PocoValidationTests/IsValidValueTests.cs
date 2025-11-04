@@ -86,35 +86,35 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private static IEnumerable<object[]> cases(params string[] tests) =>
             tests.Select(t => new object[] { t });
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidOids))]
         public void TestValidOids(string test) => Oid.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidOids))]
         public void TestInvalidOids(string test) => Oid.IsValidValue(test).Should().BeFalse();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidUuids))]
         public void TestValidUuids(string test) => Uuid.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidOids))]
         public void TestInvalidUuids(string test) => Uuid.IsValidValue(test).Should().BeFalse();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidUris))]
         public void TestValidUri(string test) => FhirUri.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidUris))]
         public void TestInvalidUri(string test) => FhirUri.IsValidValue(test).Should().BeFalse();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidUris))]
         public void TestValidCanonical(string test) => Canonical.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidUris))]
         public void TestInvalidCanonical(string test) => Canonical.IsValidValue(test).Should().BeFalse();
     }

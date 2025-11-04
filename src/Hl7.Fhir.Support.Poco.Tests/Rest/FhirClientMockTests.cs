@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
             patient!.ResourceBase.Should().Be(new Uri("https://example.com/fhir/"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, DisplayName = "Use FhirVersion in Accept header")]
         [DataRow(false, DisplayName = "Don't use FhirVersion in Accept header")]
         public async Task AcceptHeaderTest(bool useFhirVersionHeader)
@@ -166,8 +166,8 @@ namespace Hl7.Fhir.Core.Tests.Rest
             yield return new object?[] { "http://example.com/_history", "WholeSystemHistoryAsync", null };
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(GetData))]
         public void HistoryContainsNoSummaryParameter(string expectedRequest, string methodName, object? parameter)
         {
             Uri expectedRequestUri = new(expectedRequest);

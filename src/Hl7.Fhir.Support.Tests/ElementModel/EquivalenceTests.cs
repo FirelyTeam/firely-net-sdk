@@ -244,15 +244,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             }.Select(t => new[] { t.Item1, t.Item2, t.Item3 });
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(equalityTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(equalityTestcases))]
         public void EqualityTest(object a, object b, bool? s)
         {
             doEqEquivTest(a, b, s, nameof(ICqlEquatable.IsEqualTo));
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(equivalenceTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(equivalenceTestcases))]
         public void EquivalenceTest(object a, object b, bool? s)
         {
             doEqEquivTest(a, b, s, nameof(ICqlEquatable.IsEquivalentTo));
@@ -350,8 +350,8 @@ namespace Hl7.Fhir.ElementModel.Tests
                 (Quantity.Parse("24.0 'kg'"), null, null),
              }.Select(t => new[] { t.Item1, t.Item2, t.Item3 });
 
-        [DataTestMethod]
-        [DynamicData(nameof(orderingTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(orderingTestcases))]
         public void OrderingTest(object a, object b, int? s)
         {
             if (s is 1 or -1)

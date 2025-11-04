@@ -36,8 +36,8 @@ public class StringFunctionsTests
         yield return ["Ewout", 0, (long?)-1, ""];
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(substringTests), DynamicDataSourceType.Method)]
+    [TestMethod]
+    [DynamicData(nameof(substringTests))]
     public void SubString(string input, long start, long? length, string expected)
     {
         input.FpSubstring(start, length).Should().Be(expected);

@@ -271,7 +271,7 @@ namespace Hl7.FhirPath.Tests
             CollectionAssert.AreEqual(new[] { "", "ONE", "", "TWO", "", "", "THREE", "", "" }, result.Select(r => r.Value.ToString()).ToArray());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("(1 | 2 | 3).indexOf(3)", 2)]
         [DataRow("((1 | 2 | 3).combine(2)).indexOf(2, 2)", 3)]
         [DataRow("((1 | 2 | 3).combine(2)).lastIndexOf(2)", 3)]

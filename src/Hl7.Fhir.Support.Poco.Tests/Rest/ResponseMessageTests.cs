@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task GetResponseWithCorrectXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage();
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithIncorrectXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task GetResponseWithCorrectJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage();
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithIncorrectJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""");
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithXmlButNotXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(HttpStatusCode.Accepted, "this is not xml");
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithJsonButNotJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(HttpStatusCode.Accepted, "this is not json");
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleFailureResponseWithXmlButNotXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(HttpStatusCode.Forbidden, "this is not xml");
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleFailureResponseWithJsonButNotJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(HttpStatusCode.Forbidden, "this is not json");
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithRelativeLocation(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(HttpStatusCode.Created);
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Test
 
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithAbsoluteLocation(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(HttpStatusCode.Created);
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleSuccessResponseWithUnknown(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(xml: "this is not xml or json");
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetEngines))]
         public async Task HandleFailureResponseWithUnknown(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(HttpStatusCode.InternalServerError, "this is not xml or json");

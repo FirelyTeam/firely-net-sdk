@@ -57,7 +57,7 @@ public class ValidationTests_LowLevelApi
             errors.Select(e => e.ErrorCode).Should().BeEquivalentTo(expectedErrorCodes);
     }
         
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("az23", null)]
     [DataRow("!notgood!", CodedValidationException.LITERAL_INVALID_CODE)]
     [DataRow("NotGood!", CodedValidationException.LITERAL_INVALID_CODE)]
@@ -100,7 +100,7 @@ public class ValidationTests_LowLevelApi
         assertPropertyValidationErrors(meta, prop, "PVAL127");
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("urn:oid:1.2.3", null)]
     [DataRow("urn:oid:datmagdusniet", CodedValidationException.LITERAL_INVALID_CODE)]
     [DataRow("urn:uuid:a5afddf4-e880-459b-876e-e4591b0acc11", null)]

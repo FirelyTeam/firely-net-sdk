@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true)]
         [DataRow(false)]
         public void TestIsConformanceSummary(bool typeNameFound)

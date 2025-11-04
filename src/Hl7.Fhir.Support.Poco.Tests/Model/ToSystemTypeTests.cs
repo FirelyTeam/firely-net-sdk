@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Support.Poco.Tests.Model;
 public class ToSystemTypeTests
 {
     [TestMethod]
-    [DynamicData(nameof(ConversionData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(ConversionData))]
     public void TryConvertTypeToSystemType(Base from, P.Any expected, bool success)
     {
         var toSystem = (P.IToSystemPrimitive)from;

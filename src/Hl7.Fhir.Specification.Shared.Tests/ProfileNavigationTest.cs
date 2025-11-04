@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, false)]
         [DataRow("A", null, true)]
         [DataRow("A/B", null, false)]
