@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Tests
             // If you filter on the type of a non-choice member, you'll arrive at that type.
             var elem = walker.Child("method");
             var typed = elem.OfType("CodeableConcept");
-            Assert.AreEqual(1, typed.Count());
+            Assert.HasCount(typed, 1);
             Assert.AreEqual("CodeableConcept", typed.Single().Current.Path);
 
             // Now, walk across a choice type, disambiguating the choice.

@@ -53,7 +53,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             fhirCodeableConcept.Coding[0].Version = "1.0.0";
             var systemConcept = fhirCodeableConcept.ToSystemConcept();
             Assert.AreEqual("Original text", systemConcept.Display);
-            Assert.AreEqual(1, systemConcept.Codes.Count);
+            Assert.HasCount(systemConcept.Codes, 1);
             verifyCoding(systemConcept.Codes.First());
 
             static void verifyCoding(P.Code systemCode)

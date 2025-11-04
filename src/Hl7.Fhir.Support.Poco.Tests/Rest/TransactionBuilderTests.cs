@@ -29,7 +29,7 @@ public class TransactionBuilderTests
             .Read("Patient", "9", versionId: "bla")
             .ToBundle();
 
-        Assert.AreEqual(4, b.Entry.Count);
+        Assert.HasCount(b.Entry, 4);
 
         Assert.AreEqual(Bundle.HTTPVerb.POST, b.Entry[0].Request.Method);
         Assert.AreEqual(p, b.Entry[0].Resource);
@@ -116,7 +116,7 @@ public class TransactionBuilderTests
         var bundle = transaction.ToBundle();
         bundle.Type = Bundle.BundleType.Transaction;
 
-        Assert.AreEqual(2, bundle.Entry.Count);
+        Assert.HasCount(bundle.Entry, 2);
         Assert.IsFalse(bundle.Entry[0].Request.Url.StartsWith(endpoint), "Entries in the transaction bundle cannot contain absolute url.");
         Assert.AreEqual("Patient", bundle.Entry[0].Request.Url, "Entry must be a relative url");
     }

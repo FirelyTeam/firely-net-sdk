@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Specification.Tests
             var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(patientElement);
             Assert.IsNotNull(patientElement.Example);
-            Assert.AreEqual(1, patientElement.Example.Count);
+            Assert.HasCount(patientElement.Example, 1);
             Assert.AreEqual("test-example", patientElement.Example[0].Label);
             Assert.AreEqual("Example patient name", (patientElement.Example[0].Value as FhirString)?.Value);
         }

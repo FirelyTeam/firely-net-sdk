@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "with-errors.xml"));
             var patient = getXmlNode(tpXml, tnSettings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(11, result.Count);  // 11 syntax errors, unknown root is passed through without errors
+            Assert.HasCount(result, 11);  // 11 syntax errors, unknown root is passed through without errors
         }
 
         [TestMethod]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "no-namespace.xml"));
             var bundle = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings { PermissiveParsing = true });
             var result = bundle.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).VisitAndCatch();
-            Assert.AreEqual(0, result.Count);
+            Assert.HasCount(result, 0);
         }
 
         [TestMethod]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "typeErrors.xml"));
             var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(9, result.Count);
+            Assert.HasCount(result, 9);
         }
 
         [TestMethod]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 "<div>hi!</div></text></Patient>");
             errors = nav.VisitAndCatch();
             Assert.IsTrue(errors.First().Message.Contains("should be an XHTML element."));
-            Assert.AreEqual(2, errors.Count);
+            Assert.HasCount(errors, 2);
 
             // Use an element where an attribute was expected
             nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'>" +
@@ -183,14 +183,14 @@ namespace Hl7.Fhir.Serialization.Tests
              "<status value='generated' />" +
              "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div></text></Patient>");
             var errors = nav.VisitAndCatch();
-            Assert.AreEqual(0, errors.Count);
+            Assert.HasCount(errors, 0);
 
             // No xhtml namespace
             nav = getValidatingXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
              "<status value='generated' />" +
              "<div><p>Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.AreEqual(3, errors.Count);
+            Assert.HasCount(errors, 3);
             Assert.IsTrue(errors.Any(e => e.Message.Contains("should be an XHTML element")));
 
             // Active content

@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);
-            Assert.AreEqual(17, doc.DescendantsAndSelf().Count());
+            Assert.HasCount(doc.DescendantsAndSelf(), 17);
         }
 
        

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 new FhirXmlParsingSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
 
             var navc = nav.Children().ToList();
-            Assert.AreEqual(2, navc.Count);
+            Assert.HasCount(navc, 2);
 
             Assert.AreEqual("myattr", navc[0].Name);        // none-xmlns attributes will come through
             var xmldetails = (navc[0] as IAnnotated).Annotation<XmlSerializationDetails>();
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // namespace attributes should not be found
             var children = nav.Children().ToList();
-            Assert.AreEqual(3, children.Count);
+            Assert.HasCount(children, 3);
             assertAnElement(children[0]);
             assertAnElementWithValueAndChildren(children[1]);
             assertDiv(children[2]);
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 Assert.AreEqual("anElement", cn.Name);
                 Assert.AreEqual("true", cn.Text);
-                Assert.AreEqual(1, cn.Children().Count());
+                Assert.HasCount(cn.Children(), 1);
                 cn = cn.Children().First();
 
                 Assert.AreEqual("customAttribute", cn.Name);
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
 
                 var cnc = cn.Children().ToList();
-                Assert.AreEqual(3,cnc.Count);
+                Assert.HasCount(cnc, 3);
                 firstChild(cnc[0]);
                 secondChild(cnc[1]);
                 thirdChild(cnc[2]);
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     Assert.AreEqual("firstChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
                     var ccnc = ccn.Children().ToList();
-                    Assert.AreEqual(1, ccnc.Count);
+                    Assert.HasCount(ccnc, 1);
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.AreEqual("I have text content", xd.NodeText);
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var patient = getXmlUntyped(tpXml);
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;
-            Assert.AreEqual(11, result.Count);
+            Assert.HasCount(result, 11);
             Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true, PermissiveParsing = false });
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             patient = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
-            Assert.AreEqual(0, result.Count);
+            Assert.HasCount(result, 0);
         }
 
         [TestMethod]

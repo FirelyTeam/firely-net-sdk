@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Serialization.Tests
                  "'status': 'generated', " +
                  "'div': 'crap' } }", new FhirJsonParsingSettings { PermissiveParsing = true });
                 var errors = nav.VisitAndCatch();
-                Assert.AreEqual(0,errors.Count);
+                Assert.HasCount(errors, 0);
 
                 // Total crap - now with validation
                 nav = await getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +

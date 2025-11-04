@@ -58,7 +58,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(p.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(1, result.Count());
+            Assert.HasCount(result, 1);
             Assert.AreEqual("pat1", result.First().GetValue());
         }
 
@@ -76,7 +76,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(p.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(1, result.Count());
+            Assert.HasCount(result, 1);
             Assert.AreEqual("pat1", result.First().GetValue());
         }
 
@@ -94,7 +94,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(p.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(1, result.Count());
+            Assert.HasCount(result, 1);
             Assert.AreEqual("five", result.ElementAt(0).GetValue());
         }
 
@@ -106,7 +106,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual(1, result.ElementAt(0).GetValue());
             Assert.AreEqual(2, result.ElementAt(1).GetValue());
             Assert.AreEqual(3, result.ElementAt(2).GetValue());
@@ -120,7 +120,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual(1, result.ElementAt(0).GetValue());
             Assert.AreEqual(2, result.ElementAt(1).GetValue());
             Assert.AreEqual(3, result.ElementAt(2).GetValue());
@@ -134,7 +134,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual(1, result.ElementAt(0).GetValue());
             Assert.AreEqual(2, result.ElementAt(1).GetValue());
             Assert.AreEqual(3, result.ElementAt(2).GetValue());
@@ -148,7 +148,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual(1, result.ElementAt(0).GetValue());
             Assert.AreEqual(2, result.ElementAt(1).GetValue());
             Assert.AreEqual(3, result.ElementAt(2).GetValue());
@@ -162,7 +162,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual(3, result.ElementAt(0).GetValue());
             Assert.AreEqual(2, result.ElementAt(1).GetValue());
             Assert.AreEqual(1, result.ElementAt(2).GetValue());
@@ -178,7 +178,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual(3, result.ElementAt(0).GetValue());
             Assert.AreEqual(2, result.ElementAt(1).GetValue());
             Assert.AreEqual(1, result.ElementAt(2).GetValue());
@@ -194,7 +194,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual("c", result.ElementAt(0).GetValue());
             Assert.AreEqual("b", result.ElementAt(1).GetValue());
             Assert.AreEqual("a", result.ElementAt(2).GetValue());
@@ -208,7 +208,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(null, new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual("a", result.ElementAt(0).GetValue());
             Assert.AreEqual("b", result.ElementAt(1).GetValue());
             Assert.AreEqual("c", result.ElementAt(2).GetValue());
@@ -224,7 +224,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(patient.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(2, result.Count());
+            Assert.HasCount(result, 2);
             Assert.AreEqual("James", result.ElementAt(0).GetValue());
             Assert.AreEqual("Peter", result.ElementAt(1).GetValue());
         }
@@ -241,7 +241,7 @@ namespace Hl7.FhirPath.R4.Tests
             var result = expr(patient.ToPocoNode(), new FhirEvaluationContext());
 
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(3, result.Count());
+            Assert.HasCount(result, 3);
             Assert.AreEqual("3", result.ElementAt(0).GetValue());
             Assert.AreEqual("2", result.ElementAt(1).GetValue());
             Assert.AreEqual("1", result.ElementAt(2).GetValue());

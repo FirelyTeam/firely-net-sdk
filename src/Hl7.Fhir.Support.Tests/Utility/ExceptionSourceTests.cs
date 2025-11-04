@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Support.Tests
             };
 
             src.Test("Unintercepted", "Patient.name[0].text");
-            Assert.AreEqual(1, Received.Count());
+            Assert.HasCount(Received, 1);
             Assert.IsTrue(Received.All(r => r.Message == "Unintercepted"));
 
             string intercepted = null;
@@ -68,13 +68,13 @@ namespace Hl7.Fhir.Support.Tests
             }
 
             Assert.AreEqual("Intercepted-true", intercepted);
-            Assert.AreEqual(1, Received.Count());   // since we've intercepted
+            Assert.HasCount(Received, 1);   // since we've intercepted
             Assert.IsFalse(Received.Any(r => r.Message == "Intercepted-true"));
 
             src.Test("Unintercepted2", "Patient.name[0].text");
 
             Assert.AreEqual("Intercepted-true", intercepted);  // should not have intercepted anymore
-            Assert.AreEqual(2, Received.Count());   // original sink remains active
+            Assert.HasCount(Received, 2);   // original sink remains active
             Assert.AreEqual("Unintercepted2", Received.Last().Message);
         }
 

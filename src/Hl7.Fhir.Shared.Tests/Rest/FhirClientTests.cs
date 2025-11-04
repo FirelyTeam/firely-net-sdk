@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var result = await client.SearchAsync<Patient>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.AreEqual(2,result.Entry.Count);
+            Assert.HasCount(result.Entry, 2);
 
             var firstId = result.Entry.First().Resource.Id;
 
@@ -389,12 +389,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.ResourceIdentity(), fe2.ResourceIdentity());
-            Assert.AreEqual(2, fe2.Identifier.Count);
+            Assert.HasCount(fe2.Identifier, 2);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = await client.UpdateAsync(fe);
             Assert.IsNotNull(fe3);
-            Assert.AreEqual(3, fe3.Identifier.Count);
+            Assert.HasCount(fe3.Identifier, 3);
 
             await client.DeleteAsync(fe3);
 
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Tests.Rest
             Bundle history = await client.HistoryAsync(createdTestPatientUrl);
             Assert.IsNotNull(history);
 
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(history.Entry, 4);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -439,13 +439,13 @@ namespace Hl7.Fhir.Tests.Rest
 
             history = await client.TypeHistoryAsync("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
-            Assert.AreEqual(4, history.Entry.Count);   // there's a race condition here, sometimes this is 5.
+            Assert.HasCount(history.Entry, 4);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
             history = await client.TypeHistoryAsync<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(history.Entry, 4);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 

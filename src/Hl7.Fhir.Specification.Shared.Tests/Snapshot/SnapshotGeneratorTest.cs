@@ -235,9 +235,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20190211] FIXED
             // STU3: "valueBoolean" replaces "value[x]" in snapshot
-            //Assert.AreEqual(5, elems.Count);
+            //Assert.HasCount(elems, 5);
             // R4: snapshot contains both "value[x]" and "valueBoolean" 
-            Assert.AreEqual(6, elems.Count);
+            Assert.HasCount(elems, 6);
 
             Assert.AreEqual("Extension", elems[0].Path);
             Assert.AreEqual("Extension.id", elems[1].Path);
@@ -550,14 +550,14 @@ namespace Hl7.Fhir.Specification.Tests
             // -1 (animal)
             // -3 inline children
             // -3 inherited children (id, extension, modifierExtension)
-            //Assert.AreEqual(52, snapElems.Count);
-            Assert.AreEqual(45, snapElems.Count);
+            //Assert.HasCount(snapElems, 52);
+            Assert.HasCount(snapElems, 45);
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
             var fullElems = await fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
-            //Assert.AreEqual(310, fullElems.Count);
+            //Assert.HasCount(fullElems, 310);
             // [WMR 20181212] R4 FIXED
             // Total of 7 + 3 * 12 = 43 elements removed:
             // -1 (animal)
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Specification.Tests
             // MV 20200908 R5 fixed
             // +5 photo (Attachment): extra attributes (TU): heigth, width, frames, duration, pages 
             fullElems.Count.Should().BeGreaterThan(snapElems.Count);
-            //Assert.AreEqual(282, fullElems.Count);
+            //Assert.HasCount(fullElems, 282);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Default snapshot: {snapElems.Count} elements");
                 dumpBaseElems(snapElems);
                 dumpIssues(_generator.Outcome?.Issue);
-                Assert.AreEqual(62, snapElems.Count);
+                Assert.HasCount(snapElems, 62);
                 Assert.IsNull(_generator.Outcome);
 
                 var issues = new List<OperationOutcome.IssueComponent>();
@@ -629,8 +629,8 @@ namespace Hl7.Fhir.Specification.Tests
                 // +1 Organization.partOf.type
                 // +1 Organization.endpoint.type
                 // +8 in total
-                //Assert.AreEqual(347, fullElems.Count);
-                //Assert.AreEqual(355, fullElems.Count);
+                //Assert.HasCount(fullElems, 347);
+                //Assert.HasCount(fullElems, 355);
 
                 // [WMR 20190211] Fixed
                 // R4: snapshot now includes both "value[x]" and "valueString" constraints
@@ -648,9 +648,9 @@ namespace Hl7.Fhir.Specification.Tests
                 // -1 Organization.address.line.extension.value[x]:valueString
                 // -1 Organization.address.line.extension.value[x]:valueString
                 // -1 Organization.address.line.extension.value[x]:valueString
-                Assert.AreEqual(356, fullElems.Count);
+                Assert.HasCount(fullElems, 356);
 
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
 
                 // Verify
                 for (int j = 1; j < fullElems.Count; j++)
@@ -1081,7 +1081,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var extensionElements = sd.Differential.Element.Where(e => e.IsExtension());
             Assert.IsNotNull(extensionElements);
-            Assert.AreEqual(2, extensionElements.Count()); // Extension slicing entry + first extension definition
+            Assert.HasCount(extensionElements, 2); // Extension slicing entry + first extension definition
             var extensionElement = extensionElements.Skip(1).FirstOrDefault();
             var extensionType = extensionElement.Type.FirstOrDefault();
             Assert.IsNotNull(extensionType);
@@ -1124,7 +1124,7 @@ namespace Hl7.Fhir.Specification.Tests
             dumpOutcome(outcome);
 
             Assert.IsNotNull(outcome);
-            Assert.AreEqual(3, outcome.Issue.Count);
+            Assert.HasCount(outcome.Issue, 3);
 
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyMissingExtension");
             // Note: the extension reference to MyExtensionNoSnapshot should not generate an Issue,
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(tree);
 
             var nav = new ElementDefinitionNavigator(tree);
-            Assert.AreEqual(10, nav.Count);
+            Assert.HasCount(nav, 10);
 
             Assert.IsTrue(nav.MoveToChild("A"));
             Assert.IsTrue(nav.MoveToChild("B"));
@@ -1342,7 +1342,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(tree);
             Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
 
-            Assert.AreEqual(10, tree.Count);
+            Assert.HasCount(tree, 10);
             var verifier = new ElementVerifier(tree, _settings);
 
             verifier.VerifyElement("Patient");                      // Added: root element
@@ -3572,7 +3572,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20190211] STU3: Disallow multiple renamed choice type constraints
             //Assert.IsNotNull(outcome);
-            //Assert.AreEqual(1, outcome.Issue.Count);
+            //Assert.HasCount(outcome.Issue, 1);
             //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
 
             // [WMR 20190211] R4: Allow multiple renamed choice type constraints
@@ -3666,7 +3666,7 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.JumpToFirst("Observation.value[x]"));
             Assert.AreEqual(1, nav.Current.Min);
-            Assert.AreEqual(2, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 2);
             Assert.AreEqual("string", nav.Current.Type[0].Code);
             Assert.AreEqual("boolean", nav.Current.Type[1].Code);
         }
@@ -3736,7 +3736,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("value[x]", nav.PathName);
             Assert.AreEqual("FirstTypeSlice", nav.Current.SliceName);
             Assert.AreEqual(100, nav.Current.MaxLength);
-            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 1);
         }
 
         [TestMethod]
@@ -3978,7 +3978,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that the snapshot contains three extension elements 
             var obsExtensions = elems.Where(e => e.Path == "Observation.extension").ToList();
             Assert.IsNotNull(obsExtensions);
-            Assert.AreEqual(4, obsExtensions.Count); // 1 extension slice + 3 extensions
+            Assert.HasCount(obsExtensions, 4); // 1 extension slice + 3 extensions
 
             var extSliceElem = obsExtensions[0];
             Assert.IsNotNull(extSliceElem);
@@ -4245,7 +4245,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(_generator.Outcome);
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
             Assert.IsNotNull(issues);
-            Assert.AreEqual(1, issues.Count);
+            Assert.HasCount(issues, 1);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
@@ -4257,7 +4257,7 @@ namespace Hl7.Fhir.Specification.Tests
             expanded.Snapshot.Element.Dump();
 
             // Full expansion should also generate same outcome issue
-            Assert.AreEqual(1, issues.Count);
+            Assert.HasCount(issues, 1);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
         }
 
@@ -5133,7 +5133,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20181212] R4 FIXED - SimpleQuantity core type definition has been fixed
             //var issues = _generator.Outcome?.Issue;
-            //Assert.AreEqual(1, issues.Count);
+            //Assert.HasCount(issues, 1);
             //assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
             Assert.IsNull(_generator.Outcome);
 
@@ -5142,9 +5142,9 @@ namespace Hl7.Fhir.Specification.Tests
             var elems = expanded.Snapshot.Element;
             elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
             // Generator should report same issue as during regular snapshot expansion
-            //Assert.AreEqual(1, issues.Count);
+            //Assert.HasCount(issues, 1);
             //assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
-            Assert.AreEqual(0, issues.Count);
+            Assert.HasCount(issues, 0);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -5165,7 +5165,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
 
             Assert.IsNotNull(nav.Current.Type);
-            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), nav.Current.Type[0].Code);
 
             var type = nav.Current.Type.First();
@@ -5375,7 +5375,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // IMPORTANT: also hook elementHandler event during fullExpansion, to emit (custom) base element annotations
                 var issues = new List<OperationOutcome.IssueComponent>();
                 elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
                 Debug.WriteLine($"Full expansion: #{elems.Count} elements");
                 dumpBaseElems(elems);
 
@@ -5502,7 +5502,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
 
                 Debug.WriteLine("Patient with type slice:");
                 foreach (var elem in expanded.Snapshot.Element)
@@ -5590,7 +5590,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
             }
             finally
             {
@@ -5670,7 +5670,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
             }
             finally
             {
@@ -5712,7 +5712,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
                 sd.Snapshot.Element = await fullyExpand(sd.Snapshot.Element, issues);
                 dumpIssues(issues);
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
             }
             finally
             {
@@ -5958,7 +5958,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x]
             var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.item.answer.value[x]").ToList();
-            Assert.AreEqual(3, answerValues.Count);
+            Assert.HasCount(answerValues, 3);
             foreach (var elem in answerValues)
             {
                 var binding = elem.Binding;
@@ -6595,7 +6595,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("valueString"));
 #endif
             Assert.AreEqual("NameSuffix", nav.Current.Short);
-            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
             Assert.IsNotNull(nav.Current.Binding);
             Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
@@ -6645,13 +6645,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Expecting single issue about invalid sliceName on SimpleQuantity root (error in core spec)
             dumpOutcome(_generator.Outcome);
             // Assert.IsNotNull(_generator.Outcome);
-            // Assert.AreEqual(1, _generator.Outcome.Issue.Count);
+            // Assert.HasCount(_generator.Outcome.Issue, 1);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            // Assert.AreEqual(1, issues.Count);
+            // Assert.HasCount(issues, 1);
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             // Verify inherited constraints on Observation.component.referenceRange.low
@@ -6775,7 +6775,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.AreEqual(0, issues.Count);
+            Assert.HasCount(issues, 0);
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.JumpToFirst("Patient.name.extension"));
@@ -6837,7 +6837,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(_generator.Outcome);
             Assert.IsNotNull(_generator.Outcome.Issue);
-            Assert.AreEqual(1, _generator.Outcome.Issue.Count);
+            Assert.HasCount(_generator.Outcome.Issue, 1);
 
             assertIssue(_generator.Outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE, extensionUrl, sd.Differential.Element[1].Path);
 
@@ -6845,7 +6845,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.AreEqual(1, issues.Count);
+            Assert.HasCount(issues, 1);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE, extensionUrl, sd.Differential.Element[1].Path);
 
             // Expecting a single warning about incompatible type profile on element Extension.valueSetReference
@@ -6939,7 +6939,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.AreEqual(0, issues.Count);
+            Assert.HasCount(issues, 0);
 
 
             // Verify element renaming is not affected
@@ -7015,7 +7015,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issues = new List<OperationOutcome.IssueComponent>();
             expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
-            Assert.AreEqual(0, issues.Count);
+            Assert.HasCount(issues, 0);
 
             // Expecting valueReference in snapshot, not value[x]
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -7156,7 +7156,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // The snapshot generator should fully expand resource children if the resource is different from
                 // the base resource or when we override the behaviour in the event BeforeExpandElement.
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                Assert.AreEqual(0, issues.Count);
+                Assert.HasCount(issues, 0);
 
                 // Verify that Bundle.entry.resource : fhir type was properly expanded (or not)
                 var expectExpanded = !string.IsNullOrEmpty(differentialElement) || alwaysExpand;
@@ -7721,7 +7721,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Expecting single issue about invalid slice name on SimpleQuantity root element
             //var outcome = generator.Outcome;
-            //Assert.AreEqual(1, outcome.Issue.Count);
+            //Assert.HasCount(outcome.Issue, 1);
             //assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
             // [WMR 20181212] R4 FIXED - SimpleQuantity core type definition has been fixed
             Assert.IsNull(generator.Outcome);
@@ -7732,7 +7732,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem);
             // Verify that both codings are included in the snapshot
-            Assert.AreEqual(2, elem.Code.Count);
+            Assert.HasCount(elem.Code, 2);
             Assert.AreEqual("foo", elem.Code[0].Display);
             Assert.AreEqual("bar", elem.Code[1].Display);
         }
@@ -7838,7 +7838,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20181212] R4 Fixed markdown
             Assert.AreEqual("CustomReference", nav.Current.Comment);
             Assert.IsNotNull(nav.Current.Type);
-            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Reference.GetLiteral(), nav.Current.Type[0].Code);
             Assert.AreEqual(ReferenceProfile.Url, nav.Current.Type[0].Profile.First());
             // By default, snapshot generator does not expand children of element DiagnosticReport.imagingStudy
@@ -7877,7 +7877,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
 
             // Verify default regular expression
             Assert.IsNotNull(elem.Type[0].Extension);
@@ -7931,7 +7931,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             // [WMR 20190131] WRONG! in R4, primitive value elements have no type code
             //Assert.AreEqual("string", elem.Type[0].Code);
             Assert.IsNull(elem.Type[0].Code);
@@ -8019,7 +8019,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
             elem = nav.Current;
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), elem.Type[0].Code);
 
             int getNumberOfChoiceTypes(Type resource, string choiceProperty)
@@ -8117,7 +8117,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify that the SnapshotGenerator added a default Slicing component
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.HasCount(nav.Current.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
             //Assert.AreEqual(ElementDefinition.DiscriminatorType.Type, nav.Current.Slicing.Discriminator[0].Type);
             //Assert.AreEqual(ElementDefinition.DiscriminatorComponent.TypeDiscriminatorPath, nav.Current.Slicing.Discriminator[0].Path);
@@ -8187,10 +8187,10 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
 #if NORMALIZE_RENAMED_TYPESLICE
@@ -8202,7 +8202,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
             Assert.AreEqual("TEST", elem.Short);
 
@@ -8266,7 +8266,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = nav.Current;
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
 
             // Verify named extension slice
@@ -8274,7 +8274,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("hairColor", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
             var profile = elem.Type[0].Profile.FirstOrDefault();
             Assert.IsNotNull(profile);
@@ -8285,10 +8285,10 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             // Verify named type slice
@@ -8301,7 +8301,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
             Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
             Assert.AreEqual(1, elem.Min);        // Inline profile constraint
@@ -8372,7 +8372,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
 
             // Verify named extension slice
@@ -8380,7 +8380,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("hairColor", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
             var profile = elem.Type[0].Profile.FirstOrDefault();
             Assert.IsNotNull(profile);
@@ -8392,10 +8392,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             // Verify named type slice
@@ -8408,7 +8408,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
             Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
             Assert.AreEqual(1, elem.Min);        // Inline profile constraint
@@ -8480,17 +8480,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             Assert.IsTrue(nav.MoveToNext("value[x]"));
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
             Assert.AreEqual("TEST", elem.Short);
 
@@ -8556,7 +8556,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
 
             // Verify named extension slice
@@ -8564,7 +8564,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("hairColor", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
             var profile = elem.Type[0].Profile.FirstOrDefault();
             Assert.IsNotNull(profile);
@@ -8576,10 +8576,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             // Verify named type slice
@@ -8587,7 +8587,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
             Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
             Assert.AreEqual(1, elem.Min);        // Inline profile constraint
@@ -8654,7 +8654,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(elem.Slicing.Discriminator[0]));
 
             // Verify named extension slice
@@ -8662,7 +8662,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("hairColor", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), elem.Type[0].Code);
             var profile = elem.Type[0].Profile.FirstOrDefault();
             Assert.IsNotNull(profile);
@@ -8674,10 +8674,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.SliceName);
             Assert.IsNotNull(elem.Slicing);
             Assert.IsNotNull(elem.Slicing.Discriminator);
-            Assert.AreEqual(1, elem.Slicing.Discriminator.Count);
+            Assert.HasCount(elem.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(elem.Slicing.Discriminator[0]));
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
 
             // Verify named type slice
@@ -8686,7 +8686,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = nav.Current;
             Assert.AreEqual("valueString", elem.SliceName);
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(1, elem.Type.Count);
+            Assert.HasCount(elem.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), elem.Type[0].Code);
             Assert.AreEqual("TEST", elem.Short); // Inherited from extension profile
 
@@ -8804,7 +8804,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify that the SnapshotGenerator added a default Slicing component for extension
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.HasCount(nav.Current.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForExtensionSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
 
             Assert.IsTrue(nav.MoveToNext("extension"));
@@ -8812,10 +8812,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify type slice entry for value[x] element
             Assert.IsTrue(nav.MoveToChild("value[x]"));
-            Assert.AreEqual(1, nav.Current.Slicing.Discriminator.Count);
+            Assert.HasCount(nav.Current.Slicing.Discriminator, 1);
             Assert.IsTrue(ElementDefinition.DiscriminatorComponent.ForTypeSlice().IsExactly(nav.Current.Slicing.Discriminator[0]));
             Assert.IsNotNull(nav.Current.Type);
-            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
 
             Assert.IsTrue(nav.MoveToNext());
@@ -8829,7 +8829,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("TEST", nav.Current.Short);
 
             Assert.IsNotNull(nav.Current.Type);
-            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.HasCount(nav.Current.Type, 1);
             Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
 
             // Verify that this is the last slice
@@ -9925,7 +9925,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
-            Assert.AreEqual(1, valuexEld.Type.Count);
+            Assert.HasCount(valuexEld.Type, 1);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
@@ -10002,7 +10002,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elementDefinitions = await _generator.GenerateAsync(structure);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
-            Assert.AreEqual(1, valuexEld.Type.Count);
+            Assert.HasCount(valuexEld.Type, 1);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
@@ -10469,7 +10469,7 @@ namespace Hl7.Fhir.Specification.Tests
             var translationExt = nameElement.DefinitionElement.Extension.First();
             Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/translation", translationExt.Url);
             Assert.IsNotNull(translationExt.Extension);
-            Assert.AreEqual(2, translationExt.Extension.Count);
+            Assert.HasCount(translationExt.Extension, 2);
             
             var langExt = translationExt.Extension.FirstOrDefault(e => e.Url == "lang");
             Assert.IsNotNull(langExt);

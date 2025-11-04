@@ -113,7 +113,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", entry.ParentResource!.Location);
             Assert.AreEqual("Bundle.entry[6].resource[0]", entry.ParentResource.ParentResource!.Location);
             Assert.AreEqual("Bundle", entry.ParentResource.ParentResource.ParentResource!.Location);
-            Assert.AreEqual(3, entry.ParentResources().Count());
+            Assert.HasCount(entry.ParentResources(), 3);
 
         }
 
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var node = b.ToTypedElement().ToScopedNode();
             var bundled = node.BundledResources();
-            Assert.AreEqual(8, bundled.Count()); // one extra (a fake version agnostic version)
+            Assert.HasCount(bundled, 8); // one extra (a fake version agnostic version)
             var resolveFirst = node.Children("entry").Children("resource").Children("link").Children("other").First().Resolve()!;
             var resolveSecond = node.Children("entry").Children("resource").Children("link").Children("other").Skip(1).First().Resolve()!;
             Assert.AreEqual("Bundle.entry[1].resource[0]", resolveFirst.Location);
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             Assert.IsNotNull(assertXHtml);
             IEnumerable<ITypedElement> typedElements = assertXHtml as ITypedElement[] ?? assertXHtml.ToArray();
-            Assert.AreEqual(1, typedElements.Count());
+            Assert.HasCount(typedElements, 1);
             Assert.AreEqual("text", typedElements.First().Name);
             Assert.AreEqual("xhtml", typedElements.First().InstanceType);
             Assert.AreEqual("Section.text[0]", typedElements.First().Location);

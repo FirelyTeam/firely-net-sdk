@@ -40,24 +40,24 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use").ToList();
 #if R5
-            Assert.AreEqual(5, conceptMaps.Count());
+            Assert.HasCount(conceptMaps, 5);
 #else
-            Assert.AreEqual(3, conceptMaps.Count());
+            Assert.HasCount(conceptMaps, 3);
 #endif
             Assert.IsNotNull(conceptMaps.First().GetOrigin());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v2-0190").ToList();
-            Assert.AreEqual(1, conceptMaps.Count());
+            Assert.HasCount(conceptMaps, 1);
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v3-AddressUse").ToList();
 #if R5
-            Assert.AreEqual(4, conceptMaps.Count());
+            Assert.HasCount(conceptMaps, 4);
 #else
-            Assert.AreEqual(2, conceptMaps.Count());
+            Assert.HasCount(conceptMaps, 2);
 #endif
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/somethingelse").ToList();
-            Assert.AreEqual(0, conceptMaps.Count());
+            Assert.HasCount(conceptMaps, 0);
         }
 
         [TestMethod]
@@ -194,21 +194,21 @@ namespace Hl7.Fhir.Specification.Tests
                                 @"c:\blie\bit.xml", @"c:\blie\bit.json", @"c:\blie\bit.txt" };
 
             var res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferXml);
-            Assert.AreEqual(5, res.Count);
+            Assert.HasCount(res, 5);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
             Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
-            Assert.AreEqual(5, res.Count);
+            Assert.HasCount(res, 5);
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
             Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.KeepBoth);
-            Assert.AreEqual(6, res.Count);
+            Assert.HasCount(res, 6);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
         }
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Basic glob filter
             var fi = new FilePatternFilter("*.xml");
             var r = fi.Filter(basef, files);
-            Assert.AreEqual(2, r.Count());
+            Assert.HasCount(r, 2);
             Assert.IsTrue(r.All(f => f.EndsWith(".xml")));
             Assert.IsTrue(r.All(f => f.StartsWith(basef)));
 
@@ -242,77 +242,77 @@ namespace Hl7.Fhir.Specification.Tests
             // Absolute select 1 file - no match
             fi = new FilePatternFilter("/file1.crap");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(0, r.Count());
+            Assert.HasCount(r, 0);
 
             // Absolute select with glob
             fi = new FilePatternFilter("/*.json");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(1, r.Count());
+            Assert.HasCount(r, 1);
             Assert.AreEqual(Path.Combine("c:", "bla", "file1.json"), r.Single());
 
             // Relative select file
             fi = new FilePatternFilter("file1.json");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(2, r.Count());
+            Assert.HasCount(r, 2);
             Assert.IsTrue(r.All(f => f.EndsWith("file1.json")));
 
             // Relative select file
             fi = new FilePatternFilter("**/file1.json");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(2, r.Count());
+            Assert.HasCount(r, 2);
             Assert.IsTrue(r.All(f => f.EndsWith("file1.json")));
 
             // Relative select file with glob
             fi = new FilePatternFilter("**/file1.*");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(3, r.Count());
+            Assert.HasCount(r, 3);
             Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}file1.")));
 
             // Relative select file with glob
             fi = new FilePatternFilter("**/*.txt");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(1, r.Count());
+            Assert.HasCount(r, 1);
             Assert.AreEqual(Path.Combine("c:", "bla", "bla2", "text1.txt"), r.Single());
 
             // Relative select file with glob
             fi = new FilePatternFilter("**/file*.xml");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(2, r.Count());
+            Assert.HasCount(r, 2);
             Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}file") && f.EndsWith(".xml")));
 
             // Relative select file with glob
             fi = new FilePatternFilter("file1.*");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(3, r.Count());
+            Assert.HasCount(r, 3);
             Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}file1.")));
 
             // Select whole directory
             fi = new FilePatternFilter("bla2/");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(4, r.Count());
+            Assert.HasCount(r, 4);
             Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}bla2{Path.DirectorySeparatorChar}")));
 
             // Select whole directory
             fi = new FilePatternFilter("bla2/**");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(4, r.Count());
+            Assert.HasCount(r, 4);
             Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}bla2{Path.DirectorySeparatorChar}")));
 
             // Select whole directory
             fi = new FilePatternFilter("/bla3/");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(0, r.Count());
+            Assert.HasCount(r, 0);
 
             // Internal glob dir
             fi = new FilePatternFilter("/bla2/*/*.jpg");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(1, r.Count());
+            Assert.HasCount(r, 1);
             Assert.AreEqual(Path.Combine("c:", "bla", "bla2", "bla3", "test2.jpg"), r.Single());
 
             // Case-insensitive
             fi = new FilePatternFilter("TEST2.jpg");
             r = fi.Filter(basef, files);
-            Assert.AreEqual(1, r.Count());
+            Assert.HasCount(r, 1);
             Assert.AreEqual(Path.Combine("c:", "bla", "bla2", "bla3", "test2.jpg"), r.Single());
         }
 
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Initialize source and verify index
                 var source = new DirectorySource(tmpFolderPath);
                 var fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(fileNames, 1);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 void Refresh(params string[] files)
@@ -484,26 +484,26 @@ namespace Hl7.Fhir.Specification.Tests
                 File.Move(tmpFilePath, newFilePath);
                 Refresh(tmpFilePath, newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(fileNames, 1);
                 Assert.AreEqual(newFileName, fileNames[0]);
 
                 // Delete file and refresh source
                 File.Delete(newFilePath);
                 Refresh(newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(0, fileNames.Count);
+                Assert.HasCount(fileNames, 0);
 
                 // Recreate file and refresh source
                 File.Copy(srcFilePath, tmpFilePath);
                 Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(fileNames, 1);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 // [WMR 20190528] Update file and refresh source
                 var summaries = source.ListSummaries().ToList();
                 Assert.IsNotNull(summaries);
-                Assert.AreEqual(1, summaries.Count);
+                Assert.HasCount(summaries, 1);
                 var summary = summaries[0];
                 var uri = summary.ResourceUri;
                 const string uriPrefix = @"http://example.org/Patient/";
@@ -530,11 +530,11 @@ namespace Hl7.Fhir.Specification.Tests
                 // Verify that Refresh updates the summary information
                 Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(fileNames, 1);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 summaries = source.ListSummaries().ToList();
-                Assert.AreEqual(1, summaries.Count);
+                Assert.HasCount(summaries, 1);
                 summary = summaries[0];
                 Assert.AreEqual(uriPrefix + patient.Id, summary.ResourceUri);
 

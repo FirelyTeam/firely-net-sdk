@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(5, names.Count());
+            Assert.HasCount(names, 5);
             Assert.IsTrue(names.Contains("profiles-types.xml"));
             Assert.IsTrue(names.Contains("flag.xsd"));
             Assert.IsFalse(names.Contains("patient.sch"));
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(4, names.Count());
+            Assert.HasCount(names, 4);
             Assert.IsTrue(names.Contains("profiles-types.xml"));
             Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsFalse(names.Contains("nonfhir.xml"));
@@ -173,12 +173,12 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var names = fa.ListArtifactNames();
-            Assert.AreEqual(1, names.Count());
+            Assert.HasCount(names, 1);
 
             fa.Excludes = new[] { "/sub/" };
 
             names = fa.ListArtifactNames();
-            Assert.AreEqual(0, names.Count());
+            Assert.HasCount(names, 0);
         }
 
         [TestMethod]
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(4, names.Count());
+            Assert.HasCount(names, 4);
             Assert.IsTrue(names.Contains("profiles-types.xml"));
             Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsTrue(names.Contains("nonfhir.xml"));
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
-            Assert.AreEqual(1, errors.Count);
+            Assert.HasCount(errors, 1);
             var error = errors[0];
             Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));

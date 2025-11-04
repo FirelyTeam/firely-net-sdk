@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Tests.Model
             var patientsCopy = patients.DeepCopy();
 
             patients.Remove(p1);
-            Assert.AreEqual(2, patientsCopy.Count());
+            Assert.HasCount(patientsCopy, 2);
         }
 
         [TestMethod]

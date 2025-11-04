@@ -294,7 +294,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             var typedElement = obs.ToTypedElement();
             var result = typedElement.Select("(Observation.value as Quantity) | (Observation.component.value as Quantity)");
-            Assert.AreEqual(2, result.Count());
+            Assert.HasCount(result, 2);
         }
 
         [TestMethod]
