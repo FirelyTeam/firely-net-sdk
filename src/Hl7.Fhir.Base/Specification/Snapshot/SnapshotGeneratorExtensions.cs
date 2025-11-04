@@ -99,7 +99,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         internal static bool HasNonInheritableExtensions(this IExtendable element)
         {
-            return element != null && _nonInheritableExtensions.Any(ext => element.GetExtension(ext) != null);
+            if (element == null) 
+                return false;
+
+            if (element.Extension.Any(ext => _nonInheritableExtensions.Contains(ext.Url)))
+                return true;
+
+            if (element is IModifierExtendable modifierElement)
+                return modifierElement.ModifierExtension.Any(ext => _nonInheritableExtensions.Contains(ext.Url));
+
+            return false;
         }
 
         /// <summary>
@@ -122,13 +131,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal static void RemoveNonInheritableExtensions(this IExtendable element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            foreach (var ext in _nonInheritableExtensions)
-            {
-                element.RemoveExtension(ext);
-            }
+            element.RemoveExtensions(_nonInheritableExtensions);
         }
 
-        private static readonly List<string> _nonInheritableExtensions = [
+        private static readonly HashSet<string> _nonInheritableExtensions = [
          ResourceIdentity.CORE_BASE_URL + "elementdefinition-isCommonBinding",
          ResourceIdentity.CORE_BASE_URL + "structuredefinition-fmm",
          ResourceIdentity.CORE_BASE_URL + "structuredefinition-fmm-no-warnings",
