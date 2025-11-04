@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var trimmed = FhirXmlSerializer.SerializeToString(patient);
             Assert.IsFalse(trimmed.Contains(" Smith"));
             Assert.IsFalse(trimmed.Contains("Smith&#xD;&#xA;&#x9;"));
-            Assert.Contains("\"Smith\"", trimmed);
+            Assert.IsTrue(trimmed.Contains("\"Smith\""));
         }
 
         [TestMethod]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (XmlException e)
             {
-                Assert.Contains("DTD is prohibited", e.Message);
+                Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
             }
         }
 
@@ -283,14 +283,14 @@ namespace Hl7.Fhir.Tests.Serialization
             var pser = new FhirXmlDeserializer();
             var p = pser.Deserialize<Patient>(xml);
             string outp = FhirXmlSerializer.SerializeToString(p);
-            Assert.Contains("\"male\"", outp);
+            Assert.IsTrue(outp.Contains("\"male\""));
 
             // Pollute the data with an incorrect administrative gender
             p.GenderElement.JsonValue = "superman";
 
             outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsFalse(outp.Contains("\"male\""));
-            Assert.Contains("\"superman\"", outp);
+            Assert.IsTrue(outp.Contains("\"superman\""));
         }
 
 
@@ -315,8 +315,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(p);
 
             var p2 = (new FhirXmlDeserializer()).Deserialize<Patient>(xml);
-            Assert.HasCount(1, p2.Extension);
-            Assert.HasCount(1, p2.Contact);
+            Assert.AreEqual(1, p2.Extension.Count);
+            Assert.AreEqual(1, p2.Contact.Count);
         }
 
         [TestMethod]
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var root = doc.Root;
             Assert.AreEqual("Patient", root.Name.LocalName);
             Assert.IsTrue(root.HasElements);
-            Assert.HasCount(7, root.Elements());
+            Assert.AreEqual(7, root.Elements().Count());
         }
         // #endif
 
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(jsonText);
 
             var doc = JObject.Parse(jsonText);
-            Assert.HasCount(8, doc); // Including resourceType
+            Assert.AreEqual(8, doc.Count); // Including resourceType
 
             static JToken assertProperty(JToken t, string expectedName)
             {
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var poco = fhirJsonParser.Deserialize<Patient>(json);
 
-            Assert.HasCount(1, poco.Name);
+            Assert.AreEqual(1, poco.Name.Count);
 
             poco.Meta = new Meta();
 
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var newPoco = fhirJsonParser.Deserialize<Patient>(reserialized);
 
-            Assert.HasCount(1, newPoco.Name);
+            Assert.AreEqual(1, newPoco.Name.Count);
         }
 
         [TestMethod]

@@ -101,13 +101,13 @@ public class ModelTests
 
         ic.Expression = new string[] { "json", "xml" };
         Assert.IsNotNull(ic.ExpressionElement);
-        Assert.HasCount(2, ic.ExpressionElement);
+        Assert.AreEqual(2, ic.ExpressionElement.Count);
         Assert.AreEqual("json", ic.ExpressionElement.First().Value);
 
         ic.ExpressionElement = new List<FhirString>();
         ic.ExpressionElement.Add(new FhirString("csv"));
         Assert.IsNotNull(ic.Expression);
-        Assert.HasCount(1, ic.Expression);
+        Assert.AreEqual(1, ic.Expression.Count());
     }
 
     [TestMethod]
@@ -128,19 +128,19 @@ public class ModelTests
 
         p.SetExtension("http://fhir.org/ext/ext-test2", new FhirString("Ewout Kramer"));
         var ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-        Assert.HasCount(1, ew);
+        Assert.AreEqual(1, ew.Count());
 
         p.AddExtension("http://fhir.org/ext/ext-test2", new FhirString("Wouter Kramer"));
 
         ew = p.GetExtensions("http://fhir.org/ext/ext-test2");
-        Assert.HasCount(2, ew);
+        Assert.AreEqual(2, ew.Count());
 
-        Assert.HasCount(0, p.ModifierExtension);
+        Assert.AreEqual(0, p.ModifierExtension.Count());
         var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier: true);
-        Assert.HasCount(1, p.ModifierExtension);
+        Assert.AreEqual(1, p.ModifierExtension.Count());
         Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
         Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
-        Assert.HasCount(3, p.AllExtensions());
+        Assert.AreEqual(3, p.AllExtensions().Count());
 
         var code = new Code("test");
         p.AddExtension("http://fhir.org/ext/code", code);

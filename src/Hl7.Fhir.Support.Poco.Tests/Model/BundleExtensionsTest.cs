@@ -53,21 +53,21 @@ namespace Hl7.Fhir.Tests.Model
             testBundle.AddResourceEntry(new Patient { Id = "1.2.3.4.5" }, "urn:oid:1.2.3.4.5");
 
             var result = testBundle.FindEntry("http://nu.nl/fhir/Patient/1234");
-            Assert.HasCount(2, result);
+            Assert.AreEqual(2, result.Count());
             result = testBundle.FindEntry("http://nu.nl/fhir/Patient/1234", includeDeleted: true);
-            Assert.HasCount(3, result);
+            Assert.AreEqual(3, result.Count());
             result = testBundle.FindEntry("http://nu.nl/fhir/Patient/1234/_history/v3", includeDeleted: true);
-            Assert.HasCount(1, result);
+            Assert.AreEqual(1, result.Count());
             result = testBundle.FindEntry(new Uri("http://server3.org/fhir/Patient/1234"));
-            Assert.HasCount(0, result);
+            Assert.AreEqual(0, result.Count());
 
             result = testBundle.FindEntry(new Uri("http://server1.com/fhir/Patient/5678"));
-            Assert.HasCount(1, result);
+            Assert.AreEqual(1, result.Count());
             result = testBundle.FindEntry(new Uri("http://server2.com/fhir/Patient/5678"));
-            Assert.HasCount(0, result);
+            Assert.AreEqual(0, result.Count());
 
             result = testBundle.FindEntry(new Uri("urn:oid:1.2.3.4.5"));
-            Assert.HasCount(1, result);
+            Assert.AreEqual(1, result.Count());
         }
 
         [TestMethod]

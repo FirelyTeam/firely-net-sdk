@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, json, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
             var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson();
-            Assert.Contains("pat1", jsonBare);
+            Assert.IsTrue(jsonBare.Contains("pat1"));
 
             patient.Add(SourceNode.Valued("unknownElement", "someValue"));
             var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson();
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Serialization.Tests
                  "'status': 'generated', " +
                  "'div': 'crap' } }", new FhirJsonParsingSettings { PermissiveParsing = true });
                 var errors = nav.VisitAndCatch();
-                Assert.HasCount(0, errors);
+                Assert.AreEqual(0,errors.Count);
 
                 // Total crap - now with validation
                 nav = await getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.Contains("Invalid Json encountered", fe.Message);
+                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
             }
         }
 

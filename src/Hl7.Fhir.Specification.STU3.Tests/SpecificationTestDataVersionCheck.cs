@@ -23,7 +23,7 @@ public class SpecificationTestDataVersionCheck
         Console.WriteLine(path);
         List <string> issues = [];
         validateFolder(path, path, issues);
-        Assert.HasCount(0, issues);
+        Assert.AreEqual(0, issues.Count);
     }
 
     private static void validateFolder(string basePath, string path, List<string> issues)

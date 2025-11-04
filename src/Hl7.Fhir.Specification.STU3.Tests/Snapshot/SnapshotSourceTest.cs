@@ -51,8 +51,8 @@ namespace Hl7.Fhir.Specification.Tests
             for (int i = 1; i < elemCnt; i++)
             {
                 var elem = diffElems[i];
-                Assert.IsEmpty(elem.Constraint);
-                Assert.IsEmpty(elem.Condition);
+                Assert.IsFalse(elem.Constraint.Any());
+                Assert.IsFalse(elem.Condition.Any());
             }
 
             // Verify explicit inheritance of recursive constraints in snapshot

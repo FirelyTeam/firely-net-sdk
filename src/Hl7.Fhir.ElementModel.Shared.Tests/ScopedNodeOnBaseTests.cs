@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Model.Tests
             Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
             
             var entries = _bundleNode.Child<PocoListNode>("entry")?.Pocos.OfType<Bundle.EntryComponent>().ToList();
-            Assert.HasCount(7, entries);
+            Assert.AreEqual(7, entries.Count);
 
             Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d", entries[1].FullUrl);
             Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model.Tests
 
             var node = b.ToPocoNode();
             var bundled = node.BundledResources();
-            Assert.HasCount(4, bundled);
+            Assert.AreEqual(4, bundled.Count());
             
             Assert.AreEqual("Bundle.entry[1].resource[0]", node.NavigateTo("entry[2].resource.link.other").First().Resolve()!.GetLocation());
             Assert.AreEqual("Bundle.entry[0].resource[0]", node.NavigateTo("entry[3].resource.link.other").First().Resolve()!.GetLocation());

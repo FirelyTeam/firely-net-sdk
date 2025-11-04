@@ -354,8 +354,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(1, ex.Conflicts.Length);
                 var conflict = ex.Conflicts[0];
                 Assert.AreEqual(url, conflict.Identifier);
-                Assert.Contains(filePath, conflict.Origins);
-                Assert.Contains(filePath2, conflict.Origins);
+                Assert.IsTrue(conflict.Origins.Contains(filePath));
+                Assert.IsTrue(conflict.Origins.Contains(filePath2));
                 conflictException = true;
             }
             finally

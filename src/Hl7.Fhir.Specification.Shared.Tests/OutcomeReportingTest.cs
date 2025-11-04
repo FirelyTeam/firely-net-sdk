@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void IssueCategorization()
         {
-            Assert.HasCount(2, _report.ListErrors());
+            Assert.AreEqual(2, _report.ListErrors().Count());
             Assert.AreEqual(3, _report.Where(severity: OperationOutcome.IssueSeverity.Warning).Count());
             Assert.AreEqual(2, _report.Where(type: OperationOutcome.IssueType.BusinessRule).Count());
             Assert.AreEqual(1, _report.Where(issueCode: Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING.Code).Count());
@@ -67,8 +67,8 @@ namespace Hl7.Fhir.Specification.Tests
         public void IssueLocation()
         {
             Assert.AreEqual(1, _report.ErrorsAt("Patient.active[0].id[0]").Count());
-            Assert.HasCount(0, _report.ErrorsAt(_location));
-            Assert.HasCount(1, _report.IssuesAt(_location));
+            Assert.AreEqual(0, _report.ErrorsAt(_location).Count());
+            Assert.AreEqual(1, _report.IssuesAt(_location).Count());
             Assert.AreEqual(1, _report.ErrorsAt("Patient").Count());
         }
     }

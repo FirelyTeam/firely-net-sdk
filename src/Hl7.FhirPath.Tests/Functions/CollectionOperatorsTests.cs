@@ -34,7 +34,7 @@ namespace HL7.FhirPath.Tests.Functions
 
             result = col1.Intersect(col3);
             Assert.IsNotNull(result);
-            Assert.IsEmpty(result);
+            Assert.IsFalse(result.Any());
         }
 
 

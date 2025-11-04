@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", json, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);
-            Assert.HasCount(17, doc.DescendantsAndSelf());
+            Assert.AreEqual(17, doc.DescendantsAndSelf().Count());
         }
 
        
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Serialization.Tests
             var output = nav.ToJson();
             Assert.IsFalse(output[..20].Contains('\n'));
             var pretty = nav.ToJson(pretty: true);
-            Assert.Contains('\n', pretty[..20]);
+            Assert.IsTrue(pretty[..20].Contains('\n'));
 
             var p = FhirJsonDeserializer.OSTRICH.Deserialize<Patient>(json);
             output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
             Assert.IsFalse(output[..20].Contains('\n'));
             pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);
-            Assert.Contains('\n', pretty[..20]);
+            Assert.IsTrue(pretty[..20].Contains('\n'));
         }
     }
 }

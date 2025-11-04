@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Test.Rest
             //Commit: 7a61694eb476619b65387341644c83200ef4d3dd
             var sp = ModelInfo.SearchParameters.Where(s => s.Resource == "DiagnosticReport" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp);
-            Assert.Contains("DiagnosticReport.context", sp.Path);           
+            Assert.IsTrue(sp.Path.Contains("DiagnosticReport.context"));           
             Assert.IsFalse(sp.Target.Contains(ResourceType.EpisodeOfCare));
 
             //Manualy removed this target from more occurances of the same searchparameter
@@ -93,11 +93,11 @@ namespace Hl7.Fhir.Test.Rest
             //These occurances of the searchparameter do have the EpisodeOfCare as target
             var sp11 = ModelInfo.SearchParameters.Where(s => s.Resource == "DeviceRequest" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp11);
-            Assert.Contains(ResourceType.EpisodeOfCare, sp11.Target);
+            Assert.IsTrue(sp11.Target.Contains(ResourceType.EpisodeOfCare));
 
             var sp12 = ModelInfo.SearchParameters.Where(s => s.Resource == "Procedure" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp12);
-            Assert.Contains(ResourceType.EpisodeOfCare, sp12.Target);
+            Assert.IsTrue(sp12.Target.Contains(ResourceType.EpisodeOfCare));
 
         }
     }

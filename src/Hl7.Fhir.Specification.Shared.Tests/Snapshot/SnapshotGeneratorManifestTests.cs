@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Specification.Tests
             var input = Load(inputFilePath);
             Assert.IsNotNull(input);
             var elems = input.Differential.Element;
-            Assert.HasCount(5, elems);
+            Assert.AreEqual(5, elems.Count);
             if (elems[3].Path == "Patient.contact.gender" && elems[4].Path == "Patient.contact.telecom")
             {
                 Swap(elems, 3, 4);

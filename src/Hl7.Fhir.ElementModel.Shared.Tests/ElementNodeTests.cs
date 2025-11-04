@@ -82,7 +82,7 @@ namespace Hl7.FhirPath.Tests
             // Select on the root of the resource, path should match with resource name included
             var active = patient.Select("Patient.active");
             Assert.IsNotNull(active);
-            Assert.IsTrue(active.FirstOrDefault().Value);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
 
             // Select on the root of the resource, resource type does not match
             var id = obs.Select("Patient.id");
@@ -91,7 +91,7 @@ namespace Hl7.FhirPath.Tests
             // Select on root of the resource, path does not include the resourceType
             active = patient.Select("active");
             Assert.IsNotNull(active);
-            Assert.IsTrue(active.FirstOrDefault().Value);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
 
             // Select on the root of the resource, path is for a generic Resource / DomainResource element
             id = obs.Select("Resource.id");
@@ -113,11 +113,11 @@ namespace Hl7.FhirPath.Tests
 
             var result = customResource.Select("UpperCaseElement");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.IsTrue(result.FirstOrDefault().Value);
+            Assert.AreEqual(true, result.FirstOrDefault().Value);
 
             result = customResource.Select("lowerCaseElement");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.IsFalse(result.FirstOrDefault().Value);
+            Assert.AreEqual(false, result.FirstOrDefault().Value);
         }
 
         [TestMethod]
@@ -166,7 +166,7 @@ namespace Hl7.FhirPath.Tests
 
             data = patient[1];
             Assert.AreEqual("active", data.Name);
-            Assert.IsTrue(data.Value);
+            Assert.AreEqual(true, data.Value);
             Assert.AreEqual("boolean", data.InstanceType);
         }
 
@@ -304,7 +304,7 @@ namespace Hl7.FhirPath.Tests
             newActive.Value = false;
             patient.Replace(_provider, patient["active"].Single(), newActive);
             Assert.AreEqual(1, patient["active"].Count);
-            Assert.IsFalse(patient["active"].Single().Value);
+            Assert.AreEqual(false, patient["active"].Single().Value);
 
             var newIdentifier = ElementNode.Root(_provider, "Identifier");
             newIdentifier.Add(_provider, "system", "http://nos.nl");
@@ -320,7 +320,7 @@ namespace Hl7.FhirPath.Tests
             var patient = createPatient();
 
             var newElement = ElementNode.FromElement(patient, recursive: true, annotationsToCopy: new[] { typeof(string) });
-            Assert.HasCount(4, newElement.Children());
+            Assert.AreEqual(4, newElement.Children().Count());
 
             var activeChild = newElement["active"].Single();
             Assert.IsTrue((bool)activeChild.Value);
@@ -378,12 +378,12 @@ namespace Hl7.FhirPath.Tests
             var basicWithTel = "<?xml version=\"1.0\" encoding=\"utf - 8\"?><BasicWithTel xmlns=\"http://hl7.org/fhir\"><telecom value =\"(tel)06-12345678\"/></BasicWithTel>";
             var node = FhirXmlNode.Parse(basicWithTel);
             var errors = node.VisitAndCatch();
-            Assert.IsEmpty(errors);
+            Assert.IsFalse(errors.Any());
 
             var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
             var typedElement = node.ToTypedElement(provider);
             errors = typedElement.VisitAndCatch();
-            Assert.IsEmpty(errors);
+            Assert.IsFalse(errors.Any());
         }
 
         private class CustomResourceResolver : IAsyncResourceResolver

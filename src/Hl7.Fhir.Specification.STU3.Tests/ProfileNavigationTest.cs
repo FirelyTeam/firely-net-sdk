@@ -149,10 +149,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("A.B", nav.Path);
 
             Assert.IsTrue(nav.Delete());    // remove 1st A.B
-            Assert.HasCount(1, nav);  // only A left
+            Assert.AreEqual(1, nav.Count);  // only A left
 
             Assert.IsTrue(nav.Delete());
-            Assert.HasCount(0, nav);
+            Assert.AreEqual(0, nav.Count);
             Assert.IsNull(nav.Current);
 
             Assert.IsFalse(nav.Delete());
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Specification.Tests
             nav = createTestNav();
             nav.MoveToFirstChild();
             Assert.IsTrue(nav.DeleteTree());
-            Assert.HasCount(0, nav);
+            Assert.AreEqual(0, nav.Count);
             Assert.IsNull(nav.Current);
         }
 
@@ -235,27 +235,27 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = createTestNav();
 
             var res = nav.Approach("A");
-            Assert.HasCount(1, res);
+            Assert.AreEqual(1, res.Count());
             res = nav.Find("A");
-            Assert.HasCount(1, res);
+            Assert.AreEqual(1, res.Count());
 
             res = nav.Approach("A.B.C1");
-            Assert.HasCount(3, res);
+            Assert.AreEqual(3, res.Count());
             res = nav.Find("A.B.C1");
-            Assert.HasCount(2, res);
+            Assert.AreEqual(2, res.Count());
 
             res = nav.Approach("A.B.C1.E");
-            Assert.HasCount(2, res);
+            Assert.AreEqual(2, res.Count());
             nav.ReturnToBookmark(res.First());
             Assert.AreEqual(2, nav.OrdinalPosition);
             nav.ReturnToBookmark(res.Skip(1).First());
             Assert.AreEqual(4, nav.OrdinalPosition);
 
             res = nav.Find("A.B.C1.E");
-            Assert.HasCount(0, res);
+            Assert.AreEqual(0, res.Count());
 
             res = nav.Approach("A.B.C1.D.X");
-            Assert.HasCount(3, res);
+            Assert.AreEqual(3, res.Count());
             nav.ReturnToBookmark(res.First());
             Assert.AreEqual(2, nav.OrdinalPosition);   // This one's still on the way
             nav.ReturnToBookmark(res.Skip(1).First());
@@ -264,22 +264,22 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(7, nav.OrdinalPosition);   // Via the one but last entry, this one approaches via A.B.C1.D
 
             res = nav.Find("A.B.C1.D.X");
-            Assert.HasCount(0, res);
+            Assert.AreEqual(0, res.Count());
 
             res = nav.Approach("A.B.C1.D");
-            Assert.HasCount(3, res);
+            Assert.AreEqual(3, res.Count());
             res = nav.Find("A.B.C1.D");
-            Assert.HasCount(1, res);
+            Assert.AreEqual(1, res.Count());
 
             res = nav.Approach("A.B");
-            Assert.HasCount(3, res);
+            Assert.AreEqual(3, res.Count());
             res = nav.Find("A.B");
-            Assert.HasCount(3, res);
+            Assert.AreEqual(3, res.Count());
 
             res = nav.Approach("A.B.X");
-            Assert.HasCount(1, res);
+            Assert.AreEqual(1, res.Count());
             res = nav.Find("A.B.X");
-            Assert.HasCount(0, res);
+            Assert.AreEqual(0, res.Count());
         }
 
 
@@ -304,44 +304,44 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = createTestNav();
             var newCNode = new ElementDefinition() { Path = "X.C" };
 
-            Assert.HasCount(9, nav);
+            Assert.AreEqual(9, nav.Count);
 
             nav.MoveToFirstChild();
             Assert.IsTrue(nav.MoveToChild("D"));
             Assert.IsTrue(nav.InsertBefore(newCNode));
             Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(8, nav.OrdinalPosition);
-            Assert.HasCount(10, nav);
+            Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.Delete());    // delete new "C" node we just created
             Assert.AreEqual(8, nav.OrdinalPosition);
-            Assert.HasCount(9, nav);
+            Assert.AreEqual(9, nav.Count);
 
             Assert.IsTrue(nav.MoveToPrevious()); // 3rd "A.B" node
             Assert.IsTrue(nav.InsertAfter(newCNode));
             Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(8, nav.OrdinalPosition);
-            Assert.HasCount(10, nav);
+            Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.Delete());    // delete new "C" node we just created
             Assert.AreEqual(8, nav.OrdinalPosition);
-            Assert.HasCount(9, nav);
+            Assert.AreEqual(9, nav.Count);
 
             Assert.IsTrue(nav.InsertAfter(newCNode));
             Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(9, nav.OrdinalPosition);
-            Assert.HasCount(10, nav);
+            Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.Delete());    // delete new "C" node we just created
             Assert.AreEqual(8, nav.OrdinalPosition);
-            Assert.HasCount(9, nav);
+            Assert.AreEqual(9, nav.Count);
 
             Assert.IsTrue(nav.MoveToParent());
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.IsTrue(nav.InsertBefore(newCNode));
             Assert.AreEqual("A.C", nav.Path);
             Assert.AreEqual(1, nav.OrdinalPosition);
-            Assert.HasCount(10, nav);
+            Assert.AreEqual(10, nav.Count);
         }
 
         [TestMethod]
@@ -529,11 +529,11 @@ namespace Hl7.Fhir.Specification.Tests
 
         //    var path = PathExpression.Compile("name.extension");
         //    var result = path.ForNode(nav);
-        //    Assert.HasCount(2, result);
+        //    Assert.AreEqual(2, result.Count());
 
         //    var path2 = PathExpression.Compile("characteristic.\"value[x]\"");
         //    result = path2.ForNode(nav);
-        //    Assert.HasCount(1, result);
+        //    Assert.AreEqual(1, result.Count());
 
         //    var ed = result.Single().Value as ElementDefinition;
         //    Assert.IsNotNull(ed);            
@@ -631,9 +631,9 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestGetBaseSliceName()
         {
-            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName(null));
-            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName(""));
-            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName("1"));
+            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(null));
+            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(""));
+            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName("1"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/1"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/2"));

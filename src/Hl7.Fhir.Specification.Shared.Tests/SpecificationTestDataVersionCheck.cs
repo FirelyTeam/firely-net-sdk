@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
             Console.WriteLine(path);
             List<string> issues = [];
             await ValidateFolder(path, path, issues);
-            Assert.HasCount(0, issues);
+            Assert.AreEqual(0, issues.Count);
         }
 
         private async Tasks.Task ValidateFolder(string basePath, string path, List<string> issues)

@@ -28,7 +28,7 @@ public class ModelInspectorMembersTest
         Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Base64Binary), out var mapping));
         Assert.AreEqual("base64Binary", mapping.Name);
         Assert.IsTrue(mapping.HasPrimitiveValueMember);
-        Assert.HasCount(3, mapping.PropertyMappings); // id, extension, fhir_comments & value
+        Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
         var valueProp = mapping.PrimitiveValueProperty;
         Assert.IsNotNull(valueProp);
         Assert.AreEqual("value", valueProp.Name);
@@ -38,7 +38,7 @@ public class ModelInspectorMembersTest
         Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Code<SomeEnum>), out mapping));
         Assert.AreEqual("codeOfT<Hl7.Fhir.Tests.Introspection.SomeEnum>", mapping.Name);
         Assert.IsTrue(mapping.HasPrimitiveValueMember);
-        Assert.HasCount(3, mapping.PropertyMappings); // id, extension, fhir_comments & value
+        Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
         valueProp = mapping.PrimitiveValueProperty;
         Assert.IsNotNull(valueProp);
         Assert.IsFalse(valueProp.IsCollection);
@@ -48,7 +48,7 @@ public class ModelInspectorMembersTest
         Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(FhirUri), out mapping));
         Assert.AreEqual("uri", mapping.Name);
         Assert.IsTrue(mapping.HasPrimitiveValueMember);
-        Assert.HasCount(3, mapping.PropertyMappings); // id, extension, fhir_comments & value
+        Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
         valueProp = mapping.PrimitiveValueProperty;
         Assert.IsNotNull(valueProp);
         Assert.IsFalse(valueProp.IsCollection);

@@ -198,10 +198,10 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(1, results);
+            Assert.AreEqual(1, results.Count());
             Assert.AreEqual("1974", results[0].ToString());
 
-            Assert.HasCount(6, tracer.traceOutput);
+            Assert.AreEqual(6, tracer.traceOutput.Count());
             Assert.AreEqual("0,7,Patient: focus=1 result=1", tracer.traceOutput[0]);
             Assert.AreEqual("8,9,birthDate: focus=1 result=1", tracer.traceOutput[1]);
             Assert.AreEqual("18,8,toString: focus=1 result=1", tracer.traceOutput[2]);
@@ -244,10 +244,10 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(1, results);
+            Assert.AreEqual(1, results.Count());
             Assert.AreEqual("2", results[0].ToString());
 
-            Assert.HasCount(4, tracer.traceOutput);
+            Assert.AreEqual(4, tracer.traceOutput.Count());
             Assert.AreEqual("0,7,Patient: focus=1 result=1", tracer.traceOutput[0]);
             Assert.AreEqual("8,2,id: focus=1 result=1", tracer.traceOutput[1]);
             Assert.AreEqual("19,4,constant: focus=1 result=1", tracer.traceOutput[2]);
@@ -290,11 +290,11 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(1, results);
+            Assert.AreEqual(1, results.Count());
             Assert.AreEqual("3", results[0].ToString());
 
             // Now check the tracer outputs
-            Assert.HasCount(11, tracer.traceOutput);
+            Assert.AreEqual(11, tracer.traceOutput.Count());
             int n = 0;
             Assert.AreEqual("1,1,constant: focus=1 result=1", tracer.traceOutput[n++]);
             Assert.AreEqual("3,1,constant: focus=1 result=1", tracer.traceOutput[n++]);
@@ -338,11 +338,11 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(1, results);
+            Assert.AreEqual(1, results.Count());
             Assert.AreEqual("true", results[0].ToString());
 
             // Now check the tracer outputs
-            Assert.HasCount(6, tracer.traceOutput);
+            Assert.AreEqual(6, tracer.traceOutput.Count());
             int n = 0;
             Assert.AreEqual("0,7,Patient: focus=1 result=1", tracer.traceOutput[n++]);
             Assert.AreEqual("8,2,id: focus=1 result=1", tracer.traceOutput[n++]);
@@ -374,7 +374,7 @@ namespace Hl7.FhirPath.Tests
                     // name
                     Assert.AreEqual("\t(Patient)\tPatient", vThis);
                     Assert.AreEqual("\t(Patient)\tPatient", vFocus);
-                    Assert.HasCount(2, result);
+                    Assert.AreEqual(2, result.Count());
                 }
 
                 if (n == 1 || n == 2 || n == 3 || n == 4)
@@ -395,8 +395,8 @@ namespace Hl7.FhirPath.Tests
                     // Where clause
                     Assert.AreEqual("\t(Patient)\tPatient", vThis);
                     Assert.AreEqual("\t(HumanName)\tPatient.name[0]", vFocus);
-                    Assert.HasCount(2, focus);
-                    Assert.HasCount(2, result);
+                    Assert.AreEqual(2, focus.Count());
+                    Assert.AreEqual(2, result.Count());
                     Assert.AreEqual("\t(HumanName)\tPatient.name[0]", vResult);
                 }
                 if (n == 13)
@@ -404,8 +404,8 @@ namespace Hl7.FhirPath.Tests
                     // The final given prop navigator
                     Assert.AreEqual("\t(Patient)\tPatient", vThis);
                     Assert.AreEqual("\t(HumanName)\tPatient.name[0]", vFocus);
-                    Assert.HasCount(2, focus);
-                    Assert.HasCount(3, result);
+                    Assert.AreEqual(2, focus.Count());
+                    Assert.AreEqual(3, result.Count());
                 }
             };
             var expr = compiler.Compile(expression, true);
@@ -413,7 +413,7 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(3, results);
+            Assert.AreEqual(3, results.Count());
             Assert.AreEqual("Peter", PocoNodeExtensions.GetValue(results[0])?.ToString());
             Assert.AreEqual("James", PocoNodeExtensions.GetValue(results[1])?.ToString());
             Assert.AreEqual("Jim", PocoNodeExtensions.GetValue(results[2])?.ToString());
@@ -422,7 +422,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual("Patient.name[0].given[1]", PocoNodeExtensions.GetLocation(results[1]));
             Assert.AreEqual("Patient.name[1].given[0]", PocoNodeExtensions.GetLocation(results[2]));
 
-            Assert.HasCount(14, tracer.traceOutput);
+            Assert.AreEqual(14, tracer.traceOutput.Count());
             Assert.AreEqual("0,4,name: focus=1 result=2", tracer.traceOutput[0]);
             Assert.AreEqual("11,3,use: focus=1 result=1", tracer.traceOutput[1]);
             Assert.AreEqual("15,10,constant: focus=1 result=1", tracer.traceOutput[2]);
@@ -458,10 +458,10 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(1, results);
+            Assert.AreEqual(1, results.Count());
             Assert.AreEqual("42", results[0].ToString());
 
-            Assert.HasCount(1, tracer.traceOutput);
+            Assert.AreEqual(1, tracer.traceOutput.Count());
             Assert.AreEqual("0,4,constant: focus=1 result=1", tracer.traceOutput[0]);
 
             // Now check the tracer assertions
@@ -492,10 +492,10 @@ namespace Hl7.FhirPath.Tests
             var results = expr(input, new FhirEvaluationContext() { DebugTracer = tracer }).ToFhirValues().ToList();
             tracer.DumpDiagnostics();
 
-            Assert.HasCount(1, results);
+            Assert.AreEqual(1, results.Count());
             Assert.AreEqual("true", results[0].ToString());
 
-            Assert.HasCount(7, tracer.traceOutput);
+            Assert.AreEqual(7, tracer.traceOutput.Count());
             Assert.AreEqual("0,2,id: focus=1 result=1", tracer.traceOutput[0]);
             Assert.AreEqual("3,10,constant: focus=1 result=1", tracer.traceOutput[1]);
             Assert.AreEqual("2,1,=: focus=1 result=1", tracer.traceOutput[2]);

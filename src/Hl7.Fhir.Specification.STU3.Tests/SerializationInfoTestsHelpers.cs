@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (ArgumentException e)
             {
-                Assert.Contains("has no snapshot component", e.Message);
+                Assert.IsTrue(e.Message.Contains("has no snapshot component"));
             }
         }
 

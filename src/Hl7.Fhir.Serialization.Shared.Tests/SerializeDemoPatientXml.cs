@@ -36,7 +36,7 @@ public class SerializeDemoPatientXml
         // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
         var nav = getXmlElement(tpXml, new FhirXmlParsingSettings { PermissiveParsing = true });
         var doc = nav.ToXDocument().Root!;
-        Assert.HasCount(10, doc.DescendantNodesAndSelf());  // only 8 nodes + 2 comments left after pruning
+        Assert.AreEqual(10, doc.DescendantNodesAndSelf().Count());  // only 8 nodes + 2 comments left after pruning
     }
 
     [TestMethod]
@@ -103,12 +103,12 @@ public class SerializeDemoPatientXml
         var output = nav.ToXml();
         Assert.IsFalse(output[..50].Contains('\n'));
         var pretty = nav.ToXml(pretty: true);
-        Assert.Contains('\n', pretty[..50]);
+        Assert.IsTrue(pretty[..50].Contains('\n'));
 
         var p = FhirXmlDeserializer.OSTRICH.Deserialize<Patient>(xml);
         output = new FhirXmlSerializer().SerializeToString(p, pretty: false);
         Assert.IsFalse(output[..50].Contains('\n'));
         pretty = new FhirXmlSerializer().SerializeToString(p, pretty: true);
-        Assert.Contains('\n', pretty[..50]);
+        Assert.IsTrue(pretty[..50].Contains('\n'));
     }
 }

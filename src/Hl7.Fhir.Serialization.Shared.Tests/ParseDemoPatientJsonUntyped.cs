@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual("deceasedBoolean", db.Name);
             Assert.AreEqual("true", db.Text);
             var details = (db as IAnnotated).Annotation<JsonSerializationDetails>();
-            Assert.IsTrue(details.OriginalValue);
+            Assert.AreEqual(true, details.OriginalValue);
 
             Assert.AreEqual("3", patient.Children("multipleBirthInteger").Single().Text);
 
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.Contains("Invalid Json encountered", fe.Message);
+                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
             }
         }
     }

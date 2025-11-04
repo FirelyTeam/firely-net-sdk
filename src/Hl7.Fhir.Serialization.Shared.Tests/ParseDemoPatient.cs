@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = new List<string>();
             JsonAssert.AreSame(filename, expected, output, errors);
             Console.WriteLine(string.Join("\r\n", errors));
-            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         public static void CanReadThroughTypedElement(ITypedElement n, bool typed)
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var name = n.Children("contained").First().Children("name").First();
             Assert.AreEqual("name", name.Name);
             var inname = name.Children().ToList();
-            Assert.IsNotEmpty(inname);
+            Assert.IsTrue(inname.Any());
             Assert.AreEqual("id", inname[0].Name);
             Assert.AreEqual("firstname", inname[0].Value);
             Assert.AreEqual("use", inname[1].Name);
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var dec = n.Children("deceased").Single();
                 Assert.AreEqual("boolean", dec.InstanceType);
-                Assert.IsFalse(dec.Value);
+                Assert.AreEqual(false, dec.Value);
             }
             else
             {

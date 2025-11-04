@@ -56,10 +56,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsNotNull(parsed);
             Assert.IsNotNull(parsed.Differential?.Element);
-            Assert.HasCount(1, parsed.Differential.Element);
+            Assert.AreEqual(1, parsed.Differential.Element.Count);
             var examples = parsed.Differential.Element[0].Example;
             Assert.IsNotNull(examples);
-            Assert.HasCount(1, examples);
+            Assert.AreEqual(1, examples.Count);
             var example = examples[0];
             Assert.IsNotNull(example);
             Assert.AreEqual(orgExample.Label, example.Label);

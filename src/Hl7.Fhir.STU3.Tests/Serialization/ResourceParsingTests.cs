@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (StructuralTypeException ste)
             {
                 Debug.WriteLine(ste.Message);
-                Assert.Contains("daytona", ste.Message);
+                Assert.IsTrue(ste.Message.Contains("daytona"));
                 Assert.IsFalse(ste.Message.Contains("ox"));
             }
 
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.Contains("expected the HL7 FHIR namespace", fe.Message);
+                Assert.IsTrue(fe.Message.Contains("expected the HL7 FHIR namespace"));
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.Contains("which is not allowed", fe.Message);
+                Assert.IsTrue(fe.Message.Contains("which is not allowed"));
             }
         }
 
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
             var outp = FhirXmlSerializer.SerializeToString(basic);
-            Assert.Contains("&#xA;", outp);
+            Assert.IsTrue(outp.Contains("&#xA;"));
         }
 
         // Test legacy behaviour
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Tests.Serialization
             List<string> errors = [];
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.HasCount(0, errors, "Errors were encountered comparing converted content");
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -287,12 +287,12 @@ namespace Hl7.Fhir.Tests.Serialization
             o.ResourceBase = new Uri("http://nu.nl/fhir");
 
             var xml = FhirXmlSerializer.SerializeToString(o);
-            Assert.Contains("value=\"#jaap\"", xml);
+            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
             var o2 = FhirXmlDeserializer.Deserialize<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirXmlSerializer.SerializeToString(o2);
-            Assert.Contains("value=\"#jaap\"", xml);
+            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
         }
 
 
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.Contains("Invalid Xml encountered", fe.Message);
+                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
             }
         }
 

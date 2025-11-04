@@ -23,7 +23,7 @@ namespace Hl7.FhirPath.R4.Tests
             Console.WriteLine(path);
             List<string> issues = new List<string>();
             ValidateFolder(path, path, issues);
-            Assert.HasCount(0, issues);
+            Assert.AreEqual(0, issues.Count);
         }
 
         private void ValidateFolder(string basePath, string path, List<string> issues)

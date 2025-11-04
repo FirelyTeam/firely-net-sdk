@@ -171,7 +171,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             }
             catch (InvalidOperationException io)
             {
-                Assert.Contains("contains more than one element", io.Message);
+                Assert.IsTrue(io.Message.Contains("contains more than one element"));
             }
         }
 
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('v1', 'value1').select(%v1)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(1, r);
+            Assert.AreEqual(1, r.Count());
             Assert.AreEqual("value1", r.First().ToString());
         }
 
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('n1', name.first()).select(%n1.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
+            Assert.AreEqual(2, r.Count());
             Assert.AreEqual("Peter", r.First().ToString());
             Assert.AreEqual("James", r.Skip(1).First().ToString());
             // .toStrictEqual(["Peter", "James"]);
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('n1', name.first()).select(%n1.given).first()";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(1, r);
+            Assert.AreEqual(1, r.Count());
             Assert.AreEqual("Peter", r.First().ToString());
         }
 
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             // this shouldn't report an issue where the variable is being redefined (as it's not in the same context)
             var expr = "defineVariable('n1', name.first()).select(%n1.given) | defineVariable('n1', name.skip(1).first()).select(%n1.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(3, r);
+            Assert.AreEqual(3, r.Count());
             Assert.AreEqual("Peter", r.First().ToString());
             Assert.AreEqual("James", r.Skip(1).First().ToString());
             Assert.AreEqual("Jim", r.Skip(2).First().ToString());
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             // but only uses it in the second. This ensures that the first context doesn't remain when using it in another context
             var expr = "defineVariable('n1', name.first()).where(active.not()) | defineVariable('n1', name.skip(1).first()).select(%n1.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(1, r);
+            Assert.AreEqual(1, r.Count());
             Assert.AreEqual("Jim", r.First().ToString());
             // .toStrictEqual(["Jim"]);
         }
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('n1', name.first()).select(id & '-' & %n1.given.join('|')) | defineVariable('n2', name.skip(1).first()).select(%n2.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
+            Assert.AreEqual(2, r.Count());
             Assert.AreEqual("example-Peter|James", r.First().ToString());
             Assert.AreEqual("Jim", r.Skip(1).First().ToString());
             // .toStrictEqual(["example-Peter|James", "Jim"]);
@@ -518,8 +518,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('n1', name.first()).active | defineVariable('n2', name.skip(1).first()).select(%n2.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
-            Assert.IsTrue(((FhirBoolean)r.First()).Value);
+            Assert.AreEqual(2, r.Count());
+            Assert.AreEqual(true, ((FhirBoolean)r.First()).Value);
             Assert.AreEqual("Jim", r.Skip(1).First().ToString());
             // .toStrictEqual([true, "Jim"]);
         }
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('v1', 'value1').select(%v1).trace('data').defineVariable('v2', 'value2').select($this & ':' & %v1 & '-' & %v2) | defineVariable('v3', 'value3').select(%v3)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
+            Assert.AreEqual(2, r.Count());
             Assert.AreEqual("value1:value1-value2", r.First().ToString());
             Assert.AreEqual("value3", r.Skip(1).First().ToString());
             //.toStrictEqual(["value1:value1-value2", "value3"]);
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "Patient.name.defineVariable('n2', skip(1).first()).defineVariable('res', %n2.given+%n2.given).select(%res)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
+            Assert.AreEqual(2, r.Count());
             Assert.AreEqual("JimJim", r.First().ToString());
             Assert.AreEqual("JimJim", r.Skip(1).First().ToString());
             // .toStrictEqual(["JimJim", "JimJim", "JimJim"]);
@@ -594,8 +594,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             // A variable defined based on another variable
             var expr = "Patient.name.defineVariable('n1', first()).exists(%n1) | Patient.name.defineVariable('n2', skip(1).first()).defineVariable('res', %n2.given+%n2.given).select(%res)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
-            Assert.IsTrue(((FhirBoolean)r.First()).Value);
+            Assert.AreEqual(2, r.Count());
+            Assert.AreEqual(true, ((FhirBoolean)r.First()).Value);
             Assert.AreEqual("JimJim", r.Skip(1).First().ToString());
             // the duplicate JimJim values are removed due to the | operator
             // .toStrictEqual([true, "JimJim"]);
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable('root', 'r1-').select(defineVariable('v1', 'v1').defineVariable('v2', 'v2').select(%v1 | %v2)).select(%root & $this)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(2, r);
+            Assert.AreEqual(2, r.Count());
             Assert.AreEqual("r1-v1", r.First().ToString());
             Assert.AreEqual("r1-v2", r.Skip(1).First().ToString());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var compiler = new FhirPathCompiler();
             var exprCompiled = compiler.Compile(expr);
             var r = exprCompiled(fixture.PatientExample.ToPocoNode(), new FhirEvaluationContext());
-            Assert.HasCount(2, r);
+            Assert.AreEqual(2, r.Count());
             Assert.AreEqual("r1-v1", r.First().GetValue());
             Assert.AreEqual("r1-v2", r.Skip(1).First().GetValue());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "defineVariable(defineVariable('param','ppp').select(%param), defineVariable('param','value').select(%param)).select(%ppp)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(1, r);
+            Assert.AreEqual(1, r.Count());
             Assert.AreEqual("value", r.First().ToString());
             // .toStrictEqual(["value"]);
         }
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "'aaa'.replace(defineVariable('param', 'aaa').select(%param), defineVariable('param','bbb').select(%param))";
             var r = fixture.PatientExample.Select(expr).ToList();
-            Assert.HasCount(1, r);
+            Assert.AreEqual(1, r.Count());
             Assert.AreEqual("bbb", r.First().ToString());
             // .toStrictEqual(["bbb"]);
         }

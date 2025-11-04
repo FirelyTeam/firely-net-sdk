@@ -54,12 +54,12 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
 
-            Assert.IsTrue(p.Scalar("Patient.active.first()"));
-            Assert.IsTrue(p.Scalar("Patient.active[0]"));
+            Assert.AreEqual(true, p.Scalar("Patient.active.first()"));
+            Assert.AreEqual(true, p.Scalar("Patient.active[0]"));
             Assert.AreEqual("314", p.Scalar("Patient.active[0].id[0]"));
 
             var extensions = p.Select("Patient.active[0].extension");
-            Assert.HasCount(2, extensions);
+            Assert.AreEqual(2, extensions.Count());
 
             var boolValue = p.Select("Patient.active");
             Assert.IsTrue(boolValue.All(bv => bv is FhirBoolean));
@@ -82,21 +82,21 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         {
             Patient p = new Patient();
 
-            Assert.IsFalse(p.Predicate("Patient.active.hasValue()"));
-            Assert.IsFalse(p.Predicate("Patient.active.exists()"));
+            Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(false, p.Predicate("Patient.active.exists()"));
 
             p.Active = true;
-            Assert.IsTrue(p.Predicate("Patient.active.hasValue()"));
-            Assert.IsTrue(p.Predicate("Patient.active.exists()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
 
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
-            Assert.IsTrue(p.Predicate("Patient.active.hasValue()"));
-            Assert.IsTrue(p.Predicate("Patient.active.exists()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
 
             p.ActiveElement = new FhirBoolean();
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
-            Assert.IsFalse(p.Predicate("Patient.active.hasValue()"));
-            Assert.IsTrue(p.Predicate("Patient.active.exists()"));
+            Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
         }
 
         [TestMethod]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             Assert.IsNotNull(rest);
 
-            Assert.Contains("CapabilityStatement.rest[0]", rest.Location);
+            Assert.IsTrue(rest.Location.Contains("CapabilityStatement.rest[0]"));
         }
 
 

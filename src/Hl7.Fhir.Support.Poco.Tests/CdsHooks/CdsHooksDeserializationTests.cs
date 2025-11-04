@@ -50,7 +50,7 @@ public class CdsHooksDeserializationTests
         var result = JsonSerializer.Deserialize<DiscoveryResponse>(json, options);
         Assert.IsNotNull(result);
         Assert.IsNotNull(result.Services);
-        Assert.HasCount(3, result.Services);
+        Assert.AreEqual(3, result.Services.Count);
         Assert.AreEqual("patient-view", result.Services[0].Hook);
         Assert.AreEqual("Static CDS Service Example", result.Services[0].Title);
         Assert.AreEqual("An example of a CDS Service that returns a static set of cards", result.Services[0].Description);
@@ -114,7 +114,7 @@ public class CdsHooksDeserializationTests
         Assert.IsNotNull(result.FhirAuthorization);
         Assert.IsNotNull(result.Context);
         Assert.IsNotNull(result.Prefetch);
-        Assert.HasCount(1, result.Prefetch);
+        Assert.AreEqual(1, result.Prefetch.Count);
         var patientJson = """
                           {
                             "resourceType": "Patient",

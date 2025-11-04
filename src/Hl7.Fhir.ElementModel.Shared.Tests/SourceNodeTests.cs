@@ -56,12 +56,12 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual("contained", data.Name);
             Assert.IsNull(data.Text);
             Assert.AreEqual("Observation", data.ResourceType);
-            Assert.HasCount(1, data.Children());
+            Assert.AreEqual(1, data.Children().Count());
 
             data = patient[1];
             Assert.AreEqual("active", data.Name);
             Assert.AreEqual("true", data.Text);
-            Assert.HasCount(4, data.Children());
+            Assert.AreEqual(4, data.Children().Count());
         }
 
 

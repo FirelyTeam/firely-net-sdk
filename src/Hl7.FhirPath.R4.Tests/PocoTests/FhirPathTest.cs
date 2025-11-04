@@ -225,7 +225,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             var divExists = nav.Scalar("text.`div`.exists()");
 
-            Assert.IsTrue(divExists);
+            Assert.AreEqual(true, divExists);
         }
 
         [TestMethod]
@@ -237,10 +237,10 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
 
             var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
-            Assert.IsTrue(absolutueInvariantcheck);
+            Assert.AreEqual(true, absolutueInvariantcheck);
 
             var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
-            Assert.IsTrue(invariantcheck);
+            Assert.AreEqual(true, invariantcheck);
 
         }
 
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             var typedElement = obs.ToTypedElement();
             var result = typedElement.Select("(Observation.value as Quantity) | (Observation.component.value as Quantity)");
-            Assert.HasCount(2, result);
+            Assert.AreEqual(2, result.Count());
         }
 
         [TestMethod]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             };
 
             var result = bundle.Select("Bundle.entry.where(fullUrl = 'urn:uuid:555').resource.managingOrganization.resolve()");
-            Assert.IsNotEmpty(result);
+            Assert.IsTrue(result.Any());
         }
 
         [TestMethod]

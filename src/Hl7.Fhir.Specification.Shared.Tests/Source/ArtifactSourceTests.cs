@@ -129,13 +129,13 @@ namespace Hl7.Fhir.Specification.Tests
             };
             var names = fa.ListArtifactNames();
 
-            Assert.HasCount(5, names);
-            Assert.Contains("profiles-types.xml", names);
-            Assert.Contains("flag.xsd", names);
+            Assert.AreEqual(5, names.Count());
+            Assert.IsTrue(names.Contains("profiles-types.xml"));
+            Assert.IsTrue(names.Contains("flag.xsd"));
             Assert.IsFalse(names.Contains("patient.sch"));
-            Assert.Contains("TestPatient.xml", names);
-            Assert.Contains("nonfhir.xml", names);
-            Assert.Contains("invalid.xml", names);
+            Assert.IsTrue(names.Contains("TestPatient.xml"));
+            Assert.IsTrue(names.Contains("nonfhir.xml"));
+            Assert.IsTrue(names.Contains("invalid.xml"));
 
             using (var stream = fa.LoadArtifactByName("TestPatient.xml"))
             {
@@ -155,12 +155,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             var names = fa.ListArtifactNames();
 
-            Assert.HasCount(4, names);
-            Assert.Contains("profiles-types.xml", names);
-            Assert.Contains("TestPatient.xml", names);
+            Assert.AreEqual(4, names.Count());
+            Assert.IsTrue(names.Contains("profiles-types.xml"));
+            Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsFalse(names.Contains("nonfhir.xml"));
-            Assert.Contains("invalid.xml", names);
-            Assert.Contains("patient.sch", names);
+            Assert.IsTrue(names.Contains("invalid.xml"));
+            Assert.IsTrue(names.Contains("patient.sch"));
         }
 
         [TestMethod]
@@ -173,12 +173,12 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var names = fa.ListArtifactNames();
-            Assert.HasCount(1, names);
+            Assert.AreEqual(1, names.Count());
 
             fa.Excludes = new[] { "/sub/" };
 
             names = fa.ListArtifactNames();
-            Assert.HasCount(0, names);
+            Assert.AreEqual(0, names.Count());
         }
 
         [TestMethod]
@@ -190,11 +190,11 @@ namespace Hl7.Fhir.Specification.Tests
             };
             var names = fa.ListArtifactNames();
 
-            Assert.HasCount(4, names);
-            Assert.Contains("profiles-types.xml", names);
-            Assert.Contains("TestPatient.xml", names);
-            Assert.Contains("nonfhir.xml", names);
-            Assert.Contains("invalid.xml", names);
+            Assert.AreEqual(4, names.Count());
+            Assert.IsTrue(names.Contains("profiles-types.xml"));
+            Assert.IsTrue(names.Contains("TestPatient.xml"));
+            Assert.IsTrue(names.Contains("nonfhir.xml"));
+            Assert.IsTrue(names.Contains("invalid.xml"));
             //[WMR 20171020] TODO: Use ArtifactSummary.Error
             //Assert.AreEqual(0, fa.Errors.Length);
 
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
-            Assert.HasCount(1, errors);
+            Assert.AreEqual(1, errors.Count);
             var error = errors[0];
             Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
-            Assert.Contains("TestPatient.json", names);
+            Assert.IsTrue(names.Contains("TestPatient.json"));
         }
 
         [TestMethod]
@@ -266,8 +266,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
-            Assert.IsNotEmpty(resourceIds);
-            Assert.StartsWith(resourceIds.All(url => url, "http://hl7.org/fhir/StructureDefinition/"));
+            Assert.IsTrue(resourceIds.Count > 0);
+            Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/MoneyQuantity");
 
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                         Assert.AreEqual(numFiles, names.Count());
                         Assert.IsFalse(names.Contains(srcFile1));
-                        Assert.Contains(srcFile2, names);
+                        Assert.IsTrue(names.Contains(srcFile2));
 
                         // [WMR 20170823] Also test ListResourceUris => prepareResources()
                         var profileUrls = dirSource.ListResourceUris(ResourceType.StructureDefinition);
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // Materialize the sequence
                         var urlList = profileUrls.ToList();
                         Assert.IsFalse(urlList.Contains(profileUrl1));
-                        Assert.Contains(profileUrl2, urlList);
+                        Assert.IsTrue(urlList.Contains(profileUrl2));
                     }
                     // API *should* gracefully handle security exceptions
                     catch (UnauthorizedAccessException ex)

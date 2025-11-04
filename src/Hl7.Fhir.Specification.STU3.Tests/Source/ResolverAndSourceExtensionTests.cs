@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindAllResources()
         {
             var uris = source.ListResourceUris(ResourceType.ConceptMap);
-            Assert.IsNotEmpty(uris);
+            Assert.IsTrue(uris.Any());
 
             var cmaps = source.FindAll<ConceptMap>();
             Assert.AreEqual(uris.Count(), cmaps.Count());
