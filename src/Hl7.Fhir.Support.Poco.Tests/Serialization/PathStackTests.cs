@@ -26,11 +26,11 @@ public class PathStackTests
         ps.EnterElement("e", true);
         t("A.b.c[0].e[0]");
 
-        Assert.ThrowsException<InvalidOperationException>(() => ps.ExitResource());
+        Assert.Throws<InvalidOperationException>(() => ps.ExitResource());
         ps.ExitElement();
         t("A.b.c[0]");
 
-        Assert.ThrowsException<InvalidOperationException>(() => ps.ExitElement());
+        Assert.Throws<InvalidOperationException>(() => ps.ExitElement());
         ps.ExitResource();
         t("A.b.c[0]");
 
@@ -39,7 +39,7 @@ public class PathStackTests
         ps.ExitElement();
         t("A");
 
-        Assert.ThrowsException<InvalidOperationException>(() => ps.ExitElement());
+        Assert.Throws<InvalidOperationException>(() => ps.ExitElement());
         ps.ExitResource();
         t("$this");
 

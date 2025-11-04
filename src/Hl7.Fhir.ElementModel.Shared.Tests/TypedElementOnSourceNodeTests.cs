@@ -14,15 +14,17 @@ namespace Hl7.Fhir.ElementModel.Tests
     {
         private readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
 
-        [ExpectedException(typeof(StructuralTypeException), "Should have thrown on .Value as complex types can't have a value")]
         [TestMethod]
         public async Task TestExceptionComplexTypeValue()
         {
-            var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":\"Invalid\"}";
-            var bundle = await FhirJsonNode.ParseAsync(bundleJson);
-            var typedBundle = bundle.ToTypedElement(provider, "Bundle");
+            await Assert.ThrowsAsync<StructuralTypeException>(async () =>
+            {
+                var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":\"Invalid\"}";
+                var bundle = await FhirJsonNode.ParseAsync(bundleJson);
+                var typedBundle = bundle.ToTypedElement(provider, "Bundle");
 
-            var _ = typedBundle.Children("entry").First().Value;
+                var _ = typedBundle.Children("entry").First().Value;
+            });
         }
         
         private SourceNode testPatient => SourceNode.Node("Patient",

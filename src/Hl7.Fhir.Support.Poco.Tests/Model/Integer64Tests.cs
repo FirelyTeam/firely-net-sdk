@@ -44,11 +44,11 @@ public class Integer64Tests
         Assert.IsNull(c.Value);
 
         c.JsonValue = "nonsense";
-        Assert.ThrowsException<CodedValidationException>(() => c.Value);
+        Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
         c.JsonValue = 314;
-        Assert.ThrowsException<CodedValidationException>(() => c.Value);
+        Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }
 }

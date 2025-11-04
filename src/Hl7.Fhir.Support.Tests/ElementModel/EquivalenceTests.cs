@@ -51,8 +51,8 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsFalse(EqualityOperators.IsEquivalentTo(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R")));
             Assert.IsFalse(EqualityOperators.IsEquivalentTo(new Integer(0), new String("hi!")));
 
-            Assert.ThrowsException<System.InvalidOperationException>(() => EqualityOperators.Compare(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R"), "="));
-            Assert.ThrowsException<System.InvalidOperationException>(() => EqualityOperators.Compare(new Integer(0), new String("hi!"), ">="));
+            Assert.Throws<System.InvalidOperationException>(() => EqualityOperators.Compare(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R"), "="));
+            Assert.Throws<System.InvalidOperationException>(() => EqualityOperators.Compare(new Integer(0), new String("hi!"), ">="));
         }
 
         internal static IEnumerable<object[]> equalityTestcases() =>

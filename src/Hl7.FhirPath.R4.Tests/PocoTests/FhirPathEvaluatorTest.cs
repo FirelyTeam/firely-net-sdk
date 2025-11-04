@@ -573,7 +573,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public void redefining_variable_throws_error()
         {
             var expr = "defineVariable('v1').defineVariable('v1').select(%v1)";
-            Assert.ThrowsException<InvalidOperationException>(() => fixture.PatientExample.Select(expr).ToList());
+            Assert.Throws<InvalidOperationException>(() => fixture.PatientExample.Select(expr).ToList());
         }
 
 

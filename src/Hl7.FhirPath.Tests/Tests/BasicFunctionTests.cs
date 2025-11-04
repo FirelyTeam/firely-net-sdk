@@ -316,11 +316,13 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void TestStringJoinError()
         {
-            var dummy = PocoNode.FromList<FhirString>(["This", "is", "sentence", "with", 1, "number."]);
-            dummy.FpJoin(string.Empty);
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                var dummy = PocoNode.FromList<FhirString>(["This", "is", "sentence", "with", 1, "number."]);
+                dummy.FpJoin(string.Empty);
+            });
         }
     }
 

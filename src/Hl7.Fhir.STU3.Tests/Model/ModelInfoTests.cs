@@ -226,10 +226,9 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestCheckMinorVersionCompatibilityWithNull()
         {
-            ModelInfo.CheckMinorVersionCompatibility(null);
+            Assert.Throws<ArgumentNullException>(() => ModelInfo.CheckMinorVersionCompatibility(null));
         }
 
         [TestMethod]

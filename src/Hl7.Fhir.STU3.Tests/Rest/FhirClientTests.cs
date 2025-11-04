@@ -218,11 +218,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        [ExpectedException(typeof(FhirOperationException))]
         public async Tasks.Task ReadWrongResourceTypeHttpClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            await testReadWrongResourceType(client);
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await testReadWrongResourceType(client));
         }
 
         private static async Tasks.Task testReadWrongResourceType(BaseFhirClient client)
@@ -372,11 +371,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient")]
-        [ExpectedException(typeof(ArgumentException))]
         public async Tasks.Task SearchInvalidCriteriaHttpClient()
         {
             var client = new FhirClient(testEndpoint);
-            await testSearchInvalidCriteria(client);
+            await Assert.ThrowsAsync<ArgumentException>(async () => await testSearchInvalidCriteria(client));
         }
 
         private async Tasks.Task testSearchInvalidCriteria(BaseFhirClient client)

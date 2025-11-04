@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Test.Rest
                 var result = exception as TException;
                 if (result == null)
                 {
-                    Assert.Fail("Expected {0}, actual {1}", typeof(TException), exception.GetType());
+                    Assert.Fail($"Expected {typeof(TException)}, actual {exception.GetType()}");
                 }
                 return result;
             }

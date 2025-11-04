@@ -131,7 +131,7 @@ namespace Hl7.FhirPath.Tests
             // But if you leave the type out, Add() will try to determine the type
             obs = ElementNode.Root(_provider, "Observation");
 #if !NET40
-            Assert.ThrowsException<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
+            Assert.Throws<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
 #endif
             value = obs.Add(_provider, "value", true, "boolean");  // with an explicit type
             Assert.AreEqual("boolean", value.InstanceType);

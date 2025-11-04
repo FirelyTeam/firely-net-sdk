@@ -9023,7 +9023,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // [WMR 20190910] Expecting exception from DifferentialTreeConstructor
-            await Assert.ThrowsExceptionAsync<InvalidOperationException>(generate);
+            await Assert.ThrowsAsync<InvalidOperationException>(generate);
         }
 
         // [WMR 20190902] #1090 SnapshotGenerator should support logical models
