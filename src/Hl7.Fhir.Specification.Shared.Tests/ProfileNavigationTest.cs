@@ -629,9 +629,9 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestGetBaseSliceName()
         {
-            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(null));
-            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(""));
-            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName("1"));
+            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName(null));
+            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName(""));
+            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName("1"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/1"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/2"));

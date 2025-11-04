@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             var errors = new List<string>();
             JsonAssert.AreSame("edgecases", expected, actual, errors);
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.HasCount(errors, 0, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]

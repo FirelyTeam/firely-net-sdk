@@ -3999,11 +3999,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var labelExt = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension");
             Assert.IsNotNull(labelExt);
-            if (expandAll) { Assert.AreEqual(true, labelExt.HasSnapshot); }
+            if (expandAll) { Assert.IsTrue(labelExt.HasSnapshot); }
 
             var locationExt = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension");
             Assert.IsNotNull(locationExt);
-            if (expandAll) { Assert.AreEqual(true, locationExt.HasSnapshot); }
+            if (expandAll) { Assert.IsTrue(locationExt.HasSnapshot); }
 
             // Third extension element maps to an unresolved extension definition
             var otherExt = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension");
@@ -4863,7 +4863,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient.telecom slice entry
             Assert.IsTrue(nav.MoveToChild("telecom"));
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual(true, nav.Current.Slicing.Ordered);
+            Assert.IsTrue(nav.Current.Slicing.Ordered);
             Assert.AreEqual(ElementDefinition.SlicingRules.OpenAtEnd, nav.Current.Slicing.Rules);
             Assert.IsFalse(nav.Current.Slicing.Discriminator.Any());
             Assert.AreEqual(1, nav.Current.Min);
@@ -4893,7 +4893,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator.Select(s => s.Path)));
             // Assert.AreEqual(1, nav.Current.Slicing.Discriminator.SelectMany(s => s.Type.Value).Count()));
             Assert.AreEqual(ElementDefinition.SlicingRules.Closed, nav.Current.Slicing.Rules);
-            // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
+            // Assert.IsFalse(nav.Current.Slicing.Ordered);
             Assert.IsNull(nav.Current.Slicing.Ordered);
 
             // Patient.telecom.system
@@ -4945,7 +4945,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator.Select(p => p.Path)));
             Assert.AreEqual(ElementDefinition.SlicingRules.Open, nav.Current.Slicing.Rules);
-            // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
+            // Assert.IsFalse(nav.Current.Slicing.Ordered);
             Assert.IsNull(nav.Current.Slicing.Ordered);
 
             // Patient.telecom.system
@@ -6573,7 +6573,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify constraint inherited from base patient profile
             Assert.AreEqual("1", nav.Current.Max);
             // Verify constraint specified by derived patient profile
-            Assert.AreEqual(true, nav.Current.MustSupport);
+            Assert.IsTrue(nav.Current.MustSupport);
             Assert.IsTrue(nav.MoveToFirstChild());
             // Verify constraints on url child element inherited from extension definition
             Assert.IsTrue(nav.MoveToNext("url"));
@@ -9425,7 +9425,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestDistinctTypeCode()
         {
             var elem = new ElementDefinition();
-            Assert.AreEqual(null, elem.CommonTypeCode());
+            Assert.IsNull(elem.CommonTypeCode());
 
             var patientTypeCode = FHIRAllTypes.Patient.GetLiteral();
             elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new[] { @"http://example.org/fhir/StructureDefinition/MyPatient1" } });
@@ -10464,7 +10464,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Should also have the extension from differential
             Assert.IsNotNull(nameElement.DefinitionElement?.Extension, "DefinitionElement.Extension should not be null");
-            Assert.AreEqual(1, nameElement.DefinitionElement.Extension.Count, "Should have exactly one extension");
+            Assert.HasCount(nameElement.DefinitionElement.Extension, 1, "Should have exactly one extension");
 
             var translationExt = nameElement.DefinitionElement.Extension.First();
             Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/translation", translationExt.Url);

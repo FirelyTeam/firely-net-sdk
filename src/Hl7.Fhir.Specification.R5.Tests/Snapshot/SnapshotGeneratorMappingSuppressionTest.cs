@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rootElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(rootElement, "Should have Patient root element");
             Assert.IsNotNull(rootElement.Mapping, "Mapping should be inherited from base profile");
-            Assert.AreEqual(1, rootElement.Mapping.Count, "Should have inherited one mapping");
+            Assert.HasCount(rootElement.Mapping, 1, "Should have inherited one mapping");
             Assert.AreEqual("test-identity", rootElement.Mapping[0].Identity, "Should have inherited the correct mapping");
         }
 

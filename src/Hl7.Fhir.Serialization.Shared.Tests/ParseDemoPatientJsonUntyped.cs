@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual("deceasedBoolean", db.Name);
             Assert.AreEqual("true", db.Text);
             var details = (db as IAnnotated).Annotation<JsonSerializationDetails>();
-            Assert.AreEqual(true, details.OriginalValue);
+            Assert.IsTrue(details.OriginalValue);
 
             Assert.AreEqual("3", patient.Children("multipleBirthInteger").Single().Text);
 

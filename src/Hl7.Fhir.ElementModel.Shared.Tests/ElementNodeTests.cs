@@ -82,7 +82,7 @@ namespace Hl7.FhirPath.Tests
             // Select on the root of the resource, path should match with resource name included
             var active = patient.Select("Patient.active");
             Assert.IsNotNull(active);
-            Assert.AreEqual(true, active.FirstOrDefault().Value);
+            Assert.IsTrue(active.FirstOrDefault().Value);
 
             // Select on the root of the resource, resource type does not match
             var id = obs.Select("Patient.id");
@@ -91,7 +91,7 @@ namespace Hl7.FhirPath.Tests
             // Select on root of the resource, path does not include the resourceType
             active = patient.Select("active");
             Assert.IsNotNull(active);
-            Assert.AreEqual(true, active.FirstOrDefault().Value);
+            Assert.IsTrue(active.FirstOrDefault().Value);
 
             // Select on the root of the resource, path is for a generic Resource / DomainResource element
             id = obs.Select("Resource.id");
@@ -113,11 +113,11 @@ namespace Hl7.FhirPath.Tests
 
             var result = customResource.Select("UpperCaseElement");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(true, result.FirstOrDefault().Value);
+            Assert.IsTrue(result.FirstOrDefault().Value);
 
             result = customResource.Select("lowerCaseElement");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(false, result.FirstOrDefault().Value);
+            Assert.IsFalse(result.FirstOrDefault().Value);
         }
 
         [TestMethod]
@@ -166,7 +166,7 @@ namespace Hl7.FhirPath.Tests
 
             data = patient[1];
             Assert.AreEqual("active", data.Name);
-            Assert.AreEqual(true, data.Value);
+            Assert.IsTrue(data.Value);
             Assert.AreEqual("boolean", data.InstanceType);
         }
 
@@ -304,7 +304,7 @@ namespace Hl7.FhirPath.Tests
             newActive.Value = false;
             patient.Replace(_provider, patient["active"].Single(), newActive);
             Assert.AreEqual(1, patient["active"].Count);
-            Assert.AreEqual(false, patient["active"].Single().Value);
+            Assert.IsFalse(patient["active"].Single().Value);
 
             var newIdentifier = ElementNode.Root(_provider, "Identifier");
             newIdentifier.Add(_provider, "system", "http://nos.nl");
