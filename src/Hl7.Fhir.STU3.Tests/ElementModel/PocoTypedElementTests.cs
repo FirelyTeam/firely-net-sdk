@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             Assert.IsNotNull(rest);
 
-            Assert.IsTrue(rest.Location.Contains("CapabilityStatement.rest[0]"));
+            Assert.Contains("CapabilityStatement.rest[0]", rest.Location);
         }
 
 

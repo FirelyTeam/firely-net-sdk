@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var trimmed = FhirXmlSerializer.SerializeToString(patient);
             Assert.IsFalse(trimmed.Contains(" Smith"));
             Assert.IsFalse(trimmed.Contains("Smith&#xD;&#xA;&#x9;"));
-            Assert.IsTrue(trimmed.Contains("\"Smith\""));
+            Assert.Contains("\"Smith\"", trimmed);
         }
 
         [TestMethod]
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (XmlException e)
             {
-                Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
+                Assert.Contains("DTD is prohibited", e.Message);
             }
         }
 
@@ -283,14 +283,14 @@ namespace Hl7.Fhir.Tests.Serialization
             var pser = new FhirXmlDeserializer();
             var p = pser.Deserialize<Patient>(xml);
             string outp = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsTrue(outp.Contains("\"male\""));
+            Assert.Contains("\"male\"", outp);
 
             // Pollute the data with an incorrect administrative gender
             p.GenderElement.JsonValue = "superman";
 
             outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsFalse(outp.Contains("\"male\""));
-            Assert.IsTrue(outp.Contains("\"superman\""));
+            Assert.Contains("\"superman\"", outp);
         }
 
 

@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+                Assert.Contains("Invalid Json encountered", fe.Message);
             }
         }
     }

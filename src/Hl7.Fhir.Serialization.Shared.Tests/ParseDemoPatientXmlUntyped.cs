@@ -132,8 +132,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("4", cn.Text);
 
                 var mylittledetails = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
-                Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
-                Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
+                Assert.Contains("Crap, mixed content!", mylittledetails.NodeText);
+                Assert.Contains("Is Merged", mylittledetails.NodeText);
 
                 var cnc = cn.Children().ToList();
                 Assert.HasCount(cnc, 3);
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     Assert.IsTrue(ccn.Children().Any());                    
                     var cd = (ccn as IAnnotated).Annotation<SourceComments>();
                     Assert.AreEqual(" this should be possible ", cd.ClosingComments.Single());
-                    Assert.IsFalse(cd.CommentsBefore.Any());
+                    Assert.IsEmpty(cd.CommentsBefore);
                 }
             }
 
@@ -230,12 +230,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;
             Assert.HasCount(result, 11);
-            Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
+            Assert.Contains("schemaLocation", !result.Any(r => r.Message));
 
             patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true, PermissiveParsing = false });
             result = patient.VisitAndCatch();
             Assert.IsTrue(result.Count == originalCount + 1);    // one extra error about schemaLocation being present
-            Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
+            Assert.Contains("schemaLocation", result.Any(r => r.Message));
 
             patient = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", fe.Message);
             }
         }
 

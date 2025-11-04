@@ -557,13 +557,13 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void verifyMeta(Meta meta, bool hasNew, int key)
         {
-            Assert.IsTrue(meta.Profile.Contains("http://someserver.org/fhir/StructureDefinition/XYZ1-" + key));
+            Assert.Contains("http://someserver.org/fhir/StructureDefinition/XYZ1-" + key, meta.Profile);
             Assert.IsTrue(meta.Security.Select(c => c.Code + "@" + c.System).Contains("1234-" + key + "@http://mysystem.com/sec"));
             Assert.IsTrue(meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag1-" + key + "@http://mysystem.com/tag"));
 
             if (hasNew)
             {
-                Assert.IsTrue(meta.Profile.Contains("http://someserver.org/fhir/StructureDefinition/XYZ2-" + key));
+                Assert.Contains("http://someserver.org/fhir/StructureDefinition/XYZ2-" + key, meta.Profile);
                 Assert.IsTrue(meta.Security.Select(c => c.Code + "@" + c.System).Contains("5678-" + key + "@http://mysystem.com/sec"));
                 Assert.IsTrue(meta.Tag.Select(c => c.Code + "@" + c.System).Contains("sometag2-" + key + "@http://mysystem.com/tag"));
             }
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                 var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                Assert.Contains("<Patient", bodyText);
 
                 calledBefore = false;
                 await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsNotNull(bodyOut);
 
                 bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                Assert.Contains("<Patient", bodyText);
             }
         }
 
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
             }
         }

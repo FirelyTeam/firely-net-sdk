@@ -33,10 +33,10 @@ namespace Hl7.Fhir.Tests.Rest
             var end = new FhirDateTime(2015, 1, 1);
             var par = new Parameters().Add("start", start).Add("end", end);
             var bundle = await client.InstanceOperationAsync(ResourceIdentity.Build("Patient", PATIENTID), "everything", par) as Bundle;
-            Assert.IsTrue(bundle.Entry.Any());
+            Assert.IsNotEmpty(bundle.Entry);
 
             var bundle2 = await client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", PATIENTID), start, end);
-            Assert.IsTrue(bundle2.Entry.Any());
+            Assert.IsNotEmpty(bundle2.Entry);
         }
 
         [TestMethod]
@@ -47,11 +47,11 @@ namespace Hl7.Fhir.Tests.Rest
 
             // expand via instance level operation
             var vs = await client.ExpandValueSetAsync(ResourceIdentity.Build("ValueSet", "administrative-gender"));
-            Assert.IsTrue(vs.Expansion.Contains.Any());
+            Assert.IsNotEmpty(vs.Expansion.Contains);
 
             // expand via Canonical URI
             vs = await client.ExpandValueSetAsync(new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender"));
-            Assert.IsTrue(vs.Expansion.Contains.Any());
+            Assert.IsNotEmpty(vs.Expansion.Contains);
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Rest
             var vs = await client.ReadAsync<ValueSet>("ValueSet/administrative-gender");
             var vsX = await client.ExpandValueSetAsync(vs);
 
-            Assert.IsTrue(vsX.Expansion.Contains.Any());
+            Assert.IsNotEmpty(vsX.Expansion.Contains);
         }
 
         [TestMethod]

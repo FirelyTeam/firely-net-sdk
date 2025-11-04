@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
             var jsonText = JsonSerializer.Serialize(p, options);
-            Assert.IsTrue(jsonText.Contains("birthDate"));
+            Assert.Contains("birthDate", jsonText);
         }
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
@@ -55,12 +55,12 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var full = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
             var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
-            Assert.IsTrue(summ.Contains("<birthDate"));
+            Assert.Contains("<birthDate", summ);
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
@@ -85,20 +85,20 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
             Console.WriteLine("summary: Fhir.Rest.SummaryType.False");
             Console.WriteLine(qfull);
-            Assert.IsTrue(qfull.Contains("Test Questionnaire"));
-            Assert.IsTrue(qfull.Contains("<status value=\"active\""));
-            Assert.IsTrue(qfull.Contains("<date value=\"2015-09-27\""));
-            Assert.IsTrue(qfull.Contains("<title value=\"TITLE\""));
-            Assert.IsTrue(qfull.Contains("<text value=\"TEXT\""));
-            Assert.IsTrue(qfull.Contains("<linkId value=\"linkid\""));
+            Assert.Contains("Test Questionnaire", qfull);
+            Assert.Contains("<status value=\"active\"", qfull);
+            Assert.Contains("<date value=\"2015-09-27\"", qfull);
+            Assert.Contains("<title value=\"TITLE\"", qfull);
+            Assert.Contains("<text value=\"TEXT\"", qfull);
+            Assert.Contains("<linkId value=\"linkid\"", qfull);
 
             var qSum = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.True);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.True");
             Console.WriteLine(qSum);
             Assert.IsFalse(qSum.Contains("Test Questionnaire"));
-            Assert.IsTrue(qSum.Contains("<status value=\"active\""));
-            Assert.IsTrue(qSum.Contains("<date value=\"2015-09-27\""));
-            Assert.IsTrue(qSum.Contains("<title value=\"TITLE\""));
+            Assert.Contains("<status value=\"active\"", qSum);
+            Assert.Contains("<date value=\"2015-09-27\"", qSum);
+            Assert.Contains("<title value=\"TITLE\"", qSum);
             Assert.IsFalse(qSum.Contains("<text value=\"TEXT\""));
             Assert.IsFalse(qSum.Contains("<linkId value=\"linkid\""));
 
@@ -106,20 +106,20 @@ namespace Hl7.Fhir.Tests.Serialization
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Data");
             Console.WriteLine(qData);
             Assert.IsFalse(qData.Contains("Test Questionnaire"));
-            Assert.IsTrue(qData.Contains("<meta"));
-            Assert.IsTrue(qData.Contains("<text value=\"TEXT\""));
-            Assert.IsTrue(qData.Contains("<status value=\"active\""));
-            Assert.IsTrue(qData.Contains("<date value=\"2015-09-27\""));
-            Assert.IsTrue(qData.Contains("<title value=\"TITLE\""));
-            Assert.IsTrue(qData.Contains("<linkId value=\"linkid\""));
+            Assert.Contains("<meta", qData);
+            Assert.Contains("<text value=\"TEXT\"", qData);
+            Assert.Contains("<status value=\"active\"", qData);
+            Assert.Contains("<date value=\"2015-09-27\"", qData);
+            Assert.Contains("<title value=\"TITLE\"", qData);
+            Assert.Contains("<linkId value=\"linkid\"", qData);
 
             q.Meta = new Meta { VersionId = "v2" };
             var qText = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Text);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Text");
             Console.WriteLine(qText);
-            Assert.IsTrue(qText.Contains("Test Questionnaire"));
-            Assert.IsTrue(qText.Contains("<meta"));
-            Assert.IsTrue(qText.Contains("<status value=\"active\""));
+            Assert.Contains("Test Questionnaire", qText);
+            Assert.Contains("<meta", qText);
+            Assert.Contains("<status value=\"active\"", qText);
             Assert.IsFalse(qText.Contains("<text value=\"TEXT\""));
             Assert.IsFalse(qText.Contains("<date value=\"2015-09-27\""));
             Assert.IsFalse(qText.Contains("<title value=\"TITLE\""));
@@ -145,8 +145,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var summaryElements = FhirXmlSerializer.SerializeToString(l, Fhir.Rest.SummaryType.Count);
 
             Assert.IsFalse(summaryElements.Contains("<language"));
-            Assert.IsTrue(summaryElements.Contains("<type>"));
-            Assert.IsTrue(summaryElements.Contains("<id value=\"testId\""));
+            Assert.Contains("<type>", summaryElements);
+            Assert.Contains("<id value=\"testId\"", summaryElements);
 
             var customMaskingNode = new MaskingNode(new ScopedNode(l.ToTypedElement()), new MaskingNodeSettings
             {
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var result = customMaskingNode.ToXml();
 
             Assert.IsFalse(result.Contains("<language>"));
-            Assert.IsTrue(result.Contains("<type>"));
+            Assert.Contains("<type>", result);
             Assert.IsFalse(result.Contains("<id value=\"testId\""));
 
             var b = new Bundle
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             result = customMaskingNodeForBundle.ToXml();
 
-            Assert.IsTrue(result.Contains("<type value=\"collection\""));
+            Assert.Contains("<type value=\"collection\"", result);
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
         }
 
@@ -194,11 +194,11 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var summaryElements = FhirXmlSerializer.SerializeToString(p, SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
-            Assert.IsTrue(summaryElements.Contains("<photo"));
+            Assert.Contains("<photo", summaryElements);
 
             var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, SummaryType.False, elements: elements);
             Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
-            Assert.IsTrue(noSummarySpecified.Contains("<photo"));
+            Assert.Contains("<photo", noSummarySpecified);
         }
 
         [TestMethod]
@@ -235,23 +235,23 @@ namespace Hl7.Fhir.Tests.Serialization
             b.Type = Bundle.BundleType.Searchset;
 
             var full = FhirXmlSerializer.SerializeToString(b);
-            Assert.IsTrue(full.Contains("<entry"));
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
-            Assert.IsTrue(full.Contains("<total"));
+            Assert.Contains("<entry", full);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
+            Assert.Contains("<total", full);
 
             var summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.True);
-            Assert.IsTrue(summ.Contains("<entry"));
-            Assert.IsTrue(summ.Contains("<birthDate"));
+            Assert.Contains("<entry", summ);
+            Assert.Contains("<birthDate", summ);
             Assert.IsFalse(summ.Contains("<photo"));
-            Assert.IsTrue(summ.Contains("<total"));
+            Assert.Contains("<total", summ);
 
             summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.Count);
             Assert.IsFalse(summ.Contains("<entry"));
             Assert.IsFalse(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
-            Assert.IsTrue(summ.Contains("<total"));
-            Assert.IsTrue(summ.Contains("<type"));
+            Assert.Contains("<total", summ);
+            Assert.Contains("<type", summ);
         }
 
         [TestMethod]
@@ -382,41 +382,41 @@ namespace Hl7.Fhir.Tests.Serialization
             p.AddExtension("http://example.org/ext", new FhirString("dud"));
 
             var full = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsTrue(full.Contains("narrative"));
-            Assert.IsTrue(full.Contains("dud"));
-            Assert.IsTrue(full.Contains("temp org"));
-            Assert.IsTrue(full.Contains("<id value="));
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
-            Assert.IsTrue(full.Contains("text/plain"));
+            Assert.Contains("narrative", full);
+            Assert.Contains("dud", full);
+            Assert.Contains("temp org", full);
+            Assert.Contains("<id value=", full);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
+            Assert.Contains("text/plain", full);
 
             full = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.False);
-            Assert.IsTrue(full.Contains("narrative"));
-            Assert.IsTrue(full.Contains("dud"));
-            Assert.IsTrue(full.Contains("temp org"));
-            Assert.IsTrue(full.Contains("contain"));
-            Assert.IsTrue(full.Contains("<id value="));
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
-            Assert.IsTrue(full.Contains("text/plain"));
+            Assert.Contains("narrative", full);
+            Assert.Contains("dud", full);
+            Assert.Contains("temp org", full);
+            Assert.Contains("contain", full);
+            Assert.Contains("<id value=", full);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
+            Assert.Contains("text/plain", full);
 
             var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsFalse(summ.Contains("narrative"));
             Assert.IsFalse(summ.Contains("dud"));
             Assert.IsFalse(summ.Contains("contain"));
-            Assert.IsTrue(summ.Contains("temp org"));
-            Assert.IsTrue(summ.Contains("<id value="));
-            Assert.IsTrue(summ.Contains("<birthDate"));
+            Assert.Contains("temp org", summ);
+            Assert.Contains("<id value=", summ);
+            Assert.Contains("<birthDate", summ);
             Assert.IsFalse(summ.Contains("<photo"));
 
             var data = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
             Assert.IsFalse(data.Contains("narrative"));
-            Assert.IsTrue(data.Contains("contain"));
-            Assert.IsTrue(data.Contains("dud"));
-            Assert.IsTrue(data.Contains("temp org"));
-            Assert.IsTrue(data.Contains("<id value="));
-            Assert.IsTrue(data.Contains("<birthDate"));
-            Assert.IsTrue(data.Contains("<photo"));
+            Assert.Contains("contain", data);
+            Assert.Contains("dud", data);
+            Assert.Contains("temp org", data);
+            Assert.Contains("<id value=", data);
+            Assert.Contains("<birthDate", data);
+            Assert.Contains("<photo", data);
         }
     }
 }

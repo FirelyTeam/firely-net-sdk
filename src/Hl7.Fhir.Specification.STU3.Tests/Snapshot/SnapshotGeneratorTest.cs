@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(sd.Differential);
             Assert.IsNotNull(sd.Differential.Element);
-            Assert.IsTrue(sd.Differential.Element.Count > 0);
+            Assert.IsNotEmpty(sd.Differential.Element);
 
             // Verify that the differential component contains a matching element
             assertContainsElement(sd.Differential, path, name);
@@ -1401,7 +1401,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Assert.IsNotNull(elem);
             var elems = sd.Snapshot.Element;
-            Assert.IsTrue(elems.Contains(elem));
+            Assert.Contains(elem, elems);
 
             // Test...
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -1447,7 +1447,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     Assert.IsNotNull(sdType.Snapshot);
                     Assert.IsNotNull(sdType.Snapshot.Element);
-                    Assert.IsTrue(sdType.Snapshot.Element.Count > 0);
+                    Assert.IsNotEmpty(sdType.Snapshot.Element);
 
                     // Debug.WriteLine("\r\nType:");
                     // Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => e.Path)));
@@ -1459,7 +1459,7 @@ namespace Hl7.Fhir.Specification.Tests
                     //Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
                     //if (elem.Name == null)
                     //{
-                    //    Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+                    //    Assert.StartsWith(result.Where(e => e.Path, expandElemPath).Count() == typeElems.Count);
                     //}
                     //else
                     if (elem.ContentReference != null)
@@ -1493,7 +1493,7 @@ namespace Hl7.Fhir.Specification.Tests
                     do
                     {
                         var path = typeNav.Path;
-                        Assert.IsTrue(nav.Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
+                        Assert.EndsWith(nav.Path, path, StringComparison.OrdinalIgnoreCase);
                         if (!nav.MoveToNext())
                         {
                             //Debug.Assert(!typeNav.MoveToNext());
@@ -2310,7 +2310,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var elem = elems[i];
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
-                Assert.IsTrue(baseElems.Contains(baseElem));
+                Assert.Contains(baseElem, baseElems);
             }
         }
 
@@ -2391,7 +2391,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static void assertBaseDefs(List<ElementDefinition> elems, SnapshotGeneratorSettings settings)
         {
             Assert.IsNotNull(elems);
-            Assert.IsTrue(elems.Count > 0);
+            Assert.IsNotEmpty(elems);
 
             //var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
 
@@ -2465,8 +2465,8 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 //Debug.Assert(elem.Type.Count > 0);
                 //Debug.Assert(baseClone.Type.Count > 0);
-                Assert.IsTrue(elem.Type.Count > 0);
-                Assert.IsTrue(baseClone.Type.Count > 0);
+                Assert.IsNotEmpty(elem.Type);
+                Assert.IsNotEmpty(baseClone.Type);
                 baseClone.Type[0].Profile = elem.Type[0].Profile;
             }
 
@@ -4347,7 +4347,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsTrue(nav.Current.Slicing.Ordered);
             Assert.AreEqual(ElementDefinition.SlicingRules.OpenAtEnd, nav.Current.Slicing.Rules);
-            Assert.IsFalse(nav.Current.Slicing.Discriminator.Any());
+            Assert.IsEmpty(nav.Current.Slicing.Discriminator);
             Assert.AreEqual(1, nav.Current.Min);
             Assert.AreEqual("5", nav.Current.Max);
 

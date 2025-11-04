@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Console.WriteLine(Path.GetFileName(summary.Origin) + (summary.IsFaulted ? " - " + summary.Error?.Message : ""));
             }
-            Assert.IsFalse(UnknownArtefacts.Any());
+            Assert.IsEmpty(UnknownArtefacts);
 
             // Expecting to find some artifacts w/o ResourceId
             var AnonymousArtefacts = summaries.Where(s => s.ResourceUri is null);

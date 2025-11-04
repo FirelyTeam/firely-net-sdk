@@ -70,13 +70,13 @@ namespace Hl7.Fhir.Serialization.Tests
             var output = nav.ToJson();
             Assert.IsFalse(output[..20].Contains('\n'));
             var pretty = nav.ToJson(pretty: true);
-            Assert.IsTrue(pretty[..20].Contains('\n'));
+            Assert.Contains('\n', pretty[..20]);
 
             var p = FhirJsonDeserializer.OSTRICH.Deserialize<Patient>(json);
             output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
             Assert.IsFalse(output[..20].Contains('\n'));
             pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);
-            Assert.IsTrue(pretty[..20].Contains('\n'));
+            Assert.Contains('\n', pretty[..20]);
         }
     }
 }

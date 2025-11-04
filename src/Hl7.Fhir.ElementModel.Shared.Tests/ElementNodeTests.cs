@@ -378,12 +378,12 @@ namespace Hl7.FhirPath.Tests
             var basicWithTel = "<?xml version=\"1.0\" encoding=\"utf - 8\"?><BasicWithTel xmlns=\"http://hl7.org/fhir\"><telecom value =\"(tel)06-12345678\"/></BasicWithTel>";
             var node = FhirXmlNode.Parse(basicWithTel);
             var errors = node.VisitAndCatch();
-            Assert.IsFalse(errors.Any());
+            Assert.IsEmpty(errors);
 
             var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
             var typedElement = node.ToTypedElement(provider);
             errors = typedElement.VisitAndCatch();
-            Assert.IsFalse(errors.Any());
+            Assert.IsEmpty(errors);
         }
 
         private class CustomResourceResolver : IAsyncResourceResolver

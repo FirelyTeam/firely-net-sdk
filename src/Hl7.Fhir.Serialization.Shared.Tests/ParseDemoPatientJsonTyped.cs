@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
             var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson();
-            Assert.IsTrue(jsonBare.Contains("pat1"));
+            Assert.Contains("pat1", jsonBare);
 
             patient.Add(SourceNode.Valued("unknownElement", "someValue"));
             var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson();
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+                Assert.Contains("Invalid Json encountered", fe.Message);
             }
         }
 

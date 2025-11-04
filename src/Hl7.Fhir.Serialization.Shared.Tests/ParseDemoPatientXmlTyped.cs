@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Serialization.Tests
              "<div><p>Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
             Assert.HasCount(errors, 3);
-            Assert.IsTrue(errors.Any(e => e.Message.Contains("should be an XHTML element")));
+            Assert.Contains("should be an XHTML element", errors.Any(e => e.Message));
 
             // Active content
             nav = getValidatingXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", fe.Message);
             }
         }
 

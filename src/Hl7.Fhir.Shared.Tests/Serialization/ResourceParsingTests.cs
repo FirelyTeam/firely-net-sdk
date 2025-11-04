@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (StructuralTypeException ste)
             {
                 Debug.WriteLine(ste.Message);
-                Assert.IsTrue(ste.Message.Contains("daytona"));
+                Assert.Contains("daytona", ste.Message);
                 Assert.IsFalse(ste.Message.Contains("ox"));
             }
 
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("expected the HL7 FHIR namespace"));
+                Assert.Contains("expected the HL7 FHIR namespace", fe.Message);
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("which is not allowed"));
+                Assert.Contains("which is not allowed", fe.Message);
             }
         }
 
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
             var outp = FhirXmlSerializer.SerializeToString(basic);
-            Assert.IsTrue(outp.Contains("&#xA;"));
+            Assert.Contains("&#xA;", outp);
         }
 
         // Test legacy behaviour
@@ -286,12 +286,12 @@ namespace Hl7.Fhir.Tests.Serialization
             o.ResourceBase = new Uri("http://nu.nl/fhir");
 
             var xml = FhirXmlSerializer.SerializeToString(o);
-            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+            Assert.Contains("value=\"#jaap\"", xml);
 
             var o2 = FhirXmlDeserializer.Deserialize<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirXmlSerializer.SerializeToString(o2);
-            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+            Assert.Contains("value=\"#jaap\"", xml);
         }
 
 
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", fe.Message);
             }
         }
 

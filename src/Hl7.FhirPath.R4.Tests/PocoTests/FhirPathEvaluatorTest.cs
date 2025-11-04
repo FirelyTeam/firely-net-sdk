@@ -171,7 +171,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             }
             catch (InvalidOperationException io)
             {
-                Assert.IsTrue(io.Message.Contains("contains more than one element"));
+                Assert.Contains("contains more than one element", io.Message);
             }
         }
 

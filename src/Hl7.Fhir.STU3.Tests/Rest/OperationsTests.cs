@@ -39,10 +39,10 @@ namespace Hl7.Fhir.Tests.Rest
             var end = new FhirDateTime(2015, 1, 1);
             var par = new Parameters().Add("start", start).Add("end", end);
             var bundle = (Bundle)await client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "example"), "everything", par);
-            Assert.IsTrue(bundle.Entry.Any());
+            Assert.IsNotEmpty(bundle.Entry);
 
             var bundle2 = await client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "example"), start, end);
-            Assert.IsTrue(bundle2.Entry.Any());
+            Assert.IsNotEmpty(bundle2.Entry);
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Tests.Rest
         private static void expandExistingValueset(BaseFhirClient client)
         {
             var vs = client.ExpandValueSet(ResourceIdentity.Build("ValueSet", "administrative-gender"));
-            Assert.IsTrue(vs.Expansion.Contains.Any());
+            Assert.IsNotEmpty(vs.Expansion.Contains);
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Tests.Rest
             var vs = await client.ReadAsync<ValueSet>("ValueSet/administrative-gender");
             var vsX = await client.ExpandValueSetAsync(vs);
 
-            Assert.IsTrue(vsX.Expansion.Contains.Any());
+            Assert.IsNotEmpty(vsX.Expansion.Contains);
         }
 
         // [WMR 20170927] Chris Munro
@@ -235,10 +235,10 @@ namespace Hl7.Fhir.Tests.Rest
             await bundle2Task.ConfigureAwait(false);
 
             var bundle = (Bundle)bundleTask.Result;
-            Assert.IsTrue(bundle.Entry.Any());
+            Assert.IsNotEmpty(bundle.Entry);
 
             var bundle2 = (Bundle)bundle2Task.Result;
-            Assert.IsTrue(bundle2.Entry.Any());
+            Assert.IsNotEmpty(bundle2.Entry);
         }
     }
 }

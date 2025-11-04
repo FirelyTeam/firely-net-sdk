@@ -103,12 +103,12 @@ public class SerializeDemoPatientXml
         var output = nav.ToXml();
         Assert.IsFalse(output[..50].Contains('\n'));
         var pretty = nav.ToXml(pretty: true);
-        Assert.IsTrue(pretty[..50].Contains('\n'));
+        Assert.Contains('\n', pretty[..50]);
 
         var p = FhirXmlDeserializer.OSTRICH.Deserialize<Patient>(xml);
         output = new FhirXmlSerializer().SerializeToString(p, pretty: false);
         Assert.IsFalse(output[..50].Contains('\n'));
         pretty = new FhirXmlSerializer().SerializeToString(p, pretty: true);
-        Assert.IsTrue(pretty[..50].Contains('\n'));
+        Assert.Contains('\n', pretty[..50]);
     }
 }

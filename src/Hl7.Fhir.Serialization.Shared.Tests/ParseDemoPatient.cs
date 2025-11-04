@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var name = n.Children("contained").First().Children("name").First();
             Assert.AreEqual("name", name.Name);
             var inname = name.Children().ToList();
-            Assert.IsTrue(inname.Any());
+            Assert.IsNotEmpty(inname);
             Assert.AreEqual("id", inname[0].Name);
             Assert.AreEqual("firstname", inname[0].Value);
             Assert.AreEqual("use", inname[1].Name);

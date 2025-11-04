@@ -120,20 +120,20 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ListCanonicalUris()
         {
-            var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
-            var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsFalse(sm.Any());
-            var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
-            var md = source.ListResourceUris(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
-            var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
-            var sp = source.ListResourceUris(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
-            var cd = source.ListResourceUris(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
-            var ig = source.ListResourceUris(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+            var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsNotEmpty(sd);
+            var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsEmpty(sm);
+            var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsNotEmpty(cf);
+            var md = source.ListResourceUris(ResourceType.MessageDefinition); Assert.IsEmpty(md);
+            var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsNotEmpty(od);
+            var sp = source.ListResourceUris(ResourceType.SearchParameter); Assert.IsNotEmpty(sp);
+            var cd = source.ListResourceUris(ResourceType.CompartmentDefinition); Assert.IsEmpty(md);
+            var ig = source.ListResourceUris(ResourceType.ImplementationGuide); Assert.IsEmpty(ig);
 
-            var cs = source.ListResourceUris(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
-            var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
-            var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
-            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
+            var cs = source.ListResourceUris(ResourceType.CodeSystem); Assert.IsNotEmpty(cs);
+            var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsNotEmpty(vs);
+            var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsNotEmpty(cm);
+            var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsEmpty(ep);
+            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsNotEmpty(ns);
 
             var all = source.ListResourceUris();
 
@@ -141,14 +141,14 @@ namespace Hl7.Fhir.Specification.Tests
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
                         ep.Count() + ns.Count(), all.Count());
 
-            Assert.IsTrue(sd.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset"));
-            Assert.IsTrue(cf.Contains("http://hl7.org/fhir/CapabilityStatement/base"));
-            Assert.IsTrue(od.Contains("http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"));
-            Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
-            Assert.IsTrue(cs.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system"));
-            Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
-            Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
-            Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
+            Assert.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset", sd);
+            Assert.Contains("http://hl7.org/fhir/CapabilityStatement/base", cf);
+            Assert.Contains("http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code", od);
+            Assert.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info", sp);
+            Assert.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system", cs);
+            Assert.Contains("http://hl7.org/fhir/ValueSet/contact-point-system", vs);
+            Assert.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2", cm);
+            Assert.Contains("http://hl7.org/fhir/NamingSystem/us-ssn", ns);
         }
 
         [TestMethod]
@@ -201,22 +201,22 @@ namespace Hl7.Fhir.Specification.Tests
 
             var res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferXml);
             Assert.HasCount(res, 5);
-            Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
-            Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
+            Assert.EndsWith(res.Any(p => p, "bit.xml"));
+            Assert.EndsWith(res.Any(p => p, "bit.txt"));
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
-            Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
+            Assert.EndsWith(res.Any(p => p, "yadi.json"));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
             Assert.HasCount(res, 5);
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.xml")));
-            Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
-            Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
-            Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
+            Assert.EndsWith(res.Any(p => p, "bit.txt"));
+            Assert.EndsWith(res.Any(p => p, "bit.json"));
+            Assert.EndsWith(res.Any(p => p, "yadi.json"));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.KeepBoth);
             Assert.HasCount(res, 6);
-            Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
-            Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
+            Assert.EndsWith(res.Any(p => p, "bit.xml"));
+            Assert.EndsWith(res.Any(p => p, "bit.json"));
         }
 
         [TestMethod]
@@ -237,8 +237,8 @@ namespace Hl7.Fhir.Specification.Tests
             var fi = new FilePatternFilter("*.xml");
             var r = fi.Filter(basef, files);
             Assert.HasCount(r, 2);
-            Assert.IsTrue(r.All(f => f.EndsWith(".xml")));
-            Assert.IsTrue(r.All(f => f.StartsWith(basef)));
+            Assert.EndsWith(r.All(f => f, ".xml"));
+            Assert.StartsWith(r.All(f => f, basef));
 
             // Absolute select 1 file
             fi = new FilePatternFilter("/file1.json");
@@ -260,19 +260,19 @@ namespace Hl7.Fhir.Specification.Tests
             fi = new FilePatternFilter("file1.json");
             r = fi.Filter(basef, files);
             Assert.HasCount(r, 2);
-            Assert.IsTrue(r.All(f => f.EndsWith("file1.json")));
+            Assert.EndsWith(r.All(f => f, "file1.json"));
 
             // Relative select file
             fi = new FilePatternFilter("**/file1.json");
             r = fi.Filter(basef, files);
             Assert.HasCount(r, 2);
-            Assert.IsTrue(r.All(f => f.EndsWith("file1.json")));
+            Assert.EndsWith(r.All(f => f, "file1.json"));
 
             // Relative select file with glob
             fi = new FilePatternFilter("**/file1.*");
             r = fi.Filter(basef, files);
             Assert.HasCount(r, 3);
-            Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}file1.")));
+            Assert.Contains($"{Path.DirectorySeparatorChar}file1.", r.All(f => f));
 
             // Relative select file with glob
             fi = new FilePatternFilter("**/*.txt");
@@ -290,19 +290,19 @@ namespace Hl7.Fhir.Specification.Tests
             fi = new FilePatternFilter("file1.*");
             r = fi.Filter(basef, files);
             Assert.HasCount(r, 3);
-            Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}file1.")));
+            Assert.Contains($"{Path.DirectorySeparatorChar}file1.", r.All(f => f));
 
             // Select whole directory
             fi = new FilePatternFilter("bla2/");
             r = fi.Filter(basef, files);
             Assert.HasCount(r, 4);
-            Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}bla2{Path.DirectorySeparatorChar}")));
+            Assert.Contains($"{Path.DirectorySeparatorChar}bla2{Path.DirectorySeparatorChar}", r.All(f => f));
 
             // Select whole directory
             fi = new FilePatternFilter("bla2/**");
             r = fi.Filter(basef, files);
             Assert.HasCount(r, 4);
-            Assert.IsTrue(r.All(f => f.Contains($"{Path.DirectorySeparatorChar}bla2{Path.DirectorySeparatorChar}")));
+            Assert.Contains($"{Path.DirectorySeparatorChar}bla2{Path.DirectorySeparatorChar}", r.All(f => f));
 
             // Select whole directory
             fi = new FilePatternFilter("/bla3/");
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var summary = summaries[0];
                 var uri = summary.ResourceUri;
                 const string uriPrefix = @"http://example.org/Patient/";
-                Assert.IsTrue(uri.StartsWith(uriPrefix));
+                Assert.StartsWith(uri, uriPrefix);
                 var id = uri.Substring(uriPrefix.Length);
                 Assert.AreEqual("pat1", id);
 

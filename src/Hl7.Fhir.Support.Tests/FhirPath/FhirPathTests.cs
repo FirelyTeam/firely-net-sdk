@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Support.Tests
             var evaluator = _compiler.Compile("{}.resolve()");
             var result = evaluator(null, new FhirEvaluationContext());
 
-            Assert.IsFalse(result.Any());
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]

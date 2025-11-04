@@ -324,7 +324,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             };
 
             var result = bundle.Select("Bundle.entry.where(fullUrl = 'urn:uuid:555').resource.managingOrganization.resolve()");
-            Assert.IsTrue(result.Any());
+            Assert.IsNotEmpty(result);
         }
 
         [TestMethod]

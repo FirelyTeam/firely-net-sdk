@@ -32,28 +32,28 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ListSummaries()
         {
-            var sd = source.ListSummaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
-            var sm = source.ListSummaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
-            var cf = source.ListSummaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
-            var md = source.ListSummaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
-            var od = source.ListSummaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
-            var sp = source.ListSummaries(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
-            var cd = source.ListSummaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            var sd = source.ListSummaries(ResourceType.StructureDefinition); Assert.IsNotEmpty(sd);
+            var sm = source.ListSummaries(ResourceType.StructureMap); Assert.IsNotEmpty(sd);
+            var cf = source.ListSummaries(ResourceType.CapabilityStatement); Assert.IsNotEmpty(cf);
+            var md = source.ListSummaries(ResourceType.MessageDefinition); Assert.IsEmpty(md);
+            var od = source.ListSummaries(ResourceType.OperationDefinition); Assert.IsNotEmpty(od);
+            var sp = source.ListSummaries(ResourceType.SearchParameter); Assert.IsNotEmpty(sp);
+            var cd = source.ListSummaries(ResourceType.CompartmentDefinition); Assert.IsEmpty(md);
 #if R5
             // In specification.zip for R5 are now also ImplementationGuides
-            var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsTrue(ig.Any());
+            var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsNotEmpty(ig);
 #else
-            var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+            var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsEmpty(ig);
 #endif
-            var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
-            var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
+            var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsNotEmpty(cs);
+            var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsNotEmpty(vs);
+            var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsNotEmpty(cm);
             // [WMR 20181218] R4 OBSOLETE - ExpansionProfile resource no longer exists
-            // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsEmpty(ep);
 #if !R5
             // In specification.zip for R5 there are no NamingSystems anymore.
             var ns = source.ListSummaries(ResourceType.NamingSystem);
-            Assert.IsTrue(ns.Any());
+            Assert.IsNotEmpty(ns);
 #endif
         }
 

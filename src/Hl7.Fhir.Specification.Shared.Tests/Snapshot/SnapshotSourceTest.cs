@@ -54,10 +54,10 @@ namespace Hl7.Fhir.Specification.Tests
             for (int i = 1; i < elemCnt; i++)
             {
                 var elem = diffElems[i];
-                Assert.IsFalse(elem.Constraint.Any());
+                Assert.IsEmpty(elem.Constraint);
 #if !R5
                 // In R5 ele-1 is not a condition anymore
-                Assert.IsFalse(elem.Condition.Any());
+                Assert.IsEmpty(elem.Condition);
 #endif
             }
 

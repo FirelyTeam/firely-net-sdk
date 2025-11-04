@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests
             // After issue 2280 has been solved, ZipSource should be removed here. 
             var zipSource = ZipSource.CreateValidationSource();
             var uris = zipSource.ListResourceUris(ResourceType.ConceptMap).ToList();
-            Assert.IsTrue(uris.Any());
+            Assert.IsNotEmpty(uris);
 
             var cmaps = zipSource.FindAll<ConceptMap>().ToList();
             Assert.AreEqual(uris.Count(), cmaps.Count());
