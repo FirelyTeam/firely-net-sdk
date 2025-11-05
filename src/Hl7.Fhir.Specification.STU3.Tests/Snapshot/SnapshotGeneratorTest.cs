@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
             Assert.HasCount(310, fullElems);
-            Assert.AreEqual(0, issues.Count);
+            Assert.IsEmpty(issues);
 
             // Verify
             for (int j = 1; j < fullElems.Count; j++)
@@ -3182,7 +3182,7 @@ namespace Hl7.Fhir.Specification.Tests
             var outcome = _generator.Outcome;
             Assert.IsNotNull(outcome);
             Assert.IsNotNull(outcome.Issue);
-            Assert.AreEqual(1, outcome.Issue.Count);
+            Assert.HasCount(1, outcome.Issue);
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.BaseDefinition);
         }
 
