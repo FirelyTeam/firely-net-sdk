@@ -155,7 +155,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             Console.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
-            Assert.AreEqual(numFailed, 0, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            Assert.AreEqual(0, numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest, IEnumerable<string> ignoreTestcases)

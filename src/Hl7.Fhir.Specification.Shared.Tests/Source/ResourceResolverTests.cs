@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var artifact = wa.ResolveByUri("http://vonk.fire.ly/StructureDefinition/Patient");
 
                     Assert.IsNotNull(client);
-                    Assert.AreEqual(client.Status, 3);
+                    Assert.AreEqual(3, client.Status);
 
                     Assert.IsNotNull(artifact);
                     Assert.IsTrue(artifact is StructureDefinition);

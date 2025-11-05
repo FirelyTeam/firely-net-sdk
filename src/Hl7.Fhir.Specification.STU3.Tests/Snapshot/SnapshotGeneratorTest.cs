@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
             Assert.HasCount(310, fullElems);
-            Assert.AreEqual(issues.Count, 0);
+            Assert.AreEqual(0, issues.Count);
 
             // Verify
             for (int j = 1; j < fullElems.Count; j++)
@@ -774,10 +774,10 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.name.family", null, "Patient.name:officialName.family");
             verifier.VerifyElement("Patient.name.given", null, "Patient.name:officialName.given");
             verifier.VerifyElement("Patient.name.use", null, "Patient.name:officialName.use");
-            Assert.AreEqual((verifier.CurrentElement.Fixed as Code)?.Value, "official");
+            Assert.AreEqual("official", (verifier.CurrentElement.Fixed as Code)?.Value);
             verifier.VerifyElement("Patient.name", "maidenName", "Patient.name:maidenName");
             verifier.VerifyElement("Patient.name.use", null, "Patient.name:maidenName.use");
-            Assert.AreEqual((verifier.CurrentElement.Fixed as Code)?.Value, "maiden");
+            Assert.AreEqual("maiden", (verifier.CurrentElement.Fixed as Code)?.Value);
             verifier.VerifyElement("Patient.name.family", null, "Patient.name:maidenName.family");
 
             // patient-telecom-slice-profile.xml
@@ -1334,7 +1334,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Move to first (named) slice
             nav.MoveToNext();
-            Assert.AreEqual(nav.Path, "DiagnosticReport.result");
+            Assert.AreEqual("DiagnosticReport.result", nav.Path);
             Assert.IsNotNull(nav.Current.SliceName);
 
             await testExpandElement(sd, nav.Current);
@@ -3111,11 +3111,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual(nav.Path, "Observation");
+            Assert.AreEqual("Observation", nav.Path);
             Assert.IsTrue(nav.MoveToChild("value[x]"));
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(nav.PathName, "value[x]"); // valueString
+            Assert.AreEqual("value[x]", nav.PathName); // valueString
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
             // Add an additional type slice: { value[x], value[x] : String, value[x] : CodeableConcept }
@@ -3137,13 +3137,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual(nav.Path, "Observation");
+            Assert.AreEqual("Observation", nav.Path);
             Assert.IsTrue(nav.MoveToChild("value[x]"));
             Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(nav.PathName, "value[x]"); // valueString
+            Assert.AreEqual("value[x]", nav.PathName); // valueString
             Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.String.GetLiteral());
             Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(nav.PathName, "value[x]"); // valueCodeableConcept
+            Assert.AreEqual("value[x]", nav.PathName); // valueCodeableConcept
             Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.CodeableConcept.GetLiteral());
         }
 
@@ -3182,7 +3182,7 @@ namespace Hl7.Fhir.Specification.Tests
             var outcome = _generator.Outcome;
             Assert.IsNotNull(outcome);
             Assert.IsNotNull(outcome.Issue);
-            Assert.AreEqual(outcome.Issue.Count, 1);
+            Assert.AreEqual(1, outcome.Issue.Count);
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.BaseDefinition);
         }
 
@@ -3254,15 +3254,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual(nav.Path, "Observation");
+            Assert.AreEqual("Observation", nav.Path);
             Assert.IsTrue(nav.MoveToChild("value[x]"));
             Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(nav.PathName, "value[x]"); // valueString
+            Assert.AreEqual("value[x]", nav.PathName); // valueString
             Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.String.GetLiteral());
             // Derived profile REMOVES existing CodeableConcept type slice and introduces a new Integer type slice
             // Note: special rules for element types allow removal of inherited collection items
             Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual(nav.PathName, "value[x]"); // valueCodeableConcept
+            Assert.AreEqual("value[x]", nav.PathName); // valueCodeableConcept
             Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.Integer.GetLiteral());
         }
 
@@ -3310,7 +3310,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual(nav.Path, "Observation");
+            Assert.AreEqual("Observation", nav.Path);
             Assert.IsFalse(nav.MoveToChild("value[x]")); // Should also be renamed to valueString in snapshot
             Assert.IsTrue(nav.MoveToChild("valueString"));
             Assert.IsNull(nav.Current.Slicing);
@@ -3346,7 +3346,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual(nav.Path, "Observation");
+            Assert.AreEqual("Observation", nav.Path);
             Assert.IsFalse(nav.MoveToChild("value[x]")); // Should also be renamed to valueString in snapshot
             Assert.IsTrue(nav.MoveToChild("valueString"));
             Assert.IsNull(nav.Current.Slicing);
@@ -4049,7 +4049,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice entry should also inherit constraints on child elements from base element
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
             // Verify slice "bsn"
@@ -4068,9 +4068,9 @@ namespace Hl7.Fhir.Specification.Tests
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             // Should be merged with diff constraints on child elements
-            Assert.AreEqual((nav.Current.Fixed as FhirUri).Value, "http://example.org/fhir/ValueSet/bsn");
+            Assert.AreEqual("http://example.org/fhir/ValueSet/bsn", (nav.Current.Fixed as FhirUri).Value);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
             // Verify slice "ehr_id"
@@ -4089,7 +4089,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
 #if false
@@ -4242,7 +4242,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice entry should also inherit constraints on child elements from base element
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
             // Verify slice "bsn"
@@ -4261,9 +4261,9 @@ namespace Hl7.Fhir.Specification.Tests
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             // Should be merged with diff constraints on child elements
-            Assert.AreEqual((nav.Current.Fixed as FhirUri).Value, "http://example.org/fhir/ValueSet/bsn");
+            Assert.AreEqual("http://example.org/fhir/ValueSet/bsn", (nav.Current.Fixed as FhirUri).Value);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
             // Verify slice "ehr_id"
@@ -4282,7 +4282,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
             // Verify re-slice "ehr_id/temp"
@@ -4301,7 +4301,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
-            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.AreEqual(1, nav.Current.Min);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
         }
 
@@ -5057,7 +5057,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 if (elem.ElementId?.StartsWith("CUSTOM") == true)
                 {
-                    Assert.AreEqual(elem.SliceName, sliceName);
+                    Assert.AreEqual(sliceName, elem.SliceName);
                 }
                 else
                 {
@@ -5083,7 +5083,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst(slice.Path));
             Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel(sliceName));
             slice = nav.Current;
-            Assert.AreEqual(slice.SliceName, sliceName);
+            Assert.AreEqual(sliceName, slice.SliceName);
             slice.SliceName = "CHANGED";
             ElementIdGenerator.Update(nav, true);
 

@@ -61,10 +61,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var poco = new FhirXmlDeserializer().Deserialize<Patient>(xmlPacientTest);
 
-            Assert.AreEqual(poco.Id, "pat1");
-            Assert.AreEqual(poco.Contained.First().Id, "1");
-            Assert.AreEqual(poco.Name.First().Family, "Donald");
-            Assert.AreEqual(poco.ManagingOrganization.Reference, "Organization/1");
+            Assert.AreEqual("pat1", poco.Id);
+            Assert.AreEqual("1", poco.Contained.First().Id);
+            Assert.AreEqual("Donald", poco.Name.First().Family);
+            Assert.AreEqual("Organization/1", poco.ManagingOrganization.Reference);
         }
 
         internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
@@ -87,10 +87,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var poco = new FhirJsonDeserializer().Deserialize<Resource>(jsonPatient);
 
-            Assert.AreEqual(((Patient)poco).Id, "pat1");
-            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
-            Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
-            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+            Assert.AreEqual("pat1", ((Patient)poco).Id);
+            Assert.AreEqual("1", ((Patient)poco).Contained.First().Id);
+            Assert.AreEqual("Donald", ((Patient)poco).Name.First().Family);
+            Assert.AreEqual("Organization/1", ((Patient)poco).ManagingOrganization.Reference);
         }
 
         [TestMethod]

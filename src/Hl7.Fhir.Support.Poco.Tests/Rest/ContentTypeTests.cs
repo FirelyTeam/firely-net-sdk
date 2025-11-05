@@ -56,8 +56,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod]
         public void GetResourceFormatSupportsCharset()
         {
-            Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml;charset=ISO-8859-1"), ResourceFormat.Xml);
-            Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml"), ResourceFormat.Xml);
+            Assert.AreEqual(ResourceFormat.Xml, ContentType.GetResourceFormatFromContentType("text/xml;charset=ISO-8859-1"));
+            Assert.AreEqual(ResourceFormat.Xml, ContentType.GetResourceFormatFromContentType("text/xml"));
         }
     }
 }

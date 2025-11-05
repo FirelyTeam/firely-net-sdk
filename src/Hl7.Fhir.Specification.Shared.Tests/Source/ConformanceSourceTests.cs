@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Specification.Tests
                     patient = node.ToPoco<Patient>();
                 }
                 Assert.IsNotNull(patient);
-                Assert.AreEqual(patient.Id, "pat1");
+                Assert.AreEqual("pat1", patient.Id);
                 patient.Id = "CHANGED";
                 var serializer = new FhirXmlSerializer();
                 var xml = serializer.SerializeToString(patient);

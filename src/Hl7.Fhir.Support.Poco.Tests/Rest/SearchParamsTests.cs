@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual("field2", q.Elements.Skip(1).First());
             Assert.HasCount(2, q.Elements);
 
-            Assert.AreEqual(q.Summary, SummaryType.True);
+            Assert.AreEqual(SummaryType.True, q.Summary);
             Assert.Contains(("Patient.managingOrganization", IncludeModifier.None), q.Include);
             Assert.AreEqual(20, q.Count);
         }
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Test.Rest
                     .LimitTo(10).LimitTo(20).Custom("miSearch").SummaryOnly().DataOnly();
 
             Assert.AreEqual("miSearch", q.Query);
-            Assert.AreEqual(q.Summary, SummaryType.Data);
+            Assert.AreEqual(SummaryType.Data, q.Summary);
 
             var o = q.Sort;
             Assert.AreEqual("adsfadf", o.First().Item1);

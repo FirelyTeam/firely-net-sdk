@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Tests.Model
 
             FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             Assert.StartsWith("1972-11-30T15:10", dt2.Value);
-            Assert.AreNotEqual(dt2.Value, "1972-11-30T15:10");
+            Assert.AreNotEqual("1972-11-30T15:10", dt2.Value);
 
 
             FhirDateTime dtNoMs = new FhirDateTime("2014-12-11T00:00:00+11:00");

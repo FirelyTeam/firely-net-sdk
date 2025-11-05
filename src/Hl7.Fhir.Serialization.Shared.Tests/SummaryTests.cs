@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var masker = MaskingNode.ForCount(nav);
 
             var maskedChildren = masker.Descendants().Count();
-            Assert.AreEqual(maskedChildren, 2);
+            Assert.AreEqual(2, maskedChildren);
 
             ITypedElement getXmlNodeSDSP(string xml, FhirXmlParsingSettings s = null) =>
                 XmlParsingHelpers.ParseToTypedElement(xml, new StructureDefinitionSummaryProvider(ZipSource.CreateValidationSource()), s);
