@@ -146,13 +146,13 @@ namespace Hl7.Fhir.Test
         public void TestVersionId()
         {
             var identity = new ResourceIdentity("http://localhost/fhir/Patient/3");
-            Assert.AreEqual(null, identity.VersionId);
+            Assert.IsNull(identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/fhir/Organization/508x/_history/98");
             Assert.AreEqual("98", identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Patient/B256/");
-            Assert.AreEqual(null, identity.VersionId);
+            Assert.IsNull(identity.VersionId);
 
             identity = new ResourceIdentity("http://localhost/some/sub/path/fhir/Organization/3/_history/X98");
             Assert.AreEqual("X98", identity.VersionId);

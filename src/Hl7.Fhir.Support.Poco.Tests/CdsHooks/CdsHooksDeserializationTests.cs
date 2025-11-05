@@ -50,20 +50,20 @@ public class CdsHooksDeserializationTests
         var result = JsonSerializer.Deserialize<DiscoveryResponse>(json, options);
         Assert.IsNotNull(result);
         Assert.IsNotNull(result.Services);
-        Assert.AreEqual(3, result.Services.Count);
+        Assert.HasCount(3, result.Services);
         Assert.AreEqual("patient-view", result.Services[0].Hook);
         Assert.AreEqual("Static CDS Service Example", result.Services[0].Title);
         Assert.AreEqual("An example of a CDS Service that returns a static set of cards", result.Services[0].Description);
         Assert.AreEqual("static-patient-greeter", result.Services[0].Id);
         Assert.IsNotNull(result.Services[0].Prefetch);
-        Assert.AreEqual(1, result.Services[0].Prefetch.Count);
+        Assert.HasCount(1, result.Services[0].Prefetch);
         Assert.AreEqual("Patient/{{context.patientId}}", result.Services[0].Prefetch["patientToGreet"]);
         Assert.AreEqual("order-select", result.Services[1].Hook);
         Assert.AreEqual("Order Echo CDS Service", result.Services[1].Title);
         Assert.AreEqual("An example of a CDS Service that simply echoes the order(s) being placed", result.Services[1].Description);
         Assert.AreEqual("order-echo", result.Services[1].Id);
         Assert.IsNotNull(result.Services[1].Prefetch);
-        Assert.AreEqual(2, result.Services[1].Prefetch.Count);
+        Assert.HasCount(2, result.Services[1].Prefetch);
         Assert.AreEqual("Patient/{{context.patientId}}", result.Services[1].Prefetch["patient"]);
         Assert.AreEqual("MedicationRequest?patient={{context.patientId}}", result.Services[1].Prefetch["medications"]);
         Assert.AreEqual("order-sign", result.Services[2].Hook);
@@ -114,7 +114,7 @@ public class CdsHooksDeserializationTests
         Assert.IsNotNull(result.FhirAuthorization);
         Assert.IsNotNull(result.Context);
         Assert.IsNotNull(result.Prefetch);
-        Assert.AreEqual(1, result.Prefetch.Count);
+        Assert.HasCount(1, result.Prefetch);
         var patientJson = """
                           {
                             "resourceType": "Patient",

@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Specification.Tests
             fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
             sw2.Stop();
 
-            Assert.IsTrue(sw2.ElapsedMilliseconds < sw.ElapsedMilliseconds);
+            Assert.IsLessThan(sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds);
             Debug.WriteLine(String.Format("First time {0}, second time {1}", sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds));
         }
 
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Debug.WriteLine("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
                 Assert.IsNotNull(ex.Conflicts);
-                Assert.AreEqual(1, ex.Conflicts.Length);
+                Assert.HasCount(1, ex.Conflicts);
                 var conflict = ex.Conflicts[0];
                 Assert.AreEqual(url, conflict.Identifier);
                 Assert.IsTrue(conflict.Origins.Contains(filePath));

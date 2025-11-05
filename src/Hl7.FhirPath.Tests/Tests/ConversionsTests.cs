@@ -43,7 +43,7 @@ namespace Hl7.FhirPath.Tests
             wrong.ForEach(o => Assert.IsNull(o.ToBoolean()));
             wrong.ForEach(o => Assert.IsFalse(o.ConvertsToBoolean()));
 
-            Assert.AreEqual(true, ElementNode.ForPrimitive(true).Scalar("'TruE'.toBoolean()"));
+            Assert.IsTrue((bool?)ElementNode.ForPrimitive(true).Scalar("'TruE'.toBoolean()"));
             Assert.IsNull(ElementNode.ForPrimitive(true).Scalar("{}.toBoolean()"));
         }
 

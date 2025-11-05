@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
             sw.Stop();
 
             Debug.WriteLine(sw.ElapsedMilliseconds);
-            Assert.IsTrue(sw.ElapsedMilliseconds < 100);
+            Assert.IsLessThan(100, sw.ElapsedMilliseconds);
         }
 
         [TestMethod]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
             sw.Stop();
 
             Debug.WriteLine(sw.ElapsedMilliseconds);
-            Assert.IsTrue(sw.ElapsedMilliseconds < 100);
+            Assert.IsLessThan(100, sw.ElapsedMilliseconds);
         }
 
         [TestMethod]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
 
             Assert.AreEqual("male", result);
             Debug.WriteLine(sw.ElapsedMilliseconds);
-            Assert.IsTrue(sw.ElapsedMilliseconds < 500);
+            Assert.IsLessThan(500, sw.ElapsedMilliseconds);
         }
 
         [TestMethod]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Support.Tests.Utils
 
             Assert.AreEqual("male", result);
             Debug.WriteLine(sw.ElapsedMilliseconds);
-            Assert.IsTrue(sw.ElapsedMilliseconds < 500);
+            Assert.IsLessThan(500, sw.ElapsedMilliseconds);
         }
 
         enum X

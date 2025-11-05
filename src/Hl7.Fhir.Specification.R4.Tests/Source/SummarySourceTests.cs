@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summary);
             var vs = fa.LoadBySummary(summary);
             Assert.IsTrue(vs is ValueSet);
-            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+            Assert.EndsWith("v2-tables.xml", vs.GetOrigin());
 
             summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(summary);
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rs = fa.LoadBySummary(summary);
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
-            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
+            Assert.EndsWith("profiles-resources.xml", rs.GetOrigin());
 
             summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(summary);

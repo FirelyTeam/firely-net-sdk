@@ -345,14 +345,14 @@ namespace Hl7.Fhir.Tests.Rest
 
                 result = await client.SearchAsync<DiagnosticReport>();
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count > 10, "Test should use testdata with more than 10 reports");
+                Assert.IsGreaterThan(10, result.Entry.Count, "Test should use testdata with more than 10 reports");
 
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 
                 result = await client.SearchAsync<DiagnosticReport>(pageSize: 10);
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count <= 10);
+                Assert.IsLessThanOrEqualTo(10, result.Entry.Count);
 
                 handler.AutomaticDecompression = DecompressionMethods.GZip;
 
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Tests.Rest
                 result = await client.SearchAsync<Patient>([ "name=Chalmers", "name=Peter" ]);
 
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count > 0);
+                Assert.IsNotEmpty(result.Entry);
             }
         }
 
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var result = await client.SearchAsync<Patient>(pageSize: 10);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count <= 10);
+            Assert.IsLessThanOrEqualTo(10, result.Entry.Count);
 
             var firstId = result.Entry.First().Resource.Id;
 
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var result = await client.SearchAsync<Patient>(pageSize: 10);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count <= 10);
+            Assert.IsLessThanOrEqualTo(10, result.Entry.Count);
 
             var firstId = result.Entry.First().Resource.Id;
 
@@ -644,12 +644,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.ResourceIdentity(), fe2.ResourceIdentity());
-            Assert.AreEqual(2, fe2.Identifier.Count);
+            Assert.HasCount(2, fe2.Identifier);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = await client.UpdateAsync(fe);
             Assert.IsNotNull(fe3);
-            Assert.AreEqual(3, fe3.Identifier.Count);
+            Assert.HasCount(3, fe3.Identifier);
 
             await client.DeleteAsync(fe3);
 
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
 
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = await client.TypeHistoryAsync("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count);   // there's a race condition here, sometimes this is 5.
+            Assert.HasCount(4, history.Entry);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = await client.TypeHistoryAsync<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Tests.Rest
                 history = await client.WholeSystemHistoryAsync(timestampBeforeCreationAndDeletions.ToUniversalTime());
                 Assert.IsNotNull(history);
                 DebugDumpBundle(history);
-                Assert.IsTrue(4 <= history.Entry.Count, "Whole System history should have at least 4 new events");
+                Assert.IsLessThanOrEqualTo(history.Entry.Count, 4, "Whole System history should have at least 4 new events");
                 // Check that the number of patients that have been created is what we expected
                 Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
                 Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
@@ -1091,7 +1091,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
@@ -1131,7 +1131,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
             }
         }
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -1193,7 +1193,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
             }
         }
@@ -1349,9 +1349,9 @@ namespace Hl7.Fhir.Tests.Rest
                 OperationOutcome operationOutcome = client.LastBodyAsResource as OperationOutcome;
                 Assert.IsNotNull(operationOutcome, "Returned resource is not an OperationOutcome");
 
-                Assert.IsTrue(operationOutcome.Issue.Count > 0, "OperationOutcome does not contain an issue");
+                Assert.IsNotEmpty(operationOutcome.Issue, "OperationOutcome does not contain an issue");
 
-                Assert.IsTrue(operationOutcome.Issue[0].Severity == OperationOutcome.IssueSeverity.Error, "OperationOutcome is not of severity 'error'");
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, operationOutcome.Issue[0].Severity, "OperationOutcome is not of severity 'error'");
 
                 string message = operationOutcome.Issue[0].Diagnostics;
                 if (!message.Contains("a valid FHIR xml/json body type was expected") && !message.Contains("not recognized as either xml or json"))
@@ -1398,9 +1398,9 @@ namespace Hl7.Fhir.Tests.Rest
                 OperationOutcome operationOutcome = client.LastBodyAsResource as OperationOutcome;
                 Assert.IsNotNull(operationOutcome, "Returned resource is not an OperationOutcome");
 
-                Assert.IsTrue(operationOutcome.Issue.Count > 0, "OperationOutcome does not contain an issue");
+                Assert.IsNotEmpty(operationOutcome.Issue, "OperationOutcome does not contain an issue");
 
-                Assert.IsTrue(operationOutcome.Issue[0].Severity == OperationOutcome.IssueSeverity.Error, "OperationOutcome is not of severity 'error'");
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, operationOutcome.Issue[0].Severity, "OperationOutcome is not of severity 'error'");
             }
             catch (Exception e)
             {

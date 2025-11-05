@@ -194,21 +194,21 @@ namespace Hl7.Fhir.Specification.Tests
                                 @"c:\blie\bit.xml", @"c:\blie\bit.json", @"c:\blie\bit.txt" };
 
             var res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferXml);
-            Assert.AreEqual(5, res.Count);
+            Assert.HasCount(5, res);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
             Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
-            Assert.AreEqual(5, res.Count);
+            Assert.HasCount(5, res);
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
             Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.KeepBoth);
-            Assert.AreEqual(6, res.Count);
+            Assert.HasCount(6, res);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
         }
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Initialize source and verify index
                 var source = new DirectorySource(tmpFolderPath);
                 var fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 void Refresh(params string[] files)
@@ -484,30 +484,30 @@ namespace Hl7.Fhir.Specification.Tests
                 File.Move(tmpFilePath, newFilePath);
                 Refresh(tmpFilePath, newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(newFileName, fileNames[0]);
 
                 // Delete file and refresh source
                 File.Delete(newFilePath);
                 Refresh(newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(0, fileNames.Count);
+                Assert.IsEmpty(fileNames);
 
                 // Recreate file and refresh source
                 File.Copy(srcFilePath, tmpFilePath);
                 Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 // [WMR 20190528] Update file and refresh source
                 var summaries = source.ListSummaries().ToList();
                 Assert.IsNotNull(summaries);
-                Assert.AreEqual(1, summaries.Count);
+                Assert.HasCount(1, summaries);
                 var summary = summaries[0];
                 var uri = summary.ResourceUri;
                 const string uriPrefix = @"http://example.org/Patient/";
-                Assert.IsTrue(uri.StartsWith(uriPrefix));
+                Assert.StartsWith(uriPrefix, uri);
                 var id = uri.Substring(uriPrefix.Length);
                 Assert.AreEqual("pat1", id);
 
@@ -530,11 +530,11 @@ namespace Hl7.Fhir.Specification.Tests
                 // Verify that Refresh updates the summary information
                 Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 summaries = source.ListSummaries().ToList();
-                Assert.AreEqual(1, summaries.Count);
+                Assert.HasCount(1, summaries);
                 summary = summaries[0];
                 Assert.AreEqual(uriPrefix + patient.Id, summary.ResourceUri);
 

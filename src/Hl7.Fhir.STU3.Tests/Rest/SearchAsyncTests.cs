@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 .SummaryOnly();
 
             var result1 = await client.SearchAsync<Patient>(srch);
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                             .SummaryOnly();
 
             var result1 = await client.SearchUsingPostAsync<Patient>(srch);
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             var result1 = client.SearchAsync<Patient>(srch).WaitResult();
 
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             var result1 = task1.Result;
 
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             var result1 = task1.Result;
 
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {

@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
             Assert.AreNotEqual(0, entry.Rest[0].Resource.Count, "There is expected to be at least 1 resource defined in the conformance statement");
-            Assert.IsTrue(entry.Rest[0].Resource[0].Type is not null, "The resource type should be provided");
+            Assert.IsNotNull(entry.Rest[0].Resource[0].Type, "The resource type should be provided");
             Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
         }
 
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Tests.Rest
             
             result = await client.SearchAsync<DiagnosticReport>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count <= 2);
+            Assert.IsLessThanOrEqualTo(2, result.Entry.Count);
         }
 
         [TestMethod]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var result = await client.SearchAsync<Patient>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.AreEqual(2,result.Entry.Count);
+            Assert.HasCount(2, result.Entry);
 
             var firstId = result.Entry.First().Resource.Id;
 
@@ -389,12 +389,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.ResourceIdentity(), fe2.ResourceIdentity());
-            Assert.AreEqual(2, fe2.Identifier.Count);
+            Assert.HasCount(2, fe2.Identifier);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = await client.UpdateAsync(fe);
             Assert.IsNotNull(fe3);
-            Assert.AreEqual(3, fe3.Identifier.Count);
+            Assert.HasCount(3, fe3.Identifier);
 
             await client.DeleteAsync(fe3);
 
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Tests.Rest
             Bundle history = await client.HistoryAsync(createdTestPatientUrl);
             Assert.IsNotNull(history);
 
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -439,13 +439,13 @@ namespace Hl7.Fhir.Tests.Rest
 
             history = await client.TypeHistoryAsync("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
-            Assert.AreEqual(4, history.Entry.Count);   // there's a race condition here, sometimes this is 5.
+            Assert.HasCount(4, history.Entry);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
             history = await client.TypeHistoryAsync<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 history = await client.WholeSystemHistoryAsync(timestampBeforeCreationAndDeletions.ToUniversalTime());
                 Assert.IsNotNull(history);
-                Assert.IsTrue(4 <= history.Entry.Count, "Whole System history should have at least 4 new events");
+                Assert.IsLessThanOrEqualTo(history.Entry.Count, 4, "Whole System history should have at least 4 new events");
                 // Check that the number of patients that have been created is what we expected
                 Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
                 Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                 var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                Assert.Contains("<Patient", bodyText);
 
                 calledBefore = false;
                 await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsNotNull(bodyOut);
 
                 bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                Assert.Contains("<Patient", bodyText);
             }
         }
 
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
                     await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Tests.Rest
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
             }
         }

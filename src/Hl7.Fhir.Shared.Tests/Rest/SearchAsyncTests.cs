@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         private static async Task check(FhirClient client, Bundle result1)
         {
-            Assert.IsTrue(result1.Entry.Count >= 1);
+            Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
             while (result1 != null)
             {

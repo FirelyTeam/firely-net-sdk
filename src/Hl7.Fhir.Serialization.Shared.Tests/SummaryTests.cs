@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var output = masker.ToXml();
 
             var maskedChildren = masker.Children().ToList();
-            Assert.IsTrue(maskedChildren.Count < inSummary.Count);
+            Assert.IsLessThan(inSummary.Count, maskedChildren.Count);
             Assert.IsTrue(maskedChildren.Select(c => c.Name).All(c => inSummary.Any(s => s.ElementName == c)));
         }
 

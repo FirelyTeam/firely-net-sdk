@@ -101,7 +101,7 @@ public class ModelTests
 
         ic.Expression = new string[] { "json", "xml" };
         Assert.IsNotNull(ic.ExpressionElement);
-        Assert.AreEqual(2, ic.ExpressionElement.Count);
+        Assert.HasCount(2, ic.ExpressionElement);
         Assert.AreEqual("json", ic.ExpressionElement.First().Value);
 
         ic.ExpressionElement = new List<FhirString>();
@@ -216,7 +216,7 @@ public class ModelTests
         var x = new List<Patient> { new(), new() };
 
         var y = new List<Patient>(x.DeepCopyInternal());
-        Assert.IsTrue(x[0] != null);
+        Assert.IsNotNull(x[0]);
         Assert.AreNotEqual(x[0], y[0]);
         Assert.AreNotEqual(x[1], y[1]);
     }

@@ -171,7 +171,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             }
             catch (InvalidOperationException io)
             {
-                Assert.IsTrue(io.Message.Contains("contains more than one element"));
+                Assert.Contains("contains more than one element", io.Message);
             }
         }
 
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var expr = "defineVariable('n1', name.first()).active | defineVariable('n2', name.skip(1).first()).select(%n2.given)";
             var r = fixture.PatientExample.Select(expr).ToList();
             Assert.AreEqual(2, r.Count());
-            Assert.AreEqual(true, ((FhirBoolean)r.First()).Value);
+            Assert.IsTrue(((FhirBoolean)r.First()).Value);
             Assert.AreEqual("Jim", r.Skip(1).First().ToString());
             // .toStrictEqual([true, "Jim"]);
         }
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var expr = "Patient.name.defineVariable('n1', first()).exists(%n1) | Patient.name.defineVariable('n2', skip(1).first()).defineVariable('res', %n2.given+%n2.given).select(%res)";
             var r = fixture.PatientExample.Select(expr).ToList();
             Assert.AreEqual(2, r.Count());
-            Assert.AreEqual(true, ((FhirBoolean)r.First()).Value);
+            Assert.IsTrue(((FhirBoolean)r.First()).Value);
             Assert.AreEqual("JimJim", r.Skip(1).First().ToString());
             // the duplicate JimJim values are removed due to the | operator
             // .toStrictEqual([true, "JimJim"]);

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 new FhirXmlParsingSettings { AllowedExternalNamespaces = new[] { XNamespace.Get("http://example.org") } });
 
             var navc = nav.Children().ToList();
-            Assert.AreEqual(2, navc.Count);
+            Assert.HasCount(2, navc);
 
             Assert.AreEqual("myattr", navc[0].Name);        // none-xmlns attributes will come through
             var xmldetails = (navc[0] as IAnnotated).Annotation<XmlSerializationDetails>();
@@ -99,13 +99,13 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsNotNull(xmldetails);
             Assert.AreEqual(XmlNodeType.Element, xmldetails.NodeType);
             Assert.AreEqual("http://hl7.org/fhir", xmldetails.Namespace.NamespaceName);
-            Assert.IsTrue(commentdetails.CommentsBefore.Single().Contains("structural errors"));
-            Assert.IsTrue(commentdetails.DocumentEndComments.Single().Contains("standard FHIR"));
+            Assert.Contains("structural errors", commentdetails.CommentsBefore.Single());
+            Assert.Contains("standard FHIR", commentdetails.DocumentEndComments.Single());
             Assert.IsNull(nav.Text);
 
             // namespace attributes should not be found
             var children = nav.Children().ToList();
-            Assert.AreEqual(3, children.Count);
+            Assert.HasCount(3, children);
             assertAnElement(children[0]);
             assertAnElementWithValueAndChildren(children[1]);
             assertDiv(children[2]);
@@ -132,11 +132,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("4", cn.Text);
 
                 var mylittledetails = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
-                Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
-                Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
+                Assert.Contains("Crap, mixed content!", mylittledetails.NodeText);
+                Assert.Contains("Is Merged", mylittledetails.NodeText);
 
                 var cnc = cn.Children().ToList();
-                Assert.AreEqual(3,cnc.Count);
+                Assert.HasCount(3, cnc);
                 firstChild(cnc[0]);
                 secondChild(cnc[1]);
                 thirdChild(cnc[2]);
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     Assert.AreEqual("firstChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
                     var ccnc = ccn.Children().ToList();
-                    Assert.AreEqual(1, ccnc.Count);
+                    Assert.HasCount(1, ccnc);
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.AreEqual("I have text content", xd.NodeText);
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 var xd = (cnn as IAnnotated).Annotation<XmlSerializationDetails>();
                 var cd = (cnn as IAnnotated).Annotation<SourceComments>();
                 Assert.AreEqual(XmlNs.XHTMLNS, xd.Namespace);
-                Assert.AreEqual(2, cd.CommentsBefore.Length);
+                Assert.HasCount(2, cd.CommentsBefore);
                 Assert.AreEqual(" next line intentionally left empty ", cd.CommentsBefore.First());
                 Assert.AreEqual(" Div is really special, since the value includes the node itself ", cd.CommentsBefore.Last());
             }
@@ -229,17 +229,17 @@ namespace Hl7.Fhir.Serialization.Tests
             var patient = getXmlUntyped(tpXml);
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;
-            Assert.AreEqual(11, result.Count);
+            Assert.HasCount(11, result);
             Assert.IsFalse(result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true, PermissiveParsing = false });
             result = patient.VisitAndCatch();
-            Assert.IsTrue(result.Count == originalCount + 1);    // one extra error about schemaLocation being present
+            Assert.HasCount(originalCount + 1, result);    // one extra error about schemaLocation being present
             Assert.IsTrue(result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings() { PermissiveParsing = true });
             result = patient.VisitAndCatch();
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -248,12 +248,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var xml = "<Patient xmlns='http://hl7.org/fhir'><contained><OperationOutcome /></contained></Patient>";
             var pat = getXmlUntyped(xml);
             var errors = pat.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("must have child elements"));
+            Assert.Contains("must have child elements", errors.Single().Message);
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><contained /></Patient>";
             pat = getXmlUntyped(xml);
             errors = pat.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("must have child elements"));
+            Assert.Contains("must have child elements", errors.Single().Message);
         }
 
         [TestMethod]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", fe.Message);
             }
         }
 

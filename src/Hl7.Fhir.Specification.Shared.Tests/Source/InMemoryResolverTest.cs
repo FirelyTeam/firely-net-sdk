@@ -103,7 +103,7 @@ public class InMemoryResourceResolverTest
         var partialResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.5");
         Assert.IsNotNull(partialResult, "Partial version matching should return a result");
         var partialSd = (StructureDefinition)partialResult;
-        Assert.IsTrue(partialSd.Version!.StartsWith("1.5"), $"Expected version starting with '1.5', but got '{partialSd.Version}'");
+        Assert.StartsWith("1.5", partialSd.Version, $"Expected version starting with '1.5', but got '{partialSd.Version}'");
 
         // Act & Assert - Test that wrong partial version returns null
         var wrongResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.4");

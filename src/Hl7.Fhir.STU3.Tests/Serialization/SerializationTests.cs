@@ -99,18 +99,18 @@ namespace Hl7.Fhir.Tests.Serialization
             Bundle b = new Bundle() { Total = 1000 };
 
             var data = FhirJsonSerializer.SerializeToBytes(b);
-            Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
+            Assert.AreNotEqual(Encoding.UTF8.GetPreamble()[0], data[0]);
 
             data = FhirXmlSerializer.SerializeToBytes(b);
-            Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
+            Assert.AreNotEqual(Encoding.UTF8.GetPreamble()[0], data[0]);
 
             Patient p = new() { Active = true };
 
             data = FhirJsonSerializer.SerializeToBytes(p);
-            Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
+            Assert.AreNotEqual(Encoding.UTF8.GetPreamble()[0], data[0]);
 
             data = FhirXmlSerializer.SerializeToBytes(p);
-            Assert.IsFalse(data[0] == Encoding.UTF8.GetPreamble()[0]);
+            Assert.AreNotEqual(Encoding.UTF8.GetPreamble()[0], data[0]);
         }
 
         [TestMethod]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             b = _fhirXmlDeserializer.Deserialize<Bundle>(xml);
 
-            Assert.IsFalse(b.NextLink.ToString().EndsWith("/"));
+            Assert.DoesNotEndWith("/", b.NextLink.ToString());
         }
 
         [TestMethod]
@@ -230,9 +230,9 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var trimmed = FhirXmlSerializer.SerializeToString(patient);
-            Assert.IsFalse(trimmed.Contains(" Smith"));
-            Assert.IsFalse(trimmed.Contains("Smith&#xD;&#xA;&#x9;"));
-            Assert.IsTrue(trimmed.Contains("\"Smith\""));
+            Assert.DoesNotContain(" Smith", trimmed);
+            Assert.DoesNotContain("Smith&#xD;&#xA;&#x9;", trimmed);
+            Assert.Contains("\"Smith\"", trimmed);
         }
 
         [TestMethod]
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Tests.Serialization
             x.Name.Add(HumanName.ForFamily("<script language='javascript'></script>"));
 
             var xml = FhirXmlSerializer.SerializeToString(x);
-            Assert.IsFalse(xml.Contains("<script"));
+            Assert.DoesNotContain("<script", xml);
         }
 
 
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (XmlException e)
             {
-                Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
+                Assert.Contains("DTD is prohibited", e.Message);
             }
         }
 
@@ -283,14 +283,14 @@ namespace Hl7.Fhir.Tests.Serialization
             var pser = new FhirXmlDeserializer();
             var p = pser.Deserialize<Patient>(xml);
             string outp = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsTrue(outp.Contains("\"male\""));
+            Assert.Contains("\"male\"", outp);
 
             // Pollute the data with an incorrect administrative gender
             p.GenderElement.JsonValue = "superman";
 
             outp = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsFalse(outp.Contains("\"male\""));
-            Assert.IsTrue(outp.Contains("\"superman\""));
+            Assert.DoesNotContain("\"male\"", outp);
+            Assert.Contains("\"superman\"", outp);
         }
 
 
@@ -315,8 +315,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(p);
 
             var p2 = (new FhirXmlDeserializer()).Deserialize<Patient>(xml);
-            Assert.AreEqual(1, p2.Extension.Count);
-            Assert.AreEqual(1, p2.Contact.Count);
+            Assert.HasCount(1, p2.Extension);
+            Assert.HasCount(1, p2.Contact);
         }
 
         [TestMethod]
@@ -481,10 +481,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.True);
 
-            Assert.IsFalse(doc.Contains("<extension"), "In the summary there must be no extension section.");
+            Assert.DoesNotContain("<extension", doc, "In the summary there must be no extension section.");
 
             doc = FhirXmlSerializer.SerializeToString(patient, Fhir.Rest.SummaryType.False);
-            Assert.IsTrue(doc.Contains("<extension"), "Extension exists when Summary = false");
+            Assert.Contains("<extension", doc, "Extension exists when Summary = false");
         }
 
         /// <summary>
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var poco = fhirJsonParser.Deserialize<Patient>(json);
 
-            Assert.AreEqual(1, poco.Name.Count);
+            Assert.HasCount(1, poco.Name);
 
             poco.Meta = new Meta();
 
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var newPoco = fhirJsonParser.Deserialize<Patient>(reserialized);
 
-            Assert.AreEqual(1, newPoco.Name.Count);
+            Assert.HasCount(1, newPoco.Name);
         }
 
         [TestMethod]
