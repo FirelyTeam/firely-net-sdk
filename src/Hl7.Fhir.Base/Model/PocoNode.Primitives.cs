@@ -62,7 +62,7 @@ public partial record PocoNode
         values.Select(v => v as PocoNode ?? ForAnyPrimitive(v));
 }
 
-public record PrimitiveNode(PrimitiveType Primitive, PocoNodeOrList? ParentNode, int? Index, string? Name = null) : PocoNode(Primitive, ParentNode, Index, Name)
+public record PrimitiveNode(PrimitiveType Primitive, PocoNode? Parent, int? Index, string? Name = null) : PocoNode(Primitive, Parent, Index, Name)
 {
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
     internal object? Value => ValueInternal;
@@ -86,10 +86,10 @@ public record PrimitiveNode(PrimitiveType Primitive, PocoNodeOrList? ParentNode,
     protected override string? TextInternal => Primitive.ToString();
 }
 
-internal record PrimitiveListNode(IReadOnlyList<PrimitiveType> Primitives, PocoNodeOrList? ParentNode, string? Name = null) : PocoListNode(Primitives, ParentNode, Name ?? "value")
+internal record PrimitiveListNode(IReadOnlyList<PrimitiveType> Primitives, PocoNode? Parent, string? Name = null) : PocoListNode(Primitives, Parent, Name ?? "value")
 {
     public override IEnumerator<PocoNode> GetEnumerator() =>
-        Primitives.Select((primitive, index) => new PrimitiveNode(primitive, ParentNode, index, Name)).GetEnumerator();
+        Primitives.Select((primitive, index) => new PrimitiveNode(primitive, Parent, index, Name)).GetEnumerator();
 
     internal IEnumerable<object?> Values => Primitives.Select(p => p.JsonValue);
 }

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Hl7.FhirPath.Expressions;
 
-internal record OrderedNode(PrimitiveType Primitive, PocoNodeOrList ParentNode, int? Index, string Name = null, bool Descending = false) : PrimitiveNode(Primitive, ParentNode, Index, Name)
+internal record OrderedNode(PrimitiveType Primitive, PocoNode Parent, int? Index, string Name = null, bool Descending = false) : PrimitiveNode(Primitive, Parent, Index, Name)
 {
     internal static OrderedNode FromPrimitiveNode(PocoNode primitiveNode, bool descending = false) =>
         new((PrimitiveType)primitiveNode.Poco, primitiveNode.Parent, primitiveNode.Index, primitiveNode.Name, descending);

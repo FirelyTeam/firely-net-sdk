@@ -15,13 +15,9 @@ namespace Hl7.Fhir.Model;
 /// A singular node in a POCO node tree. This node represents either a repeating or singular POCO instance.
 /// </summary>
 /// <param name="Name"></param>
-public abstract record PocoNodeOrList(string Name) : IEnumerable<PocoNode>
+/// <param name="Parent"></param>
+public abstract record PocoNodeOrList(string Name, PocoNode? Parent) : IEnumerable<PocoNode>
 {
-    /// <summary>
-    /// The parent of this node. This is always a singular PocoNode. If the Parent field is set to a PocoListNode, this will construct and return the PocoNode at the specified index.
-    /// </summary>
-    public abstract PocoNode? Parent { get; }
-    
     public abstract IEnumerator<PocoNode> GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -36,20 +32,12 @@ public abstract record PocoNodeOrList(string Name) : IEnumerable<PocoNode>
 /// A singular node in a POCO node tree. This node represents a single POCO instance.
 /// </summary>
 /// <param name="Poco"></param>
-/// <param name="ParentNode"></param>
+/// <param name="Parent"></param>
 /// <param name="Index">This Poco's index in a list, if it is contained in one</param>
 /// <param name="Name"></param>
-public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index, string? Name)
-    : PocoNodeOrList(Name ?? Poco.TypeName), ITypedElement, IShortPathGenerator, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
+public partial record PocoNode(Base Poco, PocoNode? Parent, int? Index, string? Name)
+    : PocoNodeOrList(Name ?? Poco.TypeName, Parent), ITypedElement, IShortPathGenerator, ISourceNode, IFhirValueProvider, IResourceTypeSupplier, IAnnotatable
 {
-    /// <inheritdoc />
-    public override PocoNode? Parent => ParentNode switch
-    {
-        PocoListNode nodes => nodes[Index!.Value],
-        PocoNode node => node,
-        _ => null
-    };
-
     /// <summary>
     /// Enumerates all children of this node. These can each either be singular or repeating PocoNodes.
     /// </summary>
@@ -83,8 +71,8 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
         {
             PrimitiveType primitive => new PrimitiveNode(primitive, this, null, name),
             Base b => new PocoNode(b, this, null, name),
-            IEnumerable<PrimitiveType> primitiveList => new PrimitiveListNode(primitiveList.ToList(), this, name),
-            IEnumerable<Base> list => new PocoListNode(list.ToList(), this, name),
+            IReadOnlyList<PrimitiveType> primitiveList => new PrimitiveListNode(primitiveList.ToList(), this, name),
+            IReadOnlyList<Base> list => new PocoListNode(list.ToList(), this, name),
             _ => throw new InvalidOperationException("Unexpected element in child list")
         };
 
@@ -153,11 +141,10 @@ public partial record PocoNode(Base Poco, PocoNodeOrList? ParentNode, int? Index
 /// A single node for a repeating element. Note that since a repeating element has a single parent, this cannot be used for grouping "separate" pocos that are not repeating in the specification.
 /// </summary>
 /// <param name="Pocos"></param>
-/// <param name="ParentNode"></param>
+/// <param name="Parent"></param>
 /// <param name="Name"></param>
-public record PocoListNode(IReadOnlyList<Base> Pocos, PocoNodeOrList? ParentNode, string Name) : PocoNodeOrList(Name)
+public record PocoListNode(IReadOnlyList<Base> Pocos, PocoNode? Parent, string Name) : PocoNodeOrList(Name, Parent)
 {
     public PocoNode this[int index] => new(Pocos[index], Parent, index, Name);
-    public override PocoNode? Parent => ParentNode as PocoNode; // safe because FHIR knows no nested lists
     public override IEnumerator<PocoNode> GetEnumerator() => Pocos.Select((poco, index) => new PocoNode(poco, Parent, index, Name)).GetEnumerator();
 }
