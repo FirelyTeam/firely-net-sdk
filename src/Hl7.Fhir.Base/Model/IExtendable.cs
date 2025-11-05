@@ -208,9 +208,30 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        /// <summary>
+        /// Remove all extensions that are specified in the uris list, if any.
+        /// </summary>
+        /// <param name="extendable"></param>
+        /// <param name="uris"></param>
+        internal static void RemoveExtensions(this IExtendable extendable, IEnumerable<string> uris)
+        {
+            var remove = extendable.Extension.Where(ext => uris.Contains(ext.Url)).ToList();
+
+            foreach (var ext in remove)
+                extendable.Extension.Remove(ext);
+
+            if (extendable is IModifierExtendable me)
+            {
+                remove = me.ModifierExtension.Where(ext => uris.Contains(ext.Url)).ToList();
+
+                foreach (var ext in remove)
+                    me.ModifierExtension.Remove(ext);
+            }
+        }
+
 
         /// <summary>
-        /// Add an extension with the given uri and value, removing any pre-existsing extensions
+        /// Add an extension with the given uri and value, removing any pre-existing extensions
         /// with the same uri.
         /// </summary>
         /// <param name="extendable"></param>

@@ -1424,6 +1424,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var expandElemPath = elem.Path;
 
+            Assert.IsFalse(elem.HasAnyNonInheritableExtensions());
+
             // Debug.WriteLine("\r\nOutput:");
             // Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => e.Path)));
 

@@ -233,6 +233,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 await expandElement(nav).ConfigureAwait(false);
+
+                foreach (var elem in nav.Elements)
+                    elem.RemoveAllNonInheritableExtensions();
             }
             finally
             {
@@ -260,7 +263,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             _stack.OnStartRecursion();
             try
             {
-                return await expandElement(nav).ConfigureAwait(false);
+                var result = await expandElement(nav).ConfigureAwait(false);
+
+                foreach (var elem in nav.Elements)
+                    elem.RemoveAllNonInheritableExtensions();
+
+                return result;
             }
             finally
             {
