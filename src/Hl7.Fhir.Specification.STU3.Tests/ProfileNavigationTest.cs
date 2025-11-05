@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsFalse(nav.JumpToNameReference("#IDontExist"));
 
-            Assert.ThrowsException<NotSupportedException>(() =>
+            Assert.Throws<NotSupportedException>(() =>
                 nav.JumpToNameReference("http://then.nl/test#A-Named-Constraint"));
         }
 
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, false)]
         [DataRow("A", null, true)]
         [DataRow("A/B", null, false)]

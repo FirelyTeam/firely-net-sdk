@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Support.Tests
             Assert.IsFalse(result.Any());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("<div>Not empty</div>", false, "no XHTML namespace")]
         [DataRow("<div xmlns=\"http://www.w3.org/1999/xhtml\"> </div>", false, "containing only whitespace")]
         [DataRow("<div xmlns=\"http://www.w3.org/1999/xhtml\">\t\n</div>", false, "containing only whitespace")]
@@ -59,8 +59,8 @@ namespace Hl7.Fhir.Support.Tests
             evaluator.Predicate(PocoNode.ForPrimitive<XHtml>(xml), new FhirEvaluationContext()).Should().Be(expected, because);
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(GetTypedElements), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(GetTypedElements))]
         public void NavigateWithChoiceTypes(ITypedElement typedElement, string method)
         {
             // expression with TypedElement
@@ -144,8 +144,8 @@ namespace Hl7.Fhir.Support.Tests
             .Concat(ComparableTestCases());
 
 
-        [DataTestMethod]
-        [DynamicData(nameof(AllTestCases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(AllTestCases))]
         public void AssertFhirPathTestcases(string expression, bool expected)
         {
             var evaluator = _compiler.Compile(expression);

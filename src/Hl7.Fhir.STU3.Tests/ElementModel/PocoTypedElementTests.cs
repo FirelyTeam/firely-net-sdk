@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             // FHIR specific function does not work for ITypedElement extension methods
             var data = ElementNode.ForPrimitive("hello!");
-            Assert.ThrowsException<ArgumentException>(() => data.IsTrue("hasValue()"));
+            Assert.Throws<ArgumentException>(() => data.IsTrue("hasValue()"));
         }
 
         [TestMethod]

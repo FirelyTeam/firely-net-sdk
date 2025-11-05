@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new SnapshotSource(cachedSource);
 
             // Verify that SnapshotGenerator ctor rejects SnapshotSource arguments
-            Assert.ThrowsException<ArgumentException>(() => new SnapshotGenerator(src));
+            Assert.Throws<ArgumentException>(() => new SnapshotGenerator(src));
         }
 
         [TestMethod]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new SnapshotSource(cachedSource);
 
             // Verify that SnapshotSource ctor rejects SnapshotSource arguments
-            Assert.ThrowsException<ArgumentException>(() => new SnapshotSource(src));
+            Assert.Throws<ArgumentException>(() => new SnapshotSource(src));
         }
 
     }

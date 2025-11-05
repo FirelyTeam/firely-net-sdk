@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.Value = null;
             dft.TryToTimeSpan(out _).Should().BeFalse();
-            Assert.ThrowsException<FormatException>(() => dft.ToTimeSpan());
+            Assert.Throws<FormatException>(() => dft.ToTimeSpan());
         }
 
         [TestMethod]
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             var dft = new Time("45:45:56");
 
-            Assert.ThrowsException<FormatException>(() => dft.ToTimeSpan());
+            Assert.Throws<FormatException>(() => dft.ToTimeSpan());
 
             dft.TryToTimeSpan(out var _).Should().BeFalse();
         }

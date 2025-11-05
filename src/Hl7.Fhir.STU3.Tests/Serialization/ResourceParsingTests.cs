@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Now, allow unknown enums and check support
             pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
             p = pser.Deserialize<Patient>(xml2);
-            Assert.ThrowsException<CodedValidationException>(() => p.Gender);
+            Assert.Throws<CodedValidationException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.JsonValue);
         }
 

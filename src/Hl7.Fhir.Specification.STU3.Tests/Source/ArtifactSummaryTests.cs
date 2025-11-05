@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(summaries);
             Assert.AreEqual(4253, summaries.Count);
             Assert.AreEqual(581, summaries.OfResourceType(ResourceType.StructureDefinition).Count());
-            Assert.IsTrue(!summaries.Errors().Any());
+            Assert.IsFalse(summaries.Errors().Any());
         }
 
         [TestMethod]
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Console.WriteLine(Path.GetFileName(summary.Origin) + (summary.IsFaulted ? " - " + summary.Error?.Message : ""));
             }
-            Assert.IsTrue(!UnknownArtefacts.Any());
+            Assert.IsFalse(UnknownArtefacts.Any());
 
             // Expecting to find some artifacts w/o ResourceId
             var AnonymousArtefacts = summaries.Where(s => s.ResourceUri is null);
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true)]
         [DataRow(false)]
         public void TestIsConformanceSummary(bool typeNameFound)

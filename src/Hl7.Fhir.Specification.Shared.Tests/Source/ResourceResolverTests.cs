@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dirSource = new DirectorySource(Path.Combine("TestData", "validation"));
             extDefn = dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0").Value;
 
-            Assert.ThrowsException<ArgumentException>(() => dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|").Value);
+            Assert.Throws<ArgumentException>(() => dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|").Value);
         }
 
         [TestMethod]

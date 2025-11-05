@@ -198,7 +198,6 @@ public class ModelTests
 
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void FindContainedResourceExceptionExpected()
     {
         var cPat1 = new Patient() { Id = "pat1" };
@@ -208,7 +207,7 @@ public class ModelTests
             Contained = [cPat1, cPat2]
         };
 
-        pat.FindContainedResource((ResourceReference)null);
+        Assert.Throws<ArgumentNullException>(() => pat.FindContainedResource((ResourceReference)null));
     }
 
     [TestMethod]

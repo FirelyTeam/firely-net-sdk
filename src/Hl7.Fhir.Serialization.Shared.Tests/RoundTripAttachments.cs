@@ -74,8 +74,8 @@ public class RoundTripAttachments
         result.Should().Be(_attachmentJson);
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(attachmentSource), DynamicDataSourceType.Method)]
+    [TestMethod]
+    [DynamicData(nameof(attachmentSource))]
     public void ParseAttachment(string input, object? expectedAttachmentSize, string? errorCode)
     {
         var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);

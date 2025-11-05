@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
             await call.Should().ThrowAsync<FhirOperationException>().Where(e => ((AggregateException)e.InnerException).InnerExceptions.Count == 2);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the first ts that fails", DisplayName = "First is prefered")]
         [DataRow("http://example.org/fhir/ValueSet/second-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the second ts that fails", DisplayName = "Second is prefered")]
         [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/*", "http://example.org/fhir/ValueSet/*", "this is the first ts that fails", DisplayName = "Both are prefered")]

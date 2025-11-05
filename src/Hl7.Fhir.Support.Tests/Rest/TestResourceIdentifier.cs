@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Test
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("XXX/1/_history/1", "1")]
         [DataRow("XXX/_history/1", null)]
         [DataRow("_history/1", null)]

@@ -147,11 +147,11 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
-    [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData), DynamicDataSourceType.Method)]
-    [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
-    [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
-    [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestPrimitiveArrayData))]
+    [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData))]
+    [DynamicData(nameof(TestNormalArrayData))]
+    [DynamicData(nameof(TestPrimitiveData))]
+    [DynamicData(nameof(TestValidatePrimitiveData))]
     public void TestData(Type t, object testObject, JsonTokenType token, Action<object?>? verify,
         params string[] expectedErrors)
     {
@@ -769,8 +769,8 @@ public partial class FhirJsonDeserializationTests
     }
 
 
-    [DataTestMethod]
-    [DynamicData(nameof(getDuplicatePropertyTests), DynamicDataSourceType.Method)]
+    [TestMethod]
+    [DynamicData(nameof(getDuplicatePropertyTests))]
     public void TestDuplicateProperties(string testJson, string[] expectedErrs)
     {
         var options = new JsonSerializerOptions().ForFhir();
@@ -872,8 +872,8 @@ public partial class FhirJsonDeserializationTests
         ];
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(getExtensionOptionsAndExpectedErrors), DynamicDataSourceType.Method)]
+    [TestMethod]
+    [DynamicData(nameof(getExtensionOptionsAndExpectedErrors))]
     public void TestExtensionMethods(JsonSerializerOptions options, Predicate<IEnumerable<CodedException>> shouldHold)
     {
         string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
@@ -946,8 +946,8 @@ public partial class FhirJsonDeserializationTests
     }
 
 
-    [DataTestMethod]
-    [DynamicData(nameof(getIgnoreEnforceTests), DynamicDataSourceType.Method)]
+    [TestMethod]
+    [DynamicData(nameof(getIgnoreEnforceTests))]
     public void TestIgnoreEnforcePrevalence(Predicate<CodedException> actual, Predicate<CodedException> expected)
     {
         var errors = getErrorsList();

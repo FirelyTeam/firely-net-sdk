@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        [DynamicData(nameof(GetPocoAndSdSummaryProviders), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetCanonicalDisplayName))]
+        [DynamicData(nameof(GetPocoAndSdSummaryProviders), DynamicDataDisplayName = nameof(GetCanonicalDisplayName))]
         public void PocoAndSdSummaryProvidersShouldBeEqual(Canonical canonicalResource, IStructureDefinitionSummary left, IStructureDefinitionSummary right) =>
             areEqual(left, right, new());
 
