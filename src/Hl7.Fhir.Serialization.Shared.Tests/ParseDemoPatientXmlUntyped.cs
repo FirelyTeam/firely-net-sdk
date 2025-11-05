@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var result = patient.VisitAndCatch();
             var originalCount = result.Count;
             Assert.AreEqual(11, result.Count);
-            Assert.IsTrue(!result.Any(r => r.Message.Contains("schemaLocation")));
+            Assert.IsFalse(result.Any(r => r.Message.Contains("schemaLocation")));
 
             patient = getXmlUntyped(tpXml, new FhirXmlParsingSettings() { DisallowSchemaLocation = true, PermissiveParsing = false });
             result = patient.VisitAndCatch();

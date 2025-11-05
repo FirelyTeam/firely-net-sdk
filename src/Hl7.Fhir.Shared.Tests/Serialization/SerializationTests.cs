@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             b = _fhirXmlDeserializer.Deserialize<Bundle>(xml);
 
-            Assert.IsTrue(!b.NextLink.ToString().EndsWith("/"));
+            Assert.IsFalse(b.NextLink.ToString().EndsWith("/"));
         }
 
         [TestMethod]

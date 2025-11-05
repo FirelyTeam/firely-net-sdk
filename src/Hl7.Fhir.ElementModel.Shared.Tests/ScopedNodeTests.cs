@@ -285,7 +285,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var errors = typedElement.VisitAndCatch();
 
-            Assert.IsTrue(!errors.Any());
+            Assert.IsFalse(errors.Any());
 
             var assertXHtml = typedElement.Children("text");
 
