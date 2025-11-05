@@ -44,6 +44,6 @@
 		<AssemblyOriginatorKeyFile>..\FhirNetApi.publickey</AssemblyOriginatorKeyFile>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<!-- Missing XML comments -->
-		<NoWarn>1591, SDK0001, SDK0002</NoWarn>
+		<NoWarn>1591, SDK0001, SDK0002, MSTEST0001, MSTEST0017, MSTEST0023, MSTEST0025, MSTEST0030, MSTEST0032, MSTEST0037</NoWarn>
 	</PropertyGroup>
 </Project>

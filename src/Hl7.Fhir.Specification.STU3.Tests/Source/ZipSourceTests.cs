@@ -30,6 +30,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
         {
             var zip = unpackTestData(new DirectorySourceSettings { IncludeSubDirectories = false });
             var summaries = zip.ListSummaries();
+            Assert.IsTrue(summaries.First().Origin.StartsWith(zip.ExtractPath));
 
             Assert.IsNotNull(summaries, "Collection of summaries should not be null");
             Assert.AreEqual(1, summaries.Count(), "In the zipfile there is 1 resource in the root folder.");
