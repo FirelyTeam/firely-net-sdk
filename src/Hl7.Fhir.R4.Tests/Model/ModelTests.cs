@@ -17,6 +17,7 @@ using System;
 
 namespace Hl7.Fhir.Tests.Model
 {
+    [TestClass]
     public partial class ModelTests
     {
         [TestMethod]

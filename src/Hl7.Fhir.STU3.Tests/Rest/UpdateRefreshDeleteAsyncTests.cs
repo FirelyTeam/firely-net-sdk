@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
+    [TestClass]
     public class UpdateRefreshDeleteAsyncTests
     {
         private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
