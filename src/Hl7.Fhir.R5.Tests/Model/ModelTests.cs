@@ -47,12 +47,12 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
         }
 
-        //If failed: change the description of the "STN" in the Currency enum of Money.cs from "SC#o TomC) and PrC-ncipe dobra" to "S�o Tom� and Pr�ncipe dobra".
+        //If failed: change the description of the "STN" in the Currency enum of Money.cs from "SC#o TomC) and PrC-ncipe dobra" to "São Tomé and Príncipe dobra".
         [TestMethod]
         public void TestCorrectCurrencyDescription()
         {
             var currency = Currencies.STN;
-            currency.GetDocumentation().Should().Be("S�o Tom� and Pr�ncipe dobra");
+            currency.GetDocumentation().Should().Be("São Tomé and Príncipe dobra");
         }
     }
 }
