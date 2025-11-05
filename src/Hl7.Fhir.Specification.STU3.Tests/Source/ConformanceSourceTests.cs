@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(@"http://example.org/Observation/1", uri);
 
                 // Expecting resolving to fail, because of illegal empty value
-                Assert.ThrowsException<FormatException>(() => { src.ResolveByUri(uri); });
+                Assert.Throws<FormatException>(() => { src.ResolveByUri(uri); });
 
                 // Bypass all verification; specifically, accept empty values
                 src.XmlParserSettings.PermissiveParsing = true;

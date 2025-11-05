@@ -36,8 +36,8 @@ public class StringFunctionsTests
         yield return ["Ewout", 0, (long?)-1, ""];
     }
 
-    [DataTestMethod]
-    [DynamicData(nameof(substringTests), DynamicDataSourceType.Method)]
+    [TestMethod]
+    [DynamicData(nameof(substringTests))]
     public void SubString(string input, long start, long? length, string expected)
     {
         input.FpSubstring(start, length).Should().Be(expected);
@@ -122,10 +122,10 @@ public class StringFunctionsTests
     public void UnknownEncoding()
     {
         Action act = () => StringOperators.FpEncode("Ewout", "reverse_polish");
-        act.Should().Throw<ArgumentException>().Which.Message.StartsWith("Unknown encoding 'reverse_polish'.");
+        act.Should().Throw<ArgumentException>().Which.Message.Should().StartWith("Unknown encoding 'reverse_polish'.");
 
         act = () => StringOperators.FpDecode("Ewout", "reverse_polish");
-        act.Should().Throw<ArgumentException>().Which.Message.StartsWith("Unknown encoding 'reverse_polish'.");
+        act.Should().Throw<ArgumentException>().Which.Message.Should().StartWith("Unknown encoding 'reverse_polish'.");
     }
 
     [TestMethod]
@@ -164,9 +164,9 @@ public class StringFunctionsTests
     public void UnknownEscape()
     {
         Action act = () => StringOperators.FpEscape("Ewout", "reverse_polish");
-        act.Should().Throw<ArgumentException>().Which.Message.StartsWith("Unknown escaping method 'reverse_polish'.");
+        act.Should().Throw<ArgumentException>().Which.Message.Should().StartWith("Unknown escaping method 'reverse_polish'.");
 
         act = () => StringOperators.FpUnescape("Ewout", "reverse_polish");
-        act.Should().Throw<ArgumentException>().Which.Message.StartsWith("Unknown escaping method 'reverse_polish'.");
+        act.Should().Throw<ArgumentException>().Which.Message.Should().StartWith("Unknown escaping method 'reverse_polish'.");
     }
 }

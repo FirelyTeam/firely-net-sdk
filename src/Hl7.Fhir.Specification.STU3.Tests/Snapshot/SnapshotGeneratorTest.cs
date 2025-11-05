@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow(null, "1", "1")]
         [DataRow("1", null, "1")]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(expected, actual.Value);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow(null, "1", "1")]
         [DataRow(null, "2", "2")]
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(expected, actual.Value);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow(null, 1, 1)]
         [DataRow(1, null, 1)]
@@ -6462,7 +6462,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// <param name="profileCanonical">Optional canonical for the profile (to be used with FHIRAllTypes.Resource).</param>
         /// <param name="differentialElement">Optional element name to add to the differential (min = 1).</param>
         /// <param name="alwaysExpand">Flag indicating if the bundle entry resource should always be expanded.</param>
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(FHIRAllTypes.Resource, "", "", false)]
         [DataRow(FHIRAllTypes.Resource, "", "", true)]
         [DataRow(FHIRAllTypes.Resource, "", "id", false)]
@@ -7474,7 +7474,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // [WMR 20190910] Expecting exception from DifferentialTreeConstructor
-            await Assert.ThrowsExceptionAsync<InvalidOperationException>(generate);
+            await Assert.ThrowsAsync<InvalidOperationException>(generate);
         }
 
         // #1123 SnapshotGenerator - ElementDefinition.base is empty for children of contentreference
@@ -8010,7 +8010,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
         public async Tasks.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
@@ -8267,8 +8267,8 @@ namespace Hl7.Fhir.Specification.Tests
         /// <param name="baseExtensions">The extensions that are defined in the base profile for this property.</param>
         /// <param name="diffExtensions">The extensions to define in the differential for this property.</param>
         /// <returns></returns>
-        [DataTestMethod]
-        [DynamicData(nameof(ElementDefinitionPropertyExtensionTestCasesStu3), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(ElementDefinitionPropertyExtensionTestCasesStu3))]
         public async Tasks.Task ElementDefinitionPropertyExtensionTest(FHIRAllTypes profileType, string elementId, string propertyName, Extension[] baseExtensions, Extension[] diffExtensions)
         {
             // Arrange
@@ -8406,8 +8406,8 @@ namespace Hl7.Fhir.Specification.Tests
         /// <param name="baseId">The element id that is defined in the base profile for this property.</param>
         /// <param name="diffId">The element id to define in the differential for this property.</param>
         /// <returns></returns>
-        [DataTestMethod]
-        [DynamicData(nameof(ElementDefinitionPropertyElementIdTestCasesStu3), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(ElementDefinitionPropertyElementIdTestCasesStu3))]
         public async Tasks.Task ElementDefinitionPropertyElementIdTest(FHIRAllTypes profileType, string elementId, string propertyName, string baseId, string diffId, string expectedId)
         {
             // Arrange

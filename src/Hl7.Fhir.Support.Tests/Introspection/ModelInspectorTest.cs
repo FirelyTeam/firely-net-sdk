@@ -29,11 +29,11 @@ namespace Hl7.Fhir.Tests.Introspection
 
             var way = inspector.FindClassMapping("Way");
             Assert.IsNotNull(way);
-            Assert.AreEqual(way.NativeType, typeof(Way));
+            Assert.AreEqual(typeof(Way), way.NativeType);
 
             var way2 = inspector.FindClassMapping("Way2");
             Assert.IsNotNull(way2);
-            Assert.AreEqual(way2.NativeType, typeof(Way2));
+            Assert.AreEqual(typeof(Way2), way2.NativeType);
 
             var noway = inspector.FindClassMapping("nonexistent");
             Assert.IsNull(noway);

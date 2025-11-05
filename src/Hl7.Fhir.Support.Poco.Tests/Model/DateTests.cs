@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Tests.Model
 
             dft.Value = null;
             dft.TryToDateTimeOffset(out _).Should().BeFalse();
-            Assert.ThrowsException<InvalidOperationException>(() => dft.ToDateTimeOffset());
+            Assert.Throws<InvalidOperationException>(() => dft.ToDateTimeOffset());
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             var dft = new Date("T45:45:56");
 
-            Assert.ThrowsException<CodedValidationException>(() => dft.ToDateTimeOffset());
+            Assert.Throws<CodedValidationException>(() => dft.ToDateTimeOffset());
 
             dft.TryToDateTimeOffset(out _).Should().BeFalse();
         }

@@ -56,12 +56,11 @@ public partial class FhirXmlDeserializationTests
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("<active value =\"true\"/>", typeof(FhirBoolean), true, null)]
     [DataRow("<multipleBirthInteger value =\"1\"/>", typeof(Integer), 1, null)]
     [DataRow("<Birthdate value =\"2000-01-01\"/>", typeof(FhirDateTime), "2000-01-01", null)]
     [DataRow("<given value =\" foo \"/>", typeof(FhirString), "foo", null)]
-    [TestMethod]
     public void TryDeserializePrimitives(string xmlPrimitive, Type expectedFhirType, object expectedValue,
         string error)
     {
@@ -76,7 +75,7 @@ public partial class FhirXmlDeserializationTests
         datatype.As<PrimitiveType>().JsonValue.Should().Be(expectedValue);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("<foo value =\"true\"/>", typeof(FhirBoolean), true, null, DisplayName = "XmlBool1")]
     [DataRow("<foo value =\"1\"/>", typeof(FhirBoolean), "1", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE,
         DisplayName = "XmlBool2")]

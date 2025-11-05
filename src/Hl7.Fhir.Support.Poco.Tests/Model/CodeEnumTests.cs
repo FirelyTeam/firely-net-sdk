@@ -48,11 +48,11 @@ public class CodeEnumTests
         Assert.IsNull(c.Value);
 
         c.JsonValue = "maleX";
-        Assert.ThrowsException<COVE>(() => c.Value);
+        Assert.Throws<COVE>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
         c.JsonValue = 314;
-        Assert.ThrowsException<COVE>(() => c.Value).Message.Should().Contain("integer 314 is not the right type of literal for a code.");
+        Assert.Throws<COVE>(() => c.Value).Message.Should().Contain("integer 314 is not the right type of literal for a code.");
         c.HasValidValue().Should().BeFalse();
     }
 

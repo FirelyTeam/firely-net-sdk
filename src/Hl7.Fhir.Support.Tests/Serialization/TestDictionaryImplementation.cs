@@ -150,7 +150,7 @@ public class TestDictionaryImplementation
         ps.TryGetValue("resource", out var r).Should().BeTrue();
 
         var resource = ps["resource"].Should().BeAssignableTo<Resource>().Subject;
-        Assert.ThrowsException<KeyNotFoundException>(() => resource["resourceType"]);
+        Assert.Throws<KeyNotFoundException>(() => resource["resourceType"]);
     }
 }
 

@@ -52,11 +52,11 @@ public class Base64Tests
         c.Value.Should().BeNull();
 
         c.JsonValue = "Hoi";
-        Assert.ThrowsException<CodedValidationException>(() => c.Value);
+        Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
         c.JsonValue = 314;
-        Assert.ThrowsException<CodedValidationException>(() => c.Value);
+        Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }
 }

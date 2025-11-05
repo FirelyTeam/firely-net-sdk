@@ -7,7 +7,7 @@
 
 	<PropertyGroup>
 		<ContainsTests>true</ContainsTests>
-		<NoWarn>1591, SDK0001, SDK0002</NoWarn>
+		<NoWarn>1591, SDK0001, SDK0002, MSTEST0001, MSTEST0017, MSTEST0023, MSTEST0025, MSTEST0030, MSTEST0032, MSTEST0037</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
@@ -23,7 +23,7 @@
 
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
 		<PackageReference Include="MSTest.TestFramework" Version="4.0.1" />
-		<PackageReference Include="MSTest.TestAdapter" Version="3.9.3" />
+		<PackageReference Include="MSTest.TestAdapter" Version="4.0.1" />
 		<PackageReference Include="xunit" Version="2.9.2" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -44,6 +44,6 @@
 		<AssemblyOriginatorKeyFile>..\FhirNetApi.publickey</AssemblyOriginatorKeyFile>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<!-- Missing XML comments -->
-		<NoWarn>1591, SDK0001, SDK0002</NoWarn>
+		<NoWarn>1591, SDK0001, SDK0002, MSTEST0001, MSTEST0017, MSTEST0023, MSTEST0025, MSTEST0030, MSTEST0032, MSTEST0037</NoWarn>
 	</PropertyGroup>
 </Project>

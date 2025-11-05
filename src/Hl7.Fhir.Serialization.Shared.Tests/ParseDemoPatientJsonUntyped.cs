@@ -185,11 +185,13 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException), "Expected an InvalidOperationException about resourceType is missing.")]
         public async Task CatchResourceTypeMissing()
         {
-            var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
-            _ = await FhirJsonNodeParse(json, null);
+            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
+                _ = await FhirJsonNodeParse(json, null);
+            });
         }
 
         [TestMethod]

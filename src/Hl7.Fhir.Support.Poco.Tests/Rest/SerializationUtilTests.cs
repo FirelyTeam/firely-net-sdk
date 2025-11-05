@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Tests.Rest
     public class SerializationUtilTests
     {
         [TestMethod]
-        [DynamicData(nameof(GetXmlData), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetXmlData))]
         public void IsXml(string xml, bool isXml, bool isFhirXml)
         {
             SerializationUtil.ProbeIsXml(xml).Should().Be(isXml);
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [DynamicData(nameof(GetJsonData), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(GetJsonData))]
         public void IsJson(string json, bool isJson, bool isFhirJson)
         {
             SerializationUtil.ProbeIsJson(json).Should().Be(isJson);

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("uri.extension", elem.Child("extension").Current.Path);
 
             // Try move to the special value member
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
+            Assert.Throws<StructureDefinitionWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
 
             // Move into a component
             elem = walker.Child("component");
@@ -76,10 +76,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // should not walk into value[x] when unconstrained to a single type
             elem = walker.Child("value");
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Child("system"));  // i.e. a Quantity
+            Assert.Throws<StructureDefinitionWalkerException>(() => elem.Child("system"));  // i.e. a Quantity
 
             // can't walk into an unknown child
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => walker.Child("ewout"));
+            Assert.Throws<StructureDefinitionWalkerException>(() => walker.Child("ewout"));
         }
 
         [TestMethod]

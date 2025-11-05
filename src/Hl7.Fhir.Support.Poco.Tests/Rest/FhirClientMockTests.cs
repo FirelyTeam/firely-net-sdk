@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
             patient!.ResourceBase.Should().Be(new Uri("https://example.com/fhir/"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, DisplayName = "Use FhirVersion in Accept header")]
         [DataRow(false, DisplayName = "Don't use FhirVersion in Accept header")]
         public async Task AcceptHeaderTest(bool useFhirVersionHeader)
@@ -166,8 +166,8 @@ namespace Hl7.Fhir.Core.Tests.Rest
             yield return new object?[] { "http://example.com/_history", "WholeSystemHistoryAsync", null };
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(GetData))]
         public void HistoryContainsNoSummaryParameter(string expectedRequest, string methodName, object? parameter)
         {
             Uri expectedRequestUri = new(expectedRequest);
@@ -204,25 +204,27 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FhirOperationException))]
         public async Task TestUnauthorizedWithANonFhirJsonBody()
         {
-            var response = new HttpResponseMessage
+            await Assert.ThrowsAsync<FhirOperationException>(async () =>
             {
-                StatusCode = HttpStatusCode.Unauthorized,
-                Content = new StringContent(@"{""foo"": ""bar"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient?name=henry")
-            };
+                var response = new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    Content = new StringContent(@"{""foo"": ""bar"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
+                    RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient?name=henry")
+                };
 
-            var authValue = AuthenticationHeaderValue.Parse("foo");
-            response.RequestMessage.Headers.Authorization = authValue;
+                var authValue = AuthenticationHeaderValue.Parse("foo");
+                response.RequestMessage.Headers.Authorization = authValue;
 
-            using var client = new SubstituteBuilder()
-                .Send(response, h => h.RequestUri == new Uri("http://example.com/Patient?name=henry"))
-                .AsClient();
-            client.RequestHeaders!.Authorization = authValue;
+                using var client = new SubstituteBuilder()
+                    .Send(response, h => h.RequestUri == new Uri("http://example.com/Patient?name=henry"))
+                    .AsClient();
+                client.RequestHeaders!.Authorization = authValue;
 
-            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+                var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+            });
         }
 
         [TestMethod]
