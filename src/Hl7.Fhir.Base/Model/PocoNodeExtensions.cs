@@ -298,7 +298,9 @@ public static class PocoNodeExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static PocoNode? FirstOrDefault<T>(this IEnumerable<PocoNode> node, Func<T, bool> predicate) where T : Base =>
-        node.FirstOrDefault(n => n.Poco is T t && predicate(t));
+        node is PocoListNode pln
+            ? pln.FirstOrDefault(predicate)
+            : node.FirstOrDefault(n => n.Poco is T t && predicate(t));
     
     /// <summary>
     /// Navigates to a child node or set of child nodes using a path. The path is a string that can contain dot-separated names and array indices, much like navigation in FhirPath.
