@@ -225,7 +225,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             var divExists = nav.Scalar("text.`div`.exists()");
 
-            Assert.AreEqual(true, divExists);
+            Assert.IsTrue((bool?)divExists);
         }
 
         [TestMethod]
@@ -237,10 +237,10 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
 
             var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
-            Assert.AreEqual(true, absolutueInvariantcheck);
+            Assert.IsTrue((bool?)absolutueInvariantcheck);
 
             var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
-            Assert.AreEqual(true, invariantcheck);
+            Assert.IsTrue((bool?)invariantcheck);
 
         }
 

@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             var errors = new List<string>();
             JsonAssert.AreSame("edgecases", expected, actual, errors);
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var prettyWS = pretty.Where(c => char.IsWhiteSpace(c)).Count();
 
             // much more whitespace, in fact...
-            Assert.IsTrue(prettyWS > compactWS * 2);
+            Assert.IsGreaterThan(compactWS * 2, prettyWS);
         }
 
         [TestMethod]

@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rs = fa.LoadBySummary(summary);
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
-            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
+            Assert.EndsWith("profiles-resources.xml", rs.GetOrigin());
 
             summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(summary);

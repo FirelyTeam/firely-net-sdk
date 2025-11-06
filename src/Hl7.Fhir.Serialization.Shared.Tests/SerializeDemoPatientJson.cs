@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", json, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -68,15 +68,15 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var nav = await getJsonElement(json);
             var output = nav.ToJson();
-            Assert.IsFalse(output[..20].Contains('\n'));
+            Assert.DoesNotContain('\n', output[..20]);
             var pretty = nav.ToJson(pretty: true);
-            Assert.IsTrue(pretty[..20].Contains('\n'));
+            Assert.Contains('\n', pretty[..20]);
 
             var p = FhirJsonDeserializer.OSTRICH.Deserialize<Patient>(json);
             output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
-            Assert.IsFalse(output[..20].Contains('\n'));
+            Assert.DoesNotContain('\n', output[..20]);
             pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);
-            Assert.IsTrue(pretty[..20].Contains('\n'));
+            Assert.Contains('\n', pretty[..20]);
         }
     }
 }

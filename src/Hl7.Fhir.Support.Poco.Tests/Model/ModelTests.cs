@@ -101,7 +101,7 @@ public class ModelTests
 
         ic.Expression = new string[] { "json", "xml" };
         Assert.IsNotNull(ic.ExpressionElement);
-        Assert.AreEqual(2, ic.ExpressionElement.Count);
+        Assert.HasCount(2, ic.ExpressionElement);
         Assert.AreEqual("json", ic.ExpressionElement.First().Value);
 
         ic.ExpressionElement = new List<FhirString>();
@@ -216,7 +216,7 @@ public class ModelTests
         var x = new List<Patient> { new(), new() };
 
         var y = new List<Patient>(x.DeepCopyInternal());
-        Assert.IsTrue(x[0] != null);
+        Assert.IsNotNull(x[0]);
         Assert.AreNotEqual(x[0], y[0]);
         Assert.AreNotEqual(x[1], y[1]);
     }
@@ -236,42 +236,42 @@ public class ModelTests
         IValue<string> sv = new FhirString("test");
         Assert.IsNotNull(sv);
         sv.Value = "string";
-        Assert.AreEqual(sv.Value, "string");
+        Assert.AreEqual("string", sv.Value);
 
         sv = new FhirUri("test");
         Assert.IsNotNull(sv);
         sv.Value = "http://example.org";
-        Assert.AreEqual(sv.Value, "http://example.org");
+        Assert.AreEqual("http://example.org", sv.Value);
 
         sv = new Uuid("test");
         Assert.IsNotNull(sv);
         sv.Value = "550e8400-e29b-41d4-a716-446655440000";
-        Assert.AreEqual(sv.Value, "550e8400-e29b-41d4-a716-446655440000");
+        Assert.AreEqual("550e8400-e29b-41d4-a716-446655440000", sv.Value);
 
         sv = new Oid("test");
         Assert.IsNotNull(sv);
         sv.Value = "2.16.840.1.113883";
-        Assert.AreEqual(sv.Value, "2.16.840.1.113883");
+        Assert.AreEqual("2.16.840.1.113883", sv.Value);
 
         sv = new Markdown("test");
         Assert.IsNotNull(sv);
         sv.Value = "Hello World!";
-        Assert.AreEqual(sv.Value, "Hello World!");
+        Assert.AreEqual("Hello World!", sv.Value);
 
         sv = new Date();
         Assert.IsNotNull(sv);
         sv.Value = "20161201";
-        Assert.AreEqual(sv.Value, "20161201");
+        Assert.AreEqual("20161201", sv.Value);
 
         sv = new Time();
         Assert.IsNotNull(sv);
         sv.Value = "23:59:00";
-        Assert.AreEqual(sv.Value, "23:59:00");
+        Assert.AreEqual("23:59:00", sv.Value);
 
         sv = new FhirDateTime(DateTimeOffset.UtcNow);
         Assert.IsNotNull(sv);
         sv.Value = "20161201 23:59:00";
-        Assert.AreEqual(sv.Value, "20161201 23:59:00");
+        Assert.AreEqual("20161201 23:59:00", sv.Value);
 
     }
 
@@ -282,17 +282,17 @@ public class ModelTests
         INullableValue<int> iv = new Integer(null);
         Assert.IsNotNull(iv);
         iv.Value = 12345;
-        Assert.AreEqual(iv.Value, 12345);
+        Assert.AreEqual(12345, iv.Value);
 
         iv = new UnsignedInt(0);
         Assert.IsNotNull(iv);
         iv.Value = 12345;
-        Assert.AreEqual(iv.Value, 12345);
+        Assert.AreEqual(12345, iv.Value);
 
         iv = new PositiveInt(1);
         Assert.IsNotNull(iv);
         iv.Value = 12345;
-        Assert.AreEqual(iv.Value, 12345);
+        Assert.AreEqual(12345, iv.Value);
     }
 
 

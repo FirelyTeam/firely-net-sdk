@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Serialization.Tests
             List<string> errors = [];
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, json, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var patient = SourceNode.Resource("Patient", "Patient", SourceNode.Valued("id", "pat1"));
             var jsonBare = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).ToJson();
-            Assert.IsTrue(jsonBare.Contains("pat1"));
+            Assert.Contains("pat1", jsonBare);
 
             patient.Add(SourceNode.Valued("unknownElement", "someValue"));
             var jsonUnknown = patient.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), settings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Ignore }).ToJson();
-            Assert.IsFalse(jsonUnknown.Contains("unknownElement"));
+            Assert.DoesNotContain("unknownElement", jsonUnknown);
         }
 
         [TestMethod]
@@ -111,13 +111,13 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = "{ 'resourceType' : 'Patient', 'maritalStatus' : 'UNK' }";
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
             var errors = navJson.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
+            Assert.Contains("it cannot have a value", errors.Single().Message);
 
             // then, use a simple value where an array (of a complex type) was expected
             tp = "{ 'resourceType' : 'Patient', 'name' : ['Ewout'] }";
             navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
             errors = navJson.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
+            Assert.Contains("it cannot have a value", errors.Single().Message);
         }
 
         [TestMethod]
@@ -127,13 +127,13 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = "{ 'resourceType' : 'Patient', 'identifier' :  { 'value': 'AB60001' }}";
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
             var errors = navJson.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("an array must be used here"));
+            Assert.Contains("an array must be used here", errors.Single().Message);
 
             // Use an array where a single value was expected
             tp = "{ 'resourceType' : 'Patient', 'active' : [true,false] }";
             navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
             errors = navJson.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("an array must not be used here"));
+            Assert.Contains("an array must not be used here", errors.Single().Message);
         }
 
         [TestMethod]
@@ -144,28 +144,28 @@ namespace Hl7.Fhir.Serialization.Tests
                  "'status': 'generated', " +
                  "'div': 'crap' } }", new FhirJsonParsingSettings { PermissiveParsing = true });
                 var errors = nav.VisitAndCatch();
-                Assert.AreEqual(0,errors.Count);
+                Assert.IsEmpty(errors);
 
                 // Total crap - now with validation
                 nav = await getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
                  "'status': 'generated', " +
                  "'div': 'crap' } }");
                 errors = nav.VisitAndCatch();
-                Assert.IsTrue(errors.Single().Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", errors.Single().Message);
 
                 // No xhtml namespace
                 nav = await getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
                  "'status': 'generated', " +
                  "'div': '<div><p>Donald</p></div>' } }");
                 errors = nav.VisitAndCatch();
-                Assert.IsTrue(errors.Single().Message.Contains("is not a <div> from the XHTML namespace"));
+                Assert.Contains("is not a <div> from the XHTML namespace", errors.Single().Message);
 
                 // Active content
                 nav = await getValidatingJsonNav("{ 'resourceType': 'Patient', 'text': {" +
                  "'status': 'generated', " +
                  "'div': '<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div>' } }");
                 errors = nav.VisitAndCatch();
-                Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
+                Assert.Contains("The 'onclick' attribute is not declared", errors.Single().Message);
 
                 async Task<ITypedElement> getValidatingJsonNav(string jsonText) =>
                     await getJsonNode(jsonText, new FhirJsonParsingSettings { ValidateFhirXhtml = true, PermissiveParsing = false });
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+                Assert.Contains("Invalid Json encountered", fe.Message);
             }
         }
 

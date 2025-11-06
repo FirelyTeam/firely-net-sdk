@@ -17,6 +17,7 @@ using System;
 
 namespace Hl7.Fhir.Tests.Model
 {
+    [TestClass]
     public partial class ModelTests
     {
         [TestMethod]
@@ -103,7 +104,6 @@ namespace Hl7.Fhir.Tests.Model
             try
             {
                 int hashCode = date.GetHashCode();
-                Assert.IsTrue(true, "GetHashCode completed without throwing an exception");
             }
             catch (NullReferenceException ex)
             {
@@ -133,8 +133,6 @@ namespace Hl7.Fhir.Tests.Model
                 int hashCode2 = dateTime.GetHashCode();
                 int hashCode3 = instant.GetHashCode();
                 int hashCode4 = time.GetHashCode();
-                
-                Assert.IsTrue(true, "All GetHashCode calls completed without throwing exceptions");
             }
             catch (NullReferenceException ex)
             {

@@ -14,8 +14,8 @@ namespace Hl7.Fhir.Serialization.Tests
             var testXml = File.ReadAllText(Path.Combine("TestData", "xml-with-different-elements.xml"));
             var sourceNode = FhirXmlNode.Parse(testXml);
 
-            Assert.AreEqual(sourceNode.Children("example1").First().Text, "TestValue1");
-            Assert.AreEqual(sourceNode.Children("example2").First().Text, "TestValue2");
+            Assert.AreEqual("TestValue1", sourceNode.Children("example1").First().Text);
+            Assert.AreEqual("TestValue2", sourceNode.Children("example2").First().Text);
         }
     }
 }

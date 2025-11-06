@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(sd.Snapshot.IsCreatedBySnapshotGenerator());
 
             var elems = sd.Snapshot.Element;
-            Assert.AreEqual(elemCnt, elems.Count);
+            Assert.HasCount(elemCnt, elems);
 
             void assert_ele1(ElementDefinition eld)
             {

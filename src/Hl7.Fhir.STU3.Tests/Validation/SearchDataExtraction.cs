@@ -95,8 +95,8 @@ public class ValidateSearchExtractionAllExamplesTest
             errorCount++;
         }
 
-        Assert.IsTrue(43 >= errorCount,
-            $"Failed Validating, missing data in {missingSearchValues.Length} of " +
+        Assert.IsGreaterThanOrEqualTo(errorCount,
+43, $"Failed Validating, missing data in {missingSearchValues.Length} of " +
             $"{exampleSearchValues.Count} search parameters");
         Assert.AreEqual(0, parserErrorCount,
             $"Failed search parameter data extraction, {parserErrorCount} files failed parsing");

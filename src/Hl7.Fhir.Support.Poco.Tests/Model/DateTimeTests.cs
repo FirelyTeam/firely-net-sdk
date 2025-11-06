@@ -24,8 +24,8 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("2010-01-01", dt.Value);
 
             FhirDateTime dt2 = new FhirDateTime(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
-            Assert.IsTrue(dt2.Value.StartsWith("1972-11-30T15:10"));
-            Assert.AreNotEqual(dt2.Value, "1972-11-30T15:10");
+            Assert.StartsWith("1972-11-30T15:10", dt2.Value);
+            Assert.AreNotEqual("1972-11-30T15:10", dt2.Value);
 
 
             FhirDateTime dtNoMs = new FhirDateTime("2014-12-11T00:00:00+11:00");
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Tests.Model
 
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
-            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
+            Assert.EndsWith("+00:00", dt.Value);
         }
 
         //Added for issue #1498
