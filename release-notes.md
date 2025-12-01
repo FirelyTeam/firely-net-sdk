@@ -1,4 +1,4 @@
 ## Intro:
 
-Added support for not trimming whitespace in serialization
-Made minor changes to the snapshot generator
+Fixed ValueSet serialization being not resistant to unknown elements.
+Improve cleaning up of extensions that should not be inherited during snapshot generation.
