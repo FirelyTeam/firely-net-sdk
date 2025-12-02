@@ -2,6 +2,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -42,7 +44,7 @@ public class CachingTerminologyService : ITerminologyService
 
     public Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
-        return parameters.GetParameterComponentHashCode() is { } hash
+        return parameters.GetParametersHashCode() is { } hash
             ? _cache.GetOrCreate<Task<Parameters>>(hash, entry =>
                 {
                     entry.SetOptions(_entryOptions);
@@ -53,7 +55,7 @@ public class CachingTerminologyService : ITerminologyService
 
     public Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
     {
-        return parameters.GetParameterComponentHashCode() is { } hash
+        return parameters.GetParametersHashCode() is { } hash
             ? _cache.GetOrCreate<Task<Parameters>>(hash, entry =>
                 {
                     entry.SetOptions(_entryOptions);
@@ -64,7 +66,7 @@ public class CachingTerminologyService : ITerminologyService
     
     public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
-        return parameters.GetParameterComponentHashCode() is { } hash
+        return parameters.GetParametersHashCode() is { } hash
             ? _cache.GetOrCreate<Task<Parameters>>(hash, entry =>
                 {
                     entry.SetOptions(_entryOptions);
@@ -75,7 +77,7 @@ public class CachingTerminologyService : ITerminologyService
 
     public Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
     {
-        return parameters.GetParameterComponentHashCode() is { } hash
+        return parameters.GetParametersHashCode() is { } hash
             ? _cache.GetOrCreate<Task<Resource>>(hash, entry =>
                 {
                     entry.SetOptions(_entryOptions);
@@ -86,7 +88,7 @@ public class CachingTerminologyService : ITerminologyService
     
     public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
     {
-        return parameters.GetParameterComponentHashCode() is { } hash
+        return parameters.GetParametersHashCode() is { } hash
             ? _cache.GetOrCreate<Task<Parameters>>(hash, entry =>
                 {
                     entry.SetOptions(_entryOptions);
@@ -97,7 +99,7 @@ public class CachingTerminologyService : ITerminologyService
     
     public Task<Resource> Closure(Parameters parameters, bool useGet = false)
     {
-        return parameters.GetParameterComponentHashCode() is { } hash 
+        return parameters.GetParametersHashCode() is { } hash 
             ? _cache.GetOrCreate<Task<Resource>>(hash, entry =>
                 {
                     entry.SetOptions(_entryOptions);
@@ -111,24 +113,73 @@ public class CachingTerminologyService : ITerminologyService
 internal static class ParametersExtensions
 {
     // returns null on resource parameters to avoid caching those. these are too complex for now.
-    public static int? GetParameterComponentHashCode(this Parameters parameters)
+    public static int? GetParametersHashCode(this Parameters parameters)
     {
         var hash = new HashCode();
         foreach (var parameter in parameters.Parameter)
         {
             hash.Add(parameter.Name);
             if (parameter.Value != null)
-                hash.Add(parameter.Value.GetHashCode());
+                hash.Add(getTerminologyValueHashCode(parameter.Value));
             if (parameter.Resource != null)
                 return null;
             foreach (var part in parameter.Part)
             {
-                hash.Add(part.Name);
-                if (part.Value != null)
-                    hash.Add(part.Value.GetHashCode());
-                if (part.Resource != null)
-                    return null;
+                hash.Add(getPartHashCode(part));
             }
+        }
+        return hash.ToHashCode();
+    }
+
+    private static int? getTerminologyValueHashCode(DataType parameterValue)
+    {
+        var hash = new HashCode();
+        switch (parameterValue)
+        {
+            case Canonical canonical:
+                hash.Add(canonical.Value);
+                break;
+            case Code code:
+                hash.Add(code.Value);
+                break;
+            case FhirBoolean boolean:
+                hash.Add(boolean.Value);
+                break;
+            case FhirString fhirString:
+                hash.Add(fhirString.Value);
+                break;
+            case FhirUri uri:
+                hash.Add(uri.Value);
+                break;
+            case Coding coding:
+                hash.Add(coding.System);
+                hash.Add(coding.Code);
+                hash.Add(coding.Display);
+                break;
+            case CodeableConcept concept:
+                foreach (var coding in concept.Coding)
+                {
+                    hash.Add(coding.System);
+                    hash.Add(coding.Code);
+                    hash.Add(coding.Display);
+                }
+                break;
+            case FhirDateTime dt:
+                hash.Add(dt.Value);
+                break;
+            default:
+                return null;
+        }
+        
+        return hash.ToHashCode();
+    }
+
+    private static int? getPartHashCode(this Parameters.ParameterComponent part)
+    {
+        var hash = new HashCode();
+        foreach (var subpart in part.Part)
+        {
+            hash.Add(getPartHashCode(subpart));
         }
         return hash.ToHashCode();
     }

@@ -1,8 +1,11 @@
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests;
@@ -113,4 +116,27 @@ public class CachingTerminologyServiceTests
         // Assert - Should call underlying service twice for different parameters
         await _mockService.Received(2).ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Any<string>(), Arg.Any<bool>());
     }
+    
+    [TestMethod]
+    public async Task Translate_WhenServiceThrowsException_DoesNotCacheException()
+    {
+        // Arrange
+        var exception = new FhirOperationException("Service error", HttpStatusCode.InternalServerError);
+        _mockService.Translate(_testParameters, Arg.Any<string>(), Arg.Any<bool>())
+            .Returns(Task.FromException<Parameters>(exception));
+    
+        // Act & Assert - First call should throw
+        var firstException = await Assert.ThrowsAsync<FhirOperationException>(
+            () => _cachingService.Translate(_testParameters, "id1", false));
+        Assert.AreEqual("Service error", firstException.Message);
+    
+        // Act & Assert - Second call should also throw (exception not cached)
+        var secondException = await Assert.ThrowsAsync<FhirOperationException>(
+            () => _cachingService.Translate(_testParameters, "id2", true));
+        Assert.AreEqual("Service error", secondException.Message);
+    
+        // Assert - Service should be called twice since exceptions aren't cached
+        await _mockService.Received(2).Translate(_testParameters, Arg.Any<string>(), Arg.Any<bool>());
+    }
+    
 }
