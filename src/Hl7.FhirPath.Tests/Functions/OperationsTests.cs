@@ -206,8 +206,8 @@ namespace HL7.FhirPath.Tests
                 ;
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(AllFunctionTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(AllFunctionTestcases))]
         public void AssertTestcases(string expression, bool? expected, bool invalid = false)
         {
             ITypedElement dummy = ElementNode.ForPrimitive(true);

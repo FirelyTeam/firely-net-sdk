@@ -29,7 +29,7 @@ public class TransactionBuilderTests
             .Read("Patient", "9", versionId: "bla")
             .ToBundle();
 
-        Assert.AreEqual(4, b.Entry.Count);
+        Assert.HasCount(4, b.Entry);
 
         Assert.AreEqual(Bundle.HTTPVerb.POST, b.Entry[0].Request.Method);
         Assert.AreEqual(p, b.Entry[0].Resource);
@@ -101,7 +101,7 @@ public class TransactionBuilderTests
             .Transaction(bundle);
 
         var b = tx.ToBundle();
-        Assert.IsFalse(b.Entry[0].Request.Url.EndsWith(@"/"), "Url cannot end with forward slash");
+        Assert.DoesNotEndWith(@"/", b.Entry[0].Request.Url, "Url cannot end with forward slash");
     }
 
     [TestMethod]
@@ -116,8 +116,8 @@ public class TransactionBuilderTests
         var bundle = transaction.ToBundle();
         bundle.Type = Bundle.BundleType.Transaction;
 
-        Assert.AreEqual(2, bundle.Entry.Count);
-        Assert.IsFalse(bundle.Entry[0].Request.Url.StartsWith(endpoint), "Entries in the transaction bundle cannot contain absolute url.");
+        Assert.HasCount(2, bundle.Entry);
+        Assert.DoesNotStartWith(endpoint, bundle.Entry[0].Request.Url, "Entries in the transaction bundle cannot contain absolute url.");
         Assert.AreEqual("Patient", bundle.Entry[0].Request.Url, "Entry must be a relative url");
     }
 

@@ -193,7 +193,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("entry.first().resource.contained", "contained-1", "patient-1")]
         [DataRow("entry.first().resource.contained.id", "contained-1", "patient-1")]
         [DataRow("entry.first().resource.id", "patient-1", "patient-1")]
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             var divExists = nav.Scalar("text.`div`.exists()");
 
-            Assert.AreEqual(true, divExists);
+            Assert.IsTrue((bool?)divExists);
         }
 
         [TestMethod]
@@ -237,10 +237,10 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
 
             var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
-            Assert.AreEqual(true, absolutueInvariantcheck);
+            Assert.IsTrue((bool?)absolutueInvariantcheck);
 
             var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
-            Assert.AreEqual(true, invariantcheck);
+            Assert.IsTrue((bool?)invariantcheck);
 
         }
 
@@ -256,8 +256,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                    (FhirDateTime.Now(), "dateTime"),
                }.Select(t => new object[] { t.input, t.castToDataType });
 
-        [DataTestMethod]
-        [DynamicData(nameof(CastAsDataTypeTestCases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(CastAsDataTypeTestCases))]
         public void AssertCastAs(PrimitiveType input, string castToDataType)
         {
             var observation = new Observation { Value = input };
@@ -327,8 +327,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.IsTrue(result.Any());
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(MemberOfTestData), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(MemberOfTestData))]
         public void MemberOfTests(Base poco, string expression, bool? expectedResult)
         {
             var context = new FhirEvaluationContext { TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource()) };

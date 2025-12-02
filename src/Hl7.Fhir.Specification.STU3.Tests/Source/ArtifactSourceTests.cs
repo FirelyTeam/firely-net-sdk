@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var secondRun = sw.ElapsedMilliseconds;
 
-            Assert.IsTrue(firstRun > secondRun);
+            Assert.IsGreaterThan(secondRun, firstRun);
 
             fa = new ZipCacher(zipFile, cacheDir);
 
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Specification.Tests
             sw.Stop();
 
             var thirdRun = sw.ElapsedMilliseconds;
-            Assert.IsTrue(thirdRun < firstRun);
+            Assert.IsLessThan(firstRun, thirdRun);
 
             fa.Clear();
             Assert.IsFalse(fa.IsActual());
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Tests
             sw.Stop();
 
             var fourthRun = sw.ElapsedMilliseconds;
-            Assert.IsTrue(fourthRun > secondRun);
+            Assert.IsGreaterThan(secondRun, fourthRun);
 
             // Something fishy going on here.
             // if I do not wait before the statement File.SetLastWriteTimeUtc fa.IsActual returns true
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
-            Assert.AreEqual(1, errors.Count);
+            Assert.HasCount(1, errors);
             var error = errors[0];
             Debug.Print($"Error in file '{error.Origin}': {error.Error.Message}");
             Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
@@ -260,12 +260,12 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var artifacts = za.ListArtifactNames().ToArray();
-            Assert.AreEqual(1, artifacts.Length);
+            Assert.HasCount(1, artifacts);
             Assert.AreEqual("profiles-types.xml", artifacts[0]);
 
             var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
-            Assert.IsTrue(resourceIds.Count > 0);
+            Assert.IsNotEmpty(resourceIds);
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/MoneyQuantity");
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
             // Boths arrays should contains same urls, possibly in different order
-            Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
+            Assert.HasCount(coreTypeUris.Length, resourceIds);
             Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
             Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
         }
@@ -387,8 +387,8 @@ namespace Hl7.Fhir.Specification.Tests
 
                         // Materialize the sequence
                         var urlList = profileUrls.ToList();
-                        Assert.IsFalse(urlList.Contains(profileUrl1));
-                        Assert.IsTrue(urlList.Contains(profileUrl2));
+                        Assert.DoesNotContain(profileUrl1, urlList);
+                        Assert.Contains(profileUrl2, urlList);
                     }
                     // API *should* grafecully handle security exceptions
                     catch (UnauthorizedAccessException ex)

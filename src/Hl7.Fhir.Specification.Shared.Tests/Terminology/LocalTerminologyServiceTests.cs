@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Specification.Tests
             )
         );
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", "context", null, "AdministrativeGender")]
         [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", null, "theSystem", "AdministrativeGender")]
         [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", "context", null, "Common UCUM Codes for Age")]
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .Should().BeTrue();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "not-human", "http://hl7.org/fhir/ValueSet/account-type", "Not existing code for gender")]
         [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "not-human", "http://example.com/an-exotic-valuset", "Not existing code for gender")]
         public async Task CodingWithValuesetAsSystem(string valueset, string code, string system, string display)

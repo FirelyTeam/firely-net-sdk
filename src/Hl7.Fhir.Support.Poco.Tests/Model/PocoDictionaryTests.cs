@@ -46,13 +46,13 @@ public class PocoDictionaryTests
         var pat = new Patient();
 
         // setting an existing property to a non-Base type should fail.
-        Assert.ThrowsException<ArgumentException>(() => pat["name"] = "John");
+        Assert.Throws<ArgumentException>(() => pat["name"] = "John");
 
         // Setting it correctly should work
         pat["name"] = new List<HumanName> { new HumanName().WithGiven("John") };
 
         // Adding a non-existing property should work
-        Assert.ThrowsException<ArgumentException>(() => pat["weight"] = 80.0m);
+        Assert.Throws<ArgumentException>(() => pat["weight"] = 80.0m);
         pat["weight"] = new FhirDecimal(80.0m);
 
         pat["name"].Should().BeOfType<List<HumanName>>();

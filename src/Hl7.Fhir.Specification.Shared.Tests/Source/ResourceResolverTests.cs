@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dirSource = new DirectorySource(Path.Combine("TestData", "validation"));
             extDefn = dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0").Value;
 
-            Assert.ThrowsException<ArgumentException>(() => dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|").Value);
+            Assert.Throws<ArgumentException>(() => dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|").Value);
         }
 
         [TestMethod]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var artifact = wa.ResolveByUri("http://vonk.fire.ly/StructureDefinition/Patient");
 
                     Assert.IsNotNull(client);
-                    Assert.AreEqual(client.Status, 3);
+                    Assert.AreEqual(3, client.Status);
 
                     Assert.IsNotNull(artifact);
                     Assert.IsTrue(artifact is StructureDefinition);
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Specification.Tests
             fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
             sw2.Stop();
 
-            Assert.IsTrue(sw2.ElapsedMilliseconds < sw.ElapsedMilliseconds);
+            Assert.IsLessThan(sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds);
             Debug.WriteLine(String.Format("First time {0}, second time {1}", sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds));
         }
 
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Debug.WriteLine("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
                 Assert.IsNotNull(ex.Conflicts);
-                Assert.AreEqual(1, ex.Conflicts.Length);
+                Assert.HasCount(1, ex.Conflicts);
                 var conflict = ex.Conflicts[0];
                 Assert.AreEqual(url, conflict.Identifier);
                 Assert.IsTrue(conflict.Origins.Contains(filePath));
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Specification.Tests
             var partialResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.5");
             Assert.IsNotNull(partialResult, "Partial version matching should return a result");
             var partialSd = (StructureDefinition)partialResult;
-            Assert.IsTrue(partialSd.Version.StartsWith("1.5"), $"Expected version starting with '1.5', but got '{partialSd.Version}'");
+            Assert.StartsWith("1.5", partialSd.Version, $"Expected version starting with '1.5', but got '{partialSd.Version}'");
 
             // Act & Assert - Test that wrong partial version returns null
             var wrongResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.4");

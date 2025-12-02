@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
             var familyNames = summary.GetValueOrDefault<IReadOnlyList<string>>(PatientFamilyNameKey);
             Assert.IsNotNull(familyNames);
-            Assert.AreEqual(1, familyNames.Count);
+            Assert.HasCount(1, familyNames);
             Assert.IsTrue(expectedNames.SequenceEqual(familyNames));
         }
 
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Common properties
             Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceTypeName);
-            Assert.IsTrue(summary.ResourceTypeName == ResourceType.ValueSet.GetLiteral());
+            Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceTypeName);
 
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Common properties
             Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
-            Assert.IsTrue(summary.ResourceTypeName == ResourceType.StructureDefinition.GetLiteral());
+            Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
@@ -144,11 +144,11 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
 
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
-                Assert.IsTrue(summary.ResourceTypeName == ResourceType.StructureDefinition.GetLiteral());
+                Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
 
                 // Conformance resource properties
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
-                Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
+                Assert.StartsWith("http://hl7.org/fhir/StructureDefinition/", summary.GetConformanceCanonicalUrl().ToString());
                 var name = summary.GetConformanceName();
                 Assert.IsNotNull(name);
                 Assert.IsNotNull(summary.GetPublicationStatus());
@@ -219,11 +219,11 @@ namespace Hl7.Fhir.Specification.Tests
 
                 if (StringComparer.Ordinal.Equals(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName))
                 {
-                    Assert.IsTrue(summary.ResourceTypeName == ResourceType.StructureDefinition.GetLiteral());
+                    Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
 
                     // Conformance resource properties
                     Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
-                    Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
+                    Assert.StartsWith("http://hl7.org/fhir/StructureDefinition/", summary.GetConformanceCanonicalUrl().ToString());
                     var name = summary.GetConformanceName();
                     Assert.IsNotNull(name);
                     Assert.IsNotNull(summary.GetPublicationStatus());
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Specification.Tests
             path = Path.GetFullPath(path);
             var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path, harvesters);
             Assert.IsNotNull(summaries);
-            Assert.AreEqual(1, summaries.Count);
+            Assert.HasCount(1, summaries);
             var summary = summaries[0];
             Assert.IsFalse(summary.IsFaulted);
             Assert.AreEqual(path, summary.Origin);
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify invalid files in folder 'grahame-validation-examples' are excluded
             var errors = dirSource.ListSummaryErrors().ToList();
-            Assert.AreEqual(0, errors.Count);
+            Assert.IsEmpty(errors);
         }
 
         // [WMR 20190305] Belongs to pull request #890
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Console.WriteLine(Path.GetFileName(summary.Origin) + (summary.IsFaulted ? " - " + summary.Error?.Message : ""));
             }
-            Assert.IsTrue(!UnknownArtefacts.Any());
+            Assert.IsFalse(UnknownArtefacts.Any());
 
             // Expecting to find some artifacts w/o ResourceId
             var AnonymousArtefacts = summaries.Where(s => s.ResourceUri is null);
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true)]
         [DataRow(false)]
         public void TestIsConformanceSummary(bool typeNameFound)

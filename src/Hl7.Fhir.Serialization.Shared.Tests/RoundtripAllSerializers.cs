@@ -92,27 +92,27 @@ public class RoundtripAllSerializers
     private const string XML_EXAMPLE_ZIP_NAME = "examples.zip";
     private const string JSON_EXAMPLE_ZIP_NAME = "examples-json.zip";
         
-    [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
+    [DynamicData(nameof(prepareExampleZipFiles),
         DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-    [DataTestMethod]
+    [TestMethod]
     [TestCategory("LongRunner")]
     public void FullRoundtripOfAllExamplesNewPocoSerializer(ZipArchiveEntry entry)
     {
         doRoundTrip(entry, NEW_POCO_ROUNDTRIPPER);
     }
 
-    [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
+    [DynamicData(nameof(prepareExampleZipFiles),
         DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-    [DataTestMethod]
+    [TestMethod]
     [TestCategory("LongRunner")]
     public void FullRoundtripOfAllExamplesPocoSdProvTypedElementSerializer(ZipArchiveEntry entry)
     {
         doRoundTrip(entry, TYPEDELEM_POCOSDPROV);
     }
 
-    [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
+    [DynamicData(nameof(prepareExampleZipFiles),
         DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-    [DataTestMethod]
+    [TestMethod]
     [TestCategory("LongRunner")]
     public void FullRoundtripOfAllExamplesSdProvTypedElementSerializer(ZipArchiveEntry entry)
     {
@@ -189,7 +189,7 @@ public class RoundtripAllSerializers
         if(result is not null)
             compare(input, result, name, errors);
 
-        Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+        Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
     }
 
     private static ZipArchive openTestZip(string filename)
@@ -234,9 +234,9 @@ public class RoundtripAllSerializers
         }
     }
         
-    [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
+    [DynamicData(nameof(prepareExampleZipFiles),
         DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-    [DataTestMethod]
+    [TestMethod]
     [TestCategory("LongRunner")]
     public void TestMatchAndExactly(ZipArchiveEntry entry)
     {

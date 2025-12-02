@@ -498,8 +498,8 @@ namespace HL7.FhirPath.Tests
                 ;
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(AllFunctionTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(AllFunctionTestcases))]
         public void AssertTestcases(string expression, bool expected, bool invalid = false)
         {
             PocoNode dummy = PocoNode.ForPrimitive<FhirBoolean>(true);
@@ -549,7 +549,7 @@ namespace HL7.FhirPath.Tests
             var expression = new FhirPathCompiler(symbols).Compile("once()");
             var result = expression.Scalar(null!, new EvaluationContext());
 
-            Assert.AreEqual(result, 1);
+            Assert.AreEqual(1, result);
         }
 
         /// <summary>
@@ -595,8 +595,8 @@ namespace HL7.FhirPath.Tests
 
         public static IEnumerable<object[]> EmptyValueTestcases() => EmptyStringValueTestcases().Union(EmptyDecimalValueTestcases());
 
-        [DataTestMethod]
-        [DynamicData(nameof(EmptyValueTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(EmptyValueTestcases))]
         public void AssertEmptyValueTestcases(string expression, Type data)
         {
             // Create a primitive with no value, just an extension

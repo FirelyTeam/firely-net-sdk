@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual("deceasedBoolean", db.Name);
             Assert.AreEqual("true", db.Text);
             var details = (db as IAnnotated).Annotation<JsonSerializationDetails>();
-            Assert.AreEqual(true, details.OriginalValue);
+            Assert.IsTrue((bool?)details.OriginalValue);
 
             Assert.AreEqual("3", patient.Children("multipleBirthInteger").Single().Text);
 
@@ -185,11 +185,13 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException), "Expected an InvalidOperationException about resourceType is missing.")]
         public async Task CatchResourceTypeMissing()
         {
-            var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
-            _ = await FhirJsonNodeParse(json, null);
+            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
+                _ = await FhirJsonNodeParse(json, null);
+            });
         }
 
         [TestMethod]
@@ -238,7 +240,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+                Assert.Contains("Invalid Json encountered", fe.Message);
             }
         }
     }

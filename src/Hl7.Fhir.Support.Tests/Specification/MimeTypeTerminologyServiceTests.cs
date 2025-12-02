@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         [DataRow(MIMETYPE_VERSIONED_VS)]
         [DataRow(MIMETYPE_VS_STU3)]
-        [DataTestMethod]
+        [TestMethod]
         public async Task MimeTypeValidationAlternativeValueSet(string valueset)
         {
             var parameters = new ValidateCodeParameters()

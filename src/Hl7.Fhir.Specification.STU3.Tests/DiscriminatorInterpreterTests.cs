@@ -49,10 +49,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // should not walk into value[x] when unconstrained to a single type
             elem = walker.Child("value");
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Walk("system").First());  // i.e. a Quantity
+            Assert.Throws<StructureDefinitionWalkerException>(() => elem.Walk("system").First());  // i.e. a Quantity
 
             // can't walk into an unknown child
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => walker.Walk("ewout").First());
+            Assert.Throws<StructureDefinitionWalkerException>(() => walker.Walk("ewout").First());
         }
 
         [TestMethod]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             void eval(string expr)
             {
-                Assert.ThrowsException<DiscriminatorFormatException>(() => schemas.Walk(expr));
+                Assert.Throws<DiscriminatorFormatException>(() => schemas.Walk(expr));
             }
         }
 

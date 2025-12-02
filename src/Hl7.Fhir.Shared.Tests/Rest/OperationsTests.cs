@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Tests.Rest
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var result = await client.ValidateCodeAsync("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
-            Assert.IsTrue(result.Result?.Value == true);
+            Assert.IsTrue(result.Result?.Value);
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var result = await client.ValidateCodeAsync(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"),
                   coding: coding, @abstract: new FhirBoolean(false));
-            Assert.IsTrue(result.Result?.Value == true);
+            Assert.IsTrue(result.Result?.Value);
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(vs);
 
             var result = await client.ValidateCodeAsync(valueSet: vs, coding: coding);
-            Assert.IsTrue(result.Result?.Value == true);
+            Assert.IsTrue(result.Result?.Value);
         }
 
         [TestMethod]

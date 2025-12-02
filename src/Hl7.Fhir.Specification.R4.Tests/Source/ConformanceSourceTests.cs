@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
-            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+            Assert.EndsWith("v2-tables.xml", vs.GetOrigin());
 
             vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
-            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
+            Assert.EndsWith("profiles-resources.xml", rs.GetOrigin());
 
             rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(rs);

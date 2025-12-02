@@ -39,8 +39,8 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (StructuralTypeException ste)
             {
                 Debug.WriteLine(ste.Message);
-                Assert.IsTrue(ste.Message.Contains("daytona"));
-                Assert.IsFalse(ste.Message.Contains("ox"));
+                Assert.Contains("daytona", ste.Message);
+                Assert.DoesNotContain("ox", ste.Message);
             }
 
             parser.Settings = parser.Settings with { AcceptUnknownMembers = true };
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("expected the HL7 FHIR namespace"));
+                Assert.Contains("expected the HL7 FHIR namespace", fe.Message);
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("which is not allowed"));
+                Assert.Contains("which is not allowed", fe.Message);
             }
         }
 
@@ -159,10 +159,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var basic = FhirXmlDeserializer.Deserialize<DomainResource>(xml);
 
-            Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
+            Assert.Contains("\n", basic.GetStringExtension("http://blabla.nl"));
 
             var outp = FhirXmlSerializer.SerializeToString(basic);
-            Assert.IsTrue(outp.Contains("&#xA;"));
+            Assert.Contains("&#xA;", outp);
         }
 
         // Test legacy behaviour
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Now, allow unknown enums and check support
             pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
             p = pser.Deserialize<Patient>(xml2);
-            Assert.ThrowsException<CodedValidationException>(() => p.Gender);
+            Assert.Throws<CodedValidationException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.JsonValue);
         }
 
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Tests.Serialization
             List<string> errors = [];
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
             Console.WriteLine(String.Join("\r\n", errors));
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
         }
 
         [TestMethod]
@@ -287,12 +287,12 @@ namespace Hl7.Fhir.Tests.Serialization
             o.ResourceBase = new Uri("http://nu.nl/fhir");
 
             var xml = FhirXmlSerializer.SerializeToString(o);
-            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+            Assert.Contains("value=\"#jaap\"", xml);
 
             var o2 = FhirXmlDeserializer.Deserialize<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirXmlSerializer.SerializeToString(o2);
-            Assert.IsTrue(xml.Contains("value=\"#jaap\""));
+            Assert.Contains("value=\"#jaap\"", xml);
         }
 
 
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var parsedPatient = resource as Patient;
 
-            Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
+            Assert.HasCount(patient.Identifier.Count, parsedPatient.Identifier);
             for (var i = 0; i < patient.Identifier.Count; i++)
             {
                 Assert.AreEqual(patient.Identifier[i].System, parsedPatient.Identifier[i].System);
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(patient);
             parsedPatient = FhirXmlDeserializer.Deserialize<Patient>(xml);
 
-            Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
+            Assert.HasCount(patient.Identifier.Count, parsedPatient.Identifier);
             for (var i = 0; i < patient.Identifier.Count; i++)
             {
                 Assert.AreEqual(patient.Identifier[i].System, parsedPatient.Identifier[i].System);
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", fe.Message);
             }
         }
 

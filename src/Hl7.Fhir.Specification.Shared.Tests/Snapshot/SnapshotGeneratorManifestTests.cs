@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Specification.Tests
             var input = Load(inputFilePath);
             Assert.IsNotNull(input);
             var elems = input.Differential.Element;
-            Assert.AreEqual(5, elems.Count);
+            Assert.HasCount(5, elems);
             if (elems[3].Path == "Patient.contact.gender" && elems[4].Path == "Patient.contact.telecom")
             {
                 Swap(elems, 3, 4);
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20190814] Insert missing test rule for t24a (inherited by t24b)
             var testList = manifest.Test.ToList();
             var idx = testList.FindIndex(t => t.Id == "t24b");
-            Assert.IsTrue(idx >= 0);
+            Assert.IsGreaterThanOrEqualTo(0, idx);
             testList.Insert(idx, new SnapshotGenerationManifestTest()
             {
                 Id = "t24a"
