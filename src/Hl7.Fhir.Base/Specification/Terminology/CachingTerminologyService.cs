@@ -118,15 +118,10 @@ internal static class ParametersExtensions
         var hash = new HashCode();
         foreach (var parameter in parameters.Parameter)
         {
-            hash.Add(parameter.Name);
-            if (parameter.Value != null)
-                hash.Add(getTerminologyValueHashCode(parameter.Value));
-            if (parameter.Resource != null)
+            if (parameter.getPartHashCode() is { } hashPart)
+                hash.Add(hashPart);
+            else
                 return null;
-            foreach (var part in parameter.Part)
-            {
-                hash.Add(getPartHashCode(part));
-            }
         }
         return hash.ToHashCode();
     }
@@ -141,7 +136,10 @@ internal static class ParametersExtensions
             return null;
         foreach (var subpart in part.Part)
         {
-            hash.Add(getPartHashCode(subpart));
+            if(subpart.getPartHashCode() is { } subpartHash)
+                hash.Add(subpartHash);
+            else
+                return null;
         }
         return hash.ToHashCode();
     }
@@ -168,13 +166,16 @@ internal static class ParametersExtensions
                 break;
             case Coding coding:
                 hash.Add(coding.System);
+                hash.Add(coding.Version);
                 hash.Add(coding.Code);
                 hash.Add(coding.Display);
                 break;
             case CodeableConcept concept:
+                hash.Add(concept.Text);
                 foreach (var coding in concept.Coding)
                 {
                     hash.Add(coding.System);
+                    hash.Add(coding.Version);
                     hash.Add(coding.Code);
                     hash.Add(coding.Display);
                 }
