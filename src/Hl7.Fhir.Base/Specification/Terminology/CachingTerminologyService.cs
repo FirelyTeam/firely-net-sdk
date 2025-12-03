@@ -130,6 +130,21 @@ internal static class ParametersExtensions
         }
         return hash.ToHashCode();
     }
+    
+    private static int? getPartHashCode(this Parameters.ParameterComponent part)
+    {
+        var hash = new HashCode();
+        hash.Add(part.Name);
+        if(part.Value != null)
+            hash.Add(getTerminologyValueHashCode(part.Value));
+        if(part.Resource != null)
+            return null;
+        foreach (var subpart in part.Part)
+        {
+            hash.Add(getPartHashCode(subpart));
+        }
+        return hash.ToHashCode();
+    }
 
     private static int? getTerminologyValueHashCode(DataType parameterValue)
     {
@@ -171,16 +186,6 @@ internal static class ParametersExtensions
                 return null;
         }
         
-        return hash.ToHashCode();
-    }
-
-    private static int? getPartHashCode(this Parameters.ParameterComponent part)
-    {
-        var hash = new HashCode();
-        foreach (var subpart in part.Part)
-        {
-            hash.Add(getPartHashCode(subpart));
-        }
         return hash.ToHashCode();
     }
 }
