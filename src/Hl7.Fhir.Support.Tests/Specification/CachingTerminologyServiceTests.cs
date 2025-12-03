@@ -130,13 +130,13 @@ public class CachingTerminologyServiceTests
             () => _cachingService.Translate(_testParameters, "id1", false));
         Assert.AreEqual("Service error", firstException.Message);
     
-        // Act & Assert - Second call should also throw (exception not cached)
+        // Act & Assert - Second call should also throw (exception cached)
         var secondException = await Assert.ThrowsAsync<FhirOperationException>(
             () => _cachingService.Translate(_testParameters, "id2", true));
         Assert.AreEqual("Service error", secondException.Message);
     
-        // Assert - Service should be called twice since exceptions aren't cached
-        await _mockService.Received(2).Translate(_testParameters, Arg.Any<string>(), Arg.Any<bool>());
+        // Assert - Service should be called once since exceptions are cached
+        await _mockService.Received(1).Translate(_testParameters, Arg.Any<string>(), Arg.Any<bool>());
     }
     
 }
