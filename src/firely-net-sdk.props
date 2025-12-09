@@ -36,8 +36,8 @@
 		<LangVersion>13.0</LangVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
-	<!--	<EnablePackageValidation>true</EnablePackageValidation>
-		<PackageValidationBaselineVersion>6.0.0-alpha1</PackageValidationBaselineVersion> -->
+		<EnablePackageValidation>true</EnablePackageValidation>
+		<PackageValidationBaselineVersion>6.0.1</PackageValidationBaselineVersion> 
 		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed.
 		Consider applying the 'await' operator to the result of the call.	-->
 		<WarningsAsErrors>CS4014</WarningsAsErrors>
