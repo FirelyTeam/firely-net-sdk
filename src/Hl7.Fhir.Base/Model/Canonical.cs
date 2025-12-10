@@ -152,8 +152,7 @@ public partial class Canonical
     /// <summary>
     /// Whether the canonical is a relative or an absolute uri.
     /// </summary>
-    public bool IsAbsolute => ToUri().IsAbsoluteUri;
-
+    public bool IsAbsolute => Uri is not null && new Uri(this.Uri, UriKind.RelativeOrAbsolute).IsAbsoluteUri;
     /// <summary>
     /// Whether the canonical has a version part.
     /// </summary>
