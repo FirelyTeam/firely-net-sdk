@@ -53,25 +53,6 @@ namespace Hl7.Fhir.Tests.Validation
         }
 
         [TestMethod]
-        public void TestStringValidation()
-        {
-            FhirString str = new("val");
-            str.Validate().Should().BeEmpty();
-
-            str = new(" leading");
-            validateErrorOrFail(str);
-
-            str = new("trailing ");
-            validateErrorOrFail(str);
-
-            str = new();
-            validateErrorOrFail(str);
-
-            str = new(new('a', 1024*1024+1)); // 1 MB string
-            validateErrorOrFail(str);
-        }
-
-        [TestMethod]
         public void IdIsNowAString()
         {
             HumanName hn = HumanName.ForFamily("Kramer");

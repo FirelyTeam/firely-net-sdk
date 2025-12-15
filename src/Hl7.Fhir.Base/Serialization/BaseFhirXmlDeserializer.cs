@@ -455,7 +455,12 @@ public class BaseFhirXmlDeserializer
 
         // "Implementers SHOULD trim leading and trailing whitespace before writing and SHOULD trim leading and
         // trailing whitespace when reading attribute values (for XML schema conformance)"
-        string trimmedValue = reader.Value.Trim();
+        var originalValue = reader.Value;
+        string trimmedValue = originalValue.Trim();
+        if (originalValue != trimmedValue)
+        {
+            state.Errors.Add(ERR.STRING_SHOULD_NOT_HAVE_LEADING_TRAILING_WHITESPACE(reader, state.Path.GetInstancePath(), attributeName));
+        }
 
         var parsedValue = parsePrimitiveValue(trimmedValue, propMapping.ImplementingType);
 

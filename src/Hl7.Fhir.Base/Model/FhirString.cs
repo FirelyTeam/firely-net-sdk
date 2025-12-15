@@ -55,15 +55,7 @@ public partial class FhirString : ICoded
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
-    public static bool IsValidValue(string value) => value.Length is <= 1024 * 1024 and > 0 && !isTrimmable(value);    // Note that strings SHALL NOT exceed 1MB in size.
-
-    private static bool isTrimmable(string value)
-    {
-        if (value.Length == 0)
-            return false;
-        
-        return char.IsWhiteSpace(value[0]) || char.IsWhiteSpace(value[^1]);
-    }
+    public static bool IsValidValue(string value) => value.Length is <= 1024 * 1024 and > 0;    // Note that strings SHALL NOT exceed 1MB in size.
         
     // We do not match against the pattern since that is more expensive
 
