@@ -60,19 +60,20 @@ public partial class FhirXmlDeserializationTests
     [DataRow("<active value =\"true\"/>", typeof(FhirBoolean), true, null)]
     [DataRow("<multipleBirthInteger value =\"1\"/>", typeof(Integer), 1, null)]
     [DataRow("<Birthdate value =\"2000-01-01\"/>", typeof(FhirDateTime), "2000-01-01", null)]
-    [DataRow("<given value =\" foo \"/>", typeof(FhirString), "foo", null)]
-    public void TryDeserializePrimitives(string xmlPrimitive, Type expectedFhirType, object expectedValue,
-        string error)
+    [DataRow("<given value =\" foo \"/>", typeof(FhirString), "foo", ERR.STRING_SHOULD_NOT_HAVE_LEADING_OR_TRAILING_WHITESPACE)]
+    public void TryDeserializePrimitives(string xmlPrimitive, Type expectedFhirType, object expectedValue, string error)
     {
         var reader = constructReader(xmlPrimitive);
         reader.Read();
 
         var deserializer = getTestDeserializer(
             new DeserializerSettings().Ignoring([ERR.EMPTY_ELEMENT_NAMESPACE_CODE]));
-        var datatype = deserializer.DeserializeElement(expectedFhirType, reader);
+        deserializer.TryDeserializeElement(expectedFhirType, reader, out var datatype, out var errors);
 
         datatype.Should().BeOfType(expectedFhirType);
         datatype.As<PrimitiveType>().JsonValue.Should().Be(expectedValue);
+        if (error is not null)
+            errors.Should().Contain(x => x.ErrorCode == error);
     }
 
     [TestMethod]
