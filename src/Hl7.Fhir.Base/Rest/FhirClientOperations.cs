@@ -81,11 +81,6 @@ namespace Hl7.Fhir.Rest
         /// "subsumes" operation
         /// </summary>
         public const string SUBSUMES = "subsumes";
-
-        /// <summary>
-        /// "find-matches" operation
-        /// </summary>
-        public const string FIND_MATCHES = "find-matches";
     }
 
 

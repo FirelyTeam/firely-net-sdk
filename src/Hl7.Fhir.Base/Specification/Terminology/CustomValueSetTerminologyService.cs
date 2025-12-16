@@ -51,7 +51,6 @@ public abstract class CustomValueSetTerminologyService : ITerminologyService
 
     public Task<Parameters> Lookup(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
 
-    public Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
 
     ///<inheritdoc />
     public Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) =>

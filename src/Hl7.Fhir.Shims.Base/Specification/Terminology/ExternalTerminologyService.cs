@@ -73,20 +73,8 @@ public class ExternalTerminologyService : ITerminologyService
     }
 
     ///<inheritdoc />
-    public async Task<Parameters> Lookup(Parameters parameters, string? id=null, bool useGet = false)
-    {
-        return string.IsNullOrEmpty(id)
-            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false))
-            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false));
-    }
-
-    ///<inheritdoc />
-    public async Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false)
-    {
-        return string.IsNullOrEmpty(id)
-            ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.FIND_MATCHES, parameters, useGet).ConfigureAwait(false))
-            : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.FIND_MATCHES, parameters, useGet).ConfigureAwait(false));
-    }
+    public async Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
+        assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false));
 
     ///<inheritdoc />
     public async Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)

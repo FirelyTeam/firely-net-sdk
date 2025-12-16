@@ -30,14 +30,9 @@ namespace Hl7.Fhir.Specification.Terminology
             return srv.Expand(parameters.Build(), id, useGet);
         }
 
-        public static Task<Parameters> Lookup(this ITerminologyService srv, LookupParameters parameters, bool useGet)
+        public static Task<Parameters> Lookup(this ITerminologyService srv, LookupParameters parameters, bool useGet = false)
         {
-            return srv.Lookup(parameters.Build(), null, useGet);
-        }
-
-        public static Task<Parameters> Lookup(this ITerminologyService srv, LookupParameters parameters, string? id = null, bool useGet = false)
-        {
-            return srv.Lookup(parameters.Build(), id, useGet);
+            return srv.Lookup(parameters.Build(), useGet);
         }
 
         public static Task<Parameters> Translate(this ITerminologyService srv, TranslateParameters parameters, string? id = null, bool useGet = false)

@@ -67,7 +67,7 @@ public interface ICodeSystemTerminologyService
     /// <returns>Output parameters containing the result of the operation</returns>
     /// <exception cref="FhirOperationException">Thrown when the terminology service encounters an error</exception>
     /// <remarks>This function corresponds to the <seealso href="http://hl7.org/fhir/codesystem-operation-lookup.html">$lookup</seealso> operation.</remarks>
-    Task<Parameters> Lookup(Parameters parameters, bool useGet);
+    Task<Parameters> Lookup(Parameters parameters, bool useGet = false);
 }
 
 
