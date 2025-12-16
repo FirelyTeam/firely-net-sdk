@@ -75,6 +75,17 @@ public class CachingTerminologyService : ITerminologyService
             : _terminologyService.CodeSystemValidateCode(parameters, id, useGet);
     }
 
+    public Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
+    {
+        return parameters.GetParametersHashCode() is { } hash
+            ? _cache.GetOrCreate<Task<Parameters>>(hash, entry =>
+            {
+                entry.SetOptions(_entryOptions);
+                return _terminologyService.Lookup(parameters, useGet);
+            })!
+            : _terminologyService.Lookup(parameters, useGet);
+    }
+
     public Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
     {
         return parameters.GetParametersHashCode() is { } hash
@@ -190,4 +201,3 @@ internal static class ParametersExtensions
         return hash.ToHashCode();
     }
 }
-

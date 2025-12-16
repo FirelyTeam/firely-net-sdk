@@ -234,10 +234,11 @@ public class LocalTerminologyService : ITerminologyService
     }
 
     ///<inheritdoc />
-    public Task<Parameters> Lookup(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
-
-    ///<inheritdoc />
-    public Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
+    public Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
+    {
+        // make this method async, when implementing
+        throw new NotImplementedException();
+    }
 
     ///<inheritdoc />
     public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)

@@ -128,11 +128,8 @@ public class MultiTerminologyService : ITerminologyService
         tryMulti((s, p) => s.Expand(p, id, useGet), parameters);
 
     /// <inheritdoc/>
-    public Task<Parameters> Lookup(Parameters parameters, string? id = null, bool useGet = false) =>
-        tryMulti((s, p) => s.Lookup(p, id, useGet), parameters);
-
-    public Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false) =>
-        tryMulti((s, p) => s.FindMatches(p, id, useGet), parameters);
+    public Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
+        tryMulti((s, p) => s.Lookup(p, useGet), parameters);
 
     /// <inheritdoc/>
     public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) =>

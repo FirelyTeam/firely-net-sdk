@@ -1,46 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.ExternalTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.FallbackTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.LocalTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.ExternalTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.FallbackTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.LocalTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
 </Suppressions>

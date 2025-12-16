@@ -80,13 +80,6 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.MultiTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.PocoListNode.#ctor(System.Collections.Generic.IReadOnlyList{Hl7.Fhir.Model.Base},Hl7.Fhir.Model.PocoNodeOrList,System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -158,13 +151,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.PrimitiveNode.#ctor(Hl7.Fhir.Model.PrimitiveType,Hl7.Fhir.Model.PocoNodeOrList,System.Nullable{System.Int32},System.String)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Specification.Terminology.MultiTerminologyService.Lookup(Hl7.Fhir.Model.Parameters,System.Boolean)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

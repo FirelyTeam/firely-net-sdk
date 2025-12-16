@@ -67,31 +67,7 @@ public interface ICodeSystemTerminologyService
     /// <returns>Output parameters containing the result of the operation</returns>
     /// <exception cref="FhirOperationException">Thrown when the terminology service encounters an error</exception>
     /// <remarks>This function corresponds to the <seealso href="http://hl7.org/fhir/codesystem-operation-lookup.html">$lookup</seealso> operation.</remarks>
-    [Obsolete("Implementers should use the overload with 'id' parameter to specify the CodeSystem to lookup against.")]
-    Task<Parameters> Lookup(Parameters parameters, bool useGet) =>
-        Lookup(parameters, null, useGet);
-
-    /// <summary>
-    /// Given a code/system, or a Coding, get additional details about the concept, including definition, status, designations, and properties.
-    /// </summary>
-    /// <param name="parameters">Input parameters for the operation</param>
-    /// <param name="id">Id of a specific CodeSystem which is used for the lookup</param>
-    /// <param name="useGet">Use the GET instead of POST Http method</param>
-    /// <returns>Output parameters containing the result of the operation</returns>
-    /// <exception cref="FhirOperationException">Thrown when the terminology service encounters an error</exception>
-    /// <remarks>This function corresponds to the <seealso href="http://hl7.org/fhir/codesystem-operation-lookup.html">$lookup</seealso> operation.</remarks>
-    Task<Parameters> Lookup(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
-
-    /// <summary>
-    /// Given a set of properties (and text), return one or more possible matching codes.
-    /// </summary>
-    /// <param name="parameters">Input parameters for the operation</param>
-    /// <param name="id">Id of a specific CodeSystem which is used to find matches in</param>
-    /// <param name="useGet">Use the GET instead of POST Http method</param>
-    /// <returns>Output parameters containing the result of the operation</returns>
-    /// <exception cref="FhirOperationException">Thrown when the terminology service encounters an error</exception>
-    /// <remarks>This function corresponds to the <seealso href="http://hl7.org/fhir/codesystem-operation-find-matches.html">$find-matches</seealso> operation.</remarks>
-    Task<Parameters> FindMatches(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
+    Task<Parameters> Lookup(Parameters parameters, bool useGet = false);
 }
 
 
