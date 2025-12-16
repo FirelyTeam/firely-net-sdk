@@ -69,7 +69,6 @@ public class CrossVersionConfigurationAttribute : Attribute, IConfigSource
                     yield return job;
             }
         }
-
     }
 
     static List<Argument> GetArgsFor(string constant)
