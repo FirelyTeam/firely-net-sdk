@@ -79,7 +79,7 @@ public class FhirXmlException(
     internal static FhirXmlException ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE, $"Attribute '{attributeName}' should have been an element with a `value` property, not an attribute.", "Expected element", OO_Sev.Error);
     
     // XML strings do not accept leading or trailing whitespaces and will become trimmed during parsing
-    internal static FhirXmlException STRING_SHOULD_NOT_HAVE_LEADING_TRAILING_WHITESPACE(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, STRING_SHOULD_NOT_HAVE_LEADING_OR_TRAILING_WHITESPACE, $"Attribute '{attributeName}' should not contain a leading or trailing whitespaces.", "Invalid whitespace", OO_Sev.Warning);
+    internal static FhirXmlException STRING_SHOULD_NOT_HAVE_LEADING_TRAILING_WHITESPACE(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, STRING_SHOULD_NOT_HAVE_LEADING_OR_TRAILING_WHITESPACE, $"Attribute '{attributeName}' should not contain  leading or trailing whitespace.", "Invalid whitespace", OO_Sev.Warning);
 
     /// <summary>
     /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer
