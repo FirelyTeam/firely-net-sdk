@@ -1,4 +1,3 @@
 ## Intro:
 
-Fixed ValueSet serialization being not resistant to unknown elements.
-Improve cleaning up of extensions that should not be inherited during snapshot generation.
+Reverts the caching of ModelInfo.ModelInspector due to issues with cross version codes importing and overriding type mappings.
