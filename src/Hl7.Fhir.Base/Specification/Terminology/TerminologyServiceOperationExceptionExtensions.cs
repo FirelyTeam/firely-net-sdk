@@ -204,7 +204,7 @@ public static class TerminologyServiceOperationExceptionExtensions
 }
 
 #if NETSTANDARD2_1
-public static class HttpStatusCodePolyfills
+internal static class HttpStatusCodePolyfills
 {
     extension(HttpStatusCode)
     {

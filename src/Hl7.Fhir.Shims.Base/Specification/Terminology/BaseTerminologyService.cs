@@ -18,8 +18,6 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
-#if UNFINISHED
-
 public abstract class BaseTerminologyService : ITerminologyService
 {
     Task<Parameters> ICodeValidationTerminologyService.ValueSetValidateCode(Parameters parameters, string? id, bool useGet)
@@ -44,6 +42,9 @@ public abstract class BaseTerminologyService : ITerminologyService
         // * One (and only one) of the in parameters code, coding, or codeableConcept must be provided.
         if(!exactlyOneCodeParam(parameters))
             throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided.");
+
+        // TODO: Cross ref with  src/Vonk.Plugins.Terminology/VonkTerminologyHost.cs, as this also has a similar
+        // parameter validation code.
 
         static bool exactlyOneCodeParam(ValidateCodeParameters p)
         {
@@ -193,5 +194,3 @@ public abstract class BaseTerminologyService : ITerminologyService
     public virtual Task<Resource> Closure(Parameters parameters) =>
         throw new NotImplementedException();
 }
-
-#endif
