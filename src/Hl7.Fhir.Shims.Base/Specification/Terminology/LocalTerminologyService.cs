@@ -164,7 +164,7 @@ public class LocalTerminologyService : ITerminologyService
     ///<inheritdoc />
     public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
-        parameters.CheckForValidityOfValidateCodeParams();
+        parameters.ValidateValueSetValidateCodeParams();
 
         var validateCodeParams = new ValidateCodeParameters(parameters);
         var valueSet = validateCodeParams.ValueSet as ValueSet;

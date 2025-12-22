@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.Add("context", context is not null ? new FhirUri("context") : null);
             parameters.Add("valueSet", valueset is not null ? new ValueSet() : null);
 
-            Action validate = () => parameters.CheckForValidityOfValidateCodeParams();
+            Action validate = () => parameters.ValidateValueSetValidateCodeParams();
 
             if (!throws)
                 validate.Should().NotThrow();

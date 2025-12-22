@@ -44,6 +44,18 @@ namespace Hl7.Fhir.Model;
 [DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
 public partial class Parameters
 {
+    public Parameters()
+    {
+        // Nothing
+    }
+
+    public Parameters(IEnumerable<ParameterComponent> parameters)
+    {
+        if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+
+        Parameter = new List<ParameterComponent>(parameters);
+    }
+
     /// <summary>
     /// Add a parameter with a given name and value.
     /// </summary>
@@ -157,6 +169,14 @@ public partial class Parameters
 
         var p = Get(name, matchPrefix).SingleOrDefault();
         return p?.Value as T;
+    }
+
+    public void SetSingleValue<T>(string name, T? value) where T : Element
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        Remove(name);
+        Add(name, value);
     }
 
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

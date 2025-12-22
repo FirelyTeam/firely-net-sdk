@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2024, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ *
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
 #nullable enable
 
 using System.Text.RegularExpressions;

@@ -18,12 +18,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\SnapshotSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\CodeSystemFilterProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExpandParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExternalTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\FallbackTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\LocalTerminologyService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TranslateParameters.cs" />

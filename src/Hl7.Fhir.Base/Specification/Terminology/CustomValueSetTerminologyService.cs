@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2024, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ *
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
 #nullable enable
 
 using Hl7.Fhir.Model;
@@ -64,7 +72,7 @@ public abstract class CustomValueSetTerminologyService : ITerminologyService
     public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null,
         bool useGet = false)
     {
-        parameters.CheckForValidityOfValidateCodeParams();
+        parameters.ValidateValueSetValidateCodeParams();
 
         var validCodeParams = new ValidateCodeParameters(parameters);
         var valueSetUri = validCodeParams.Url?.Value != null

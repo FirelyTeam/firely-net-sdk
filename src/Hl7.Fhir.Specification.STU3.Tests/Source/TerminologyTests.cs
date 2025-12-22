@@ -606,8 +606,8 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new SubsumesParameters()
-                .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
-                .Build();
+                .WithCode(codeA: "235856003", codeB: "3738000",
+                    system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430");
 
             var result = await svc.Subsumes(parameters);
 

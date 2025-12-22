@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public static Task<Parameters> Subsumes(this ITerminologyService srv, SubsumesParameters parameters, string? id = null, bool useGet = false)
         {
-            return srv.Subsumes(parameters.Build(), id, useGet);
+            return srv.Subsumes(parameters, id, useGet);
         }
 
         public static Task<Resource> Closure(this ITerminologyService srv, ClosureParameters parameters, bool useGet = false)

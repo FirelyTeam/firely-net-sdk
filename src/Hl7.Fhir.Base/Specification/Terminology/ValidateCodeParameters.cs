@@ -8,26 +8,30 @@
 
 #nullable enable
 
+//Note: uses the wrong namespace -> should be Hl7.Fhir.Specification.Terminology
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public class ValidateCodeParameters
     {
-        private const string URL_ATTRIBUTE = "url";
-        private const string CONTEXT_ATTRIBUTE = "context";
-        private const string VALUE_SET_ATTRIBUTE = "valueSet";
-        private const string VALUE_SET_VERSION_ATTRIBUTE = "valueSetVersion";
-        private const string CODE_ATTRIBUTE = "code";
-        private const string SYSTEM_ATTRIBUTE = "system";
-        private const string SYSTEM_VERSION_ATTRIBUTE = "systemVersion";
-        private const string DISPLAY_ATTRIBUTE = "display";
-        private const string CODING_ATTRIBUTE = "coding";
-        private const string CODEABLE_CONCEPT_ATTRIBUTE = "codeableConcept";
-        private const string DATE_ATTRIBUTE = "date";
-        private const string ABSTRACT_ATTRIBUTE = "abstract";
-        private const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
-        private const string INFER_SYSTEM_ATTRIBUTE = "inferSystem";
+        public const string URL_ATTRIBUTE = "url";
+        public const string CONTEXT_ATTRIBUTE = "context";
+        public const string VALUE_SET_ATTRIBUTE = "valueSet";
+        public const string VALUE_SET_VERSION_ATTRIBUTE = "valueSetVersion";
+        public const string CODE_ATTRIBUTE = "code";
+        public const string SYSTEM_ATTRIBUTE = "system";
+        public const string SYSTEM_VERSION_ATTRIBUTE = "systemVersion";
+        public const string DISPLAY_ATTRIBUTE = "display";
+        public const string CODING_ATTRIBUTE = "coding";
+        public const string CODEABLE_CONCEPT_ATTRIBUTE = "codeableConcept";
+        public const string DATE_ATTRIBUTE = "date";
+        public const string ABSTRACT_ATTRIBUTE = "abstract";
+        public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
+        public const string INFER_SYSTEM_ATTRIBUTE = "inferSystem";
+        public const string MESSAGE_ATTRIBUTE = "message";
+        public const string RESULT_ATTRIBUTE = "result";
+        public const string ISSUE_ATTRIBUTE = "issue";
 
         public ValidateCodeParameters(Parameters parameters)
         {
