@@ -167,7 +167,7 @@ public abstract class BaseTerminologyService : ITerminologyService
         return Lookup(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-    public virtual T.Task<LookupResult> Lookup(LookupParameters parameters) =>
+    protected virtual T.Task<LookupResult> Lookup(LookupParameters parameters) =>
         throw new NotImplementedException();
 
     T.Task<Resource> IExpandingTerminologyService.Expand(Parameters parameters, string? id, bool useGet)
