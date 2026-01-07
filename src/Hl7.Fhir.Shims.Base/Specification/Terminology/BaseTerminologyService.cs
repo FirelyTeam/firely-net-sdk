@@ -10,7 +10,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -23,10 +22,10 @@ public abstract class BaseTerminologyService : ITerminologyService
     Task<Parameters> ICodeValidationTerminologyService.ValueSetValidateCode(Parameters parameters, string? id, bool useGet)
     {
         var validCodeParams = new ValidateCodeParameters(parameters);
-        return ValueSetValidateCode(validCodeParams);
+        return ValueSetValidateCode(validCodeParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-    protected async virtual Task<Parameters> ValueSetValidateCode(ValidateCodeParameters parameters)
+    protected async virtual Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
     {
         // For input params of https://build.fhir.org/valueset-operation-validate-code.html:
         // * (...) one of the in parameters url, context or valueSet must be provided.
@@ -65,17 +64,26 @@ public abstract class BaseTerminologyService : ITerminologyService
 
         try
         {
-            var result = parameters switch
+            ValidateCodeResult result;
+            
+            if (parameters.CodeableConcept is not null)
             {
-                { CodeableConcept: { } cc, Abstract: var a } => await validateConcept(valueSet, cc, a)
-                    .ConfigureAwait(false),
-                { Coding: { } co, Abstract: var a } => await validateCoding(valueSet, co, a).ConfigureAwait(false),
-                { Code: not null, Abstract: var a } => validateCode(valueSet, parameters.Code,
-                    parameters.System, parameters.Display, parameters.Abstract).ConfigureAwait(false),
-                _ => throw new InvalidOperationException("Unexpected parameters combination.")
-            };
+                result = await validateConcept(valueSet, parameters.CodeableConcept, parameters.Abstract).ConfigureAwait(false);
+            }
+            else if (parameters.Coding is not null)
+            {
+                result = await validateCoding(valueSet, parameters.Coding, parameters.Abstract).ConfigureAwait(false);
+            }
+            else if (parameters.Code is not null)
+            {
+                result = await ValidateCode(valueSet, parameters.Code, parameters.System?.Value, parameters.Display?.Value, parameters.Abstract).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unexpected parameters combination.");
+            }
 
-            return result.ToParameters();
+            return result;
         }
         catch (Exception e) when (e is not FhirOperationException)
         {
@@ -83,7 +91,7 @@ public abstract class BaseTerminologyService : ITerminologyService
         }
     }
 
-    private static async Task<ValidateCodeResult> validateConcept(
+    private async Task<ValidateCodeResult> validateConcept(
         ValueSet vs,
         CodeableConcept codeableConcept,
         FhirBoolean? abstractAllowed)
@@ -100,7 +108,7 @@ public abstract class BaseTerminologyService : ITerminologyService
         var callResults = await Task
             .WhenAll(codeableConcept.Coding.Select(coding => validateCoding(vs, coding, abstractAllowed))).ConfigureAwait(false);
 
-        if (callResults.FirstOrDefault(r=>r.Result == true) is { } successResult)
+        if (callResults.FirstOrDefault(r => r.Result?.Value == true) is { } successResult)
             return successResult;
 
         // Return failure result.
@@ -109,26 +117,24 @@ public abstract class BaseTerminologyService : ITerminologyService
 
         // gathering the messages of all calls
         foreach (var msg in callResults.Select(r=>r.Message).Where(m => m is not null))
-            messages.AppendLine(msg.Value);
+            messages.AppendLine(msg!.Value);
 
         return ValidateCodeResult.ForResult(false, messages.ToString());
     }
 
-    private static Task<ValidateCodeResult> validateCoding(ValueSet vs, Coding coding, FhirBoolean? abstractAllowed)
+    private Task<ValidateCodeResult> validateCoding(ValueSet vs, Coding coding, FhirBoolean? abstractAllowed)
     {
         if(string.IsNullOrEmpty(coding.Code) || string.IsNullOrEmpty(coding.System))
             throw FhirOperationException.IncompleteCodedParameter("Must have a Coding/CodeableConcept with both code and system to be validated.");
 
-        return validateCode(vs,  new(coding, abstractAllowed, new HashSet<string>()));
+        return ValidateCode(vs, coding.CodeElement, coding.System, coding.Display, abstractAllowed);
     }
 
 
-    private static Task<ValidateCodeResult> validateCode(
-        CodingValidator validator,
-        string valueSetUrl,
-        string? code, string? system, string? display,
-        bool? abstractAllowed) =>
-        validateCoding(validator, valueSetUrl, new Coding(system, code, display), abstractAllowed);
+    protected virtual Task<ValidateCodeResult> ValidateCode(
+        ValueSet vs,
+        Code? code, string? system, string? display,
+        FhirBoolean? abstractAllowed) => throw new NotImplementedException();
 
     /// <summary>
     /// Resolve a ValueSet by its canonical URL. This method MUST return a valueset, or else throw
@@ -140,57 +146,54 @@ public abstract class BaseTerminologyService : ITerminologyService
     Task<Parameters> ICodeValidationTerminologyService.Subsumes(Parameters parameters, string? id, bool useGet)
     {
         var validParams = new SubsumesParameters(parameters.NoDuplicates());
-        return Subsumes(validParams);
+        return Subsumes(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-    public virtual Task<Parameters> Subsumes(SubsumesParameters parameters) => throw new NotImplementedException();
-
-
+    protected virtual Task<SubsumesResult> Subsumes(SubsumesParameters parameters) => throw new NotImplementedException();
 
     Task<Parameters> ICodeSystemTerminologyService.CodeSystemValidateCode(Parameters parameters, string? id,
         bool useGet)
     {
-        // TODO: Add specific subclass (like subsumes) for parameters, and validate here
-        var validParams = parameters.NoDuplicates();
-        return CodeSystemValidateCode(validParams);
+        var validParams = new ValidateCodeParameters(parameters.NoDuplicates());
+        return CodeSystemValidateCode(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
 
-    public virtual Task<Parameters> CodeSystemValidateCode(Parameters parameters) => throw new NotImplementedException();
+    public virtual Task<ValidateCodeResult> CodeSystemValidateCode(ValidateCodeParameters parameters) => throw new NotImplementedException();
 
     Task<Parameters> ICodeSystemTerminologyService.Lookup(Parameters parameters, bool useGet)
     {
-        var validParams = parameters.NoDuplicates();
-        return Lookup(validParams);
+        var validParams = new LookupParameters(parameters.NoDuplicates());
+        return Lookup(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-    public virtual Task<Parameters> Lookup(Parameters parameters) =>
+    public virtual Task<LookupResult> Lookup(LookupParameters parameters) =>
         throw new NotImplementedException();
 
     Task<Resource> IExpandingTerminologyService.Expand(Parameters parameters, string? id, bool useGet)
     {
-        var validParams = parameters.NoDuplicates();
+        var validParams = new ExpandParameters(parameters.NoDuplicates());
         return Expand(validParams);
     }
 
-    public virtual Task<Resource> Expand(Parameters parameters) =>
+    public virtual Task<Resource> Expand(ExpandParameters parameters) =>
         throw new NotImplementedException();
 
     Task<Parameters> IMappingTerminologyService.Translate(Parameters parameters, string? id, bool useGet)
     {
-        var validParams = parameters.NoDuplicates();
-        return Translate(validParams);
+        var validParams = new TranslateParameters(parameters.NoDuplicates());
+        return Translate(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-    public virtual Task<Parameters> Translate(Parameters parameters) =>
+    public virtual Task<TranslateResult> Translate(TranslateParameters parameters) =>
         throw new NotImplementedException();
 
     Task<Resource> ITerminologyServiceWithClosure.Closure(Parameters parameters, bool useGet)
     {
-        var validParams = parameters.NoDuplicates();
+        var validParams = new ClosureParameters(parameters.NoDuplicates());
         return Closure(validParams);
     }
 
-    public virtual Task<Resource> Closure(Parameters parameters) =>
+    public virtual Task<Resource> Closure(ClosureParameters parameters) =>
         throw new NotImplementedException();
 }

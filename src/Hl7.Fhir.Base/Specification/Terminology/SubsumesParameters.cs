@@ -31,7 +31,6 @@ public class SubsumesParameters : Parameters
     public const string VERSION_ATTRIBUTE = "version";
     public const string CODING_A_ATTRIBUTE = "codingA";
     public const string CODING_B_ATTRIBUTE = "codingB";
-    public const string OUTCOME_ATTRIBUTE = "outcome";
 
     /// <summary>
     /// The "A" code that is to be tested. If a code is provided, a system must be provided.
@@ -39,7 +38,7 @@ public class SubsumesParameters : Parameters
     public Code? CodeA
     {
         get => this.GetSingleValue<Code>(CODE_A_ATTRIBUTE);
-        set => this.SetSingleValue(CODE_B_ATTRIBUTE, value);
+        set => this.SetSingleValue(CODE_A_ATTRIBUTE, value);
     }
 
     /// <summary>
