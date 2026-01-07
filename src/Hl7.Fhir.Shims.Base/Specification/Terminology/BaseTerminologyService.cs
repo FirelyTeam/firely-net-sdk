@@ -158,8 +158,7 @@ public abstract class BaseTerminologyService : ITerminologyService
         return CodeSystemValidateCode(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-
-    public virtual T.Task<ValidateCodeResult> CodeSystemValidateCode(ValidateCodeParameters parameters) => throw new NotImplementedException();
+    protected virtual T.Task<ValidateCodeResult> CodeSystemValidateCode(ValidateCodeParameters parameters) => throw new NotImplementedException();
 
     T.Task<Parameters> ICodeSystemTerminologyService.Lookup(Parameters parameters, bool useGet)
     {
@@ -176,7 +175,7 @@ public abstract class BaseTerminologyService : ITerminologyService
         return Expand(validParams);
     }
 
-    public virtual T.Task<Resource> Expand(ExpandParameters parameters) =>
+    protected virtual T.Task<Resource> Expand(ExpandParameters parameters) =>
         throw new NotImplementedException();
 
     T.Task<Parameters> IMappingTerminologyService.Translate(Parameters parameters, string? id, bool useGet)
@@ -185,7 +184,7 @@ public abstract class BaseTerminologyService : ITerminologyService
         return Translate(validParams).ContinueWith(t => (Parameters)t.Result);
     }
 
-    public virtual T.Task<TranslateResult> Translate(TranslateParameters parameters) =>
+    protected virtual T.Task<TranslateResult> Translate(TranslateParameters parameters) =>
         throw new NotImplementedException();
 
     T.Task<Resource> ITerminologyServiceWithClosure.Closure(Parameters parameters, bool useGet)
@@ -194,6 +193,6 @@ public abstract class BaseTerminologyService : ITerminologyService
         return Closure(validParams);
     }
 
-    public virtual T.Task<Resource> Closure(ClosureParameters parameters) =>
+    protected virtual T.Task<Resource> Closure(ClosureParameters parameters) =>
         throw new NotImplementedException();
 }
