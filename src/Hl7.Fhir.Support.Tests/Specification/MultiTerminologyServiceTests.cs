@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
                                    .Add("message", new FhirString("this is the second ts that fails"));
 
             //setup mock services
-            var inputParams = new ValidateCodeParameters().WithValueSet(VSInput).Build();
+            var inputParams = new ValidateCodeParameters().WithValueSet(VSInput);
             var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), firstTsPreferenceVs);
             var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), secondTsPreferenceVs);
 
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
                                  .Add("message", new FhirString("this is the third ts that fails"));
 
             //setup mock services
-            var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/example-vs").Build();
+            var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/example-vs");
 
             var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), "http://example.org/fhir/ValueSet/*");
             var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), "http://example.org/*/ValueSet/example-vs");

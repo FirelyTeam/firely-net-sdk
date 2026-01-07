@@ -264,7 +264,7 @@ namespace Hl7.Fhir.FhirPath
 
             try
             {
-                var outParams = TaskHelper.Await(() => service.ValueSetValidateCode(inParams.Build()));
+                var outParams = TaskHelper.Await(() => service.ValueSetValidateCode(inParams));
                 return outParams.GetSingleValue<FhirBoolean>("result")?.Value ?? false;
             }
             catch (FhirOperationException)

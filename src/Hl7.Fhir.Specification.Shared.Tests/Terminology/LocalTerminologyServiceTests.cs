@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification.Tests
                 : parameters.WithCode(code: code, system: system);
 
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
-            var result = await _service.ValueSetValidateCode(parameters.Build());
+            var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.IsExactly(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"))
                 .Should().BeTrue();
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
                    .WithValueSet(valueset)
                    .WithCoding(new Coding(system, code, display));
 
-            var result = await _service.ValueSetValidateCode(parameters.Build());
+            var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.IsExactly(new FhirString($"The Coding references a value set, not a code system ('{system}')"))
                 .Should().BeTrue();
@@ -67,10 +67,9 @@ namespace Hl7.Fhir.Specification.Tests
             var service = LocalTerminologyService.CreateDefaultForCore(resolver);
 
             var parameters = new ValidateCodeParameters()
-                 .WithValueSet("http://hl7.org/fhir/ValueSet/mimetypes")
-                 .WithCode(code: "application/json", context: "context")
-                 .Build();
-
+                .WithValueSet("http://hl7.org/fhir/ValueSet/mimetypes")
+                .WithCode(code: "application/json", context: "context");
+            
             var result = await service.ValueSetValidateCode(parameters);
 
             result.Parameter.Should().Contain(p => p.Name == "result")
@@ -115,7 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
 
-            var ac = () => _service.ValueSetValidateCode(parameters.Build());
+            var ac = () => _service.ValueSetValidateCode(parameters);
 
             var ex = await ac.Should().ThrowAsync<FhirOperationException>();
             ex.WithMessage("*compositional code system*");
@@ -175,7 +174,7 @@ namespace Hl7.Fhir.Specification.Tests
             var localTerminology = new LocalTerminologyService(ZipSource.CreateValidationSource());
 
             var expandAction = async () => await localTerminology.Expand(
-                new ExpandParameters().WithValueSet(NonexistentValueSetUrl).Build());
+                new ExpandParameters().WithValueSet(NonexistentValueSetUrl));
 
             var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
             ex.Which.Status.Should().Be(System.Net.HttpStatusCode.NotFound);
@@ -200,7 +199,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var expandAction = async () => await localTerminology.Expand(
-                new ExpandParameters().WithValueSet(valueSet: valueSet).Build());
+                new ExpandParameters().WithValueSet(valueSet: valueSet));
 
             var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
             ex.Which.Status.Should().Be((System.Net.HttpStatusCode)422);

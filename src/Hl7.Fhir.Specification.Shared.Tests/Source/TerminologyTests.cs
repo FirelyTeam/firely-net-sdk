@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.Context.Value.Should().Be("Patient.gender");
             parameters.InferSystem.Value.Should().Be(true);
 
-            var paramResource = parameters.Build();
+            var paramResource = parameters;
 
             paramResource.Parameter.Should().HaveCount(7);
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "code" && ((Code)p.Value).Value == "bar");
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.ValueSet.Should().NotBeNull();
             parameters.ValueSetVersion.Value.Should().Be("1.0.4");
 
-            var paramResource = parameters.Build();
+            var paramResource = parameters;
 
             paramResource.Parameter.Should().HaveCount(4);
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "url" && ((FhirUri)p.Value).Value == "http://foo.bar");

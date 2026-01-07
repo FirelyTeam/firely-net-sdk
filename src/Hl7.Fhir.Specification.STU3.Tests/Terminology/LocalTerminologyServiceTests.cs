@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
                 : parameters.WithCode(code: code, system: system);
 
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
-            var result = await _service.ValueSetValidateCode(parameters.Build());
+            var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value
                 .IsExactly(new FhirString(
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
                    .WithValueSet(valueset)
                    .WithCoding(new Coding(system, code, display));
 
-            var result = await _service.ValueSetValidateCode(parameters.Build());
+            var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.IsExactly(new FhirString($"The Coding references a value set, not a code system ('{system}')"))
                 .Should().BeTrue();
@@ -68,8 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var parameters = new ValidateCodeParameters()
                  .WithValueSet("http://www.rfc-editor.org/bcp/bcp13.txt")
-                 .WithCode(code: "application/json", context: "context")
-                 .Build();
+                 .WithCode(code: "application/json", context: "context");
 
             var result = await service.ValueSetValidateCode(parameters);
 
