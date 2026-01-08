@@ -23,9 +23,9 @@ namespace Hl7.Fhir.Specification.Tests
         );
 
         [TestMethod]
-        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", "context", null, "AdministrativeGender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", "context", "system", "AdministrativeGender")]
         [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", null, "theSystem", "AdministrativeGender")]
-        [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", "context", null, "UCUM Codes")]
+        [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", "context", "system", "UCUM Codes")]
         [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", null, "theSystem", "UCUM Codes")]
         public async Task CodeNotFoundMessageTest(string valueset, string code, string context, string system, string valuesetTitle)
         {
@@ -84,11 +84,24 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("code", "<ValueSet />", null, "context", false)]
         public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
         {
-            var parameters = new Parameters();
-            parameters.Add("code", code is not null ? new FhirString(code) : null);
-            parameters.Add("url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null );
-            parameters.Add("context", context is not null ? new FhirUri("context") : null);
-            parameters.Add("valueSet", valueset is not null ? new ValueSet() : null);
+            var parameters = new ValidateCodeParameters();
+            
+            if (code is not null)
+            {
+                parameters.Code = new Code(code);
+                // Provide a system when code is present and context is not
+                if (context is null && valueset is not null)
+                    parameters.System = new FhirUri("http://example.org/test-system");
+            }
+            
+            if (url is not null)
+                parameters.Url = new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender");
+            
+            if (context is not null)
+                parameters.Context = new FhirUri("context");
+            
+            if (valueset is not null)
+                parameters.ValueSet = new ValueSet();
 
             Action validate = () => parameters.ValidateValueSetValidateCodeParams();
 
@@ -105,12 +118,12 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("http://hl7.org/fhir/ValueSet/vs|2.0", "3.0", "http://hl7.org/fhir/ValueSet/vs|3.0")]
         public async Task PicksUpValidationVersionInUri(string url, string vsVersion, string resolved)
         {
-            var parameters = new Parameters();
-            parameters.Add("code", new FhirString("code"));
-            parameters.Add("url", new FhirUri(url));
+            var parameters = new ValidateCodeParameters()
+                .WithCode(code: "code", system: "http://example.org/test-system")
+                .WithValueSet(url);
 
             if(vsVersion is not null)
-                parameters.Add("valueSetVersion", new FhirString(vsVersion));
+                parameters.ValueSetVersion = new FhirString(vsVersion);
 
             var resolver = Substitute.For<IAsyncResourceResolver>();
             var localTs = new LocalTerminologyService(resolver);

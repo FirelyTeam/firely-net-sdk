@@ -212,8 +212,8 @@ public abstract class BaseTerminologyService : ITerminologyService
     {
         // For input params of https://build.fhir.org/valueset-operation-validate-code.html:
         // * (...) one of the in parameters url, context or valueSet must be provided.
-        if(parameters.Context is not null)
-            throw FhirOperationException.NotSupported("The 'context' parameter is not supported.");
+        // if(parameters.Context is not null)
+        //     throw FhirOperationException.NotSupported("The 'context' parameter is not supported.");
 
         if(parameters.ValueSet is null && parameters.Url is null)
             throw FhirOperationException.InvalidOperationInvocation("'url' or 'valueset' must be provided.");
