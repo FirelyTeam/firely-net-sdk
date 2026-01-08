@@ -127,7 +127,7 @@ stages:
       name: packMetapackages
       displayName: 'Pack NuGet Metapackages'    
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - template: codesign-nuget-packages-using-trusted-signing.yml@templates
+      - template: codesign-nuget-package-using-trusted-signing.yml@templates
         parameters:
           azureServiceConnection: 'AzureTrustedSigningPrincipal'
           trustedSigningAccountEndpoint: 'https://weu.codesigning.azure.net/'
