@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Terminology;
 
 /// <summary>
-/// Base class for checking Code terminology
+/// Base class for checking terminology of codes that are part of specific value sets (e.g., MIME types, languages).
 /// </summary>
 public abstract class CustomValueSetTerminologyService : ITerminologyService
 {
@@ -40,150 +40,115 @@ public abstract class CustomValueSetTerminologyService : ITerminologyService
         _codeValueSets = codeValueSets;
     }
 
-    ///<inheritdoc />
+    // Not supported operations - these throw NotImplementedException
     public Task<Resource> Closure(Parameters parameters, bool useGet = false) =>
         throw new NotImplementedException();
 
-    ///<inheritdoc />
-    public Task<Parameters>
-        CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>
+    public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) =>
         throw new NotImplementedException();
 
-    ///<inheritdoc />
     public Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false) =>
         throw new NotImplementedException();
 
-    ///<inheritdoc />
     public Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
         throw new NotImplementedException();
 
-    public Task<Parameters> Lookup(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
-
-
-    ///<inheritdoc />
     public Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) =>
         throw new NotImplementedException();
 
-    ///<inheritdoc />
     public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) =>
         throw new NotImplementedException();
 
-    ///<inheritdoc />
-    public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null,
-        bool useGet = false)
+    /// <summary>
+    /// Validate that a coded value is in the set of codes allowed by a value set.
+    /// Only supports value sets that this service is configured to handle.
+    /// </summary>
+    public Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
-        parameters.ValidateValueSetValidateCodeParams();
-
         var validCodeParams = new ValidateCodeParameters(parameters);
         var valueSetUri = validCodeParams.Url?.Value != null
             ? new Canonical(validCodeParams.Url?.Value).Uri
             : null;
 
+        // Check if this is one of the value sets we handle
         if (_codeValueSets.All(valueSet => valueSet != valueSetUri))
         {
-            // 404 not found
             throw new FhirOperationException($"Cannot find valueset '{validCodeParams.Url?.Value}'",
                 HttpStatusCode.NotFound);
         }
 
-        try
+        // Dispatch to appropriate validation method based on what's provided
+        // (This logic is similar to BaseTerminologyService but must be duplicated due to assembly constraints)
+        return validCodeParams switch
         {
-            return validCodeParams switch
-            {
-                { CodeableConcept: not null } => await validateCodeVs(validCodeParams.CodeableConcept).ConfigureAwait(false),
-                { Coding: not null } => await validateCodeVs(validCodeParams.Coding).ConfigureAwait(false),
-                _ => await validateCodeVs(validCodeParams.Code?.Value, validCodeParams.System?.Value)
-                    .ConfigureAwait(false)
-            };
-        }
-        catch (Exception e)
-        {
-            //500 internal server error
-            throw new FhirOperationException(e.Message, (HttpStatusCode)500);
-        }
-
+            { CodeableConcept: not null } => validateCodeableConcept(validCodeParams.CodeableConcept),
+            { Coding: not null } => validateCoding(validCodeParams.Coding),
+            _ => validateCode(validCodeParams.Code?.Value, validCodeParams.System?.Value)
+        };
     }
 
-    private async Task<Parameters> validateCodeVs(Coding coding)
-    {
-        return await validateCodeVs(coding.Code, coding.System).ConfigureAwait(false);
-    }
+    private Task<Parameters> validateCoding(Coding coding) =>
+        validateCode(coding.Code, coding.System);
 
-    private async Task<Parameters> validateCodeVs(CodeableConcept cc)
+    private async Task<Parameters> validateCodeableConcept(CodeableConcept cc)
     {
-        var result = new Parameters();
-
-        // Maybe just a text, but if there are no codings, that's a positive result
+        // If there are no codings, that's a positive result (just text is allowed)
         if (!cc.Coding.Any())
-        {
-            result.Add("result", new FhirBoolean(true));
-            return result;
-        }
+            return createResult(true);
 
-        // If we have just 1 coding, we better handle this using the simpler version of ValidateBinding
+        // If we have just 1 coding, use the simpler version
         if (cc.Coding.Count == 1)
-            return await validateCodeVs(cc.Coding.Single()).ConfigureAwait(false);
+            return await validateCoding(cc.Coding.Single()).ConfigureAwait(false);
 
+        // Multiple codings: look for one successful match
+        var callResults = await Task.WhenAll(cc.Coding.Select(validateCoding)).ConfigureAwait(false);
+        var anySuccessful = callResults.Any(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
 
-        // Else, look for one succesful match in any of the codes in the CodeableConcept
-        var callResults = await Task.WhenAll(cc.Coding.Select(validateCodeVs)).ConfigureAwait(false);
-        var anySuccesful = callResults.Any(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
-
-        if (!anySuccesful)
+        if (!anySuccessful)
         {
             var messages = new StringBuilder();
             messages.AppendLine("None of the Codings in the CodeableConcept were valid for the binding. Details follow.");
-
-            // gathering the messages of all calls
-            foreach (var msg in callResults.Select(cr => cr.GetSingleValue<FhirString>("message")?.Value).Where(m => m is { }))
-            {
+            foreach (var msg in callResults.Select(cr => cr.GetSingleValue<FhirString>("message")?.Value).Where(m => m is not null))
                 messages.AppendLine(msg);
-            }
 
-            result.Add("message", new FhirString(messages.ToString()));
-            result.Add("result", new FhirBoolean(false));
-        }
-        else
-        {
-            result.Add("result", new FhirBoolean(true));
+            return createResult(false, messages.ToString());
         }
 
+        return createResult(true);
+    }
+
+    private Task<Parameters> validateCode(string? code, string? system)
+    {
+        var systemUri = system != null ? new Canonical(system).Uri : null;
+
+        // Check if system matches what we expect
+        if (systemUri != _codeSystem && systemUri != null)
+            throw new FhirOperationException($"Unknown system '{systemUri}'", HttpStatusCode.NotFound);
+
+        if (code is null)
+            return Task.FromResult(createResult(false, "No code supplied."));
+
+        // Call the abstract method that derived classes implement
+        var success = ValidateCodeType(code);
+
+        return Task.FromResult(success
+            ? createResult(true)
+            : createResult(false, $"'{code}' is not a valid {_terminologyType}."));
+    }
+
+    private static Parameters createResult(bool success, string? message = null)
+    {
+        var result = new Parameters();
+        result.Add("result", new FhirBoolean(success));
+        if (!string.IsNullOrWhiteSpace(message))
+            result.Add("message", new FhirString(message));
         return result;
     }
 
-    private Task<Parameters> validateCodeVs(string? code, string? system)
-    {
-        var result = new Parameters();
-        var systemUri = system != null ? new Canonical(system).Uri : null;
-
-
-        if (systemUri == _codeSystem || systemUri == null)
-        {
-            if (code is null)
-            {
-                result.Add("message", new FhirString("No code supplied."))
-                    .Add("result", new FhirBoolean(false));
-            }
-            else
-            {
-                var success = ValidateCodeType(code);
-
-                if (success)
-                {
-                    result.Add("result", new FhirBoolean(true));
-                }
-                else
-                {
-                    result.Add("result", new FhirBoolean(false))
-                        .Add("message", new FhirString($"'{code}' is not a valid {_terminologyType}."));
-                }
-            }
-        }
-        else
-        {
-            throw new FhirOperationException($"Unknown system '{systemUri}'", HttpStatusCode.NotFound);
-        }
-        return Task.FromResult(result);
-    }
-    abstract protected bool ValidateCodeType(string code);
+    /// <summary>
+    /// Abstract method that derived classes must implement to validate if a code is valid for this terminology type.
+    /// </summary>
+    /// <param name="code">The code to validate</param>
+    /// <returns>True if the code is valid, false otherwise</returns>
+    protected abstract bool ValidateCodeType(string code);
 }

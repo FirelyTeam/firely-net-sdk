@@ -36,4 +36,9 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Specification\Terminology\MimeTypeValidator.cs" />
+	  <Compile Remove="Specification\Terminology\LanguageValidator.cs" />
+	</ItemGroup>
+
 </Project>
