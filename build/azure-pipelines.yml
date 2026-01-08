@@ -129,12 +129,11 @@ stages:
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - template: codesign-nuget-packages-using-trusted-signing.yml@templates
         parameters:
-          azureServiceConnection: 'AzureTrustedSigningPrincipal',
-          trustedSigningAccountEndpoint: 'https://weu.codesigning.azure.net/',
-          trustedSigningAccountName: 'FirelyCodeSigning',
-          certificateProfileName: 'FirelyCodeSigning',
+          azureServiceConnection: 'AzureTrustedSigningPrincipal'
+          trustedSigningAccountEndpoint: 'https://weu.codesigning.azure.net/'
+          trustedSigningAccountName: 'FirelyCodeSigning'
+          certificateProfileName: 'FirelyCodeSigning'
           packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
-
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
