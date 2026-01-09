@@ -6,29 +6,30 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-namespace Hl7.FhirPath.Expressions
+#nullable enable
+
+namespace Hl7.FhirPath.Expressions;
+
+public abstract class ExpressionVisitor<T>
 {
-    public abstract class ExpressionVisitor<T>
+    public abstract T VisitConstant(ConstantExpression expression);
+
+    public abstract T VisitFunctionCall(FunctionCallExpression expression);
+
+    //public abstract T VisitLambda(LambdaExpression expression);
+
+    public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
+
+    public abstract T VisitVariableRef(VariableRefExpression expression);
+
+    /// <summary>
+    /// The default implementation of the CustomExpression Visit requests the node
+    /// to <see cref="CustomExpression.Reduce">Reduce</see> to one of the standard expression types and then visits that type.
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <returns></returns>
+    public virtual T VisitCustomExpression(CustomExpression expression)
     {
-        public abstract T VisitConstant(ConstantExpression expression);
-
-        public abstract T VisitFunctionCall(FunctionCallExpression expression);
-
-        //public abstract T VisitLambda(LambdaExpression expression);
-
-        public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
-
-        public abstract T VisitVariableRef(VariableRefExpression expression);
-
-        /// <summary>
-        /// The default implementation of the CustomExpression Visit requests the node
-        /// to <see cref="CustomExpression.Reduce">Reduce</see> to one of the standard expression types and then visits that type.
-        /// </summary>
-        /// <param name="expression"></param>
-        /// <returns></returns>
-        public virtual T VisitCustomExpression(CustomExpression expression)
-        {
-            return expression.Reduce().Accept<T>(this);
-        }
+        return expression.Reduce().Accept(this);
     }
 }

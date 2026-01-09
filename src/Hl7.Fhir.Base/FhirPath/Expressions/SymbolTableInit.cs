@@ -255,7 +255,7 @@ public static class SymbolTableInit
         {
             var iks = invokees.ToArray();
             var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
-            ctx.focus = focus;
+            ctx.Focus = focus;
             var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().GetValue();
             var result= focus.Navigate(name);
 
@@ -329,7 +329,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var incrExpre = arguments.Skip(1).First();
         IEnumerable<PocoNode> initialValue = [];
         if (arguments.Count() > 2)
@@ -345,7 +345,7 @@ public static class SymbolTableInit
         {
             IEnumerable<PocoNode> newFocus = element;
             var newContext = totalContext.Nest(newFocus);
-            newContext.focus = newFocus;
+            newContext.Focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetTotal(totalContext.GetTotal());
             var newTotalResult = incrExpre(newContext, InvokeeFactory.EmptyArgs);
@@ -358,7 +358,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> Trace(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
 
         List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
@@ -372,7 +372,7 @@ public static class SymbolTableInit
     {
         Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
         var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
 
         if(ctx.ResolveValue(name) is not null) throw new InvalidOperationException($"Variable {name} is already defined in this scope");
@@ -384,7 +384,7 @@ public static class SymbolTableInit
         else
         {
             var newContext = ctx.Nest(focus);
-            newContext.focus = focus;
+            newContext.Focus = focus;
             newContext.SetThis(focus);
             var result = enumerable[2](newContext, InvokeeFactory.EmptyArgs);
             ctx.SetValue(name, result);
@@ -398,10 +398,10 @@ public static class SymbolTableInit
         // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
         // note: short-circuit behavior is expected in this function
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
 
         var newContext = ctx.Nest(focus);
-        newContext.focus = focus;
+        newContext.Focus = focus;
         newContext.SetThis(focus);
             
         var expression = arguments.Skip(1).First()(newContext, InvokeeFactory.EmptyArgs);
@@ -419,7 +419,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var lambda = arguments.Skip(1).First();
 
         return CachedEnumerable.Create(runForeach());
@@ -432,7 +432,7 @@ public static class SymbolTableInit
             {
                 PocoNode[] newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
-                newContext.focus = newFocus;
+                newContext.Focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
@@ -446,7 +446,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var lambda = arguments.Skip(1).First();
 
         return CachedEnumerable.Create(runForeach());
@@ -459,7 +459,7 @@ public static class SymbolTableInit
             {
                 IEnumerable<PocoNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
-                newContext.focus = newFocus;
+                newContext.Focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
@@ -474,7 +474,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
-        ctx.focus = newNodes;
+        ctx.Focus = newNodes;
         var lambda = arguments.Skip(1).First();
 
         var fullResult = new List<PocoNode>();
@@ -489,7 +489,7 @@ public static class SymbolTableInit
             {
                 IEnumerable<PocoNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
-                newContext.focus = newFocus;
+                newContext.Focus = newFocus;
                 newContext.SetThis(newFocus);
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
@@ -509,7 +509,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runAll(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
@@ -517,7 +517,7 @@ public static class SymbolTableInit
         {
             IEnumerable<PocoNode> newFocus = [element];
             var newContext = ctx.Nest(newFocus);
-            newContext.focus = newFocus;
+            newContext.Focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
             index++;
@@ -533,7 +533,7 @@ public static class SymbolTableInit
     private static IEnumerable<PocoNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
     {
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-        ctx.focus = focus;
+        ctx.Focus = focus;
         var lambda = arguments.Skip(1).First();
         var index = 0;
 
@@ -541,7 +541,7 @@ public static class SymbolTableInit
         {
             IEnumerable<PocoNode> newFocus = [element];
             var newContext = ctx.Nest(newFocus);
-            newContext.focus = newFocus;
+            newContext.Focus = newFocus;
             newContext.SetThis(newFocus);
             newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
             index++;

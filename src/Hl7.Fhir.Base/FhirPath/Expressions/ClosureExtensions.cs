@@ -6,43 +6,35 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
+#nullable enable
+
 using Hl7.Fhir.Model;
+using System;
 using System.Collections.Generic;
 
-namespace Hl7.FhirPath.Expressions
+namespace Hl7.FhirPath.Expressions;
+
+internal static class ClosureExtensions
 {
-    internal static class ClosureExtensions
+    extension(Closure ctx)
     {
-        public static IEnumerable<PocoNode> GetThis(this Closure ctx)
-        {
-            return ctx.ResolveValue("builtin.this");
-        }
+        public IEnumerable<PocoNode> GetThis() => ctx.ResolveValue("builtin.this") ?? [];
 
-
-        public static void SetThis(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetThis(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("builtin.this", value);
         }
 
-        public static IEnumerable<PocoNode> GetTotal(this Closure ctx)
-        {
-            return ctx.ResolveValue("builtin.total");
-        }
+        public IEnumerable<PocoNode> GetTotal() => ctx.ResolveValue("builtin.total") ?? [];
 
-
-        public static void SetTotal(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetTotal(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("builtin.total", value);
         }
 
+        public IEnumerable<PocoNode> GetThat() => ctx.ResolveValue("builtin.that") ?? [];
 
-        public static IEnumerable<PocoNode> GetThat(this Closure ctx)
-        {
-            return ctx.ResolveValue("builtin.that");
-        }
-
-        public static void SetThat(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetThat(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("builtin.that", value);
         }
@@ -50,7 +42,7 @@ namespace Hl7.FhirPath.Expressions
         /// <summary>
         /// The original node that was passed to the evaluation engine before starting evaluation.
         /// </summary>
-        public static void SetOriginalContext(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetOriginalContext(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("context", value);
         }
@@ -60,38 +52,27 @@ namespace Hl7.FhirPath.Expressions
         /// resource the element is part of. Do not go past a root resource into a bundle, if it is contained
         /// in a bundle.
         /// </summary>
-        public static void SetResource(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetResource(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("resource", value);
         }
 
         /// <summary>
-        /// When a DomainResource contains another resource, and that contained resource is the focus (%resource) 
+        /// When a DomainResource contains another resource, and that contained resource is the focus (%resource)
         /// then %rootResource refers to the container resource.
         /// </summary>
-        public static void SetRootResource(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetRootResource(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("rootResource", value);
         }
 
+        public IEnumerable<PocoNode> GetOriginalContext() => ctx.ResolveValue("context") ?? [];
 
-        public static IEnumerable<PocoNode> GetOriginalContext(this Closure ctx)
-        {
-            return ctx.ResolveValue("context");
-        }
+        public IEnumerable<PocoNode> GetResource() => ctx.ResolveValue("resource") ?? [];
 
-        public static IEnumerable<PocoNode> GetResource(this Closure ctx)
-        {
-            return ctx.ResolveValue("resource");
-        }
+        public IEnumerable<PocoNode> GetRootResource() => ctx.ResolveValue("rootResource") ?? [];
 
-
-        public static IEnumerable<PocoNode> GetRootResource(this Closure ctx)
-        {
-            return ctx.ResolveValue("rootResource");
-        }
-
-        public static Closure Nest(this Closure ctx, IEnumerable<PocoNode> input)
+        public Closure Nest(IEnumerable<PocoNode> input)
         {
             var nested = ctx.Nest();
             nested.SetThat(input);
@@ -99,14 +80,11 @@ namespace Hl7.FhirPath.Expressions
             return nested;
         }
 
-        public static void SetIndex(this Closure ctx, IEnumerable<PocoNode> value)
+        public void SetIndex(IEnumerable<PocoNode> value)
         {
             ctx.SetValue("builtin.index", value);
         }
 
-        public static IEnumerable<PocoNode> GetIndex(this Closure ctx)
-        {
-            return ctx.ResolveValue("builtin.index");
-        }
+        public IEnumerable<PocoNode> GetIndex() => ctx.ResolveValue("builtin.index") ?? [];
     }
 }

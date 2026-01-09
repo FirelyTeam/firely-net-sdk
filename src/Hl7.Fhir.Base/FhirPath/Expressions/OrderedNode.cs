@@ -6,15 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.FhirPath.Expressions;
 
-internal record OrderedNode(PrimitiveType Primitive, PocoNode Parent, int? Index, string Name = null, bool Descending = false) : PrimitiveNode(Primitive, Parent, Index, Name)
+internal record OrderedNode(PrimitiveType Primitive, PocoNode? Parent, int? Index, string? Name = null, bool Descending = false) : PrimitiveNode(Primitive, Parent, Index, Name)
 {
     internal static OrderedNode FromPrimitiveNode(PocoNode primitiveNode, bool descending = false) =>
         new((PrimitiveType)primitiveNode.Poco, primitiveNode.Parent, primitiveNode.Index, primitiveNode.Name, descending);
 }
-
