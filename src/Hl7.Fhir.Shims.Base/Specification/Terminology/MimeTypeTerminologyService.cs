@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2024, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -13,9 +13,11 @@ using System;
 namespace Hl7.Fhir.Specification.Terminology;
 
 /// <summary>
-/// Checks if codes are valid Mime-Types (urn:ietf:bcp:13)
+/// Checks if codes are valid MIME types (urn:ietf:bcp:13)
 /// </summary>
-public sealed class MimeTypeTerminologyService() : CustomValueSetTerminologyService("MIME type", MIMETYPE_SYSTEM,
+public sealed class MimeTypeTerminologyService() : CustomValueSetTerminologyService(
+    "MIME type", 
+    MIMETYPE_SYSTEM,
     [MIMETYPE_VALUESET_STU3, MIMETYPE_VALUESET_R4_AND_UP])
 {
     private const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
@@ -25,11 +27,16 @@ public sealed class MimeTypeTerminologyService() : CustomValueSetTerminologyServ
     private const string JSON_CODE = "json";
     private const string TTL_CODE = "ttl";
 
-    //mime-type format: type "/" [tree "."] subtype ["+" suffix]* [";" parameter];
-    //FHIR also allows for the following codes: xml, json, ttl
-    override protected bool ValidateCodeType(string code)
+    /// <summary>
+    /// Validates if the code is a valid MIME type.
+    /// </summary>
+    /// <remarks>
+    /// mime-type format: type "/" [tree "."] subtype ["+" suffix]* [";" parameter];
+    /// FHIR also allows for the following codes: xml, json, ttl
+    /// </remarks>
+    protected override bool ValidateCodeType(string code)
     {
-        //This is a temporary fix until we support additional bindings.
+        // This is a temporary fix until we support additional bindings.
         if (code == XML_CODE || code == JSON_CODE || code == TTL_CODE)
         {
             return true;
@@ -39,3 +46,4 @@ public sealed class MimeTypeTerminologyService() : CustomValueSetTerminologyServ
         return entries.Length == 2;
     }
 }
+

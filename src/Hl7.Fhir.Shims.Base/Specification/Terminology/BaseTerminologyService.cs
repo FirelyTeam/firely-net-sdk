@@ -58,7 +58,6 @@ namespace Hl7.Fhir.Specification.Terminology;
 /// <item><description>Simply delegating/forwarding to another service (HTTP endpoint, wrapped service, etc.)</description></item>
 /// <item><description>Implementing decorator patterns (caching, routing, fallback logic)</description></item>
 /// <item><description>Need to preserve all parameters (id, useGet) that get discarded during conversion</description></item>
-/// <item><description>Implementing simple single-value validators</description></item>
 /// </list>
 /// Examples: 
 /// <list type="bullet">
@@ -564,7 +563,6 @@ public abstract class BaseTerminologyService : ITerminologyService
     /// <returns>A ConceptMap with new closure table entries</returns>
     protected virtual T.Task<Resource> Closure(ClosureParameters parameters) =>
         throw new NotImplementedException();
-    
     #endregion
 }
 
