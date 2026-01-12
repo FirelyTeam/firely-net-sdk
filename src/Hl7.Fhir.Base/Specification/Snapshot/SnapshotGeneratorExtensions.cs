@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Non-inheritable extensions are extensions that should not be inherited by derived profiles.
         /// </summary>
         /// <param name="element"></param>
-        internal static void RemoveAllNonInheritableExtensions(this Element element)
+        public static void RemoveAllNonInheritableExtensions(this Element element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveNonInheritableExtensions();
