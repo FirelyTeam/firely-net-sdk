@@ -1,7 +1,4 @@
 ## Intro:
 
-Fixes Code<T> having System and Value switched.  
-Leaves snapshot generation result usability to the caller rather than assuming error.   
-
-- For breaking changes compared to 5.x see our [GitHub wiki](https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-6.0)
-
+Mostly minor changes, but one breaking change where the PocoNode's ParentNode constructor has been removed, as it was not
+necessary and is derived from the Parent.
