@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using System;
 using System.Collections.Generic;
 
 #pragma warning disable 1591 // suppress XML summary warnings
@@ -138,13 +139,18 @@ namespace Hl7.Fhir.Support
         public static readonly Issue TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED = Create(6002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_SERVICE_FAILED = Create(6004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue TERMINOLOGY_NO_CODE_IN_INSTANCE = Create(6005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
+        public static readonly Issue TERMINOLOGY_INCOMPLETE_CODE_ERROR = Create(6005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
+
+        [Obsolete("Use TERMINOLOGY_INCOMPLETE_CODE_ERROR instead")]
+        public static readonly Issue TERMINOLOGY_NO_CODE_IN_INSTANCE = TERMINOLOGY_INCOMPLETE_CODE_ERROR;
 
         // Since the terminology service can't return Operation Outcomes, but only true of false. Terminology issues are split up into two categories: warnings of errors.
         // Error means the code is invalid, warning contains just an informational message as outcome.
         public static readonly Issue TERMINOLOGY_OUTPUT_WARNING = Create(6006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Informational);
         public static readonly Issue TERMINOLOGY_OUTPUT_ERROR = Create(6007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
 
+        // More terminology specific errors.
+        public static readonly Issue TERMINOLOGY_INCOMPLETE_CODE_WARNING = Create(6008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.CodeInvalid);
     }
 
 
