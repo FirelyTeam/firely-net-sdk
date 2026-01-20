@@ -58,7 +58,7 @@ public static class TerminologyParametersExtensions
                 throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided");
 
             if (parameters.HasParam(CODE_ATTRIBUTE) && !exactlyOneSystemParam(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' or 'inferSystem' must be provided");
+                throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' must be provided, or 'inferSystem' must be true");
 
             return new(parameters);
 

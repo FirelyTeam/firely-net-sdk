@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
+            Assert.Equal(System.Net.HttpStatusCode.BadRequest, exception.Status);
         }
 
 
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
+            Assert.Equal(System.Net.HttpStatusCode.BadRequest, exception.Status);
         }
 
         [Fact]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
 
-            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", system: "test", context: "Partient.gender");
 
             isSuccess(result).Should().BeFalse();
             getMessage(result).Should().Contain("does not exist in the value set");

@@ -249,10 +249,10 @@ namespace Hl7.Fhir.FhirPath
 
             inParams = input switch
             {
-                { Poco: Code code } => inParams.WithCode(code: code.Value, context: input.GetLocalLocation()),
+                { Poco: Code code } => inParams.WithCode(code: code.Value, context: input.GetLocalLocation(), inferSystem: true),
                 { Poco: Coding coding } => inParams.WithCoding(coding),
                 { Poco: CodeableConcept cc } => inParams.WithCodeableConcept(cc),
-                PrimitiveNode { Value: string s } => inParams.WithCode(code: s, context: "No context available"),
+                PrimitiveNode { Value: string s } => inParams.WithCode(code: s, context: "No context available", inferSystem: true),
                 _ => null,
             };
 

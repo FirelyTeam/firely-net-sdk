@@ -34,8 +34,7 @@ public static class TerminologyValidationHelpers
 
         if (count != 1)
         {
-            throw FhirOperationException.InvalidOperationInvocation(
-                $"One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation($"One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided.");
         }
     }
 
@@ -48,7 +47,7 @@ public static class TerminologyValidationHelpers
         if (code == null) return;
 
         if (system == null && inferSystem?.Value != true)
-            throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' must be provided, or 'inferSystem' must be true.");
+            throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' must be provided, or 'inferSystem' must be true");
     }
 
     /// <summary>
@@ -60,8 +59,7 @@ public static class TerminologyValidationHelpers
         if (coding == null) return;
 
         if (string.IsNullOrEmpty(coding.Code) || string.IsNullOrEmpty(coding.System))
-            throw FhirOperationException.IncompleteCodedParameter(
-            $"Must have a {parameterName} with both code and system to be validated.");
+            throw FhirOperationException.IncompleteCodedParameter($"Must have a {parameterName} with both code and system to be validated.");
     }
 
     /// <summary>
@@ -88,8 +86,7 @@ public static class TerminologyValidationHelpers
         if (context != null) count += 1;
 
         if (count != 1)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "One (and only one) of 'url', 'valueSet' or 'context' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'url', 'valueSet' or 'context' must be provided.");
     }
 
     /// <summary>
@@ -109,18 +106,15 @@ public static class TerminologyValidationHelpers
     {
         // Validate exactly one code parameter type for A
         if (!HasExactlyOne(codeA, codingA))
-            throw FhirOperationException.InvalidOperationInvocation(
-                "One (and only one) of 'codeA' or 'codingA' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'codeA' or 'codingA' must be provided.");
 
         // Validate exactly one code parameter type for B
         if (!HasExactlyOne(codeB, codingB))
-            throw FhirOperationException.InvalidOperationInvocation(
-                "One (and only one) of 'codeB' or 'codingB' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'codeB' or 'codingB' must be provided.");
 
         // Validate system requirements for code parameters
         if ((codeA != null || codeB != null) && system == null)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "If 'codeA' or 'codeB' is provided, 'system' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("If 'codeA' or 'codeB' is provided, 'system' must be provided.");
 
         // Validate coding parameters have code and system
         ValidateCoding(codingA);
@@ -135,13 +129,11 @@ public static class TerminologyValidationHelpers
     {
         // Validate exactly one code parameter type
         if (!HasExactlyOne(code, coding))
-            throw FhirOperationException.InvalidOperationInvocation(
-                "One (and only one) of 'code' or 'coding' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'code' or 'coding' must be provided.");
 
         // Validate system requirement for code parameter
         if (code != null && system == null)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "If 'code' is provided, 'system' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, 'system' must be provided.");
 
         // Validate coding parameter has code and system
         ValidateCoding(coding);
@@ -158,12 +150,10 @@ public static class TerminologyValidationHelpers
 
         // Validate exactly one concept map reference
         if (url == null && conceptMap == null)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "One of 'url' or 'conceptMap' must be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("One of 'url' or 'conceptMap' must be provided.");
 
         if (url != null && conceptMap != null)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "Only one of 'url' or 'conceptMap' can be provided, not both.");
+            throw FhirOperationException.InvalidOperationInvocation("Only one of 'url' or 'conceptMap' can be provided, not both.");
 
         // Validate system requirement for code parameter
         ValidateSystemForCode(code, system, null);
@@ -205,8 +195,7 @@ public static class TerminologyValidationHelpers
 
         // Validate context direction requires context
         if (contextDirection.HasValue && context == null)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "'contextDirection' requires 'context' to be provided.");
+            throw FhirOperationException.InvalidOperationInvocation("'contextDirection' requires 'context' to be provided.");
 
         // Validate paging parameters are non-negative
         if (offset?.Value < 0)
@@ -233,11 +222,6 @@ public static class TerminologyValidationHelpers
 
         // Validate codeableConcept parameter has coding or text
         ValidateConcept(codeableConcept);
-
-        // Validate text parameter requires code parameter
-        if (!string.IsNullOrEmpty(codeableConcept?.Text) && code == null && coding == null)
-            throw FhirOperationException.InvalidOperationInvocation(
-                "'text' requires 'code' or 'coding' to be provided.");
     }
 
     /// <summary>

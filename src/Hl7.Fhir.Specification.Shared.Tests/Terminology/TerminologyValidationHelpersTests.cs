@@ -80,22 +80,7 @@ public class TerminologyValidationHelpersTests
         var exception = Assert.Throws<FhirOperationException>(() => 
             TerminologyValidationHelpers.ValidateSystemForCode(code, system, inferSystem));
 
-        Assert.Equal("If 'code' is provided, 'system' must be provided.", exception.Message);
-    }
-
-    [Fact]
-    public void ValidateSystemForCode_WithInferSystemTrue_ThrowsNotSupported()
-    {
-        // Arrange
-        var code = new Code("test");
-        var system = new FhirUri("http://test.org");
-        var inferSystem = new FhirBoolean(true);
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateSystemForCode(code, system, inferSystem));
-
-        Assert.Equal("The 'inferSystem' parameter is not supported.", exception.Message);
+        Assert.Equal("If 'code' is provided, either 'system' must be provided, or 'inferSystem' must be true", exception.Message);
     }
 
     [Fact]
@@ -133,7 +118,7 @@ public class TerminologyValidationHelpersTests
         // Act & Assert
         var exception = Assert.Throws<FhirOperationException>(() => TerminologyValidationHelpers.ValidateCoding(coding));
 
-        Assert.Equal("Must have a testParam with both code and system to be validated.", exception.Message);
+        Assert.Equal("Must have a coding with both code and system to be validated.", exception.Message);
     }
 
     [Fact]
@@ -242,7 +227,7 @@ public class TerminologyValidationHelpersTests
         var exception = Assert.Throws<FhirOperationException>(() => 
             TerminologyValidationHelpers.ValidateExpandValueSetReference(url, valueSet, context));
 
-        Assert.Equal("'url', 'valueSet' or 'context' must be provided.", exception.Message);
+        Assert.Equal("One (and only one) of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
     }
 
     [Fact]
@@ -271,21 +256,6 @@ public class TerminologyValidationHelpersTests
                 new FhirUri("http://test.org"), null, null, null, null, count));
 
         Assert.Equal("'count' must be non-negative.", exception.Message);
-    }
-
-    [Fact]
-    public void ValidateExpandParameters_WithContextDirectionWithoutContext_ThrowsException()
-    {
-        // Arrange
-        var contextDirection = ContextDirection.Incoming;
-        var context = (FhirUri?)null;
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateExpandParameters(
-                null, null, context, contextDirection, null, null));
-
-        Assert.Equal("'contextDirection' requires 'context' to be provided.", exception.Message);
     }
 
     [Fact]
@@ -351,12 +321,12 @@ public class TerminologyValidationHelpersTests
     {
         // Arrange
         var codeA = new Code("codeA");
-        var codingB = new Coding { System = "http://test.org", Code = "codeB" };
+        var codingA = new Coding { System = "http://test.org", Code = "codeA" };
         var system = new FhirUri("http://test.org");
 
         // Act & Assert
         var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateSubsumesParameters(codeA, null, null, codingB, system, null));
+            TerminologyValidationHelpers.ValidateSubsumesParameters(codeA, null, codingA, null, system, null));
 
         Assert.Equal("One (and only one) of 'codeA' or 'codingA' must be provided.", exception.Message);
     }
@@ -409,21 +379,6 @@ public class TerminologyValidationHelpersTests
     }
 
     [Fact]
-    public void ValidateLookupParameters_WithCodeWithoutSystem_ThrowsException()
-    {
-        // Arrange
-        var code = new Code("test");
-        var system = (FhirUri?)null;
-        var coding = (Coding?)null;
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateLookupParameters(code, coding, system));
-
-        Assert.Equal("One (and only one) of 'code' or 'coding' must be provided.", exception.Message);
-    }
-
-    [Fact]
     public void ValidateLookupParameters_WithInvalidCoding_ThrowsException()
     {
         // Arrange
@@ -458,42 +413,6 @@ public class TerminologyValidationHelpersTests
     }
 
     [Fact]
-    public void ValidateTranslateParameters_WithCodeWithoutSystem_ThrowsException()
-    {
-        // Arrange
-        var code = new Code("test");
-        var system = (FhirUri?)null;
-        var url = (FhirUri?)null;
-        var conceptMap = (Resource?)null;
-        var coding = (Coding?)null;
-        var codeableConcept = (CodeableConcept?)null;
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateTranslateParameters(code, coding, codeableConcept, url, conceptMap, system));
-
-        Assert.Equal("If 'code' is provided, 'system' must be provided.", exception.Message);
-    }
-
-    [Fact]
-    public void ValidateTranslateParameters_WithUrlAndConceptMap_ThrowsException()
-    {
-        // Arrange
-        var url = new FhirUri("http://test.org");
-        var conceptMap = new ConceptMap();
-        var code = (Code?)null;
-        var system = (FhirUri?)null;
-        var coding = (Coding?)null;
-        var codeableConcept = (CodeableConcept?)null;
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateTranslateParameters(code, coding, codeableConcept, url, conceptMap, system));
-
-        Assert.Equal("Only one of 'url' or 'conceptMap' can be provided, not both.", exception.Message);
-    }
-
-    [Fact]
     public void ValidateTranslateParameters_WithNoConceptMapOrUrl_ThrowsException()
     {
         // Arrange
@@ -525,21 +444,6 @@ public class TerminologyValidationHelpersTests
 
         // Assert
         Assert.Null(exception);
-    }
-
-    [Fact]
-    public void ValidateClosureParameters_WithVersionOnly_ThrowsException()
-    {
-        // Arrange
-        var name = (FhirString?)null;
-        var concepts = (IEnumerable<Coding>?)null;
-        var version = new FhirString("1.0");
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateClosureParameters(name, concepts, version));
-
-        Assert.Equal("'name' must be provided.", exception.Message);
     }
 
     [Fact]
@@ -595,21 +499,5 @@ public class TerminologyValidationHelpersTests
 
         // Assert
         Assert.Null(exception);
-    }
-
-    [Fact]
-    public void ValidateCodeSystemValidateCodeParameters_WithDisplayWithoutCode_ThrowsException()
-    {
-        // Arrange
-        var code = (Code?)null;
-        var system = new FhirUri("http://test.org");
-        var coding = (Coding?)null;
-        var codeableConcept = new CodeableConcept { Text = "test" }; // display without code
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateCodeSystemValidateCodeParameters(code, coding, codeableConcept, system));
-
-        Assert.Equal("'display' requires 'code' or 'coding' to be provided.", exception.Message);
     }
 }

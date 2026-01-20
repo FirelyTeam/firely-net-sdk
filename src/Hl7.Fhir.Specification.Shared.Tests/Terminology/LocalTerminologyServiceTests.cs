@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
                    .WithValueSet(valueset);
 
             parameters = !string.IsNullOrEmpty(context)
-                ? parameters.WithCode(code: code, context: context)
+                ? parameters.WithCode(code: code, context: context, inferSystem: true)
                 : parameters.WithCode(code: code, system: system);
 
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var parameters = new ValidateCodeParameters()
                 .WithValueSet("http://hl7.org/fhir/ValueSet/mimetypes")
-                .WithCode(code: "application/json", context: "context");
+                .WithCode(code: "application/json", context: "context", inferSystem: true);
             
             var result = await service.ValueSetValidateCode(parameters);
 
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var parameters = new ValidateCodeParameters()
                 .WithValueSet("http://fire.ly/ValueSet/an-entire-complicated-codesystem")
-                .WithCode("255848005", context: "AllergyIntolerance.code.coding[0].code");
+                .WithCode("255848005", context: "AllergyIntolerance.code.coding[0].code", inferSystem: true);
 
 
 
@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.Add("code", code is not null ? new FhirString(code) : null);
             parameters.Add("url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null );
             parameters.Add("context", context is not null ? new FhirUri("context") : null);
+            parameters.Add("inferSystem", new FhirBoolean(true));
             parameters.Add("valueSet", valueset is not null ? new ValueSet() : null);
 
             Action validate = () => parameters.ValidateValueSetValidateCodeParams();
@@ -150,7 +151,8 @@ namespace Hl7.Fhir.Specification.Tests
         public async Task PicksUpValidationVersionInUri(string url, string vsVersion, string resolved)
         {
             var parameters = new ValidateCodeParameters();
-            parameters.Add("code", new FhirString("code"));
+            parameters.Add("code", new Code("code"));
+            parameters.Add("system", new FhirUri("test"));
             parameters.Add("url", new FhirUri(url));
 
             if(vsVersion is not null)
