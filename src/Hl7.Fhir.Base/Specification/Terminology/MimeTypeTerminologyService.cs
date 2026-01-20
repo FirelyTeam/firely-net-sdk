@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Terminology;
 public sealed class MimeTypeTerminologyService() : CustomValueSetTerminologyService("MIME type", MIMETYPE_SYSTEM,
     [MIMETYPE_VALUESET_STU3, MIMETYPE_VALUESET_R4_AND_UP])
 {
-    private const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
+    internal const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
     public const string MIMETYPE_VALUESET_R4_AND_UP = "http://hl7.org/fhir/ValueSet/mimetypes";
     public const string MIMETYPE_VALUESET_STU3 = "http://www.rfc-editor.org/bcp/bcp13.txt";
     private const string XML_CODE = "xml";

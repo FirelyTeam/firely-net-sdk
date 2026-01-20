@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var parameters = new ValidateCodeParameters()
                 .WithValueSet(MIMETYPEVS)
-                .WithCode(code: "invalid", context: "context");
+                .WithCode(code: "invalid", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             parameters = new ValidateCodeParameters()
                 .WithValueSet(MIMETYPEVS)
-                .WithCode(code: "application/json", context: "context");
+                .WithCode(code: "application/json", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
@@ -41,23 +41,23 @@ namespace Hl7.Fhir.Specification.Tests
 
             parameters = new ValidateCodeParameters()
                 .WithValueSet(MIMETYPEVS)
-                .WithCode(code: "json");
+                .WithCode(code: "json", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
                 .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
 
             parameters = new ValidateCodeParameters()
                 .WithValueSet(ADMINGENDERVS)
-                .WithCode(code: "application/json", context: "context");
+                .WithCode(code: "application/json", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             Func<Task> validateCode = async () => await _service.ValueSetValidateCode(parameters);
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage($"Cannot find valueset '{ADMINGENDERVS}'");
 
             parameters = new ValidateCodeParameters()
-                    .WithCode(code: "application/json");
+                    .WithCode(code: "application/json", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a url or a context must be provided");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a 'url', 'context' or a 'valueSet' must be provided");
 
             parameters = new ValidateCodeParameters()
                   .WithValueSet(MIMETYPEVS)
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var parameters = new ValidateCodeParameters()
                    .WithValueSet(valueset)
-                   .WithCode(code: "invalid", context: "context");
+                   .WithCode(code: "invalid", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             parameters = new ValidateCodeParameters()
                    .WithValueSet(valueset)
-                   .WithCode(code: "application/json", context: "context");
+                   .WithCode(code: "application/json", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")

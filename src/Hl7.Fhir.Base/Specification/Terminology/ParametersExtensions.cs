@@ -10,11 +10,13 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using System.Linq;
 using static Hl7.Fhir.Specification.Terminology.ValidateCodeParameters;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
+/// <summary>
+/// Extension methods for Parameters used in terminology operations.
+/// </summary>
 public static class TerminologyParametersExtensions
 {
     extension(Parameters parameters)
@@ -36,6 +38,10 @@ public static class TerminologyParametersExtensions
             return parameters;
         }
 
+        /// <summary>
+        /// Validates parameters for ValueSet validate code operation.
+        /// </summary>
+        /// <exception cref="FhirOperationException"></exception>
         internal ValidateCodeParameters ValidateValueSetValidateCodeParams()
         {
             parameters.NoDuplicates();
@@ -46,15 +52,15 @@ public static class TerminologyParametersExtensions
             // * If a code is provided, either a system or inferSystem SHOULD be provided.
 
             if (!hasValueSet(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("'url', 'context' or 'valueset' must be provided.");
+                throw FhirOperationException.InvalidOperationInvocation("If a code is provided, a 'url', 'context' or a 'valueSet' must be provided");
 
-            if(!exactlyOneCodeParam(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided.");
+            if (!exactlyOneCodeParam(parameters))
+                throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided");
 
             if (parameters.HasParam(CODE_ATTRIBUTE) && !exactlyOneSystemParam(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' or 'inferSystem' must be provided.");
+                throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' or 'inferSystem' must be provided");
 
-            return new ValidateCodeParameters(parameters);
+            return new(parameters);
 
             static bool hasValueSet(Parameters p) =>
                 p.HasParam(URL_ATTRIBUTE) || p.HasParam(CONTEXT_ATTRIBUTE) || p.HasParam(VALUE_SET_ATTRIBUTE);

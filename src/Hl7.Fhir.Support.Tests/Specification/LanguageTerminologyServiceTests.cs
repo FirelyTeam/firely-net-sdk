@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var parameters = new ValidateCodeParameters()
                    .WithValueSet(LANGUAGE_VS)
-                   .WithCode(code: "ned", context: "context");
+                   .WithCode(code: "ned", context: "context", system: LanguageTerminologyService.LANGUAGE_SYSTEM);
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             parameters = new ValidateCodeParameters()
                    .WithValueSet(LANGUAGE_VS)
-                   .WithCode(code: "nl-NL", context: "context");
+                   .WithCode(code: "nl-NL", context: "context", system: LanguageTerminologyService.LANGUAGE_SYSTEM);
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification.Tests
             
             parameters = new ValidateCodeParameters()
                 .WithValueSet(LANGUAGE_VS)
-                .WithCode(code: "fr-CH", context: "context");
+                .WithCode(code: "fr-CH", context: "context", system: LanguageTerminologyService.LANGUAGE_SYSTEM);
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
@@ -48,16 +48,16 @@ namespace Hl7.Fhir.Specification.Tests
 
             parameters = new ValidateCodeParameters()
                    .WithValueSet(ADMINGENDERVS)
-                   .WithCode(code: "application/json", context: "context");
+                   .WithCode(code: "application/json", context: "context", system: LanguageTerminologyService.LANGUAGE_SYSTEM);
 
             Func<Task> validateCode = async () => await _service.ValueSetValidateCode(parameters);
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage($"Cannot find valueset '{ADMINGENDERVS}'");
 
             parameters = new ValidateCodeParameters()
-                  .WithCode(code: "application/json");
+                  .WithCode(code: "application/json", system: LanguageTerminologyService.LANGUAGE_SYSTEM);
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a url or a context must be provided");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a 'url', 'context' or a 'valueSet' must be provided");
 
             parameters = new ValidateCodeParameters()
                   .WithValueSet(LANGUAGE_VS)

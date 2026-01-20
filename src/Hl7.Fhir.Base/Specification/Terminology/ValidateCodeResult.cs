@@ -21,6 +21,9 @@ public class ValidateCodeResult : Parameters
     public const string RESULT_ATTRIBUTE = "result";
     public const string MESSAGE_ATTRIBUTE = "message";
     public const string DISPLAY_ATTRIBUTE = "display";
+    public const string CODE_ATTRIBUTE = "code";
+    public const string SYSTEM_ATTRIBUTE = "system";
+    public const string VERSION_ATTRIBUTE = "version";
     public const string ISSUES_ATTRIBUTE = "issues";
 
     public ValidateCodeResult()
@@ -54,9 +57,24 @@ public class ValidateCodeResult : Parameters
     public Resource? Issues => this.GetSingleResource(ISSUES_ATTRIBUTE);
 
     /// <summary>
+    /// Code for which validation was performed.
+    /// </summary>
+    public Code? Code => this.GetSingleValue<Code>(CODE_ATTRIBUTE);
+
+    /// <summary>
+    /// System in which validated code belongs.
+    /// </summary>
+    public FhirUri? System => this.GetSingleValue<FhirUri>(SYSTEM_ATTRIBUTE);
+
+    /// <summary>
+    /// Version of the system.
+    /// </summary>
+    public FhirString? Version => this.GetSingleValue<FhirString>(VERSION_ATTRIBUTE);
+
+    /// <summary>
     /// Creates a ValidateCodeResult with the given result and optional message.
     /// </summary>
-    public static ValidateCodeResult ForResult(bool result, string? message = null, string? display = null)
+    public static ValidateCodeResult ForResult(bool result, string? message = null, string? display = null, string? code = null, string? system = null, string? version = null, OperationOutcome? issues = null)
     {
         var resultParams = new ValidateCodeResult();
         resultParams.Add(RESULT_ATTRIBUTE, new FhirBoolean(result));
@@ -66,6 +84,18 @@ public class ValidateCodeResult : Parameters
 
         if (!string.IsNullOrWhiteSpace(display))
             resultParams.Add(DISPLAY_ATTRIBUTE, new FhirString(display));
+
+        if (!string.IsNullOrWhiteSpace(code))
+            resultParams.Add(CODE_ATTRIBUTE, new Code(code));
+
+        if (!string.IsNullOrWhiteSpace(system))
+            resultParams.Add(SYSTEM_ATTRIBUTE, new FhirUri(system));
+
+        if (!string.IsNullOrWhiteSpace(version))
+            resultParams.Add(VERSION_ATTRIBUTE, new FhirString(version));
+
+        if (issues is not null)
+            resultParams.SetSingleResource(ISSUES_ATTRIBUTE, issues);
 
         return resultParams;
     }

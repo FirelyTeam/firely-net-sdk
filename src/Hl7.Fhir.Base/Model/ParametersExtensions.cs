@@ -8,14 +8,15 @@
 
 #nullable enable
 
-using Hl7.Fhir.Rest;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 
 namespace Hl7.Fhir.Model;
 
+/// <summary>
+/// Extension methods for the Parameters class.
+/// </summary>
 public static class ParametersExtensions
 {
     private const string CODEATTRIBUTE = "code";
@@ -25,6 +26,11 @@ public static class ParametersExtensions
 
     extension(Parameters parameters)
     {
+        /// <summary>
+        /// Attempts to find duplicate parameter names in the Parameters.
+        /// </summary>
+        /// <param name="duplicates">Output parameter containing duplicate names.</param>
+        /// <returns>True if duplicates are found, false otherwise.</returns>
         public bool TryGetDuplicates(out IEnumerable<string> duplicates)
         {
             duplicates = parameters.Parameter.Select(p => p.Name)
@@ -36,6 +42,11 @@ public static class ParametersExtensions
             return duplicates.Any();
         }
 
+        /// <summary>
+        /// Checks if the Parameters contains a parameter with the specified name.
+        /// </summary>
+        /// <param name="name">The parameter name to look for.</param>
+        /// <returns>True if the parameter exists, false otherwise.</returns>
         public bool HasParam(string name) => parameters.Parameter.Any(p => p.Name == name);
     }
 }

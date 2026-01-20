@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task LocalTermServiceUsingDuplicateParameters()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {

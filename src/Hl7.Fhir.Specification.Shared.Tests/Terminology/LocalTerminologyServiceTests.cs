@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("http://hl7.org/fhir/ValueSet/vs|2.0", "3.0", "http://hl7.org/fhir/ValueSet/vs|3.0")]
         public async Task PicksUpValidationVersionInUri(string url, string vsVersion, string resolved)
         {
-            var parameters = new Parameters();
+            var parameters = new ValidateCodeParameters();
             parameters.Add("code", new FhirString("code"));
             parameters.Add("url", new FhirUri(url));
 

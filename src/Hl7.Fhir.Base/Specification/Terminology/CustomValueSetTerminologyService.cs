@@ -113,12 +113,8 @@ public abstract class CustomValueSetTerminologyService : ITerminologyService
     {
         var result = new Parameters();
 
-        // Maybe just a text, but if there are no codings, that's a positive result
         if (!cc.Coding.Any())
-        {
-            result.Add("result", new FhirBoolean(true));
-            return result;
-        }
+            throw FhirOperationException.IncompleteCodedParameter("CodeableConcept has no Coding elements.");
 
         // If we have just 1 coding, we better handle this using the simpler version of ValidateBinding
         if (cc.Coding.Count == 1)

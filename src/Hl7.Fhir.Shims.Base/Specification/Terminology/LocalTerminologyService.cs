@@ -12,17 +12,16 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
-using System;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Tasks = System.Threading.Tasks;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
-public class LocalTerminologyService : ITerminologyService
+public class LocalTerminologyService : BaseTerminologyService
 {
     private static readonly SemaphoreSlim SEMAPHORE = new(1, 1);
 
@@ -36,7 +35,7 @@ public class LocalTerminologyService : ITerminologyService
         var settings = expanderSettings ?? ValueSetExpanderSettings.CreateDefault();
         settings.ValueSetSource ??= resolver;
 
-        _expander = new ValueSetExpander(settings);
+        _expander = new(settings);
     }
 
     /// <summary>
@@ -45,13 +44,12 @@ public class LocalTerminologyService : ITerminologyService
     /// <param name="coreResourceResolver">Resource resolves to resolve FHIR core artifacts</param>
     /// <param name="expanderSettings">ValueSet expansion settings</param>
     /// <returns>A MultiTerminologyService, which combines a LocalTerminologyService to retrieve the core FHIR resources with custom services to validate some implicit core ValueSets</returns>
-    public static MultiTerminologyService CreateDefaultForCore(IAsyncResourceResolver coreResourceResolver,
-        ValueSetExpanderSettings? expanderSettings = null)
+    public static MultiTerminologyService CreateDefaultForCore(IAsyncResourceResolver coreResourceResolver, ValueSetExpanderSettings? expanderSettings = null)
     {
         return TerminologyServiceFactory.CreateDefaultForCore(coreResourceResolver, expanderSettings);
     }
 
-    internal async Task<ValueSet?> FindValueSet(Canonical canonical)
+    protected internal override async Task<ValueSet?> ResolveValueSet(Canonical canonical)
     {
         var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
 
@@ -64,7 +62,7 @@ public class LocalTerminologyService : ITerminologyService
             var cs = source.FindCodeSystemByValueSet(canonical);
             if (cs != null)
             {
-                valueset = new ValueSet
+                valueset = new()
                 {
                     Url = canonical,
                     Status = cs.Status, // mandatory field
@@ -96,11 +94,11 @@ public class LocalTerminologyService : ITerminologyService
                     Title = cs.Title,
                     UseContext = cs.UseContext,
                     Version = cs.Version,
-                    Compose = new ValueSet.ComposeComponent
+                    Compose = new()
                     {
                         Include =
                         [
-                            new ValueSet.ConceptSetComponent { System = cs.Url }
+                            new() { System = cs.Url }
                         ]
                     }
                 };
@@ -152,7 +150,7 @@ public class LocalTerminologyService : ITerminologyService
         var versionToUse = version?.Value ?? canonicalVersion;
         var resolvableCanonical = new Canonical(uri, versionToUse, fragment);
 
-        var vs = await FindValueSet(resolvableCanonical).ConfigureAwait(false);
+        var vs = await ResolveValueSet(resolvableCanonical).ConfigureAwait(false);
 
         if (vs is null)
             throw new FhirOperationException(
@@ -161,208 +159,92 @@ public class LocalTerminologyService : ITerminologyService
         return await getExpandedValueSet(vs, operation).ConfigureAwait(false);
     }
 
-    ///<inheritdoc />
-    public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+    protected override async Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
     {
-        parameters.ValidateValueSetValidateCodeParams();
-
-        var validateCodeParams = new ValidateCodeParameters(parameters);
-        var valueSet = validateCodeParams.ValueSet as ValueSet;
-        if (valueSet is null && validateCodeParams.Url is null)
-            throw new FhirOperationException("Have to supply either a canonical url or a valueset.",
-                (HttpStatusCode)422); // Unprocessable entity
-
-        try
-        {
-            valueSet = valueSet is null
-                ? await getExpandedValueSet(validateCodeParams.Url!, validateCodeParams.ValueSetVersion,
-                    "validate code").ConfigureAwait(false)
-                : await getExpandedValueSet(valueSet, "validate code").ConfigureAwait(false);
-
-            if (validateCodeParams.CodeableConcept is not null)
-                return await validateCodeVs(valueSet, validateCodeParams.CodeableConcept,
-                    validateCodeParams.Abstract?.Value).ConfigureAwait(false);
-            else if (validateCodeParams.Coding is { })
-                return await validateCodeVs(valueSet, validateCodeParams.Coding, validateCodeParams.Abstract?.Value)
-                    .ConfigureAwait(false);
-            else
-                return await validateCodeVs(valueSet, validateCodeParams.Code?.Value, validateCodeParams.System?.Value,
-                    validateCodeParams.Display?.Value, validateCodeParams.Abstract?.Value).ConfigureAwait(false);
-        }
-        catch (Exception e) when (e is not FhirOperationException)
-        {
-            //500 internal server error
-            throw new FhirOperationException(e.Message, (HttpStatusCode)500);
-        }
+        var valueSet = parameters.ValueSet as ValueSet;
+        valueSet = valueSet is null
+            ? await getExpandedValueSet(parameters.Url!, parameters.ValueSetVersion, "validate code").ConfigureAwait(false)
+            : await getExpandedValueSet(valueSet, "validate code").ConfigureAwait(false);
+        
+        if (parameters.CodeableConcept is not null)
+            return await validateCodeVs(valueSet, parameters.CodeableConcept, parameters.Abstract?.Value).ConfigureAwait(false);
+        if (parameters.Coding is not null)
+            return await validateCodeVs(valueSet, parameters.Coding, parameters.Abstract?.Value).ConfigureAwait(false);
+        
+        return await validateCodeVs(valueSet, parameters.Code?.Value, parameters.System?.Value, parameters.Display?.Value, parameters.Abstract?.Value).ConfigureAwait(false);
     }
 
-    ///<inheritdoc />
-    public async Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
+    protected override async Task<Resource> Expand(ExpandParameters parameters)
     {
-     	parameters.NoDuplicates();
-     	
-        var url = parameters.GetSingleValue<FhirUri>("url")?.Value ??
-                  parameters.GetSingleValue<FhirString>("url")?.Value;
-        var valueSet = parameters.GetSingle("valueSet")?.Resource as ValueSet;
-
-        if (valueSet is null && url is null)
-            throw new FhirOperationException("Have to supply either a canonical url or a valueset.",
-                (HttpStatusCode)422); // Unprocessable entity
-
-        var version = parameters.GetSingleValue<FhirString>("valueSetVersion");
-
-        try
-        {
-            return valueSet is null
-                ? await getExpandedValueSet(new FhirUri(url!), version, "expand").ConfigureAwait(false)
-                : await getExpandedValueSet(valueSet, "expand").ConfigureAwait(false);
-        }
-        catch (Exception e) when (e is not FhirOperationException)
-        {
-            //500 internal server error
-            throw new FhirOperationException(e.Message, (HttpStatusCode)500);
-        }
+        if(parameters.ValueSet is ValueSet vs)
+            return await getExpandedValueSet(vs, "expand").ConfigureAwait(false);
+        
+        return await getExpandedValueSet(parameters.Url!, parameters.ValueSetVersion, "expand").ConfigureAwait(false);
     }
 
-    #region Not implemented methods
 
-    ///<inheritdoc />
-    public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
+    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
     {
-        // make this method async, when implementing
-        throw new NotImplementedException();
-    }
-
-    ///<inheritdoc />
-    public Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
-    {
-        // make this method async, when implementing
-        throw new NotImplementedException();
-    }
-
-    ///<inheritdoc />
-    public Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
-    {
-        // make this method async, when implementing
-        throw new NotImplementedException();
-    }
-
-    ///<inheritdoc />
-    public Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
-    {
-        // make this method async, when implementing
-        throw new NotImplementedException();
-    }
-
-    ///<inheritdoc />
-    public Task<Resource> Closure(Parameters parameters, bool useGet = false)
-    {
-        // make this method async, when implementing
-        throw new NotImplementedException();
-    }
-
-    #endregion
-
-    private async Task<Parameters> validateCodeVs(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
-    {
-        var result = new Parameters();
-
-        // Maybe just a text, but if there are no codings, that's a positive result
-        if (!cc.Coding.Any())
-        {
-            result.Add("result", new FhirBoolean(true));
-            return result;
-        }
-
         // If we have just 1 coding, we better handle this using the simpler version of ValidateBinding
         if (cc.Coding.Count == 1)
             return await validateCodeVs(vs, cc.Coding.Single(), abstractAllowed).ConfigureAwait(false);
 
         // Else, look for one succesful match in any of the codes in the CodeableConcept
-        var callResults = await Tasks.Task
-            .WhenAll(cc.Coding.Select(coding => validateCodeVs(vs, coding, abstractAllowed))).ConfigureAwait(false);
-        var anySuccesful = callResults.Any(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
+        var callResults = await T.Task.WhenAll(cc.Coding.Select(coding => validateCodeVs(vs, coding, abstractAllowed))).ConfigureAwait(false);
+        var successResult = callResults.FirstOrDefault(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
 
-        if (anySuccesful == false)
+        if (successResult is not null)
+            return successResult;
+
+        var messages = new StringBuilder();
+        messages.AppendLine("None of the Codings in the CodeableConcept were valid for the binding. Details follow.");
+
+        // gathering the messages of all calls
+        foreach (var msg in callResults.Select(cr => cr.GetSingleValue<FhirString>("message")?.Value)
+                     .Where(m => m is not null))
         {
-            var messages = new StringBuilder();
-            messages.AppendLine(
-                "None of the Codings in the CodeableConcept were valid for the binding. Details follow.");
-
-            // gathering the messages of all calls
-            foreach (var msg in callResults.Select(cr => cr.GetSingleValue<FhirString>("message")?.Value)
-                         .Where(m => m is { }))
-            {
-                messages.AppendLine(msg);
-            }
-
-            result.Add("message", new FhirString(messages.ToString()));
-            result.Add("result", new FhirBoolean(false));
-        }
-        else
-        {
-            result.Add("result", new FhirBoolean(true));
+            messages.AppendLine(msg);
         }
 
-        return result;
+        return ValidateCodeResult.ForResult(false, messages.ToString());
     }
 
-    private async Task<Parameters> validateCodeVs(ValueSet vs, Coding coding, bool? abstractAllowed)
+    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, Coding coding, bool? abstractAllowed)
     {
         return await validateCodeVs(vs, coding.Code, coding.System, coding.Display, abstractAllowed)
             .ConfigureAwait(false);
     }
 
-    private async Task<Parameters> validateCodeVs(ValueSet vs, string? code, string? system, string? display,
-        bool? abstractAllowed)
+    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, string? code, string? system, string? display, bool? abstractAllowed)
     {
         if (code is null)
-        {
-            var resultParam = new Parameters();
-            resultParam.Add("message", new FhirString("No code supplied."));
-            resultParam.Add("result", new FhirBoolean(false));
-            return resultParam;
-        }
+            return ValidateCodeResult.ForResult(false, "No code supplied.");
 
         var component = vs.FindInExpansion(code, system);
         var codeLabel = $"Code '{code}'"
-            + (string.IsNullOrEmpty(display) ? string.Empty : $" (display '{display}')") 
-            + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
-        var result = new Parameters();
-        var success = true;
+                        + (string.IsNullOrEmpty(display) ? string.Empty : $" (display '{display}')")
+                        + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
+        
         var messages = new StringBuilder();
-
         if (component is null)
         {
             await messageForCodeNotFound(vs, system, codeLabel, messages).ConfigureAwait(false);
-            success = false;
+            return ValidateCodeResult.ForResult(false, messages.ToString().TrimEnd());
         }
-        else
+
+        if (component.Abstract == true && abstractAllowed == false)// will be ignored if abstractAllowed == null
+            return ValidateCodeResult.ForResult(false, $"{codeLabel} is abstract, which is not allowed here");
+
+        if (display != null && component.Display != null && display != component.Display)
         {
-            if (component.Abstract == true && abstractAllowed == false) // will be ignored if abstractAllowed == null
-            {
-                messages.AppendLine($"{codeLabel} is abstract, which is not allowed here");
-                success = false;
-            }
-
-            if (display != null && component.Display != null && display != component.Display)
-            {
-                // this is only a warning (so success is still true)
-                messages.AppendLine($"{codeLabel} has incorrect display '{display}', should be '{component.Display}'");
-            }
-
-            var displ = component.Display ?? display;
-            if (displ is { })
-                result.Add("display", new FhirString(displ));
+            // this is only a warning (so success is still true)
+            messages.AppendLine($"{codeLabel} has incorrect display '{display}', should be '{component.Display}'");
         }
 
-        result.Add("result", new FhirBoolean(success));
-        if (messages.Length > 0)
-            result.Add("message", new FhirString(messages.ToString().TrimEnd()));
-        return result;
+        return ValidateCodeResult.ForResult(true, messages.Length > 0 ? messages.ToString().TrimEnd() : null, display: component.Display ?? display);
     }
 
-    private async Tasks.Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel,
+    private async T.Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel,
         StringBuilder messages)
     {
         if (system is not null && await isValueSet(system).ConfigureAwait(false))

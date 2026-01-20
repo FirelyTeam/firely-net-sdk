@@ -59,7 +59,7 @@ public class FallbackTerminologyService : ITerminologyService
 
                 var version = parameters.GetSingleValue<FhirString>("valueSetVersion")?.Value;
                 var canonical = new Canonical(url, version);
-                var valueSet = await _localService.FindValueSet(canonical).ConfigureAwait(false);
+                var valueSet = await _localService.ResolveValueSet(canonical).ConfigureAwait(false);
                 if (valueSet == null) throw;
 
                 var paramsWithVs = parameters.DeepCopy();

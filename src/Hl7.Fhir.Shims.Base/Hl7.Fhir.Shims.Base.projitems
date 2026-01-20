@@ -18,7 +18,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\SnapshotSource.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Closure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.CodeSystemValidateCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Common.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Expand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Lookup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Subsumes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Translate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.ValueSetValidateCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\CodeSystemFilterProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExternalTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\FallbackTerminologyService.cs" />

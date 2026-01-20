@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Terminology;
 public class LanguageTerminologyService()
     : CustomValueSetTerminologyService("language", LANGUAGE_SYSTEM, [LANGUAGE_VALUESET])
 {
-    private const string LANGUAGE_SYSTEM = "urn:ietf:bcp:47";
+    internal const string LANGUAGE_SYSTEM = "urn:ietf:bcp:47";
     public const string LANGUAGE_VALUESET = "http://hl7.org/fhir/ValueSet/all-languages";
 
     override protected bool ValidateCodeType(string code)
