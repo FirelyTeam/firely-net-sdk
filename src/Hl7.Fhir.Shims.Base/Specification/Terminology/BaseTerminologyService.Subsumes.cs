@@ -92,14 +92,23 @@ public abstract partial class BaseTerminologyService
 
     private static bool hasParentWithCode(ConceptHierarchyTree.ConceptEntry child, ConceptHierarchyTree.ConceptEntry parent, string parentCode, string childCode)
     {
-        // Check if child has parent relationship (transitive)
+        // Check if child has parent relationship
         if(child.Parents.Contains(parentCode))
             return true;
 
-        // For completeness, check if parent has child relationship
-        // This covers cases where the relationship is defined from the parent side
+        // Check if parent has child relationships
         if(parent.Children.Contains(childCode))
             return true;
+        
+        // check if relationship exists in composition, by traversing up the tree
+        var node = child.Node;
+        while (node.Parent is { Name: "concept" } p)
+        {
+            if (p.Child("code") is PrimitiveNode { Primitive: Code c } && c.Value == parentCode)
+                return true;
+
+            node = p;
+        }
 
         return false;
     }
