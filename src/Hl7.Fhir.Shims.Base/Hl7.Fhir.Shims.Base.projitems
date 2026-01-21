@@ -27,9 +27,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.Translate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\BaseTerminologyService.ValueSetValidateCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\CodeSystemFilterProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\CustomValueSetTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ExternalTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\FallbackTerminologyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\LanguageTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\LocalTerminologyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\MimeTypeTerminologyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\TerminologyServiceFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Terminology\ValueSetConfigurators.cs" />

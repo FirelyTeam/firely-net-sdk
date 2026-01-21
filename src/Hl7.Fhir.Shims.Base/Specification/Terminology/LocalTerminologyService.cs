@@ -49,7 +49,7 @@ public class LocalTerminologyService : BaseTerminologyService
         return TerminologyServiceFactory.CreateDefaultForCore(coreResourceResolver, expanderSettings);
     }
 
-    protected internal override async Task<ValueSet?> ResolveValueSet(Canonical canonical)
+    protected internal override async Task<ValueSet> ResolveValueSet(Canonical canonical)
     {
         var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
 
@@ -107,7 +107,7 @@ public class LocalTerminologyService : BaseTerminologyService
             }
         }
 
-        return valueset;
+        throw FhirOperationException.Unresolvable("Unable to resolve ValueSet.");
     }
 
     private async Task<ValueSet> getExpandedValueSet(ValueSet vs, string operation)

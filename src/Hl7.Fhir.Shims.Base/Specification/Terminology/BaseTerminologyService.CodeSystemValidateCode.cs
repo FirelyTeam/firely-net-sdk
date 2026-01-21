@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Terminology;
 
 public partial class BaseTerminologyService
 {
-    protected virtual T.Task<ValidateCodeResult> ValidateCode(CodeSystem vs, Code? code, string? system, string? display, FhirBoolean? abstractAllowed) => throw new NotImplementedException();
+    protected virtual T.Task<ValidateCodeResult> ValidateCode(CodeSystem vs, Code code, string? system, string? display, FhirBoolean? abstractAllowed) => throw new NotImplementedException();
     
     protected virtual async T.Task<ValidateCodeResult> CodeSystemValidateCode(CodeSystemValidateCodeParameters parameters)
     {
@@ -69,7 +69,7 @@ public partial class BaseTerminologyService
     
     private T.Task<ValidateCodeResult> validateCoding(CodeSystem codeSystem, Coding coding, FhirBoolean? abstractAllowed)
     {
-        if(string.IsNullOrEmpty(coding.Code) || string.IsNullOrEmpty(coding.System))
+        if(string.IsNullOrEmpty(coding.CodeElement?.Value) || string.IsNullOrEmpty(coding.System))
             throw FhirOperationException.IncompleteCodedParameter("Must have a Coding/CodeableConcept with both code and system to be validated.");
 
         return ValidateCode(codeSystem, coding.CodeElement, coding.System, coding.Display, abstractAllowed);

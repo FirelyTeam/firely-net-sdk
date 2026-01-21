@@ -26,8 +26,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.IsExactly(new FhirString($"'ned' is not a valid language."))
                 .Should().BeTrue();
-
-
+            
             parameters = new ValidateCodeParameters()
                    .WithValueSet(LANGUAGE_VS)
                    .WithCode(code: "nl-NL", context: "context", system: LanguageTerminologyService.LANGUAGE_SYSTEM);

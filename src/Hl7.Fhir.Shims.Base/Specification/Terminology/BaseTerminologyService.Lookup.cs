@@ -32,7 +32,7 @@ public partial class BaseTerminologyService
 
         var concept = recursiveConcepts(codeSystem.Concept).FirstOrDefault(x => x.Code == code);
 
-        return BuildResult(codeSystem, concept ?? throw FhirOperationException.CodeNotInSystem("Code not found in the specified code system."));
+        return BuildLookupResult(codeSystem, concept ?? throw FhirOperationException.CodeNotInSystem("Code not found in the specified code system."));
     }
 
     private IEnumerable<CodeSystem.ConceptDefinitionComponent> recursiveConcepts(List<CodeSystem.ConceptDefinitionComponent> concepts)
@@ -59,5 +59,5 @@ public partial class BaseTerminologyService
         }
     }
 
-    protected virtual LookupResult BuildResult(CodeSystem codeSystem, CodeSystem.ConceptDefinitionComponent concept) => throw new NotImplementedException();
+    protected virtual LookupResult BuildLookupResult(CodeSystem codeSystem, CodeSystem.ConceptDefinitionComponent concept) => throw new NotImplementedException();
 }

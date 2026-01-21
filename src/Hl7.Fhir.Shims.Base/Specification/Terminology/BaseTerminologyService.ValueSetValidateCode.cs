@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Terminology;
 
 public partial class BaseTerminologyService
 {
-    protected virtual T.Task<ValidateCodeResult> ValidateCode(ValueSet vs, Code? code, string? system, string? display, FhirBoolean? abstractAllowed) => throw new NotImplementedException();
+    protected virtual T.Task<ValidateCodeResult> ValidateCode(ValueSet vs, Code code, string? system, bool? inferSystem, string? display, FhirBoolean? abstractAllowed) => throw new NotImplementedException();
     
     private async T.Task<ValidateCodeResult> validateConcept(ValueSet vs, CodeableConcept codeableConcept, FhirBoolean? abstractAllowed)
     {
@@ -51,45 +51,28 @@ public partial class BaseTerminologyService
     
     private T.Task<ValidateCodeResult> validateCoding(ValueSet vs, Coding coding, FhirBoolean? abstractAllowed)
     {
-        if(string.IsNullOrEmpty(coding.Code) || string.IsNullOrEmpty(coding.System))
-            throw TerminologyServiceOperationExceptionExtensions.IncompleteCodedParameter("Must have a Coding/CodeableConcept with both code and system to be validated.");
+        if(string.IsNullOrEmpty(coding.CodeElement?.Value) || string.IsNullOrEmpty(coding.System))
+            throw FhirOperationException.IncompleteCodedParameter("Must have a Coding/CodeableConcept with both code and system to be validated.");
 
-        return ValidateCode(vs, coding.CodeElement, coding.System, coding.Display, abstractAllowed);
+        return ValidateCode(vs, coding.CodeElement, coding.System, false, coding.Display, abstractAllowed);
     }
 
     protected async virtual T.Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
     {
-        // Context parameter is not supported
-        if (parameters.Context != null)
-            throw FhirOperationException.NotSupported("The 'context' parameter is not supported.");
-        
-        if (parameters.System == null)
-            throw FhirOperationException.NotSupported("The 'inferSystem' parameter is not supported."); 
-        
         var valueSet = parameters.ValueSet as ValueSet
                        ?? await ResolveValueSet(new($"{parameters.Url!}|{parameters.ValueSetVersion?.Value}")).ConfigureAwait(false)
                        ?? throw FhirOperationException.Unresolvable("Unable to resolve ValueSet.");
         
-        ValidateCodeResult result;
-
         if (parameters.CodeableConcept is not null)
-        {
-            result = await validateConcept(valueSet, parameters.CodeableConcept, parameters.Abstract).ConfigureAwait(false);
-        }
-        else if (parameters.Coding is not null)
-        {
-            result = await validateCoding(valueSet, parameters.Coding, parameters.Abstract).ConfigureAwait(false);
-        }
-        else if (parameters.Code is not null)
-        {
-            result = await ValidateCode(valueSet, parameters.Code, parameters.System?.ToString(), parameters.Display?.ToString(), parameters.Abstract).ConfigureAwait(false);
-        }
-        else
-        {
-            throw FhirOperationException.InvalidOperationInvocation("Unexpected parameters combination.");
-        }
-
-        return result;
+            return await validateConcept(valueSet, parameters.CodeableConcept, parameters.Abstract).ConfigureAwait(false);
+        
+        if (parameters.Coding is not null)
+            return await validateCoding(valueSet, parameters.Coding, parameters.Abstract).ConfigureAwait(false);
+        
+        if (parameters.Code is not null)
+            return await ValidateCode(valueSet, parameters.Code, parameters.System?.ToString(), parameters.InferSystem?.Value, parameters.Display?.ToString(), parameters.Abstract).ConfigureAwait(false);
+        
+        throw FhirOperationException.InvalidOperationInvocation("Unexpected parameters combination.");
     }
 
     async T.Task<Parameters> ICodeValidationTerminologyService.ValueSetValidateCode(Parameters parameters, string? id, bool useGet)
