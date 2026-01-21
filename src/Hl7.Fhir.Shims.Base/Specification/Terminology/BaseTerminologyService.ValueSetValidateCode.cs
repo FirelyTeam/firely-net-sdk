@@ -80,7 +80,7 @@ public partial class BaseTerminologyService
         try
         {
             var validCodeParams = new ValidateCodeParameters(parameters.NoDuplicates());
-            TerminologyValidationHelpers.ValidateValueSetValidateCodeParameters(validCodeParams.Code, validCodeParams.Coding, validCodeParams.CodeableConcept, validCodeParams.System, validCodeParams.InferSystem);
+            TerminologyValidationHelpers.ValidateValueSetValidateCodeParameters(validCodeParams);
             return await ValueSetValidateCode(validCodeParams).ConfigureAwait(false);
         }
         catch (Exception e) when (e is not FhirOperationException)

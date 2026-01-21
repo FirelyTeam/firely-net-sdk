@@ -63,7 +63,7 @@ public static class TerminologyValidationHelpers
     }
 
     /// <summary>
-    /// Validates that a coding parameter has both code and system populated.
+    /// Validates that a codeableConcept parameter contains any codings, or a text.
     /// </summary>
     /// <exception cref="FhirOperationException">Thrown when validation fails.</exception>
     public static void ValidateConcept(CodeableConcept? codeableConcept)
@@ -87,15 +87,6 @@ public static class TerminologyValidationHelpers
 
         if (count != 1)
             throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'url', 'valueSet' or 'context' must be provided.");
-    }
-
-    /// <summary>
-    /// Validates that exactly one of url or valueSet is provided (for expand operation).
-    /// </summary>
-    /// <exception cref="FhirOperationException">Thrown when validation fails.</exception>
-    public static void ValidateExpandValueSetReference(FhirUri? url, Resource? valueSet, FhirUri? context)
-    {
-        ValidateValueSetReference(url, valueSet, context);
     }
 
     /// <summary>
@@ -191,7 +182,7 @@ public static class TerminologyValidationHelpers
     public static void ValidateExpandParameters(FhirUri? url, Resource? valueSet, FhirUri? context, ContextDirection? contextDirection, Integer? offset, Integer? count)
     {
         // Validate value set reference
-        ValidateExpandValueSetReference(url, valueSet, context);
+        ValidateValueSetReference(url, valueSet, context);
 
         // Validate context direction requires context
         if (contextDirection.HasValue && context == null)
@@ -228,19 +219,22 @@ public static class TerminologyValidationHelpers
     /// Validates code system validate code operation parameters according to FHIR specification.
     /// </summary>
     /// <exception cref="FhirOperationException">Thrown when validation fails.</exception>
-    public static void ValidateValueSetValidateCodeParameters(Code? code, Coding? coding, CodeableConcept? codeableConcept, FhirUri? system, FhirBoolean? inferSystem)
+    public static void ValidateValueSetValidateCodeParameters(ValidateCodeParameters parameters)
     {
+        // Validate either url, valueSet, or context is provided for valueSet resolution
+        ValidateValueSetReference(parameters.Url, parameters.ValueSet, parameters.Context);
+        
         // Validate exactly one code parameter type
-        ValidateExactlyOneCodeParameter(code, coding, codeableConcept);
+        ValidateExactlyOneCodeParameter(parameters.Code, parameters.Coding, parameters.CodeableConcept);
 
         // Validate system requirement for code parameter
-        ValidateSystemForCode(code, system, inferSystem);
+        ValidateSystemForCode(parameters.Code, parameters.System, parameters.InferSystem);
 
         // Validate coding parameter has code and system
-        ValidateCoding(coding);
+        ValidateCoding(parameters.Coding);
         
         // Validate codeableConcept parameter has coding or text
-        ValidateConcept(codeableConcept);
+        ValidateConcept(parameters.CodeableConcept);
     }
 
     /// <summary>

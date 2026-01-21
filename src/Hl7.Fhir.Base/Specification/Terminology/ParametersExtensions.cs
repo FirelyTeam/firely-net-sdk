@@ -10,7 +10,6 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using static Hl7.Fhir.Specification.Terminology.ValidateCodeParameters;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -36,51 +35,6 @@ public static class TerminologyParametersExtensions
             }
 
             return parameters;
-        }
-
-        /// <summary>
-        /// Validates parameters for ValueSet validate code operation.
-        /// </summary>
-        /// <exception cref="FhirOperationException"></exception>
-        internal ValidateCodeParameters ValidateValueSetValidateCodeParams()
-        {
-            parameters.NoDuplicates();
-
-            // For input params of https://build.fhir.org/valueset-operation-validate-code.html:
-            // * (...) one of the in parameters url, context or valueSet must be provided.
-            // * One (and only one) of the in parameters code, coding, or codeableConcept must be provided.
-            // * If a code is provided, either a system or inferSystem SHOULD be provided.
-
-            if (!hasValueSet(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("If a code is provided, a 'url', 'context' or a 'valueSet' must be provided");
-
-            if (!exactlyOneCodeParam(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'code', 'coding' or 'codeableConcept' must be provided");
-
-            if (parameters.HasParam(CODE_ATTRIBUTE) && !exactlyOneSystemParam(parameters))
-                throw FhirOperationException.InvalidOperationInvocation("If 'code' is provided, either 'system' must be provided, or 'inferSystem' must be true");
-
-            return new(parameters);
-
-            static bool hasValueSet(Parameters p) =>
-                p.HasParam(URL_ATTRIBUTE) || p.HasParam(CONTEXT_ATTRIBUTE) || p.HasParam(VALUE_SET_ATTRIBUTE);
-
-            static bool exactlyOneCodeParam(Parameters p)
-            {
-                int count = 0;
-                if (p.HasParam(CODE_ATTRIBUTE)) count += 1;
-                if (p.HasParam(CODING_ATTRIBUTE)) count += 1;
-                if (p.HasParam(CODEABLE_CONCEPT_ATTRIBUTE)) count += 1;
-                return count == 1;
-            }
-
-            static bool exactlyOneSystemParam(Parameters p)
-            {
-                int count = 0;
-                if (p.HasParam(SYSTEM_ATTRIBUTE)) count += 1;
-                if (p.HasParam(INFER_SYSTEM_ATTRIBUTE)) count += 1;
-                return count == 1;
-            }
         }
     }
 }
