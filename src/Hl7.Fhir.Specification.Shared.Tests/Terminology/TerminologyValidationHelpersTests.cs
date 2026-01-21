@@ -209,7 +209,7 @@ public class TerminologyValidationHelpersTests
 
         // Act
         var exception = Record.Exception(() => 
-            TerminologyValidationHelpers.ValidateExpandValueSetReference(url, valueSet, context));
+            TerminologyValidationHelpers.ValidateExpandParameters(url, valueSet, context, null, null, null));
 
         // Assert
         Assert.Null(exception);
@@ -225,7 +225,7 @@ public class TerminologyValidationHelpersTests
 
         // Act & Assert
         var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateExpandValueSetReference(url, valueSet, context));
+            TerminologyValidationHelpers.ValidateExpandParameters(url, valueSet, context, null, null, null));
 
         Assert.Equal("One (and only one) of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
     }

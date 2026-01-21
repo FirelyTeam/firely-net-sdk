@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.Add("inferSystem", new FhirBoolean(true));
             parameters.Add("valueSet", valueset is not null ? new ValueSet() : null);
 
-            Action validate = () => parameters.ValidateValueSetValidateCodeParams();
+            Action validate = () => TerminologyValidationHelpers.ValidateValueSetValidateCodeParameters(new(parameters));
 
             if (!throws)
                 validate.Should().NotThrow();
