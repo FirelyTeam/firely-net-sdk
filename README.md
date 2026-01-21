@@ -62,6 +62,8 @@ The profile validator has been split off into its own [repository](https://githu
 ## Support 
 We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/firely-net-sdk/issues](https://github.com/FirelyTeam/firely-net-sdk/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netsdk-zulip].
 
+In addition to community support via GitHub, Firely also offers optional commercial support for organizations that rely on the SDK in production and want guaranteed response times or implementation help. If this is relevant for you, feel free to [contact us](https://fire.ly/lets-connect/).
+
 ## Contributing ##
 We are welcoming contributions!
 
