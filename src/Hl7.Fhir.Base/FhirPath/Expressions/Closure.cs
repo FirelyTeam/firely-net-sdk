@@ -65,14 +65,20 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root([NotNull] PocoNodeOrList root, EvaluationContext ctx = null)
+        public static Closure Root(IEnumerable<PocoNode> root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
 
-            newContext.Resource ??= root.GetResourceContext();
-            
-            // Same thing, but we copy the resource into the root resource if we cannot infer it from the node.
-            newContext.RootResource ??= root.GetRootResourceContext();
+            if (root is PocoNodeOrList node)
+            {
+                newContext.Resource ??= node.GetResourceContext();
+                newContext.RootResource ??= node.GetRootResourceContext();
+            }
+            else
+            {
+                newContext.Resource ??= [];
+                newContext.RootResource ??= newContext.Resource;
+            }
             
             var newClosure = new Closure(ctx ?? new EvaluationContext());
 
@@ -86,8 +92,8 @@ namespace Hl7.FhirPath.Expressions
             newClosure.SetIndex(PocoNode.ForPrimitive<Integer>(1));
             newClosure.SetOriginalContext(root);
             
-            if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
-            if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });
+            if (newContext.Resource != null) newClosure.SetResource(newContext.Resource);
+            if (newContext.RootResource != null) newClosure.SetRootResource(newContext.RootResource);
 
             return newClosure;
         }

@@ -60,7 +60,7 @@ public class FhirPathCompiler
 
         return (focus, ctx) =>
         {
-            focus ??= PocoNode.ForAnyPrimitive(true); // null focus defaults to 'true'
+            focus ??= []; // null focus defaults to 'true'
             var closure = Closure.Root(focus, ctx);
             return inv(closure, InvokeeFactory.EmptyArgs);
         };
@@ -76,9 +76,9 @@ public class FhirPathCompiler
     {
         Invokee inv = expression.ToEvaluator(Symbols, injectDebugTraceHooks);
 
-        return (PocoNode focus, EvaluationContext ctx) =>
+        return (focus, ctx) =>
         {
-            focus ??= PocoNode.ForAnyPrimitive(true); // null focus defaults to 'true'
+            focus ??= []; // null focus defaults to 'true'
             var closure = Closure.Root(focus, ctx);
             return inv(closure, InvokeeFactory.EmptyArgs);
         };
