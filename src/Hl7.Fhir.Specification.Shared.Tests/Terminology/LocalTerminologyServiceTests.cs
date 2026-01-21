@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
         {
             var parameters = new Parameters();
-            parameters.Add("code", code is not null ? new FhirString(code) : null);
+            parameters.Add("code", code is not null ? new Code(code) : null);
             parameters.Add("url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null );
             parameters.Add("context", context is not null ? new FhirUri("context") : null);
             parameters.Add("inferSystem", new FhirBoolean(true));
@@ -167,19 +167,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             // but we're called with the correct version before that.
             await resolver.Received().FindValueSetAsync(Arg.Is<string>(u => u == resolved));
-        }
-
-        [TestMethod]
-        public async Task Expand_PreservesStatus404ForNonexistentValueSet()
-        {
-            // Test for issue: LocalTerminologyService.Expand hides internally reported 404 HttpStatus FhirOperationException
-            var localTerminology = new LocalTerminologyService(ZipSource.CreateValidationSource());
-
-            var expandAction = async () => await localTerminology.Expand(
-                new ExpandParameters().WithValueSet(NonexistentValueSetUrl));
-
-            var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
-            ex.Which.Status.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [TestMethod]

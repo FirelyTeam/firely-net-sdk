@@ -64,11 +64,11 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
 
     protected override Task<ValidateCodeResult> ValidateCode(ValueSet vs, Code code, string? system, bool? inferSystem, string? display, FhirBoolean? abstractAllowed)
     {
-        if (system == null && inferSystem != true)
+        if (system is null && inferSystem is not true)
             throw FhirOperationException.IncompleteCodedParameter("System is not supplied, and inferSystem is not set to true.");
         
-        if (system != _codeSystem)
-            throw FhirOperationException.IncompleteCodedParameter($"Unknown code system '{system}'");
+        if (system is not null && system != _codeSystem)
+            throw FhirOperationException.IncompleteCodedParameter($"Unknown system '{system}'");
         
         if (ValidateCodeType(code.Value!))
             return Task.FromResult(ValidateCodeResult.ForResult(true, code: code.Value, system: _codeSystem));

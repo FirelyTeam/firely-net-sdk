@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Tests
                     .WithCode(code: "application/json", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a 'url', 'context' or a 'valueSet' must be provided");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("At least one of 'url', 'context' or a 'valueSet' must be provided");
 
             parameters = new ValidateCodeParameters()
                   .WithValueSet(MIMETYPEVS)

@@ -85,8 +85,8 @@ public static class TerminologyValidationHelpers
         if (valueSet != null) count += 1;
         if (context != null) count += 1;
 
-        if (count != 1)
-            throw FhirOperationException.InvalidOperationInvocation("One (and only one) of 'url', 'valueSet' or 'context' must be provided.");
+        if (count == 0)
+            throw FhirOperationException.InvalidOperationInvocation("At least one of 'url', 'context' or a 'valueSet' must be provided");
     }
 
     /// <summary>

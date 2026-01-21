@@ -53,10 +53,13 @@ public class LocalTerminologyService : BaseTerminologyService
     {
         var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
 
+        if (valueset is not null)
+            return valueset;
+
 #if STU3
-            if (valueset == null && _resolver is IConformanceSource source)
+            if (_resolver is IConformanceSource source)
 #else
-        if (valueset == null && _resolver is ICommonConformanceSource source)
+        if (_resolver is ICommonConformanceSource source)
 #endif
         {
             var cs = source.FindCodeSystemByValueSet(canonical);
