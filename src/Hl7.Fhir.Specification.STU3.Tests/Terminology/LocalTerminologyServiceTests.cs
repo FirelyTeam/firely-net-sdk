@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
         {
             var parameters = new Parameters();
-            parameters.Add("code", code is not null ? new FhirString(code) : null);
+            parameters.Add("code", code is not null ? new Code(code) : null);
             parameters.Add("url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null );
             parameters.Add("context", context is not null ? new FhirUri("context") : null);
             parameters.Add("inferSystem", new FhirBoolean(true));
