@@ -170,21 +170,6 @@ public class TerminologyValidationHelpersTests
     }
 
     [Fact]
-    public void ValidateValueSetReference_WithMultipleReferences_ThrowsException()
-    {
-        // Arrange
-        var url = new FhirUri("http://test.org");
-        var valueSet = new ValueSet();
-        var context = new FhirUri("http://test.org");
-
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => 
-            TerminologyValidationHelpers.ValidateValueSetReference(url, valueSet, context));
-
-        Assert.Equal("One (and only one) of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
-    }
-
-    [Fact]
     public void ValidateValueSetReference_WithNoReferences_ThrowsException()
     {
         // Arrange
@@ -196,7 +181,7 @@ public class TerminologyValidationHelpersTests
         var exception = Assert.Throws<FhirOperationException>(() => 
             TerminologyValidationHelpers.ValidateValueSetReference(url, valueSet, context));
 
-        Assert.Equal("One (and only one) of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
+        Assert.Equal("At least one of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
     }
 
     [Fact]
@@ -227,7 +212,7 @@ public class TerminologyValidationHelpersTests
         var exception = Assert.Throws<FhirOperationException>(() => 
             TerminologyValidationHelpers.ValidateExpandParameters(url, valueSet, context, null, null, null));
 
-        Assert.Equal("One (and only one) of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
+        Assert.Equal("At least one of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
     }
 
     [Fact]
