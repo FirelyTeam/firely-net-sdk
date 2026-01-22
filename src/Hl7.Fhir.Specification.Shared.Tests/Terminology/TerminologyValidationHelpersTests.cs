@@ -181,7 +181,7 @@ public class TerminologyValidationHelpersTests
         var exception = Assert.Throws<FhirOperationException>(() => 
             TerminologyValidationHelpers.ValidateValueSetReference(url, valueSet, context));
 
-        Assert.Equal("At least one of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
+        Assert.Equal("At least one of 'url', 'context' or a 'valueSet' must be provided.", exception.Message);
     }
 
     [Fact]
@@ -212,7 +212,7 @@ public class TerminologyValidationHelpersTests
         var exception = Assert.Throws<FhirOperationException>(() => 
             TerminologyValidationHelpers.ValidateExpandParameters(url, valueSet, context, null, null, null));
 
-        Assert.Equal("At least one of 'url', 'valueSet' or 'context' must be provided.", exception.Message);
+        Assert.Equal("At least one of 'url', 'context' or a 'valueSet' must be provided.", exception.Message);
     }
 
     [Fact]
