@@ -33,11 +33,11 @@ namespace Hl7.Fhir.Specification.Tests
                    .WithValueSet(valueset);
 
             parameters = !string.IsNullOrEmpty(context)
-                ? parameters.WithCode(code: code, context: context)
+                ? parameters.WithCode(code: code, context: context, inferSystem: true)
                 : parameters.WithCode(code: code, system: system);
 
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
-            var result = await _service.ValueSetValidateCode(parameters.Build());
+            var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value
                 .IsExactly(new FhirString(
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
                    .WithValueSet(valueset)
                    .WithCoding(new Coding(system, code, display));
 
-            var result = await _service.ValueSetValidateCode(parameters.Build());
+            var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.IsExactly(new FhirString($"The Coding references a value set, not a code system ('{system}')"))
                 .Should().BeTrue();
@@ -68,8 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var parameters = new ValidateCodeParameters()
                  .WithValueSet("http://www.rfc-editor.org/bcp/bcp13.txt")
-                 .WithCode(code: "application/json", context: "context")
-                 .Build();
+                 .WithCode(code: "application/json", context: "context", inferSystem: true);
 
             var result = await service.ValueSetValidateCode(parameters);
 
@@ -86,12 +85,13 @@ namespace Hl7.Fhir.Specification.Tests
         public void CheckValidateCodeParams(string code, string valueset, string url, string context, bool throws)
         {
             var parameters = new Parameters();
-            parameters.Add("code", code is not null ? new FhirString(code) : null);
+            parameters.Add("code", code is not null ? new Code(code) : null);
             parameters.Add("url", url is not null ? new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender") : null );
             parameters.Add("context", context is not null ? new FhirUri("context") : null);
+            parameters.Add("inferSystem", new FhirBoolean(true));
             parameters.Add("valueSet", valueset is not null ? new ValueSet() : null);
 
-            Action validate = () => parameters.CheckForValidityOfValidateCodeParams();
+            Action validate = () => TerminologyValidationHelpers.ValidateValueSetValidateCodeParameters(new(parameters));
 
             if (!throws)
                 validate.Should().NotThrow();
@@ -106,8 +106,9 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("http://hl7.org/fhir/ValueSet/vs|2.0", "3.0", "http://hl7.org/fhir/ValueSet/vs|3.0")]
         public async Task PicksUpValidationVersionInUri(string url, string vsVersion, string resolved)
         {
-            var parameters = new Parameters();
-            parameters.Add("code", new FhirString("code"));
+            var parameters = new ValidateCodeParameters();
+            parameters.Add("code", new Code("code"));
+            parameters.Add("system", new FhirUri("test"));
             parameters.Add("url", new FhirUri(url));
 
             if(vsVersion is not null)

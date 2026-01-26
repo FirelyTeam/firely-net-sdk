@@ -14,9 +14,9 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     /// <summary>
     /// Exceptions throw by the utility methods used for the implementation of our terminology services,
-    /// e.g. the <see cref="ValueSetExpander"/> and the <see cref="CodeSystemFilterProcessor"/>.
+    /// e.g. the ValueSetExpander and the CodeSystemFilterProcessor.
     /// </summary>
-    /// <remarks>These exceptions are used within the <see cref="LocalTerminologyService"/> and are not
+    /// <remarks>These exceptions are used within the LocalTerminologyService and are not
     /// supposed to be thrown by implementations of <see cref="ITerminologyService"/>.</remarks>
     public class TerminologyServiceException : Exception
     {
