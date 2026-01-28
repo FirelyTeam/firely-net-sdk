@@ -122,7 +122,25 @@ public class BaseFhirXmlDeserializer
         {
             state.EnterResource(newResource.TypeName);
             int nErrorCount = state.Errors.Count;
-            DeserializeElementInto(newResource, resourceMapping, reader, state);
+            
+            try
+            {
+                DeserializeElementInto(newResource, resourceMapping, reader, state);
+            }
+            catch (XmlException ex) when (ex.Message.Contains("duplicate attribute"))
+            {
+                // Extract the attribute name from the exception message if possible
+                string? attributeName = null;
+                var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"'([^']+)' is a duplicate attribute");
+                if (match.Success)
+                {
+                    attributeName = match.Groups[1].Value;
+                }
+                
+                state.Errors.Add(ERR.DUPLICATE_ATTRIBUTE(reader, state.Path.GetInstancePath(), attributeName ?? "unknown"));
+                
+                // The resource is incomplete, but we can still return it
+            }
 
             if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
             {
@@ -406,7 +424,27 @@ public class BaseFhirXmlDeserializer
 
     private void readAttributes(Base target, ClassMapping parentMapping, XmlReader reader, PocoDeserializerState state)
     {
-        if (!reader.MoveToFirstAttribute()) return;
+        bool canMoveToFirstAttribute;
+        try
+        {
+            canMoveToFirstAttribute = reader.MoveToFirstAttribute();
+        }
+        catch (XmlException ex) when (ex.Message.Contains("duplicate attribute"))
+        {
+            // Extract the attribute name from the exception message if possible
+            // The message format is typically: "'attributeName' is a duplicate attribute name."
+            string? attributeName = null;
+            var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"'([^']+)' is a duplicate attribute");
+            if (match.Success)
+            {
+                attributeName = match.Groups[1].Value;
+            }
+            
+            state.Errors.Add(ERR.DUPLICATE_ATTRIBUTE(reader, state.Path.GetInstancePath(), attributeName ?? "unknown"));
+            return; // Skip reading attributes on this element
+        }
+        
+        if (!canMoveToFirstAttribute) return;
 
         try
         {
