@@ -594,11 +594,13 @@ public partial class FhirXmlDeserializationTests
         // the parser reports an error but continues parsing gracefully
         var content = """
             <Patient xmlns="http://hl7.org/fhir">
-                <line id="test2" value="5. OG - Hinterhof" value="2test">
-                    <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator">
-                        <valueString value="5. OG - Hinterhof" />
-                    </extension>
-                </line>
+                <address>
+                    <line id="test2" value="5. OG - Hinterhof" value="2test">
+                        <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator">
+                            <valueString value="5. OG - Hinterhof" />
+                        </extension>
+                    </line>
+                </address>
             </Patient>
             """;
 
@@ -607,13 +609,8 @@ public partial class FhirXmlDeserializationTests
 
         var deserializer = getTestDeserializer(new());
         var state = new PocoDeserializerState();
-        var resource = deserializer.DeserializeResourceInternal(reader, state);
-
-        // Should have parsed the resource
-        resource.Should().BeOfType<Patient>();
-        
-        // Should have an error about duplicate attributes
-        state.Errors.Should().Contain(ce => ce.ErrorCode == ERR.DUPLICATE_ATTRIBUTE_CODE);
+        var callable = () => deserializer.DeserializeResourceInternal(reader, state);
+        Assert.Throws<XmlException>(callable, "XML parser throws an exception when duplicate attributes are present, and it's not being hidden by us");
     }
 
     private static XmlReader constructReader(string xml)

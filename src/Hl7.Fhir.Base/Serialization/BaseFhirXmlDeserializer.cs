@@ -123,15 +123,7 @@ public class BaseFhirXmlDeserializer
             state.EnterResource(newResource.TypeName);
             int nErrorCount = state.Errors.Count;
             
-            try
-            {
-                DeserializeElementInto(newResource, resourceMapping, reader, state);
-            }
-            catch (XmlException ex) when (ex.Message.Contains("duplicate attribute"))
-            {
-                AddDuplicateAttributeError(reader, state, ex);
-                // The resource is incomplete, but we can still return it
-            }
+            DeserializeElementInto(newResource, resourceMapping, reader, state);
 
             if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
             {
@@ -217,9 +209,15 @@ public class BaseFhirXmlDeserializer
 
                 highestOrder = checkOrder(reader, state, highestOrder, propMapping);
 
-                deserializeChildElement(target, reader, state, propMapping, propValueMapping);
-                if(!propMapping.RepresentsValueElement)
-                    state.ExitElement();
+                try
+                {
+                    deserializeChildElement(target, reader, state, propMapping, propValueMapping);
+                }
+                finally
+                {
+                    if (!propMapping.RepresentsValueElement)
+                        state.ExitElement();
+                }
             }
         }
 
@@ -415,18 +413,8 @@ public class BaseFhirXmlDeserializer
 
     private void readAttributes(Base target, ClassMapping parentMapping, XmlReader reader, PocoDeserializerState state)
     {
-        bool canMoveToFirstAttribute;
-        try
-        {
-            canMoveToFirstAttribute = reader.MoveToFirstAttribute();
-        }
-        catch (XmlException ex) when (ex.Message.Contains("duplicate attribute"))
-        {
-            AddDuplicateAttributeError(reader, state, ex);
-            return; // Skip reading attributes on this element
-        }
-        
-        if (!canMoveToFirstAttribute) return;
+        if(!reader.MoveToFirstAttribute())
+            return;
 
         try
         {
@@ -635,23 +623,5 @@ public class BaseFhirXmlDeserializer
                 : typeof(DynamicDataType);
 
         PropertyMapping getUnknownPropMapping() => new (parentMapping, elementName, getDynamicTypeMapping());
-    }
-
-    /// <summary>
-    /// Helper method to add a duplicate attribute error to the state.
-    /// Note: This method relies on parsing the exception message, which may vary across .NET runtime versions.
-    /// </summary>
-    private static void AddDuplicateAttributeError(XmlReader reader, PocoDeserializerState state, XmlException ex)
-    {
-        // Extract the attribute name from the exception message if possible
-        // The message format is typically: "'attributeName' is a duplicate attribute name."
-        string? attributeName = null;
-        var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"'([^']+)' is a duplicate attribute");
-        if (match.Success)
-        {
-            attributeName = match.Groups[1].Value;
-        }
-        
-        state.Errors.Add(ERR.DUPLICATE_ATTRIBUTE(reader, state.Path.GetInstancePath(), attributeName ?? "unknown"));
     }
 }
