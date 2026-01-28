@@ -220,8 +220,7 @@ public static class PocoNodeExtensions
     /// </summary>
     /// <param name="nodeList"></param>
     /// <returns></returns>
-    public static string GetCommonLocation(this PocoListNode nodeList) =>
-        nodeList.Parent?.GetLocation() + nodeList.Name;
+    public static string GetCommonLocation(this PocoListNode nodeList) => $"{nodeList.Parent?.GetLocation()}.{nodeList.Name}";
     
     internal static string GetLocalLocation(this PocoNode node) =>
         node.Parent is null 
