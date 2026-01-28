@@ -265,7 +265,25 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             var zc = new ZipCacher(ZipPath, CacheDirectory);
-            var source = new DirectorySource(zc.GetContentDirectory(), _settings);
+
+            try
+            {
+                return createDirectorySource(zc);
+            }
+            catch
+            {
+                // Retries once if extraction fails
+                zc.Refresh();
+                return createDirectorySource(zc);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="DirectorySource"/> from the extracted ZIP archive contents.
+        /// </summary>
+        private DirectorySource createDirectorySource(ZipCacher zipCacher)
+        {
+            var source = new DirectorySource(zipCacher.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))

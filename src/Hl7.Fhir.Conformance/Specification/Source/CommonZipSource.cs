@@ -199,7 +199,6 @@ namespace Hl7.Fhir.Specification.Source
             }
             catch
             {
-                zc.Clear();
                 // Retries once if extraction fails
                 zc.Refresh();
                 return createDirectorySource(zc);
