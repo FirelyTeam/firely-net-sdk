@@ -588,7 +588,7 @@ public partial class FhirXmlDeserializationTests
     }
 
     [TestMethod]
-    public void DuplicateAttributesShouldBeReportedButParsingContinues()
+    public void DuplicateAttributesShouldBeReportedCorrectly()
     {
         // This test verifies that when an element has duplicate attributes,
         // the parser reports an error but continues parsing gracefully
