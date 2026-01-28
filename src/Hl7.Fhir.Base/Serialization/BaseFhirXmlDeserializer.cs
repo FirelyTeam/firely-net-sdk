@@ -129,16 +129,7 @@ public class BaseFhirXmlDeserializer
             }
             catch (XmlException ex) when (ex.Message.Contains("duplicate attribute"))
             {
-                // Extract the attribute name from the exception message if possible
-                string? attributeName = null;
-                var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"'([^']+)' is a duplicate attribute");
-                if (match.Success)
-                {
-                    attributeName = match.Groups[1].Value;
-                }
-                
-                state.Errors.Add(ERR.DUPLICATE_ATTRIBUTE(reader, state.Path.GetInstancePath(), attributeName ?? "unknown"));
-                
+                AddDuplicateAttributeError(reader, state, ex);
                 // The resource is incomplete, but we can still return it
             }
 
@@ -431,16 +422,7 @@ public class BaseFhirXmlDeserializer
         }
         catch (XmlException ex) when (ex.Message.Contains("duplicate attribute"))
         {
-            // Extract the attribute name from the exception message if possible
-            // The message format is typically: "'attributeName' is a duplicate attribute name."
-            string? attributeName = null;
-            var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"'([^']+)' is a duplicate attribute");
-            if (match.Success)
-            {
-                attributeName = match.Groups[1].Value;
-            }
-            
-            state.Errors.Add(ERR.DUPLICATE_ATTRIBUTE(reader, state.Path.GetInstancePath(), attributeName ?? "unknown"));
+            AddDuplicateAttributeError(reader, state, ex);
             return; // Skip reading attributes on this element
         }
         
@@ -653,5 +635,23 @@ public class BaseFhirXmlDeserializer
                 : typeof(DynamicDataType);
 
         PropertyMapping getUnknownPropMapping() => new (parentMapping, elementName, getDynamicTypeMapping());
+    }
+
+    /// <summary>
+    /// Helper method to add a duplicate attribute error to the state.
+    /// Note: This method relies on parsing the exception message, which may vary across .NET runtime versions.
+    /// </summary>
+    private static void AddDuplicateAttributeError(XmlReader reader, PocoDeserializerState state, XmlException ex)
+    {
+        // Extract the attribute name from the exception message if possible
+        // The message format is typically: "'attributeName' is a duplicate attribute name."
+        string? attributeName = null;
+        var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"'([^']+)' is a duplicate attribute");
+        if (match.Success)
+        {
+            attributeName = match.Groups[1].Value;
+        }
+        
+        state.Errors.Add(ERR.DUPLICATE_ATTRIBUTE(reader, state.Path.GetInstancePath(), attributeName ?? "unknown"));
     }
 }
