@@ -44,6 +44,18 @@ namespace Hl7.Fhir.Model;
 [DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
 public partial class Parameters
 {
+    public Parameters()
+    {
+        // Nothing
+    }
+
+    public Parameters(IEnumerable<ParameterComponent> parameters)
+    {
+        if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+
+        Parameter = new List<ParameterComponent>(parameters);
+    }
+
     /// <summary>
     /// Add a parameter with a given name and value.
     /// </summary>
@@ -157,6 +169,74 @@ public partial class Parameters
 
         var p = Get(name, matchPrefix).SingleOrDefault();
         return p?.Value as T;
+    }
+
+    public void SetSingleValue<T>(string name, T? value) where T : Element
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        Remove(name);
+        Add(name, value);
+    }
+
+    /// <summary>
+    /// Sets a single Resource parameter value. Removes any existing parameters with the same name.
+    /// </summary>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="resource">The resource to set, or null to remove the parameter</param>
+    public void SetSingleResource(string name, Resource? resource)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        Remove(name);
+        if (resource != null) Add(name, resource);
+    }
+
+    /// <summary>
+    /// Returns the Resource property of the requested parameter
+    /// </summary>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
+    /// <returns>The Resource or null if not found</returns>
+    public Resource? GetSingleResource(string name, bool matchPrefix = false)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        return GetSingle(name, matchPrefix)?.Resource;
+    }
+
+    /// <summary>
+    /// Returns multiple values of the requested parameter
+    /// </summary>
+    /// <typeparam name="T">The type of Element to retrieve</typeparam>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="matchPrefix">If true, will retrieve all parameters which begin with the string given in the "name" parameter</param>
+    /// <returns>An enumerable of values</returns>
+    public IEnumerable<T> GetMultipleValues<T>(string name, bool matchPrefix = false) where T : Element
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        return Get(name, matchPrefix).Select(pc => pc.Value).OfType<T>();
+    }
+
+    /// <summary>
+    /// Sets multiple values for a parameter. Removes any existing parameters with the same name.
+    /// </summary>
+    /// <typeparam name="T">The type of Element to set</typeparam>
+    /// <param name="name">The name of the parameter</param>
+    /// <param name="values">The values to set, or null to remove all parameters with this name</param>
+    public void SetMultipleValues<T>(string name, IEnumerable<T>? values) where T : Element
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+
+        Remove(name);
+        if (values != null)
+        {
+            foreach (var value in values)
+            {
+                Add(name, value);
+            }
+        }
     }
 
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
