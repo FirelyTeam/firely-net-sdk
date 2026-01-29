@@ -67,5 +67,54 @@ namespace Hl7.Fhir.Specification.Tests.Source
             // if extractpath is null, something went seriously wrong
             File.Exists(Path.Combine(zip.ExtractPath!, "profiles-types.xml")).Should().BeTrue();
         }
+
+        [TestMethod]
+        public void ExtractionRetriesAfterClearingCache()
+        {
+            var zipfile = Path.Combine("TestData", "ResourcesInSubfolder.zip");
+            var extractDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            var zip = new ZipSource(zipfile, extractDir, new DirectorySourceSettings { IncludeSubDirectories = true });
+
+            var summaries = zip.ListSummaries();
+            Assert.IsNotNull(summaries, "Initial extraction should succeed");
+            Assert.AreEqual(20, summaries.Count(), "ResourcesInSubfolder.zip contains 20 resources");
+
+            var cachedDir = Path.Combine(extractDir, "ResourcesInSubfolder");
+            Directory.Exists(cachedDir).Should().BeTrue();
+
+            Directory.Delete(cachedDir, recursive: true);
+            Directory.Exists(cachedDir).Should().BeFalse();
+
+            var zip2 = new ZipSource(zipfile, extractDir, new DirectorySourceSettings { IncludeSubDirectories = true });
+            var summaries2 = zip2.ListSummaries();
+
+            Assert.AreEqual(summaries.Count(), summaries2.Count(), "Cache should be repopulated with same resources");
+            Directory.Exists(cachedDir).Should().BeTrue();
+
+            Directory.Delete(extractDir, recursive: true);
+        }
+
+        [TestMethod]
+        public void ExtractionFailsBothTimesWithCorruptedZip()
+        {
+            var tempZipPath = Path.Combine(Path.GetTempPath(), "corrupted_" + Guid.NewGuid() + ".zip");
+            var extractDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
+            try
+            {
+                File.WriteAllText(tempZipPath, "This is not a valid zip file");
+                var zip = new ZipSource(tempZipPath, extractDir);
+                
+                var action = () => zip.ListSummaries();
+                action.Should().Throw<Exception>("corrupted zip file should fail extraction");
+            }
+            finally
+            {
+                if (File.Exists(tempZipPath))
+                    File.Delete(tempZipPath);
+                if (Directory.Exists(extractDir))
+                    Directory.Delete(extractDir, recursive: true);
+            }
+        }
     }
 }
