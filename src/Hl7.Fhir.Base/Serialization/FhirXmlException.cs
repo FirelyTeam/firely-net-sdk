@@ -80,7 +80,7 @@ public class FhirXmlException(
     
     // XML strings do not accept leading or trailing whitespaces and will become trimmed during parsing
     internal static FhirXmlException STRING_SHOULD_NOT_HAVE_LEADING_TRAILING_WHITESPACE(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, STRING_SHOULD_NOT_HAVE_LEADING_OR_TRAILING_WHITESPACE, $"Attribute '{attributeName}' should not contain leading or trailing whitespace.", "Invalid whitespace", OO_Sev.Warning);
-
+    
     /// <summary>
     /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer
     /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
