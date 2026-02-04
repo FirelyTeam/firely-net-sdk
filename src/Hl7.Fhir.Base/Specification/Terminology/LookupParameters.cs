@@ -7,84 +7,121 @@
  */
 
 using Hl7.Fhir.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Specification.Terminology
+#nullable enable
+
+namespace Hl7.Fhir.Specification.Terminology;
+
+public class LookupParameters : Parameters
 {
-    public class LookupParameters
+    public const string CODE_ATTRIBUTE = "code";
+    public const string SYSTEM_ATTRIBUTE = "system";
+    public const string VERSION_ATTRIBUTE = "version";
+    public const string CODING_ATTRIBUTE = "coding";
+    public const string DATE_ATTRIBUTE = "date";
+    public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
+    public const string PROPERTY_ATTRIBUTE = "property";
+
+    public LookupParameters()
     {
-        /// <summary>
-        /// The code that is to be located. If a code is provided, a system must be provided.
-        /// </summary>
-        public Code Code { get; private set; }
-        /// <summary>
-        /// The system for the code that is to be located.
-        /// </summary>
-        public FhirUri System { get; private set; }
-        /// <summary>
-        /// The version of the system, if one was provided in the source data.
-        /// </summary>
-        public FhirString Version { get; private set; }
-        /// <summary>
-        /// A coding to look up.
-        /// </summary>
-        public Coding Coding { get; private set; }
-        /// <summary>
-        /// The date for which the information should be returned.
-        /// </summary>
-        public FhirDateTime Date { get; private set; }
-        /// <summary>
-        /// The requested language for display.
-        /// </summary>
-        public Code DisplayLanguage { get; private set; }
-        /// <summary>
-        /// A property that the client wishes to be returned in the output.
-        /// </summary>
-        /// <remarks>If no properties are specified, the server chooses what to return.</remarks>
-        public IEnumerable<Code> Property { get; private set; }
-
-        #region Builder methods
-        public LookupParameters WithCode(string code = null, string system = null, string version = null, string displayLanguage = null)
-        {
-            if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
-            if (!string.IsNullOrWhiteSpace(system)) System = new FhirUri(system);
-            if (!string.IsNullOrWhiteSpace(version)) Version = new FhirString(version);
-            if (!string.IsNullOrWhiteSpace(displayLanguage)) DisplayLanguage = new Code(displayLanguage);
-            return this;
-        }
-
-        public LookupParameters WithDate(FhirDateTime date)
-        {
-            Date = date;
-            return this;
-        }
-
-        public LookupParameters WithProperties(string[] properties)
-        {
-            Property = properties?.Select(p => new Code(p));
-            return this;
-        }
-        #endregion
-
-
-        public Parameters Build()
-        {
-            var result = new Parameters();
-
-            if (Code is { }) result.Add("code", Code);
-            if (System is { }) result.Add("system", System);
-            if (Version is { }) result.Add("version", Version);
-            if (Coding is { }) result.Add("coding", Coding);
-            if (Date is { }) result.Add("date", Date);
-            if (DisplayLanguage is { }) result.Add("displayLanguage", DisplayLanguage);
-
-            foreach (var prop in Property ?? Enumerable.Empty<Code>())
-            {
-                result.Add("property", prop);
-            }
-
-            return result;
-        }
+        // Nothing
     }
+
+    public LookupParameters(Parameters parameters) : base(parameters.Parameter)
+    {
+        // Nothing
+    }
+
+    /// <summary>
+    /// The code that is to be located. If a code is provided, a system must be provided.
+    /// </summary>
+    public Code? Code
+    {
+        get => this.GetSingleValue<Code>(CODE_ATTRIBUTE);
+        set => this.SetSingleValue(CODE_ATTRIBUTE, value);
+    }
+
+    /// <summary>
+    /// The system for the code that is to be located.
+    /// </summary>
+    public FhirUri? System
+    {
+        get => this.GetSingleValue<FhirUri>(SYSTEM_ATTRIBUTE);
+        set => this.SetSingleValue(SYSTEM_ATTRIBUTE, value);
+    }
+
+    /// <summary>
+    /// The version of the system, if one was provided in the source data.
+    /// </summary>
+    public FhirString? Version
+    {
+        get => this.GetSingleValue<FhirString>(VERSION_ATTRIBUTE);
+        set => this.SetSingleValue(VERSION_ATTRIBUTE, value);
+    }
+
+    /// <summary>
+    /// A coding to look up.
+    /// </summary>
+    public Coding? Coding
+    {
+        get => this.GetSingleValue<Coding>(CODING_ATTRIBUTE);
+        set => this.SetSingleValue(CODING_ATTRIBUTE, value);
+    }
+
+    /// <summary>
+    /// The date for which the information should be returned.
+    /// </summary>
+    public FhirDateTime? Date
+    {
+        get => this.GetSingleValue<FhirDateTime>(DATE_ATTRIBUTE);
+        set => this.SetSingleValue(DATE_ATTRIBUTE, value);
+    }
+
+    /// <summary>
+    /// The requested language for display.
+    /// </summary>
+    public Code? DisplayLanguage
+    {
+        get => this.GetSingleValue<Code>(DISPLAY_LANGUAGE_ATTRIBUTE);
+        set => this.SetSingleValue(DISPLAY_LANGUAGE_ATTRIBUTE, value);
+    }
+
+    /// <summary>
+    /// A property that the client wishes to be returned in the output.
+    /// </summary>
+    /// <remarks>If no properties are specified, the server chooses what to return.</remarks>
+    public IEnumerable<Code>? Property
+    {
+        get => this.GetMultipleValues<Code>(PROPERTY_ATTRIBUTE);
+        set => this.SetMultipleValues(PROPERTY_ATTRIBUTE, value);
+    }
+
+    #region Builder methods
+    public LookupParameters WithCode(string? code = null, string? system = null, string? version = null, string? displayLanguage = null)
+    {
+        if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
+        if (!string.IsNullOrWhiteSpace(system)) System = new FhirUri(system);
+        if (!string.IsNullOrWhiteSpace(version)) Version = new FhirString(version);
+        if (!string.IsNullOrWhiteSpace(displayLanguage)) DisplayLanguage = new Code(displayLanguage);
+        return this;
+    }
+
+    public LookupParameters WithDate(FhirDateTime? date)
+    {
+        Date = date;
+        return this;
+    }
+
+    public LookupParameters WithProperties(string[]? properties)
+    {
+        Property = properties?.Select(p => new Code(p));
+        return this;
+    }
+    #endregion
+
+    [Obsolete("This is just a DeepCopy of the current instance, use the instance or DeepCopy() instead", false)]
+    public Parameters Build() => (Parameters)this.DeepCopyInternal();
 }

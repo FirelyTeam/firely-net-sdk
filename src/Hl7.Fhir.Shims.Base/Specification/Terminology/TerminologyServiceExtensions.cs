@@ -17,37 +17,37 @@ namespace Hl7.Fhir.Specification.Terminology
     {
         public static Task<Parameters> ValueSetValidateCode(this ITerminologyService srv, ValidateCodeParameters parameters, string? id = null, bool useGet = false)
         {
-            return srv.ValueSetValidateCode(parameters.Build(), id, useGet);
+            return srv.ValueSetValidateCode(parameters, id, useGet);
         }
 
         public static Task<Parameters> CodeSystemValidateCode(this ITerminologyService srv, ValidateCodeParameters parameters, string? id = null, bool useGet = false)
         {
-            return srv.CodeSystemValidateCode(parameters.Build(), id, useGet);
+            return srv.CodeSystemValidateCode(parameters, id, useGet);
         }
 
         public static Task<Resource> Expand(this ITerminologyService srv, ExpandParameters parameters, string? id = null, bool useGet = false)
         {
-            return srv.Expand(parameters.Build(), id, useGet);
+            return srv.Expand(parameters, id, useGet);
         }
 
         public static Task<Parameters> Lookup(this ITerminologyService srv, LookupParameters parameters, bool useGet = false)
         {
-            return srv.Lookup(parameters.Build(), useGet);
+            return srv.Lookup(parameters, useGet);
         }
 
         public static Task<Parameters> Translate(this ITerminologyService srv, TranslateParameters parameters, string? id = null, bool useGet = false)
         {
-            return srv.Translate(parameters.Build(), id, useGet);
+            return srv.Translate(parameters, id, useGet);
         }
 
         public static Task<Parameters> Subsumes(this ITerminologyService srv, SubsumesParameters parameters, string? id = null, bool useGet = false)
         {
-            return srv.Subsumes(parameters.Build(), id, useGet);
+            return srv.Subsumes(parameters, id, useGet);
         }
 
         public static Task<Resource> Closure(this ITerminologyService srv, ClosureParameters parameters, bool useGet = false)
         {
-            return srv.Closure(parameters.Build(), useGet);
+            return srv.Closure(parameters, useGet);
         }
     }
 }

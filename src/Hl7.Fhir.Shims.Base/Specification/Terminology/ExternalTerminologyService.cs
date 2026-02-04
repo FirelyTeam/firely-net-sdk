@@ -37,6 +37,8 @@ public class ExternalTerminologyService : ITerminologyService
     ///<inheritdoc />
     public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
+        // copy the parameters for web serialization
+        parameters = parameters.DeepCopy();
         return string.IsNullOrEmpty(id)
             ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false))
             : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.VALUESET_NAME,id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false));
@@ -53,6 +55,8 @@ public class ExternalTerminologyService : ITerminologyService
     ///<inheritdoc />
     public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false)
     {
+        // copy the parameters for web serialization
+        parameters = parameters.DeepCopy();
         return string.IsNullOrEmpty(id)
             ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false))
             : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME, id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false));
@@ -64,6 +68,8 @@ public class ExternalTerminologyService : ITerminologyService
     ///<inheritdoc />
     public async Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false)
     {
+        // copy the parameters for web serialization
+        parameters = parameters.DeepCopy();
         return string.IsNullOrEmpty(id)
             ? assertIs<Resource>(
                 await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet)
@@ -74,11 +80,13 @@ public class ExternalTerminologyService : ITerminologyService
 
     ///<inheritdoc />
     public async Task<Parameters> Lookup(Parameters parameters, bool useGet = false) =>
-        assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false));
+        assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters.DeepCopy(), useGet).ConfigureAwait(false));
 
     ///<inheritdoc />
     public async Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false)
     {
+        // copy the parameters for web serialization
+        parameters = parameters.DeepCopy();
         return string.IsNullOrEmpty(id)
             ? assertIs<Parameters>(await Endpoint
                 .TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, parameters, useGet)
@@ -92,6 +100,8 @@ public class ExternalTerminologyService : ITerminologyService
     ///<inheritdoc />
     public async Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false)
     {
+        // copy the parameters for web serialization
+        parameters = parameters.DeepCopy();
         return string.IsNullOrEmpty(id)
             ? assertIs<Parameters>(await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false))
             : assertIs<Parameters>(await Endpoint.InstanceOperationAsync(constructUri(FhirTypeNames.CODESYSTEM_NAME,id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false));
@@ -100,6 +110,8 @@ public class ExternalTerminologyService : ITerminologyService
     /// <inheritdoc />
     public async Task<Resource> Closure(Parameters parameters, bool useGet = false)
     {
+        // copy the parameters for web serialization
+        parameters = parameters.DeepCopy();
         return assertIs<Resource>(await Endpoint.WholeSystemOperationAsync(RestOperation.CLOSURE, parameters, useGet).ConfigureAwait(false));
     }
 }

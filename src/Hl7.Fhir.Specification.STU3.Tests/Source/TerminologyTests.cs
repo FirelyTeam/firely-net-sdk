@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task LocalTermServiceUsingDuplicateParameters()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
 
-            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender", system: "test");
 
             isSuccess(result).Should().BeFalse();
             getMessage(result).Should().Contain("does not exist in the value set");
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithProperties(new[] { "inactive", "display" });
 
             var result = await svc.Lookup(parameters);
-
+            
             Assert.NotNull(result);
 
             var paramDisplay = result.Parameter.Find(p => p.Name == "display");
@@ -606,8 +606,8 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new SubsumesParameters()
-                .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
-                .Build();
+                .WithCode(codeA: "235856003", codeB: "3738000",
+                    system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430");
 
             var result = await svc.Subsumes(parameters);
 

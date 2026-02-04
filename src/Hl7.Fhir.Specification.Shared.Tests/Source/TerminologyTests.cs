@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
+            Assert.Equal(System.Net.HttpStatusCode.BadRequest, exception.Status);
         }
 
 
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task LocalTermServiceUsingDuplicateParameters()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
+            Assert.Equal(System.Net.HttpStatusCode.BadRequest, exception.Status);
         }
 
         [Fact]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
 
-            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", system: "test", context: "Partient.gender");
 
             isSuccess(result).Should().BeFalse();
             getMessage(result).Should().Contain("does not exist in the value set");
@@ -626,8 +626,8 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new SubsumesParameters()
-                .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
-                .Build();
+                .WithCode(codeA: "235856003", codeB: "3738000",
+                    system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430");
 
             var result = await svc.Subsumes(parameters);
 
@@ -637,9 +637,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsType<Code>(paramOutcome.Value);
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
-
-
-
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public async Tasks.Task ExternalServiceValidateCodeTest()
@@ -776,7 +773,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.Context.Value.Should().Be("Patient.gender");
             parameters.InferSystem.Value.Should().Be(true);
 
-            var paramResource = parameters.Build();
+            var paramResource = parameters;
 
             paramResource.Parameter.Should().HaveCount(7);
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "code" && ((Code)p.Value).Value == "bar");
@@ -799,7 +796,7 @@ namespace Hl7.Fhir.Specification.Tests
             parameters.ValueSet.Should().NotBeNull();
             parameters.ValueSetVersion.Value.Should().Be("1.0.4");
 
-            var paramResource = parameters.Build();
+            var paramResource = parameters;
 
             paramResource.Parameter.Should().HaveCount(4);
             paramResource.Parameter.Should().ContainSingle(p => p.Name == "url" && ((FhirUri)p.Value).Value == "http://foo.bar");

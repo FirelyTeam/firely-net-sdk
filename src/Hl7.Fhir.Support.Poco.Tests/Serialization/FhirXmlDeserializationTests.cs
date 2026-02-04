@@ -587,6 +587,32 @@ public partial class FhirXmlDeserializationTests
         result.As<Patient>().Contained[1].As<Questionnaire>().Text.Div.Should().NotBeNull();
     }
 
+    [TestMethod]
+    public void DuplicateAttributesShouldBeReportedCorrectly()
+    {
+        // This test verifies that when an element has duplicate attributes,
+        // the parser reports an error but continues parsing gracefully
+        var content = """
+            <Patient xmlns="http://hl7.org/fhir">
+                <address>
+                    <line id="test2" value="5. OG - Hinterhof" value="2test">
+                        <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator">
+                            <valueString value="5. OG - Hinterhof" />
+                        </extension>
+                    </line>
+                </address>
+            </Patient>
+            """;
+
+        var reader = constructReader(content);
+        reader.Read();
+
+        var deserializer = getTestDeserializer(new());
+        var state = new PocoDeserializerState();
+        var callable = () => deserializer.DeserializeResourceInternal(reader, state);
+        Assert.Throws<XmlException>(callable, "XML parser throws an exception when duplicate attributes are present, and it's not being hidden by us");
+    }
+
     private static XmlReader constructReader(string xml)
     {
         var stringReader = new StringReader(xml);

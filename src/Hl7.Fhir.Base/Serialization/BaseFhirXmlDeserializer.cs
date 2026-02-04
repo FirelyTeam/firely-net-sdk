@@ -122,6 +122,7 @@ public class BaseFhirXmlDeserializer
         {
             state.EnterResource(newResource.TypeName);
             int nErrorCount = state.Errors.Count;
+            
             DeserializeElementInto(newResource, resourceMapping, reader, state);
 
             if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
@@ -208,9 +209,15 @@ public class BaseFhirXmlDeserializer
 
                 highestOrder = checkOrder(reader, state, highestOrder, propMapping);
 
-                deserializeChildElement(target, reader, state, propMapping, propValueMapping);
-                if(!propMapping.RepresentsValueElement)
-                    state.ExitElement();
+                try
+                {
+                    deserializeChildElement(target, reader, state, propMapping, propValueMapping);
+                }
+                finally
+                {
+                    if (!propMapping.RepresentsValueElement)
+                        state.ExitElement();
+                }
             }
         }
 
@@ -406,7 +413,8 @@ public class BaseFhirXmlDeserializer
 
     private void readAttributes(Base target, ClassMapping parentMapping, XmlReader reader, PocoDeserializerState state)
     {
-        if (!reader.MoveToFirstAttribute()) return;
+        if(!reader.MoveToFirstAttribute())
+            return;
 
         try
         {

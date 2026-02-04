@@ -8,7 +8,6 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -92,8 +91,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Note that this function will update the cache before returning the directory name.</remarks>
         public string GetContentDirectory()
         {
-            if (!IsActual()) Refresh();
-
+            EnsureActual();
             return getCachedZipDirectory().FullName;
         }
 
@@ -108,14 +106,7 @@ namespace Hl7.Fhir.Specification.Source
 
             dir.Create();
 
-            try
-            {
-                ZipFile.ExtractToDirectory(ZipPath, dir.FullName);
-            }
-            catch
-            {
-                Clear();
-            }
+            ZipFile.ExtractToDirectory(ZipPath, dir.FullName);
 
             // and also extract the contained zip in there too with all the xsds in there
             if (File.Exists(Path.Combine(dir.FullName, "fhir-all-xsd.zip")))
@@ -127,14 +118,12 @@ namespace Hl7.Fhir.Specification.Source
             Directory.SetCreationTimeUtc(dir.FullName, File.GetLastWriteTimeUtc(ZipPath));
         }
 
-
         public void Clear()
         {
             var dir = getCachedZipDirectory();
 
             if (dir.Exists) dir.Delete(recursive: true);
         }
-
 
         /// <summary>
         /// Gets the cache directory, or creates an empty cache directory if it does not exist
@@ -171,7 +160,6 @@ namespace Hl7.Fhir.Specification.Source
             var cleanedInformationalVersion = versionInfo!.InformationalVersion;
             return $"FhirArtifactCache-{cleanedInformationalVersion}-{productInfo!.Product}";
         }
-
     }
 }
 
