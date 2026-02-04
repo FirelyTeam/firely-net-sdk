@@ -32,6 +32,7 @@ public static class PocoValidationExtensions
     /// <param name="inspector">The model metadata to use for validation.</param>
     /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
     /// <param name="validator"></param>
+    /// <param name="validateRecursively">Allows opting out of validating whole object tree.</param>
     public static IReadOnlyCollection<CodedValidationException> Validate(
         this Base poco,
         ModelInspector inspector,

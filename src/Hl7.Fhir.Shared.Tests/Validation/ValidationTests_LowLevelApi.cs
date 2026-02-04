@@ -101,6 +101,35 @@ public class ValidationTests_LowLevelApi
     }
 
     [TestMethod]
+    public void ValidatePropertyReportsMemberName()
+    {
+        const string prop = "tag";
+        var meta = new Meta();
+        meta.SetValue(prop, new List<FhirUri>());
+
+        var classMapping = ModelInfo.ModelInspector.FindClassMapping(meta.GetType());
+        Assert.IsNotNull(classMapping);
+        var propertyMapping = classMapping.FindMappedElementByName(prop);
+        Assert.IsNotNull(propertyMapping);
+
+        var context = new PocoValidationContext(
+            meta,
+            ModelInfo.ModelInspector,
+            () => "Meta.tag",
+            0, 0,
+            NarrativeValidationKind.FhirXhtml
+        ) { MemberName = propertyMapping.Name };
+
+        var errors = validator.ValidateProperty(
+            prop,
+            meta[prop],
+            propertyMapping,
+            context);
+
+        errors.Should().ContainSingle().Which.MemberName.Should().Be(prop);
+    }
+
+    [TestMethod]
     [DataRow("urn:oid:1.2.3", null)]
     [DataRow("urn:oid:datmagdusniet", CodedValidationException.LITERAL_INVALID_CODE)]
     [DataRow("urn:uuid:a5afddf4-e880-459b-876e-e4591b0acc11", null)]
