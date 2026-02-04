@@ -36,20 +36,21 @@ public static class PocoValidationExtensions
         this Base poco,
         ModelInspector inspector,
         NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml,
-        IPocoValidator? validator = null)
+        IPocoValidator? validator = null,
+        bool validateRecursively = true)
     {
         validator ??= new FhirAttributeValidator();
-        var validationContext = buildContext(poco, inspector, narrativeValidation);
+        var validationContext = buildContext(poco, inspector, narrativeValidation, !validateRecursively);
 
         return doObjectValidation(poco, validationContext, validator);
     }
 
-    private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind)
+    private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind, bool validateObjectOnly)
     {
         IPositionInfo? info = instance.Annotation<JsonSerializationDetails>();
         info ??= instance.Annotation<XmlSerializationDetails>();
         
-        var newContext = new PocoValidationContext(instance, inspector, producer, info?.LineNumber, info?.LinePosition, kind) { ValidateObjectOnly = false };
+        var newContext = new PocoValidationContext(instance, inspector, producer, info?.LineNumber, info?.LinePosition, kind) { ValidateObjectOnly = validateObjectOnly };
         return newContext;
 
         string producer() => instance.TypeName;
@@ -104,7 +105,7 @@ public static class PocoValidationExtensions
     internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => (parent() is not "" && propName is not "") ? $"{parent()}.{propName}" : parent + propName;
     internal static Func<string> IntoPath(this Func<string> parent, int index) => () => (parent() is not "") ? $"{parent()}[{index}]" : $"[{index}]";
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, string propName) =>
-        parent with { PathProducer = parent.PathProducer.IntoPath(propName) };
+        parent with { PathProducer = parent.PathProducer.IntoPath(propName), MemberName = propName };
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, int index) =>
         parent with { PathProducer = parent.PathProducer.IntoPath(index) };
 }
