@@ -48,12 +48,12 @@ public class EvaluationContext
     /// <summary>
     /// The data represented by <c>%rootResource</c>.
     /// </summary>
-    public IEnumerable<PocoNode>? RootResource { get; set; }
+    public PocoNode? RootResource { get; set; }
 
     /// <summary>
     /// The data represented by <c>%resource</c>.
     /// </summary>
-    public IEnumerable<PocoNode>? Resource { get; set; }
+    public PocoNode? Resource { get; set; }
 
     /// <summary>
     /// The environment variables that are available to the FHIRPath expressions.

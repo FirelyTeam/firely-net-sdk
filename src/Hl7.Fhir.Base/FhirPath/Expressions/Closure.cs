@@ -76,7 +76,6 @@ namespace Hl7.FhirPath.Expressions
             }
             else
             {
-                newContext.Resource ??= [];
                 newContext.RootResource ??= newContext.Resource;
             }
             

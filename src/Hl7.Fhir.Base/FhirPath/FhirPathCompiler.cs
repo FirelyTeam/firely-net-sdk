@@ -60,7 +60,7 @@ public class FhirPathCompiler
 
         return (focus, ctx) =>
         {
-            focus ??= []; // null focus defaults to 'true'
+            focus ??= []; // null focus defaults to empty collection
             var closure = Closure.Root(focus, ctx);
             return inv(closure, InvokeeFactory.EmptyArgs);
         };
@@ -78,7 +78,7 @@ public class FhirPathCompiler
 
         return (focus, ctx) =>
         {
-            focus ??= []; // null focus defaults to 'true'
+            focus ??= []; // null focus defaults to empty collection
             var closure = Closure.Root(focus, ctx);
             return inv(closure, InvokeeFactory.EmptyArgs);
         };
