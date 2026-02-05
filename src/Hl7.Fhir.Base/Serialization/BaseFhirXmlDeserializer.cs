@@ -292,7 +292,9 @@ public class BaseFhirXmlDeserializer
                 state.Path.GetInstancePath,
                 lineNumber, position,
                 Settings.NarrativeValidation)
-                { MemberName = propMapping.Name };
+            {
+                MemberName = propMapping.NativeProperty?.Name ?? propMapping.Name
+            };
 
             state.Errors.Add(Settings.Validator.ValidateProperty(elementName, newPropValue, propMapping, context));
         }
@@ -522,7 +524,10 @@ public class BaseFhirXmlDeserializer
                     _inspector,
                     state.Path.GetInstancePath,
                     lineNumber, position,
-                    Settings.NarrativeValidation);
+                    Settings.NarrativeValidation)
+                {
+                    MemberName = propMapping.NativeProperty?.Name ?? attributeName
+                };
                 state.Errors.Add(Settings.Validator.ValidateProperty(attributeName, newPropValue, propMapping, context));
             }
         }

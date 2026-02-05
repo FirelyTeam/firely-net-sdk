@@ -76,7 +76,7 @@ public class BaseFhirJsonDeserializer
 
         instance = (Resource)createNewObjectInstance(ref reader, ClassMapping.Resource, state, out var classMapping);
 
-        deserializeSingleValueInto(instance, ref reader, "(root)", "(root)", classMapping, state, stayOnLastToken: true);
+        deserializeSingleValueInto(instance, ref reader, "(root)", "(root)", null, classMapping, state, stayOnLastToken: true);
         //deserializeJsonObjectInto(ref reader, instance, classMapping, state, stayOnLastToken: true);
         issues = Settings.ExceptionFilter is { } filter
             ? state.Errors.Remove(filter)
@@ -108,7 +108,7 @@ public class BaseFhirJsonDeserializer
 
         var state = new PocoDeserializerState();
         instance = createNewObjectInstance(ref reader, mapping, state, out var actualClassMapping);
-        deserializeSingleValueInto(instance, ref reader, "(root)", "(root)", actualClassMapping, state, stayOnLastToken: true);
+        deserializeSingleValueInto(instance, ref reader, "(root)", "(root)", null, actualClassMapping, state, stayOnLastToken: true);
        // deserializeJsonObjectInto(ref reader, instance, actualClassMapping, state, stayOnLastToken: true);
 
         issues = Settings.ExceptionFilter is { } filter
@@ -266,7 +266,10 @@ public class BaseFhirJsonDeserializer
         var runDelayed = metadata.ValueMapping.IsFhirPrimitive;
 
         var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath,
-                line, pos, Settings.NarrativeValidation) { MemberName = elementName };
+                line, pos, Settings.NarrativeValidation)
+        {
+            MemberName = metadata.PropertyMapping.NativeProperty?.Name ?? elementName
+        };
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,
         // when we have had a chance to see both the `name` and `_name` properties.
@@ -285,14 +288,17 @@ public class BaseFhirJsonDeserializer
         }
     }
 
-    private void doObjectValidation(Base poco, ClassMapping classMapping, PocoDeserializerState state, long line, long pos)
+    private void doObjectValidation(Base poco, ClassMapping classMapping, PocoDeserializerState state, long line, long pos, string? memberName = null)
     {
         if(Settings.Validator is null) return;
 
         var runDelayed = classMapping.IsFhirPrimitive;
 
         var context =
-            new PocoValidationContext(poco, _inspector, state.Path.GetInstancePath, line, pos, Settings.NarrativeValidation);
+            new PocoValidationContext(poco, _inspector, state.Path.GetInstancePath, line, pos, Settings.NarrativeValidation)
+            {
+                MemberName = memberName
+            };
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,
         // when we have had a chance to see both the `name` and `_name` properties.
@@ -373,7 +379,7 @@ public class BaseFhirJsonDeserializer
                     if(existingList[elementIndex] is not Base existingBase)
                         throw new InvalidOperationException($"Expected existing element at index {elementIndex} to be a Base, but it is {existingList[elementIndex]?.GetType().Name ?? "null"}.");
 
-                    deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, actualClassMapping, state);
+                    deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, metadata.PropertyMapping.NativeProperty?.Name, actualClassMapping, state);
 
                     elementIndex += 1;
                     state.SetIndex(elementIndex);
@@ -413,7 +419,7 @@ public class BaseFhirJsonDeserializer
             case Base existingBase:
             {
                 // deserialize a primitive value into the existing Base
-                deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, metadata.ValueMapping, state);
+                deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, metadata.PropertyMapping.NativeProperty?.Name, metadata.ValueMapping, state);
                 return existingBase;
             }
             case null when reader.TokenType == JsonTokenType.StartArray:
@@ -427,7 +433,7 @@ public class BaseFhirJsonDeserializer
             {
                 // create a new instance of the value type and deserialize into it.
                 var newValue = createNewObjectInstance(ref reader, metadata.ValueMapping, state, out var actualClassMapping);
-                deserializeSingleValueInto(newValue, ref reader, propertyName, metadata.PropertyMapping.Name, actualClassMapping, state);
+                deserializeSingleValueInto(newValue, ref reader, propertyName, metadata.PropertyMapping.Name, metadata.PropertyMapping.NativeProperty?.Name, actualClassMapping, state);
                 return newValue;
             }
             default:
@@ -440,7 +446,7 @@ public class BaseFhirJsonDeserializer
     private void deserializeSingleValueInto(
         Base existingValue,
         ref Utf8JsonReader reader,
-        string propertyName, string elementName,
+        string propertyName, string elementName, string? nativeMemberName,
         ClassMapping propertyValueMapping,
         PocoDeserializerState state,
         bool stayOnLastToken = false)
@@ -491,7 +497,7 @@ public class BaseFhirJsonDeserializer
         }
 
         // Validate the value we have just deserialized.
-        doObjectValidation(existingValue, propertyValueMapping, state, line, pos);
+        doObjectValidation(existingValue, propertyValueMapping, state, line, pos, nativeMemberName);
     }
 
     /// <summary>
