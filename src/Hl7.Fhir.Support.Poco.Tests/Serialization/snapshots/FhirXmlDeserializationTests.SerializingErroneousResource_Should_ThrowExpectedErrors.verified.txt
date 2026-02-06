@@ -86,7 +86,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
@@ -231,7 +230,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: anotherAttribute,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'anotherAttribute'.,
@@ -280,7 +278,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: name,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'name'.,
@@ -293,7 +290,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: data,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'data'.,
@@ -306,7 +302,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
@@ -319,7 +314,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: no,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'no'.,
@@ -355,7 +349,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
@@ -402,7 +395,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: unknown,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'unknown'.,
@@ -427,7 +419,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: valueString,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'valueString'.,
@@ -453,7 +444,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: highest,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'highest'.,
@@ -526,7 +516,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: huh,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'huh'.,
