@@ -61,7 +61,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
@@ -86,6 +86,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
@@ -157,7 +158,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: id,
+      MemberName: IdElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single id, but found a collection of id.,
@@ -230,6 +231,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: anotherAttribute,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'anotherAttribute'.,
@@ -304,6 +306,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
@@ -316,6 +319,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: no,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'no'.,
@@ -351,6 +355,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'value'.,
@@ -422,6 +427,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: valueString,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'valueString'.,
@@ -434,7 +440,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
+      MemberName: Value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Value is of type 'Unknown', which is not an allowed choice.,
@@ -520,6 +526,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: huh,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown attribute 'huh'.,
