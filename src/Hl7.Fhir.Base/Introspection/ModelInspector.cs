@@ -203,6 +203,9 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     {
         if (FindClassMapping(type) is { } existingMapping) return existingMapping;
 
+        // Check for cross-version type import before proceeding
+        ValidateSatelliteAssemblyCompatibility(type);
+
         if(!ClassMapping.TryCreate(this, type, out var newMapping))
             return null;
 
@@ -216,6 +219,44 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         extractBackbonesFromClasses(nestedClasses);
 
         return newMapping;
+    }
+
+    /// <summary>
+    /// Validates that a type being imported is compatible with this ModelInspector's FHIR release.
+    /// </summary>
+    /// <param name="type">The type being imported</param>
+    /// <exception cref="InvalidOperationException">Thrown when attempting to import a type from
+    /// a different FHIR version satellite assembly</exception>
+    private void ValidateSatelliteAssemblyCompatibility(Type type)
+    {
+        var typeAssembly = type.Assembly;
+        
+        // Get the FhirModelAssemblyAttribute from the type's assembly
+        var typeAssemblyAttr = typeAssembly.GetCustomAttribute<FhirModelAssemblyAttribute>();
+        
+        // If the type is not from a FHIR model assembly, it's safe to import
+        // (e.g., system types, CQL types)
+        if (typeAssemblyAttr is null) return;
+        
+        // Check if the type is from the Base assembly. The Base assembly is marked with
+        // FhirRelease.STU3 but is compatible with all FHIR releases, so we should not
+        // reject types from it.
+        var baseAssembly = typeof(ModelInspector).Assembly;
+        if (typeAssembly == baseAssembly) return;
+        
+        // If the type's assembly has a different FHIR release than this inspector,
+        // we have a potential cross-version import issue. Only check for satellite assemblies
+        // (STU3, R4, R4B, R5, R6) which are version-specific.
+        if (typeAssemblyAttr.Since != FhirRelease)
+        {
+            var message = $"Type '{type.FullName}' from assembly '{typeAssembly.GetName().Name}' " +
+                         $"(FHIR {typeAssemblyAttr.Since}) is being imported into a ModelInspector " +
+                         $"configured for FHIR {FhirRelease}. This can lead to unexpected behavior " +
+                         $"when types from different FHIR versions are mixed. " +
+                         $"Ensure you are using the correct ModelInspector for your FHIR version.";
+            
+            throw new InvalidOperationException(message);
+        }
     }
 
     private void extractEnums(IEnumerable<Type> enumTypes)
