@@ -251,17 +251,11 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         
         // Known satellite assembly pattern: Hl7.Fhir.<version>
         var isSatelliteAssembly = assemblyName.StartsWith("Hl7.Fhir.", StringComparison.Ordinal) &&
-                                  (assemblyName.EndsWith(".STU3", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith(".R4", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith(".R4B", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith(".R5", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith(".R6", StringComparison.Ordinal) ||
-                                   // Also check for assemblies that are exactly "Hl7.Fhir.<version>" without additional suffixes
-                                   assemblyName.Equals("Hl7.Fhir.STU3", StringComparison.Ordinal) ||
-                                   assemblyName.Equals("Hl7.Fhir.R4", StringComparison.Ordinal) ||
-                                   assemblyName.Equals("Hl7.Fhir.R4B", StringComparison.Ordinal) ||
-                                   assemblyName.Equals("Hl7.Fhir.R5", StringComparison.Ordinal) ||
-                                   assemblyName.Equals("Hl7.Fhir.R6", StringComparison.Ordinal));
+                                  (assemblyName.EndsWith("STU3", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith("R4", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith("R4B", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith("R5", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith("R6", StringComparison.Ordinal));
         
         // Only validate version compatibility for actual satellite assemblies
         if (!isSatelliteAssembly) return;
