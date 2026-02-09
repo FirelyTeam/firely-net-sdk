@@ -244,18 +244,33 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         var baseAssembly = typeof(ModelInspector).Assembly;
         if (typeAssembly == baseAssembly) return;
         
-        // Check if the assembly name indicates it's a test assembly - test assemblies
-        // may have FhirModelAssembly attribute but are not actual satellite assemblies
+        // Check if this is a known satellite assembly by name (Hl7.Fhir.STU3, Hl7.Fhir.R4, etc.)
+        // Only satellite assemblies should trigger version conflicts
         var assemblyName = typeAssembly.GetName().Name;
-        if (assemblyName != null && assemblyName.Contains("Tests", StringComparison.OrdinalIgnoreCase))
-            return;
+        if (assemblyName == null) return;
+        
+        // Known satellite assembly pattern: Hl7.Fhir.<version>
+        var isSatelliteAssembly = assemblyName.StartsWith("Hl7.Fhir.", StringComparison.Ordinal) &&
+                                  (assemblyName.EndsWith(".STU3", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith(".R4", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith(".R4B", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith(".R5", StringComparison.Ordinal) ||
+                                   assemblyName.EndsWith(".R6", StringComparison.Ordinal) ||
+                                   // Also check for assemblies that are exactly "Hl7.Fhir.<version>" without additional suffixes
+                                   assemblyName.Equals("Hl7.Fhir.STU3", StringComparison.Ordinal) ||
+                                   assemblyName.Equals("Hl7.Fhir.R4", StringComparison.Ordinal) ||
+                                   assemblyName.Equals("Hl7.Fhir.R4B", StringComparison.Ordinal) ||
+                                   assemblyName.Equals("Hl7.Fhir.R5", StringComparison.Ordinal) ||
+                                   assemblyName.Equals("Hl7.Fhir.R6", StringComparison.Ordinal));
+        
+        // Only validate version compatibility for actual satellite assemblies
+        if (!isSatelliteAssembly) return;
         
         // If the type's assembly has a different FHIR release than this inspector,
-        // we have a potential cross-version import issue. Only check for satellite assemblies
-        // (STU3, R4, R4B, R5, R6) which are version-specific.
+        // we have a cross-version import issue
         if (typeAssemblyAttr.Since != FhirRelease)
         {
-            var message = $"Type '{type.FullName}' from assembly '{typeAssembly.GetName().Name}' " +
+            var message = $"Type '{type.FullName}' from assembly '{assemblyName}' " +
                          $"(FHIR {typeAssemblyAttr.Since}) is being imported into a ModelInspector " +
                          $"configured for FHIR {FhirRelease}. This can lead to unexpected behavior " +
                          $"when types from different FHIR versions are mixed. " +
