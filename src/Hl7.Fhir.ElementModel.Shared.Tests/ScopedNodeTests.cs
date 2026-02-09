@@ -320,14 +320,13 @@ namespace Hl7.Fhir.ElementModel.Tests
                 Entry = new List<Bundle.EntryComponent>
                 {
                     new() { FullUrl = "http://Example.Org/fhir/Patient/1", Resource = new Patient { Id = "1" } },
-                    new() { FullUrl = "http://Example.Org/fhir/Medication/med1", Resource = new Medication { Id = "med1" } },
+                    new() { FullUrl = "http://Example.Org/fhir/Organization/org1", Resource = new Organization { Id = "org1" } },
                     new() { 
-                        FullUrl = "http://Example.Org/fhir/MedicationRequest/req1", 
-                        Resource = new MedicationRequest 
+                        FullUrl = "http://Example.Org/fhir/Patient/2", 
+                        Resource = new Patient 
                         { 
-                            Id = "req1",
-                            Subject = new ResourceReference("Patient/1"),
-                            Medication = new ResourceReference("Medication/med1")
+                            Id = "2",
+                            ManagingOrganization = new ResourceReference("Organization/org1")
                         } 
                     }
                 }
@@ -335,32 +334,30 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var bundleNode = new ScopedNode(bundle.ToTypedElement());
             
-            // Get the third entry (index 2) - the MedicationRequest that references the other resources
-            var medReqEntry = bundleNode.Children("entry").ElementAt(2);
-            var medReqResource = medReqEntry.Children("resource").First() as ScopedNode;
+            // Get the third entry (index 2) - the Patient that references the organization
+            var patient2Entry = bundleNode.Children("entry").ElementAt(2);
+            var patient2Resource = patient2Entry.Children("resource").First() as ScopedNode;
             
-            // Test resolving relative reference "Patient/1"
-            var subjectRef = medReqResource!.Children("subject").First();
-            var resolvedPatient = subjectRef.Resolve();
+            // Test resolving relative reference "Organization/org1"
+            var orgRef = patient2Resource!.Children("managingOrganization").First();
+            var resolvedOrg = orgRef.Resolve();
             
-            // The resolved patient should not be null
-            Assert.IsNotNull(resolvedPatient, "Failed to resolve Patient/1 reference");
-            
-            // Test resolving relative reference "Medication/med1"
-            var medicationRef = medReqResource.Children("medication").Children("reference").First();
-            var resolvedMedication = medicationRef.Resolve();
-            
-            // The resolved medication should not be null
-            Assert.IsNotNull(resolvedMedication, "Failed to resolve Medication/med1 reference");
+            // The resolved organization should not be null
+            Assert.IsNotNull(resolvedOrg, "Failed to resolve Organization/org1 reference");
             
             // Verify that MakeAbsolute preserves the original host casing
-            var medicationRefNode = medReqResource.Children("medication").First() as ScopedNode;
-            Assert.IsNotNull(medicationRefNode);
-            var absoluteUrl = medicationRefNode.MakeAbsolute("Medication/med1");
+            var orgRefNode = patient2Resource.Children("managingOrganization").First() as ScopedNode;
+            Assert.IsNotNull(orgRefNode);
+            var absoluteUrl = orgRefNode.MakeAbsolute("Organization/org1");
             
             // The absolute URL should preserve the case of the host from the fullUrl
-            Assert.AreEqual("http://Example.Org/fhir/Medication/med1", absoluteUrl, 
+            Assert.AreEqual("http://Example.Org/fhir/Organization/org1", absoluteUrl, 
                 "MakeAbsolute should preserve the case of the host from the fullUrl");
+            
+            // Also verify resolution of Patient/1 with uppercase host works
+            var patient1Url = patient2Resource.MakeAbsolute("Patient/1");
+            Assert.AreEqual("http://Example.Org/fhir/Patient/1", patient1Url,
+                "MakeAbsolute should preserve the case for any relative reference");
         }
 
         private class CCDAResourceResolver : IAsyncResourceResolver
