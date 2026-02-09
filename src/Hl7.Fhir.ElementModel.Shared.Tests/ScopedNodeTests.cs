@@ -335,8 +335,8 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var bundleNode = new ScopedNode(bundle.ToTypedElement());
             
-            // Get the MedicationRequest entry
-            var medReqEntry = bundleNode.Children("entry").Skip(2).First();
+            // Get the third entry (index 2) - the MedicationRequest that references the other resources
+            var medReqEntry = bundleNode.Children("entry").ElementAt(2);
             var medReqResource = medReqEntry.Children("resource").First() as ScopedNode;
             
             // Test resolving relative reference "Patient/1"

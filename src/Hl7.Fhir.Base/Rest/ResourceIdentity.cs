@@ -240,8 +240,12 @@ namespace Hl7.Fhir.Rest
 
         private static string construct(Uri endpoint, IEnumerable<string> components)
         {
-            // Manually construct the URL to preserve the original host casing
-            // UriBuilder lowercases the host, which breaks case-sensitive URL matching
+            // Manually construct the URL to preserve the original host casing.
+            // We cannot use UriBuilder because it normalizes the host to lowercase.
+            // EnsureEndsWith ensures proper path handling for all base URI scenarios:
+            //   - "http://Example.Org/fhir" -> "http://Example.Org/fhir/"
+            //   - "http://Example.Org/fhir/" -> "http://Example.Org/fhir/"
+            //   - "http://Example.Org/fhir/base" -> "http://Example.Org/fhir/base/"
             var originalString = endpoint.OriginalString.EnsureEndsWith(@"/");
             string _components = string.Join("/", components).Trim('/');
             
