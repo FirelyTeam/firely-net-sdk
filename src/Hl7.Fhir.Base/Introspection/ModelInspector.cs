@@ -244,6 +244,12 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         var baseAssembly = typeof(ModelInspector).Assembly;
         if (typeAssembly == baseAssembly) return;
         
+        // Check if the assembly name indicates it's a test assembly - test assemblies
+        // may have FhirModelAssembly attribute but are not actual satellite assemblies
+        var assemblyName = typeAssembly.GetName().Name;
+        if (assemblyName != null && assemblyName.Contains("Tests", StringComparison.OrdinalIgnoreCase))
+            return;
+        
         // If the type's assembly has a different FHIR release than this inspector,
         // we have a potential cross-version import issue. Only check for satellite assemblies
         // (STU3, R4, R4B, R5, R6) which are version-specific.
