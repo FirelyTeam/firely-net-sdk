@@ -226,7 +226,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// </summary>
     /// <param name="type">The type being imported</param>
     /// <exception cref="InvalidOperationException">Thrown when attempting to import a type from
-    /// a different FHIR version satellite assembly</exception>
+    /// a different FHIR version assembly</exception>
     private void ValidateSatelliteAssemblyCompatibility(Type type)
     {
         var typeAssembly = type.Assembly;
@@ -244,26 +244,11 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         var baseAssembly = typeof(ModelInspector).Assembly;
         if (typeAssembly == baseAssembly) return;
         
-        // Check if this is a known satellite assembly by name (Hl7.Fhir.STU3, Hl7.Fhir.R4, etc.)
-        // Only satellite assemblies should trigger version conflicts
-        var assemblyName = typeAssembly.GetName().Name;
-        if (assemblyName == null) return;
-        
-        // Known satellite assembly pattern: Hl7.Fhir.<version>
-        var isSatelliteAssembly = assemblyName.StartsWith("Hl7.Fhir.", StringComparison.Ordinal) &&
-                                  (assemblyName.EndsWith("STU3", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith("R4", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith("R4B", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith("R5", StringComparison.Ordinal) ||
-                                   assemblyName.EndsWith("R6", StringComparison.Ordinal));
-        
-        // Only validate version compatibility for actual satellite assemblies
-        if (!isSatelliteAssembly) return;
-        
-        // If the type's assembly has a different FHIR release than this inspector,
-        // we have a cross-version import issue
+        // For any other assembly with FhirModelAssemblyAttribute, validate version compatibility
+        // This applies to all assemblies containing POCO definitions, not just satellite assemblies
         if (typeAssemblyAttr.Since != FhirRelease)
         {
+            var assemblyName = typeAssembly.GetName().Name;
             var message = $"Type '{type.FullName}' from assembly '{assemblyName}' " +
                          $"(FHIR {typeAssemblyAttr.Since}) is being imported into a ModelInspector " +
                          $"configured for FHIR {FhirRelease}. This can lead to unexpected behavior " +
