@@ -240,12 +240,12 @@ namespace Hl7.Fhir.Rest
 
         private static string construct(Uri endpoint, IEnumerable<string> components)
         {
-            UriBuilder builder = new UriBuilder(endpoint);
-            builder.Path = builder.Path.EnsureEndsWith(@"/");
+            // Manually construct the URL to preserve the original host casing
+            // UriBuilder lowercases the host, which breaks case-sensitive URL matching
+            var originalString = endpoint.OriginalString.EnsureEndsWith(@"/");
             string _components = string.Join("/", components).Trim('/');
-            builder.Path = builder.Path + _components;
-
-            return builder.Uri.ToString();
+            
+            return originalString + _components;
         }
 
         private static string construct(Uri endpoint, params string[] components)
@@ -505,6 +505,17 @@ namespace Hl7.Fhir.Rest
             if (uri == null) return false;
 
             return HttpUtil.IsRestResourceIdentity(uri.OriginalString);
+        }
+
+        /// <summary>
+        /// Returns the string representation of this ResourceIdentity, preserving the original casing of the host.
+        /// </summary>
+        /// <returns>The original string representation of the URI</returns>
+        public override string ToString()
+        {
+            // Use OriginalString to preserve the case of the host
+            // The base Uri.ToString() lowercases the host, which breaks case-sensitive URL matching
+            return OriginalString;
         }
 
     }

@@ -309,6 +309,60 @@ namespace Hl7.Fhir.ElementModel.Tests
             enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
         }
 
+        [TestMethod]
+        public void TestMakeAbsolutePreservesHostCase()
+        {
+            // This test reproduces the issue where URL host is converted to lowercase
+            // when building full URLs from relative references within a bundle
+            var bundle = new Bundle()
+            {
+                Type = Bundle.BundleType.Collection,
+                Entry = new List<Bundle.EntryComponent>
+                {
+                    new() { FullUrl = "http://Example.Org/fhir/Patient/1", Resource = new Patient { Id = "1" } },
+                    new() { FullUrl = "http://Example.Org/fhir/Medication/med1", Resource = new Medication { Id = "med1" } },
+                    new() { 
+                        FullUrl = "http://Example.Org/fhir/MedicationRequest/req1", 
+                        Resource = new MedicationRequest 
+                        { 
+                            Id = "req1",
+                            Subject = new ResourceReference("Patient/1"),
+                            Medication = new ResourceReference("Medication/med1")
+                        } 
+                    }
+                }
+            };
+
+            var bundleNode = new ScopedNode(bundle.ToTypedElement());
+            
+            // Get the MedicationRequest entry
+            var medReqEntry = bundleNode.Children("entry").Skip(2).First();
+            var medReqResource = medReqEntry.Children("resource").First() as ScopedNode;
+            
+            // Test resolving relative reference "Patient/1"
+            var subjectRef = medReqResource!.Children("subject").First();
+            var resolvedPatient = subjectRef.Resolve();
+            
+            // The resolved patient should not be null
+            Assert.IsNotNull(resolvedPatient, "Failed to resolve Patient/1 reference");
+            
+            // Test resolving relative reference "Medication/med1"
+            var medicationRef = medReqResource.Children("medication").Children("reference").First();
+            var resolvedMedication = medicationRef.Resolve();
+            
+            // The resolved medication should not be null
+            Assert.IsNotNull(resolvedMedication, "Failed to resolve Medication/med1 reference");
+            
+            // Verify that MakeAbsolute preserves the original host casing
+            var medicationRefNode = medReqResource.Children("medication").First() as ScopedNode;
+            Assert.IsNotNull(medicationRefNode);
+            var absoluteUrl = medicationRefNode.MakeAbsolute("Medication/med1");
+            
+            // The absolute URL should preserve the case of the host from the fullUrl
+            Assert.AreEqual("http://Example.Org/fhir/Medication/med1", absoluteUrl, 
+                "MakeAbsolute should preserve the case of the host from the fullUrl");
+        }
+
         private class CCDAResourceResolver : IAsyncResourceResolver
         {
             private readonly Dictionary<string, StructureDefinition> _cache;
