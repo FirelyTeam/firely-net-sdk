@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return srv.ValueSetValidateCode(parameters, id, useGet);
         }
 
-        public static Task<Parameters> CodeSystemValidateCode(this ITerminologyService srv, ValidateCodeParameters parameters, string? id = null, bool useGet = false)
+        public static Task<Parameters> CodeSystemValidateCode(this ITerminologyService srv, CodeSystemValidateCodeParameters parameters, string? id = null, bool useGet = false)
         {
             return srv.CodeSystemValidateCode(parameters, id, useGet);
         }

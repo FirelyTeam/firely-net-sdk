@@ -48,6 +48,13 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
     /// <returns></returns>
     protected internal override Task<ValueSet> ResolveValueSet(Canonical canonical) => Task.FromResult(new ValueSet());
 
+    /// <summary>
+    /// Returns an uninitialized CodeSystem, as the implementations will verify only codes known to them. If CodeSystem is needed, override this method.
+    /// </summary>
+    /// <param name="canonical"></param>
+    /// <returns></returns>
+    protected override Task<CodeSystem> ResolveCodeSystem(Canonical canonical) => Task.FromResult(new CodeSystem());
+
 
     protected override Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
     {
@@ -74,6 +81,27 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
             return Task.FromResult(ValidateCodeResult.ForResult(true, code: code.Value, system: _codeSystem));
         
         return Task.FromResult(ValidateCodeResult.ForResult(false, $"'{code}' is not a valid {_terminologyType}."));
+    }
+
+    protected override Task<ValidateCodeResult> ValidateCode(CodeSystem cs, Code code, string? system, string? display, FhirBoolean? abstractAllowed)
+    {
+        if (system is not null && system != _codeSystem)
+            throw FhirOperationException.IncompleteCodedParameter($"Unknown system '{system}'");
+        
+        if (ValidateCodeType(code.Value!))
+            return Task.FromResult(ValidateCodeResult.ForResult(true, code: code.Value, system: _codeSystem));
+        
+        return Task.FromResult(ValidateCodeResult.ForResult(false, $"'{code}' is not a valid {_terminologyType}."));
+    }
+
+    protected override Task<ValidateCodeResult> CodeSystemValidateCode(CodeSystemValidateCodeParameters parameters)
+    {
+        var providedUrl = parameters.Url?.Value ?? (parameters.CodeSystem as CodeSystem)?.Url;
+        
+        if (providedUrl is not null && providedUrl != _codeSystem)
+            throw FhirOperationException.InvalidOperationInvocation($"Unknown code system '{providedUrl}'");
+        
+        return base.CodeSystemValidateCode(parameters);
     }
 
     abstract protected bool ValidateCodeType(string code);

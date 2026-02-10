@@ -95,5 +95,43 @@ namespace Hl7.Fhir.Specification.Tests
                 .Subject.Value.IsExactly(new FhirBoolean(true))
                 .Should().BeTrue();
         }
+
+        [TestMethod]
+        public async Task CodeSystemValidateCodeTest()
+        {
+            var parameters = new CodeSystemValidateCodeParameters()
+                .WithCodeSystem(MimeTypeTerminologyService.MIMETYPE_SYSTEM)
+                .WithCode(code: "invalid");
+
+            var result = await _service.CodeSystemValidateCode(parameters);
+            var messageParam = result.Parameter.Should().Contain(p => p.Name == "message").Subject;
+            messageParam.Value.IsExactly(new FhirString($"'invalid' is not a valid MIME type."))
+                .Should().BeTrue();
+
+            parameters = new CodeSystemValidateCodeParameters()
+                .WithCodeSystem(MimeTypeTerminologyService.MIMETYPE_SYSTEM)
+                .WithCode(code: "application/json");
+
+            result = await _service.CodeSystemValidateCode(parameters);
+            var resultParam = result.Parameter.Should().Contain(p => p.Name == "result").Subject;
+            resultParam.Value.IsExactly(new FhirBoolean(true))
+                .Should().BeTrue();
+
+            parameters = new CodeSystemValidateCodeParameters()
+                .WithCodeSystem(MimeTypeTerminologyService.MIMETYPE_SYSTEM)
+                .WithCode(code: "json");
+
+            result = await _service.CodeSystemValidateCode(parameters);
+            resultParam = result.Parameter.Should().Contain(p => p.Name == "result").Subject;
+            resultParam.Value.IsExactly(new FhirBoolean(true))
+                .Should().BeTrue();
+
+            var csParameters = new CodeSystemValidateCodeParameters()
+                .WithCodeSystem("http://hl7.org/fhir/administrative-gender")
+                .WithCode(code: "male");
+
+            Func<Task> validateCode = async () => await _service.CodeSystemValidateCode(csParameters);
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown code system 'http://hl7.org/fhir/administrative-gender'");
+        }
     }
 }
