@@ -244,11 +244,18 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         var baseAssembly = typeof(ModelInspector).Assembly;
         if (typeAssembly == baseAssembly) return;
         
+        // Check if the type is from the Conformance assembly. The Conformance assembly is marked
+        // with FhirRelease.R4 but contains conformance resources (like StructureDefinition) that are
+        // compatible with R4, R4B, R5, and R6, so we should not reject types from it when the
+        // inspector is for R4 or later.
+        var assemblyName = typeAssembly.GetName().Name;
+        if (assemblyName == "Hl7.Fhir.Conformance" && FhirRelease >= FhirRelease.R4)
+            return;
+        
         // For any other assembly with FhirModelAssemblyAttribute, validate version compatibility
         // This applies to all assemblies containing POCO definitions, not just satellite assemblies
         if (typeAssemblyAttr.Since != FhirRelease)
         {
-            var assemblyName = typeAssembly.GetName().Name;
             var message = $"Type '{type.FullName}' from assembly '{assemblyName}' " +
                          $"(FHIR {typeAssemblyAttr.Since}) is being imported into a ModelInspector " +
                          $"configured for FHIR {FhirRelease}. This can lead to unexpected behavior " +
