@@ -30,11 +30,18 @@ namespace Hl7.Fhir.Introspection
     public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     {
         private static readonly ConcurrentDictionary<string, ModelInspector> _inspectedAssemblies = new();
+        
+        // Cache for assembly-level FhirModelAssemblyAttribute to avoid repeated reflection calls
+        private static readonly ConcurrentDictionary<Assembly, FhirModelAssemblyAttribute?> _assemblyAttributeCache = new();
 
         /// <summary>
         /// Removes all known mappings from the inspector.
         /// </summary>
-        public static void Clear() => _inspectedAssemblies.Clear();
+        public static void Clear()
+        {
+            _inspectedAssemblies.Clear();
+            _assemblyAttributeCache.Clear();
+        }
 
         /// <summary>
         /// Finds or creates the <see cref="ClassMapping"/> for a given type.
@@ -217,8 +224,10 @@ namespace Hl7.Fhir.Introspection
         {
             var typeAssembly = type.Assembly;
             
-            // Get the FhirModelAssemblyAttribute from the type's assembly
-            var typeAssemblyAttr = typeAssembly.GetCustomAttribute<FhirModelAssemblyAttribute>();
+            // Get the FhirModelAssemblyAttribute from the type's assembly (cached to avoid repeated reflection)
+            var typeAssemblyAttr = _assemblyAttributeCache.GetOrAdd(
+                typeAssembly,
+                assembly => assembly.GetCustomAttribute<FhirModelAssemblyAttribute>());
             
             // If the type is not from a FHIR model assembly, it's safe to import
             // (e.g., system types, CQL types)
