@@ -122,8 +122,8 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithCode(code: "json");
 
             result = await _service.CodeSystemValidateCode(parameters);
-            resultParam = result.Parameter.Should().Contain(p => p.Name == "result").Subject;
-            resultParam.Value.IsExactly(new FhirBoolean(true))
+            var secondResultParam = result.Parameter.Should().Contain(p => p.Name == "result").Subject;
+            secondResultParam.Value.IsExactly(new FhirBoolean(true))
                 .Should().BeTrue();
 
             var csParameters = new CodeSystemValidateCodeParameters()
