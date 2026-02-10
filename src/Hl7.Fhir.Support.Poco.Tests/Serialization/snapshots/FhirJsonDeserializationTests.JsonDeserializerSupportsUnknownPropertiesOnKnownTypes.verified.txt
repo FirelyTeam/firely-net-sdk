@@ -2,7 +2,7 @@
   Errors: [
     {
       Type: CodedValidationException,
-      MemberName: telecom,
+      MemberName: Telecom,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a collection of ContactPoint, but found a single ContactPoint.,
@@ -27,6 +27,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Communication,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.communication[0].language' with minimum cardinality 1 must be present.,
@@ -39,7 +40,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: communication,
+      MemberName: Communication,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a collection of Patient.communication, but found a single Patient.communication.,
@@ -64,7 +65,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: name,
+      MemberName: Name,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a collection of HumanName, but found a single HumanName.,
@@ -77,7 +78,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,

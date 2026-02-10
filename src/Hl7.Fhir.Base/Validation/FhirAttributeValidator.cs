@@ -45,7 +45,7 @@ public class FhirAttributeValidator : IPocoValidator
         if (!propertyMapping.PropertyType.IsInstanceOfType(propertyValue))
         {
             return [
-                CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context),
+                CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context, propertyMapping.NativeProperty.Name),
                 ..runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
             ];
         }
