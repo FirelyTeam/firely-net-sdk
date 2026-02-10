@@ -60,7 +60,7 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
     {
         // If inferSystem is requested, we cannot handle this - let it pass to another service
         if (parameters.InferSystem?.Value == true)
-            throw FhirOperationException.InvalidOperationInvocation($"Cannot find valueset '{parameters.Url?.Value ?? (parameters.ValueSet as ValueSet)?.Url}'");
+            throw FhirOperationException.SystemCannotBeInferred("Cannot infer system.");
 
         var providedUrl = parameters.Url?.Value ?? (parameters.ValueSet as ValueSet)?.Url;
         var valueSetUri = parameters.Url?.Value != null

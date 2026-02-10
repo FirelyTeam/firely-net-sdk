@@ -115,13 +115,13 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async Task ValueSetValidationWithInferSystemTest()
         {
-            // Test that inferSystem=true causes service to not handle the request (throws "Cannot find valueset")
+            // Test that inferSystem=true causes service to report it cannot infer
             var parametersWithInferSystem = new ValidateCodeParameters()
                 .WithValueSet(LANGUAGE_VS)
                 .WithCode(code: "nl-NL", inferSystem: true);
 
             Func<Task> validateCode = async () => await _service.ValueSetValidateCode(parametersWithInferSystem);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage($"Cannot find valueset '{LANGUAGE_VS}'");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Cannot infer system.");
 
             // Test that missing system without inferSystem results in validation error
             var parametersWithoutSystem = new ValidateCodeParameters()
