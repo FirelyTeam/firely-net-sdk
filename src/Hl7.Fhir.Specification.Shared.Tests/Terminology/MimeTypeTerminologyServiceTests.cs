@@ -132,6 +132,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             Func<Task> validateCode = async () => await _service.CodeSystemValidateCode(csParameters);
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown code system 'http://hl7.org/fhir/administrative-gender'");
+
+            // Test that system is required when using a Coding without system
+            var codingWithoutSystem = new CodeSystemValidateCodeParameters()
+                .WithCodeSystem(MimeTypeTerminologyService.MIMETYPE_SYSTEM)
+                .WithCoding(new Coding { Code = "application/json" }); // Coding without system
+
+            validateCode = async () => await _service.CodeSystemValidateCode(codingWithoutSystem);
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Must have a coding with both code and system to be validated.");
         }
     }
 }

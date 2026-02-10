@@ -85,7 +85,10 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
 
     protected override Task<ValidateCodeResult> ValidateCode(CodeSystem cs, Code code, string? system, string? display, FhirBoolean? abstractAllowed)
     {
-        if (system is not null && system != _codeSystem)
+        if (system is null)
+            throw FhirOperationException.IncompleteCodedParameter("System is not supplied.");
+        
+        if (system != _codeSystem)
             throw FhirOperationException.IncompleteCodedParameter($"Unknown system '{system}'");
         
         if (ValidateCodeType(code.Value!))
