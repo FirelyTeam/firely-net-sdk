@@ -187,7 +187,12 @@ namespace Hl7.Fhir.Introspection
         /// <returns>The created ClassMapping.</returns>
         public ClassMapping? ImportType(Type type)
         {
-            if (!ClassMapping.TryGetMappingForType(type, FhirRelease, out var mapping))
+            if (FindClassMapping(type) is { } existingMapping) return existingMapping;
+            
+            // Check for cross-version type import before proceeding
+            ValidateSatelliteAssemblyCompatibility(type);
+            
+            if (!ClassMapping.TryCreate(type, out var mapping, FhirRelease))
                 return null;
 
             _classMappings.Add(mapping!);
@@ -202,6 +207,51 @@ namespace Hl7.Fhir.Introspection
             return mapping;
         }
 
+        /// <summary>
+        /// Validates that a type being imported is compatible with this ModelInspector's FHIR release.
+        /// </summary>
+        /// <param name="type">The type being imported</param>
+        /// <exception cref="InvalidOperationException">Thrown when attempting to import a type from
+        /// a different FHIR version assembly</exception>
+        private void ValidateSatelliteAssemblyCompatibility(Type type)
+        {
+            var typeAssembly = type.Assembly;
+            
+            // Get the FhirModelAssemblyAttribute from the type's assembly
+            var typeAssemblyAttr = typeAssembly.GetCustomAttribute<FhirModelAssemblyAttribute>();
+            
+            // If the type is not from a FHIR model assembly, it's safe to import
+            // (e.g., system types, CQL types)
+            if (typeAssemblyAttr is null) return;
+            
+            // Check if the type is from the Base assembly. The Base assembly is marked with
+            // FhirRelease.STU3 but is compatible with all FHIR releases, so we should not
+            // reject types from it.
+            var baseAssembly = typeof(ModelInspector).Assembly;
+            if (typeAssembly == baseAssembly) return;
+            
+            // Check if the type is from the Conformance assembly. The Conformance assembly is marked
+            // with FhirRelease.R4 but contains conformance resources (like StructureDefinition) that are
+            // compatible with R4, R4B, R5, and R6, so we should not reject types from it when the
+            // inspector is for R4 or later.
+            var assemblyName = typeAssembly.GetName().Name;
+            if (assemblyName == "Hl7.Fhir.Conformance" && FhirRelease >= FhirRelease.R4)
+                return;
+            
+            // For any other assembly with FhirModelAssemblyAttribute, validate version compatibility
+            // This applies to all assemblies containing POCO definitions, not just satellite assemblies
+            if (typeAssemblyAttr.Since != FhirRelease)
+            {
+                var message = $"Type '{type.FullName}' from assembly '{assemblyName}' " +
+                             $"(FHIR {typeAssemblyAttr.Since}) is being imported into a ModelInspector " +
+                             $"configured for FHIR {FhirRelease}. This can lead to unexpected behavior " +
+                             $"when types from different FHIR versions are mixed. " +
+                             $"Ensure you are using the correct ModelInspector for your FHIR version.";
+                
+                throw new InvalidOperationException(message);
+            }
+        }
+    
         private void extractEnums(IEnumerable<Type> enumTypes)
         {
             foreach (var enumType in enumTypes)
