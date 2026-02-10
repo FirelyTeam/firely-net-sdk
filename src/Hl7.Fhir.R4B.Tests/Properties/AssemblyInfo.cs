@@ -1,4 +1,4 @@
 using Hl7.Fhir.Introspection;
 
 
-[assembly: FhirModelAssembly]
+[assembly: FhirModelAssembly(Hl7.Fhir.Specification.FhirRelease.R4B)]

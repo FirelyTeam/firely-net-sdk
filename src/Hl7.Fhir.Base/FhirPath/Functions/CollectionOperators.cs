@@ -111,6 +111,17 @@ namespace Hl7.FhirPath.Functions
                 }
             }
 
+            // Handle .value property on FHIR primitives to access the actual primitive value
+            if (name == "value" && element is PrimitiveNode primitiveNode)
+            {
+                // Return the primitive value as a FhirPath system type
+                if (primitiveNode.Value is not null)
+                {
+                    return new[] { PocoNode.ForAnyPrimitive(primitiveNode.Value) };
+                }
+                return Enumerable.Empty<PocoNode>();
+            }
+
             return element.Child(name) ?? Enumerable.Empty<PocoNode>();
         }
 
