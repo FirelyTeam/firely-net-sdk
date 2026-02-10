@@ -268,7 +268,7 @@ public class BaseFhirJsonDeserializer
         var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath,
                 line, pos, Settings.NarrativeValidation)
         {
-            MemberName = metadata.PropertyMapping.NativeProperty?.Name ?? elementName
+            MemberName = metadata.PropertyMapping.NativeProperty?.Name
         };
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,

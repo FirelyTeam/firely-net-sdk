@@ -40,7 +40,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: resourceType,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'resourceType'.,
@@ -78,7 +77,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'value'.,
@@ -215,7 +213,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: versionId,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'versionId'.,
@@ -265,7 +262,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: versionId,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'versionId'.,
@@ -316,7 +312,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: versionId,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'versionId'.,
@@ -390,7 +385,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: url,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'url'.,
@@ -425,7 +419,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: test,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'test'.,
@@ -512,7 +505,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: mother,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'mother'.,
@@ -575,7 +567,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: incorrect,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'incorrect'.,
@@ -728,7 +719,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: temperature,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'temperature'.,
@@ -741,7 +731,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: unit,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'unit'.,
@@ -882,7 +871,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: unknownElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'unknownElement'.,
@@ -895,7 +883,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: valued,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'valued'.,
@@ -908,7 +895,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: data,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'data'.,

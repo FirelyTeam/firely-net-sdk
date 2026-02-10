@@ -68,7 +68,7 @@ public static class PocoValidationExtensions
         foreach (var (name,propValue) in value.EnumerateElements())
         {
             var propMapping = classMapping.FindMappedElementByName(name);
-            var childContext = validationContext.IntoPath(name) with { MemberName = propMapping?.NativeProperty?.Name ?? name};
+            var childContext = validationContext.IntoPath(name) with { MemberName = propMapping?.NativeProperty?.Name };
             errors.AddRange(validator.ValidateProperty(name, propValue, propMapping, childContext));
 
             if (!validationContext.ValidateObjectOnly)

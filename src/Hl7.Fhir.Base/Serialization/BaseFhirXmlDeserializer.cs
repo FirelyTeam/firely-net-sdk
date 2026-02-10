@@ -293,7 +293,7 @@ public class BaseFhirXmlDeserializer
                 lineNumber, position,
                 Settings.NarrativeValidation)
             {
-                MemberName = propMapping.NativeProperty?.Name ?? propMapping.Name
+                MemberName = propMapping.NativeProperty?.Name
             };
 
             state.Errors.Add(Settings.Validator.ValidateProperty(elementName, newPropValue, propMapping, context));
@@ -526,7 +526,7 @@ public class BaseFhirXmlDeserializer
                     lineNumber, position,
                     Settings.NarrativeValidation)
                 {
-                    MemberName = propMapping.NativeProperty?.Name ?? attributeName
+                    MemberName = propMapping.NativeProperty?.Name
                 };
                 state.Errors.Add(Settings.Validator.ValidateProperty(attributeName, newPropValue, propMapping, context));
             }
