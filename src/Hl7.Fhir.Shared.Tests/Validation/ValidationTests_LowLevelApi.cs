@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -101,7 +102,25 @@ public class ValidationTests_LowLevelApi
     }
 
     [TestMethod]
-    public void ValidatePropertyReportsMemberName()
+    public void ValidationSameMemberNameInErrors()
+    {
+        var json = """
+            {
+                "resourceType": "Organization",
+                "text": {
+                    "status": "generated",
+                    "div": "<wrong />"
+                }
+            }
+            """;
+        FhirJsonDeserializer.STRICT.TryDeserializeResource(json, out var organization, out var errorsJson);
+        var errorsProp = organization!.Validate();
+        errorsProp.Should().BeEquivalentTo(errorsJson.OfType<CodedValidationException>(), options => options.Including(x => x.MemberName));
+        errorsProp.Should().ContainSingle().Which.MemberName.Should().Be("DivElement");
+    }
+
+    [TestMethod]
+    public void ValidateReportsMemberName()
     {
         const string prop = "tag";
         var meta = new Meta();
@@ -109,24 +128,13 @@ public class ValidationTests_LowLevelApi
 
         var classMapping = ModelInfo.ModelInspector.FindClassMapping(meta.GetType());
         Assert.IsNotNull(classMapping);
-        var propertyMapping = classMapping.FindMappedElementByName(prop);
-        Assert.IsNotNull(propertyMapping);
 
-        var context = new PocoValidationContext(
-            meta,
-            ModelInfo.ModelInspector,
-            () => "Meta.tag",
-            0, 0,
-            NarrativeValidationKind.FhirXhtml
-        ) { MemberName = propertyMapping.Name };
+        var errors = meta.Validate();
 
-        var errors = validator.ValidateProperty(
-            prop,
-            meta[prop],
-            propertyMapping,
-            context);
+        errors.Should().ContainSingle().Which.MemberName.Should().Be(nameof(Meta.Tag));
 
-        errors.Should().ContainSingle().Which.MemberName.Should().Be(prop);
+        CodedValidationException typeAccessException = Assert.Throws<CodedValidationException>(() => meta.Tag);
+        typeAccessException.MemberName.Should().BeEquivalentTo(errors.First().MemberName);
     }
 
     [TestMethod]

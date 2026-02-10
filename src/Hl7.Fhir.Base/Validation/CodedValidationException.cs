@@ -88,8 +88,8 @@ public class CodedValidationException : ExtendedCodedException
     internal static COVE UNSIGNED_INT_MUST_NOT_BE_NEGATIVE(PocoValidationContext? context, int value) =>
         Initialize(context, UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE, $"Value {value} is negative, which is not allowed for an UnsignedInt.", "Cannot be negative", OO_Sev.Error, OO_Typ.Value);
     
-    internal static COVE PROPERTY_TYPE_MISMATCH(PocoValidationContext? context, string expected, string actual) =>
-        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be a {expected}, but found a {actual}.", "Type mismatch", OO_Sev.Error, OO_Typ.Value);
+    internal static COVE PROPERTY_TYPE_MISMATCH(PocoValidationContext? context, string expected, string actual, string memberName) =>
+        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be a {expected}, but found a {actual}.", "Type mismatch", OO_Sev.Error, OO_Typ.Value, memberName);
     
     internal static COVE UNKNOWN_ELEMENT(PocoValidationContext? context, string elementName, string serializedForm = "element") =>
         Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown {serializedForm} '{elementName}'.", "Unknown element", OO_Sev.Error, OO_Typ.Value);
@@ -169,7 +169,7 @@ public class CodedValidationException : ExtendedCodedException
         if(actualList && !expectedList)
             expectedFhirTypeName = "single " + expectedFhirTypeName;
 
-        return PROPERTY_TYPE_MISMATCH(context, expectedFhirTypeName, actualFhirTypeName);
+        return PROPERTY_TYPE_MISMATCH(context, expectedFhirTypeName, actualFhirTypeName, memberName);
     }
 
     internal static string FhirTypeNameForObject(object? actual) =>

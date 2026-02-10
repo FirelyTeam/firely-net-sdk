@@ -14,7 +14,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'value'.,
@@ -27,7 +26,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: amount,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'amount'.,
@@ -40,7 +38,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'value'.,
@@ -53,7 +50,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: unit,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'unit'.,
@@ -66,7 +62,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: valueQuantity,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'valueQuantity'.,
