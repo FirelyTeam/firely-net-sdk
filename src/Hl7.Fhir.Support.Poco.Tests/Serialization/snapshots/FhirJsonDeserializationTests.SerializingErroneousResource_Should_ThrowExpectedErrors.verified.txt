@@ -14,6 +14,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Extension,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.extension[0].url' with minimum cardinality 1 must be present.,
@@ -26,6 +27,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: LastUpdatedElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: string 'not a valid instant' is not a correct literal for a instant.,
@@ -38,7 +40,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: resourceType,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'resourceType'.,
@@ -51,6 +52,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: StatusElement,
       IssueSeverity: Error,
       IssueType: CodeInvalid,
       BaseErrorMessage: Value 'generatedY' is not a correct code for valueset 'NarrativeStatus'.,
@@ -75,7 +77,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'value'.,
@@ -88,7 +89,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
@@ -125,7 +126,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
@@ -162,7 +163,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
@@ -175,7 +176,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
@@ -212,7 +213,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: versionId,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'versionId'.,
@@ -225,7 +225,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: active,
+      MemberName: ActiveElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single boolean, but found a collection of boolean.,
@@ -262,7 +262,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: versionId,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'versionId'.,
@@ -287,6 +286,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Contained,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Encountered unknown resource type 'PatientX'.,
@@ -299,6 +299,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Contained,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Encountered unknown resource type 'Meta'.,
@@ -311,7 +312,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: versionId,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'versionId'.,
@@ -324,6 +324,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Contained,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Encountered unknown resource type '4'.,
@@ -360,7 +361,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: deceased,
+      MemberName: Deceased,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Value is of type 'string', which is not an allowed choice.,
@@ -384,7 +385,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: url,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'url'.,
@@ -419,7 +419,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: test,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'test'.,
@@ -432,6 +431,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: ValueElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: string '1.00000000000000000e-24' is not the right type of literal for a decimal.,
@@ -444,6 +444,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: ValueElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: string '-1.00000000000000000e245' is not the right type of literal for a decimal.,
@@ -478,6 +479,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: ElementIdElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: boolean True is not the right type of literal for a string.,
@@ -490,7 +492,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: given,
+      MemberName: GivenElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a collection of string, but found a single string.,
@@ -503,7 +505,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: mother,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'mother'.,
@@ -516,7 +517,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: family,
+      MemberName: FamilyElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Expected property to be a single string, but found a collection of string.,
@@ -541,6 +542,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: UseElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Empty FHIR elements are invalid.,
@@ -565,7 +567,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: incorrect,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'incorrect'.,
@@ -578,7 +579,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: line,
+      MemberName: LineElement,
       IssueSeverity: Error,
       IssueType: BusinessRule,
       BaseErrorMessage: Repeating elements should not contain a null value.,
@@ -603,6 +604,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: SystemElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri.,
@@ -615,7 +617,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: given,
+      MemberName: GivenElement,
       IssueSeverity: Error,
       IssueType: BusinessRule,
       BaseErrorMessage: Repeating elements should not contain a null value.,
@@ -628,6 +630,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: RankElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: boolean True is not the right type of literal for a positiveInt.,
@@ -652,6 +655,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: integer 28 is not the right type of literal for a code.,
@@ -676,7 +680,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
+      MemberName: Value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Value is of type 'UnknownType_Patient.gender.extension[2].value', which is not an allowed choice.,
@@ -689,7 +693,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
+      MemberName: Value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Value is of type 'SuperDecimal', which is not an allowed choice.,
@@ -702,7 +706,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: value,
+      MemberName: Value,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Value is of type 'SuperCrap', which is not an allowed choice.,
@@ -715,7 +719,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: temperature,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'temperature'.,
@@ -728,7 +731,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: unit,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'unit'.,
@@ -741,6 +743,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Deceased,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: string 'false' is not the right type of literal for a boolean.,
@@ -753,6 +756,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: MultipleBirth,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: decimal 3.14 is not the right type of literal for a integer.,
@@ -765,6 +769,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: DataElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Value 'ERROR!R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7' is not parseable as Base64 data.,
@@ -789,6 +794,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Language,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Empty FHIR elements are invalid.,
@@ -801,6 +807,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: DisplayElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: string '' is not a correct literal for a string.,
@@ -813,6 +820,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Link,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.link[0].type' with minimum cardinality 1 must be present.,
@@ -825,6 +833,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Link,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.link[0].other' with minimum cardinality 1 must be present.,
@@ -837,6 +846,7 @@
     },
     {
       Type: CodedValidationException,
+      MemberName: Link,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Empty FHIR elements are invalid.,
@@ -861,7 +871,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: unknownElement,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'unknownElement'.,
@@ -874,7 +883,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: valued,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'valued'.,
@@ -887,7 +895,6 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: data,
       IssueSeverity: Error,
       IssueType: Value,
       BaseErrorMessage: Found unknown element 'data'.,
