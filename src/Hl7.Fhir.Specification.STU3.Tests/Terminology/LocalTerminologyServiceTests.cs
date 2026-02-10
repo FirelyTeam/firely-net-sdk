@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var parameters = new ValidateCodeParameters()
                  .WithValueSet("http://www.rfc-editor.org/bcp/bcp13.txt")
-                 .WithCode(code: "application/json", context: "context", inferSystem: true);
+                 .WithCode(code: "application/json", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
 
             var result = await service.ValueSetValidateCode(parameters);
 

@@ -58,6 +58,10 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
 
     protected override Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
     {
+        // If inferSystem is requested, we cannot handle this - let it pass to another service
+        if (parameters.InferSystem?.Value == true)
+            throw FhirOperationException.InvalidOperationInvocation($"Cannot find valueset '{parameters.Url?.Value ?? (parameters.ValueSet as ValueSet)?.Url}'");
+
         var providedUrl = parameters.Url?.Value ?? (parameters.ValueSet as ValueSet)?.Url;
         var valueSetUri = parameters.Url?.Value != null
             ? new Canonical(providedUrl).Uri
@@ -71,10 +75,13 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
 
     protected override Task<ValidateCodeResult> ValidateCode(ValueSet vs, Code code, string? system, bool? inferSystem, string? display, FhirBoolean? abstractAllowed)
     {
-        if (system is null && inferSystem is not true)
-            throw FhirOperationException.IncompleteCodedParameter("System is not supplied, and inferSystem is not set to true.");
+        if (inferSystem is true)
+            throw FhirOperationException.IncompleteCodedParameter("Cannot infer system.");
         
-        if (system is not null && system != _codeSystem)
+        if (system is null)
+            throw FhirOperationException.IncompleteCodedParameter("System is not supplied.");
+        
+        if (system != _codeSystem)
             throw FhirOperationException.IncompleteCodedParameter($"Unknown system '{system}'");
         
         if (ValidateCodeType(code.Value!))
