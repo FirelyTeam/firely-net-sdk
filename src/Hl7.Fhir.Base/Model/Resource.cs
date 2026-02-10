@@ -68,7 +68,8 @@ public partial class Resource
         get => Meta?.VersionId;
         set
         {
-            Meta ??= new Meta { VersionId = value };
+            Meta ??= new Meta();
+            Meta.VersionId = value;
         }
     }
 }

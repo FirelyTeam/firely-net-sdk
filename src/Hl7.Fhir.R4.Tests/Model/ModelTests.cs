@@ -139,5 +139,43 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.Fail($"One of the GetHashCode calls threw NullReferenceException: {ex.Message}");
             }
         }
+
+        [TestMethod]
+        public void ResourceVersionIdSetterWorksWithExistingMeta()
+        {
+            // Test for issue where Resource.VersionId setter doesn't work when Meta is already initialized
+            // Reproduces the scenario from the bug report
+            var patient = new Patient { Meta = new Meta() };
+            patient.VersionId = "1";
+
+            // VersionId should be set even when Meta was already initialized
+            patient.VersionId.Should().Be("1");
+            patient.Meta.VersionId.Should().Be("1");
+        }
+
+        [TestMethod]
+        public void ResourceVersionIdSetterWorksWithNullMeta()
+        {
+            // Test that VersionId setter still works when Meta is null
+            var patient = new Patient();
+            patient.VersionId = "2";
+
+            // VersionId should be set and Meta should be created
+            patient.VersionId.Should().Be("2");
+            patient.Meta.Should().NotBeNull();
+            patient.Meta.VersionId.Should().Be("2");
+        }
+
+        [TestMethod]
+        public void ResourceVersionIdSetterCanUpdateExistingVersionId()
+        {
+            // Test that VersionId can be updated when already set
+            var patient = new Patient { Meta = new Meta { VersionId = "1" } };
+            patient.VersionId = "2";
+
+            // VersionId should be updated
+            patient.VersionId.Should().Be("2");
+            patient.Meta.VersionId.Should().Be("2");
+        }
     }
 }
