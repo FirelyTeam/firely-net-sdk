@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Tests.Validation
             patient.Contained.Add(organization);
 
             var errors = patient.Validate(ModelInfo.ModelInspector);
-            errors.Should().Contain(err => err.MemberName == "div");
+            errors.Should().Contain(err => err.MemberName == "DivElement");
         }
     }
 }
