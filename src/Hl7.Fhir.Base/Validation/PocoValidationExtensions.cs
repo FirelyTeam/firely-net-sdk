@@ -68,7 +68,7 @@ public static class PocoValidationExtensions
         foreach (var (name,propValue) in value.EnumerateElements())
         {
             var propMapping = classMapping.FindMappedElementByName(name);
-            var childContext = validationContext.IntoPath(name);
+            var childContext = validationContext.IntoPath(name) with { MemberName = propMapping?.NativeProperty?.Name };
             errors.AddRange(validator.ValidateProperty(name, propValue, propMapping, childContext));
 
             if (!validationContext.ValidateObjectOnly)
@@ -106,7 +106,7 @@ public static class PocoValidationExtensions
     internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => (parent() is not "" && propName is not "") ? $"{parent()}.{propName}" : parent + propName;
     internal static Func<string> IntoPath(this Func<string> parent, int index) => () => (parent() is not "") ? $"{parent()}[{index}]" : $"[{index}]";
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, string propName) =>
-        parent with { PathProducer = parent.PathProducer.IntoPath(propName), MemberName = propName };
+        parent with { PathProducer = parent.PathProducer.IntoPath(propName) };
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, int index) =>
         parent with { PathProducer = parent.PathProducer.IntoPath(index) };
 }
