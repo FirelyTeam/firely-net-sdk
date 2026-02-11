@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Specification.Tests
                   .WithCode(code: "male", system: "http://hl7.org/fhir/administrative-gender");
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown system 'http://hl7.org/fhir/administrative-gender'");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("This service only supports code system 'urn:ietf:bcp:47'.");
         }
 
         [TestMethod]

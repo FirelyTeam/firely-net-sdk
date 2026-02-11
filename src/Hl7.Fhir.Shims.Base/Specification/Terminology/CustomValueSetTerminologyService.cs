@@ -75,7 +75,7 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
             throw FhirOperationException.IncompleteCodedParameter("System is not supplied, and inferSystem is not set to true.");
         
         if (system is not null && system != _codeSystem)
-            throw FhirOperationException.IncompleteCodedParameter($"Unknown system '{system}'");
+            throw FhirOperationException.InvalidOperationInvocation($"This service only supports code system '{_codeSystem}'.");
         
         if (ValidateCodeType(code.Value!))
             return Task.FromResult(ValidateCodeResult.ForResult(true, code: code.Value, system: _codeSystem));
@@ -89,7 +89,7 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
             throw FhirOperationException.IncompleteCodedParameter("System is not supplied.");
         
         if (system != _codeSystem)
-            throw FhirOperationException.IncompleteCodedParameter($"Unknown system '{system}'");
+            throw FhirOperationException.InvalidOperationInvocation($"This service only supports code system '{_codeSystem}'.");
         
         if (ValidateCodeType(code.Value!))
             return Task.FromResult(ValidateCodeResult.ForResult(true, code: code.Value, system: _codeSystem));
@@ -102,7 +102,7 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
         var providedUrl = parameters.Url?.Value ?? (parameters.CodeSystem as CodeSystem)?.Url;
         
         if (providedUrl is not null && providedUrl != _codeSystem)
-            throw FhirOperationException.InvalidOperationInvocation($"Unknown code system '{providedUrl}'");
+            throw FhirOperationException.InvalidOperationInvocation($"This service only supports code system '{_codeSystem}'.");
         
         return base.CodeSystemValidateCode(parameters);
     }
