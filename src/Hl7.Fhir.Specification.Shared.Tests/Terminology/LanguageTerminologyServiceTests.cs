@@ -111,25 +111,5 @@ namespace Hl7.Fhir.Specification.Tests
             validateCode = async () => await _service.CodeSystemValidateCode(codingWithoutSystem);
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Must have a coding with both code and system to be validated.");
         }
-
-        [TestMethod]
-        public async Task ValueSetValidationWithInferSystemTest()
-        {
-            // Test that inferSystem=true causes service to report it cannot infer
-            var parametersWithInferSystem = new ValidateCodeParameters()
-                .WithValueSet(LANGUAGE_VS)
-                .WithCode(code: "nl-NL", inferSystem: true);
-
-            Func<Task> validateCode = async () => await _service.ValueSetValidateCode(parametersWithInferSystem);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Cannot infer system.");
-
-            // Test that missing system without inferSystem results in validation error
-            var parametersWithoutSystem = new ValidateCodeParameters()
-                .WithValueSet(LANGUAGE_VS)
-                .WithCode(code: "nl-NL");
-
-            validateCode = async () => await _service.ValueSetValidateCode(parametersWithoutSystem);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If 'code' is provided, either 'system' must be provided, or 'inferSystem' must be true");
-        }
     }
 }

@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var parameters = new ValidateCodeParameters()
                 .WithValueSet("http://hl7.org/fhir/ValueSet/mimetypes")
-                .WithCode(code: "application/json", context: "context", system: MimeTypeTerminologyService.MIMETYPE_SYSTEM);
+                .WithCode(code: "application/json", context: "context", inferSystem: true);
             
             var result = await service.ValueSetValidateCode(parameters);
 
