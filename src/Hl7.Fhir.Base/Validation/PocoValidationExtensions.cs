@@ -32,24 +32,26 @@ public static class PocoValidationExtensions
     /// <param name="inspector">The model metadata to use for validation.</param>
     /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
     /// <param name="validator"></param>
+    /// <param name="validateRecursively">Allows opting out of validating whole object tree.</param>
     public static IReadOnlyCollection<CodedValidationException> Validate(
         this Base poco,
         ModelInspector inspector,
         NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml,
-        IPocoValidator? validator = null)
+        IPocoValidator? validator = null,
+        bool validateRecursively = true)
     {
         validator ??= new FhirAttributeValidator();
-        var validationContext = buildContext(poco, inspector, narrativeValidation);
+        var validationContext = buildContext(poco, inspector, narrativeValidation, !validateRecursively);
 
         return doObjectValidation(poco, validationContext, validator);
     }
 
-    private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind)
+    private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind, bool validateObjectOnly)
     {
         IPositionInfo? info = instance.Annotation<JsonSerializationDetails>();
         info ??= instance.Annotation<XmlSerializationDetails>();
         
-        var newContext = new PocoValidationContext(instance, inspector, producer, info?.LineNumber, info?.LinePosition, kind) { ValidateObjectOnly = false };
+        var newContext = new PocoValidationContext(instance, inspector, producer, info?.LineNumber, info?.LinePosition, kind) { ValidateObjectOnly = validateObjectOnly };
         return newContext;
 
         string producer() => instance.TypeName;
@@ -66,7 +68,7 @@ public static class PocoValidationExtensions
         foreach (var (name,propValue) in value.EnumerateElements())
         {
             var propMapping = classMapping.FindMappedElementByName(name);
-            var childContext = validationContext.IntoPath(name);
+            var childContext = validationContext.IntoPath(name) with { MemberName = propMapping?.NativeProperty?.Name };
             errors.AddRange(validator.ValidateProperty(name, propValue, propMapping, childContext));
 
             if (!validationContext.ValidateObjectOnly)

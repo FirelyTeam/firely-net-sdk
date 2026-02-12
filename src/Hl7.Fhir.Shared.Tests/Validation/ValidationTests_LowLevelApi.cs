@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -98,6 +99,42 @@ public class ValidationTests_LowLevelApi
         meta.SetValue(prop, new List<FhirUri>());
 
         assertPropertyValidationErrors(meta, prop, "PVAL127");
+    }
+
+    [TestMethod]
+    public void ValidationSameMemberNameInErrors()
+    {
+        var json = """
+            {
+                "resourceType": "Organization",
+                "text": {
+                    "status": "generated",
+                    "div": "<wrong />"
+                }
+            }
+            """;
+        FhirJsonDeserializer.STRICT.TryDeserializeResource(json, out var organization, out var errorsJson);
+        var errorsProp = organization!.Validate();
+        errorsProp.Should().BeEquivalentTo(errorsJson.OfType<CodedValidationException>(), options => options.Including(x => x.MemberName));
+        errorsProp.Should().ContainSingle().Which.MemberName.Should().Be("DivElement");
+    }
+
+    [TestMethod]
+    public void ValidateReportsMemberName()
+    {
+        const string prop = "tag";
+        var meta = new Meta();
+        meta.SetValue(prop, new List<FhirUri>());
+
+        var classMapping = ModelInfo.ModelInspector.FindClassMapping(meta.GetType());
+        Assert.IsNotNull(classMapping);
+
+        var errors = meta.Validate();
+
+        errors.Should().ContainSingle().Which.MemberName.Should().Be(nameof(Meta.Tag));
+
+        CodedValidationException typeAccessException = Assert.Throws<CodedValidationException>(() => meta.Tag);
+        typeAccessException.MemberName.Should().BeEquivalentTo(errors.First().MemberName);
     }
 
     [TestMethod]

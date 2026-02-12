@@ -309,6 +309,57 @@ namespace Hl7.Fhir.ElementModel.Tests
             enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
         }
 
+        [TestMethod]
+        public void TestMakeAbsolutePreservesHostCase()
+        {
+            // This test reproduces the issue where URL host is converted to lowercase
+            // when building full URLs from relative references within a bundle
+            var bundle = new Bundle()
+            {
+                Type = Bundle.BundleType.Collection,
+                Entry = new List<Bundle.EntryComponent>
+                {
+                    new() { FullUrl = "http://Example.Org/fhir/Patient/1", Resource = new Patient { Id = "1" } },
+                    new() { FullUrl = "http://Example.Org/fhir/Organization/org1", Resource = new Organization { Id = "org1" } },
+                    new() { 
+                        FullUrl = "http://Example.Org/fhir/Patient/2", 
+                        Resource = new Patient 
+                        { 
+                            Id = "2",
+                            ManagingOrganization = new ResourceReference("Organization/org1")
+                        } 
+                    }
+                }
+            };
+
+            var bundleNode = new ScopedNode(bundle.ToTypedElement());
+            
+            // Get the third entry (index 2) - the Patient that references the organization
+            var patient2Entry = bundleNode.Children("entry").ElementAt(2);
+            var patient2Resource = patient2Entry.Children("resource").First() as ScopedNode;
+            
+            // Test resolving relative reference "Organization/org1"
+            var orgRef = patient2Resource!.Children("managingOrganization").First();
+            var resolvedOrg = orgRef.Resolve();
+            
+            // The resolved organization should not be null
+            Assert.IsNotNull(resolvedOrg, "Failed to resolve Organization/org1 reference");
+            
+            // Verify that MakeAbsolute preserves the original host casing
+            var orgRefNode = patient2Resource.Children("managingOrganization").First() as ScopedNode;
+            Assert.IsNotNull(orgRefNode);
+            var absoluteUrl = orgRefNode.MakeAbsolute("Organization/org1");
+            
+            // The absolute URL should preserve the case of the host from the fullUrl
+            Assert.AreEqual("http://Example.Org/fhir/Organization/org1", absoluteUrl, 
+                "MakeAbsolute should preserve the case of the host from the fullUrl");
+            
+            // Also verify resolution of Patient/1 with uppercase host works
+            var patient1Url = patient2Resource.MakeAbsolute("Patient/1");
+            Assert.AreEqual("http://Example.Org/fhir/Patient/1", patient1Url,
+                "MakeAbsolute should preserve the case for any relative reference");
+        }
+
         private class CCDAResourceResolver : IAsyncResourceResolver
         {
             private readonly Dictionary<string, StructureDefinition> _cache;

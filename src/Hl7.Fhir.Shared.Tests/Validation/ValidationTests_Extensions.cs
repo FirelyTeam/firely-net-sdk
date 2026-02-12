@@ -287,5 +287,41 @@ namespace Hl7.Fhir.Tests.Validation
             errors.Should().Contain(x => x.InstancePath == "Bundle.entry[0].resource.active");
             errors.Should().Contain(x => x.InstancePath == "Bundle.entry[2].resource.active");
         }
+
+        [TestMethod]
+        public void ValidateRecursivelyCanBeDisabled()
+        {
+            var organization = new Organization
+            {
+                Text = new Narrative { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated }
+            };
+
+            var patient = new Patient();
+            patient.Contained.Add(organization);
+
+            patient.Validate().Should().NotBeEmpty();
+
+            patient.Validate(
+                ModelInfo.ModelInspector,
+                NarrativeValidationKind.FhirXhtml,
+                validator: null,
+                validateRecursively: false)
+                .Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void NestedValidationErrorsIncludeMemberName()
+        {
+            var organization = new Organization
+            {
+                Text = new Narrative { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated }
+            };
+
+            var patient = new Patient();
+            patient.Contained.Add(organization);
+
+            var errors = patient.Validate(ModelInfo.ModelInspector);
+            errors.Should().Contain(err => err.MemberName == "DivElement");
+        }
     }
 }

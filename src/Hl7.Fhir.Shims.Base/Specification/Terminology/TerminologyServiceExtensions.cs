@@ -25,6 +25,11 @@ namespace Hl7.Fhir.Specification.Terminology
             return srv.CodeSystemValidateCode(parameters, id, useGet);
         }
 
+        public static Task<Parameters> CodeSystemValidateCode(this ITerminologyService srv, CodeSystemValidateCodeParameters parameters, string? id = null, bool useGet = false)
+        {
+            return srv.CodeSystemValidateCode(parameters, id, useGet);
+        }
+
         public static Task<Resource> Expand(this ITerminologyService srv, ExpandParameters parameters, string? id = null, bool useGet = false)
         {
             return srv.Expand(parameters, id, useGet);
