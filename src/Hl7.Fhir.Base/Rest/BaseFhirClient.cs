@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 /* 
  * Copyright (c) 2023, Firely (info@fire.ly) and contributors
@@ -863,9 +863,13 @@ public partial class BaseFhirClient : IDisposable
         // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
         // of the server, add a suggestion about this in the (legacy) parsing exception.
 
-        (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
+        var (result, body, bodyAsText, bodyAsResource, issue) =
             await ValidateResponse(responseMessage, expect, getSerializationEngine(), !Settings.VerifyFhirVersion, fhirVersion, useBinaryProtocol)
                 .ConfigureAwait(false);
+        LastResult = result;
+        LastBody = body;
+        LastBodyAsText = bodyAsText;
+        LastBodyAsResource = bodyAsResource;
 
         // If an error occurred while trying to interpret and validate the response, we will bail out now.
         if (issue is not null) throw issue;
@@ -873,24 +877,24 @@ public partial class BaseFhirClient : IDisposable
         // If the response is an operation outcome, add it to response.outcome.
         // This is necessary for when a client uses return=OperationOutcome as a prefer header.
         // See also issue #1681.
-        if (LastBodyAsResource is OperationOutcome oo)
-            LastResult.Outcome = oo;
+        if (bodyAsResource is OperationOutcome oo)
+            result.Outcome = oo;
 
         // If the full representation was requested (using the Prefer header), but the server did not return the resource
         // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
         // This behavior is only valid for PUT, POST and PATCH requests, where the server may device whether or not to return
         // the full body of the altered resource.
-        var noRealBody = LastBodyAsResource is null || (LastBodyAsResource is OperationOutcome && string.IsNullOrEmpty(LastBodyAsResource.Id));
+        var noRealBody = bodyAsResource is null || (bodyAsResource is OperationOutcome && string.IsNullOrEmpty(bodyAsResource.Id));
         var shouldFetchFullRepresentation = noRealBody
                                             && (msg is not null ? isPostOrPutOrPatch(msg.Method) : isPostOrPutOrPatch(entryComponent!))
                                             && Settings.ReturnPreference == ReturnPreference.Representation
-                                            && LastResult.Location is { } fetchLocation
+                                            && result.Location is { } fetchLocation
                                             && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
 
         // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
         // and all state (e.g. Last Result etc) will be overwritten from this point on.
-        var execResult = shouldFetchFullRepresentation && LastResult?.Location is not null ?
-            await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
+        var execResult = shouldFetchFullRepresentation && result?.Location is not null ?
+            await GetAsync(result.Location).ConfigureAwait(false) : LastBodyAsResource;
 
         // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
         return execResult switch
