@@ -84,6 +84,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20171023] Always copy the specified settings, to prevent shared state
             // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
             _settings = new SnapshotGeneratorSettings(settings);
+
+            // [WMR 20250212] Validate TypeProfileMergeStrategy setting
+            // BaseFirst mode is not yet implemented - see FHIR-9791
+            if (_settings.TypeProfileMergeStrategy == TypeProfileMergeStrategy.BaseFirst)
+            {
+                throw new NotImplementedException(
+                    $"TypeProfileMergeStrategy.BaseFirst is not yet implemented. " +
+                    $"The default TypeFirst strategy (base profile → type profile → differential) is currently the only supported mode. " +
+                    $"See FHIR-9791 (https://jira.hl7.org/browse/FHIR-9791) for background on this issue. " +
+                    $"Implementation of BaseFirst mode requires significant refactoring of the snapshot generation algorithm.");
+            }
         }
 
         /// <summary>
@@ -983,6 +994,24 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20161004] Remove configuration setting; always merge type profiles
                 // if (_settings.MergeTypeProfiles) 
                 // [WMR 20170714] Can safely skip this step for the root node
+                
+                // TODO [WMR 20250212] TypeProfileMergeStrategy support
+                // Current implementation uses TypeFirst strategy (base → type → diff):
+                // 1. snap.Current contains base profile element
+                // 2. mergeTypeProfiles merges type profile onto snap (base + type)
+                // 3. mergeElementDefinition merges differential onto snap (base + type + diff)
+                //
+                // To implement BaseFirst strategy (type → base → diff), we would need to:
+                // 1. Start with type profile as initial snap
+                // 2. Merge base profile onto that (type + base)
+                // 3. Then merge differential (type + base + diff)
+                //
+                // This requires significant refactoring as current architecture assumes
+                // snap already contains base profile. See FHIR-9791 for background.
+                //
+                // Current: _settings.TypeProfileMergeStrategy == TypeFirst (default)
+                // Future: Add conditional logic here to support BaseFirst mode
+                
                 if (!isRoot)
                 {
                     isMerged = await mergeTypeProfiles(snap, diff).ConfigureAwait(false);

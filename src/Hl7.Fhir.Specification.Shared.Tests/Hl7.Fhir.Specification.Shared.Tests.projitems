@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TestElementBaseAnnotation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TestProfileArtifactSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TimingSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TypeProfileMergeBehaviorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSourceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSummaryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ConformanceSourceTests.cs" />
