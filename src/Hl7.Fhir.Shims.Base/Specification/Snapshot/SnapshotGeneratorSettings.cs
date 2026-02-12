@@ -10,6 +10,40 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
+    /// <summary>
+    /// Defines the merge strategy for element properties when both a profiled base and a typeref to a profiled datatype bring in changes.
+    /// </summary>
+    /// <remarks>
+    /// This addresses the behavior difference described in FHIR-9791 (https://jira.hl7.org/browse/FHIR-9791).
+    /// The specification does not prescribe a definitive merge order, and both strategies have valid use cases.
+    /// </remarks>
+    public enum TypeProfileMergeStrategy
+    {
+        /// <summary>
+        /// Legacy .NET SDK behavior (default): Type profile constraints are merged first, then base profile constraints, then differential.
+        /// Example: Patient.Address with type.profile = AddressNL
+        /// Order: AddressNL constraints → Patient.Address base constraints → differential constraints
+        /// Result: Base profile constraints can override type profile constraints.
+        /// </summary>
+        /// <remarks>
+        /// This is the behavior that has been used by the .NET SDK since 2016.
+        /// Choose this mode to maintain backward compatibility with existing .NET snapshots.
+        /// </remarks>
+        TypeFirst = 0,
+
+        /// <summary>
+        /// Base-first merge strategy: Base profile constraints are merged first, then type profile constraints, then differential.
+        /// Example: Patient.Address with type.profile = AddressNL
+        /// Order: Patient.Address base constraints → AddressNL constraints → differential constraints
+        /// Result: Type profile constraints can override base profile constraints.
+        /// </summary>
+        /// <remarks>
+        /// This mode is designed to align with Java HAPI FHIR implementation behavior.
+        /// Choose this mode when interoperability with Java-generated snapshots is required.
+        /// </remarks>
+        BaseFirst = 1
+    }
+
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
     public sealed class SnapshotGeneratorSettings
     {
@@ -38,7 +72,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
-            // other.MergeTypeProfiles = MergeTypeProfiles;
+            other.TypeProfileMergeStrategy = TypeProfileMergeStrategy;
         }
 
         /// <summary>
@@ -74,14 +108,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Enable this setting to automatically generate missing element id values.</summary>
         public bool GenerateElementIds { get; set; } = true;
 
-        // [WMR 20161004] Always try to merge element type profiles
-
-        // <summary>
-        // Enable this setting in order to merge custom element type profiles.
-        // If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
-        // If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
-        // </summary>
-        // <remarks>See GForge #9791</remarks>
-        // public bool MergeTypeProfiles { get; set; }
+        /// <summary>
+        /// Controls the merge strategy when both a profiled base and a typeref to a profiled datatype bring in changes to element properties.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This setting addresses FHIR-9791 (https://jira.hl7.org/browse/FHIR-9791), which discusses the ambiguity in merge order
+        /// when an element has both base profile constraints and custom type profile constraints.
+        /// </para>
+        /// <para>
+        /// Default value is <see cref="TypeProfileMergeStrategy.TypeFirst"/> to maintain backward compatibility with existing .NET SDK behavior.
+        /// Use <see cref="TypeProfileMergeStrategy.BaseFirst"/> for compatibility with Java HAPI FHIR implementation.
+        /// </para>
+        /// <para>
+        /// Example scenario: A profile constrains Patient.address with type.profile = "http://example.org/AddressNL"
+        /// - TypeFirst: AddressNL constraints → Patient.address base constraints → differential
+        /// - BaseFirst: Patient.address base constraints → AddressNL constraints → differential
+        /// </para>
+        /// </remarks>
+        public TypeProfileMergeStrategy TypeProfileMergeStrategy { get; set; } = TypeProfileMergeStrategy.TypeFirst;
     }
 }
