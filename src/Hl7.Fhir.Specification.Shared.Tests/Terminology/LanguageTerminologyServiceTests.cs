@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithCode(code: "male");
 
             Func<Task> validateCode = async () => await _service.CodeSystemValidateCode(csParameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown code system 'http://hl7.org/fhir/administrative-gender'");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage($"This service only supports code system '{LanguageTerminologyService.LANGUAGE_SYSTEM}'.");
 
             // Test that system is required when using a Coding without system
             var codingWithoutSystem = new CodeSystemValidateCodeParameters()
