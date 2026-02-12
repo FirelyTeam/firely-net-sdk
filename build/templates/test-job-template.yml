@@ -30,7 +30,18 @@ steps:
     projects: ${{ parameters.projects }}
     arguments: '-f $(TEST_TARGETFRAMEWORK) --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
     testRunTitle: ${{ parameters.testRunTitle }}
-
+    
+  - powershell: |
+      [xml]$trx = Get-Content "$(Agent.TempDirectory)\*.trx"
+      $total = $trx.TestRun.ResultSummary.Counters.total
+  
+      Write-Host "Total tests executed: $total"
+  
+      if ($total -eq 0) {
+          Write-Error "No tests were executed. Failing the build."
+          exit 1
+      }
+    displayName: Fail if zero tests executed
 - powershell: |
     Write-Host "##[section]✓ Test execution completed: ${{ parameters.testRunTitle }}"
   displayName: 'Test Completion Status'
