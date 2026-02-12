@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Hl7.FhirPath
 {
-    public delegate IEnumerable<PocoNode> CompiledExpression(PocoNode root, EvaluationContext ctx);
+    public delegate IEnumerable<PocoNode> CompiledExpression(IEnumerable<PocoNode> root, EvaluationContext ctx);
 
     public static class CompiledExpressionExtensions
     {

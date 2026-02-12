@@ -60,6 +60,7 @@ public class FhirPathCompiler
 
         return (focus, ctx) =>
         {
+            focus ??= []; // null focus defaults to empty collection
             var closure = Closure.Root(focus, ctx);
             return inv(closure, InvokeeFactory.EmptyArgs);
         };
@@ -75,8 +76,9 @@ public class FhirPathCompiler
     {
         Invokee inv = expression.ToEvaluator(Symbols, injectDebugTraceHooks);
 
-        return (PocoNode focus, EvaluationContext ctx) =>
+        return (focus, ctx) =>
         {
+            focus ??= []; // null focus defaults to empty collection
             var closure = Closure.Root(focus, ctx);
             return inv(closure, InvokeeFactory.EmptyArgs);
         };
