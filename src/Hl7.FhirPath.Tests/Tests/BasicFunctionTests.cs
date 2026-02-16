@@ -14,6 +14,7 @@ using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -24,25 +25,24 @@ namespace Hl7.FhirPath.Tests
     {
         private static void isB(string expr, object value = null)
         {
-            var dummy = PocoNode.ForAnyPrimitive(value ?? true);
+            var dummyOrValue = PocoNode.ForAnyPrimitive(value ?? true);
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
-            Assert.IsTrue(evaluator.IsBoolean(true, dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
+            Assert.IsTrue(evaluator.IsBoolean(true, dummyOrValue!, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
         }
 
         private static object scalar(string expr)
         {
-            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
-            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
+            return evaluator.Scalar(null!, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
-        private static object scalar(PocoNode dummy, string expr)
+        private static object scalar(PocoNode focus, string expr)
         {
             var compiler = new FhirPathCompiler();
             var evaluator = compiler.Compile(expr, true);
-            return evaluator.Scalar(dummy, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
+            return evaluator.Scalar(focus, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
         [TestMethod]
