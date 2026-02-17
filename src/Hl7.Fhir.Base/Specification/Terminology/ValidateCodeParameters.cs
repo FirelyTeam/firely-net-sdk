@@ -229,6 +229,8 @@ public class ValidateCodeParameters : Parameters
     }
     #endregion
 
+    protected internal override Base DeepCopyInternal() => new ValidateCodeParameters(this);
+    
     [Obsolete("This is just a DeepCopy of the current instance, use the instance or DeepCopy() instead", false)]
     public Parameters Build() => this.DeepCopy();
 }

@@ -122,6 +122,8 @@ public class LookupParameters : Parameters
     }
     #endregion
 
+    protected internal override Base DeepCopyInternal() => new LookupParameters(this);
+    
     [Obsolete("This is just a DeepCopy of the current instance, use the instance or DeepCopy() instead", false)]
     public Parameters Build() => (Parameters)this.DeepCopyInternal();
 }

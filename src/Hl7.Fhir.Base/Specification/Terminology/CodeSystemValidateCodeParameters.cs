@@ -186,6 +186,8 @@ public class CodeSystemValidateCodeParameters : Parameters
     }
     #endregion
 
+    protected internal override Base DeepCopyInternal() => new CodeSystemValidateCodeParameters(this);
+    
     [Obsolete("This is just a DeepCopy of the current instance, use the instance or DeepCopy() instead", false)]
     public Parameters Build() => this.DeepCopy();
 }

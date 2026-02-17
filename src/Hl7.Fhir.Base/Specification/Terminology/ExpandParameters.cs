@@ -282,6 +282,9 @@ public class ExpandParameters : Parameters
     }
 
     #endregion
+    
+    
+    protected internal override Base DeepCopyInternal() => new ExpandParameters(this);
 
     [Obsolete("This is just a DeepCopy of the current instance, use the instance or DeepCopy() instead", false)]
     public Parameters Build() => this.DeepCopy();

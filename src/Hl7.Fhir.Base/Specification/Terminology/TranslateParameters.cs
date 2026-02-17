@@ -200,6 +200,8 @@ public class TranslateParameters : Parameters
 
     #endregion
 
+    protected internal override Base DeepCopyInternal() => new TranslateParameters(this);
+
     [Obsolete("This is just a DeepCopy of the current instance, use the instance or DeepCopy() instead", false)]
     public Parameters Build() => this.DeepCopy();
 }
