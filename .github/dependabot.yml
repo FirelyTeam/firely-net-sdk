@@ -5,10 +5,62 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "nuget"
+    directory: "/"
     schedule:
       interval: "weekly"
+
+    groups:
+      # Low-risk: Test deps — patch & minor together
+      test-dependencies:
+        patterns:
+          - "xunit*"
+          - "Moq"
+          - "FluentAssertions"
+          - "Microsoft.NET.Test.Sdk"
+          - "MSTest.*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Test deps — majors separate for careful review
+      test-dependencies-major:
+        patterns:
+          - "xunit*"
+          - "Moq"
+          - "FluentAssertions"
+          - "Microsoft.NET.Test.Sdk"
+          - "MSTest.*"
+        update-types:
+          - "major"
+
+      # Runtime deps — patch & minor together
+      runtime-dependencies-minor:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "xunit*"
+          - "Moq"
+          - "FluentAssertions"
+          - "Microsoft.NET.Test.Sdk"
+          - "MSTest.*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Runtime deps — majors separate for careful review
+      runtime-dependencies-major:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "xunit*"
+          - "Moq"
+          - "FluentAssertions"
+          - "Microsoft.NET.Test.Sdk"
+          - "MSTest.*"
+        update-types:
+          - "major"
+
     ignore:
       - dependency-name: "Moq"
       - dependency-name: "xunit"
@@ -23,5 +75,3 @@ updates:
         update-types: ["version-update:semver-patch"]
       - dependency-name: FluentAssertions
         versions: [">=8.0.0"]
-      - dependency-name: System.Threading.Tasks.Dataflow
-        versions: [">=9.0.0"]
