@@ -73,7 +73,7 @@ If you want to participate in this project, we're using [Git Flow][nvie] for our
 
 ## Binary Compatibility
 Our build pipeline automatically checks for binary compatibilty and fails when we break it. In some cases we can make an exception to break binary compatitibility. 
-To make sure the pipeline doesn't break, you should run ```dotnet pack /p:ApiCompatGenerateSuppressionFile``` locally to generate a suppression file. Please commit this file to make sure the build passes.
+To make sure the pipeline doesn't break, you should run ```dotnet pack /p:ApiCompatGenerateSuppressionFile=true``` locally to generate a suppression file. Please commit this file to make sure the build passes.
 
 
 
