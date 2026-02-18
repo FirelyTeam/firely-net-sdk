@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 #pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
@@ -32,11 +33,12 @@ public partial class BaseFhirClient
     /// <param name="q">The Query resource containing the search parameters</param>
     /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    public virtual Task<Bundle?> SearchAsync(SearchParams q, string? resourceType = null, CancellationToken? ct = null)
+    public virtual Task<Bundle?> SearchAsync(SearchParams q, string? resourceType = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         var tx = new TransactionBuilder(Endpoint).Search(q, resourceType).ToBundle();
-        return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted }, ct);
+        return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted }, ct, requestHeaders);
     }
 
     /// <summary>
@@ -45,11 +47,12 @@ public partial class BaseFhirClient
     /// <param name="q">The Query resource containing the search parameters</param>
     /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    public virtual Task<Bundle?> SearchUsingPostAsync(SearchParams q, string? resourceType = null, CancellationToken? ct = null)
+    public virtual Task<Bundle?> SearchUsingPostAsync(SearchParams q, string? resourceType = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         var tx = new TransactionBuilder(Endpoint).SearchUsingPost(q, resourceType).ToBundle();
-        return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK }, ct);
+        return executeAsync<Bundle>(tx, new[] { HttpStatusCode.OK }, ct, requestHeaders);
     }
 
     #endregion
@@ -61,18 +64,19 @@ public partial class BaseFhirClient
     /// </summary>
     /// <param name="q">The Query resource containing the search parameters</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <typeparam name="TResource">The type of resource to filter on</typeparam>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    public virtual Task<Bundle?> SearchAsync<TResource>(SearchParams q, CancellationToken? ct = null) where TResource : Resource
+    public virtual Task<Bundle?> SearchAsync<TResource>(SearchParams q, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null) where TResource : Resource
     {
         // [WMR 20160421] GetResourceNameForType is obsolete
         // return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
-        return SearchAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource)), ct);
+        return SearchAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource)), ct, requestHeaders);
     }
 
-    public virtual Task<Bundle?> SearchUsingPostAsync<TResource>(SearchParams q, CancellationToken? ct = null) where TResource : Resource
+    public virtual Task<Bundle?> SearchUsingPostAsync<TResource>(SearchParams q, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null) where TResource : Resource
     {
-        return SearchUsingPostAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource)), ct);
+        return SearchUsingPostAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource)), ct, requestHeaders);
     }
 
     #endregion
@@ -89,22 +93,23 @@ public partial class BaseFhirClient
     /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <typeparam name="TResource">The type of resource to list</typeparam>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list
     /// of all resources of the given Resource type</remarks>
     public virtual Task<Bundle?> SearchAsync<TResource>(string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
         where TResource : Resource, new()
     {
-        return SearchAsync(typeNameOrDie<TResource>(), criteria, includes, pageSize, summary, revIncludes, ct);
+        return SearchAsync(typeNameOrDie<TResource>(), criteria, includes, pageSize, summary, revIncludes, ct, requestHeaders);
     }
 
     public virtual Task<Bundle?> SearchAsync<TResource>(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
-        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null)
+        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
         where TResource : Resource, new()
     {
-        return SearchAsync<TResource>(criteria, BaseFhirClient.stringToIncludeTuple(includes), pageSize, summary, BaseFhirClient.stringToIncludeTuple(revIncludes), ct);
+        return SearchAsync<TResource>(criteria, BaseFhirClient.stringToIncludeTuple(includes), pageSize, summary, BaseFhirClient.stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     /// <summary>
@@ -117,23 +122,24 @@ public partial class BaseFhirClient
     /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <typeparam name="TResource">The type of resource to list</typeparam>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list
     /// of all resources of the given Resource type</remarks>
     public virtual Task<Bundle?> SearchUsingPostAsync<TResource>(string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
         where TResource : Resource, new()
     {
-        return SearchUsingPostAsync(typeNameOrDie<TResource>(), criteria, includes, pageSize, summary, revIncludes, ct);
+        return SearchUsingPostAsync(typeNameOrDie<TResource>(), criteria, includes, pageSize, summary, revIncludes, ct, requestHeaders);
     }
 
     ///<inheritdoc cref="SearchUsingPostAsync{TResource}(string[], (string path, IncludeModifier modifier)[], int?, SummaryType?, (string path, IncludeModifier modifier)[])"/>
     public virtual Task<Bundle?> SearchUsingPostAsync<TResource>(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
-        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null)
+        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
         where TResource : Resource, new()
     {
-        return SearchUsingPostAsync<TResource>(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct);
+        return SearchUsingPostAsync<TResource>(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     #endregion
@@ -151,22 +157,23 @@ public partial class BaseFhirClient
     /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list
     /// of all resources of the given Resource type</remarks>
     public virtual Task<Bundle?> SearchAsync(string resource, string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-        return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource, ct);
+        return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource, ct, requestHeaders);
     }
 
     ///<inheritdoc cref="SearchAsync(string, string[], (string path, IncludeModifier modifier)[], int?, SummaryType?, (string path, IncludeModifier modifier)[])"/>
     public virtual Task<Bundle?> SearchAsync(string resource, string[]? criteria = null, string[]? includes = null, int? pageSize = null,
-        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null)
+        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return SearchAsync(resource, criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct);
+        return SearchAsync(resource, criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     /// <summary>
@@ -180,22 +187,23 @@ public partial class BaseFhirClient
     /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list
     /// of all resources of the given Resource type</remarks>
     public virtual Task<Bundle?> SearchUsingPostAsync(string resource, string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-        return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource, ct);
+        return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource, ct, requestHeaders);
     }
 
     ///<inheritdoc cref="SearchUsingPostAsync(string, string, (string path, IncludeModifier modifier)[], int?, (string path, IncludeModifier modifier)[])"/>
     public virtual Task<Bundle?> SearchUsingPostAsync(string resource, string[]? criteria = null, string[]? includes = null, int? pageSize = null,
-        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null)
+        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return SearchUsingPostAsync(resource, criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct);
+        return SearchUsingPostAsync(resource, criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     #endregion
@@ -212,20 +220,21 @@ public partial class BaseFhirClient
     /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list
     /// of all resources of the given Resource type</remarks>
     public virtual Task<Bundle?> WholeSystemSearchAsync(string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), ct: ct);
+        return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), ct: ct, requestHeaders: requestHeaders);
     }
 
     ///<inheritdoc cref="WholeSystemSearchAsync(string[], (string path, IncludeModifier modifier)[], int?, SummaryType?, (string path, IncludeModifier modifier)[])"/>
     public virtual Task<Bundle?> WholeSystemSearchAsync(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
-        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null)
+        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return WholeSystemSearchAsync(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct);
+        return WholeSystemSearchAsync(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     /// <summary>
@@ -238,20 +247,21 @@ public partial class BaseFhirClient
     /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
-    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
+    /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list
     /// of all resources of the given Resource type</remarks>
     public virtual Task<Bundle?> WholeSystemSearchUsingPostAsync(string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), ct: ct);
+        return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), ct: ct, requestHeaders: requestHeaders);
     }
 
     ///<inheritdoc cref="WholeSystemSearchUsingPostAsync(string[], (string path, IncludeModifier modifier)[], int?, SummaryType?, (string path, IncludeModifier modifier)[])"/>
     public virtual Task<Bundle?> WholeSystemSearchUsingPostAsync(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
-        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null)
+        SummaryType? summary = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return WholeSystemSearchUsingPostAsync(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct);
+        return WholeSystemSearchUsingPostAsync(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     #endregion
@@ -266,6 +276,7 @@ public partial class BaseFhirClient
     /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <typeparam name="TResource">The type of resource to search for</typeparam>
     /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
     /// Bundle if the resource wasn't found.</returns>
@@ -273,18 +284,18 @@ public partial class BaseFhirClient
     /// it is possible to specify include parameters to include resources in the bundle that the
     /// returned resource refers to.</remarks>
     public virtual Task<Bundle?> SearchByIdAsync<TResource>(string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null) where TResource : Resource, new()
+        (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null) where TResource : Resource, new()
     {
         if (id == null) throw Error.ArgumentNull(nameof(id));
 
-        return SearchByIdAsync(typeNameOrDie<TResource>(), id, includes, pageSize, revIncludes, ct);
+        return SearchByIdAsync(typeNameOrDie<TResource>(), id, includes, pageSize, revIncludes, ct, requestHeaders);
     }
 
     ///<inheritdoc cref="SearchByIdAsync{TResource}(string, (string path, IncludeModifier modifier)[], int?, (string path, IncludeModifier modifier)[])"/>
     public virtual Task<Bundle?> SearchByIdAsync<TResource>(string id, string[]? includes = null, int? pageSize = null,
-        string[]? revIncludes = null, CancellationToken? ct = null) where TResource : Resource, new()
+        string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null) where TResource : Resource, new()
     {
-        return SearchByIdAsync<TResource>(id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct);
+        return SearchByIdAsync<TResource>(id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     /// <summary>
@@ -295,6 +306,7 @@ public partial class BaseFhirClient
     /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <typeparam name="TResource">The type of resource to search for</typeparam>
     /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
     /// Bundle if the resource wasn't found.</returns>
@@ -302,18 +314,17 @@ public partial class BaseFhirClient
     /// it is possible to specify include parameters to include resources in the bundle that the
     /// returned resource refers to.</remarks>
     public virtual Task<Bundle?> SearchByIdUsingPostAsync<TResource>(string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null) where TResource : Resource, new()
+        (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null) where TResource : Resource, new()
     {
         if (id == null) throw Error.ArgumentNull(nameof(id));
 
-        return SearchByIdUsingPostAsync(typeNameOrDie<TResource>(), id, includes, pageSize, revIncludes, ct);
+        return SearchByIdUsingPostAsync(typeNameOrDie<TResource>(), id, includes, pageSize, revIncludes, ct, requestHeaders);
     }
 
-
     public virtual Task<Bundle?> SearchByIdUsingPostAsync<TResource>(string id, string[]? includes = null, int? pageSize = null,
-        string[]? revIncludes = null, CancellationToken? ct = null) where TResource : Resource, new()
+        string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null) where TResource : Resource, new()
     {
-        return SearchByIdUsingPostAsync<TResource>(id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct);
+        return SearchByIdUsingPostAsync<TResource>(id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     #endregion
@@ -329,25 +340,26 @@ public partial class BaseFhirClient
     /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
     /// Bundle if the resource wasn't found.</returns>
     /// <remarks>This operation is similar to Read, but additionally,
     /// it is possible to specify include parameters to include resources in the bundle that the
     /// returned resource refers to.</remarks>
     public virtual Task<Bundle?> SearchByIdAsync(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)
+        (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         if (resource == null) throw Error.ArgumentNull(nameof(resource));
         if (id == null) throw Error.ArgumentNull(nameof(id));
 
         string criterium = "_id=" + id;
-        return SearchAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource, ct);
+        return SearchAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource, ct, requestHeaders);
     }
 
     ///<inheritdoc cref="SearchByIdAsync(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize, (string path, IncludeModifier modifier)[]? revIncludes, CancellationToken? ct = null)"/>
-    public virtual Task<Bundle?> SearchByIdAsync(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null, CancellationToken? ct = null)
+    public virtual Task<Bundle?> SearchByIdAsync(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return SearchByIdAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct);
+        return SearchByIdAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     /// <summary>
@@ -359,26 +371,26 @@ public partial class BaseFhirClient
     /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
     /// <param name="revIncludes">Optional. A list of reverse include paths</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
     /// Bundle if the resource wasn't found.</returns>
     /// <remarks>This operation is similar to Read, but additionally,
     /// it is possible to specify include parameters to include resources in the bundle that the
     /// returned resource refers to.</remarks>
     public virtual Task<Bundle?> SearchByIdUsingPostAsync(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
-        (string path, IncludeModifier modifier)[]? revIncludes = null, CancellationToken? ct = null)
+        (string path, IncludeModifier modifier)[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         if (resource == null) throw Error.ArgumentNull(nameof(resource));
         if (id == null) throw Error.ArgumentNull(nameof(id));
 
         string criterium = "_id=" + id;
-        return SearchUsingPostAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource, ct);
+        return SearchUsingPostAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource, ct, requestHeaders);
     }
 
-
     ///<inheritdoc cref="SearchByIdUsingPostAsync(string, string, (string path, IncludeModifier modifier)[], int?, (string path, IncludeModifier modifier)[])"/>
-    public virtual Task<Bundle?> SearchByIdUsingPostAsync(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null, CancellationToken? ct = null)
+    public virtual Task<Bundle?> SearchByIdUsingPostAsync(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
-        return SearchByIdUsingPostAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes));
+        return SearchByIdUsingPostAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes), ct, requestHeaders);
     }
 
     #endregion
@@ -391,9 +403,10 @@ public partial class BaseFhirClient
     /// <param name="current">The bundle as received from the last response</param>
     /// <param name="direction">Optional. Direction to browse to, default is the next page of results.</param>
     /// <param name="ct"></param>
+    /// <param name="requestHeaders">Optional. Callback to set additional per-request HTTP headers on the outgoing request.</param>
     /// <returns>A bundle containing a new page of results based on the browse direction, or null if
     /// the server did not have more results in that direction.</returns>
-    public virtual Task<Bundle?> ContinueAsync(Bundle current, PageDirection direction = PageDirection.Next, CancellationToken? ct = null)
+    public virtual Task<Bundle?> ContinueAsync(Bundle current, PageDirection direction = PageDirection.Next, CancellationToken? ct = null, Action<HttpRequestHeaders>? requestHeaders = null)
     {
         if (current == null) throw Error.ArgumentNull(nameof(current));
         if (current.Link == null) return Task.FromResult(default(Bundle));
@@ -415,7 +428,7 @@ public partial class BaseFhirClient
         if (continueAt != null)
         {
             var tx = new TransactionBuilder(Endpoint).Get(continueAt).ToBundle();
-            return executeAsync<Bundle>(tx, HttpStatusCode.OK, ct);
+            return executeAsync<Bundle>(tx, HttpStatusCode.OK, ct, requestHeaders);
         }
         else
         {
