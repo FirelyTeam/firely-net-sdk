@@ -48,18 +48,6 @@ updates:
           - "minor"
           - "patch"
 
-      # Runtime deps — majors separate for careful review
-      runtime-dependencies-major:
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "xunit*"
-          - "Moq"
-          - "FluentAssertions"
-          - "Microsoft.NET.Test.Sdk"
-          - "MSTest.*"
-        update-types:
-          - "major"
 
     ignore:
       - dependency-name: "Moq"
