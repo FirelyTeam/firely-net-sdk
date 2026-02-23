@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 
@@ -75,8 +76,9 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
+        /// <param name="ct">Optional cancellation token.</param>
         /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
-        async Task<ResolverResult> TryResolveByUriAsync(string uri)
+        async Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             var resource = await this.ResolveByUriAsync(uri).ConfigureAwait(false);
@@ -90,8 +92,9 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        /// <param name="ct">Optional cancellation token.</param>
         /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
-        async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             var resource = await this.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false); 

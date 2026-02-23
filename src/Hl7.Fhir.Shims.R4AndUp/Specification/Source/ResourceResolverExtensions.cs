@@ -11,13 +11,14 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
     public static class ResourceResolverExtensions
     {
-        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes)"/>
+        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes, CancellationToken)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
             => resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
@@ -25,8 +26,8 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.
         /// </summary>
-        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
-            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type)).ConfigureAwait(false);
+        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type, CancellationToken ct = default)
+            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type), ct).ConfigureAwait(false);
 
         /// <summary>
         /// Find all resources by resource type

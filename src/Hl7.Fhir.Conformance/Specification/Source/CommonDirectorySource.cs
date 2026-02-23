@@ -1042,8 +1042,8 @@ namespace Hl7.Fhir.Specification.Source
         public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
 
         public Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
-        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
-        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default) => Tasks.Task.FromResult(TryResolveByUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         #endregion
 

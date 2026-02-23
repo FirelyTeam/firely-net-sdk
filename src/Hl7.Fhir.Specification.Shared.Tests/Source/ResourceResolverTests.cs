@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -73,6 +74,17 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsInstanceOfType(extDefn, typeof(NamingSystem));
         }
 
+        [TestMethod, TestCategory("IntegrationTest")]
+        public async Tasks.Task RetrieveWebArtifactCancelled()
+        {
+            var settings = new FhirClientSettings { Timeout = DefaultTimeOut };
+            var wa = new WebResolver(ep => new FhirClient(ep, settings));
+            var cts = new System.Threading.CancellationTokenSource();
+            cts.Cancel();
+
+            var act = () => wa.TryResolveByUriAsync("http://test.fhir.org/r4/StructureDefinition/Observation", cts.Token);
+            await act.Should().ThrowAsync<OperationCanceledException>();
+        }
 
         [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
@@ -161,7 +173,7 @@ namespace Hl7.Fhir.Specification.Tests
             var settings = new FhirClientSettings { Timeout = DefaultTimeOut };
             var wa = new WebResolver(ep => new FhirClient(ep, settings));
 
-            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(),wa));
+            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), wa));
 
             Stopwatch sw1 = new Stopwatch();
 

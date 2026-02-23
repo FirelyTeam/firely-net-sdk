@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using System.Linq;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
     
 #nullable enable
@@ -100,7 +101,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         ///<inheritdoc/>
-        public async Task<ResolverResult> TryResolveByUriAsync(string uri)
+        public async Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
@@ -109,7 +110,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 try
                 {
-                    var result = await source.TryResolveByUriAsync(uri).ConfigureAwait(false);
+                    var result = await source.TryResolveByUriAsync(uri, ct).ConfigureAwait(false);
 
                     if (result.Success) 
                         return result;
@@ -128,7 +129,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         ///<inheritdoc/>
-        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
@@ -137,7 +138,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 try
                 {
-                    var result = await source.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+                    var result = await source.TryResolveByCanonicalUriAsync(uri, ct).ConfigureAwait(false);
 
                     if (result.Success)
                         return result;

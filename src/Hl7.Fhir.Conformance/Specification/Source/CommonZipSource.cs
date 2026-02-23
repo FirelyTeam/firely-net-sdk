@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -107,7 +108,8 @@ namespace Hl7.Fhir.Specification.Source
             // Access the Lazy<T>.Value property to force creation
             // Evaluate the result to prevent compiler optimization in RELEASE build
             // Should never throw...
-            if (_lazySource.Value == null) { throw new InvalidOperationException(); };
+            if (_lazySource.Value == null) { throw new InvalidOperationException(); }
+            ;
         }
 
         #region IArtifactSource
@@ -168,11 +170,11 @@ namespace Hl7.Fhir.Specification.Source
 
         public Task<Resource?> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
         public Task<Resource?> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
-        
+
         ///<inheritdoc/>
-        public Task<ResolverResult> TryResolveByUriAsync(string uri) => FileSource.TryResolveByUriAsync(uri);
+        public Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default) => FileSource.TryResolveByUriAsync(uri, ct);
         ///<inheritdoc/>
-        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => FileSource.TryResolveByCanonicalUriAsync(uri);
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default) => FileSource.TryResolveByCanonicalUriAsync(uri, ct);
 
         #endregion
 

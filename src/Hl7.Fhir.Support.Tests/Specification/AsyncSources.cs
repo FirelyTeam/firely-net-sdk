@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Specification.Source;
+using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Utility.Tests
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Utility.Tests
         public async Task TestAsyncSyncMultiResolver()
         {
             var (sr, ar, sar) = (new SyncResolver(), new AsyncResolver(), new SyncAsyncResolver());
-            var multi = new MultiResolver(sr,ar,sar);
+            var multi = new MultiResolver(sr, ar, sar);
 
             // calling *any* kind of resolve will involve all child resolvers, since they all return null.
             _ = await multi.TryResolveByUriAsync("");
@@ -88,9 +88,19 @@ namespace Hl7.Fhir.Utility.Tests
                 Assert.AreEqual(1, result.Data);
             }
         }
-      
-    }
 
+        [TestMethod]
+        public async Task CancelledTokenThrowsOnMultiResolver()
+        {
+            var resolver = new CancellableAsyncResolver();
+            var multi = new MultiResolver(resolver);
+            var cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            var act = () => multi.TryResolveByUriAsync("http://example.org/anything", cts.Token);
+            await act.Should().ThrowAsync<OperationCanceledException>();
+        }
+    }
 
     internal class SyncResolver : IResourceResolver
     {
@@ -147,13 +157,13 @@ namespace Hl7.Fhir.Utility.Tests
             return Task.FromResult(Data);
         }
 
-        public Task<ResolverResult> TryResolveByUriAsync(string uri) 
+        public Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default)
         {
             ByUriAsync += 1;
             return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
         }
 
-        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default)
         {
             ByCanonicalAsync += 1;
             return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
@@ -205,21 +215,19 @@ namespace Hl7.Fhir.Utility.Tests
             return TryResolveByUri(uri).Value;
         }
 
-
-
         public Task<Resource> ResolveByCanonicalUriAsync(string uri)
         {
             ByCanonicalAsync += 1;
             return Task.FromResult(Data);
         }
 
-        public Task<ResolverResult> TryResolveByUriAsync(string uri) 
+        public Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default)
         {
             ByUriAsync += 1;
             return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
         }
 
-        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default)
         {
             ByCanonicalAsync += 1;
             return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
@@ -232,10 +240,33 @@ namespace Hl7.Fhir.Utility.Tests
         }
     }
 
+    /// <summary>
+    /// Test resolver that honours <see cref="CancellationToken"/> by calling
+    /// <see cref="CancellationToken.ThrowIfCancellationRequested"/> before doing any work.
+    /// Used to verify that callers (e.g. <see cref="MultiResolver"/>) correctly propagate tokens.
+    /// </summary>
+    internal class CancellableAsyncResolver : IAsyncResourceResolver
+    {
+        public Task<Resource> ResolveByUriAsync(string uri) => Task.FromResult<Resource>(null);
+        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => Task.FromResult<Resource>(null);
+
+        public Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default)
+        {
+            ct.ThrowIfCancellationRequested();
+            return Task.FromResult<ResolverResult>(ResolverException.NotFound());
+        }
+
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default)
+        {
+            ct.ThrowIfCancellationRequested();
+            return Task.FromResult<ResolverResult>(ResolverException.NotFound());
+        }
+    }
+
     internal class AResource : Resource
     {
         public int Data;
-        
+
         protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
     }
 }

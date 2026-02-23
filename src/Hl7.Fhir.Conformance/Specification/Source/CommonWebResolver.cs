@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics;
 using System.Net;
+using System.Threading;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -102,11 +103,40 @@ namespace Hl7.Fhir.Specification.Source
             return result.Value;
         }
         
+        ///<inheritdoc cref="TryResolveByUri(string)"/>
+        public async Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            if (!ResourceIdentity.IsRestResourceIdentity(uri))
+                return ResolverException.NotValidResourceIdentity(uri);
+
+            var id = new ResourceIdentity(uri);
+            var client = _clientFactory(id.BaseUri);
+
+            try
+            {
+                var resultResource = await client.ReadAsync<Resource>(id, ct: ct).ConfigureAwait(false);
+                if (resultResource is null)
+                    return ResolverException.NotFound(client.LastResult?.Outcome as OperationOutcome);
+
+                resultResource.SetOrigin(uri);
+                LastError = null;
+                return resultResource;
+            }
+            catch (FhirOperationException foe)
+            {
+                LastError = foe;
+                return ResolverException.OperationFailed("Error occurred during Fhir operation", foe);
+            }
+            catch (WebException we)
+            {
+                LastError = we;
+                return ResolverException.OperationFailed("Error occurred during web operation", we);
+            }
+        }
+
         ///<inheritdoc/>
-        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
-        
-        ///<inheritdoc/>
-        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default) => TryResolveByUriAsync(uri, ct);
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
