@@ -158,7 +158,7 @@ stages:
         Write-Host "##[section]Metapackage packing completed successfully!"
       name: packMetapackages
       displayName: 'Pack NuGet Metapackages'    
-    - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+    - ${{ if startswith(variables['Build.SourceBranch'], 'refs/tags/v') }}:
       - template: codesign-nuget-package-using-trusted-signing.yml@templates
         parameters:
           azureServiceConnection: 'AzureTrustedSigningPrincipal'
