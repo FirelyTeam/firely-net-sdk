@@ -894,7 +894,7 @@ public partial class BaseFhirClient : IDisposable
         // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
         // and all state (e.g. Last Result etc) will be overwritten from this point on.
         var execResult = shouldFetchFullRepresentation && result?.Location is not null ?
-            await GetAsync(result.Location).ConfigureAwait(false) : LastBodyAsResource;
+            await GetAsync(result.Location).ConfigureAwait(false) : bodyAsResource;
 
         // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
         return execResult switch
