@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source;
@@ -155,9 +156,9 @@ public class InMemoryResourceResolver : IAsyncResourceResolver, IResourceResolve
     public Task<Resource?> ResolveByUriAsync(string uri) => Task.FromResult(ResolveByUri(uri));
 
     ///<inheritdoc/>
-    public Task<ResolverResult> TryResolveByUriAsync(string uri) => Task.FromResult(TryResolveByUri(uri));
+    public Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default) => Task.FromResult(TryResolveByUri(uri));
 
     ///<inheritdoc/>
-    public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) =>
+    public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default) =>
         Task.FromResult(TryResolveByCanonicalUri(uri));
 }

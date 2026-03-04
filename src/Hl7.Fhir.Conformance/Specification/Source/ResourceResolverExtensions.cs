@@ -9,13 +9,14 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Threading;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
     public static class ResourceResolverExtensions
     {
-        /// <inheritdoc cref="FindExtensionDefinitionAsync(IAsyncResourceResolver, string)"/>
+        /// <inheritdoc cref="FindExtensionDefinitionAsync(IAsyncResourceResolver, string, CancellationToken)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindExtensionDefinitionAsync() instead.")]
         public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri)
         {
@@ -32,9 +33,9 @@ namespace Hl7.Fhir.Specification.Source
         /// Resolve the given url and verify it defines an Extension.
         /// </summary>
         /// <returns>Returns a StructureDefinition if it is resolvable and defines an extension, otherwise <c>null</c>.</returns>
-        public static async Tasks.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
+        public static async Tasks.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri, CancellationToken ct = default)
         {
-            var result = await resolver.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            var result = await resolver.TryResolveByCanonicalUriAsync(uri, ct).ConfigureAwait(false);
             if (result.Value is not StructureDefinition sd) return null;
 
             if (!sd.IsExtension)
@@ -43,7 +44,7 @@ namespace Hl7.Fhir.Specification.Source
             return sd;
         }
 
-        /// <inheritdoc cref="FindStructureDefinitionAsync(IAsyncResourceResolver, string)"/>
+        /// <inheritdoc cref="FindStructureDefinitionAsync(IAsyncResourceResolver, string, CancellationToken)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionAsync() instead.")]
         public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri)
             => resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
@@ -52,13 +53,13 @@ namespace Hl7.Fhir.Specification.Source
         /// Resolve the given url and verify it is a StructureDefinition
         /// </summary>
         /// <returns>The resolved StructureDefinition or <c>null</c> if it cannot be resolved or does not resolve to a StructureDefinition.</returns>
-        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
+        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionAsync(this IAsyncResourceResolver resolver, string uri, CancellationToken ct = default)
         {
-            var result = await resolver.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            var result = await resolver.TryResolveByCanonicalUriAsync(uri, ct).ConfigureAwait(false);
             return result.Value as StructureDefinition;
         }
 
-        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, string)"/>
+        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, string, CancellationToken)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
@@ -72,14 +73,14 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>If the <paramref name="typename"/> is a uri, will resolve the given uri, if it is a simple typename,
         /// it will resolve the typename below <c>http://hl7.org/fhir/StructureDefinition/</c>.
         /// </remarks>
-        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
+        public static async Tasks.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename, CancellationToken ct = default)
         {
             var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename :
                 Canonical.ForCoreType(typename).Value;
-            return await resolver.FindStructureDefinitionAsync(url).ConfigureAwait(false);
+            return await resolver.FindStructureDefinitionAsync(url, ct).ConfigureAwait(false);
         }
 
-        /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string)"/>
+        /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string, CancellationToken)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindValueSetAsync() instead.")]
         public static ValueSet FindValueSet(this IResourceResolver source, string uri)
             => source.ResolveByCanonicalUri(uri) as ValueSet;
@@ -87,13 +88,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Find a ValueSet by canonical url.
         /// </summary>
-        public static async Tasks.Task<ValueSet> FindValueSetAsync(this IAsyncResourceResolver source, string uri)
+        public static async Tasks.Task<ValueSet> FindValueSetAsync(this IAsyncResourceResolver source, string uri, CancellationToken ct = default)
         {
-            var result = await source.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            var result = await source.TryResolveByCanonicalUriAsync(uri, ct).ConfigureAwait(false);
             return result.Value as ValueSet;
         }
 
-        /// <inheritdoc cref="FindCodeSystemAsync(IAsyncResourceResolver, string)"/>
+        /// <inheritdoc cref="FindCodeSystemAsync(IAsyncResourceResolver, string, CancellationToken)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindCodeSystemAsync() instead.")]
         public static CodeSystem FindCodeSystem(this IResourceResolver source, string uri)
             => source.ResolveByCanonicalUri(uri) as CodeSystem;
@@ -101,9 +102,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Find a CodeSystem by canonical url.
         /// </summary>
-        public static async Tasks.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri)
+        public static async Tasks.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri, CancellationToken ct = default)
         {
-            var result = await source.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            var result = await source.TryResolveByCanonicalUriAsync(uri, ct).ConfigureAwait(false);
             return result.Value as CodeSystem;
         }
     }

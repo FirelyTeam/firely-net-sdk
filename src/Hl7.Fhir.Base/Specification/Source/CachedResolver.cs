@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -98,23 +99,24 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Retrieve the artifact with the specified url.</summary>
         /// <param name="url">The url of the target artifact.</param>
         /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <param name="ct">Optional cancellation token.</param>
         /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public async Task<ResolverResult> TryResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy)
+        public async Task<ResolverResult> TryResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy, CancellationToken ct = default)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return await _resourcesByUri.Get(url, strategy).ConfigureAwait(false);
+            return await _resourcesByUri.Get(url, strategy, ct).ConfigureAwait(false);
         }
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)" />
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string url) => TryResolveByCanonicalUri(url).Value;
 
-        /// <inheritdoc cref="TryResolveByUriAsync(string)" />
+        /// <inheritdoc cref="TryResolveByUriAsync(string, CancellationToken)" />
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
 
-        /// <inheritdoc cref="TryResolveByCanonicalUriAsync(string)" />
+        /// <inheritdoc cref="TryResolveByCanonicalUriAsync(string, CancellationToken)" />
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public ResolverResult TryResolveByCanonicalUri(string uri) => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
@@ -130,15 +132,17 @@ namespace Hl7.Fhir.Specification.Source
         
         /// <summary>Retrieve the artifact with the specified url.</summary>
         /// <param name="uri">The url of the target artifact.</param>
+        /// <param name="ct">Optional cancellation token.</param>
         /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public async Task<ResolverResult> TryResolveByUriAsync(string uri) => await TryResolveByUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
+        public async Task<ResolverResult> TryResolveByUriAsync(string uri, CancellationToken ct = default) => await TryResolveByUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand, ct).ConfigureAwait(false);
 
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
         /// <param name="uri">The canonical url of the target conformance resource.</param>
+        /// <param name="ct">Optional cancellation token.</param>
         /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => await TryResolveByCanonicalUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
+        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CancellationToken ct = default) => await TryResolveByCanonicalUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand, ct).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string, CachedResolverLoadingStrategy)" />
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
@@ -159,12 +163,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
         /// <param name="uri">The canonical url of the target conformance resource.</param>
         /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <param name="ct">Optional cancellation token.</param>
         /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
-        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CachedResolverLoadingStrategy strategy)
+        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CachedResolverLoadingStrategy strategy, CancellationToken ct = default)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            return await _resourcesByCanonical.Get(uri, strategy).ConfigureAwait(false);
+            return await _resourcesByCanonical.Get(uri, strategy, ct).ConfigureAwait(false);
         }
 
         /// <summary>Clear the cache entry for the artifact with the specified url, if it exists.</summary>
@@ -263,7 +268,7 @@ namespace Hl7.Fhir.Specification.Source
             public bool Contains(string identifier) =>
                 _cache.TryGetValue(identifier, out var entry) && !entry.IsExpired && entry.Data.Success;
 
-            public async Task<ResolverResult> Get(string identifier, CachedResolverLoadingStrategy strategy)
+            public async Task<ResolverResult> Get(string identifier, CachedResolverLoadingStrategy strategy, CancellationToken ct = default)
             {
                 lock (_getLock)
                 {
