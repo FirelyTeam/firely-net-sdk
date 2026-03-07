@@ -198,6 +198,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         var exportedClasses = exportedTypes.Where(et => et is { IsClass: true, IsEnum: false });
         return exportedClasses.Select(ImportType)
             .Where(cm => cm is not null)
+            .Distinct()
             .ToList()!;
     }
 
