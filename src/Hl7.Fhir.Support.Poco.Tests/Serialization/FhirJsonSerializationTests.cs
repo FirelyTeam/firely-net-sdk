@@ -76,9 +76,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         /// <summary>
-        /// Regression test for https://github.com/FirelyTeam/firely-net-sdk/issues/XXXX –
-        /// Types derived from Parameters (e.g. ValidateCodeParameters) must be serializable
-        /// even though they do not carry a [FhirType] attribute themselves.
+        /// Regression test: types derived from FHIR POCOs (e.g. ValidateCodeParameters which derives
+        /// from Parameters) must be serializable even though they do not carry a [FhirType] attribute
+        /// themselves. See https://github.com/FirelyTeam/firely-net-sdk/issues/2891
         /// </summary>
         [TestMethod]
         public void CanSerializeDerivedParametersType()
