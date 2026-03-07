@@ -127,6 +127,30 @@ namespace Hl7.Fhir.Tests.Introspection
             mapping.Should().NotBeNull();
             mapping!.NativeType.Should().Be(typeof(Parameters));
         }
+
+        /// <summary>
+        /// When a base mapping is removed from the inspector, any alias entries that were cached
+        /// for derived types must also be removed so that stale lookups are not returned.
+        /// </summary>
+        [TestMethod]
+        public void RemovingBaseMappingAlsoClearsAliasesForDerivedTypes()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            // Prime the alias cache for ValidateCodeParameters → Parameters mapping.
+            var alias = inspector.FindOrImportClassMapping(typeof(ValidateCodeParameters));
+            alias.Should().NotBeNull();
+
+            // Now remove the Parameters mapping.
+            var parametersMapping = inspector.FindClassMapping(typeof(Parameters));
+            parametersMapping.Should().NotBeNull();
+            inspector.ClassMappings.Remove(parametersMapping!);
+
+            // The alias entry for ValidateCodeParameters must also be gone.
+            inspector.FindClassMapping(typeof(ValidateCodeParameters)).Should().BeNull(
+                "alias entries for derived types must be cleaned up when the base mapping is removed");
+        }
     }
 
     [FhirEnumeration("SomeEnum")]

@@ -69,7 +69,15 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
     public bool Remove(ClassMapping item)
     {
         if (!_byName.TryRemove(item.Name, out _)) return false;
-        _byType.TryRemove(item.NativeType, out _);
+
+        // Remove the primary type entry and any alias entries (from RegisterTypeAlias) that
+        // were pointing to this mapping so that stale lookups cannot be returned.
+        foreach (var kvp in _byType)
+        {
+            if (ReferenceEquals(kvp.Value, item))
+                _byType.TryRemove(kvp.Key, out _);
+        }
+
         if (item.Canonical is not null)
             _byCanonical.TryRemove(item.Canonical, out _);
 
