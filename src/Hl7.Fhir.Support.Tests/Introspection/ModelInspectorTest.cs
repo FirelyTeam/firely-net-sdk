@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Introspection
@@ -90,6 +91,41 @@ namespace Hl7.Fhir.Tests.Introspection
             // And add it back.
             inspector.ClassMappings.Add(metaMapping);
             inspector.FindClassMapping("Meta").Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Regression test: types derived from FHIR POCOs (e.g. ValidateCodeParameters which derives
+        /// from Parameters) must be importable by ModelInspector even though they do not carry their
+        /// own [FhirType] attribute.  The base type's ClassMapping must be returned.
+        /// </summary>
+        [TestMethod]
+        public void FindOrImportClassMappingReturnsMappingForDerivedParametersType()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            // ValidateCodeParameters derives from Parameters but has no [FhirType] attribute.
+            var mapping = inspector.FindOrImportClassMapping(typeof(ValidateCodeParameters));
+            mapping.Should().NotBeNull("a derived FHIR type should fall back to its base type's mapping");
+            mapping!.NativeType.Should().Be(typeof(Parameters), "the mapping should belong to the FHIR base type");
+
+            // A second lookup must hit the cache and return the same mapping.
+            var mappingAgain = inspector.FindOrImportClassMapping(typeof(ValidateCodeParameters));
+            mappingAgain.Should().BeSameAs(mapping);
+        }
+
+        /// <summary>
+        /// Same as above but for CodeSystemValidateCodeParameters.
+        /// </summary>
+        [TestMethod]
+        public void FindOrImportClassMappingReturnsMappingForDerivedCodeSystemParametersType()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var mapping = inspector.FindOrImportClassMapping(typeof(CodeSystemValidateCodeParameters));
+            mapping.Should().NotBeNull();
+            mapping!.NativeType.Should().Be(typeof(Parameters));
         }
     }
 

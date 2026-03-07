@@ -214,7 +214,23 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         ValidateSatelliteAssemblyCompatibility(type);
 
         if(!ClassMapping.TryCreate(this, type, out var newMapping))
+        {
+            // If TryCreate fails, check whether this is a derived FHIR type (a subclass of Base)
+            // that doesn't have its own [FhirTypeAttribute] – e.g. ValidateCodeParameters which
+            // derives from Parameters. In that case, fall back to the nearest ancestor that does
+            // have a mapping so that the serializer can use the base type's metadata.
+            // Open generic type definitions (like Code<>) are intentionally excluded: they are not
+            // concrete types and must not be imported.
+            if (typeof(Base).IsAssignableFrom(type) && !type.IsGenericTypeDefinition && type.BaseType is { } baseType)
+            {
+                var baseMapping = ImportType(baseType);
+                // Cache the result against the derived type so the hierarchy walk only happens once.
+                if (baseMapping is not null)
+                    _classMappings.RegisterTypeAlias(type, baseMapping);
+                return baseMapping;
+            }
             return null;
+        }
 
         _classMappings.Add(newMapping);
 
