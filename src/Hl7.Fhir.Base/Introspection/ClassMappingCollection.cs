@@ -69,7 +69,15 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
     public bool Remove(ClassMapping item)
     {
         if (!_byName.TryRemove(item.Name, out _)) return false;
-        _byType.TryRemove(item.NativeType, out _);
+
+        // Remove the primary type entry and any alias entries (from RegisterTypeAlias) that
+        // were pointing to this mapping so that stale lookups cannot be returned.
+        foreach (var kvp in _byType)
+        {
+            if (ReferenceEquals(kvp.Value, item))
+                _byType.TryRemove(kvp.Key, out _);
+        }
+
         if (item.Canonical is not null)
             _byCanonical.TryRemove(item.Canonical, out _);
 
@@ -91,6 +99,17 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
     /// </summary>
     public IReadOnlyDictionary<string, ClassMapping> ByCanonical => _byCanonical;
     private readonly ConcurrentDictionary<string, ClassMapping> _byCanonical = new();
+
+    /// <summary>
+    /// Registers a type alias mapping a derived type to an existing <see cref="ClassMapping"/>.
+    /// Unlike <see cref="Add"/>, this only updates the type lookup and does not affect the
+    /// name or canonical dictionaries. This is used for types that derive from FHIR POCOs
+    /// but don't have their own <see cref="FhirTypeAttribute"/>.
+    /// </summary>
+    public void RegisterTypeAlias(Type type, ClassMapping mapping)
+    {
+        _byType[type] = mapping;
+    }
 
     /// <summary>
     /// List of the class mappings, keyed by canonical.

@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -72,6 +73,52 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var contactArray = jdoc.RootElement.GetProperty("contact");
             contactArray.GetArrayLength().Should().Be(1);
             contactArray[0].EnumerateObject().Should().BeEmpty();
+        }
+
+        /// <summary>
+        /// Regression test: types derived from FHIR POCOs (e.g. ValidateCodeParameters which derives
+        /// from Parameters) must be serializable even though they do not carry a [FhirType] attribute
+        /// themselves. See https://github.com/FirelyTeam/firely-net-sdk/issues/3458
+        /// </summary>
+        [TestMethod]
+        public void CanSerializeDerivedParametersType()
+        {
+            var options = new JsonSerializerOptions().ForFhir();
+
+            var parameters = new ValidateCodeParameters
+            {
+                Code = new Code("active"),
+            };
+
+            // Must not throw
+            var json = JsonSerializer.Serialize(parameters, options);
+            json.Should().Contain("\"resourceType\":\"Parameters\"");
+            json.Should().Contain("\"active\"");
+        }
+
+        /// <summary>
+        /// Regression test: a round-trip through JSON must produce an equivalent Parameters instance.
+        /// </summary>
+        [TestMethod]
+        public void RoundtripDerivedParametersType()
+        {
+            var options = new JsonSerializerOptions().ForFhir();
+
+            var parameters = new ValidateCodeParameters
+            {
+                Code = new Code("active"),
+                System = new FhirUri("http://hl7.org/fhir/ValueSet/example"),
+            };
+
+            var json = JsonSerializer.Serialize(parameters, options);
+
+            // Deserializes back to Parameters (the registered FHIR type)
+            var deserialized = JsonSerializer.Deserialize<Parameters>(json, options);
+            deserialized.Should().NotBeNull();
+
+            var vcParams = new ValidateCodeParameters(deserialized!);
+            vcParams.Code?.Value.Should().Be("active");
+            vcParams.System?.Value.Should().Be("http://hl7.org/fhir/ValueSet/example");
         }
     }
 
