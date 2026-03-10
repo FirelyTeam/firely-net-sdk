@@ -1,3 +1,4 @@
 ## Intro:
 
-Reverts the caching of ModelInfo.ModelInspector due to issues with cross version codes importing and overriding type mappings.
+Restored the ModelInspector caching behavior removed in previous version.  
+We diagnosed the underlying issue, and will now throw a runtime exception in cases where the cross ClassMapping import would occur. 
