@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -18,24 +17,10 @@ namespace Hl7.Fhir.Tests
 {
     public class JsonAssert
     {
-        private static JObject jObjectFromJsonText(string json)
-        {
-            using var reader = SerializationUtil.JsonReaderFromJsonText(json);
-            return SerializationUtil.JObjectFromReader(reader);
-        }
-
-        public static void AreSame(string filename, string expected, string actual)
-        {
-            var errors = new List<string>();
-            AreSame(filename, expected, actual, errors);
-            if(errors.Any())
-                Assert.Fail(string.Join("\r\n", errors));
-        }
-
         public static void AreSame(string filename, string expected, string actual, List<string> errors)
         {
-            var exp = jObjectFromJsonText(expected);
-            var act = jObjectFromJsonText(actual);
+            var exp = SerializationUtil.JObjectFromJsonText(expected);
+            var act = SerializationUtil.JObjectFromJsonText(actual);
 
             AreSame(filename, exp, act, errors);
         }

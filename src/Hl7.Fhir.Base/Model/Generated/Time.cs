@@ -7,11 +7,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -57,34 +53,29 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "time";
+    public override string TypeName { get { return "time"; } }
 
     /// Must conform to the pattern "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]{1,9})?"
     public const string PATTERN = @"([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]{1,9})?";
 
-    public Time(string? value)
+    public Time(string value)
     {
       Value = value;
     }
 
-    public Time(): this((string?)null) {}
+    public Time(): this((string)null) {}
 
     /// <summary>
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(SystemPrimitive.Time))]
+    [TimePattern]
     [DataMember]
-    public string? Value
+    public string Value
     {
-      get { return JsonValue is string or null ? (string?)JsonValue : throw COVE.FromTypes(typeof(Time), JsonValue); }
-      set { JsonValue = value; OnPropertyChanged("Value"); }
-    }
-
-    protected internal override Base DeepCopyInternal()
-    {
-      var instance = new Time();
-      CopyToInternal(instance);
-      return instance;
+      get { return (string)ObjectValue; }
+      set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
   }

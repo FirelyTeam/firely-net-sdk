@@ -3,7 +3,6 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 using System.Linq;
 using Tasks = System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
             return new CachedResolver(
                 new SnapshotSource(
                 new MultiResolver(
-                    new DirectorySource(Path.Combine("TestData", "validation")),
+                    new DirectorySource(@"TestData\validation"),
                     ZipSource.CreateValidationSource())));
         }
 
@@ -123,7 +122,7 @@ namespace Hl7.Fhir.Specification.Tests
             nav.JumpToFirst("Patient.communication");
             nav.MoveToNextSlice();
 
-            var fortest = nav.StructureDefinition.ToXml();
+            var fortest = await nav.StructureDefinition.ToXmlAsync();
             var walker = new StructureDefinitionWalker(nav, _source);
 
             var elem = walker.Extension("http://hl7.org/fhir/StructureDefinition/patient-proficiency");

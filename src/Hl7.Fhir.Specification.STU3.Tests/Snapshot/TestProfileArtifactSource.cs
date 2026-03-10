@@ -299,21 +299,16 @@ namespace Hl7.Fhir.STU3.Specification.Tests.Snapshot
 
             return result;
         }
-        
-        public Resource ResolveByCanonicalUri(string uri) =>  TryResolveByCanonicalUri(uri).Value;
-
-        public Resource ResolveByUri(string uri) => ResolveByCanonicalUri(uri);
-
-        public ResolverResult TryResolveByUri(string uri) => TryResolveByCanonicalUri(uri);
-
-        public ResolverResult TryResolveByCanonicalUri(string uri) 
+        public Resource ResolveByCanonicalUri(string uri)
         {
-            var resource = TestProfiles.SingleOrDefault(p => p.Url == uri);
-            if(resource is not null)
-                return resource;
-
-            return ResolverException.NotFound();
+            return TestProfiles.SingleOrDefault(p => p.Url == uri);
         }
+
+        public Resource ResolveByUri(string uri)
+        {
+            return ResolveByCanonicalUri(uri);
+        }
+
 
         private static StructureDefinition buildDutchPatient()
         {

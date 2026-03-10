@@ -7,11 +7,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -60,7 +56,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "integer64";
+    public override string TypeName { get { return "integer64"; } }
 
     /// Must conform to the pattern "[0]|[-+]?[1-9][0-9]*"
     public const string PATTERN = @"[0]|[-+]?[1-9][0-9]*";
@@ -72,11 +68,16 @@ namespace Hl7.Fhir.Model
 
     public Integer64(): this((long?)null) {}
 
-    protected internal override Base DeepCopyInternal()
+    /// <summary>
+    /// Primitive value of the element
+    /// </summary>
+    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(SystemPrimitive.Long))]
+    [DataMember]
+    public long? Value
     {
-      var instance = new Integer64();
-      CopyToInternal(instance);
-      return instance;
+      get { return (long?)ObjectValue; }
+      set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
   }

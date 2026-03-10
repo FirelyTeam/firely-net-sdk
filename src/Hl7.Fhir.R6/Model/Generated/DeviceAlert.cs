@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -56,13 +52,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceAlert","http://hl7.org/fhir/StructureDefinition/DeviceAlert")]
+  [FhirType("DeviceAlert","http://hl7.org/fhir/StructureDefinition/DeviceAlert", IsResource=true)]
   public partial class DeviceAlert : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "DeviceAlert";
+    public override string TypeName { get { return "DeviceAlert"; } }
 
     /// <summary>
     /// DeviceAlert Status Codes
@@ -237,66 +233,41 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceAlert.condition", IsBackboneType=true)]
+    [FhirType("DeviceAlert#Condition", IsNestedType=true)]
+    [BackboneType("DeviceAlert.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "DeviceAlert.condition";
+      public override string TypeName { get { return "DeviceAlert#Condition"; } }
 
       /// <summary>
-      /// The meaning of the alert.
+      /// The meaning of the alert
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
-        get
-        {
-          if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
-        }
-
-        set
-        {
-          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("code");
-          _Code = value;
-          OnPropertyChanged("Code");
-        }
-
+        get { return _Code; }
+        set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Code;
+      private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Whether the alert condition has been acknowledged.
+      /// Whether the alert condition has been acknowledged
       /// </summary>
       [FhirElement("acknowledged", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? AcknowledgedElement
+      public Hl7.Fhir.Model.FhirBoolean AcknowledgedElement
       {
-        get
-        {
-          if(_AcknowledgedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["acknowledged"]);
-          return _AcknowledgedElement;
-        }
-
-        set
-        {
-          if (_AcknowledgedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            Overflow.Remove("acknowledged");
-          _AcknowledgedElement = value;
-          OnPropertyChanged("AcknowledgedElement");
-        }
-
+        get { return _AcknowledgedElement; }
+        set { _AcknowledgedElement = value; OnPropertyChanged("AcknowledgedElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean? _AcknowledgedElement;
+      private Hl7.Fhir.Model.FhirBoolean _AcknowledgedElement;
 
       /// <summary>
       /// Whether the alert condition has been acknowledged
@@ -305,40 +276,30 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Acknowledged
       {
-        get => AcknowledgedElement?.Value;
+        get { return AcknowledgedElement != null ? AcknowledgedElement.Value : null; }
         set
         {
-          AcknowledgedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          if (value == null)
+            AcknowledgedElement = null;
+          else
+            AcknowledgedElement = new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Acknowledged");
         }
       }
 
       /// <summary>
-      /// The alert condition is currently occurring.
+      /// The alert condition is currently occurring
       /// </summary>
       [FhirElement("presence", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? PresenceElement
+      public Hl7.Fhir.Model.FhirBoolean PresenceElement
       {
-        get
-        {
-          if(_PresenceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["presence"]);
-          return _PresenceElement;
-        }
-
-        set
-        {
-          if (_PresenceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            Overflow.Remove("presence");
-          _PresenceElement = value;
-          OnPropertyChanged("PresenceElement");
-        }
-
+        get { return _PresenceElement; }
+        set { _PresenceElement = value; OnPropertyChanged("PresenceElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean? _PresenceElement;
+      private Hl7.Fhir.Model.FhirBoolean _PresenceElement;
 
       /// <summary>
       /// The alert condition is currently occurring
@@ -347,211 +308,158 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Presence
       {
-        get => PresenceElement?.Value;
+        get { return PresenceElement != null ? PresenceElement.Value : null; }
         set
         {
-          PresenceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          if (value == null)
+            PresenceElement = null;
+          else
+            PresenceElement = new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Presence");
         }
       }
 
       /// <summary>
-      /// The period during which the condition was active.
+      /// The period during which the condition was active
       /// </summary>
       [FhirElement("timing", Order=70, FiveWs="FiveWs.done[x]")]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Timing
+      public Hl7.Fhir.Model.Period Timing
       {
-        get
-        {
-          if(_Timing.InOverflow<Hl7.Fhir.Model.Period>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["timing"]);
-          return _Timing;
-        }
-
-        set
-        {
-          if (_Timing.InOverflow<Hl7.Fhir.Model.Period>())
-            Overflow.Remove("timing");
-          _Timing = value;
-          OnPropertyChanged("Timing");
-        }
-
+        get { return _Timing; }
+        set { _Timing = value; OnPropertyChanged("Timing"); }
       }
 
-      private Hl7.Fhir.Model.Period? _Timing;
+      private Hl7.Fhir.Model.Period _Timing;
 
       /// <summary>
-      /// The boundaries outside of which a value was detected to cause the alert condition.
+      /// The boundaries outside of which a value was detected to cause the alert condition
       /// </summary>
       [FhirElement("limit", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Range? Limit
+      public Hl7.Fhir.Model.Range Limit
       {
-        get
-        {
-          if(_Limit.InOverflow<Hl7.Fhir.Model.Range>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Range), Overflow["limit"]);
-          return _Limit;
-        }
-
-        set
-        {
-          if (_Limit.InOverflow<Hl7.Fhir.Model.Range>())
-            Overflow.Remove("limit");
-          _Limit = value;
-          OnPropertyChanged("Limit");
-        }
-
+        get { return _Limit; }
+        set { _Limit = value; OnPropertyChanged("Limit"); }
       }
 
-      private Hl7.Fhir.Model.Range? _Limit;
+      private Hl7.Fhir.Model.Range _Limit;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ConditionComponent dest)
+        var dest = other as ConditionComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
-        if(_AcknowledgedElement is not null) dest.AcknowledgedElement = (Hl7.Fhir.Model.FhirBoolean)_AcknowledgedElement.DeepCopyInternal();
-        if(_PresenceElement is not null) dest.PresenceElement = (Hl7.Fhir.Model.FhirBoolean)_PresenceElement.DeepCopyInternal();
-        if(_Timing is not null) dest.Timing = (Hl7.Fhir.Model.Period)_Timing.DeepCopyInternal();
-        if(_Limit is not null) dest.Limit = (Hl7.Fhir.Model.Range)_Limit.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+        if(AcknowledgedElement != null) dest.AcknowledgedElement = (Hl7.Fhir.Model.FhirBoolean)AcknowledgedElement.DeepCopy();
+        if(PresenceElement != null) dest.PresenceElement = (Hl7.Fhir.Model.FhirBoolean)PresenceElement.DeepCopy();
+        if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Period)Timing.DeepCopy();
+        if(Limit != null) dest.Limit = (Hl7.Fhir.Model.Range)Limit.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ConditionComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ConditionComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ConditionComponent otherT) return false;
+        var otherT = other as ConditionComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Code, otherT._Code)) return false;
-        if(!comparer.Equals(_AcknowledgedElement, otherT._AcknowledgedElement)) return false;
-        if(!comparer.Equals(_PresenceElement, otherT._PresenceElement)) return false;
-        if(!comparer.Equals(_Timing, otherT._Timing)) return false;
-        if(!comparer.Equals(_Limit, otherT._Limit)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+        if( !DeepComparable.Matches(AcknowledgedElement, otherT.AcknowledgedElement)) return false;
+        if( !DeepComparable.Matches(PresenceElement, otherT.PresenceElement)) return false;
+        if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
+        if( !DeepComparable.Matches(Limit, otherT.Limit)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ConditionComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+        if( !DeepComparable.IsExactly(AcknowledgedElement, otherT.AcknowledgedElement)) return false;
+        if( !DeepComparable.IsExactly(PresenceElement, otherT.PresenceElement)) return false;
+        if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
+        if( !DeepComparable.IsExactly(Limit, otherT.Limit)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Code != null) yield return Code;
+          if (AcknowledgedElement != null) yield return AcknowledgedElement;
+          if (PresenceElement != null) yield return PresenceElement;
+          if (Timing != null) yield return Timing;
+          if (Limit != null) yield return Limit;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Code != null) yield return new ElementValue("code", Code);
+          if (AcknowledgedElement != null) yield return new ElementValue("acknowledged", AcknowledgedElement);
+          if (PresenceElement != null) yield return new ElementValue("presence", PresenceElement);
+          if (Timing != null) yield return new ElementValue("timing", Timing);
+          if (Limit != null) yield return new ElementValue("limit", Limit);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "code":
-            if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["code"];
-              return true;
-            }
-            value = _Code;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Code;
+            return Code is not null;
           case "acknowledged":
-            if (_AcknowledgedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            {
-              value = Overflow["acknowledged"];
-              return true;
-            }
-            value = _AcknowledgedElement;
-            return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+            value = AcknowledgedElement;
+            return AcknowledgedElement is not null;
           case "presence":
-            if (_PresenceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            {
-              value = Overflow["presence"];
-              return true;
-            }
-            value = _PresenceElement;
-            return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+            value = PresenceElement;
+            return PresenceElement is not null;
           case "timing":
-            if (_Timing.InOverflow<Hl7.Fhir.Model.Period>())
-            {
-              value = Overflow["timing"];
-              return true;
-            }
-            value = _Timing;
-            return (value as Hl7.Fhir.Model.Period) is not null;
+            value = Timing;
+            return Timing is not null;
           case "limit":
-            if (_Limit.InOverflow<Hl7.Fhir.Model.Range>())
-            {
-              value = Overflow["limit"];
-              return true;
-            }
-            value = _Limit;
-            return (value as Hl7.Fhir.Model.Range) is not null;
+            value = Limit;
+            return Limit is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "code":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["code"] = value;
-            }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "acknowledged":
-            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-            {
-              AcknowledgedElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-              Overflow["acknowledged"] = value;
-            }
-            else AcknowledgedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-            return this;
-          case "presence":
-            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-            {
-              PresenceElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-              Overflow["presence"] = value;
-            }
-            else PresenceElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-            return this;
-          case "timing":
-            if (value is not (Hl7.Fhir.Model.Period or null))
-            {
-              Timing = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
-              Overflow["timing"] = value;
-            }
-            else Timing = (Hl7.Fhir.Model.Period?)value;
-            return this;
-          case "limit":
-            if (value is not (Hl7.Fhir.Model.Range or null))
-            {
-              Limit = OverflowNull<Hl7.Fhir.Model.Range>.INSTANCE;
-              Overflow["limit"] = value;
-            }
-            else Limit = (Hl7.Fhir.Model.Range?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
-        if (_AcknowledgedElement is not null && !_AcknowledgedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("acknowledged",_AcknowledgedElement);
-        if (_PresenceElement is not null && !_PresenceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("presence",_PresenceElement);
-        if (_Timing is not null && !_Timing.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("timing",_Timing);
-        if (_Limit is not null && !_Limit.InOverflow<Hl7.Fhir.Model.Range>()) yield return new KeyValuePair<string,object>("limit",_Limit);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (AcknowledgedElement is not null) yield return new KeyValuePair<string,object>("acknowledged",AcknowledgedElement);
+        if (PresenceElement is not null) yield return new KeyValuePair<string,object>("presence",PresenceElement);
+        if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+        if (Limit is not null) yield return new KeyValuePair<string,object>("limit",Limit);
       }
 
     }
@@ -561,40 +469,29 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("DeviceAlert.signal", IsBackboneType=true)]
+    [FhirType("DeviceAlert#Signal", IsNestedType=true)]
+    [BackboneType("DeviceAlert.signal")]
     public partial class SignalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "DeviceAlert.signal";
+      public override string TypeName { get { return "DeviceAlert#Signal"; } }
 
       /// <summary>
-      /// on | off | paused.
+      /// on | off | paused
       /// </summary>
       [FhirElement("activationState", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>? ActivationStateElement
+      public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes> ActivationStateElement
       {
-        get
-        {
-          if(_ActivationStateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>>())
-            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>), Overflow["activationState"]);
-          return _ActivationStateElement;
-        }
-
-        set
-        {
-          if (_ActivationStateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>>())
-            Overflow.Remove("activationState");
-          _ActivationStateElement = value;
-          OnPropertyChanged("ActivationStateElement");
-        }
-
+        get { return _ActivationStateElement; }
+        set { _ActivationStateElement = value; OnPropertyChanged("ActivationStateElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>? _ActivationStateElement;
+      private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes> _ActivationStateElement;
 
       /// <summary>
       /// on | off | paused
@@ -603,39 +500,30 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes? ActivationState
       {
-        get => ActivationStateElement?.Value;
+        get { return ActivationStateElement != null ? ActivationStateElement.Value : null; }
         set
         {
-          ActivationStateElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>(value);
+          if (value == null)
+            ActivationStateElement = null;
+          else
+            ActivationStateElement = new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>(value);
           OnPropertyChanged("ActivationState");
         }
       }
 
       /// <summary>
-      /// on | latched | off | ack.
+      /// on | latched | off | ack
       /// </summary>
       [FhirElement("presence", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>? PresenceElement
+      public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes> PresenceElement
       {
-        get
-        {
-          if(_PresenceElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>>())
-            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>), Overflow["presence"]);
-          return _PresenceElement;
-        }
-
-        set
-        {
-          if (_PresenceElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>>())
-            Overflow.Remove("presence");
-          _PresenceElement = value;
-          OnPropertyChanged("PresenceElement");
-        }
-
+        get { return _PresenceElement; }
+        set { _PresenceElement = value; OnPropertyChanged("PresenceElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>? _PresenceElement;
+      private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes> _PresenceElement;
 
       /// <summary>
       /// on | latched | off | ack
@@ -644,342 +532,226 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes? Presence
       {
-        get => PresenceElement?.Value;
+        get { return PresenceElement != null ? PresenceElement.Value : null; }
         set
         {
-          PresenceElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>(value);
+          if (value == null)
+            PresenceElement = null;
+          else
+            PresenceElement = new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>(value);
           OnPropertyChanged("Presence");
         }
       }
 
       /// <summary>
-      /// Where the signal is being annunciated.
+      /// Where the signal is being annunciated
       /// </summary>
       [FhirElement("annunciator", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference? Annunciator
+      public Hl7.Fhir.Model.CodeableReference Annunciator
       {
-        get
-        {
-          if(_Annunciator.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableReference), Overflow["annunciator"]);
-          return _Annunciator;
-        }
-
-        set
-        {
-          if (_Annunciator.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-            Overflow.Remove("annunciator");
-          _Annunciator = value;
-          OnPropertyChanged("Annunciator");
-        }
-
+        get { return _Annunciator; }
+        set { _Annunciator = value; OnPropertyChanged("Annunciator"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference? _Annunciator;
+      private Hl7.Fhir.Model.CodeableReference _Annunciator;
 
       /// <summary>
-      /// How the signal is being annunciated.
+      /// How the signal is being annunciated
       /// </summary>
       [FhirElement("manifestation", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Manifestation
+      public Hl7.Fhir.Model.CodeableConcept Manifestation
       {
-        get
-        {
-          if(_Manifestation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["manifestation"]);
-          return _Manifestation;
-        }
-
-        set
-        {
-          if (_Manifestation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("manifestation");
-          _Manifestation = value;
-          OnPropertyChanged("Manifestation");
-        }
-
+        get { return _Manifestation; }
+        set { _Manifestation = value; OnPropertyChanged("Manifestation"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Manifestation;
+      private Hl7.Fhir.Model.CodeableConcept _Manifestation;
 
       /// <summary>
-      /// Characteristics of the signal manifestation.
+      /// Characteristics of the signal manifestation
       /// </summary>
       [FhirElement("type", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get
-        {
-          if(_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["type"]);
-          return _Type ??= [];
-        }
-
-        set
-        {
-          if (_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("type");
-          _Type = value;
-          OnPropertyChanged("Type");
-        }
-
+        get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+        set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
+      private List<Hl7.Fhir.Model.CodeableConcept> _Type;
 
       /// <summary>
-      /// When the signal was being annunciated.
+      /// When the signal was being annunciated
       /// </summary>
       [FhirElement("indication", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.Period? Indication
+      public Hl7.Fhir.Model.Period Indication
       {
-        get
-        {
-          if(_Indication.InOverflow<Hl7.Fhir.Model.Period>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["indication"]);
-          return _Indication;
-        }
-
-        set
-        {
-          if (_Indication.InOverflow<Hl7.Fhir.Model.Period>())
-            Overflow.Remove("indication");
-          _Indication = value;
-          OnPropertyChanged("Indication");
-        }
-
+        get { return _Indication; }
+        set { _Indication = value; OnPropertyChanged("Indication"); }
       }
 
-      private Hl7.Fhir.Model.Period? _Indication;
+      private Hl7.Fhir.Model.Period _Indication;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not SignalComponent dest)
+        var dest = other as SignalComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_ActivationStateElement is not null) dest.ActivationStateElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>)_ActivationStateElement.DeepCopyInternal();
-        if(_PresenceElement is not null) dest.PresenceElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>)_PresenceElement.DeepCopyInternal();
-        if(_Annunciator is not null) dest.Annunciator = (Hl7.Fhir.Model.CodeableReference)_Annunciator.DeepCopyInternal();
-        if(_Manifestation is not null) dest.Manifestation = (Hl7.Fhir.Model.CodeableConcept)_Manifestation.DeepCopyInternal();
-        if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
-        if(_Indication is not null) dest.Indication = (Hl7.Fhir.Model.Period)_Indication.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(ActivationStateElement != null) dest.ActivationStateElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>)ActivationStateElement.DeepCopy();
+        if(PresenceElement != null) dest.PresenceElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>)PresenceElement.DeepCopy();
+        if(Annunciator != null) dest.Annunciator = (Hl7.Fhir.Model.CodeableReference)Annunciator.DeepCopy();
+        if(Manifestation != null) dest.Manifestation = (Hl7.Fhir.Model.CodeableConcept)Manifestation.DeepCopy();
+        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+        if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Period)Indication.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new SignalComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new SignalComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not SignalComponent otherT) return false;
+        var otherT = other as SignalComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_ActivationStateElement, otherT._ActivationStateElement)) return false;
-        if(!comparer.Equals(_PresenceElement, otherT._PresenceElement)) return false;
-        if(!comparer.Equals(_Annunciator, otherT._Annunciator)) return false;
-        if(!comparer.Equals(_Manifestation, otherT._Manifestation)) return false;
-        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
-        if(!comparer.Equals(_Indication, otherT._Indication)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(ActivationStateElement, otherT.ActivationStateElement)) return false;
+        if( !DeepComparable.Matches(PresenceElement, otherT.PresenceElement)) return false;
+        if( !DeepComparable.Matches(Annunciator, otherT.Annunciator)) return false;
+        if( !DeepComparable.Matches(Manifestation, otherT.Manifestation)) return false;
+        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+        if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as SignalComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(ActivationStateElement, otherT.ActivationStateElement)) return false;
+        if( !DeepComparable.IsExactly(PresenceElement, otherT.PresenceElement)) return false;
+        if( !DeepComparable.IsExactly(Annunciator, otherT.Annunciator)) return false;
+        if( !DeepComparable.IsExactly(Manifestation, otherT.Manifestation)) return false;
+        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+        if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (ActivationStateElement != null) yield return ActivationStateElement;
+          if (PresenceElement != null) yield return PresenceElement;
+          if (Annunciator != null) yield return Annunciator;
+          if (Manifestation != null) yield return Manifestation;
+          foreach (var elem in Type) { if (elem != null) yield return elem; }
+          if (Indication != null) yield return Indication;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (ActivationStateElement != null) yield return new ElementValue("activationState", ActivationStateElement);
+          if (PresenceElement != null) yield return new ElementValue("presence", PresenceElement);
+          if (Annunciator != null) yield return new ElementValue("annunciator", Annunciator);
+          if (Manifestation != null) yield return new ElementValue("manifestation", Manifestation);
+          foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
+          if (Indication != null) yield return new ElementValue("indication", Indication);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "activationState":
-            if (_ActivationStateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>>())
-            {
-              value = Overflow["activationState"];
-              return true;
-            }
-            value = _ActivationStateElement;
-            return (value as Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>) is not null;
+            value = ActivationStateElement;
+            return ActivationStateElement is not null;
           case "presence":
-            if (_PresenceElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>>())
-            {
-              value = Overflow["presence"];
-              return true;
-            }
-            value = _PresenceElement;
-            return (value as Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>) is not null;
+            value = PresenceElement;
+            return PresenceElement is not null;
           case "annunciator":
-            if (_Annunciator.InOverflow<Hl7.Fhir.Model.CodeableReference>())
-            {
-              value = Overflow["annunciator"];
-              return true;
-            }
-            value = _Annunciator;
-            return (value as Hl7.Fhir.Model.CodeableReference) is not null;
+            value = Annunciator;
+            return Annunciator is not null;
           case "manifestation":
-            if (_Manifestation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["manifestation"];
-              return true;
-            }
-            value = _Manifestation;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Manifestation;
+            return Manifestation is not null;
           case "type":
-            if (_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["type"];
-              return true;
-            }
-            value = _Type;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = Type;
+            return Type?.Any() == true;
           case "indication":
-            if (_Indication.InOverflow<Hl7.Fhir.Model.Period>())
-            {
-              value = Overflow["indication"];
-              return true;
-            }
-            value = _Indication;
-            return (value as Hl7.Fhir.Model.Period) is not null;
+            value = Indication;
+            return Indication is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "activationState":
-            if (value is not (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes> or null))
-            {
-              ActivationStateElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>>.INSTANCE;
-              Overflow["activationState"] = value;
-            }
-            else ActivationStateElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>?)value;
-            return this;
-          case "presence":
-            if (value is not (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes> or null))
-            {
-              PresenceElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>>.INSTANCE;
-              Overflow["presence"] = value;
-            }
-            else PresenceElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>?)value;
-            return this;
-          case "annunciator":
-            if (value is not (Hl7.Fhir.Model.CodeableReference or null))
-            {
-              Annunciator = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
-              Overflow["annunciator"] = value;
-            }
-            else Annunciator = (Hl7.Fhir.Model.CodeableReference?)value;
-            return this;
-          case "manifestation":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Manifestation = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["manifestation"] = value;
-            }
-            else Manifestation = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "type":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              Type = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["type"] = value;
-            }
-            else Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "indication":
-            if (value is not (Hl7.Fhir.Model.Period or null))
-            {
-              Indication = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
-              Overflow["indication"] = value;
-            }
-            else Indication = (Hl7.Fhir.Model.Period?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_ActivationStateElement is not null && !_ActivationStateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertActivationStateCodes>>()) yield return new KeyValuePair<string,object>("activationState",_ActivationStateElement);
-        if (_PresenceElement is not null && !_PresenceElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPresenceCodes>>()) yield return new KeyValuePair<string,object>("presence",_PresenceElement);
-        if (_Annunciator is not null && !_Annunciator.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("annunciator",_Annunciator);
-        if (_Manifestation is not null && !_Manifestation.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("manifestation",_Manifestation);
-        if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("type",_Type);
-        if (_Indication is not null && !_Indication.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("indication",_Indication);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ActivationStateElement is not null) yield return new KeyValuePair<string,object>("activationState",ActivationStateElement);
+        if (PresenceElement is not null) yield return new KeyValuePair<string,object>("presence",PresenceElement);
+        if (Annunciator is not null) yield return new KeyValuePair<string,object>("annunciator",Annunciator);
+        if (Manifestation is not null) yield return new KeyValuePair<string,object>("manifestation",Manifestation);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
       }
 
     }
 
     /// <summary>
-    /// Instance identifier.
+    /// Instance identifier
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// in-progress | completed | entered-in-error.
+    /// in-progress | completed | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>? StatusElement
+    public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes> StatusElement
     {
-      get
-      {
-        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>), Overflow["status"]);
-        return _StatusElement;
-      }
-
-      set
-      {
-        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>>())
-          Overflow.Remove("status");
-        _StatusElement = value;
-        OnPropertyChanged("StatusElement");
-      }
-
+      get { return _StatusElement; }
+      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>? _StatusElement;
+    private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes> _StatusElement;
 
     /// <summary>
     /// in-progress | completed | entered-in-error
@@ -988,39 +760,30 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes? Status
     {
-      get => StatusElement?.Value;
+      get { return StatusElement != null ? StatusElement.Value : null; }
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>(value);
+        if (value == null)
+          StatusElement = null;
+        else
+          StatusElement = new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// physiological | technical.
+    /// physiological | technical
     /// </summary>
     [FhirElement("type", Order=110, FiveWs="FiveWs.class")]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>? TypeElement
+    public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes> TypeElement
     {
-      get
-      {
-        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>), Overflow["type"]);
-        return _TypeElement;
-      }
-
-      set
-      {
-        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>>())
-          Overflow.Remove("type");
-        _TypeElement = value;
-        OnPropertyChanged("TypeElement");
-      }
-
+      get { return _TypeElement; }
+      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>? _TypeElement;
+    private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes> _TypeElement;
 
     /// <summary>
     /// physiological | technical
@@ -1029,39 +792,30 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes? Type
     {
-      get => TypeElement?.Value;
+      get { return TypeElement != null ? TypeElement.Value : null; }
       set
       {
-        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>(value);
+        if (value == null)
+          TypeElement = null;
+        else
+          TypeElement = new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>(value);
         OnPropertyChanged("Type");
       }
     }
 
     /// <summary>
-    /// high | medium | low | info.
+    /// high | medium | low | info
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=120, FiveWs="FiveWs.grade")]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>? PriorityElement
+    public Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes> PriorityElement
     {
-      get
-      {
-        if(_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>), Overflow["priority"]);
-        return _PriorityElement;
-      }
-
-      set
-      {
-        if (_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>>())
-          Overflow.Remove("priority");
-        _PriorityElement = value;
-        OnPropertyChanged("PriorityElement");
-      }
-
+      get { return _PriorityElement; }
+      set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>? _PriorityElement;
+    private Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes> _PriorityElement;
 
     /// <summary>
     /// high | medium | low | info
@@ -1070,439 +824,285 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes? Priority
     {
-      get => PriorityElement?.Value;
+      get { return PriorityElement != null ? PriorityElement.Value : null; }
       set
       {
-        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>(value);
+        if (value == null)
+          PriorityElement = null;
+        else
+          PriorityElement = new Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>(value);
         OnPropertyChanged("Priority");
       }
     }
 
     /// <summary>
-    /// The who or what the alert is about.
+    /// The who or what the alert is about
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Subject
+    public Hl7.Fhir.Model.ResourceReference Subject
     {
-      get
-      {
-        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
-        return _Subject;
-      }
-
-      set
-      {
-        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("subject");
-        _Subject = value;
-        OnPropertyChanged("Subject");
-      }
-
+      get { return _Subject; }
+      set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Subject;
+    private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// The device (or DeviceMetric) that detected the alert condition.
+    /// The device (or DeviceMetric) that detected the alert condition
     /// </summary>
     [FhirElement("source", Order=140, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Device","DeviceMetric")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Source
+    public Hl7.Fhir.Model.ResourceReference Source
     {
-      get
-      {
-        if(_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["source"]);
-        return _Source;
-      }
-
-      set
-      {
-        if (_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("source");
-        _Source = value;
-        OnPropertyChanged("Source");
-      }
-
+      get { return _Source; }
+      set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Source;
+    private Hl7.Fhir.Model.ResourceReference _Source;
 
     /// <summary>
-    /// The condition, event, or state being reported.
+    /// The condition, event, or state being reported
     /// </summary>
     [FhirElement("condition", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DeviceAlert.ConditionComponent? Condition
+    public Hl7.Fhir.Model.DeviceAlert.ConditionComponent Condition
     {
-      get
-      {
-        if(_Condition.InOverflow<Hl7.Fhir.Model.DeviceAlert.ConditionComponent>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DeviceAlert.ConditionComponent), Overflow["condition"]);
-        return _Condition;
-      }
-
-      set
-      {
-        if (_Condition.InOverflow<Hl7.Fhir.Model.DeviceAlert.ConditionComponent>())
-          Overflow.Remove("condition");
-        _Condition = value;
-        OnPropertyChanged("Condition");
-      }
-
+      get { return _Condition; }
+      set { _Condition = value; OnPropertyChanged("Condition"); }
     }
 
-    private Hl7.Fhir.Model.DeviceAlert.ConditionComponent? _Condition;
+    private Hl7.Fhir.Model.DeviceAlert.ConditionComponent _Condition;
 
     /// <summary>
-    /// The value causing the alert condition.
+    /// The value causing the alert condition
     /// </summary>
     [FhirElement("derivedFrom", Order=160, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
-      get
-      {
-        if(_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["derivedFrom"]);
-        return _DerivedFrom ??= [];
-      }
-
-      set
-      {
-        if (_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("derivedFrom");
-        _DerivedFrom = value;
-        OnPropertyChanged("DerivedFrom");
-      }
-
+      get { if(_DerivedFrom==null) _DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(); return _DerivedFrom; }
+      set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _DerivedFrom;
+    private List<Hl7.Fhir.Model.ResourceReference> _DerivedFrom;
 
     /// <summary>
-    /// Text to be displayed for the alert condition.
+    /// Text to be displayed for the alert condition
     /// </summary>
     [FhirElement("label", Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? LabelElement
+    public Hl7.Fhir.Model.FhirString LabelElement
     {
-      get
-      {
-        if(_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["label"]);
-        return _LabelElement;
-      }
-
-      set
-      {
-        if (_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("label");
-        _LabelElement = value;
-        OnPropertyChanged("LabelElement");
-      }
-
+      get { return _LabelElement; }
+      set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _LabelElement;
+    private Hl7.Fhir.Model.FhirString _LabelElement;
 
     /// <summary>
     /// Text to be displayed for the alert condition
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Label
+    public string Label
     {
-      get => LabelElement?.Value;
+      get { return LabelElement != null ? LabelElement.Value : null; }
       set
       {
-        LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          LabelElement = null;
+        else
+          LabelElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Label");
       }
     }
 
     /// <summary>
-    /// Annunciation or notification of the alert condition.
+    /// Annunciation or notification of the alert condition
     /// </summary>
     [FhirElement("signal", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceAlert.SignalComponent> Signal
     {
-      get
-      {
-        if(_Signal.InOverflow<List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>), Overflow["signal"]);
-        return _Signal ??= [];
-      }
-
-      set
-      {
-        if (_Signal.InOverflow<List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>>())
-          Overflow.Remove("signal");
-        _Signal = value;
-        OnPropertyChanged("Signal");
-      }
-
+      get { if(_Signal==null) _Signal = new List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>(); return _Signal; }
+      set { _Signal = value; OnPropertyChanged("Signal"); }
     }
 
-    private List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>? _Signal;
+    private List<Hl7.Fhir.Model.DeviceAlert.SignalComponent> _Signal;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not DeviceAlert dest)
+      var dest = other as DeviceAlert;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>)_StatusElement.DeepCopyInternal();
-      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>)_TypeElement.DeepCopyInternal();
-      if(_PriorityElement is not null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>)_PriorityElement.DeepCopyInternal();
-      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
-      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.ResourceReference)_Source.DeepCopyInternal();
-      if(_Condition is not null) dest.Condition = (Hl7.Fhir.Model.DeviceAlert.ConditionComponent)_Condition.DeepCopyInternal();
-      if(_DerivedFrom is not null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(_DerivedFrom.DeepCopyInternal());
-      if(_LabelElement is not null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)_LabelElement.DeepCopyInternal();
-      if(_Signal is not null) dest.Signal = new List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>(_Signal.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>)StatusElement.DeepCopy();
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>)TypeElement.DeepCopy();
+      if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>)PriorityElement.DeepCopy();
+      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
+      if(Condition != null) dest.Condition = (Hl7.Fhir.Model.DeviceAlert.ConditionComponent)Condition.DeepCopy();
+      if(DerivedFrom.Any()) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
+      if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
+      if(Signal.Any()) dest.Signal = new List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>(Signal.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new DeviceAlert();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new DeviceAlert());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not DeviceAlert otherT) return false;
+      var otherT = other as DeviceAlert;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
-      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
-      if(!comparer.Equals(_PriorityElement, otherT._PriorityElement)) return false;
-      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
-      if(!comparer.Equals(_Source, otherT._Source)) return false;
-      if(!comparer.Equals(_Condition, otherT._Condition)) return false;
-      if(!comparer.ListEquals(_DerivedFrom, otherT._DerivedFrom)) return false;
-      if(!comparer.Equals(_LabelElement, otherT._LabelElement)) return false;
-      if(!comparer.ListEquals(_Signal, otherT._Signal)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+      if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
+      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+      if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+      if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
+      if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+      if( !DeepComparable.Matches(Signal, otherT.Signal)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as DeviceAlert;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+      if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
+      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+      if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+      if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
+      if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+      if( !DeepComparable.IsExactly(Signal, otherT.Signal)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (StatusElement != null) yield return StatusElement;
+        if (TypeElement != null) yield return TypeElement;
+        if (PriorityElement != null) yield return PriorityElement;
+        if (Subject != null) yield return Subject;
+        if (Source != null) yield return Source;
+        if (Condition != null) yield return Condition;
+        foreach (var elem in DerivedFrom) { if (elem != null) yield return elem; }
+        if (LabelElement != null) yield return LabelElement;
+        foreach (var elem in Signal) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+        if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+        if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
+        if (Subject != null) yield return new ElementValue("subject", Subject);
+        if (Source != null) yield return new ElementValue("source", Source);
+        if (Condition != null) yield return new ElementValue("condition", Condition);
+        foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
+        if (LabelElement != null) yield return new ElementValue("label", LabelElement);
+        foreach (var elem in Signal) { if (elem != null) yield return new ElementValue("signal", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "status":
-          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _StatusElement;
-          return (value as Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>) is not null;
+          value = StatusElement;
+          return StatusElement is not null;
         case "type":
-          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>>())
-          {
-            value = Overflow["type"];
-            return true;
-          }
-          value = _TypeElement;
-          return (value as Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>) is not null;
+          value = TypeElement;
+          return TypeElement is not null;
         case "priority":
-          if (_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>>())
-          {
-            value = Overflow["priority"];
-            return true;
-          }
-          value = _PriorityElement;
-          return (value as Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>) is not null;
+          value = PriorityElement;
+          return PriorityElement is not null;
         case "subject":
-          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["subject"];
-            return true;
-          }
-          value = _Subject;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Subject;
+          return Subject is not null;
         case "source":
-          if (_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["source"];
-            return true;
-          }
-          value = _Source;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Source;
+          return Source is not null;
         case "condition":
-          if (_Condition.InOverflow<Hl7.Fhir.Model.DeviceAlert.ConditionComponent>())
-          {
-            value = Overflow["condition"];
-            return true;
-          }
-          value = _Condition;
-          return (value as Hl7.Fhir.Model.DeviceAlert.ConditionComponent) is not null;
+          value = Condition;
+          return Condition is not null;
         case "derivedFrom":
-          if (_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["derivedFrom"];
-            return true;
-          }
-          value = _DerivedFrom;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
         case "label":
-          if (_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["label"];
-            return true;
-          }
-          value = _LabelElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = LabelElement;
+          return LabelElement is not null;
         case "signal":
-          if (_Signal.InOverflow<List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>>())
-          {
-            value = Overflow["signal"];
-            return true;
-          }
-          value = _Signal;
-          return (value as List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>)?.Any() is true;
+          value = Signal;
+          return Signal?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "status":
-          if (value is not (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes> or null))
-          {
-            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else StatusElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>?)value;
-          return this;
-        case "type":
-          if (value is not (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes> or null))
-          {
-            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>>.INSTANCE;
-            Overflow["type"] = value;
-          }
-          else TypeElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>?)value;
-          return this;
-        case "priority":
-          if (value is not (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes> or null))
-          {
-            PriorityElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>>.INSTANCE;
-            Overflow["priority"] = value;
-          }
-          else PriorityElement = (Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>?)value;
-          return this;
-        case "subject":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["subject"] = value;
-          }
-          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "source":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Source = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["source"] = value;
-          }
-          else Source = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "condition":
-          if (value is not (Hl7.Fhir.Model.DeviceAlert.ConditionComponent or null))
-          {
-            Condition = OverflowNull<Hl7.Fhir.Model.DeviceAlert.ConditionComponent>.INSTANCE;
-            Overflow["condition"] = value;
-          }
-          else Condition = (Hl7.Fhir.Model.DeviceAlert.ConditionComponent?)value;
-          return this;
-        case "derivedFrom":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            DerivedFrom = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["derivedFrom"] = value;
-          }
-          else DerivedFrom = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "label":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            LabelElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["label"] = value;
-          }
-          else LabelElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "signal":
-          if (value is not (List<Hl7.Fhir.Model.DeviceAlert.SignalComponent> or null))
-          {
-            Signal = OverflowNull<List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>>.INSTANCE;
-            Overflow["signal"] = value;
-          }
-          else Signal = (List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertTypeCodes>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_PriorityElement is not null && !_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.DeviceAlert.DeviceAlertPriorityCodes>>()) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
-      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("source",_Source);
-      if (_Condition is not null && !_Condition.InOverflow<Hl7.Fhir.Model.DeviceAlert.ConditionComponent>()) yield return new KeyValuePair<string,object>("condition",_Condition);
-      if (_DerivedFrom?.Any() is true && !_DerivedFrom.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("derivedFrom",_DerivedFrom);
-      if (_LabelElement is not null && !_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("label",_LabelElement);
-      if (_Signal?.Any() is true && !_Signal.InOverflow<List<Hl7.Fhir.Model.DeviceAlert.SignalComponent>>()) yield return new KeyValuePair<string,object>("signal",_Signal);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+      if (Signal?.Any() == true) yield return new KeyValuePair<string,object>("signal",Signal);
     }
 
   }

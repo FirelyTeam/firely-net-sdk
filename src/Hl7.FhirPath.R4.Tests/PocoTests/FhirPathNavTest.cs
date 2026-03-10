@@ -10,25 +10,21 @@
 // extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
 using System.Linq;
-using System.Text.Json;
-using System.Xml.Serialization;
 using Xunit;
 
 namespace Hl7.FhirPath.R4.Tests
 {
     public class FhirPathNavTest
     {
-        public PocoNode getTestData()
+        public ITypedElement getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            var engine = FhirSerializationEngineFactory.Ostrich(ModelInfo.ModelInspector);
-            return engine.DeserializeFromXml(tpXml).ToPocoNode();
+            return FhirXmlNode.Parse(tpXml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
         }
 
         [Fact]
@@ -40,7 +36,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
             Assert.Equal(3, result.Count());
-            Assert.Equal("usual", result.First().GetValue());
+            Assert.Equal("usual", result.First().Value);
         }
 
         [Fact]
@@ -50,7 +46,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
             Assert.Equal(3, result.Count());
-            Assert.Equal("usual", (string)result.First().GetValue());
+            Assert.Equal("usual", (string)result.First().Value);
         }
 
     }

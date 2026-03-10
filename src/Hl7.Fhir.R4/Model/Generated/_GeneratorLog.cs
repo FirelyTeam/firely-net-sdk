@@ -252,6 +252,7 @@
   // Used in model class (resource): ResearchElementDefinition.variableType
 
 // Generated items
+// Address.cs
 // Age.cs
 // Annotation.cs
 // Contributor.cs
@@ -259,13 +260,16 @@
 // DataRequirement.cs
 // Distance.cs
 // Dosage.cs
+// Duration.cs
 // Expression.cs
+// HumanName.cs
 // MarketingStatus.cs
 // Money.cs
 // ParameterDefinition.cs
 // Population.cs
 // ProdCharacteristic.cs
 // ProductShelfLife.cs
+// Ratio.cs
 // SampledData.cs
 // SubstanceAmount.cs
 // Timing.cs

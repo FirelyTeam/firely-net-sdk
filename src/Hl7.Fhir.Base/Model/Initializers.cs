@@ -31,155 +31,134 @@
 #nullable enable
 
 using Hl7.Fhir.Introspection;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 
-namespace Hl7.Fhir.Model;
-
-public partial class HumanName
+namespace Hl7.Fhir.Model
 {
-    public static HumanName ForFamily(string family)
+    [DebuggerDisplay(@"\{{DebuggerDisplay(null),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    public partial class CodeableConcept
     {
-        var result = new HumanName()
+        internal string DebuggerDisplay(string prefix)
         {
-            Family = family
-        };
-        return result;
-    }
-
-    public HumanName WithGiven(string given)
-    {
-        this.GivenElement.Add(new FhirString(given));
-        return this;
-    }
-
-    public HumanName WithPrefix(string prefix)
-    {
-        this.PrefixElement.Add(new FhirString(prefix));
-        return this;
-    }
-
-    public HumanName WithSuffix(string prefix)
-    {
-        this.SuffixElement.Add(new FhirString(prefix));
-        return this;
-    }
-
-    public HumanName AndFamily(string family)
-    {
-        this.Family = family;
-        return this;
-    }
-
-    public List<HumanName> AsList() => [this];
-}
-
-[DebuggerDisplay(@"\{{DebuggerDisplay(),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-public partial class Address
-{
-    private string DebuggerDisplay()
-    {
-        if (!String.IsNullOrEmpty(Text))
-            return $"Text=\"{Text}\"";
-        return string.Join(", ", string.Join(", ", Line.ToArray()),
-                   City, State, PostalCode, Country)
-               + (Use.HasValue ? " Use=\"" + Use.Value + "\"" : "")
-               + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
-    }
-}
-
-[DebuggerDisplay(@"\{{DebuggerDisplay(null),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-public partial class CodeableConcept
-{
-    internal string DebuggerDisplay(string prefix)
-    {
-        if (!string.IsNullOrEmpty(Text))
-            return $"{prefix}Text=\"{Text}\"";
-        var sb = new StringBuilder();
-
-        if (_Coding is null) return sb.ToString();
-
-        foreach (var item in _Coding)
-        {
-            sb.Append("  ");
-            sb.Append(item.DebuggerDisplay);
-        }
-        return sb.ToString();
-    }
-
-}
-
-public partial class Identifier
-{
-    public Identifier()
-    {
-    }
-
-    public Identifier(string? system, string? value)
-    {
-        this.System = system;
-        this.Value = value;
-    }
-}
-
-[DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-public partial class Period
-{
-    public Period()
-    {
-    }
-
-    public Period(FhirDateTime? start, FhirDateTime? end)
-    {
-        StartElement = start;
-        EndElement = end;
-    }
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    [NotMapped]
-    internal string DebuggerDisplay
-    {
-        get
-        {
+            if (!string.IsNullOrEmpty(Text))
+                return string.Format("{0}Text=\"{1}\"", prefix, Text);
             var sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(this.Start))
-                sb.AppendFormat(" Start=\"{0}\"", Start);
-            if (!string.IsNullOrEmpty(this.End))
-                sb.AppendFormat(" End=\"{0}\"", End);
-
+            if (_Coding != null)
+            {
+                foreach (var item in _Coding)
+                {
+                    sb.Append("  ");
+                    sb.Append(item.DebuggerDisplay);
+                }
+            }
             return sb.ToString();
         }
+
+        public CodeableConcept()
+        {
+        }
+
+        public CodeableConcept(string system, string code, string? text = null)
+        {
+            if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code))
+            {
+                this.Coding = new List<Coding>() {
+                    new Coding(system,code) };
+            }
+            this.Text = text;
+        }
+        public CodeableConcept(string system, string code, string display, string text)
+        {
+            if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code) || !string.IsNullOrEmpty(display))
+            {
+                this.Coding = new List<Coding>() {
+                    new Coding(system,code, display) };
+            }
+            this.Text = text;
+        }
+
+        public CodeableConcept Add(string system, string code, string? display = null)
+        {
+            Coding.Add(new Coding(system, code, display));
+
+            return this;
+        }
     }
+
+    public partial class Identifier
+    {
+        public Identifier()
+        {
+        }
+
+        public Identifier(string system, string value)
+        {
+            this.System = system;
+            this.Value = value;
+        }
+    }
+
+    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    public partial class Period
+    {
+        public Period()
+        {
+        }
+
+        public Period(FhirDateTime start, FhirDateTime end)
+        {
+            StartElement = start;
+            EndElement = end;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                if (!string.IsNullOrEmpty(this.Start))
+                    sb.AppendFormat(" Start=\"{0}\"", Start);
+                if (!string.IsNullOrEmpty(this.End))
+                    sb.AppendFormat(" End=\"{0}\"", End);
+
+                return sb.ToString();
+            }
+        }
+    }
+
+    public partial class ContactPoint
+    {
+        public ContactPoint()
+        {
+        }
+
+        public ContactPoint(ContactPointSystem? system, ContactPointUse? use, string value)
+        {
+            this.System = system;
+            this.Use = use;
+            this.Value = value;
+        }
+    }
+
+    public partial class Quantity
+    {
+        public Quantity()
+        {
+        }
+
+        public Quantity(decimal value, string unit, string system = "http://unitsofmeasure.org")
+        {
+            Value = value;
+            Unit = unit;
+            Code = unit;
+            System = system;
+        }
+    }
+
 }
 
-public partial class ContactPoint
-{
-    public ContactPoint()
-    {
-    }
-
-    public ContactPoint(ContactPointSystem? system, ContactPointUse? use, string value)
-    {
-        this.System = system;
-        this.Use = use;
-        this.Value = value;
-    }
-}
-
-public partial class Quantity
-{
-    public Quantity()
-    {
-    }
-
-    public Quantity(decimal value, string? unit, string? system = "http://unitsofmeasure.org")
-    {
-        Value = value;
-        Unit = unit;
-        Code = unit;
-        System = system;
-    }
-}
+#nullable restore

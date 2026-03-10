@@ -33,24 +33,12 @@ namespace Hl7.Fhir.Specification.Tests
 
         #region IResourceResolver
 
-        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
-        public ResolverResult TryResolveByUri(string uri) => ResolverException.NotFound();
+        public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
 
-        public ResolverResult TryResolveByCanonicalUri(string uri)
-        {
-            var resource = _resources[uri].FirstOrDefault();
-            if (resource is not null)
-                return resource;
-
-            return ResolverException.NotFound();
-        }
-
-        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
+        public Resource ResolveByUri(string uri) => null;
 
         public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
         public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
-        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
-        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         #endregion
 

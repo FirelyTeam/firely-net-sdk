@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Validation
             var node = i.ToTypedElement();
             var p = node.ParseBindable();
 
-            p.IsExactly(new CodeableConcept { Coding = [new Coding("http://nu.nl", "bla")] }).Should().BeTrue();
+            p.Should().BeEquivalentTo(new { Coding = new List<Coding> { new Coding("http://nu.nl", "bla") }  });
 
             i.Concept = null;
             node = i.ToTypedElement();

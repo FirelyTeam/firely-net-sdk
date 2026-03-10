@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,13 +51,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Linkage","http://hl7.org/fhir/StructureDefinition/Linkage")]
+  [FhirType("Linkage","http://hl7.org/fhir/StructureDefinition/Linkage", IsResource=true)]
   public partial class Linkage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Linkage";
+    public override string TypeName { get { return "Linkage"; } }
 
     /// <summary>
     /// Used to distinguish different roles a resource can play within a set of linked resources
@@ -99,41 +95,30 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Linkage.item", IsBackboneType=true)]
+    [FhirType("Linkage#Item", IsNestedType=true)]
+    [BackboneType("Linkage.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "Linkage.item";
+      public override string TypeName { get { return "Linkage#Item"; } }
 
       /// <summary>
-      /// source | alternate | historical.
+      /// source | alternate | historical
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Binding("LinkageType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Linkage.LinkageType> TypeElement
       {
-        get
-        {
-          if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
-            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Linkage.LinkageType>), Overflow["type"]);
-          return _TypeElement!;
-        }
-
-        set
-        {
-          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
-            Overflow.Remove("type");
-          _TypeElement = value;
-          OnPropertyChanged("TypeElement");
-        }
-
+        get { return _TypeElement; }
+        set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Linkage.LinkageType>? _TypeElement;
+      private Code<Hl7.Fhir.Model.Linkage.LinkageType> _TypeElement;
 
       /// <summary>
       /// source | alternate | historical
@@ -142,158 +127,135 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Linkage.LinkageType? Type
       {
-        get => TypeElement?.Value;
+        get { return TypeElement != null ? TypeElement.Value : null; }
         set
         {
-          TypeElement = value is null ? null! : new Code<Hl7.Fhir.Model.Linkage.LinkageType>(value);
+          if (value == null)
+            TypeElement = null;
+          else
+            TypeElement = new Code<Hl7.Fhir.Model.Linkage.LinkageType>(value);
           OnPropertyChanged("Type");
         }
       }
 
       /// <summary>
-      /// Resource being linked.
+      /// Resource being linked
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference Resource
       {
-        get
-        {
-          if(_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["resource"]);
-          return _Resource!;
-        }
-
-        set
-        {
-          if (_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            Overflow.Remove("resource");
-          _Resource = value;
-          OnPropertyChanged("Resource");
-        }
-
+        get { return _Resource; }
+        set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference? _Resource;
+      private Hl7.Fhir.Model.ResourceReference _Resource;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ItemComponent dest)
+        var dest = other as ItemComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>)_TypeElement.DeepCopyInternal();
-        if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)_Resource.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>)TypeElement.DeepCopy();
+        if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ItemComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ItemComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ItemComponent otherT) return false;
+        var otherT = other as ItemComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
-        if(!comparer.Equals(_Resource, otherT._Resource)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+        if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ItemComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+        if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (TypeElement != null) yield return TypeElement;
+          if (Resource != null) yield return Resource;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+          if (Resource != null) yield return new ElementValue("resource", Resource);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "type":
-            if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
-            {
-              value = Overflow["type"];
-              return true;
-            }
-            value = _TypeElement;
-            return (value as Code<Hl7.Fhir.Model.Linkage.LinkageType>) is not null;
+            value = TypeElement;
+            return TypeElement is not null;
           case "resource":
-            if (_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-            {
-              value = Overflow["resource"];
-              return true;
-            }
-            value = _Resource;
-            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+            value = Resource;
+            return Resource is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "type":
-            if (value is not (Code<Hl7.Fhir.Model.Linkage.LinkageType> or null))
-            {
-              TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.INSTANCE;
-              Overflow["type"] = value;
-            }
-            else TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>?)value!;
-            return this;
-          case "resource":
-            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-            {
-              Resource = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-              Overflow["resource"] = value;
-            }
-            else Resource = (Hl7.Fhir.Model.ResourceReference?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (_Resource is not null && !_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resource",_Resource);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
       }
 
     }
 
     /// <summary>
-    /// Whether this linkage assertion is active or not.
+    /// Whether this linkage assertion is active or not
     /// </summary>
     [FhirElement("active", InSummary=true, Order=90, FiveWs="status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
-      get
-      {
-        if(_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["active"]);
-        return _ActiveElement;
-      }
-
-      set
-      {
-        if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          Overflow.Remove("active");
-        _ActiveElement = value;
-        OnPropertyChanged("ActiveElement");
-      }
-
+      get { return _ActiveElement; }
+      set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
 
     /// <summary>
     /// Whether this linkage assertion is active or not
@@ -302,177 +264,143 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => ActiveElement?.Value;
+      get { return ActiveElement != null ? ActiveElement.Value : null; }
       set
       {
-        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
+        if (value == null)
+          ActiveElement = null;
+        else
+          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
 
     /// <summary>
-    /// Who is responsible for linkages.
+    /// Who is responsible for linkages
     /// </summary>
     [FhirElement("author", InSummary=true, Order=100, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Author
+    public Hl7.Fhir.Model.ResourceReference Author
     {
-      get
-      {
-        if(_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["author"]);
-        return _Author;
-      }
-
-      set
-      {
-        if (_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("author");
-        _Author = value;
-        OnPropertyChanged("Author");
-      }
-
+      get { return _Author; }
+      set { _Author = value; OnPropertyChanged("Author"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Author;
+    private Hl7.Fhir.Model.ResourceReference _Author;
 
     /// <summary>
-    /// Item to be linked.
+    /// Item to be linked
     /// </summary>
     [FhirElement("item", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Linkage.ItemComponent> Item
     {
-      get
-      {
-        if(_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Linkage.ItemComponent>), Overflow["item"]);
-        return _Item ??= [];
-      }
-
-      set
-      {
-        if (_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>())
-          Overflow.Remove("item");
-        _Item = value;
-        OnPropertyChanged("Item");
-      }
-
+      get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.Linkage.ItemComponent>(); return _Item; }
+      set { _Item = value; OnPropertyChanged("Item"); }
     }
 
-    private List<Hl7.Fhir.Model.Linkage.ItemComponent>? _Item;
+    private List<Hl7.Fhir.Model.Linkage.ItemComponent> _Item;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Linkage dest)
+      var dest = other as Linkage;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
-      if(_Author is not null) dest.Author = (Hl7.Fhir.Model.ResourceReference)_Author.DeepCopyInternal();
-      if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.Linkage.ItemComponent>(_Item.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
+      if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+      if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.Linkage.ItemComponent>(Item.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Linkage();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Linkage());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Linkage otherT) return false;
+      var otherT = other as Linkage;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
-      if(!comparer.Equals(_Author, otherT._Author)) return false;
-      if(!comparer.ListEquals(_Item, otherT._Item)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+      if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+      if( !DeepComparable.Matches(Item, otherT.Item)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Linkage;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
+      if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+      if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (ActiveElement != null) yield return ActiveElement;
+        if (Author != null) yield return Author;
+        foreach (var elem in Item) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+        if (Author != null) yield return new ElementValue("author", Author);
+        foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "active":
-          if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          {
-            value = Overflow["active"];
-            return true;
-          }
-          value = _ActiveElement;
-          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+          value = ActiveElement;
+          return ActiveElement is not null;
         case "author":
-          if (_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["author"];
-            return true;
-          }
-          value = _Author;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Author;
+          return Author is not null;
         case "item":
-          if (_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>())
-          {
-            value = Overflow["item"];
-            return true;
-          }
-          value = _Item;
-          return (value as List<Hl7.Fhir.Model.Linkage.ItemComponent>)?.Any() is true;
+          value = Item;
+          return Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "active":
-          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-          {
-            ActiveElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-            Overflow["active"] = value;
-          }
-          else ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-          return this;
-        case "author":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Author = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["author"] = value;
-          }
-          else Author = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "item":
-          if (value is not (List<Hl7.Fhir.Model.Linkage.ItemComponent> or null))
-          {
-            Item = OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.INSTANCE;
-            Overflow["item"] = value;
-          }
-          else Item = (List<Hl7.Fhir.Model.Linkage.ItemComponent>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ActiveElement is not null && !_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("active",_ActiveElement);
-      if (_Author is not null && !_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("author",_Author);
-      if (_Item?.Any() is true && !_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>()) yield return new KeyValuePair<string,object>("item",_Item);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

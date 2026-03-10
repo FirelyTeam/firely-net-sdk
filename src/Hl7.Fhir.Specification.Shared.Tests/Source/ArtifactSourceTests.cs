@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             using (var stream = fa.LoadArtifactByName("TestPatient.xml"))
             {
-                var pat = new FhirXmlDeserializer().Deserialize<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                var pat = new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
                 Assert.IsNotNull(pat);
             }
         }
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/firely-net-sdk/issues/875
 
         [TestMethod]
-        public void OpenDuplicateFileNames()
+        public async Tasks.Task OpenDuplicateFileNames()
         {
             var testPath = prepareExampleDirectory(out int _);
 
@@ -449,27 +449,29 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
 
-            Resource OpenStream(string filePath)
+            async Tasks.Task<Resource> OpenStream(string filePath)
             {
-                using var stream = dirSource.LoadArtifactByName(filePath);
-                return new FhirXmlDeserializer().Deserialize<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                using (var stream = dirSource.LoadArtifactByName(filePath))
+                {
+                    return await new FhirXmlParser().ParseAsync<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                }
             }
 
             // Retrieve artifacts by full path
 
             var rootFilePath = Path.Combine(testPath, srcFile);
             Assert.IsTrue(File.Exists(rootFilePath));
-            var res = OpenStream(rootFilePath);
+            var res = await OpenStream(rootFilePath);
             Assert.IsNotNull(res);
             // Modify the resource id and save back
             var dupId = res.Id;
             var rootId = Guid.NewGuid().ToString();
             res.Id = rootId;
-            _ = new FhirXmlSerializer().SerializeToString(res);
+            _ = await new FhirXmlSerializer().SerializeToStringAsync(res);
 
             var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
             Assert.IsTrue(File.Exists(dupFilePath));
-            res = OpenStream(dupFilePath);
+            res = await OpenStream(dupFilePath);
             Assert.IsNotNull(res);
             // Verify that we received the duplicate file from subfolder,
             // not the modified file in the root content directory
@@ -478,14 +480,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Retrieve artifact by file name
             // Should return nearest match, i.e. from content directory
-            res = OpenStream(srcFile);
+            res = await OpenStream(srcFile);
             Assert.IsNotNull(res);
             Assert.AreEqual(dupId, res.Id);
 
             // Retrieve artifact by relative path
             // Should return duplicate from subfolder
             var relPath = Path.Combine(subFolderName, srcFile);
-            res = OpenStream(relPath);
+            res = await OpenStream(relPath);
             Assert.IsNotNull(res);
             Assert.AreEqual(dupId, res.Id);
         }

@@ -8,122 +8,190 @@
 
 #nullable enable
 
+using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using static Hl7.Fhir.Utility.Result;
 
-namespace Hl7.Fhir.ElementModel.Types;
-
-public class String(string value) : Any, IComparable, ICqlEquatable, ICqlOrderable
+namespace Hl7.Fhir.ElementModel.Types
 {
-    public string Value { get; } = value;
-
-    public static String Parse(string value) =>
-        TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid string.");
-
-    // Actually, it's not that trivial, since CQL strings accept a subset of C#'s escape sequences,
-    // we *could* validate those here.
-    public static bool TryParse(string representation, [NotNullWhen(true)] out String? value)
+    public class String : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
     {
-        if (representation == null) throw new ArgumentNullException(nameof(representation));
+        public String() : this(string.Empty) { }
 
-        value = new String(representation);   // a bit obvious
-        return true;
-    }
+        public String(string value) => Value = value;
 
-    public override bool Equals(object? obj) => obj is Any other && Equals(other, CQL_EQUALS_COMPARISON);
-    public static bool operator ==(String a, String b) => Equals(a, b);
-    public static bool operator !=(String a, String b) => !Equals(a, b);
+        public string Value { get; }
 
-    /// <summary>
-    /// Compares two strings according to CQL equivalence rules.
-    /// </summary>
-    public bool Equals(Any other, StringComparison comparisonType)
-    {
-        if (other is not String otherS) return false;
+        public static String Parse(string value) =>
+            TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid string.");
 
-        if (comparisonType == StringComparison.Unicode)
-            return string.CompareOrdinal(Value, otherS.Value) == 0;
-
-        var l = comparisonType.HasFlag(StringComparison.NormalizeWhitespace) ? normalizeWs(Value) : Value;
-        var r = comparisonType.HasFlag(StringComparison.NormalizeWhitespace) ? normalizeWs(otherS.Value) : otherS.Value;
-
-        var compareOptions = CompareOptions.None;
-        if (comparisonType.HasFlag(StringComparison.IgnoreCase)) compareOptions |= CompareOptions.IgnoreCase;
-        if (comparisonType.HasFlag(StringComparison.IgnoreDiacritics)) compareOptions |= CompareOptions.IgnoreNonSpace;
-
-        return string.Compare(l, r, CultureInfo.InvariantCulture, compareOptions) == 0;
-    }
-
-    public const StringComparison CQL_EQUALS_COMPARISON = StringComparison.Unicode;
-    public const StringComparison CQL_EQUIVALENCE_COMPARISON = StringComparison.IgnoreCase | StringComparison.IgnoreDiacritics | StringComparison.NormalizeWhitespace;
-
-    private static string normalizeWs(string data)
-    {
-        var dataAsChars = data.ToCharArray();
-        for (var ix = 0; ix < dataAsChars.Length; ix++)
+        // Actually, it's not that trivial, since CQL strings accept a subset of C#'s escape sequences,
+        // we *could* validate those here.
+        public static bool TryParse(string representation, [NotNullWhen(true)] out String? value)
         {
-            if (char.IsWhiteSpace(dataAsChars[ix]))
-                dataAsChars[ix] = ' ';
+            if (representation == null) throw new ArgumentNullException(nameof(representation));
+
+            value = new String(representation);   // a bit obvious
+            return true;
         }
 
-        return new string(dataAsChars);
-    }
+        public override bool Equals(object? obj) => obj is Any other && Equals(other, CQL_EQUALS_COMPARISON);
+        public static bool operator ==(String a, String b) => Equals(a, b);
+        public static bool operator !=(String a, String b) => !Equals(a, b);
 
-
-    public int CompareTo(object? obj)
-    {
-        return obj switch
+        /// <summary>
+        /// Compares two strings according to CQL equivalence rules.
+        /// </summary>
+        public bool Equals(Any other, StringComparison comparisonType)
         {
-            null => 1,
-            String s => string.CompareOrdinal(Value, s.Value),
-            _ => throw NotSameTypeComparison(this, obj)
-        };
-    }
+            if (!(other is String otherS)) return false;
 
-    public static bool operator <(String a, String b) => a.CompareTo(b) < 0;
-    public static bool operator <=(String a, String b) => a.CompareTo(b) <= 0;
-    public static bool operator >(String a, String b) => a.CompareTo(b) > 0;
-    public static bool operator >=(String a, String b) => a.CompareTo(b) >= 0;
+            if (comparisonType == StringComparison.Unicode)
+                return string.CompareOrdinal(Value, otherS.Value) == 0;
 
-    public override int GetHashCode() => Value.GetHashCode();
-    public override string ToString() => Value;
+            var l = comparisonType.HasFlag(StringComparison.NormalizeWhitespace) ? normalizeWS(Value) : Value;
+            var r = comparisonType.HasFlag(StringComparison.NormalizeWhitespace) ? normalizeWS(otherS.Value) : otherS.Value;
 
-    public static implicit operator string(String s) => s.Value;
-    public static explicit operator String(string s) => new(s);
-    public static explicit operator Boolean(String s) => RunCast<Boolean>(s);
+            var compareOptions = CompareOptions.None;
+            if (comparisonType.HasFlag(StringComparison.IgnoreCase)) compareOptions |= CompareOptions.IgnoreCase;
+            if (comparisonType.HasFlag(StringComparison.IgnoreDiacritics)) compareOptions |= CompareOptions.IgnoreNonSpace;
 
-    public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
-    {
-        result = null;
+            return string.Compare(l, r, CultureInfo.InvariantCulture, compareOptions) == 0;
+        }
 
-        if(to == typeof(String))
-            result = this;
-        else if (to == typeof(Boolean))
-            result = Value.ToLower() switch
+        public const StringComparison CQL_EQUALS_COMPARISON = StringComparison.Unicode;
+        public const StringComparison CQL_EQUIVALENCE_COMPARISON = StringComparison.IgnoreCase | StringComparison.IgnoreDiacritics | StringComparison.NormalizeWhitespace;
+
+        private static string normalizeWS(string data)
+        {
+            var dataAsChars = data.ToCharArray();
+            for (var ix = 0; ix < dataAsChars.Length; ix++)
             {
-                "true" or "t" or "yes" or "y" or "1" or "1.0" => Boolean.True,
-                "false" or "f" or "no" or "n" or "0" or "0.0" => Boolean.False,
-                _ => null
-            };
-        else
-            _ = TryParseToAny(Value, to, out result);
+                if (char.IsWhiteSpace(dataAsChars[ix]))
+                    dataAsChars[ix] = ' ';
+            }
 
-        return result is not null;
+            return new string(dataAsChars);
+        }
+
+
+        public int CompareTo(object? obj)
+        {
+            return obj switch
+            {
+                null => 1,
+                String s => string.CompareOrdinal(Value, s.Value),
+                _ => throw NotSameTypeComparison(this, obj)
+            };
+        }
+
+        public static bool operator <(String a, String b) => a.CompareTo(b) < 0;
+        public static bool operator <=(String a, String b) => a.CompareTo(b) <= 0;
+        public static bool operator >(String a, String b) => a.CompareTo(b) > 0;
+        public static bool operator >=(String a, String b) => a.CompareTo(b) >= 0;
+
+        public override int GetHashCode() => Value.GetHashCode();
+        public override string ToString() => Value;
+
+        public static implicit operator string(String s) => s.Value;
+        public static explicit operator String(string s) => new String(s);
+        public static explicit operator Boolean(String s) => ((ICqlConvertible)s).TryConvertToBoolean().ValueOrThrow();
+        public static explicit operator DateTime(String s) => ((ICqlConvertible)s).TryConvertToDateTime().ValueOrThrow();
+        public static explicit operator Date(String s) => ((ICqlConvertible)s).TryConvertToDate().ValueOrThrow();
+        public static explicit operator Time(String s) => ((ICqlConvertible)s).TryConvertToTime().ValueOrThrow();
+        public static explicit operator Decimal(String s) => ((ICqlConvertible)s).TryConvertToDecimal().ValueOrThrow();
+        public static explicit operator Integer(String s) => ((ICqlConvertible)s).TryConvertToInteger().ValueOrThrow();
+        public static explicit operator Long(String s) => ((ICqlConvertible)s).TryConvertToLong().ValueOrThrow();
+        public static explicit operator Quantity(String s) => ((ICqlConvertible)s).TryConvertToQuantity().ValueOrThrow();
+
+        bool? ICqlEquatable.IsEqualTo(Any? other) => other is { } ? Equals(other, CQL_EQUALS_COMPARISON) : null;
+        bool ICqlEquatable.IsEquivalentTo(Any? other) => other is { } && Equals(other, CQL_EQUIVALENCE_COMPARISON);
+        int? ICqlOrderable.CompareTo(Any? other) => other is { } ? CompareTo(other) : null;
+
+        Result<Boolean> ICqlConvertible.TryConvertToBoolean()
+        {
+            switch (Value.ToLower())
+            {
+                case "true":
+                case "t":
+                case "yes":
+                case "y":
+                case "1":
+                case "1.0":
+                    return Ok(new Boolean(true));
+                case "false":
+                case "f":
+                case "no":
+                case "n":
+                case "0":
+                case "0.0":
+                    return Ok(new Boolean(false));
+                default:
+                    return CannotCastTo<Boolean>(this);
+            }
+        }
+
+        Result<Decimal> ICqlConvertible.TryConvertToDecimal() =>
+            Decimal.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Decimal>(this);
+
+        Result<Integer> ICqlConvertible.TryConvertToInteger() =>
+            Integer.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Integer>(this);
+
+        Result<Long> ICqlConvertible.TryConvertToLong() =>
+            Long.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Long>(this);
+
+        Result<DateTime> ICqlConvertible.TryConvertToDateTime() =>
+            DateTime.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<DateTime>(this);
+
+        Result<Date> ICqlConvertible.TryConvertToDate() =>
+            Date.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Date>(this);
+
+        Result<Time> ICqlConvertible.TryConvertToTime() =>
+            Time.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Time>(this);
+
+        Result<Quantity> ICqlConvertible.TryConvertToQuantity() =>
+            Quantity.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Quantity>(this);
+
+        Result<String> ICqlConvertible.TryConvertToString() => Ok(this);
+
+        Result<Ratio> ICqlConvertible.TryConvertToRatio() =>
+            Ratio.TryParse(Value, out var result) ? Ok(result) : CannotCastTo<Ratio>(this);
+
+        Result<Code> ICqlConvertible.TryConvertToCode() => CannotCastTo<Code>(this);
+        Result<Concept> ICqlConvertible.TryConvertToConcept() => CannotCastTo<Concept>(this);
     }
 
-    private static T convertTo<T>(String s) where T:Any =>
-        s.TryConvertTo<T>(out var result) ? result : throw new InvalidCastException($"Cannot cast String value {s} to {typeof(T).Name}.");
+    /// <summary>Specifies the comparison rules for string.</summary>
+    /// <remarks>Options are aligned with the equality and equivalence  operations for string
+    /// defined in the CQL specification. See https://cql.hl7.org/09-b-cqlreference.html#comparison-operators-4 
+    /// for more details.
+    /// </remarks>
+    [Flags]
+    public enum StringComparison
+    {
+        /// <summary>
+        /// Both strings are the same based on the Unicode values for the individual 
+        /// characters in the strings.
+        /// </summary>
+        Unicode = 0,
 
-    public static explicit operator DateTime(String s) => convertTo<DateTime>(s);
-    public static explicit operator Date(String s) => convertTo<Date>(s);
-    public static explicit operator Time(String s) => convertTo<Time>(s);
-    public static explicit operator Decimal(String s) => convertTo<Decimal>(s);
-    public static explicit operator Integer(String s) => convertTo<Integer>(s);
-    public static explicit operator Long(String s) => convertTo<Long>(s);
-    public static explicit operator Quantity(String s) => convertTo<Quantity>(s);
+        /// <summary>
+        /// Ignore casing when comparing strings
+        /// </summary>
+        IgnoreCase = 1,
 
-    bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null ? Equals(other, CQL_EQUALS_COMPARISON) : null;
-    bool ICqlEquatable.IsEquivalentTo(Any? other) => other is not null && Equals(other, CQL_EQUIVALENCE_COMPARISON);
-    int? ICqlOrderable.CompareTo(Any? other) => other is not null ? CompareTo(other) : null;
+        /// <summary>
+        /// All whitespace characters are treated as equivalent.
+        /// </summary>
+        NormalizeWhitespace = 2,
+
+        /// <summary>
+        /// Ignore all Unicode non-spacing characters when comparing string
+        /// </summary>
+        IgnoreDiacritics = 4
+    }
 }
+
+

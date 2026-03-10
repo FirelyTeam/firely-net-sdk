@@ -30,89 +30,129 @@
 using System;
 using System.Linq;
 
-#nullable enable
-
-namespace Hl7.Fhir.Model;
-
-public partial class SearchParameter : IVersionableConformanceResource;
-
-public partial class OperationDefinition : IVersionableConformanceResource;
-
-public partial class MessageDefinition : IVersionableConformanceResource;
-
-public partial class ImplementationGuide : IVersionableConformanceResource
+namespace Hl7.Fhir.Model
 {
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? PurposeElement
+    public partial class SearchParameter : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public string? Purpose
+    public partial class OperationDefinition : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-}
 
-public partial class CompartmentDefinition : IVersionableConformanceResource;
-public partial class StructureMap : IVersionableConformanceResource;
-public partial class GraphDefinition : IVersionableConformanceResource;
-public partial class ConceptMap : IVersionableConformanceResource;
-public partial class TestScript : IVersionableConformanceResource;
-public partial class Questionnaire : IVersionableConformanceResource;
-public partial class TerminologyCapabilities : IVersionableConformanceResource;
-public partial class Library : IVersionableConformanceResource;
-
-public partial class NamingSystem : IConformanceResource
-{
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? PurposeElement
-    {
-        get => null;
-        set => throw new NotImplementedException();
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public bool? Experimental
+    public partial class MessageDefinition : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public FhirBoolean? ExperimentalElement
+    public partial class ImplementationGuide : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
-    /// </summary>
-    public string? Url
-    {
-        get
+        //I think ImplementationGuide should have a purpose element.
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        public Markdown PurposeElement
         {
-            var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
-            return preferred ?? UniqueId.FirstOrDefault()?.Value;
+            get { return null; }
+            set { throw new NotImplementedException(); }
         }
 
-        set => throw new NotImplementedException();
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
-    public FhirUri? UrlElement
+    public partial class CompartmentDefinition : IVersionableConformanceResource
     {
-        get => Url != null ? new FhirUri(Url) : null;
-        set => throw new NotImplementedException();
+
+    }
+    public partial class StructureMap : IVersionableConformanceResource
+    {
+
+    }
+    public partial class GraphDefinition : IVersionableConformanceResource
+    {
+
+    }
+    public partial class ConceptMap : IVersionableConformanceResource
+    {
+
+    }
+    public partial class TestScript : IVersionableConformanceResource
+    {
+
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public string? Purpose
+
+    //public partial class ExpansionProfile : IVersionableConformanceResource
+    //{
+    //    public Markdown Purpose
+    //    {
+    //        get { return null; }
+    //        set { throw new NotImplementedException(); }
+    //    }
+    //}
+
+    public partial class Questionnaire : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
+    }
+
+    public partial class TerminologyCapabilities : IVersionableConformanceResource
+    {
+
+    }
+    
+    public partial class Library : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class NamingSystem : IConformanceResource
+    {
+        // I think NamingSystem should have Experimental too
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        public Markdown PurposeElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public bool? Experimental
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public FhirBoolean ExperimentalElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
+        /// </summary>
+        public string Url
+        {
+            get
+            {
+                var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
+                return preferred ?? UniqueId.FirstOrDefault()?.Value;
+            }
+            set { throw new NotImplementedException(); }
+        }
+
+        public FhirUri UrlElement
+        {
+            get
+            {
+                if (Url != null)
+                    return new FhirUri(Url);
+                else
+                    return null;
+            }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 }

@@ -31,7 +31,14 @@
 #nullable enable
 
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
+using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
@@ -39,7 +46,8 @@ namespace Hl7.Fhir.Model;
 /// Optional Extensions Element
 /// </summary>
 [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_url}}")]
-public partial class Extension : ICoded
+[Bindable(true)]
+public partial class Extension
 {
     public Extension()
     {
@@ -50,10 +58,4 @@ public partial class Extension : ICoded
         this.Url = url;
         this.Value = value;
     }
-
-    public IReadOnlyCollection<Coding> ToCodings() => Value switch
-    {
-        ICoded coded => coded.ToCodings(),
-        _ => []
-    };
 }

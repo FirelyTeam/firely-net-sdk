@@ -5,35 +5,35 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
-#nullable enable
 
 using System;
 
-namespace Hl7.Fhir.Utility;
-
-public interface IAnnotatable : IAnnotated
+namespace Hl7.Fhir.Utility
 {
-    void AddAnnotation(object annotation);
-
-    void RemoveAnnotations(Type type);
-}
-
-public static class AnnotatableExtensions
-{
-    public static void RemoveAnnotations<T>(this IAnnotatable annotatable)
+    public interface IAnnotatable
     {
-        annotatable.RemoveAnnotations(typeof(T));
+        void AddAnnotation(object annotation);
+
+        void RemoveAnnotations(Type type);
     }
 
-    private static readonly object _lock = new();
-
-    public static void SetAnnotation<A>(this IAnnotatable annotatable, A annotation)
+    public static class AnnotatableExtensions
     {
-        lock (_lock)
+        public static void RemoveAnnotations<A>(this IAnnotatable annotatable)
         {
-            annotatable.RemoveAnnotations<A>();
-            if (annotation != null)
-                annotatable.AddAnnotation(annotation);
+            annotatable.RemoveAnnotations(typeof(A));
+        }
+
+        private static readonly object _lock = new object();
+
+        public static void SetAnnotation<A>(this IAnnotatable annotatable, A annotation)
+        {
+            lock (_lock)
+            {
+                annotatable.RemoveAnnotations<A>();
+                if (annotation != null)
+                    annotatable.AddAnnotation(annotation);
+            }
         }
     }
 }

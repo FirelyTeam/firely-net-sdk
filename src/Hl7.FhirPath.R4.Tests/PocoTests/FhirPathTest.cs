@@ -11,23 +11,21 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
-using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Dataflow;
 using Vonk.FhirPath.R4.Tests;
 using P = Hl7.Fhir.ElementModel.Types;
 using ScopedNode = Hl7.Fhir.ElementModel.ScopedNode;
 
-namespace Hl7.Fhir.FhirPath.R4.Tests
+namespace Hl7.FhirPath.R4.Tests
 {
     [TestClass]
     public class FhirPathTest
@@ -63,7 +61,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<PocoNode> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
@@ -81,7 +79,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.IsTrue(traced);
 
             traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<PocoNode> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");
@@ -142,9 +140,9 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public void TestImplicitQuantityCast()
         {
             var obs = new Observation { Value = new Hl7.Fhir.Model.Quantity(75m, "kg") };
-            Assert.IsTrue(obs.Predicate("Observation.value > 74 'kg'"));
-            Assert.IsTrue(obs.Predicate("Observation.value = 75 'kg'"));
-            Assert.IsTrue(obs.Predicate("Observation.value ~ 75 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value > 74 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value = 75 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value ~ 75 'kg'"));
         }
 
         [TestMethod]
@@ -416,52 +414,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             result.Should().ContainSingle().Subject
                 .Should().BeOfType<Observation.ComponentComponent>()
-                .Subject.Code.IsExactly(new CodeableConcept("http://loinc.org", "2708-6")).Should().BeTrue();
-        }
-        
-                
-        [TestMethod]
-        public void PersistRootOfTypedElement_PocoBase()
-        {
-            var res = SourceNode.Resource("Bundle", "Bundle",
-            SourceNode.Node("link", 
-            SourceNode.Valued("url", "test")
-            )
-            );
-            
-            var expr = ((ITypedElement)res.ToPoco(ModelInspector.Base).ToPocoNode()).Children("link").First();
-            var loc = expr.Select("url").Select(x => x.Location).Single();
-            loc.Should().Be("Bundle.link[0].url[0]");
-        }
-        
-        [TestMethod]
-        public void PersistRootOfTypedElement_NoTypeInfo()
-        {
-            var res = SourceNode.Resource("Bundle", "Bundle",
-            SourceNode.Node("link", 
-            SourceNode.Valued("url", "test")
-            )
-            );
-            
- #pragma warning disable CS0618 // Type or member is obsolete
-            var expr = res.ToTypedElementLegacy().Children("link").First();
- #pragma warning restore CS0618 // Type or member is obsolete
-            var loc = expr.Select("url").Select(x => x.Location).Single();
-            loc.Should().Be("Bundle.link[0].url[0]");
-        }
-        
-        [TestMethod]
-        public void PersistRootOfTypedElement_StructuredInformationProvider()
-        {
-            var res = SourceNode.Resource("Bundle", "Bundle",
-            SourceNode.Node("link", 
-            SourceNode.Valued("url", "test")
-            )
-            );
-
-            var expr = res.ToTypedElement(ModelInspector.Base).Children("link").First();
-            var loc = expr.Select("url").Select(x => x.Location).Single();
-            loc.Should().Be("Bundle.link[0].url[0]");
+                .Subject.Code.Should().BeEquivalentTo(new CodeableConcept("http://loinc.org", "2708-6"));
         }
     }
 }

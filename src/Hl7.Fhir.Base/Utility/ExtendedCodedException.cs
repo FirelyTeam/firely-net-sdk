@@ -24,7 +24,6 @@ namespace Hl7.Fhir.Utility
         public ExtendedCodedException(
             string errorCode,
             string baseMessage,
-            string? display,
             string? instancePath,
             long? lineNumber,
             long? position,
@@ -36,7 +35,6 @@ namespace Hl7.Fhir.Utility
             IssueSeverity = issueSeverity;
             IssueType = issueType;
             BaseErrorMessage = baseMessage;
-            Display = display;
             InstancePath = instancePath;
             LineNumber = lineNumber;
             Position = position;
@@ -45,19 +43,11 @@ namespace Hl7.Fhir.Utility
 
         private static string formatLocationMessage(string baseMessage, string? instancePath, long? lineNumber, long? position)
         {
-            string? location = null;
+            string location = $"At line {lineNumber}, position {position}";
             if (!string.IsNullOrEmpty(instancePath))
-                location = $" At {instancePath}";
-            
-            if (lineNumber is not null && position is not null)
-            {
-                if(location is null)
-                    location = $" At line {lineNumber}, position {position}";
-                else
-                    location += $", line {lineNumber}, position {position}";
-            }
-
-            return location is not null ? $"{baseMessage}{location}." : baseMessage;
+                location = $"At {instancePath}, line {lineNumber}, position {position}";
+            var messageWithLocation = $"{baseMessage} {location}";
+            return messageWithLocation;
         }
 
         /// <summary>
@@ -77,12 +67,7 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// The error message without any location information appended to it (which is in Exception.Message property).
         /// </summary>
-        public string BaseErrorMessage { get; private set; }
-
-        /// <summary>
-        /// A short display string for the error, suitable for use in a user interface.
-        /// </summary>
-        public string? Display { get; private set; }
+        public string? BaseErrorMessage { get; private set; }
 
         /// <summary>
         /// The line number of the error in the original source data.

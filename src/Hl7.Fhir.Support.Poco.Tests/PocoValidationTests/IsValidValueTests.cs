@@ -26,6 +26,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             t(Date.IsValidValue("2020-02-03"));
             f(Date.IsValidValue("2020-02-03+03:00"));
 
+            t(FhirBoolean.IsValidValue("true"));
+            f(FhirBoolean.IsValidValue("True"));
+
             t(FhirDateTime.IsValidValue("2020"));
             f(FhirDateTime.IsValidValue("2020+01:00"));
             t(FhirDateTime.IsValidValue("2020-01-01T14+01:00"));
@@ -48,6 +51,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
             // Integer's test are exactly covered by System's Integer.TryParse
             // Integer64's test are exactly covered by System's Integer.TryParse
 
+            t(PositiveInt.IsValidValue("4"));
+            f(PositiveInt.IsValidValue("0"));
+            f(PositiveInt.IsValidValue("-1"));
+
+            t(UnsignedInt.IsValidValue("4"));
+            t(UnsignedInt.IsValidValue("0"));
+            f(UnsignedInt.IsValidValue("-1"));
+
             t(Time.IsValidValue("12:03:04"));
             f(Time.IsValidValue("12:03:04-01:00"));
         }
@@ -61,14 +72,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
             t(XHtml.IsValidXml("<hi>hi!</hi>", out _));
             f(XHtml.IsValidXml("<hi>hi!<hi>", out _));
             f(XHtml.IsValidXml("hi!", out _));
-            f(XHtml.IsValidNarrativeXhtml("hi!", out _, out _));
-            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _, out _));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
-            f(XHtml.IsValidNarrativeXhtml("hi!", out _, out _));
-            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _, out _));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
+            f(XHtml.IsValidNarrativeXhtml("hi!", out _));
+            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _));
+            f(XHtml.IsValidNarrativeXhtml("hi!"));
+            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>"));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
         }
 
         public static IEnumerable<object[]> ValidUris => cases(

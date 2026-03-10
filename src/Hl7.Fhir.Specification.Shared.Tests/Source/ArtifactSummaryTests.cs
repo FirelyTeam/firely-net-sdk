@@ -381,8 +381,8 @@ namespace Hl7.Fhir.Specification.Tests
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        var parser = new FhirXmlDeserializer();
-                        var corePatient = nav.ToPoco<StructureDefinition>();
+                        var parser = new FhirXmlParser();
+                        var corePatient = parser.Parse<StructureDefinition>(nav);
                         Assert.IsNotNull(corePatient);
                         Assert.AreEqual(corePatientUrl, corePatient.Url);
                     }

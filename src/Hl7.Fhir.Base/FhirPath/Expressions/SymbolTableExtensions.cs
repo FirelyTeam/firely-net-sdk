@@ -9,7 +9,6 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using System;
 
 namespace Hl7.FhirPath.Expressions;
@@ -66,10 +65,10 @@ public static class SymbolTableExtensions
 
     public static void AddVar(this SymbolTable table, string name, object value)
     {
-        table.AddVar(name, PocoNode.ForAnyPrimitive(value));
+        table.AddVar(name, ElementNode.ForPrimitive(value));
     }
 
-    public static void AddVar(this SymbolTable table, string name, PocoNode value)
+    public static void AddVar(this SymbolTable table, string name, ITypedElement value)
     {
         table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
     }

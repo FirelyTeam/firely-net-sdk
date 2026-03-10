@@ -11,7 +11,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
-using System;
 
 namespace Hl7.Fhir.Rest
 {
@@ -94,10 +93,9 @@ namespace Hl7.Fhir.Rest
                 var name = parameter.Name;
                 var value = parameter.Value;
 
-                if (value is PrimitiveType)
+                if (value != null && value is PrimitiveType)
                 {
-                    result.Add(parameter.Name ?? throw new ArgumentException("Parameters should have a name.", nameof(parameters)),
-                        PrimitiveTypeConverter.ConvertTo<string>(value));
+                    result.Add(parameter.Name, PrimitiveTypeConverter.ConvertTo<string>(value));
                 }
                 else
                     if (value == null) throw Error.NotSupported("Can only convert primitive parameters to Uri parameters");

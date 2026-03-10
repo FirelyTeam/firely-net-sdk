@@ -233,6 +233,37 @@ namespace Hl7.Fhir.Rest
         Lenient
     }
 
+    [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
+    public enum Prefer
+    {
+        /// <summary>
+        /// Prefer to receive the full resource in the body after completion of the interaction
+        /// </summary>
+        [EnumLiteral("representation")]
+        ReturnRepresentation,
+
+        /// <summary>
+        /// Prefer to not a receive a body after completion of the interaction
+        /// </summary>
+        [EnumLiteral("minimal")]
+        ReturnMinimal,
+
+        /// <summary>
+        /// Prefer to receive an OperationOutcome resource containing hints and warnings about the 
+        /// operation rather than the full resource
+        /// </summary>
+        [EnumLiteral("OperationOutcome")]
+        OperationOutcome,
+
+        /// <summary>
+        /// Prefer to run the operation as an asynchronous request
+        /// (http://hl7.org/fhir/r4/async.html)
+        /// - This may also be applicable in prior versions (though not part of that stamdard)
+        /// </summary>
+        [EnumLiteral("respond-async")]
+        RespondAsync
+    }
+
     public enum ReturnPreference
     {
         /// <summary>

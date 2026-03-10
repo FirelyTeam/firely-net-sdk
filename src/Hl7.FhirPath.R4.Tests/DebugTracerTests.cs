@@ -11,7 +11,6 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
-using Hl7.Fhir.FhirPath.R4.Tests;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.R4.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,10 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.ExceptionServices;
-using BaseExtensions = Hl7.Fhir.Model.BaseExtensions;
-using PocoNode = Hl7.Fhir.Model.PocoNode;
-using PocoNodeExtensions = Hl7.Fhir.Model.PocoNodeExtensions;
-using PrimitiveNode = Hl7.Fhir.Model.PrimitiveNode;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -61,12 +56,12 @@ namespace Hl7.FhirPath.Tests
             public void TraceCall(
                 Expression expr,
                 int contextId,
-                IEnumerable<PocoNode> focus,
-                IEnumerable<PocoNode> thisValue,
-                PocoNode index,
-                IEnumerable<PocoNode> totalValue,
-                IEnumerable<PocoNode> result,
-                IEnumerable<KeyValuePair<string, IEnumerable<PocoNode>>> variables)
+                IEnumerable<ITypedElement> focus,
+                IEnumerable<ITypedElement> thisValue,
+                ITypedElement index,
+                IEnumerable<ITypedElement> totalValue,
+                IEnumerable<ITypedElement> result,
+                IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables)
             {
                 // DiagnosticsDebugTracer.DebugTraceCall(expr, contextId, focus, thisValue, index, totalValue, result, variables);
 
@@ -94,11 +89,11 @@ namespace Hl7.FhirPath.Tests
             }
 
             public delegate void TraceNodeDelegate(int n, Expression expr, int contextId,
-                IEnumerable<PocoNode> focus,
-                IEnumerable<PocoNode> thisValue,
-                PocoNode index,
-                IEnumerable<PocoNode> totalValue,
-                IEnumerable<PocoNode> result);
+                IEnumerable<ITypedElement> focus,
+                IEnumerable<ITypedElement> thisValue,
+                ITypedElement index,
+                IEnumerable<ITypedElement> totalValue,
+                IEnumerable<ITypedElement> result);
             public TraceNodeDelegate TraceNode { get; set; } = null;
 
             public string TraceExpressionNodeName(Expression expr)
@@ -145,12 +140,15 @@ namespace Hl7.FhirPath.Tests
                 }
             }
 
-            public string DebugTraceValue(PocoNode item)
+            public string DebugTraceValue(ITypedElement? item)
             {
                 if (item == null)
                     return null; // possible with a null focus to kick things off
 
-                return $"{PocoNodeExtensions.GetValue(item)}\t({item.Poco.TypeName})\t{PocoNodeExtensions.GetLocation(item)}";
+                if (item.Location == "@primitivevalue@" || item.Location == "@QuantityAsPrimitiveValue@")
+                    return $"{item.Value}\t({item.InstanceType})";
+
+                return $"{item.Value}\t({item.InstanceType})\t{item.Location}";
             }
         }
 
@@ -158,7 +156,7 @@ namespace Hl7.FhirPath.Tests
         public void testDebugTrace_PropertyWalking()
         {
             var expression = "Patient.birthDate.toString().substring(0, 4)";
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {
@@ -172,25 +170,25 @@ namespace Hl7.FhirPath.Tests
                 {
                     // toString
                     Assert.AreEqual("1974-12-25\t(date)\tPatient.birthDate[0]", vFocus);
-                    Assert.AreEqual("1974-12-25\t(System.String)\tSystem.String", vResult);
+                    Assert.AreEqual("1974-12-25\t(System.String)", vResult);
                 }
                 if (n == 3)
                 {
                     // constant 0
                     Assert.AreEqual("\t(Patient)\tPatient", vFocus);
-                    Assert.AreEqual("0\t(System.Integer)\tSystem.Integer", vResult);
+                    Assert.AreEqual("0\t(System.Integer)", vResult);
                 }
                 if (n == 4)
                 {
                     // constant 4
                     Assert.AreEqual("\t(Patient)\tPatient", vFocus);
-                    Assert.AreEqual("4\t(System.Integer)\tSystem.Integer", vResult);
+                    Assert.AreEqual("4\t(System.Integer)", vResult);
                 }
                 if (n == 5)
                 {
                     // substring
-                    Assert.AreEqual("1974-12-25\t(System.String)\tSystem.String", vFocus);
-                    Assert.AreEqual("1974\t(System.String)\tSystem.String", vResult);
+                    Assert.AreEqual("1974-12-25\t(System.String)", vFocus);
+                    Assert.AreEqual("1974\t(System.String)", vResult);
                 }
             };
             var expr = compiler.Compile(expression, true);
@@ -217,7 +215,7 @@ namespace Hl7.FhirPath.Tests
         public void testDebugTrace_PropertyAndFunctionCalls()
         {
             var expression = "Patient.id.indexOf('am')";
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {
@@ -230,13 +228,13 @@ namespace Hl7.FhirPath.Tests
                 {
                     // the context and results of the constant 'am' call
                     Assert.AreEqual("\t(Patient)\tPatient", vFocus);
-                    Assert.AreEqual("am\t(System.String)\tSystem.String", vResult);
+                    Assert.AreEqual("am\t(System.String)", vResult);
                 }
                 if (n == 3)
                 {
                     // the context and results of indexOf call
                     Assert.AreEqual("example\t(id)\tPatient.id[0]", vFocus);
-                    Assert.AreEqual("2\t(integer)\tinteger", vResult);
+                    Assert.AreEqual("2\t(System.Integer)", vResult);
                 }
             };
             var expr = compiler.Compile(expression, true);
@@ -261,7 +259,7 @@ namespace Hl7.FhirPath.Tests
         public void testDebugTrace_Aggregate()
         {
             var expression = "(1|2).aggregate($total+$this, 0)";
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {
@@ -316,7 +314,7 @@ namespace Hl7.FhirPath.Tests
         public void testDebugTrace_Operator()
         {
             var expression = "Patient.id.toString() = Patient.id";
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {
@@ -329,7 +327,7 @@ namespace Hl7.FhirPath.Tests
                     // the context and results of toString call
                     var vResult = tracer.DebugTraceValue(result?.FirstOrDefault());
                     Assert.AreEqual("example\t(id)\tPatient.id[0]", vFocus);
-                    Assert.AreEqual("example\t(System.String)\tSystem.String", vResult);
+                    Assert.AreEqual("example\t(System.String)", vResult);
                 }
             };
 
@@ -360,7 +358,7 @@ namespace Hl7.FhirPath.Tests
         {
             var expression = "name.where(use='official' or use='usual').given";
 
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {
@@ -368,7 +366,7 @@ namespace Hl7.FhirPath.Tests
                 var vThis = tracer.DebugTraceValue(thisValue?.FirstOrDefault());
                 var vFocus = tracer.DebugTraceValue(focus?.FirstOrDefault());
                 var vResult = tracer.DebugTraceValue(result?.FirstOrDefault());
-                var vIndex= PocoNodeExtensions.GetValue(index);
+                var vIndex= index?.Value;
                 if (n == 0)
                 {
                     // name
@@ -414,13 +412,13 @@ namespace Hl7.FhirPath.Tests
             tracer.DumpDiagnostics();
 
             Assert.AreEqual(3, results.Count());
-            Assert.AreEqual("Peter", PocoNodeExtensions.GetValue(results[0])?.ToString());
-            Assert.AreEqual("James", PocoNodeExtensions.GetValue(results[1])?.ToString());
-            Assert.AreEqual("Jim", PocoNodeExtensions.GetValue(results[2])?.ToString());
+            Assert.AreEqual("Peter", results[0].Value.ToString());
+            Assert.AreEqual("James", results[1].Value.ToString());
+            Assert.AreEqual("Jim", results[2].Value.ToString());
 
-            Assert.AreEqual("Patient.name[0].given[0]", PocoNodeExtensions.GetLocation(results[0]));
-            Assert.AreEqual("Patient.name[0].given[1]", PocoNodeExtensions.GetLocation(results[1]));
-            Assert.AreEqual("Patient.name[1].given[0]", PocoNodeExtensions.GetLocation(results[2]));
+            Assert.AreEqual("Patient.name[0].given[0]", results[0].Location);
+            Assert.AreEqual("Patient.name[0].given[1]", results[1].Location);
+            Assert.AreEqual("Patient.name[1].given[0]", results[2].Location);
 
             Assert.AreEqual(14, tracer.traceOutput.Count());
             Assert.AreEqual("0,4,name: focus=1 result=2", tracer.traceOutput[0]);
@@ -447,7 +445,7 @@ namespace Hl7.FhirPath.Tests
         {
             var expression = "'42'";
 
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {
@@ -473,7 +471,7 @@ namespace Hl7.FhirPath.Tests
         {
             var expression = "id='official' or id='example'";
 
-            var input = BaseExtensions.ToPocoNode(fixture.PatientExample);
+            var input = fixture.PatientExample.ToTypedElement().ToScopedNode();
             var tracer = new TestDebugTracer();
             tracer.TraceNode = (n, expr, contextId, focus, thisValue, index, totalValue, result) =>
             {

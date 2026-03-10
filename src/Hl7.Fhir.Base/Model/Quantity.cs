@@ -1,73 +1,53 @@
 ﻿/*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
-
-  Redistribution and use in source and binary forms, with or without modification,
+  
+  Redistribution and use in source and binary forms, with or without modification, 
   are permitted provided that the following conditions are met:
-
-   * Redistributions of source code must retain the above copyright notice, this
+  
+   * Redistributions of source code must retain the above copyright notice, this 
      list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice,
-     this list of conditions and the following disclaimer in the documentation
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
      and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to
-     endorse or promote products derived from this software without specific
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
      prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-
+  
 
 */
 
-#nullable enable
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 using P = Hl7.Fhir.ElementModel.Types;
 
-namespace Hl7.Fhir.Model;
-
-public partial class Quantity : ICoded, P.IToSystemPrimitive
+namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Converts this Quantity to a <see cref="P.Quantity" />.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">The Value of this Quantity is null
-    /// or the Comparator is not null, which is not valid for System strings.</exception>
-    public P.Quantity ToSystemQuantity()
+    [Bindable(true)]
+    public partial class Quantity
     {
-        var (v, e) = tryConvertToSystemTypeInternal();
-        return v! ?? throw e!;
+        public P.Quantity ToQuantity()
+        {
+            if (Value != null)
+            {
+                if (Comparator != null)
+                    throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
+
+                return new P.Quantity(Value.Value, Code);
+            }
+            else
+                return null;
+        }
     }
-
-    private (P.Quantity? v, Exception? e) tryConvertToSystemTypeInternal()
-    {
-        if (Value is null)
-            return (null, new InvalidOperationException("Cannot convert a Quantity without a value to a FhirPath Quantity."));
-
-        if (Comparator is not null)
-            return (null, new InvalidOperationException("Cannot convert a Quantity with a comparator to a FhirPath Quantity."));
-
-        return (new P.Quantity(Value.Value, Code), null);
-    }
-
-    bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
-    {
-        var (v, e) = tryConvertToSystemTypeInternal();
-        result = v;
-        return e is null;
-    }
-
-    /// <inheritdoc cref="ICoded.ToCodings"/>
-    public IReadOnlyCollection<Coding> ToCodings() => [new(System, Code)];
 }

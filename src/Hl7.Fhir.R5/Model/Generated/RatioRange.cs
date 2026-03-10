@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,193 +58,144 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "RatioRange";
+    public override string TypeName { get { return "RatioRange"; } }
 
     /// <summary>
-    /// Low Numerator limit.
+    /// Low Numerator limit
     /// </summary>
     [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? LowNumerator
+    public Hl7.Fhir.Model.Quantity LowNumerator
     {
-      get
-      {
-        if(_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["lowNumerator"]);
-        return _LowNumerator;
-      }
-
-      set
-      {
-        if (_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          Overflow.Remove("lowNumerator");
-        _LowNumerator = value;
-        OnPropertyChanged("LowNumerator");
-      }
-
+      get { return _LowNumerator; }
+      set { _LowNumerator = value; OnPropertyChanged("LowNumerator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity? _LowNumerator;
+    private Hl7.Fhir.Model.Quantity _LowNumerator;
 
     /// <summary>
-    /// High Numerator limit.
+    /// High Numerator limit
     /// </summary>
     [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? HighNumerator
+    public Hl7.Fhir.Model.Quantity HighNumerator
     {
-      get
-      {
-        if(_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["highNumerator"]);
-        return _HighNumerator;
-      }
-
-      set
-      {
-        if (_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          Overflow.Remove("highNumerator");
-        _HighNumerator = value;
-        OnPropertyChanged("HighNumerator");
-      }
-
+      get { return _HighNumerator; }
+      set { _HighNumerator = value; OnPropertyChanged("HighNumerator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity? _HighNumerator;
+    private Hl7.Fhir.Model.Quantity _HighNumerator;
 
     /// <summary>
-    /// Denominator value.
+    /// Denominator value
     /// </summary>
     [FhirElement("denominator", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Denominator
+    public Hl7.Fhir.Model.Quantity Denominator
     {
-      get
-      {
-        if(_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["denominator"]);
-        return _Denominator;
-      }
-
-      set
-      {
-        if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          Overflow.Remove("denominator");
-        _Denominator = value;
-        OnPropertyChanged("Denominator");
-      }
-
+      get { return _Denominator; }
+      set { _Denominator = value; OnPropertyChanged("Denominator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity? _Denominator;
+    private Hl7.Fhir.Model.Quantity _Denominator;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not RatioRange dest)
+      var dest = other as RatioRange;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_LowNumerator is not null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)_LowNumerator.DeepCopyInternal();
-      if(_HighNumerator is not null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)_HighNumerator.DeepCopyInternal();
-      if(_Denominator is not null) dest.Denominator = (Hl7.Fhir.Model.Quantity)_Denominator.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(LowNumerator != null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)LowNumerator.DeepCopy();
+      if(HighNumerator != null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)HighNumerator.DeepCopy();
+      if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new RatioRange();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new RatioRange());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not RatioRange otherT) return false;
+      var otherT = other as RatioRange;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_LowNumerator, otherT._LowNumerator)) return false;
-      if(!comparer.Equals(_HighNumerator, otherT._HighNumerator)) return false;
-      if(!comparer.Equals(_Denominator, otherT._Denominator)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(LowNumerator, otherT.LowNumerator)) return false;
+      if( !DeepComparable.Matches(HighNumerator, otherT.HighNumerator)) return false;
+      if( !DeepComparable.Matches(Denominator, otherT.Denominator)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as RatioRange;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(LowNumerator, otherT.LowNumerator)) return false;
+      if( !DeepComparable.IsExactly(HighNumerator, otherT.HighNumerator)) return false;
+      if( !DeepComparable.IsExactly(Denominator, otherT.Denominator)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (LowNumerator != null) yield return LowNumerator;
+        if (HighNumerator != null) yield return HighNumerator;
+        if (Denominator != null) yield return Denominator;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (LowNumerator != null) yield return new ElementValue("lowNumerator", LowNumerator);
+        if (HighNumerator != null) yield return new ElementValue("highNumerator", HighNumerator);
+        if (Denominator != null) yield return new ElementValue("denominator", Denominator);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "lowNumerator":
-          if (_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          {
-            value = Overflow["lowNumerator"];
-            return true;
-          }
-          value = _LowNumerator;
-          return (value as Hl7.Fhir.Model.Quantity) is not null;
+          value = LowNumerator;
+          return LowNumerator is not null;
         case "highNumerator":
-          if (_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          {
-            value = Overflow["highNumerator"];
-            return true;
-          }
-          value = _HighNumerator;
-          return (value as Hl7.Fhir.Model.Quantity) is not null;
+          value = HighNumerator;
+          return HighNumerator is not null;
         case "denominator":
-          if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
-          {
-            value = Overflow["denominator"];
-            return true;
-          }
-          value = _Denominator;
-          return (value as Hl7.Fhir.Model.Quantity) is not null;
+          value = Denominator;
+          return Denominator is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "lowNumerator":
-          if (value is not (Hl7.Fhir.Model.Quantity or null))
-          {
-            LowNumerator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
-            Overflow["lowNumerator"] = value;
-          }
-          else LowNumerator = (Hl7.Fhir.Model.Quantity?)value;
-          return this;
-        case "highNumerator":
-          if (value is not (Hl7.Fhir.Model.Quantity or null))
-          {
-            HighNumerator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
-            Overflow["highNumerator"] = value;
-          }
-          else HighNumerator = (Hl7.Fhir.Model.Quantity?)value;
-          return this;
-        case "denominator":
-          if (value is not (Hl7.Fhir.Model.Quantity or null))
-          {
-            Denominator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
-            Overflow["denominator"] = value;
-          }
-          else Denominator = (Hl7.Fhir.Model.Quantity?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_LowNumerator is not null && !_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("lowNumerator",_LowNumerator);
-      if (_HighNumerator is not null && !_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("highNumerator",_HighNumerator);
-      if (_Denominator is not null && !_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("denominator",_Denominator);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (LowNumerator is not null) yield return new KeyValuePair<string,object>("lowNumerator",LowNumerator);
+      if (HighNumerator is not null) yield return new KeyValuePair<string,object>("highNumerator",HighNumerator);
+      if (Denominator is not null) yield return new KeyValuePair<string,object>("denominator",Denominator);
     }
 
   }

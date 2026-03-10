@@ -9,8 +9,6 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -69,17 +67,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = Typecasts.ParseQuantity(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = Typecasts.ParseQuantity(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -116,6 +106,7 @@ namespace Hl7.FhirPath.Functions
 
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
         }
+
 
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {
@@ -167,17 +158,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = Typecasts.ParseQuantity(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = Typecasts.ParseQuantity(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -224,7 +207,7 @@ namespace Hl7.FhirPath.Functions
 
 
 
-        public static bool? Compare(P.Any? left, P.Any? right, string op)
+        public static bool? Compare(P.Any left, P.Any right, string op)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
             // (though we might handle this more generally with the null-propagating functionality of the compiler
@@ -322,7 +305,7 @@ namespace Hl7.FhirPath.Functions
                 if (y is null) return 1;
                 if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
                 {
-                    if (x is OrderedNode opn && opn.Descending)
+                    if (x is OrderedValue ov && ov.Descending)
                         return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
                     return EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
                 }

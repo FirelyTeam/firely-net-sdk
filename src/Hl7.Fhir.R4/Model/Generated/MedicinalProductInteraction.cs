@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,29 +51,30 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductInteraction","http://hl7.org/fhir/StructureDefinition/MedicinalProductInteraction")]
+  [FhirType("MedicinalProductInteraction","http://hl7.org/fhir/StructureDefinition/MedicinalProductInteraction", IsResource=true)]
   public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "MedicinalProductInteraction";
+    public override string TypeName { get { return "MedicinalProductInteraction"; } }
 
     /// <summary>
     /// The specific medication, food or laboratory test that interacts
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("MedicinalProductInteraction.interactant", IsBackboneType=true)]
+    [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
+    [BackboneType("MedicinalProductInteraction.interactant")]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "MedicinalProductInteraction.interactant";
+      public override string TypeName { get { return "MedicinalProductInteraction#Interactant"; } }
 
       /// <summary>
-      /// The specific medication, food or laboratory test that interacts.
+      /// The specific medication, food or laboratory test that interacts
       /// </summary>
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
@@ -87,484 +84,341 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.DataType Item
       {
-        get
-        {
-          if(_Item.InOverflow<DynamicDataType>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["item"]);
-          return _Item!;
-        }
-
-        set
-        {
-          if (_Item.InOverflow<DynamicDataType>())
-            Overflow.Remove("item");
-          _Item = value;
-          OnPropertyChanged("Item");
-        }
-
+        get { return _Item; }
+        set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType? _Item;
+      private Hl7.Fhir.Model.DataType _Item;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not InteractantComponent dest)
+        var dest = other as InteractantComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new InteractantComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new InteractantComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not InteractantComponent otherT) return false;
+        var otherT = other as InteractantComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Item, otherT._Item)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Item, otherT.Item)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as InteractantComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Item != null) yield return Item;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Item != null) yield return new ElementValue("item", Item);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "item":
-            if (_Item.InOverflow<DynamicDataType>())
-            {
-              value = Overflow["item"];
-              return true;
-            }
-            value = _Item;
-            return (value as Hl7.Fhir.Model.DataType) is not null;
+            value = Item;
+            return Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "item":
-            if (value is not (Hl7.Fhir.Model.DataType or null))
-            {
-              Item = OverflowNull<DynamicDataType>.INSTANCE;
-              Overflow["item"] = value;
-            }
-            else Item = (Hl7.Fhir.Model.DataType?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Item is not null && !_Item.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("item",_Item);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
 
     /// <summary>
-    /// The medication for which this is a described interaction.
+    /// The medication for which this is a described interaction
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
     [References("MedicinalProduct","Medication","Substance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get
-      {
-        if(_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
-        return _Subject ??= [];
-      }
-
-      set
-      {
-        if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("subject");
-        _Subject = value;
-        OnPropertyChanged("Subject");
-      }
-
+      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
 
     /// <summary>
-    /// The interaction described.
+    /// The interaction described
     /// </summary>
     [FhirElement("description", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? DescriptionElement
+    public Hl7.Fhir.Model.FhirString DescriptionElement
     {
-      get
-      {
-        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
-        return _DescriptionElement;
-      }
-
-      set
-      {
-        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("description");
-        _DescriptionElement = value;
-        OnPropertyChanged("DescriptionElement");
-      }
-
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString _DescriptionElement;
 
     /// <summary>
     /// The interaction described
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Description
+    public string Description
     {
-      get => DescriptionElement?.Value;
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
       set
       {
-        DescriptionElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
 
     /// <summary>
-    /// The specific medication, food or laboratory test that interacts.
+    /// The specific medication, food or laboratory test that interacts
     /// </summary>
     [FhirElement("interactant", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> Interactant
     {
-      get
-      {
-        if(_Interactant.InOverflow<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>), Overflow["interactant"]);
-        return _Interactant ??= [];
-      }
-
-      set
-      {
-        if (_Interactant.InOverflow<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>())
-          Overflow.Remove("interactant");
-        _Interactant = value;
-        OnPropertyChanged("Interactant");
-      }
-
+      get { if(_Interactant==null) _Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(); return _Interactant; }
+      set { _Interactant = value; OnPropertyChanged("Interactant"); }
     }
 
-    private List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>? _Interactant;
+    private List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> _Interactant;
 
     /// <summary>
-    /// The type of the interaction e.g. drug-drug interaction, drug-food interaction, drug-lab test interaction.
+    /// The type of the interaction e.g. drug-drug interaction, drug-food interaction, drug-lab test interaction
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Type
+    public Hl7.Fhir.Model.CodeableConcept Type
     {
-      get
-      {
-        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-        return _Type;
-      }
-
-      set
-      {
-        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("type");
-        _Type = value;
-        OnPropertyChanged("Type");
-      }
-
+      get { return _Type; }
+      set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Type;
+    private Hl7.Fhir.Model.CodeableConcept _Type;
 
     /// <summary>
-    /// The effect of the interaction, for example "reduced gastric absorption of primary medication".
+    /// The effect of the interaction, for example "reduced gastric absorption of primary medication"
     /// </summary>
     [FhirElement("effect", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Effect
+    public Hl7.Fhir.Model.CodeableConcept Effect
     {
-      get
-      {
-        if(_Effect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["effect"]);
-        return _Effect;
-      }
-
-      set
-      {
-        if (_Effect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("effect");
-        _Effect = value;
-        OnPropertyChanged("Effect");
-      }
-
+      get { return _Effect; }
+      set { _Effect = value; OnPropertyChanged("Effect"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Effect;
+    private Hl7.Fhir.Model.CodeableConcept _Effect;
 
     /// <summary>
-    /// The incidence of the interaction, e.g. theoretical, observed.
+    /// The incidence of the interaction, e.g. theoretical, observed
     /// </summary>
     [FhirElement("incidence", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Incidence
+    public Hl7.Fhir.Model.CodeableConcept Incidence
     {
-      get
-      {
-        if(_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["incidence"]);
-        return _Incidence;
-      }
-
-      set
-      {
-        if (_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("incidence");
-        _Incidence = value;
-        OnPropertyChanged("Incidence");
-      }
-
+      get { return _Incidence; }
+      set { _Incidence = value; OnPropertyChanged("Incidence"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Incidence;
+    private Hl7.Fhir.Model.CodeableConcept _Incidence;
 
     /// <summary>
-    /// Actions for managing the interaction.
+    /// Actions for managing the interaction
     /// </summary>
     [FhirElement("management", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Management
+    public Hl7.Fhir.Model.CodeableConcept Management
     {
-      get
-      {
-        if(_Management.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["management"]);
-        return _Management;
-      }
-
-      set
-      {
-        if (_Management.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("management");
-        _Management = value;
-        OnPropertyChanged("Management");
-      }
-
+      get { return _Management; }
+      set { _Management = value; OnPropertyChanged("Management"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Management;
+    private Hl7.Fhir.Model.CodeableConcept _Management;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not MedicinalProductInteraction dest)
+      var dest = other as MedicinalProductInteraction;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
-      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
-      if(_Interactant is not null) dest.Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(_Interactant.DeepCopyInternal());
-      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
-      if(_Effect is not null) dest.Effect = (Hl7.Fhir.Model.CodeableConcept)_Effect.DeepCopyInternal();
-      if(_Incidence is not null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)_Incidence.DeepCopyInternal();
-      if(_Management is not null) dest.Management = (Hl7.Fhir.Model.CodeableConcept)_Management.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+      if(Interactant.Any()) dest.Interactant = new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>(Interactant.DeepCopy());
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+      if(Effect != null) dest.Effect = (Hl7.Fhir.Model.CodeableConcept)Effect.DeepCopy();
+      if(Incidence != null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)Incidence.DeepCopy();
+      if(Management != null) dest.Management = (Hl7.Fhir.Model.CodeableConcept)Management.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new MedicinalProductInteraction();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new MedicinalProductInteraction());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not MedicinalProductInteraction otherT) return false;
+      var otherT = other as MedicinalProductInteraction;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
-      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
-      if(!comparer.ListEquals(_Interactant, otherT._Interactant)) return false;
-      if(!comparer.Equals(_Type, otherT._Type)) return false;
-      if(!comparer.Equals(_Effect, otherT._Effect)) return false;
-      if(!comparer.Equals(_Incidence, otherT._Incidence)) return false;
-      if(!comparer.Equals(_Management, otherT._Management)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.Matches(Interactant, otherT.Interactant)) return false;
+      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+      if( !DeepComparable.Matches(Effect, otherT.Effect)) return false;
+      if( !DeepComparable.Matches(Incidence, otherT.Incidence)) return false;
+      if( !DeepComparable.Matches(Management, otherT.Management)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as MedicinalProductInteraction;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.IsExactly(Interactant, otherT.Interactant)) return false;
+      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+      if( !DeepComparable.IsExactly(Effect, otherT.Effect)) return false;
+      if( !DeepComparable.IsExactly(Incidence, otherT.Incidence)) return false;
+      if( !DeepComparable.IsExactly(Management, otherT.Management)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Subject) { if (elem != null) yield return elem; }
+        if (DescriptionElement != null) yield return DescriptionElement;
+        foreach (var elem in Interactant) { if (elem != null) yield return elem; }
+        if (Type != null) yield return Type;
+        if (Effect != null) yield return Effect;
+        if (Incidence != null) yield return Incidence;
+        if (Management != null) yield return Management;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+        foreach (var elem in Interactant) { if (elem != null) yield return new ElementValue("interactant", elem); }
+        if (Type != null) yield return new ElementValue("type", Type);
+        if (Effect != null) yield return new ElementValue("effect", Effect);
+        if (Incidence != null) yield return new ElementValue("incidence", Incidence);
+        if (Management != null) yield return new ElementValue("management", Management);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "subject":
-          if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["subject"];
-            return true;
-          }
-          value = _Subject;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Subject;
+          return Subject?.Any() == true;
         case "description":
-          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["description"];
-            return true;
-          }
-          value = _DescriptionElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "interactant":
-          if (_Interactant.InOverflow<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>())
-          {
-            value = Overflow["interactant"];
-            return true;
-          }
-          value = _Interactant;
-          return (value as List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>)?.Any() is true;
+          value = Interactant;
+          return Interactant?.Any() == true;
         case "type":
-          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["type"];
-            return true;
-          }
-          value = _Type;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Type;
+          return Type is not null;
         case "effect":
-          if (_Effect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["effect"];
-            return true;
-          }
-          value = _Effect;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Effect;
+          return Effect is not null;
         case "incidence":
-          if (_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["incidence"];
-            return true;
-          }
-          value = _Incidence;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Incidence;
+          return Incidence is not null;
         case "management":
-          if (_Management.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["management"];
-            return true;
-          }
-          value = _Management;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Management;
+          return Management is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "subject":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Subject = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["subject"] = value;
-          }
-          else Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "description":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["description"] = value;
-          }
-          else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "interactant":
-          if (value is not (List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> or null))
-          {
-            Interactant = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>.INSTANCE;
-            Overflow["interactant"] = value;
-          }
-          else Interactant = (List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>?)value!;
-          return this;
-        case "type":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["type"] = value;
-          }
-          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "effect":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Effect = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["effect"] = value;
-          }
-          else Effect = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "incidence":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Incidence = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["incidence"] = value;
-          }
-          else Incidence = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "management":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Management = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["management"] = value;
-          }
-          else Management = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (_Interactant?.Any() is true && !_Interactant.InOverflow<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>()) yield return new KeyValuePair<string,object>("interactant",_Interactant);
-      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
-      if (_Effect is not null && !_Effect.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("effect",_Effect);
-      if (_Incidence is not null && !_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("incidence",_Incidence);
-      if (_Management is not null && !_Management.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("management",_Management);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",Interactant);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
+      if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
+      if (Management is not null) yield return new KeyValuePair<string,object>("management",Management);
     }
 
   }

@@ -7,11 +7,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-using COVE=Hl7.Fhir.Validation.CodedValidationException;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -60,34 +56,29 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "id";
+    public override string TypeName { get { return "id"; } }
 
     /// Must conform to the pattern "[A-Za-z0-9\-\.]{1,64}"
     public const string PATTERN = @"[A-Za-z0-9\-\.]{1,64}";
 
-    public Id(string? value)
+    public Id(string value)
     {
       Value = value;
     }
 
-    public Id(): this((string?)null) {}
+    public Id(): this((string)null) {}
 
     /// <summary>
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(SystemPrimitive.String))]
+    [IdPattern]
     [DataMember]
-    public string? Value
+    public string Value
     {
-      get { return JsonValue is string or null ? (string?)JsonValue : throw COVE.FromTypes(typeof(Id), JsonValue); }
-      set { JsonValue = value; OnPropertyChanged("Value"); }
-    }
-
-    protected internal override Base DeepCopyInternal()
-    {
-      var instance = new Id();
-      CopyToInternal(instance);
-      return instance;
+      get { return (string)ObjectValue; }
+      set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
   }

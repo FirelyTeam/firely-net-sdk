@@ -206,13 +206,14 @@ namespace Hl7.FhirPath.Parser
         {
             if (focus == null) throw new ArgumentNullException("focus");
 
-            return Invocation(focus).Then(second => chainInvocation(second)).Or(Parse.Return(focus));
+            return Parse.Or(Invocation(focus).Then(second => chainInvocation(second)),
+                                 Parse.Return(focus));
         }
 
 
         public static Parser<Expression> Invocation(Expression focus)
         {
-            return DotInvocation(focus).Or(IndexerInvocation(focus));
+            return Parse.Or(DotInvocation(focus), IndexerInvocation(focus));
         }
 
         // '.' invocation

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,295 +51,198 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductUndesirableEffect","http://hl7.org/fhir/StructureDefinition/MedicinalProductUndesirableEffect")]
+  [FhirType("MedicinalProductUndesirableEffect","http://hl7.org/fhir/StructureDefinition/MedicinalProductUndesirableEffect", IsResource=true)]
   public partial class MedicinalProductUndesirableEffect : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "MedicinalProductUndesirableEffect";
+    public override string TypeName { get { return "MedicinalProductUndesirableEffect"; } }
 
     /// <summary>
-    /// The medication for which this is an indication.
+    /// The medication for which this is an indication
     /// </summary>
     [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
     [References("MedicinalProduct","Medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get
-      {
-        if(_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
-        return _Subject ??= [];
-      }
-
-      set
-      {
-        if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("subject");
-        _Subject = value;
-        OnPropertyChanged("Subject");
-      }
-
+      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
 
     /// <summary>
-    /// The symptom, condition or undesirable effect.
+    /// The symptom, condition or undesirable effect
     /// </summary>
     [FhirElement("symptomConditionEffect", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? SymptomConditionEffect
+    public Hl7.Fhir.Model.CodeableConcept SymptomConditionEffect
     {
-      get
-      {
-        if(_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["symptomConditionEffect"]);
-        return _SymptomConditionEffect;
-      }
-
-      set
-      {
-        if (_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("symptomConditionEffect");
-        _SymptomConditionEffect = value;
-        OnPropertyChanged("SymptomConditionEffect");
-      }
-
+      get { return _SymptomConditionEffect; }
+      set { _SymptomConditionEffect = value; OnPropertyChanged("SymptomConditionEffect"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _SymptomConditionEffect;
+    private Hl7.Fhir.Model.CodeableConcept _SymptomConditionEffect;
 
     /// <summary>
-    /// Classification of the effect.
+    /// Classification of the effect
     /// </summary>
     [FhirElement("classification", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? Classification
+    public Hl7.Fhir.Model.CodeableConcept Classification
     {
-      get
-      {
-        if(_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["classification"]);
-        return _Classification;
-      }
-
-      set
-      {
-        if (_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("classification");
-        _Classification = value;
-        OnPropertyChanged("Classification");
-      }
-
+      get { return _Classification; }
+      set { _Classification = value; OnPropertyChanged("Classification"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _Classification;
+    private Hl7.Fhir.Model.CodeableConcept _Classification;
 
     /// <summary>
-    /// The frequency of occurrence of the effect.
+    /// The frequency of occurrence of the effect
     /// </summary>
     [FhirElement("frequencyOfOccurrence", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? FrequencyOfOccurrence
+    public Hl7.Fhir.Model.CodeableConcept FrequencyOfOccurrence
     {
-      get
-      {
-        if(_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["frequencyOfOccurrence"]);
-        return _FrequencyOfOccurrence;
-      }
-
-      set
-      {
-        if (_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("frequencyOfOccurrence");
-        _FrequencyOfOccurrence = value;
-        OnPropertyChanged("FrequencyOfOccurrence");
-      }
-
+      get { return _FrequencyOfOccurrence; }
+      set { _FrequencyOfOccurrence = value; OnPropertyChanged("FrequencyOfOccurrence"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _FrequencyOfOccurrence;
+    private Hl7.Fhir.Model.CodeableConcept _FrequencyOfOccurrence;
 
     /// <summary>
-    /// The population group to which this applies.
+    /// The population group to which this applies
     /// </summary>
     [FhirElement("population", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Population> Population
     {
-      get
-      {
-        if(_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Population>), Overflow["population"]);
-        return _Population ??= [];
-      }
-
-      set
-      {
-        if (_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
-          Overflow.Remove("population");
-        _Population = value;
-        OnPropertyChanged("Population");
-      }
-
+      get { if(_Population==null) _Population = new List<Hl7.Fhir.Model.Population>(); return _Population; }
+      set { _Population = value; OnPropertyChanged("Population"); }
     }
 
-    private List<Hl7.Fhir.Model.Population>? _Population;
+    private List<Hl7.Fhir.Model.Population> _Population;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not MedicinalProductUndesirableEffect dest)
+      var dest = other as MedicinalProductUndesirableEffect;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
-      if(_SymptomConditionEffect is not null) dest.SymptomConditionEffect = (Hl7.Fhir.Model.CodeableConcept)_SymptomConditionEffect.DeepCopyInternal();
-      if(_Classification is not null) dest.Classification = (Hl7.Fhir.Model.CodeableConcept)_Classification.DeepCopyInternal();
-      if(_FrequencyOfOccurrence is not null) dest.FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept)_FrequencyOfOccurrence.DeepCopyInternal();
-      if(_Population is not null) dest.Population = new List<Hl7.Fhir.Model.Population>(_Population.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
+      if(SymptomConditionEffect != null) dest.SymptomConditionEffect = (Hl7.Fhir.Model.CodeableConcept)SymptomConditionEffect.DeepCopy();
+      if(Classification != null) dest.Classification = (Hl7.Fhir.Model.CodeableConcept)Classification.DeepCopy();
+      if(FrequencyOfOccurrence != null) dest.FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept)FrequencyOfOccurrence.DeepCopy();
+      if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.Population>(Population.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new MedicinalProductUndesirableEffect();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new MedicinalProductUndesirableEffect());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not MedicinalProductUndesirableEffect otherT) return false;
+      var otherT = other as MedicinalProductUndesirableEffect;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
-      if(!comparer.Equals(_SymptomConditionEffect, otherT._SymptomConditionEffect)) return false;
-      if(!comparer.Equals(_Classification, otherT._Classification)) return false;
-      if(!comparer.Equals(_FrequencyOfOccurrence, otherT._FrequencyOfOccurrence)) return false;
-      if(!comparer.ListEquals(_Population, otherT._Population)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.Matches(SymptomConditionEffect, otherT.SymptomConditionEffect)) return false;
+      if( !DeepComparable.Matches(Classification, otherT.Classification)) return false;
+      if( !DeepComparable.Matches(FrequencyOfOccurrence, otherT.FrequencyOfOccurrence)) return false;
+      if( !DeepComparable.Matches(Population, otherT.Population)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as MedicinalProductUndesirableEffect;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+      if( !DeepComparable.IsExactly(SymptomConditionEffect, otherT.SymptomConditionEffect)) return false;
+      if( !DeepComparable.IsExactly(Classification, otherT.Classification)) return false;
+      if( !DeepComparable.IsExactly(FrequencyOfOccurrence, otherT.FrequencyOfOccurrence)) return false;
+      if( !DeepComparable.IsExactly(Population, otherT.Population)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Subject) { if (elem != null) yield return elem; }
+        if (SymptomConditionEffect != null) yield return SymptomConditionEffect;
+        if (Classification != null) yield return Classification;
+        if (FrequencyOfOccurrence != null) yield return FrequencyOfOccurrence;
+        foreach (var elem in Population) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
+        if (SymptomConditionEffect != null) yield return new ElementValue("symptomConditionEffect", SymptomConditionEffect);
+        if (Classification != null) yield return new ElementValue("classification", Classification);
+        if (FrequencyOfOccurrence != null) yield return new ElementValue("frequencyOfOccurrence", FrequencyOfOccurrence);
+        foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "subject":
-          if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["subject"];
-            return true;
-          }
-          value = _Subject;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Subject;
+          return Subject?.Any() == true;
         case "symptomConditionEffect":
-          if (_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["symptomConditionEffect"];
-            return true;
-          }
-          value = _SymptomConditionEffect;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = SymptomConditionEffect;
+          return SymptomConditionEffect is not null;
         case "classification":
-          if (_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["classification"];
-            return true;
-          }
-          value = _Classification;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = Classification;
+          return Classification is not null;
         case "frequencyOfOccurrence":
-          if (_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["frequencyOfOccurrence"];
-            return true;
-          }
-          value = _FrequencyOfOccurrence;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = FrequencyOfOccurrence;
+          return FrequencyOfOccurrence is not null;
         case "population":
-          if (_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
-          {
-            value = Overflow["population"];
-            return true;
-          }
-          value = _Population;
-          return (value as List<Hl7.Fhir.Model.Population>)?.Any() is true;
+          value = Population;
+          return Population?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "subject":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Subject = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["subject"] = value;
-          }
-          else Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "symptomConditionEffect":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            SymptomConditionEffect = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["symptomConditionEffect"] = value;
-          }
-          else SymptomConditionEffect = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "classification":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            Classification = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["classification"] = value;
-          }
-          else Classification = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "frequencyOfOccurrence":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            FrequencyOfOccurrence = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["frequencyOfOccurrence"] = value;
-          }
-          else FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "population":
-          if (value is not (List<Hl7.Fhir.Model.Population> or null))
-          {
-            Population = OverflowNull<List<Hl7.Fhir.Model.Population>>.INSTANCE;
-            Overflow["population"] = value;
-          }
-          else Population = (List<Hl7.Fhir.Model.Population>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_SymptomConditionEffect is not null && !_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
-      if (_Classification is not null && !_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("classification",_Classification);
-      if (_FrequencyOfOccurrence is not null && !_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
-      if (_Population?.Any() is true && !_Population.InOverflow<List<Hl7.Fhir.Model.Population>>()) yield return new KeyValuePair<string,object>("population",_Population);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",SymptomConditionEffect);
+      if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+      if (FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",FrequencyOfOccurrence);
+      if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
     }
 
   }

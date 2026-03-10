@@ -51,6 +51,29 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public int Timeout = 100 * 1000;
 
+        /// <inheritdoc cref="ReturnPreference"/>
+        [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
+        public Prefer? PreferredReturn
+        {
+            get => UseAsync ? Prefer.RespondAsync : (Prefer?)ReturnPreference;
+            set
+            {
+                switch (value)
+                {
+                    case Prefer.RespondAsync:
+                        UseAsync = true;
+                        break;
+                    case null:
+                        UseAsync = false;
+                        ReturnPreference = null;
+                        break;
+                    default:
+                        ReturnPreference = (ReturnPreference)value;
+                        break;
+                }
+            }
+        }
+
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content, 
         /// minimal content or an OperationOutcome (see https://hl7.org/fhir/http.html#return).
@@ -77,6 +100,17 @@ namespace Hl7.Fhir.Rest
         public bool PreferCompressedResponses;
 
         /// <summary>
+        /// Compress any Request bodies using GZip.
+        /// </summary>
+        /// <remarks>If a server does not handle compressed requests using GZip, it will return a 415 response.</remarks>
+        [Obsolete("Use RequestBodyCompressionMethod instead.")]
+        public bool CompressRequestBody
+        {
+            get => RequestBodyCompressionMethod is not DecompressionMethods.None;
+            set => RequestBodyCompressionMethod = value ? DecompressionMethods.GZip : DecompressionMethods.None;
+        }
+
+        /// <summary>
         /// Compress request bodies using the selected method. Note: only <see cref="DecompressionMethods.Deflate"/> and
         /// <see cref="DecompressionMethods.GZip"/> are currently supported.
         /// </summary>
@@ -93,9 +127,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// ParserSettings for the pre-5.0 SDK parsers. Are only used when <see cref="SerializationEngine"/> is not set.
         /// </summary>
-        [Obsolete(
-            "Use the SerializationEngine setting instead, chosing one of the options on FhirSerializationEngineFactory.")]
-        public DeserializerSettings ParserSettings = new DeserializerSettings().UsingMode(DeserializationMode.Recoverable);
+        public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
         /// <summary>
         /// How to transfer binary data when sending data to a Binary endpoint.
@@ -106,6 +138,7 @@ namespace Hl7.Fhir.Rest
         /// Whether we ask the server to return us binary data or a Binary resource.
         /// </summary>
         public BinaryTransferBehaviour BinaryReceivePreference = BinaryTransferBehaviour.UseData;
+        
 
         public FhirClientSettings() { }
 
@@ -124,9 +157,7 @@ namespace Hl7.Fhir.Rest
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
-#pragma warning disable CS0618 // Type or member is obsolete
             other.ParserSettings = ParserSettings;
-#pragma warning restore CS0618 // Type or member is obsolete
             other.PreferCompressedResponses = PreferCompressedResponses;
             other.PreferredFormat = PreferredFormat;
             other.ReturnPreference = ReturnPreference;

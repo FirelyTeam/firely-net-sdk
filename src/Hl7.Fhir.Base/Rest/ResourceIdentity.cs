@@ -473,15 +473,22 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public bool IsTargetOf(ResourceIdentity reference)
         {
-            if (reference.BaseUri != null && BaseUri != reference.BaseUri) 
-                return false;
-            if(reference.ResourceType != null && ResourceType != reference.ResourceType) 
-                return false;
-            if (Id != reference.Id) 
-                return false;
-            if (reference.VersionId == null) 
-                return true;
-            return VersionId == reference.VersionId;
+            if (reference.BaseUri != null)
+            {
+                //TODO: According to the spec, this comparison should ignore http/https
+                //(see http.html#2.1.0.1, under the header 'identity')
+                if (BaseUri != reference.BaseUri) return false;
+            }
+
+            if (ResourceType != reference.ResourceType) return false;
+            if (Id != reference.Id) return false;
+
+            if (reference.VersionId != null)
+            {
+                if (VersionId != reference.VersionId) return false;
+            }
+
+            return true;
         }
 
         public bool IsTargetOf(string reference)

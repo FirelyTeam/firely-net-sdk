@@ -81,13 +81,13 @@ namespace Hl7.Fhir.Specification
 
         public async Tasks.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical, IEnumerable<string>? targetProfiles = null)
         {
-            var result = await AsyncResolver.TryResolveByCanonicalUriAsync(canonical).ConfigureAwait(false);
-            if (!result.Success)
-                throw result.Error!;
+            var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
+            if (sd == null)
+                throw new StructureDefinitionWalkerException($"Cannot walk into unknown StructureDefinition with canonical '{canonical}' at '{Current.CanonicalPath()}'");
 
             return (targetProfiles is not null)
-                ? new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(result.Value as StructureDefinition), targetProfiles, _resolver)
-                : new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(result.Value as StructureDefinition), _resolver);
+                ? new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), targetProfiles, _resolver)
+                : new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), _resolver);
         }
 
 
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Specification
         public IEnumerable<StructureDefinitionWalker> Expand()
         {
             if (Current.HasChildren)
-                return [this];
+                return new[] { this };
             else if (Current.Current.ContentReference != null)
             {
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -158,15 +158,13 @@ namespace Hl7.Fhir.Specification
                     throw new StructureDefinitionWalkerException($"The contentReference '{reference}' cannot be resolved.");
 #pragma warning restore CS0618 // Type or member is obsolete
 
-                return [new StructureDefinitionWalker(reference!, _resolver)];
+                return new[] { new StructureDefinitionWalker(reference!, _resolver) };
             }
             else if (Current.Current.Type.Count >= 1)
             {
                 return Current.Current.Type
-                    .GroupBy(t => t.GetTypeProfile() ?? throw new InvalidOperationException("Found TypeRef without profile or code."),
-                        t => t.TargetProfile)
-                    .Select(group => FromCanonical(group.Key,
-                        group.OfType<string>().ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
+                    .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
+                    .Select(group => FromCanonical(group.Key!, group.ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
@@ -217,7 +215,7 @@ namespace Hl7.Fhir.Specification
 
             return Current.Current.Type
                     .Where(t => t.IsReference() && t.TargetProfile != null)
-                    .Select(t => t.TargetProfile!)
+                    .Select(t => t.TargetProfile)
                     .Select(c => FromCanonical(c));
         }
 

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,67 +48,40 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Schedule","http://hl7.org/fhir/StructureDefinition/Schedule")]
+  [FhirType("Schedule","http://hl7.org/fhir/StructureDefinition/Schedule", IsResource=true)]
   public partial class Schedule : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Schedule";
+    public override string TypeName { get { return "Schedule"; } }
 
     /// <summary>
-    /// External Ids for this item.
+    /// External Ids for this item
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Whether this schedule is in active use.
+    /// Whether this schedule is in active use
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
-      get
-      {
-        if(_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["active"]);
-        return _ActiveElement;
-      }
-
-      set
-      {
-        if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          Overflow.Remove("active");
-        _ActiveElement = value;
-        OnPropertyChanged("ActiveElement");
-      }
-
+      get { return _ActiveElement; }
+      set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
 
     /// <summary>
     /// Whether this schedule is in active use
@@ -121,402 +90,266 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => ActiveElement?.Value;
+      get { return ActiveElement != null ? ActiveElement.Value : null; }
       set
       {
-        ActiveElement = value is null ? null! : new Hl7.Fhir.Model.FhirBoolean(value);
+        if (value == null)
+          ActiveElement = null;
+        else
+          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
 
     /// <summary>
-    /// High-level category.
+    /// High-level category
     /// </summary>
     [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
-      get
-      {
-        if(_ServiceCategory.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["serviceCategory"]);
-        return _ServiceCategory ??= [];
-      }
-
-      set
-      {
-        if (_ServiceCategory.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("serviceCategory");
-        _ServiceCategory = value;
-        OnPropertyChanged("ServiceCategory");
-      }
-
+      get { if(_ServiceCategory==null) _ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceCategory; }
+      set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _ServiceCategory;
+    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCategory;
 
     /// <summary>
-    /// Specific service.
+    /// Specific service
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
     {
-      get
-      {
-        if(_ServiceType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["serviceType"]);
-        return _ServiceType ??= [];
-      }
-
-      set
-      {
-        if (_ServiceType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("serviceType");
-        _ServiceType = value;
-        OnPropertyChanged("ServiceType");
-      }
-
+      get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceType; }
+      set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _ServiceType;
+    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
 
     /// <summary>
-    /// Type of specialty needed.
+    /// Type of specialty needed
     /// </summary>
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get
-      {
-        if(_Specialty.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["specialty"]);
-        return _Specialty ??= [];
-      }
-
-      set
-      {
-        if (_Specialty.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("specialty");
-        _Specialty = value;
-        OnPropertyChanged("Specialty");
-      }
-
+      get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+      set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Specialty;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
 
     /// <summary>
-    /// Resource(s) that availability information is being provided for.
+    /// Resource(s) that availability information is being provided for
     /// </summary>
     [FhirElement("actor", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Actor
     {
-      get
-      {
-        if(_Actor.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["actor"]);
-        return _Actor ??= [];
-      }
-
-      set
-      {
-        if (_Actor.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("actor");
-        _Actor = value;
-        OnPropertyChanged("Actor");
-      }
-
+      get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Actor; }
+      set { _Actor = value; OnPropertyChanged("Actor"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Actor;
+    private List<Hl7.Fhir.Model.ResourceReference> _Actor;
 
     /// <summary>
-    /// Period of time covered by schedule.
+    /// Period of time covered by schedule
     /// </summary>
     [FhirElement("planningHorizon", InSummary=true, Order=150, FiveWs="FiveWs.planned")]
     [DataMember]
-    public Hl7.Fhir.Model.Period? PlanningHorizon
+    public Hl7.Fhir.Model.Period PlanningHorizon
     {
-      get
-      {
-        if(_PlanningHorizon.InOverflow<Hl7.Fhir.Model.Period>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["planningHorizon"]);
-        return _PlanningHorizon;
-      }
-
-      set
-      {
-        if (_PlanningHorizon.InOverflow<Hl7.Fhir.Model.Period>())
-          Overflow.Remove("planningHorizon");
-        _PlanningHorizon = value;
-        OnPropertyChanged("PlanningHorizon");
-      }
-
+      get { return _PlanningHorizon; }
+      set { _PlanningHorizon = value; OnPropertyChanged("PlanningHorizon"); }
     }
 
-    private Hl7.Fhir.Model.Period? _PlanningHorizon;
+    private Hl7.Fhir.Model.Period _PlanningHorizon;
 
     /// <summary>
-    /// Comments on availability.
+    /// Comments on availability
     /// </summary>
     [FhirElement("comment", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? CommentElement
+    public Hl7.Fhir.Model.FhirString CommentElement
     {
-      get
-      {
-        if(_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["comment"]);
-        return _CommentElement;
-      }
-
-      set
-      {
-        if (_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("comment");
-        _CommentElement = value;
-        OnPropertyChanged("CommentElement");
-      }
-
+      get { return _CommentElement; }
+      set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _CommentElement;
+    private Hl7.Fhir.Model.FhirString _CommentElement;
 
     /// <summary>
     /// Comments on availability
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Comment
+    public string Comment
     {
-      get => CommentElement?.Value;
+      get { return CommentElement != null ? CommentElement.Value : null; }
       set
       {
-        CommentElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          CommentElement = null;
+        else
+          CommentElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Schedule dest)
+      var dest = other as Schedule;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
-      if(_ServiceCategory is not null) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(_ServiceCategory.DeepCopyInternal());
-      if(_ServiceType is not null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(_ServiceType.DeepCopyInternal());
-      if(_Specialty is not null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(_Specialty.DeepCopyInternal());
-      if(_Actor is not null) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(_Actor.DeepCopyInternal());
-      if(_PlanningHorizon is not null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)_PlanningHorizon.DeepCopyInternal();
-      if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
+      if(ServiceCategory.Any()) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopy());
+      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
+      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
+      if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopy());
+      if(PlanningHorizon != null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)PlanningHorizon.DeepCopy();
+      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Schedule();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Schedule());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Schedule otherT) return false;
+      var otherT = other as Schedule;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
-      if(!comparer.ListEquals(_ServiceCategory, otherT._ServiceCategory)) return false;
-      if(!comparer.ListEquals(_ServiceType, otherT._ServiceType)) return false;
-      if(!comparer.ListEquals(_Specialty, otherT._Specialty)) return false;
-      if(!comparer.ListEquals(_Actor, otherT._Actor)) return false;
-      if(!comparer.Equals(_PlanningHorizon, otherT._PlanningHorizon)) return false;
-      if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+      if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
+      if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
+      if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
+      if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
+      if( !DeepComparable.Matches(PlanningHorizon, otherT.PlanningHorizon)) return false;
+      if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Schedule;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
+      if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
+      if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;
+      if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
+      if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
+      if( !DeepComparable.IsExactly(PlanningHorizon, otherT.PlanningHorizon)) return false;
+      if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (ActiveElement != null) yield return ActiveElement;
+        foreach (var elem in ServiceCategory) { if (elem != null) yield return elem; }
+        foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+        foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+        foreach (var elem in Actor) { if (elem != null) yield return elem; }
+        if (PlanningHorizon != null) yield return PlanningHorizon;
+        if (CommentElement != null) yield return CommentElement;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
+        foreach (var elem in ServiceCategory) { if (elem != null) yield return new ElementValue("serviceCategory", elem); }
+        foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", elem); }
+        foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", elem); }
+        foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
+        if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", PlanningHorizon);
+        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "active":
-          if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          {
-            value = Overflow["active"];
-            return true;
-          }
-          value = _ActiveElement;
-          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+          value = ActiveElement;
+          return ActiveElement is not null;
         case "serviceCategory":
-          if (_ServiceCategory.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["serviceCategory"];
-            return true;
-          }
-          value = _ServiceCategory;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = ServiceCategory;
+          return ServiceCategory?.Any() == true;
         case "serviceType":
-          if (_ServiceType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["serviceType"];
-            return true;
-          }
-          value = _ServiceType;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = ServiceType;
+          return ServiceType?.Any() == true;
         case "specialty":
-          if (_Specialty.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["specialty"];
-            return true;
-          }
-          value = _Specialty;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Specialty;
+          return Specialty?.Any() == true;
         case "actor":
-          if (_Actor.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["actor"];
-            return true;
-          }
-          value = _Actor;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Actor;
+          return Actor?.Any() == true;
         case "planningHorizon":
-          if (_PlanningHorizon.InOverflow<Hl7.Fhir.Model.Period>())
-          {
-            value = Overflow["planningHorizon"];
-            return true;
-          }
-          value = _PlanningHorizon;
-          return (value as Hl7.Fhir.Model.Period) is not null;
+          value = PlanningHorizon;
+          return PlanningHorizon is not null;
         case "comment":
-          if (_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["comment"];
-            return true;
-          }
-          value = _CommentElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = CommentElement;
+          return CommentElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "active":
-          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-          {
-            ActiveElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-            Overflow["active"] = value;
-          }
-          else ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-          return this;
-        case "serviceCategory":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            ServiceCategory = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["serviceCategory"] = value;
-          }
-          else ServiceCategory = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "serviceType":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            ServiceType = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["serviceType"] = value;
-          }
-          else ServiceType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "specialty":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Specialty = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["specialty"] = value;
-          }
-          else Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "actor":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Actor = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["actor"] = value;
-          }
-          else Actor = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "planningHorizon":
-          if (value is not (Hl7.Fhir.Model.Period or null))
-          {
-            PlanningHorizon = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
-            Overflow["planningHorizon"] = value;
-          }
-          else PlanningHorizon = (Hl7.Fhir.Model.Period?)value;
-          return this;
-        case "comment":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            CommentElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["comment"] = value;
-          }
-          else CommentElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_ActiveElement is not null && !_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("active",_ActiveElement);
-      if (_ServiceCategory?.Any() is true && !_ServiceCategory.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("serviceCategory",_ServiceCategory);
-      if (_ServiceType?.Any() is true && !_ServiceType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("serviceType",_ServiceType);
-      if (_Specialty?.Any() is true && !_Specialty.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("specialty",_Specialty);
-      if (_Actor?.Any() is true && !_Actor.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("actor",_Actor);
-      if (_PlanningHorizon is not null && !_PlanningHorizon.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("planningHorizon",_PlanningHorizon);
-      if (_CommentElement is not null && !_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (PlanningHorizon is not null) yield return new KeyValuePair<string,object>("planningHorizon",PlanningHorizon);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
     }
 
   }

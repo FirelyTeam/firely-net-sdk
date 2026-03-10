@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,148 +58,122 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Range";
+    public override string TypeName { get { return "Range"; } }
 
     /// <summary>
-    /// Low limit.
+    /// Low limit
     /// </summary>
     [FhirElement("low", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? Low
+    public Hl7.Fhir.Model.Quantity Low
     {
-      get
-      {
-        if(_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["low"]);
-        return _Low;
-      }
-
-      set
-      {
-        if (_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
-          Overflow.Remove("low");
-        _Low = value;
-        OnPropertyChanged("Low");
-      }
-
+      get { return _Low; }
+      set { _Low = value; OnPropertyChanged("Low"); }
     }
 
-    private Hl7.Fhir.Model.Quantity? _Low;
+    private Hl7.Fhir.Model.Quantity _Low;
 
     /// <summary>
-    /// High limit.
+    /// High limit
     /// </summary>
     [FhirElement("high", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity? High
+    public Hl7.Fhir.Model.Quantity High
     {
-      get
-      {
-        if(_High.InOverflow<Hl7.Fhir.Model.Quantity>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["high"]);
-        return _High;
-      }
-
-      set
-      {
-        if (_High.InOverflow<Hl7.Fhir.Model.Quantity>())
-          Overflow.Remove("high");
-        _High = value;
-        OnPropertyChanged("High");
-      }
-
+      get { return _High; }
+      set { _High = value; OnPropertyChanged("High"); }
     }
 
-    private Hl7.Fhir.Model.Quantity? _High;
+    private Hl7.Fhir.Model.Quantity _High;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Range dest)
+      var dest = other as Range;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Low is not null) dest.Low = (Hl7.Fhir.Model.Quantity)_Low.DeepCopyInternal();
-      if(_High is not null) dest.High = (Hl7.Fhir.Model.Quantity)_High.DeepCopyInternal();
+      base.CopyTo(dest);
+      if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
+      if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Range();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Range());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Range otherT) return false;
+      var otherT = other as Range;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Low, otherT._Low)) return false;
-      if(!comparer.Equals(_High, otherT._High)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Low, otherT.Low)) return false;
+      if( !DeepComparable.Matches(High, otherT.High)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Range;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Low, otherT.Low)) return false;
+      if( !DeepComparable.IsExactly(High, otherT.High)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Low != null) yield return Low;
+        if (High != null) yield return High;
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Low != null) yield return new ElementValue("low", Low);
+        if (High != null) yield return new ElementValue("high", High);
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "low":
-          if (_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
-          {
-            value = Overflow["low"];
-            return true;
-          }
-          value = _Low;
-          return (value as Hl7.Fhir.Model.Quantity) is not null;
+          value = Low;
+          return Low is not null;
         case "high":
-          if (_High.InOverflow<Hl7.Fhir.Model.Quantity>())
-          {
-            value = Overflow["high"];
-            return true;
-          }
-          value = _High;
-          return (value as Hl7.Fhir.Model.Quantity) is not null;
+          value = High;
+          return High is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "low":
-          if (value is not (Hl7.Fhir.Model.Quantity or null))
-          {
-            Low = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
-            Overflow["low"] = value;
-          }
-          else Low = (Hl7.Fhir.Model.Quantity?)value;
-          return this;
-        case "high":
-          if (value is not (Hl7.Fhir.Model.Quantity or null))
-          {
-            High = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
-            Overflow["high"] = value;
-          }
-          else High = (Hl7.Fhir.Model.Quantity?)value;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Low is not null && !_Low.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("low",_Low);
-      if (_High is not null && !_High.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("high",_High);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Low is not null) yield return new KeyValuePair<string,object>("low",Low);
+      if (High is not null) yield return new KeyValuePair<string,object>("high",High);
     }
 
   }

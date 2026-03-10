@@ -17,15 +17,15 @@ namespace Hl7.Fhir.Utility.Tests
             var adaptee = new SyncResolver();
             var adapted = adaptee.AsAsync();
 
-            _ = await adapted.TryResolveByUriAsync("");
-            _ = await adapted.TryResolveByCanonicalUriAsync("");
-            _ = await adapted.TryResolveByCanonicalUriAsync("");
+            _ = await adapted.ResolveByUriAsync("");
+            _ = await adapted.ResolveByCanonicalUriAsync("");
+            _ = await adapted.ResolveByCanonicalUriAsync("");
 
             Assert.AreEqual(2, adaptee.ByCanonical);
             Assert.AreEqual(1, adaptee.ByUri);
 
             // Now call the async adapted sync resolver synchronously ;-)
-            TaskHelper.Await(() => adapted.TryResolveByUriAsync(""));
+            TaskHelper.Await(() => adapted.ResolveByUriAsync(""));
             Assert.AreEqual(2, adaptee.ByUri);
         }
 
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Utility.Tests
             var multi = new MultiResolver(sr,ar,sar);
 
             // calling *any* kind of resolve will involve all child resolvers, since they all return null.
-            _ = await multi.TryResolveByUriAsync("");
+            _ = await multi.ResolveByUriAsync("");
 #pragma warning disable CS0618 // Type or member is obsolete
             _ = multi.ResolveByCanonicalUri("");
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -107,24 +107,14 @@ namespace Hl7.Fhir.Utility.Tests
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            return TryResolveByCanonicalUri(uri).Value;
-        }
-
-        public ResolverResult TryResolveByUri(string uri)
-        {
-            ByUri += 1;
-            return Data is null ? ResolverException.NotFound() : Data;
-        }
-
-        public ResolverResult TryResolveByCanonicalUri(string uri)
-        {
             ByCanonical += 1;
-            return Data is null ? ResolverException.NotFound() : Data;
+            return Data;
         }
 
         public Resource ResolveByUri(string uri)
         {
-            return TryResolveByUri(uri).Value;
+            ByUri += 1;
+            return Data;
         }
     }
 
@@ -141,22 +131,11 @@ namespace Hl7.Fhir.Utility.Tests
             Data = data;
         }
 
+
         public Task<Resource> ResolveByCanonicalUriAsync(string uri)
         {
             ByCanonicalAsync += 1;
             return Task.FromResult(Data);
-        }
-
-        public Task<ResolverResult> TryResolveByUriAsync(string uri) 
-        {
-            ByUriAsync += 1;
-            return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
-        }
-
-        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
-        {
-            ByCanonicalAsync += 1;
-            return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
         }
 
         public Task<Resource> ResolveByUriAsync(string uri)
@@ -185,44 +164,20 @@ namespace Hl7.Fhir.Utility.Tests
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            return TryResolveByCanonicalUri(uri).Value;
-        }
-
-        public ResolverResult TryResolveByUri(string uri)
-        {
-            ByUri += 1;
-            return Data is null ? ResolverException.NotFound() : Data;
-        }
-
-        public ResolverResult TryResolveByCanonicalUri(string uri)
-        {
             ByCanonical += 1;
-            return Data is null ? ResolverException.NotFound() : Data;
+            return Data;
         }
 
         public Resource ResolveByUri(string uri)
         {
-            return TryResolveByUri(uri).Value;
+            ByUri += 1;
+            return Data;
         }
-
-
 
         public Task<Resource> ResolveByCanonicalUriAsync(string uri)
         {
             ByCanonicalAsync += 1;
             return Task.FromResult(Data);
-        }
-
-        public Task<ResolverResult> TryResolveByUriAsync(string uri) 
-        {
-            ByUriAsync += 1;
-            return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
-        }
-
-        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
-        {
-            ByCanonicalAsync += 1;
-            return Task.FromResult<ResolverResult>(Data is null ? ResolverException.NotFound() : Data);
         }
 
         public Task<Resource> ResolveByUriAsync(string uri)
@@ -235,7 +190,7 @@ namespace Hl7.Fhir.Utility.Tests
     internal class AResource : Resource
     {
         public int Data;
-        
-        protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
+
+        public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
     }
 }

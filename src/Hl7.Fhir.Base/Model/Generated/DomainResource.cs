@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,238 +51,172 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("DomainResource","http://hl7.org/fhir/StructureDefinition/DomainResource")]
+  [FhirType("DomainResource","http://hl7.org/fhir/StructureDefinition/DomainResource", IsResource=true)]
   public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, Hl7.Fhir.Model.IModifierExtendable
   {
     /// <summary>
-    /// Text summary of the resource, for human interpretation.
+    /// FHIR Type Name
+    /// </summary>
+    public override string TypeName { get { return "DomainResource"; } }
+
+    /// <summary>
+    /// Text summary of the resource, for human interpretation
     /// </summary>
     [FhirElement("text", Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Narrative? Text
+    public Hl7.Fhir.Model.Narrative Text
     {
-      get
-      {
-        if(_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Narrative), Overflow["text"]);
-        return _Text;
-      }
-
-      set
-      {
-        if (_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
-          Overflow.Remove("text");
-        _Text = value;
-        OnPropertyChanged("Text");
-      }
-
+      get { return _Text; }
+      set { _Text = value; OnPropertyChanged("Text"); }
     }
 
-    private Hl7.Fhir.Model.Narrative? _Text;
+    private Hl7.Fhir.Model.Narrative _Text;
 
     /// <summary>
-    /// Contained, inline Resources.
+    /// Contained, inline Resources
     /// </summary>
     [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Resource> Contained
     {
-      get
-      {
-        if(_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Resource>), Overflow["contained"]);
-        return _Contained ??= [];
-      }
-
-      set
-      {
-        if (_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>())
-          Overflow.Remove("contained");
-        _Contained = value;
-        OnPropertyChanged("Contained");
-      }
-
+      get { if(_Contained==null) _Contained = new List<Hl7.Fhir.Model.Resource>(); return _Contained; }
+      set { _Contained = value; OnPropertyChanged("Contained"); }
     }
 
-    private List<Hl7.Fhir.Model.Resource>? _Contained;
+    private List<Hl7.Fhir.Model.Resource> _Contained;
 
     /// <summary>
-    /// Additional content defined by implementations.
+    /// Additional content defined by implementations
     /// </summary>
     [FhirElement("extension", Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get
-      {
-        if(_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
-        return _Extension ??= [];
-      }
-
-      set
-      {
-        if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
-          Overflow.Remove("extension");
-        _Extension = value;
-        OnPropertyChanged("Extension");
-      }
-
+      get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
+      set { _Extension = value; OnPropertyChanged("Extension"); }
     }
 
-    private List<Hl7.Fhir.Model.Extension>? _Extension;
+    private List<Hl7.Fhir.Model.Extension> _Extension;
 
     /// <summary>
-    /// Extensions that cannot be ignored.
+    /// Extensions that cannot be ignored
     /// </summary>
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get
-      {
-        if(_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["modifierExtension"]);
-        return _ModifierExtension ??= [];
-      }
-
-      set
-      {
-        if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
-          Overflow.Remove("modifierExtension");
-        _ModifierExtension = value;
-        OnPropertyChanged("ModifierExtension");
-      }
-
+      get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
+      set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
     }
 
-    private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;
+    private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not DomainResource dest)
+      var dest = other as DomainResource;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Text is not null) dest.Text = (Hl7.Fhir.Model.Narrative)_Text.DeepCopyInternal();
-      if(_Contained is not null) dest.Contained = new List<Hl7.Fhir.Model.Resource>(_Contained.DeepCopyInternal());
-      if(_Extension is not null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(_Extension.DeepCopyInternal());
-      if(_ModifierExtension is not null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(_ModifierExtension.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopy();
+      if(Contained.Any()) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopy());
+      if(Extension.Any()) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
+      if(ModifierExtension.Any()) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
+      return dest;
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not DomainResource otherT) return false;
+      var otherT = other as DomainResource;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_Text, otherT._Text)) return false;
-      if(!comparer.ListEquals(_Contained, otherT._Contained)) return false;
-      if(!comparer.ListEquals(_Extension, otherT._Extension)) return false;
-      if(!comparer.ListEquals(_ModifierExtension, otherT._ModifierExtension)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Text, otherT.Text)) return false;
+      if( !DeepComparable.Matches(Contained, otherT.Contained)) return false;
+      if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
+      if( !DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as DomainResource;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
+      if( !DeepComparable.IsExactly(Contained, otherT.Contained)) return false;
+      if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
+      if( !DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (Text != null) yield return Text;
+        foreach (var elem in Contained) { if (elem != null) yield return elem; }
+        foreach (var elem in Extension) { if (elem != null) yield return elem; }
+        foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (Text != null) yield return new ElementValue("text", Text);
+        foreach (var elem in Contained) { if (elem != null) yield return new ElementValue("contained", elem); }
+        foreach (var elem in Extension) { if (elem != null) yield return new ElementValue("extension", elem); }
+        foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "text":
-          if (_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
-          {
-            value = Overflow["text"];
-            return true;
-          }
-          value = _Text;
-          return (value as Hl7.Fhir.Model.Narrative) is not null;
+          value = Text;
+          return Text is not null;
         case "contained":
-          if (_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>())
-          {
-            value = Overflow["contained"];
-            return true;
-          }
-          value = _Contained;
-          return (value as List<Hl7.Fhir.Model.Resource>)?.Any() is true;
+          value = Contained;
+          return Contained?.Any() == true;
         case "extension":
-          if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
-          {
-            value = Overflow["extension"];
-            return true;
-          }
-          value = _Extension;
-          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
+          value = Extension;
+          return Extension?.Any() == true;
         case "modifierExtension":
-          if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
-          {
-            value = Overflow["modifierExtension"];
-            return true;
-          }
-          value = _ModifierExtension;
-          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
+          value = ModifierExtension;
+          return ModifierExtension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "text":
-          if (value is not (Hl7.Fhir.Model.Narrative or null))
-          {
-            Text = OverflowNull<Hl7.Fhir.Model.Narrative>.INSTANCE;
-            Overflow["text"] = value;
-          }
-          else Text = (Hl7.Fhir.Model.Narrative?)value;
-          return this;
-        case "contained":
-          if (value is not (List<Hl7.Fhir.Model.Resource> or null))
-          {
-            Contained = OverflowNull<List<Hl7.Fhir.Model.Resource>>.INSTANCE;
-            Overflow["contained"] = value;
-          }
-          else Contained = (List<Hl7.Fhir.Model.Resource>?)value!;
-          return this;
-        case "extension":
-          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
-          {
-            Extension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
-            Overflow["extension"] = value;
-          }
-          else Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
-          return this;
-        case "modifierExtension":
-          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
-          {
-            ModifierExtension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
-            Overflow["modifierExtension"] = value;
-          }
-          else ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Text is not null && !_Text.InOverflow<Hl7.Fhir.Model.Narrative>()) yield return new KeyValuePair<string,object>("text",_Text);
-      if (_Contained?.Any() is true && !_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>()) yield return new KeyValuePair<string,object>("contained",_Contained);
-      if (_Extension?.Any() is true && !_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("extension",_Extension);
-      if (_ModifierExtension?.Any() is true && !_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Text is not null) yield return new KeyValuePair<string,object>("text",Text);
+      if (Contained?.Any() == true) yield return new KeyValuePair<string,object>("contained",Contained);
+      if (Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",Extension);
+      if (ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",ModifierExtension);
     }
 
   }

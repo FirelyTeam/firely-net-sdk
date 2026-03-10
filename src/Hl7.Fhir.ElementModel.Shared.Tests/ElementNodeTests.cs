@@ -11,7 +11,6 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -23,7 +22,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Tasks = System.Threading.Tasks;
 
@@ -39,7 +37,6 @@ namespace Hl7.FhirPath.Tests
             var patientRoot = ElementNode.Root(_provider, "Patient");
 
             var containedObs = ElementNode.Root(_provider, "Observation", "contained");
-            
             containedObs.Add(_provider, "value", true, "boolean");
             patientRoot.Add(_provider, containedObs);
 
@@ -74,9 +71,6 @@ namespace Hl7.FhirPath.Tests
             var obs = ElementNode.Root(_provider, "Observation");
             obs.Add(_provider, "id", "test");
 
-            patient.AddAnnotation(ModelInfo.ModelInspector);
-            obs.AddAnnotation(ModelInfo.ModelInspector);
-            
             patient.Add(_provider, obs, "contained");
 
             // Select on the root of the resource, path should match with resource name included
@@ -171,7 +165,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        public void SuccessfullyCreated()
+        public async Tasks.Task SuccessfullyCreated()
         {
             var patient = createPatient();
 
@@ -184,7 +178,7 @@ namespace Hl7.FhirPath.Tests
             pat.ActiveElement.SetStringExtension("urn:2", "world!");
             pat.Identifier.Add(new Identifier("http://nu.nl", "1234567"));
             pat.Identifier.Add(new Identifier("http://toen.nl", "7654321"));
-            XmlAssert.AreSame("in place", pat.ToXml(), patient.ToXml());
+            XmlAssert.AreSame("in place", await pat.ToXmlAsync(), await patient.ToXmlAsync());
         }
 
         [TestMethod]
@@ -273,7 +267,7 @@ namespace Hl7.FhirPath.Tests
         public void CanBuildFromITypedElement()
         {
             var tpXml = File.ReadAllText(@"TestData/fp-test-patient.xml");
-            var patientElem = FhirXmlNode.Parse(tpXml).ToTypedElement(ModelInfo.ModelInspector);
+            var patientElem = (new FhirXmlParser()).Parse(tpXml).ToTypedElement();
             var nodes = ElementNode.FromElement(patientElem);
             Assert.IsTrue(patientElem.IsEqualTo(nodes).Success);
         }
@@ -399,12 +393,6 @@ namespace Hl7.FhirPath.Tests
 
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                var resource = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
-                return resource.Value;
-            }
-
-            public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
-            {
                 var sd = await _resolver.FindStructureDefinitionAsync(uri);
                 if (!sd.HasSnapshot)
                 {
@@ -415,8 +403,6 @@ namespace Hl7.FhirPath.Tests
 
                 return sd;
             }
-
-            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }

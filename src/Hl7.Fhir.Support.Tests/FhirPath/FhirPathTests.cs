@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Tests
         public void HtmlChecks(string xml, bool expected, string because)
         {
             var evaluator = _compiler.Compile("htmlChecks()");
-            evaluator.Predicate(PocoNode.ForPrimitive<XHtml>(xml), new FhirEvaluationContext()).Should().Be(expected, because);
+            evaluator.Predicate(ElementNode.ForPrimitive(xml), new FhirEvaluationContext()).Should().Be(expected, because);
         }
 
         [TestMethod]
@@ -75,10 +75,11 @@ namespace Hl7.Fhir.Support.Tests
             var xml = "<Parameters xmlns=\"http://hl7.org/fhir\"><parameter><name value=\"item\" /><valueString value=\"test\"/></parameter></Parameters>";
             var sourceNode = FhirXmlNode.Parse(xml);
 
-            yield return [sourceNode.ToTypedElement(ModelInspector.Base), "sourceNode to TypedElement"];
+            yield return new object[] { sourceNode.ToTypedElement(ModelInspector.ForAssembly(typeof(Resource).Assembly)), "sourceNode to TypedElement" };
 
             var poco = sourceNode.ToPoco<Parameters>(ModelInspector.Base);
-            yield return [poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement"];
+            yield return new object[] { poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement" };
+
         }
 
         public static IEnumerable<object[]> LowBoundaryTestCases() =>
@@ -133,7 +134,7 @@ namespace Hl7.Fhir.Support.Tests
         public static IEnumerable<object[]> ComparableTestCases() =>
            new (string expression, bool expected)[]
                {
-                    ("1 'cm'.comparable(1 '[in_i]')", false),
+                    ("1 'cm'.comparable(1 '[in_i]')", true),
                     ("1 week.comparable(1 'wk')", true),
                     ("1 'cm'.comparable(1 's')", false),
                 }.Select(t => new object[] { t.expression, t.expected });
@@ -149,11 +150,11 @@ namespace Hl7.Fhir.Support.Tests
         public void AssertFhirPathTestcases(string expression, bool expected)
         {
             var evaluator = _compiler.Compile(expression);
-            var result = evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
+            var result = evaluator(null, new FhirEvaluationContext());
 
             if (result.Any())
             {
-                result.Should().ContainSingle().Which.GetValue().Should().Be(expected);
+                result.Should().ContainSingle().Which.Value.Should().Be(expected);
             }
             else
             {

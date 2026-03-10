@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Rest
 {

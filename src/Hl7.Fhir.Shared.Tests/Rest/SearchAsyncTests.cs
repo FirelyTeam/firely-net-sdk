@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 #pragma warning disable CS0618 // Type or member is obsolete
             var result1 = method switch
             {
-                "GET" => await client.SearchAsync<Patient>(srch),
+                "GET" => client.Search<Patient>(srch),
                 "ASYNC" => await client.SearchAsync<Patient>(srch),
                 "POST" => await client.SearchUsingPostAsync<Patient>(srch),
                 _ => throw new Exception()
@@ -80,27 +80,43 @@ namespace Hl7.Fhir.Core.AsyncTests
             var results = await Task.WhenAll(tasks);
             results.All(r => r is not null).Should().BeTrue();
         }
-
+     
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        [DataRow(null)]
-        [DataRow(5)]
-        public async Task SearchWithCriteria_AsyncContinue_SearchReturnedHttpClient(int? pageSize)
+        public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
         {
-            using var client = new FhirClient(ENDPOINT);          
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, pageSize);
+            using var client = new FhirClient(ENDPOINT);
+           
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
             await check(client, result1);
         }
 
         [TestMethod]
         [Ignore("FS does not like to continue after a search with post - getting GONE")]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        [DataRow(1)]
-        [DataRow(5)]
-        public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturnedHttpClient(int pageSize)
+        public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturnedHttpClient()
+        {
+            using var client = new FhirClient(ENDPOINT);                  
+            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize: 5);
+            await check(client, result1);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Task SearchWithCriteria_AsyncContinue_SearchReturnedHttpClient()
+        {
+            using var client = new FhirClient(ENDPOINT);          
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 5);
+            await check(client, result1);
+        }
+
+        [TestMethod]
+        [Ignore("FS does not like to continue after a search with post - getting GONE")]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturnedHttpClient()
         {
             using var client = new FhirClient(ENDPOINT);           
-            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, null, pageSize);
+            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, null, 1);
             await check(client, result1);
         }
     }

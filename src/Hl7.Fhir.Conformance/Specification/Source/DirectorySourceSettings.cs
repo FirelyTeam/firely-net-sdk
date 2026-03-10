@@ -29,9 +29,9 @@ namespace Hl7.Fhir.Specification.Source
         public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
         // Instance fields
-        private DeserializerSettings _parserSettings = new();
-        private FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
-        private FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
+        ParserSettings _parserSettings = ParserSettings.CreateDefault();
+        FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
+        FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
 
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification.Source
             other.MultiThreaded = this.MultiThreaded;
             other.SummaryDetailsHarvesters = (ArtifactSummaryHarvester[])this.SummaryDetailsHarvesters?.Clone();
             other.ExcludeSummariesForUnknownArtifacts = this.ExcludeSummariesForUnknownArtifacts;
-            other.ParserSettings = this.ParserSettings with { };
+            other.ParserSettings = new ParserSettings(this.ParserSettings);
             other.XmlParserSettings = new FhirXmlParsingSettings(this.XmlParserSettings);
             other.JsonParserSettings = new FhirJsonParsingSettings(this.JsonParserSettings);
         }
@@ -293,10 +293,10 @@ namespace Hl7.Fhir.Specification.Source
         /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
         /// </summary>
         /// <value>A <see cref="ParserSettings"/> instance.</value>
-        public DeserializerSettings ParserSettings
+        public ParserSettings ParserSettings
         {
             get => _parserSettings;
-            set => _parserSettings = value ?? new DeserializerSettings().UsingMode(DeserializationMode.Recoverable);
+            set => _parserSettings = value ?? ParserSettings.CreateDefault();
         }
 
         /// <summary>

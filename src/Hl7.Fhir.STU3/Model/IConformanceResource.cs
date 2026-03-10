@@ -31,142 +31,173 @@ using Hl7.Fhir.Introspection;
 using System;
 using System.Linq;
 
-#nullable enable
-
-namespace Hl7.Fhir.Model;
-
-public partial class StructureDefinition : IVersionableConformanceResource;
-
-public partial class ValueSet : IVersionableConformanceResource;
-
-public partial class SearchParameter : IVersionableConformanceResource;
-
-public partial class OperationDefinition : IVersionableConformanceResource;
-
-public partial class CapabilityStatement : IVersionableConformanceResource;
-
-public partial class MessageDefinition : IVersionableConformanceResource;
-
-public partial class ImplementationGuide : IVersionableConformanceResource
+namespace Hl7.Fhir.Model
 {
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? PurposeElement
+    public partial class StructureDefinition : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public string? Purpose
+    public partial class ValueSet : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-}
 
-public partial class CompartmentDefinition : IConformanceResource;
-public partial class StructureMap : IVersionableConformanceResource;
-public partial class GraphDefinition : IVersionableConformanceResource;
-public partial class CodeSystem : IVersionableConformanceResource;
-public partial class ConceptMap : IVersionableConformanceResource;
-public partial class TestScript : IVersionableConformanceResource;
-public partial class Library : IVersionableConformanceResource;
-public partial class ExpansionProfile : IVersionableConformanceResource
-{
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? PurposeElement
-    {
-        get => null;
-        set => throw new NotImplementedException();
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public string? Purpose
+    public partial class SearchParameter : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-}
 
-public partial class Questionnaire : IVersionableConformanceResource;
-
-public partial class DataElement : IConformanceResource
-{
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? DescriptionElement
-    {
-        get => null;
-        set => throw new NotImplementedException();
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? PurposeElement
+    public partial class OperationDefinition : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public string? Description
+    public partial class CapabilityStatement : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public string? Purpose
+    public partial class MessageDefinition : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-}
 
-
-public partial class NamingSystem : IConformanceResource
-{
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public Markdown? PurposeElement
-    {
-        get => null;
-        set => throw new NotImplementedException();
     }
 
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public bool? Experimental
+    public partial class ImplementationGuide : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-
-    [Obsolete("This property is not a part of the official FHIR specification", true)]
-    public FhirBoolean? ExperimentalElement
-    {
-        get => null;
-        set => throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
-    /// </summary>
-    public string? Url
-    {
-        get
+        //I think ImplementationGuide should have a purpose element.
+        [NotMapped]
+        public Markdown PurposeElement
         {
-            var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
-            return preferred ?? UniqueId.FirstOrDefault()?.Value;
+            get { return null; }
+            set { throw new NotImplementedException(); }
         }
-        set { throw new NotImplementedException(); }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
-    public FhirUri? UrlElement
+    public partial class CompartmentDefinition : IConformanceResource
     {
-        get => Url != null ? new FhirUri(Url) : null;
-        set => throw new NotImplementedException();
+
+    }
+    public partial class StructureMap : IVersionableConformanceResource
+    {
+
+    }
+    public partial class GraphDefinition : IVersionableConformanceResource
+    {
+
     }
 
-    public string? Purpose
+    public partial class CodeSystem : IVersionableConformanceResource
     {
-        get => null;
-        set => throw new NotImplementedException();
+
+    }
+
+    public partial class ConceptMap : IVersionableConformanceResource
+    {
+
+    }
+    public partial class TestScript : IVersionableConformanceResource
+    {
+
+    }
+    
+    public partial class Library : IVersionableConformanceResource
+    {
+
+    }
+
+
+    public partial class ExpansionProfile : IVersionableConformanceResource
+    {
+        public Markdown PurposeElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
+    }
+
+    public partial class Questionnaire : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class DataElement : IConformanceResource
+    {
+        // I think DataElement should have Description too
+        [NotMapped]
+        public Markdown DescriptionElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        [NotMapped]
+        public Markdown PurposeElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string Description { get => null; set => throw new NotImplementedException(); }
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
+    }
+
+
+    public partial class NamingSystem : IConformanceResource
+    {
+        // I think NamingSystem should have Experimental too
+        [NotMapped]
+        public Markdown PurposeElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        [NotMapped]
+        public bool? Experimental
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        [NotMapped]
+        public FhirBoolean ExperimentalElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
+        /// </summary>
+        [NotMapped]
+        public string Url
+        {
+            get
+            {
+                var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
+                return preferred ?? UniqueId.FirstOrDefault()?.Value;
+            }
+            set { throw new NotImplementedException(); }
+        }
+
+        [NotMapped]
+        public FhirUri UrlElement
+        {
+            get
+            {
+                if (Url != null)
+                    return new FhirUri(Url);
+                else
+                    return null;
+            }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 }

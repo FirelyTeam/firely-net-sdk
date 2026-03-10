@@ -72,11 +72,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var xmlFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.xml");
-            var xml = new FhirXmlSerializer().SerializeToString(resource);
+            var xml = await new FhirXmlSerializer().SerializeToStringAsync(resource);
             await File.WriteAllTextAsync(xmlFile, xml);
 
             xml = await File.ReadAllTextAsync(xmlFile);
-            var parsed = new FhirXmlDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable)).Deserialize<T>(xml);
+            var parsed = await new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(xml);
 
             return parsed;
         }
@@ -86,11 +86,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var jsonFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.json");
-            var json = new FhirJsonSerializer().SerializeToString(resource);
+            var json = await new FhirJsonSerializer().SerializeToStringAsync(resource);
             await File.WriteAllTextAsync(jsonFile, json);
 
             json = await File.ReadAllTextAsync(jsonFile);
-            var parsed = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable)).Deserialize<T>(json);
+            var parsed = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(json);
 
             return parsed;
         }

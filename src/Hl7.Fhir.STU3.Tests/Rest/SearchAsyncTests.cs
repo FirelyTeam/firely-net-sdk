@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await searchUsingParam(client);
             }
         }
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = await client.ContinueAsync(result1, PageDirection.Next);
+                result1 = client.Continue(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await searchUsingPost(client);
             }
         }
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = await client.ContinueAsync(result1, PageDirection.Next);
+                result1 = client.Continue(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 searchSync(client);
             }
         }
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 .LimitTo(10)
                 .SummaryOnly();
 
-            var result1 = client.SearchAsync<Patient>(srch).WaitResult();
+            var result1 = client.Search<Patient>(srch);
 
             Assert.IsGreaterThanOrEqualTo(1, result1.Entry.Count);
 
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = client.ContinueAsync(result1, PageDirection.Next).WaitResult();
+                result1 = client.Continue(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await searchMultiple(client);
             }
         }
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = await client.ContinueAsync(result1, PageDirection.Next);
+                result1 = client.Continue(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await searchMultipleUsingPost(client);
             }
         }
@@ -204,7 +204,72 @@ namespace Hl7.Fhir.Core.AsyncTests
                     Console.WriteLine(
                         $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-                result1 = await client.ContinueAsync(result1, PageDirection.Next);
+                result1 = client.Continue(result1, PageDirection.Next);
+            }
+
+            Console.WriteLine("Test Completed");
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchWithCriteria(client);
+            }
+        }
+
+        private static async Task searchWithCriteria(BaseFhirClient client)
+        {
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
+            {
+                foreach (var e in result1.Entry)
+                {
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                }
+                result1 = client.Continue(result1, PageDirection.Next);
+            }
+
+            Console.WriteLine("Test Completed");
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchUsingPostWithCriteria(client);
+            }
+        }
+
+
+        private static async Task searchUsingPostWithCriteria(BaseFhirClient client)
+        {
+            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize: 5);
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
+            {
+                foreach (var e in result1.Entry)
+                {
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                }
+                result1 = client.Continue(result1, PageDirection.Next);
             }
 
             Console.WriteLine("Test Completed");
@@ -217,12 +282,14 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
-                await searchWithCriteriaAsyncContinue(client);
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchWithCriteriaAsynContinue(client);
             }
+
+
         }
 
-        private static async Task searchWithCriteriaAsyncContinue(BaseFhirClient client)
+        private static async Task searchWithCriteriaAsynContinue(BaseFhirClient client)
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
@@ -250,7 +317,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await searchUsingPostAsyncContinue(client);
             }
         }

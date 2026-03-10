@@ -9,7 +9,6 @@
 using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -56,41 +55,25 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void TestResourceMappingCreation()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Way), out var mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
             Assert.IsTrue(mapping.IsResource);
             Assert.AreEqual("Way", mapping.Name);
             Assert.AreEqual(typeof(Way), mapping.NativeType);
 
-            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Way2), out mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out mapping));
             Assert.IsTrue(mapping.IsResource);
             Assert.AreEqual("Way2", mapping.Name);
             Assert.AreEqual(typeof(Way2), mapping.NativeType);
-        }
 
-        [TestMethod]
-        public void Mapping_Creation_Is_Sensitive_To_Fhir_Version()
-        {
-            var mir3 = new ModelInspector(FhirRelease.STU3);
-
-            Assert.IsTrue(ClassMapping.TryCreate(mir3, typeof(Way2), out var mapping));
-            mapping.PropertyMappings.Should().Contain(pm => pm.Name == "original");
-            mapping.PropertyMappings.Should().NotContain(pm => pm.Name == "r4");
-
-            var mir4 = new ModelInspector(FhirRelease.R4);
-            Assert.IsTrue(ClassMapping.TryCreate(mir4, typeof(Way2), out mapping));
-            mapping.PropertyMappings.Should().Contain(pm => pm.Name == "original");
-            mapping.PropertyMappings.Should().Contain(pm => pm.Name == "r4");
-
-            var mir5 = new ModelInspector(FhirRelease.R5);
-            Assert.IsTrue(ClassMapping.TryCreate(mir5, typeof(Way2), out mapping));
-            mapping.PropertyMappings.Should().Contain(pm => pm.Name == "original");
-            mapping.PropertyMappings.Should().NotContain(pm => pm.Name == "r4");
+            Assert.IsFalse(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.DSTU1));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.DSTU2));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.STU3));
         }
 
         [TestMethod]
         public void TestCqlInformation()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Way), out var mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
 
             Assert.IsTrue(mapping.IsPatientClass);
             Assert.IsTrue(typeof(Way).IsAssignableTo(typeof(ICoded<string>)));
@@ -128,40 +111,31 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsTrue(result.IsCompleted);
 
             // Create mapping (presumably once) && also touch properties to initialize them as well.
-            static void task(Type t) => Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, t, result: out var _));
+            static void task(Type t) => Assert.IsTrue(ClassMapping.TryCreate(t, out var map) && map.PropertyMappings != null);
         }
+
+
+
+
 
         [TestMethod]
         public void TestDatatypeMappingCreation()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(AnimalName), out var mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(AnimalName), out var mapping, (Specification.FhirRelease)int.MaxValue));
             Assert.IsFalse(mapping.IsResource);
             Assert.AreEqual("AnimalName", mapping.Name);
             Assert.AreEqual(typeof(AnimalName), mapping.NativeType);
 
-            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(NewAnimalName), out mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(NewAnimalName), out mapping));
             Assert.IsFalse(mapping.IsResource);
             Assert.AreEqual("AnimalName", mapping.Name);
             Assert.AreEqual(typeof(NewAnimalName), mapping.NativeType);
-        }
 
-        [TestMethod]
-        public void CanManipulatePropertyMappingsList()
-        {
-            var inspector = new ModelInspector(FhirRelease.STU3);
-
-            // Inspect the HL7.Fhir.Model common assembly
-            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
-            var metaMapping = inspector.FindClassMapping("Meta")!;
-            var profileMapping = metaMapping.FindMappedElementByName("profile")!;
-
-            // Try to remove a mapping
-            metaMapping.PropertyMappings.Remove(profileMapping);
-            metaMapping.FindMappedElementByName("profile").Should().BeNull();
-
-            // And add it back.
-            metaMapping.PropertyMappings.Add(profileMapping);
-            metaMapping.FindMappedElementByName("profile").Should().NotBeNull();
+            Assert.IsFalse(ClassMapping.TryCreate(typeof(ComplexNumber), out _, Specification.FhirRelease.DSTU1));
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(ComplexNumber), out mapping, Specification.FhirRelease.R5));
+            Assert.IsFalse(mapping.IsResource);
+            Assert.AreEqual("Complex", mapping.Name);
+            Assert.AreEqual(typeof(ComplexNumber), mapping.NativeType);
         }
     }
 
@@ -173,6 +147,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
         public string PositionalString { get; private set; }
     }
+
 
     /*
      * Resource classes for tests 
@@ -191,22 +166,15 @@ namespace Hl7.Fhir.Tests.Introspection
         public string Code { get; set; }
 
         public Date BirthDate => new(1972, 11, 30);
-        
-        public IReadOnlyCollection<Coding> ToCodings() => [new(null, Code)];
-        protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
+
+        public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
+        public IEnumerable<Coding> ToCodings() => [new(null, Code)];
     }
 
-    [FhirType("Way2")]
+    [FhirType("Way2", Since = Specification.FhirRelease.DSTU2)]
     public class Way2 : Resource
     {
-        [FhirElement("original")]
-        public FhirBoolean OriginalElement { get; set; }
-
-        [FhirElement("r4", Since = FhirRelease.R4)]
-        [NotMapped(Since = FhirRelease.R5)]
-        public FhirBoolean R4Element { get; set; }
-
-        protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
+        public override IDeepCopyable DeepCopy() { throw new NotImplementedException(); }
     }
 
     /* 
@@ -217,4 +185,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
     [FhirType("AnimalName")]
     public class NewAnimalName : AnimalName { }
+
+    [FhirType("Complex", Since = Specification.FhirRelease.DSTU2)]
+    public class ComplexNumber { }
 }

@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsNotNull(id);
         }
 
-        public static void RoundtripXml(Func<string, object> navCreator)
+        public static async Task RoundtripXml(Func<string, object> navCreator)
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
 
@@ -109,6 +109,7 @@ namespace Hl7.Fhir.Serialization.Tests
             switch (nav)
             {
                 case ISourceNode _:
+                    break;
                 case ITypedElement _:
                     break;
                 default:
@@ -116,8 +117,8 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             string output;
-            if (nav is ISourceNode isn2) output = isn2.ToXml();
-            else if (nav is ITypedElement ien2) output = ien2.ToXml();
+            if (nav is ISourceNode isn2) output = await isn2.ToXmlAsync();
+            else if (nav is ITypedElement ien2) output = await ien2.ToXmlAsync();
             else
                 throw Error.InvalidOperation("Fix unit test");
 
@@ -144,8 +145,8 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             string output;
-            if (nav is ISourceNode isn2) output = isn2.ToJson();
-            else if (nav is ITypedElement ien2) output = ien2.ToJson();
+            if (nav is ISourceNode isn2) output = await isn2.ToJsonAsync();
+            else if (nav is ITypedElement ien2) output = await ien2.ToJsonAsync();
             else
                 throw Error.InvalidOperation("Fix unit test");
 

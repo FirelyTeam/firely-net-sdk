@@ -23,11 +23,11 @@ namespace Firely.Sdk.Benchmarks
 
         [Benchmark]
         public string EnumUtilityGetLiteral()
-            => StringSearchParam.GetLiteral();
+            => EnumUtility.GetLiteral(StringSearchParam);
 
         [Benchmark]
         public string EnumUtilityGetLiteralNonGeneric()
-            => StringSearchParamEnum.GetLiteral();
+            => EnumUtility.GetLiteral(StringSearchParamEnum);
 
         [Benchmark]
         public SearchParamType EnumParse()
@@ -55,11 +55,11 @@ namespace Firely.Sdk.Benchmarks
 
         [Benchmark]
         public string? EnumUtilityGetSystem()
-            => StringSearchParam.GetSystem();
+            => EnumUtility.GetSystem(StringSearchParam);
 
         [Benchmark]
         public string? EnumUtilityGetSystemNonGeneric()
-            => StringSearchParamEnum.GetSystem();
+            => EnumUtility.GetSystem(StringSearchParamEnum);
     }
 }
 #nullable restore

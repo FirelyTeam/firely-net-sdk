@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -58,21 +54,41 @@ namespace Hl7.Fhir.Model
   [FhirType("DataType","http://hl7.org/fhir/StructureDefinition/DataType")]
   public abstract partial class DataType : Hl7.Fhir.Model.Element
   {
-    protected internal override void CopyToInternal(Base other)
-    {
-      if(other is not DataType dest)
-        throw new ArgumentException("Can only copy to an object of the same type", "other");
+    /// <summary>
+    /// FHIR Type Name
+    /// </summary>
+    public override string TypeName { get { return "DataType"; } }
 
-      base.CopyToInternal(dest);
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
+    {
+      var dest = other as DataType;
+
+      if (dest == null)
+      {
+        throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
+
+      base.CopyTo(dest);
+      return dest;
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not DataType otherT) return false;
+      var otherT = other as DataType;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+
+      return true;
+    }
+
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as DataType;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
 
       return true;
     }

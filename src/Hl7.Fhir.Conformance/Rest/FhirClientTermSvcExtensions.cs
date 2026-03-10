@@ -23,7 +23,6 @@ namespace Hl7.Fhir.Rest
                         .OperationResult<ValueSet>();
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static ValueSet ExpandValueSet(this BaseFhirClient client, Uri valueset, FhirString filter = null,
             FhirDateTime date = null)
         {
@@ -44,7 +43,6 @@ namespace Hl7.Fhir.Rest
                         .OperationResult<ValueSet>();
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static ValueSet ExpandValueSet(this BaseFhirClient client, FhirUri identifier, FhirString filter = null,
             FhirDateTime date = null)
         {
@@ -63,7 +61,6 @@ namespace Hl7.Fhir.Rest
                     .OperationResult<ValueSet>();
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static ValueSet ExpandValueSet(this BaseFhirClient client, ValueSet vs, FhirString filter = null,
             FhirDateTime date = null)
         {
@@ -91,7 +88,6 @@ namespace Hl7.Fhir.Rest
                 .OperationResult<Parameters>();
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static Parameters ConceptLookup(this BaseFhirClient client,
             Code code = null, FhirUri system = null, FhirString version = null,
             Coding coding = null, FhirDateTime date = null, Code displayLanguage = null, Code property = null)
@@ -135,7 +131,6 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static ValidateCodeResult ValidateCode(this BaseFhirClient client, String valueSetId,
                 FhirUri url = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,
@@ -174,7 +169,6 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static ValidateCodeResult ValidateCode(this BaseFhirClient client,
                 FhirUri url = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,

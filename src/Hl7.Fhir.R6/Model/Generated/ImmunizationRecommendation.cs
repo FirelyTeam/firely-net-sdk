@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,13 +51,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("ImmunizationRecommendation","http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation")]
+  [FhirType("ImmunizationRecommendation","http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation", IsResource=true)]
   public partial class ImmunizationRecommendation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "ImmunizationRecommendation";
+    public override string TypeName { get { return "ImmunizationRecommendation"; } }
 
     /// <summary>
     /// Vaccine administration recommendations
@@ -71,660 +67,404 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImmunizationRecommendation.recommendation", IsBackboneType=true)]
+    [FhirType("ImmunizationRecommendation#Recommendation", IsNestedType=true)]
+    [BackboneType("ImmunizationRecommendation.recommendation")]
     public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "ImmunizationRecommendation.recommendation";
+      public override string TypeName { get { return "ImmunizationRecommendation#Recommendation"; } }
 
       /// <summary>
-      /// Vaccine  or vaccine group recommendation applies to.
+      /// Vaccine  or vaccine group recommendation applies to
       /// </summary>
       [FhirElement("vaccineCode", InSummary=true, Order=40)]
       [Binding("VaccineCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> VaccineCode
       {
-        get
-        {
-          if(_VaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["vaccineCode"]);
-          return _VaccineCode ??= [];
-        }
-
-        set
-        {
-          if (_VaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("vaccineCode");
-          _VaccineCode = value;
-          OnPropertyChanged("VaccineCode");
-        }
-
+        get { if(_VaccineCode==null) _VaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _VaccineCode; }
+        set { _VaccineCode = value; OnPropertyChanged("VaccineCode"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _VaccineCode;
+      private List<Hl7.Fhir.Model.CodeableConcept> _VaccineCode;
 
       /// <summary>
-      /// Disease to be immunized against.
+      /// Disease to be immunized against
       /// </summary>
       [FhirElement("targetDisease", InSummary=true, Order=50)]
       [Binding("TargetDisease")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
       {
-        get
-        {
-          if(_TargetDisease.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["targetDisease"]);
-          return _TargetDisease ??= [];
-        }
-
-        set
-        {
-          if (_TargetDisease.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("targetDisease");
-          _TargetDisease = value;
-          OnPropertyChanged("TargetDisease");
-        }
-
+        get { if(_TargetDisease==null) _TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetDisease; }
+        set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _TargetDisease;
+      private List<Hl7.Fhir.Model.CodeableConcept> _TargetDisease;
 
       /// <summary>
-      /// Vaccine which is contraindicated to fulfill the recommendation.
+      /// Vaccine which is contraindicated to fulfill the recommendation
       /// </summary>
       [FhirElement("contraindicatedVaccineCode", InSummary=true, Order=60)]
       [Binding("VaccineCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ContraindicatedVaccineCode
       {
-        get
-        {
-          if(_ContraindicatedVaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["contraindicatedVaccineCode"]);
-          return _ContraindicatedVaccineCode ??= [];
-        }
-
-        set
-        {
-          if (_ContraindicatedVaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("contraindicatedVaccineCode");
-          _ContraindicatedVaccineCode = value;
-          OnPropertyChanged("ContraindicatedVaccineCode");
-        }
-
+        get { if(_ContraindicatedVaccineCode==null) _ContraindicatedVaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ContraindicatedVaccineCode; }
+        set { _ContraindicatedVaccineCode = value; OnPropertyChanged("ContraindicatedVaccineCode"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _ContraindicatedVaccineCode;
+      private List<Hl7.Fhir.Model.CodeableConcept> _ContraindicatedVaccineCode;
 
       /// <summary>
-      /// Vaccine recommendation status.
+      /// Vaccine recommendation status
       /// </summary>
       [FhirElement("forecastStatus", InSummary=true, IsModifier=true, Order=70)]
       [Binding("ImmunizationRecommendationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? ForecastStatus
+      public Hl7.Fhir.Model.CodeableConcept ForecastStatus
       {
-        get
-        {
-          if(_ForecastStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["forecastStatus"]);
-          return _ForecastStatus;
-        }
-
-        set
-        {
-          if (_ForecastStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("forecastStatus");
-          _ForecastStatus = value;
-          OnPropertyChanged("ForecastStatus");
-        }
-
+        get { return _ForecastStatus; }
+        set { _ForecastStatus = value; OnPropertyChanged("ForecastStatus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _ForecastStatus;
+      private Hl7.Fhir.Model.CodeableConcept _ForecastStatus;
 
       /// <summary>
-      /// Vaccine administration status reason.
+      /// Vaccine administration status reason
       /// </summary>
       [FhirElement("forecastReason", InSummary=true, Order=80)]
       [Binding("ImmunizationRecommendationReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ForecastReason
       {
-        get
-        {
-          if(_ForecastReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["forecastReason"]);
-          return _ForecastReason ??= [];
-        }
-
-        set
-        {
-          if (_ForecastReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("forecastReason");
-          _ForecastReason = value;
-          OnPropertyChanged("ForecastReason");
-        }
-
+        get { if(_ForecastReason==null) _ForecastReason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ForecastReason; }
+        set { _ForecastReason = value; OnPropertyChanged("ForecastReason"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _ForecastReason;
+      private List<Hl7.Fhir.Model.CodeableConcept> _ForecastReason;
 
       /// <summary>
-      /// Dates governing proposed immunization.
+      /// Dates governing proposed immunization
       /// </summary>
       [FhirElement("dateCriterion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> DateCriterion
       {
-        get
-        {
-          if(_DateCriterion.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>), Overflow["dateCriterion"]);
-          return _DateCriterion ??= [];
-        }
-
-        set
-        {
-          if (_DateCriterion.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>>())
-            Overflow.Remove("dateCriterion");
-          _DateCriterion = value;
-          OnPropertyChanged("DateCriterion");
-        }
-
+        get { if(_DateCriterion==null) _DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(); return _DateCriterion; }
+        set { _DateCriterion = value; OnPropertyChanged("DateCriterion"); }
       }
 
-      private List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>? _DateCriterion;
+      private List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> _DateCriterion;
 
       /// <summary>
-      /// Protocol details.
+      /// Protocol details
       /// </summary>
       [FhirElement("description", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown? DescriptionElement
+      public Hl7.Fhir.Model.Markdown DescriptionElement
       {
-        get
-        {
-          if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["description"]);
-          return _DescriptionElement;
-        }
-
-        set
-        {
-          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-            Overflow.Remove("description");
-          _DescriptionElement = value;
-          OnPropertyChanged("DescriptionElement");
-        }
-
+        get { return _DescriptionElement; }
+        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown? _DescriptionElement;
+      private Hl7.Fhir.Model.Markdown _DescriptionElement;
 
       /// <summary>
       /// Protocol details
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Description
+      public string Description
       {
-        get => DescriptionElement?.Value;
+        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
         set
         {
-          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          if (value == null)
+            DescriptionElement = null;
+          else
+            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Description");
         }
       }
 
       /// <summary>
-      /// Name of vaccination series.
+      /// Name of vaccination series
       /// </summary>
       [FhirElement("series", Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? SeriesElement
+      public Hl7.Fhir.Model.FhirString SeriesElement
       {
-        get
-        {
-          if(_SeriesElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["series"]);
-          return _SeriesElement;
-        }
-
-        set
-        {
-          if (_SeriesElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("series");
-          _SeriesElement = value;
-          OnPropertyChanged("SeriesElement");
-        }
-
+        get { return _SeriesElement; }
+        set { _SeriesElement = value; OnPropertyChanged("SeriesElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _SeriesElement;
+      private Hl7.Fhir.Model.FhirString _SeriesElement;
 
       /// <summary>
       /// Name of vaccination series
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Series
+      public string Series
       {
-        get => SeriesElement?.Value;
+        get { return SeriesElement != null ? SeriesElement.Value : null; }
         set
         {
-          SeriesElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            SeriesElement = null;
+          else
+            SeriesElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Series");
         }
       }
 
       /// <summary>
-      /// Recommended dose number within series.
+      /// Recommended dose number within series
       /// </summary>
       [FhirElement("doseNumber", InSummary=true, Order=120)]
       [Binding("DoseNumber")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? DoseNumber
+      public Hl7.Fhir.Model.CodeableConcept DoseNumber
       {
-        get
-        {
-          if(_DoseNumber.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["doseNumber"]);
-          return _DoseNumber;
-        }
-
-        set
-        {
-          if (_DoseNumber.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("doseNumber");
-          _DoseNumber = value;
-          OnPropertyChanged("DoseNumber");
-        }
-
+        get { return _DoseNumber; }
+        set { _DoseNumber = value; OnPropertyChanged("DoseNumber"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _DoseNumber;
+      private Hl7.Fhir.Model.CodeableConcept _DoseNumber;
 
       /// <summary>
-      /// Recommended number of doses for immunity.
+      /// Recommended number of doses for immunity
       /// </summary>
       [FhirElement("seriesDoses", Order=130)]
       [Binding("SeriesDoses")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? SeriesDoses
+      public Hl7.Fhir.Model.CodeableConcept SeriesDoses
       {
-        get
-        {
-          if(_SeriesDoses.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["seriesDoses"]);
-          return _SeriesDoses;
-        }
-
-        set
-        {
-          if (_SeriesDoses.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("seriesDoses");
-          _SeriesDoses = value;
-          OnPropertyChanged("SeriesDoses");
-        }
-
+        get { return _SeriesDoses; }
+        set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _SeriesDoses;
+      private Hl7.Fhir.Model.CodeableConcept _SeriesDoses;
 
       /// <summary>
-      /// Past immunizations supporting recommendation.
+      /// Past immunizations supporting recommendation
       /// </summary>
       [FhirElement("supportingImmunization", Order=140)]
       [CLSCompliant(false)]
       [References("Immunization","ImmunizationEvaluation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
       {
-        get
-        {
-          if(_SupportingImmunization.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["supportingImmunization"]);
-          return _SupportingImmunization ??= [];
-        }
-
-        set
-        {
-          if (_SupportingImmunization.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            Overflow.Remove("supportingImmunization");
-          _SupportingImmunization = value;
-          OnPropertyChanged("SupportingImmunization");
-        }
-
+        get { if(_SupportingImmunization==null) _SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingImmunization; }
+        set { _SupportingImmunization = value; OnPropertyChanged("SupportingImmunization"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference>? _SupportingImmunization;
+      private List<Hl7.Fhir.Model.ResourceReference> _SupportingImmunization;
 
       /// <summary>
-      /// Patient observations supporting recommendation.
+      /// Patient observations supporting recommendation
       /// </summary>
       [FhirElement("supportingPatientInformation", Order=150)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
       {
-        get
-        {
-          if(_SupportingPatientInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["supportingPatientInformation"]);
-          return _SupportingPatientInformation ??= [];
-        }
-
-        set
-        {
-          if (_SupportingPatientInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            Overflow.Remove("supportingPatientInformation");
-          _SupportingPatientInformation = value;
-          OnPropertyChanged("SupportingPatientInformation");
-        }
-
+        get { if(_SupportingPatientInformation==null) _SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingPatientInformation; }
+        set { _SupportingPatientInformation = value; OnPropertyChanged("SupportingPatientInformation"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference>? _SupportingPatientInformation;
+      private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not RecommendationComponent dest)
+        var dest = other as RecommendationComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_VaccineCode is not null) dest.VaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(_VaccineCode.DeepCopyInternal());
-        if(_TargetDisease is not null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(_TargetDisease.DeepCopyInternal());
-        if(_ContraindicatedVaccineCode is not null) dest.ContraindicatedVaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(_ContraindicatedVaccineCode.DeepCopyInternal());
-        if(_ForecastStatus is not null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)_ForecastStatus.DeepCopyInternal();
-        if(_ForecastReason is not null) dest.ForecastReason = new List<Hl7.Fhir.Model.CodeableConcept>(_ForecastReason.DeepCopyInternal());
-        if(_DateCriterion is not null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(_DateCriterion.DeepCopyInternal());
-        if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
-        if(_SeriesElement is not null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)_SeriesElement.DeepCopyInternal();
-        if(_DoseNumber is not null) dest.DoseNumber = (Hl7.Fhir.Model.CodeableConcept)_DoseNumber.DeepCopyInternal();
-        if(_SeriesDoses is not null) dest.SeriesDoses = (Hl7.Fhir.Model.CodeableConcept)_SeriesDoses.DeepCopyInternal();
-        if(_SupportingImmunization is not null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(_SupportingImmunization.DeepCopyInternal());
-        if(_SupportingPatientInformation is not null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(_SupportingPatientInformation.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(VaccineCode.Any()) dest.VaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(VaccineCode.DeepCopy());
+        if(TargetDisease.Any()) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopy());
+        if(ContraindicatedVaccineCode.Any()) dest.ContraindicatedVaccineCode = new List<Hl7.Fhir.Model.CodeableConcept>(ContraindicatedVaccineCode.DeepCopy());
+        if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
+        if(ForecastReason.Any()) dest.ForecastReason = new List<Hl7.Fhir.Model.CodeableConcept>(ForecastReason.DeepCopy());
+        if(DateCriterion.Any()) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(DateCriterion.DeepCopy());
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+        if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
+        if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.CodeableConcept)DoseNumber.DeepCopy();
+        if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.CodeableConcept)SeriesDoses.DeepCopy();
+        if(SupportingImmunization.Any()) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopy());
+        if(SupportingPatientInformation.Any()) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new RecommendationComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new RecommendationComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not RecommendationComponent otherT) return false;
+        var otherT = other as RecommendationComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.ListEquals(_VaccineCode, otherT._VaccineCode)) return false;
-        if(!comparer.ListEquals(_TargetDisease, otherT._TargetDisease)) return false;
-        if(!comparer.ListEquals(_ContraindicatedVaccineCode, otherT._ContraindicatedVaccineCode)) return false;
-        if(!comparer.Equals(_ForecastStatus, otherT._ForecastStatus)) return false;
-        if(!comparer.ListEquals(_ForecastReason, otherT._ForecastReason)) return false;
-        if(!comparer.ListEquals(_DateCriterion, otherT._DateCriterion)) return false;
-        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
-        if(!comparer.Equals(_SeriesElement, otherT._SeriesElement)) return false;
-        if(!comparer.Equals(_DoseNumber, otherT._DoseNumber)) return false;
-        if(!comparer.Equals(_SeriesDoses, otherT._SeriesDoses)) return false;
-        if(!comparer.ListEquals(_SupportingImmunization, otherT._SupportingImmunization)) return false;
-        if(!comparer.ListEquals(_SupportingPatientInformation, otherT._SupportingPatientInformation)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(VaccineCode, otherT.VaccineCode)) return false;
+        if( !DeepComparable.Matches(TargetDisease, otherT.TargetDisease)) return false;
+        if( !DeepComparable.Matches(ContraindicatedVaccineCode, otherT.ContraindicatedVaccineCode)) return false;
+        if( !DeepComparable.Matches(ForecastStatus, otherT.ForecastStatus)) return false;
+        if( !DeepComparable.Matches(ForecastReason, otherT.ForecastReason)) return false;
+        if( !DeepComparable.Matches(DateCriterion, otherT.DateCriterion)) return false;
+        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+        if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
+        if( !DeepComparable.Matches(DoseNumber, otherT.DoseNumber)) return false;
+        if( !DeepComparable.Matches(SeriesDoses, otherT.SeriesDoses)) return false;
+        if( !DeepComparable.Matches(SupportingImmunization, otherT.SupportingImmunization)) return false;
+        if( !DeepComparable.Matches(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as RecommendationComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(VaccineCode, otherT.VaccineCode)) return false;
+        if( !DeepComparable.IsExactly(TargetDisease, otherT.TargetDisease)) return false;
+        if( !DeepComparable.IsExactly(ContraindicatedVaccineCode, otherT.ContraindicatedVaccineCode)) return false;
+        if( !DeepComparable.IsExactly(ForecastStatus, otherT.ForecastStatus)) return false;
+        if( !DeepComparable.IsExactly(ForecastReason, otherT.ForecastReason)) return false;
+        if( !DeepComparable.IsExactly(DateCriterion, otherT.DateCriterion)) return false;
+        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+        if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
+        if( !DeepComparable.IsExactly(DoseNumber, otherT.DoseNumber)) return false;
+        if( !DeepComparable.IsExactly(SeriesDoses, otherT.SeriesDoses)) return false;
+        if( !DeepComparable.IsExactly(SupportingImmunization, otherT.SupportingImmunization)) return false;
+        if( !DeepComparable.IsExactly(SupportingPatientInformation, otherT.SupportingPatientInformation)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          foreach (var elem in VaccineCode) { if (elem != null) yield return elem; }
+          foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
+          foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return elem; }
+          if (ForecastStatus != null) yield return ForecastStatus;
+          foreach (var elem in ForecastReason) { if (elem != null) yield return elem; }
+          foreach (var elem in DateCriterion) { if (elem != null) yield return elem; }
+          if (DescriptionElement != null) yield return DescriptionElement;
+          if (SeriesElement != null) yield return SeriesElement;
+          if (DoseNumber != null) yield return DoseNumber;
+          if (SeriesDoses != null) yield return SeriesDoses;
+          foreach (var elem in SupportingImmunization) { if (elem != null) yield return elem; }
+          foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          foreach (var elem in VaccineCode) { if (elem != null) yield return new ElementValue("vaccineCode", elem); }
+          foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", elem); }
+          foreach (var elem in ContraindicatedVaccineCode) { if (elem != null) yield return new ElementValue("contraindicatedVaccineCode", elem); }
+          if (ForecastStatus != null) yield return new ElementValue("forecastStatus", ForecastStatus);
+          foreach (var elem in ForecastReason) { if (elem != null) yield return new ElementValue("forecastReason", elem); }
+          foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", elem); }
+          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+          if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
+          if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
+          if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
+          foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", elem); }
+          foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "vaccineCode":
-            if (_VaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["vaccineCode"];
-              return true;
-            }
-            value = _VaccineCode;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = VaccineCode;
+            return VaccineCode?.Any() == true;
           case "targetDisease":
-            if (_TargetDisease.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["targetDisease"];
-              return true;
-            }
-            value = _TargetDisease;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = TargetDisease;
+            return TargetDisease?.Any() == true;
           case "contraindicatedVaccineCode":
-            if (_ContraindicatedVaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["contraindicatedVaccineCode"];
-              return true;
-            }
-            value = _ContraindicatedVaccineCode;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = ContraindicatedVaccineCode;
+            return ContraindicatedVaccineCode?.Any() == true;
           case "forecastStatus":
-            if (_ForecastStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["forecastStatus"];
-              return true;
-            }
-            value = _ForecastStatus;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = ForecastStatus;
+            return ForecastStatus is not null;
           case "forecastReason":
-            if (_ForecastReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["forecastReason"];
-              return true;
-            }
-            value = _ForecastReason;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = ForecastReason;
+            return ForecastReason?.Any() == true;
           case "dateCriterion":
-            if (_DateCriterion.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>>())
-            {
-              value = Overflow["dateCriterion"];
-              return true;
-            }
-            value = _DateCriterion;
-            return (value as List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>)?.Any() is true;
+            value = DateCriterion;
+            return DateCriterion?.Any() == true;
           case "description":
-            if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-            {
-              value = Overflow["description"];
-              return true;
-            }
-            value = _DescriptionElement;
-            return (value as Hl7.Fhir.Model.Markdown) is not null;
+            value = DescriptionElement;
+            return DescriptionElement is not null;
           case "series":
-            if (_SeriesElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["series"];
-              return true;
-            }
-            value = _SeriesElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = SeriesElement;
+            return SeriesElement is not null;
           case "doseNumber":
-            if (_DoseNumber.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["doseNumber"];
-              return true;
-            }
-            value = _DoseNumber;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = DoseNumber;
+            return DoseNumber is not null;
           case "seriesDoses":
-            if (_SeriesDoses.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["seriesDoses"];
-              return true;
-            }
-            value = _SeriesDoses;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = SeriesDoses;
+            return SeriesDoses is not null;
           case "supportingImmunization":
-            if (_SupportingImmunization.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            {
-              value = Overflow["supportingImmunization"];
-              return true;
-            }
-            value = _SupportingImmunization;
-            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+            value = SupportingImmunization;
+            return SupportingImmunization?.Any() == true;
           case "supportingPatientInformation":
-            if (_SupportingPatientInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            {
-              value = Overflow["supportingPatientInformation"];
-              return true;
-            }
-            value = _SupportingPatientInformation;
-            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+            value = SupportingPatientInformation;
+            return SupportingPatientInformation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "vaccineCode":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              VaccineCode = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["vaccineCode"] = value;
-            }
-            else VaccineCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "targetDisease":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              TargetDisease = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["targetDisease"] = value;
-            }
-            else TargetDisease = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "contraindicatedVaccineCode":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              ContraindicatedVaccineCode = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["contraindicatedVaccineCode"] = value;
-            }
-            else ContraindicatedVaccineCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "forecastStatus":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              ForecastStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["forecastStatus"] = value;
-            }
-            else ForecastStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "forecastReason":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              ForecastReason = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["forecastReason"] = value;
-            }
-            else ForecastReason = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "dateCriterion":
-            if (value is not (List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> or null))
-            {
-              DateCriterion = OverflowNull<List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>>.INSTANCE;
-              Overflow["dateCriterion"] = value;
-            }
-            else DateCriterion = (List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>?)value!;
-            return this;
-          case "description":
-            if (value is not (Hl7.Fhir.Model.Markdown or null))
-            {
-              DescriptionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-              Overflow["description"] = value;
-            }
-            else DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
-            return this;
-          case "series":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              SeriesElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["series"] = value;
-            }
-            else SeriesElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          case "doseNumber":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              DoseNumber = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["doseNumber"] = value;
-            }
-            else DoseNumber = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "seriesDoses":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              SeriesDoses = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["seriesDoses"] = value;
-            }
-            else SeriesDoses = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "supportingImmunization":
-            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-            {
-              SupportingImmunization = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-              Overflow["supportingImmunization"] = value;
-            }
-            else SupportingImmunization = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-            return this;
-          case "supportingPatientInformation":
-            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-            {
-              SupportingPatientInformation = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-              Overflow["supportingPatientInformation"] = value;
-            }
-            else SupportingPatientInformation = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_VaccineCode?.Any() is true && !_VaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("vaccineCode",_VaccineCode);
-        if (_TargetDisease?.Any() is true && !_TargetDisease.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("targetDisease",_TargetDisease);
-        if (_ContraindicatedVaccineCode?.Any() is true && !_ContraindicatedVaccineCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",_ContraindicatedVaccineCode);
-        if (_ForecastStatus is not null && !_ForecastStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("forecastStatus",_ForecastStatus);
-        if (_ForecastReason?.Any() is true && !_ForecastReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("forecastReason",_ForecastReason);
-        if (_DateCriterion?.Any() is true && !_DateCriterion.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>>()) yield return new KeyValuePair<string,object>("dateCriterion",_DateCriterion);
-        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (_SeriesElement is not null && !_SeriesElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("series",_SeriesElement);
-        if (_DoseNumber is not null && !_DoseNumber.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("doseNumber",_DoseNumber);
-        if (_SeriesDoses is not null && !_SeriesDoses.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("seriesDoses",_SeriesDoses);
-        if (_SupportingImmunization?.Any() is true && !_SupportingImmunization.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("supportingImmunization",_SupportingImmunization);
-        if (_SupportingPatientInformation?.Any() is true && !_SupportingPatientInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("supportingPatientInformation",_SupportingPatientInformation);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (VaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
+        if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (ContraindicatedVaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
+        if (ForecastStatus is not null) yield return new KeyValuePair<string,object>("forecastStatus",ForecastStatus);
+        if (ForecastReason?.Any() == true) yield return new KeyValuePair<string,object>("forecastReason",ForecastReason);
+        if (DateCriterion?.Any() == true) yield return new KeyValuePair<string,object>("dateCriterion",DateCriterion);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+        if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
+        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+        if (SupportingImmunization?.Any() == true) yield return new KeyValuePair<string,object>("supportingImmunization",SupportingImmunization);
+        if (SupportingPatientInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
       }
 
     }
@@ -737,478 +477,362 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("ImmunizationRecommendation.recommendation.dateCriterion", IsBackboneType=true)]
+    [FhirType("ImmunizationRecommendation#DateCriterion", IsNestedType=true)]
+    [BackboneType("ImmunizationRecommendation.recommendation.dateCriterion")]
     public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "ImmunizationRecommendation.recommendation.dateCriterion";
+      public override string TypeName { get { return "ImmunizationRecommendation#DateCriterion"; } }
 
       /// <summary>
-      /// Type of date.
+      /// Type of date
       /// </summary>
       [FhirElement("code", Order=40)]
       [Binding("ImmunizationRecommendationDateCriterion")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept? Code
+      public Hl7.Fhir.Model.CodeableConcept Code
       {
-        get
-        {
-          if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
-          return _Code;
-        }
-
-        set
-        {
-          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("code");
-          _Code = value;
-          OnPropertyChanged("Code");
-        }
-
+        get { return _Code; }
+        set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Code;
+      private Hl7.Fhir.Model.CodeableConcept _Code;
 
       /// <summary>
-      /// Recommended date.
+      /// Recommended date
       /// </summary>
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime? ValueElement
+      public Hl7.Fhir.Model.FhirDateTime ValueElement
       {
-        get
-        {
-          if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["value"]);
-          return _ValueElement;
-        }
-
-        set
-        {
-          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-            Overflow.Remove("value");
-          _ValueElement = value;
-          OnPropertyChanged("ValueElement");
-        }
-
+        get { return _ValueElement; }
+        set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime? _ValueElement;
+      private Hl7.Fhir.Model.FhirDateTime _ValueElement;
 
       /// <summary>
       /// Recommended date
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Value
+      public string Value
       {
-        get => ValueElement?.Value;
+        get { return ValueElement != null ? ValueElement.Value : null; }
         set
         {
-          ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+          if (value == null)
+            ValueElement = null;
+          else
+            ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Value");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not DateCriterionComponent dest)
+        var dest = other as DateCriterionComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
-        if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirDateTime)_ValueElement.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+        if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDateTime)ValueElement.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new DateCriterionComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new DateCriterionComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not DateCriterionComponent otherT) return false;
+        var otherT = other as DateCriterionComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Code, otherT._Code)) return false;
-        if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+        if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as DateCriterionComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+        if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Code != null) yield return Code;
+          if (ValueElement != null) yield return ValueElement;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Code != null) yield return new ElementValue("code", Code);
+          if (ValueElement != null) yield return new ElementValue("value", ValueElement);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "code":
-            if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["code"];
-              return true;
-            }
-            value = _Code;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Code;
+            return Code is not null;
           case "value":
-            if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-            {
-              value = Overflow["value"];
-              return true;
-            }
-            value = _ValueElement;
-            return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+            value = ValueElement;
+            return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "code":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["code"] = value;
-            }
-            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
-            return this;
-          case "value":
-            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-            {
-              ValueElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-              Overflow["value"] = value;
-            }
-            else ValueElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
-        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
     }
 
     /// <summary>
-    /// Business identifier.
+    /// Business identifier
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Who this profile is for.
+    /// Who this profile is for
     /// </summary>
     [FhirElement("patient", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Patient
+    public Hl7.Fhir.Model.ResourceReference Patient
     {
-      get
-      {
-        if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
-        return _Patient;
-      }
-
-      set
-      {
-        if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("patient");
-        _Patient = value;
-        OnPropertyChanged("Patient");
-      }
-
+      get { return _Patient; }
+      set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Patient;
+    private Hl7.Fhir.Model.ResourceReference _Patient;
 
     /// <summary>
-    /// Date recommendation(s) created.
+    /// Date recommendation(s) created
     /// </summary>
     [FhirElement("date", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? DateElement
+    public Hl7.Fhir.Model.FhirDateTime DateElement
     {
-      get
-      {
-        if(_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["date"]);
-        return _DateElement;
-      }
-
-      set
-      {
-        if (_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("date");
-        _DateElement = value;
-        OnPropertyChanged("DateElement");
-      }
-
+      get { return _DateElement; }
+      set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime _DateElement;
 
     /// <summary>
     /// Date recommendation(s) created
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Date
+    public string Date
     {
-      get => DateElement?.Value;
+      get { return DateElement != null ? DateElement.Value : null; }
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          DateElement = null;
+        else
+          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
 
     /// <summary>
-    /// Who is responsible for schedule.
+    /// Who is responsible for schedule
     /// </summary>
     [FhirElement("authority", Order=120)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference? Authority
+    public Hl7.Fhir.Model.ResourceReference Authority
     {
-      get
-      {
-        if(_Authority.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["authority"]);
-        return _Authority;
-      }
-
-      set
-      {
-        if (_Authority.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          Overflow.Remove("authority");
-        _Authority = value;
-        OnPropertyChanged("Authority");
-      }
-
+      get { return _Authority; }
+      set { _Authority = value; OnPropertyChanged("Authority"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference? _Authority;
+    private Hl7.Fhir.Model.ResourceReference _Authority;
 
     /// <summary>
-    /// Vaccine administration recommendations.
+    /// Vaccine administration recommendations
     /// </summary>
     [FhirElement("recommendation", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> Recommendation
     {
-      get
-      {
-        if(_Recommendation.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>), Overflow["recommendation"]);
-        return _Recommendation ??= [];
-      }
-
-      set
-      {
-        if (_Recommendation.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>>())
-          Overflow.Remove("recommendation");
-        _Recommendation = value;
-        OnPropertyChanged("Recommendation");
-      }
-
+      get { if(_Recommendation==null) _Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(); return _Recommendation; }
+      set { _Recommendation = value; OnPropertyChanged("Recommendation"); }
     }
 
-    private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>? _Recommendation;
+    private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not ImmunizationRecommendation dest)
+      var dest = other as ImmunizationRecommendation;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
-      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
-      if(_Authority is not null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)_Authority.DeepCopyInternal();
-      if(_Recommendation is not null) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(_Recommendation.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+      if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
+      if(Recommendation.Any()) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(Recommendation.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new ImmunizationRecommendation();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new ImmunizationRecommendation());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not ImmunizationRecommendation otherT) return false;
+      var otherT = other as ImmunizationRecommendation;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
-      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
-      if(!comparer.Equals(_Authority, otherT._Authority)) return false;
-      if(!comparer.ListEquals(_Recommendation, otherT._Recommendation)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+      if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+      if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
+      if( !DeepComparable.Matches(Recommendation, otherT.Recommendation)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as ImmunizationRecommendation;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+      if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+      if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
+      if( !DeepComparable.IsExactly(Recommendation, otherT.Recommendation)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (Patient != null) yield return Patient;
+        if (DateElement != null) yield return DateElement;
+        if (Authority != null) yield return Authority;
+        foreach (var elem in Recommendation) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (Patient != null) yield return new ElementValue("patient", Patient);
+        if (DateElement != null) yield return new ElementValue("date", DateElement);
+        if (Authority != null) yield return new ElementValue("authority", Authority);
+        foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "patient":
-          if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["patient"];
-            return true;
-          }
-          value = _Patient;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Patient;
+          return Patient is not null;
         case "date":
-          if (_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["date"];
-            return true;
-          }
-          value = _DateElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = DateElement;
+          return DateElement is not null;
         case "authority":
-          if (_Authority.InOverflow<Hl7.Fhir.Model.ResourceReference>())
-          {
-            value = Overflow["authority"];
-            return true;
-          }
-          value = _Authority;
-          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
+          value = Authority;
+          return Authority is not null;
         case "recommendation":
-          if (_Recommendation.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>>())
-          {
-            value = Overflow["recommendation"];
-            return true;
-          }
-          value = _Recommendation;
-          return (value as List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>)?.Any() is true;
+          value = Recommendation;
+          return Recommendation?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "patient":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["patient"] = value;
-          }
-          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "date":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            DateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["date"] = value;
-          }
-          else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "authority":
-          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
-          {
-            Authority = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
-            Overflow["authority"] = value;
-          }
-          else Authority = (Hl7.Fhir.Model.ResourceReference?)value;
-          return this;
-        case "recommendation":
-          if (value is not (List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> or null))
-          {
-            Recommendation = OverflowNull<List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>>.INSTANCE;
-            Overflow["recommendation"] = value;
-          }
-          else Recommendation = (List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (_Authority is not null && !_Authority.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("authority",_Authority);
-      if (_Recommendation?.Any() is true && !_Recommendation.InOverflow<List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>>()) yield return new KeyValuePair<string,object>("recommendation",_Recommendation);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+      if (Recommendation?.Any() == true) yield return new KeyValuePair<string,object>("recommendation",Recommendation);
     }
 
   }

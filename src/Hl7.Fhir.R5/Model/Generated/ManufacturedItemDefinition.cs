@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,29 +48,30 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ManufacturedItemDefinition","http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition")]
+  [FhirType("ManufacturedItemDefinition","http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition", IsResource=true)]
   public partial class ManufacturedItemDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "ManufacturedItemDefinition";
+    public override string TypeName { get { return "ManufacturedItemDefinition"; } }
 
     /// <summary>
     /// General characteristics of this item
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition.property", IsBackboneType=true)]
+    [FhirType("ManufacturedItemDefinition#Property", IsNestedType=true)]
+    [BackboneType("ManufacturedItemDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "ManufacturedItemDefinition.property";
+      public override string TypeName { get { return "ManufacturedItemDefinition#Property"; } }
 
       /// <summary>
-      /// A code expressing the type of characteristic.
+      /// A code expressing the type of characteristic
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SNOMEDCTCharacteristicCodes")]
@@ -82,142 +79,116 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
-        get
-        {
-          if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type!;
-        }
-
-        set
-        {
-          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("type");
-          _Type = value;
-          OnPropertyChanged("Type");
-        }
-
+        get { return _Type; }
+        set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Type;
+      private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// A value for the characteristic.
+      /// A value for the characteristic
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Binary")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType? Value
+      public Hl7.Fhir.Model.DataType Value
       {
-        get
-        {
-          if(_Value.InOverflow<DynamicDataType>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
-          return _Value;
-        }
-
-        set
-        {
-          if (_Value.InOverflow<DynamicDataType>())
-            Overflow.Remove("value");
-          _Value = value;
-          OnPropertyChanged("Value");
-        }
-
+        get { return _Value; }
+        set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType? _Value;
+      private Hl7.Fhir.Model.DataType _Value;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not PropertyComponent dest)
+        var dest = other as PropertyComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
-        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new PropertyComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new PropertyComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not PropertyComponent otherT) return false;
+        var otherT = other as PropertyComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Type, otherT._Type)) return false;
-        if(!comparer.Equals(_Value, otherT._Value)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+        if( !DeepComparable.Matches(Value, otherT.Value)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as PropertyComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+        if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Type != null) yield return Type;
+          if (Value != null) yield return Value;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Type != null) yield return new ElementValue("type", Type);
+          if (Value != null) yield return new ElementValue("value", Value);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "type":
-            if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["type"];
-              return true;
-            }
-            value = _Type;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Type;
+            return Type is not null;
           case "value":
-            if (_Value.InOverflow<DynamicDataType>())
-            {
-              value = Overflow["value"];
-              return true;
-            }
-            value = _Value;
-            return (value as Hl7.Fhir.Model.DataType) is not null;
+            value = Value;
+            return Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "type":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["type"] = value;
-            }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
-            return this;
-          case "value":
-            if (value is not (Hl7.Fhir.Model.DataType or null))
-            {
-              Value = OverflowNull<DynamicDataType>.INSTANCE;
-              Overflow["value"] = value;
-            }
-            else Value = (Hl7.Fhir.Model.DataType?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
-        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       }
 
     }
@@ -227,345 +198,223 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition.component", IsBackboneType=true)]
+    [FhirType("ManufacturedItemDefinition#Component", IsNestedType=true)]
+    [BackboneType("ManufacturedItemDefinition.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "ManufacturedItemDefinition.component";
+      public override string TypeName { get { return "ManufacturedItemDefinition#Component"; } }
 
       /// <summary>
-      /// Defining type of the component e.g. shell, layer, ink.
+      /// Defining type of the component e.g. shell, layer, ink
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
-        get
-        {
-          if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
-          return _Type!;
-        }
-
-        set
-        {
-          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            Overflow.Remove("type");
-          _Type = value;
-          OnPropertyChanged("Type");
-        }
-
+        get { return _Type; }
+        set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept? _Type;
+      private Hl7.Fhir.Model.CodeableConcept _Type;
 
       /// <summary>
-      /// The function of this component within the item e.g. delivers active ingredient, masks taste.
+      /// The function of this component within the item e.g. delivers active ingredient, masks taste
       /// </summary>
       [FhirElement("function", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Function
       {
-        get
-        {
-          if(_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["function"]);
-          return _Function ??= [];
-        }
-
-        set
-        {
-          if (_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("function");
-          _Function = value;
-          OnPropertyChanged("Function");
-        }
-
+        get { if(_Function==null) _Function = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Function; }
+        set { _Function = value; OnPropertyChanged("Function"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _Function;
+      private List<Hl7.Fhir.Model.CodeableConcept> _Function;
 
       /// <summary>
-      /// The measurable amount of total quantity of all substances in the component, expressable in different ways (e.g. by mass or volume).
+      /// The measurable amount of total quantity of all substances in the component, expressable in different ways (e.g. by mass or volume)
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> Amount
       {
-        get
-        {
-          if(_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Quantity>), Overflow["amount"]);
-          return _Amount ??= [];
-        }
-
-        set
-        {
-          if (_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
-            Overflow.Remove("amount");
-          _Amount = value;
-          OnPropertyChanged("Amount");
-        }
-
+        get { if(_Amount==null) _Amount = new List<Hl7.Fhir.Model.Quantity>(); return _Amount; }
+        set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private List<Hl7.Fhir.Model.Quantity>? _Amount;
+      private List<Hl7.Fhir.Model.Quantity> _Amount;
 
       /// <summary>
-      /// A reference to a constituent of the manufactured item as a whole, linked here so that its component location within the item can be indicated. This not where the item's ingredient are primarily stated (for which see Ingredient.for or ManufacturedItemDefinition.ingredient).
+      /// A reference to a constituent of the manufactured item as a whole, linked here so that its component location within the item can be indicated. This not where the item's ingredient are primarily stated (for which see Ingredient.for or ManufacturedItemDefinition.ingredient)
       /// </summary>
       [FhirElement("constituent", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent> Constituent
       {
-        get
-        {
-          if(_Constituent.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>), Overflow["constituent"]);
-          return _Constituent ??= [];
-        }
-
-        set
-        {
-          if (_Constituent.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>>())
-            Overflow.Remove("constituent");
-          _Constituent = value;
-          OnPropertyChanged("Constituent");
-        }
-
+        get { if(_Constituent==null) _Constituent = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>(); return _Constituent; }
+        set { _Constituent = value; OnPropertyChanged("Constituent"); }
       }
 
-      private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>? _Constituent;
+      private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent> _Constituent;
 
       /// <summary>
-      /// General characteristics of this component.
+      /// General characteristics of this component
       /// </summary>
       [FhirElement("property", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
       {
-        get
-        {
-          if(_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>), Overflow["property"]);
-          return _Property ??= [];
-        }
-
-        set
-        {
-          if (_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>())
-            Overflow.Remove("property");
-          _Property = value;
-          OnPropertyChanged("Property");
-        }
-
+        get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(); return _Property; }
+        set { _Property = value; OnPropertyChanged("Property"); }
       }
 
-      private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>? _Property;
+      private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
 
       /// <summary>
-      /// A component that this component contains or is made from.
+      /// A component that this component contains or is made from
       /// </summary>
       [FhirElement("component", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> Component
       {
-        get
-        {
-          if(_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>), Overflow["component"]);
-          return _Component ??= [];
-        }
-
-        set
-        {
-          if (_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>())
-            Overflow.Remove("component");
-          _Component = value;
-          OnPropertyChanged("Component");
-        }
-
+        get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(); return _Component; }
+        set { _Component = value; OnPropertyChanged("Component"); }
       }
 
-      private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>? _Component;
+      private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> _Component;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ComponentComponent dest)
+        var dest = other as ComponentComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
-        if(_Function is not null) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(_Function.DeepCopyInternal());
-        if(_Amount is not null) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(_Amount.DeepCopyInternal());
-        if(_Constituent is not null) dest.Constituent = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>(_Constituent.DeepCopyInternal());
-        if(_Property is not null) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(_Property.DeepCopyInternal());
-        if(_Component is not null) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(_Component.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+        if(Function.Any()) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
+        if(Amount.Any()) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(Amount.DeepCopy());
+        if(Constituent.Any()) dest.Constituent = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>(Constituent.DeepCopy());
+        if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
+        if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(Component.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ComponentComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ComponentComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ComponentComponent otherT) return false;
+        var otherT = other as ComponentComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_Type, otherT._Type)) return false;
-        if(!comparer.ListEquals(_Function, otherT._Function)) return false;
-        if(!comparer.ListEquals(_Amount, otherT._Amount)) return false;
-        if(!comparer.ListEquals(_Constituent, otherT._Constituent)) return false;
-        if(!comparer.ListEquals(_Property, otherT._Property)) return false;
-        if(!comparer.ListEquals(_Component, otherT._Component)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+        if( !DeepComparable.Matches(Function, otherT.Function)) return false;
+        if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+        if( !DeepComparable.Matches(Constituent, otherT.Constituent)) return false;
+        if( !DeepComparable.Matches(Property, otherT.Property)) return false;
+        if( !DeepComparable.Matches(Component, otherT.Component)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ComponentComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+        if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
+        if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+        if( !DeepComparable.IsExactly(Constituent, otherT.Constituent)) return false;
+        if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
+        if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (Type != null) yield return Type;
+          foreach (var elem in Function) { if (elem != null) yield return elem; }
+          foreach (var elem in Amount) { if (elem != null) yield return elem; }
+          foreach (var elem in Constituent) { if (elem != null) yield return elem; }
+          foreach (var elem in Property) { if (elem != null) yield return elem; }
+          foreach (var elem in Component) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (Type != null) yield return new ElementValue("type", Type);
+          foreach (var elem in Function) { if (elem != null) yield return new ElementValue("function", elem); }
+          foreach (var elem in Amount) { if (elem != null) yield return new ElementValue("amount", elem); }
+          foreach (var elem in Constituent) { if (elem != null) yield return new ElementValue("constituent", elem); }
+          foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
+          foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "type":
-            if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-            {
-              value = Overflow["type"];
-              return true;
-            }
-            value = _Type;
-            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+            value = Type;
+            return Type is not null;
           case "function":
-            if (_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["function"];
-              return true;
-            }
-            value = _Function;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = Function;
+            return Function?.Any() == true;
           case "amount":
-            if (_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
-            {
-              value = Overflow["amount"];
-              return true;
-            }
-            value = _Amount;
-            return (value as List<Hl7.Fhir.Model.Quantity>)?.Any() is true;
+            value = Amount;
+            return Amount?.Any() == true;
           case "constituent":
-            if (_Constituent.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>>())
-            {
-              value = Overflow["constituent"];
-              return true;
-            }
-            value = _Constituent;
-            return (value as List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>)?.Any() is true;
+            value = Constituent;
+            return Constituent?.Any() == true;
           case "property":
-            if (_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>())
-            {
-              value = Overflow["property"];
-              return true;
-            }
-            value = _Property;
-            return (value as List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>)?.Any() is true;
+            value = Property;
+            return Property?.Any() == true;
           case "component":
-            if (_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>())
-            {
-              value = Overflow["component"];
-              return true;
-            }
-            value = _Component;
-            return (value as List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>)?.Any() is true;
+            value = Component;
+            return Component?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "type":
-            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-            {
-              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-              Overflow["type"] = value;
-            }
-            else Type = (Hl7.Fhir.Model.CodeableConcept?)value!;
-            return this;
-          case "function":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              Function = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["function"] = value;
-            }
-            else Function = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "amount":
-            if (value is not (List<Hl7.Fhir.Model.Quantity> or null))
-            {
-              Amount = OverflowNull<List<Hl7.Fhir.Model.Quantity>>.INSTANCE;
-              Overflow["amount"] = value;
-            }
-            else Amount = (List<Hl7.Fhir.Model.Quantity>?)value!;
-            return this;
-          case "constituent":
-            if (value is not (List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent> or null))
-            {
-              Constituent = OverflowNull<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>>.INSTANCE;
-              Overflow["constituent"] = value;
-            }
-            else Constituent = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>?)value!;
-            return this;
-          case "property":
-            if (value is not (List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> or null))
-            {
-              Property = OverflowNull<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>.INSTANCE;
-              Overflow["property"] = value;
-            }
-            else Property = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>?)value!;
-            return this;
-          case "component":
-            if (value is not (List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> or null))
-            {
-              Component = OverflowNull<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>.INSTANCE;
-              Overflow["component"] = value;
-            }
-            else Component = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
-        if (_Function?.Any() is true && !_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("function",_Function);
-        if (_Amount?.Any() is true && !_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>()) yield return new KeyValuePair<string,object>("amount",_Amount);
-        if (_Constituent?.Any() is true && !_Constituent.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent>>()) yield return new KeyValuePair<string,object>("constituent",_Constituent);
-        if (_Property?.Any() is true && !_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>()) yield return new KeyValuePair<string,object>("property",_Property);
-        if (_Component?.Any() is true && !_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>()) yield return new KeyValuePair<string,object>("component",_Component);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Function?.Any() == true) yield return new KeyValuePair<string,object>("function",Function);
+        if (Amount?.Any() == true) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (Constituent?.Any() == true) yield return new KeyValuePair<string,object>("constituent",Constituent);
+        if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+        if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
       }
 
     }
@@ -575,311 +424,210 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ManufacturedItemDefinition.component.constituent", IsBackboneType=true)]
+    [FhirType("ManufacturedItemDefinition#Constituent", IsNestedType=true)]
+    [BackboneType("ManufacturedItemDefinition.component.constituent")]
     public partial class ConstituentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "ManufacturedItemDefinition.component.constituent";
+      public override string TypeName { get { return "ManufacturedItemDefinition#Constituent"; } }
 
       /// <summary>
-      /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume).
+      /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume)
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> Amount
       {
-        get
-        {
-          if(_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Quantity>), Overflow["amount"]);
-          return _Amount ??= [];
-        }
-
-        set
-        {
-          if (_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
-            Overflow.Remove("amount");
-          _Amount = value;
-          OnPropertyChanged("Amount");
-        }
-
+        get { if(_Amount==null) _Amount = new List<Hl7.Fhir.Model.Quantity>(); return _Amount; }
+        set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private List<Hl7.Fhir.Model.Quantity>? _Amount;
+      private List<Hl7.Fhir.Model.Quantity> _Amount;
 
       /// <summary>
-      /// The physical location of the constituent/ingredient within the component.
+      /// The physical location of the constituent/ingredient within the component
       /// </summary>
       [FhirElement("location", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Location
       {
-        get
-        {
-          if(_Location.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["location"]);
-          return _Location ??= [];
-        }
-
-        set
-        {
-          if (_Location.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("location");
-          _Location = value;
-          OnPropertyChanged("Location");
-        }
-
+        get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Location; }
+        set { _Location = value; OnPropertyChanged("Location"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _Location;
+      private List<Hl7.Fhir.Model.CodeableConcept> _Location;
 
       /// <summary>
-      /// The function of this constituent within the component e.g. binder.
+      /// The function of this constituent within the component e.g. binder
       /// </summary>
       [FhirElement("function", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Function
       {
-        get
-        {
-          if(_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["function"]);
-          return _Function ??= [];
-        }
-
-        set
-        {
-          if (_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            Overflow.Remove("function");
-          _Function = value;
-          OnPropertyChanged("Function");
-        }
-
+        get { if(_Function==null) _Function = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Function; }
+        set { _Function = value; OnPropertyChanged("Function"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept>? _Function;
+      private List<Hl7.Fhir.Model.CodeableConcept> _Function;
 
       /// <summary>
-      /// The ingredient that is the constituent of the given component.
+      /// The ingredient that is the constituent of the given component
       /// </summary>
       [FhirElement("hasIngredient", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> HasIngredient
       {
-        get
-        {
-          if(_HasIngredient.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["hasIngredient"]);
-          return _HasIngredient ??= [];
-        }
-
-        set
-        {
-          if (_HasIngredient.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-            Overflow.Remove("hasIngredient");
-          _HasIngredient = value;
-          OnPropertyChanged("HasIngredient");
-        }
-
+        get { if(_HasIngredient==null) _HasIngredient = new List<Hl7.Fhir.Model.CodeableReference>(); return _HasIngredient; }
+        set { _HasIngredient = value; OnPropertyChanged("HasIngredient"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference>? _HasIngredient;
+      private List<Hl7.Fhir.Model.CodeableReference> _HasIngredient;
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ConstituentComponent dest)
+        var dest = other as ConstituentComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_Amount is not null) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(_Amount.DeepCopyInternal());
-        if(_Location is not null) dest.Location = new List<Hl7.Fhir.Model.CodeableConcept>(_Location.DeepCopyInternal());
-        if(_Function is not null) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(_Function.DeepCopyInternal());
-        if(_HasIngredient is not null) dest.HasIngredient = new List<Hl7.Fhir.Model.CodeableReference>(_HasIngredient.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(Amount.Any()) dest.Amount = new List<Hl7.Fhir.Model.Quantity>(Amount.DeepCopy());
+        if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.CodeableConcept>(Location.DeepCopy());
+        if(Function.Any()) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
+        if(HasIngredient.Any()) dest.HasIngredient = new List<Hl7.Fhir.Model.CodeableReference>(HasIngredient.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ConstituentComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ConstituentComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ConstituentComponent otherT) return false;
+        var otherT = other as ConstituentComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.ListEquals(_Amount, otherT._Amount)) return false;
-        if(!comparer.ListEquals(_Location, otherT._Location)) return false;
-        if(!comparer.ListEquals(_Function, otherT._Function)) return false;
-        if(!comparer.ListEquals(_HasIngredient, otherT._HasIngredient)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
+        if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+        if( !DeepComparable.Matches(Function, otherT.Function)) return false;
+        if( !DeepComparable.Matches(HasIngredient, otherT.HasIngredient)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ConstituentComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
+        if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
+        if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
+        if( !DeepComparable.IsExactly(HasIngredient, otherT.HasIngredient)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          foreach (var elem in Amount) { if (elem != null) yield return elem; }
+          foreach (var elem in Location) { if (elem != null) yield return elem; }
+          foreach (var elem in Function) { if (elem != null) yield return elem; }
+          foreach (var elem in HasIngredient) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          foreach (var elem in Amount) { if (elem != null) yield return new ElementValue("amount", elem); }
+          foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
+          foreach (var elem in Function) { if (elem != null) yield return new ElementValue("function", elem); }
+          foreach (var elem in HasIngredient) { if (elem != null) yield return new ElementValue("hasIngredient", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "amount":
-            if (_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
-            {
-              value = Overflow["amount"];
-              return true;
-            }
-            value = _Amount;
-            return (value as List<Hl7.Fhir.Model.Quantity>)?.Any() is true;
+            value = Amount;
+            return Amount?.Any() == true;
           case "location":
-            if (_Location.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["location"];
-              return true;
-            }
-            value = _Location;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = Location;
+            return Location?.Any() == true;
           case "function":
-            if (_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-            {
-              value = Overflow["function"];
-              return true;
-            }
-            value = _Function;
-            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+            value = Function;
+            return Function?.Any() == true;
           case "hasIngredient":
-            if (_HasIngredient.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
-            {
-              value = Overflow["hasIngredient"];
-              return true;
-            }
-            value = _HasIngredient;
-            return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
+            value = HasIngredient;
+            return HasIngredient?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "amount":
-            if (value is not (List<Hl7.Fhir.Model.Quantity> or null))
-            {
-              Amount = OverflowNull<List<Hl7.Fhir.Model.Quantity>>.INSTANCE;
-              Overflow["amount"] = value;
-            }
-            else Amount = (List<Hl7.Fhir.Model.Quantity>?)value!;
-            return this;
-          case "location":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              Location = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["location"] = value;
-            }
-            else Location = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "function":
-            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-            {
-              Function = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-              Overflow["function"] = value;
-            }
-            else Function = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-            return this;
-          case "hasIngredient":
-            if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
-            {
-              HasIngredient = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
-              Overflow["hasIngredient"] = value;
-            }
-            else HasIngredient = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Amount?.Any() is true && !_Amount.InOverflow<List<Hl7.Fhir.Model.Quantity>>()) yield return new KeyValuePair<string,object>("amount",_Amount);
-        if (_Location?.Any() is true && !_Location.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("location",_Location);
-        if (_Function?.Any() is true && !_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("function",_Function);
-        if (_HasIngredient?.Any() is true && !_HasIngredient.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("hasIngredient",_HasIngredient);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Amount?.Any() == true) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
+        if (Function?.Any() == true) yield return new KeyValuePair<string,object>("function",Function);
+        if (HasIngredient?.Any() == true) yield return new KeyValuePair<string,object>("hasIngredient",HasIngredient);
       }
 
     }
 
     /// <summary>
-    /// Unique identifier.
+    /// Unique identifier
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// draft | active | retired | unknown.
+    /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
-      get
-      {
-        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement!;
-      }
-
-      set
-      {
-        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
-          Overflow.Remove("status");
-        _StatusElement = value;
-        OnPropertyChanged("StatusElement");
-      }
-
+      get { return _StatusElement; }
+      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -888,57 +636,50 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get { return StatusElement != null ? StatusElement.Value : null; }
       set
       {
-        StatusElement = value is null ? null! : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        if (value == null)
+          StatusElement = null;
+        else
+          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// A descriptive name applied to this item.
+    /// A descriptive name applied to this item
     /// </summary>
     [FhirElement("name", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? NameElement
+    public Hl7.Fhir.Model.FhirString NameElement
     {
-      get
-      {
-        if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-        return _NameElement;
-      }
-
-      set
-      {
-        if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("name");
-        _NameElement = value;
-        OnPropertyChanged("NameElement");
-      }
-
+      get { return _NameElement; }
+      set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _NameElement;
+    private Hl7.Fhir.Model.FhirString _NameElement;
 
     /// <summary>
     /// A descriptive name applied to this item
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Name
+    public string Name
     {
-      get => NameElement?.Value;
+      get { return NameElement != null ? NameElement.Value : null; }
       set
       {
-        NameElement = value is null ? null! : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          NameElement = null;
+        else
+          NameElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
 
     /// <summary>
-    /// Dose form as manufactured (before any necessary transformation).
+    /// Dose form as manufactured (before any necessary transformation)
     /// </summary>
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=120)]
     [Binding("ManufacturedDoseForm")]
@@ -946,437 +687,261 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
     {
-      get
-      {
-        if(_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["manufacturedDoseForm"]);
-        return _ManufacturedDoseForm!;
-      }
-
-      set
-      {
-        if (_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("manufacturedDoseForm");
-        _ManufacturedDoseForm = value;
-        OnPropertyChanged("ManufacturedDoseForm");
-      }
-
+      get { return _ManufacturedDoseForm; }
+      set { _ManufacturedDoseForm = value; OnPropertyChanged("ManufacturedDoseForm"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _ManufacturedDoseForm;
+    private Hl7.Fhir.Model.CodeableConcept _ManufacturedDoseForm;
 
     /// <summary>
-    /// The “real-world” units in which the quantity of the item is described.
+    /// The “real-world” units in which the quantity of the item is described
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=130)]
     [Binding("UnitOfPresentation")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept? UnitOfPresentation
+    public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
     {
-      get
-      {
-        if(_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["unitOfPresentation"]);
-        return _UnitOfPresentation;
-      }
-
-      set
-      {
-        if (_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          Overflow.Remove("unitOfPresentation");
-        _UnitOfPresentation = value;
-        OnPropertyChanged("UnitOfPresentation");
-      }
-
+      get { return _UnitOfPresentation; }
+      set { _UnitOfPresentation = value; OnPropertyChanged("UnitOfPresentation"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept? _UnitOfPresentation;
+    private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
 
     /// <summary>
-    /// Manufacturer of the item, one of several possible.
+    /// Manufacturer of the item, one of several possible
     /// </summary>
     [FhirElement("manufacturer", InSummary=true, Order=140)]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get
-      {
-        if(_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturer"]);
-        return _Manufacturer ??= [];
-      }
-
-      set
-      {
-        if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          Overflow.Remove("manufacturer");
-        _Manufacturer = value;
-        OnPropertyChanged("Manufacturer");
-      }
-
+      get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+      set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
+    private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
 
     /// <summary>
-    /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.
+    /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated
     /// </summary>
-    [FhirElement("marketingStatus", InSummary=true, Order=150)]
+    [FhirElement("marketingStatus", InSummary=true, Order=150, FiveWs="administrative.medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
-      get
-      {
-        if(_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MarketingStatus>), Overflow["marketingStatus"]);
-        return _MarketingStatus ??= [];
-      }
-
-      set
-      {
-        if (_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>())
-          Overflow.Remove("marketingStatus");
-        _MarketingStatus = value;
-        OnPropertyChanged("MarketingStatus");
-      }
-
+      get { if(_MarketingStatus==null) _MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(); return _MarketingStatus; }
+      set { _MarketingStatus = value; OnPropertyChanged("MarketingStatus"); }
     }
 
-    private List<Hl7.Fhir.Model.MarketingStatus>? _MarketingStatus;
+    private List<Hl7.Fhir.Model.MarketingStatus> _MarketingStatus;
 
     /// <summary>
-    /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource.
+    /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
     /// </summary>
     [FhirElement("ingredient", InSummary=true, Order=160)]
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
-      get
-      {
-        if(_Ingredient.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["ingredient"]);
-        return _Ingredient ??= [];
-      }
-
-      set
-      {
-        if (_Ingredient.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("ingredient");
-        _Ingredient = value;
-        OnPropertyChanged("Ingredient");
-      }
-
+      get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Ingredient; }
+      set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Ingredient;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Ingredient;
 
     /// <summary>
-    /// General characteristics of this item.
+    /// General characteristics of this item
     /// </summary>
     [FhirElement("property", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
     {
-      get
-      {
-        if(_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>), Overflow["property"]);
-        return _Property ??= [];
-      }
-
-      set
-      {
-        if (_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>())
-          Overflow.Remove("property");
-        _Property = value;
-        OnPropertyChanged("Property");
-      }
-
+      get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(); return _Property; }
+      set { _Property = value; OnPropertyChanged("Property"); }
     }
 
-    private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>? _Property;
+    private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
 
     /// <summary>
-    /// Physical parts of the manufactured item, that it is intrisically made from. This is distinct from the ingredients that are part of its chemical makeup.
+    /// Physical parts of the manufactured item, that it is intrisically made from. This is distinct from the ingredients that are part of its chemical makeup
     /// </summary>
     [FhirElement("component", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> Component
     {
-      get
-      {
-        if(_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>), Overflow["component"]);
-        return _Component ??= [];
-      }
-
-      set
-      {
-        if (_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>())
-          Overflow.Remove("component");
-        _Component = value;
-        OnPropertyChanged("Component");
-      }
-
+      get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(); return _Component; }
+      set { _Component = value; OnPropertyChanged("Component"); }
     }
 
-    private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>? _Component;
+    private List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> _Component;
 
-    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value!; }
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not ManufacturedItemDefinition dest)
+      var dest = other as ManufacturedItemDefinition;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
-      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
-      if(_ManufacturedDoseForm is not null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)_ManufacturedDoseForm.DeepCopyInternal();
-      if(_UnitOfPresentation is not null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)_UnitOfPresentation.DeepCopyInternal();
-      if(_Manufacturer is not null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(_Manufacturer.DeepCopyInternal());
-      if(_MarketingStatus is not null) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(_MarketingStatus.DeepCopyInternal());
-      if(_Ingredient is not null) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(_Ingredient.DeepCopyInternal());
-      if(_Property is not null) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(_Property.DeepCopyInternal());
-      if(_Component is not null) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(_Component.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
+      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+      if(ManufacturedDoseForm != null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)ManufacturedDoseForm.DeepCopy();
+      if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
+      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
+      if(MarketingStatus.Any()) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopy());
+      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(Ingredient.DeepCopy());
+      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
+      if(Component.Any()) dest.Component = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>(Component.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new ManufacturedItemDefinition();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new ManufacturedItemDefinition());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not ManufacturedItemDefinition otherT) return false;
+      var otherT = other as ManufacturedItemDefinition;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
-      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
-      if(!comparer.Equals(_ManufacturedDoseForm, otherT._ManufacturedDoseForm)) return false;
-      if(!comparer.Equals(_UnitOfPresentation, otherT._UnitOfPresentation)) return false;
-      if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
-      if(!comparer.ListEquals(_MarketingStatus, otherT._MarketingStatus)) return false;
-      if(!comparer.ListEquals(_Ingredient, otherT._Ingredient)) return false;
-      if(!comparer.ListEquals(_Property, otherT._Property)) return false;
-      if(!comparer.ListEquals(_Component, otherT._Component)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+      if( !DeepComparable.Matches(ManufacturedDoseForm, otherT.ManufacturedDoseForm)) return false;
+      if( !DeepComparable.Matches(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
+      if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
+      if( !DeepComparable.Matches(MarketingStatus, otherT.MarketingStatus)) return false;
+      if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
+      if( !DeepComparable.Matches(Property, otherT.Property)) return false;
+      if( !DeepComparable.Matches(Component, otherT.Component)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as ManufacturedItemDefinition;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+      if( !DeepComparable.IsExactly(ManufacturedDoseForm, otherT.ManufacturedDoseForm)) return false;
+      if( !DeepComparable.IsExactly(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
+      if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
+      if( !DeepComparable.IsExactly(MarketingStatus, otherT.MarketingStatus)) return false;
+      if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
+      if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
+      if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (StatusElement != null) yield return StatusElement;
+        if (NameElement != null) yield return NameElement;
+        if (ManufacturedDoseForm != null) yield return ManufacturedDoseForm;
+        if (UnitOfPresentation != null) yield return UnitOfPresentation;
+        foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
+        foreach (var elem in MarketingStatus) { if (elem != null) yield return elem; }
+        foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
+        foreach (var elem in Property) { if (elem != null) yield return elem; }
+        foreach (var elem in Component) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+        if (NameElement != null) yield return new ElementValue("name", NameElement);
+        if (ManufacturedDoseForm != null) yield return new ElementValue("manufacturedDoseForm", ManufacturedDoseForm);
+        if (UnitOfPresentation != null) yield return new ElementValue("unitOfPresentation", UnitOfPresentation);
+        foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
+        foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", elem); }
+        foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
+        foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
+        foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "status":
-          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _StatusElement;
-          return (value as Code<Hl7.Fhir.Model.PublicationStatus>) is not null;
+          value = StatusElement;
+          return StatusElement is not null;
         case "name":
-          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["name"];
-            return true;
-          }
-          value = _NameElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = NameElement;
+          return NameElement is not null;
         case "manufacturedDoseForm":
-          if (_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["manufacturedDoseForm"];
-            return true;
-          }
-          value = _ManufacturedDoseForm;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = ManufacturedDoseForm;
+          return ManufacturedDoseForm is not null;
         case "unitOfPresentation":
-          if (_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
-          {
-            value = Overflow["unitOfPresentation"];
-            return true;
-          }
-          value = _UnitOfPresentation;
-          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
+          value = UnitOfPresentation;
+          return UnitOfPresentation is not null;
         case "manufacturer":
-          if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-          {
-            value = Overflow["manufacturer"];
-            return true;
-          }
-          value = _Manufacturer;
-          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
         case "marketingStatus":
-          if (_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>())
-          {
-            value = Overflow["marketingStatus"];
-            return true;
-          }
-          value = _MarketingStatus;
-          return (value as List<Hl7.Fhir.Model.MarketingStatus>)?.Any() is true;
+          value = MarketingStatus;
+          return MarketingStatus?.Any() == true;
         case "ingredient":
-          if (_Ingredient.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["ingredient"];
-            return true;
-          }
-          value = _Ingredient;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Ingredient;
+          return Ingredient?.Any() == true;
         case "property":
-          if (_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>())
-          {
-            value = Overflow["property"];
-            return true;
-          }
-          value = _Property;
-          return (value as List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>)?.Any() is true;
+          value = Property;
+          return Property?.Any() == true;
         case "component":
-          if (_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>())
-          {
-            value = Overflow["component"];
-            return true;
-          }
-          value = _Component;
-          return (value as List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>)?.Any() is true;
+          value = Component;
+          return Component?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "status":
-          if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
-          {
-            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value!;
-          return this;
-        case "name":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["name"] = value;
-          }
-          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "manufacturedDoseForm":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            ManufacturedDoseForm = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["manufacturedDoseForm"] = value;
-          }
-          else ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value!;
-          return this;
-        case "unitOfPresentation":
-          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
-          {
-            UnitOfPresentation = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
-            Overflow["unitOfPresentation"] = value;
-          }
-          else UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept?)value;
-          return this;
-        case "manufacturer":
-          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-          {
-            Manufacturer = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-            Overflow["manufacturer"] = value;
-          }
-          else Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-          return this;
-        case "marketingStatus":
-          if (value is not (List<Hl7.Fhir.Model.MarketingStatus> or null))
-          {
-            MarketingStatus = OverflowNull<List<Hl7.Fhir.Model.MarketingStatus>>.INSTANCE;
-            Overflow["marketingStatus"] = value;
-          }
-          else MarketingStatus = (List<Hl7.Fhir.Model.MarketingStatus>?)value!;
-          return this;
-        case "ingredient":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Ingredient = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["ingredient"] = value;
-          }
-          else Ingredient = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "property":
-          if (value is not (List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> or null))
-          {
-            Property = OverflowNull<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>.INSTANCE;
-            Overflow["property"] = value;
-          }
-          else Property = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>?)value!;
-          return this;
-        case "component":
-          if (value is not (List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> or null))
-          {
-            Component = OverflowNull<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>.INSTANCE;
-            Overflow["component"] = value;
-          }
-          else Component = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (_ManufacturedDoseForm is not null && !_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("manufacturedDoseForm",_ManufacturedDoseForm);
-      if (_UnitOfPresentation is not null && !_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("unitOfPresentation",_UnitOfPresentation);
-      if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (_MarketingStatus?.Any() is true && !_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>()) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
-      if (_Ingredient?.Any() is true && !_Ingredient.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
-      if (_Property?.Any() is true && !_Property.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>>()) yield return new KeyValuePair<string,object>("property",_Property);
-      if (_Component?.Any() is true && !_Component.InOverflow<List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent>>()) yield return new KeyValuePair<string,object>("component",_Component);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",ManufacturedDoseForm);
+      if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+      if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
     }
 
   }

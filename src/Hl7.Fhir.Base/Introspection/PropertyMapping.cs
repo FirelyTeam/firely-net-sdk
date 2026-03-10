@@ -6,472 +6,385 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using P=Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
 
-namespace Hl7.Fhir.Introspection;
 
-/// <summary>
-/// A container for the metadata of an element of a FHIR datatype as present on a property of a (generated) .NET POCO class.
-/// </summary>
-[System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
-public class PropertyMapping : IElementDefinitionSummary
+namespace Hl7.Fhir.Introspection
 {
- /// <summary>
-    /// A bare-bones constructor that creates a new PropertyMapping with just the Name, DeclaringClass,
-    /// NativeProperty properties set. All other required properties should be initialized using an object initializer.
+    /// <summary>
+    /// A container for the metadata of an element of a FHIR datatype as present on a property of a (generated) .NET POCO class.
     /// </summary>
-    /// <remarks>This constructor is mainly useful for generated code that precalculates and creates property mappings.</remarks>
-    public PropertyMapping(
-        ClassMapping declaringClass,
-        string name,
-        PropertyInfo nativeProperty)
+    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
+    public class PropertyMapping : IElementDefinitionSummary
     {
-        DeclaringClass = declaringClass;
-        Name = name;
-        NativeProperty = nativeProperty;
-        _propertyType = null;
-    }
-
-    /// <summary>
-    /// Creates a custom PropertyMapping representing the metadata for a property in the overflow.
-    /// This constructor will initialize the DeclaringClass, Name, PropertyTypeMapping, and the
-    /// required properties based on the given <paramref name="propertyType"/> and <paramref name="allowedTypes"/>.
-    /// </summary>
-    [SetsRequiredMembers]
-    public PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, Type[]? allowedTypes = null)
-     : this(declaringClass, name, nativeProperty: null!)
-    {
-        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
-
-        // Get to the actual (native) type representing this element
-        var implementingType = collectionItemType ?? propertyType;
-        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
-
-        if (declaringClass.Inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
-            throw new InvalidOperationException($"Custom property {name} is of type " +
-                                                $"{implementingType}, for which a classmapping cannot be found.");
-
-        Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
-        IsCollection = collectionItemType is not null;
-        PropertyTypeMapping = propertyTypeMapping;
-        FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
-        ImplementingType = implementingType;
-        _propertyType = propertyType;
-    }
-
-    /// <summary>
-    /// Returns <c>true</c> when this class is a custom mapping, basically a dynamic resource/type with
-    /// its own name, not being the default "DynamicType" or "DynamicResource".
-    /// </summary>
-    public bool IsCustomMapping => NativeProperty is null;
-    /// <summary>
-    /// The name of the element in the FHIR specification.
-    /// </summary>
-    public string Name { get; }
-
-    /// <summary>
-    /// The ClassMapping for the type this property is a member of.
-    /// </summary>
-    public ClassMapping DeclaringClass { get; }
-
-    /// <summary>
-    /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
-    /// </summary>
-    public PropertyInfo? NativeProperty { get; }
-
-    private readonly Type? _propertyType;
-
-    /// <summary>
-    /// This is the type of the property, exactly as it is declared in the POCO class.
-    /// </summary>
-    public Type PropertyType => _propertyType ?? NativeProperty?.PropertyType ??
-        throw new InvalidOperationException("PropertyType is not set and NativeProperty is null. This should have been" +
-                                            "caught by the constructor.");
-
-    /// <summary>
-    /// The native type of the element.
-    /// </summary>
-    /// <remarks>If the element is a collection or is nullable, this reflects the
-    /// collection item or the type that is made nullable respectively.
-    /// </remarks>
-    public required Type ImplementingType { get; init; }
-
-    /// <summary>
-    /// The list of possible FHIR types for this element, listed as the representative .NET types.
-    /// For non-choice types this is a single Type, for choices this is either a list of Types or
-    /// just <see cref="Hl7.Fhir.Model.DataType"/>.
-    /// </summary>
-    /// <remark>These are the defined (choice) types for this element as specified in the
-    /// FHIR data definitions. It is derived from the actual property type,
-    /// or, if present, via a list of types in the [AllowedTypes] attribute. Finally,
-    /// it the property type does not represent FHIR metadata, it is overridden using
-    /// the [DeclaredType] attribute.
-    /// </remark>
-    public required Type[] FhirType { get; init; }
-
-    /// <summary>
-    /// The <see cref="ClassMapping" /> that represents the type of this property.
-    /// </summary>
-    /// <remarks>This is effectively the ClassMapping for the <see cref="ImplementingType" /> unless a
-    /// <see cref="AllowedTypesAttribute" /> specifies otherwise.</remarks>
-    public required ClassMapping PropertyTypeMapping { get; init; }
-
-    /// <summary>
-    /// Whether the element can repeat.
-    /// </summary>
-    public bool IsCollection { get; init; }
-
-    /// <summary>
-    /// The element is of an atomic .NET type, not a FHIR generated POCO.
-    /// </summary>
-    public bool IsPrimitive { get; init; }
-
-    /// <summary>
-    /// The element is a primitive (<seealso cref="IsPrimitive"/>) and
-    /// represents the primitive `value` attribute/property in the FHIR serialization.
-    /// </summary>
-    public bool RepresentsValueElement { get; init; }
-
-    /// <summary>
-    /// Whether the element appears in _summary
-    /// (see https://www.hl7.org/fhir/search.html#summary)
-    /// </summary>
-    public bool InSummary { get; init; }
-
-    /// <summary>
-    /// If this modifies the meaning of other elements
-    /// (see https://www.hl7.org/fhir/conformance-rules.html#isModifier)
-    /// </summary>
-    public bool IsModifier { get; init; }
-
-    /// <summary>
-    /// Five W's mappings of the element.
-    /// <remarks>it represents the exact element name of one the elements of the
-    /// <c>FiveWs</c> pattern from http://hl7.org/fhir/fivews.html. Choice elements are spelled with the
-    /// [x] suffix, like <c>done[x]</c>. </remarks>
-    /// </summary>
-    public string? FiveWs { get; init; }
-
-    /// <summary>
-    /// Whether the element has a cardinality higher than 0.
-    /// </summary>
-    public bool IsMandatoryElement { get; init; }
-
-    /// <summary>
-    /// The numeric order of the element (relevant for the XML serialization, which
-    /// needs to be in order).
-    /// </summary>
-    public int? Order { get; init; }
-
-    /// <summary>
-    /// How this element is represented in the XML serialization.
-    /// </summary>
-    public XmlRepresentation SerializationHint { get; init; }
-
-    /// <summary>
-    /// Specifies whether this element contains a choice (either a choice element or a
-    /// contained resource).
-    /// </summary>
-    /// <remarks>In the case of a DataChoice, these elements have names ending in [x] in
-    /// the StructureDefinition and allow a (possibly restricted) set of types to be used.
-    /// These are reflected in the <see cref="FhirType"/> property.</remarks>
-    public ChoiceType Choice { get; init; }
-
-    /// <summary>
-    /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
-    /// on this property.
-    /// </summary>
-    public ValidatingFhirModelAttribute[] ValidationAttributes { get; init; } = [];
-
-
-    /// <summary>
-    /// For a bound element, this is the name of the binding.
-    /// </summary>
-    public string? BindingName { get; init; }
-
-    /// <summary>
-    /// The <see cref="ModelInspector"/> for which this mapping was created.
-    /// </summary>
-    public ModelInspector Inspector => DeclaringClass.Inspector;
-
-    /// <summary>
-    /// The release of FHIR for which the metadata was extracted from the property.
-    /// </summary>
-    public FhirRelease Release => DeclaringClass.Release;
-
-    /// <summary>
-    /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
-    /// </summary>
-    /// <remarks>There should generally be no reason to call this method, as you can easily get the required PropertyMapping via
-    /// a ClassMapping - which will cache this information as well. This constructor is public for historical reasons only.</remarks>
-    public static bool TryCreate(PropertyInfo prop, [NotNullWhen(true)] out PropertyMapping? result, ClassMapping declaringClass)
-    {
-        result = null;
-        var release = declaringClass.Release;
-
-        // If there is no [FhirElement] on the property, skip it
-        if (prop.GetFhirModelAttribute<FhirElementAttribute>(release) is not { } elementAttr) return false;
-
-        // If there is an explicit [NotMapped] on the property, skip it
-        // (in combination with `Since` useful to remove a property from the serialization)
-        if (prop.GetFhirModelAttribute<NotMappedAttribute>(release) is not null) return false;
-
-        _ = ReflectionHelper.TryGetRepeatingElementType(prop.PropertyType, out var collectionItemType);
-
-        var cardinalityAttr = prop.GetFhirModelAttribute<CardinalityAttribute>(release);
-
-        // Get to the actual (native) type representing this element
-        var implementingType = collectionItemType ?? prop.PropertyType;
-        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
-
-        // The [AllowedTypes] attribute can specify a set of allowed types for this element.
-        // If this is a choice element, then take this list as the declared list of FHIR types,
-        // otherwise assume this is the implementing FHIR type above
-        var overridingTypes = prop.GetFhirModelAttribute<AllowedTypesAttribute>(release) switch
+        // no public constructors
+        private PropertyMapping(
+            string name,
+            ClassMapping declaringClass,
+            PropertyInfo pi,
+            Type implementingType,
+            ClassMapping propertyTypeMapping,
+            Type[] fhirTypes,
+            FhirRelease version)
         {
-            { OpenChoice: true } => declaringClass.Inspector.OpenTypes,
-            { Types: { Length: > 0 } types } => types,
-            _ => null
-        };
-        
-        Type mappingType = determineMappingType(overridingTypes, implementingType, elementAttr, declaringClass.Name);
-
-        if (declaringClass.Inspector.FindOrImportClassMapping(mappingType) is not {} propertyTypeMapping)
-            throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
-                                                $"{mappingType}, for which a classmapping cannot be found.");
-
-        // FhirTypes is either the explicitly listed types in the [AllowedTypes] attribute, or the
-        // mappingType we have determined before.
-        var fhirTypes = overridingTypes ?? [mappingType];
-        var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
-
-        result = new PropertyMapping(declaringClass, elementAttr.Name, prop)
-        {
-            InSummary = elementAttr.InSummary,
-            IsModifier = elementAttr.IsModifier,
-            Choice = elementAttr.Choice,
-            SerializationHint = elementAttr.XmlSerialization,
-            Order = elementAttr.Order,
-            IsCollection = collectionItemType is not null,
-            IsMandatoryElement = cardinalityAttr?.Min > 0,
-            IsPrimitive = isPrimitive,
-            RepresentsValueElement = elementAttr.IsPrimitiveValue,
-            ValidationAttributes = prop.GetValidatingAttributes(release).ToArray(),
-            FiveWs = elementAttr.FiveWs,
-            BindingName = prop.GetFhirModelAttribute<BindingAttribute>(release)?.Name,
-            PropertyTypeMapping = propertyTypeMapping,
-            FhirType = fhirTypes,
-            ImplementingType = implementingType,
-        };
-
-        return true;
-    }
-
-    private static Type determineMappingType(Type[]? overridingTypes, Type implementingType, FhirElementAttribute felem, string parentTypeName)
-    {
-        // There are a few cases where AllowedTypes is used to specify the "correct" concrete FhirType to
-        // use when ImplementingType is not the right type to base the mapping on:
-        // * For elements that use DataType and have a specific AllowedType per version (e.g. Signature.who)
-        // * For the value element of Primitives, that need to be mapped to CQL types.
-        if (overridingTypes?.Length == 1)
-            return overridingTypes[0];
-
-        // The special "value" properties of primitive types are mapped to the CQL types.
-        if (isAllowedNativeTypeForDataTypeValue(implementingType) && felem.IsPrimitiveValue)
-        {
-            return parentTypeName switch
-            {
-                "boolean" => typeof(P.Boolean),
-                "integer" or "unsignedInt" or "positiveInt" => typeof(P.Integer),
-                "integer64" => typeof(P.Long),
-                "time" => typeof(P.Time),
-                "date" => typeof(P.Date),
-                "instant" or "datetime" => typeof(P.DateTime),
-                "decimal" => typeof(P.Decimal),
-                _ => typeof(P.String)
-            };
+            Name = name;
+            NativeProperty = pi;
+            Release = version;
+            ImplementingType = implementingType;
+            FhirType = fhirTypes;
+            PropertyTypeMapping = propertyTypeMapping;
+            DeclaringClass = declaringClass;
+            FiveWs = string.Empty;
+            ValidationAttributes = Array.Empty<ValidationAttribute>();
         }
 
-        // For all enums, we use the single mapping for Enum
-        if (typeof(Enum).IsAssignableFrom(implementingType))
-            return typeof(Enum);
+        /// <summary>
+        /// The name of the element in the FHIR specification.
+        /// </summary>
+        public string Name { get; internal set; }
 
-        // For all Code<T>, we use the mapping for Coding
-        if (implementingType.IsConstructedGenericType && implementingType.GetGenericTypeDefinition() == typeof(Code<>))
-            return typeof(Code);
+        /// <summary>
+        /// The ClassMapping for the type this property is a member of.
+        /// </summary>
+        public ClassMapping DeclaringClass { get; internal set; }
 
-        // Otherwise, we simply use the mapping for the actual implementing type.
-        return implementingType;
-    }
+        /// <summary>
+        /// Whether the element can repeat.
+        /// </summary>
+        public bool IsCollection { get; internal set; }
 
-    /// <summary>
-    /// This function tried to figure out a concrete type for the element represented by this property.
-    /// If it cannot derive a concrete type, it will just return <see cref="ImplementingType"/>.
-    /// </summary>
-    internal Type GetInstantiableType()
-    {
-        if (!ImplementingType.IsAbstract)
+        /// <summary>
+        /// The element is of an atomic .NET type, not a FHIR generated POCO.
+        /// </summary>
+        public bool IsPrimitive { get; private set; }
+
+        /// <summary>
+        /// The element is a primitive (<seealso cref="IsPrimitive"/>) and 
+        /// represents the primitive `value` attribute/property in the FHIR serialization.
+        /// </summary>
+        public bool RepresentsValueElement { get; private set; }
+
+        /// <summary>
+        /// Whether the element appears in _summary 
+        /// (see https://www.hl7.org/fhir/search.html#summary)
+        /// </summary>
+        public bool InSummary { get; private set; }
+
+        /// <summary>
+        /// If this modifies the meaning of other elements
+        /// (see https://www.hl7.org/fhir/conformance-rules.html#isModifier)
+        /// </summary>
+        public bool IsModifier { get; private set; }
+
+        /// <summary>
+        /// Five W's mappings of the element.
+        /// <remarks>it represents the exact element name of one the elements of the 
+        /// <c>FiveWs</c> pattern from http://hl7.org/fhir/fivews.html. Choice elements are spelled with the
+        /// [x] suffix, like <c>done[x]</c>. </remarks>
+        /// </summary>
+        public string FiveWs { get; private set; }
+
+        /// <summary>
+        /// Whether the element has a cardinality higher than 0.
+        /// </summary>
+        public bool IsMandatoryElement { get; private set; }
+
+        /// <summary>
+        /// The native type of the element.
+        /// </summary>
+        /// <remarks>If the element is a collection or is nullable, this reflects the
+        /// collection item or the type that is made nullable respectively.
+        /// </remarks>
+        public Type ImplementingType { get; private set; }
+
+        /// <summary>
+        /// The numeric order of the element (relevant for the XML serialization, which
+        /// needs to be in order).
+        /// </summary>
+        public int Order { get; private set; }
+
+        /// <summary>
+        /// How this element is represented in the XML serialization.
+        /// </summary>
+        public XmlRepresentation SerializationHint { get; private set; }
+
+        /// <summary>
+        /// Specifies whether this element contains a choice (either a choice element or a
+        /// contained resource).
+        /// </summary>
+        /// <remarks>In the case of a DataChoice, these elements have names ending in [x] in 
+        /// the StructureDefinition and allow a (possibly restricted) set of types to be used. 
+        /// These are reflected in the <see cref="FhirType"/> property.</remarks>
+        public ChoiceType Choice { get; private set; }
+
+        /// <summary>
+        /// The list of possible FHIR types for this element, listed as the representative .NET types. 
+        /// For non-choice types this is a single Type, for choices this is either a list of Types or 
+        /// just <see cref="Hl7.Fhir.Model.DataType"/>.
+        /// </summary>
+        /// <remark>These are the defined (choice) types for this element as specified in the
+        /// FHIR data definitions. It is derived from the actual property type,
+        /// or, if present, via a list of types in the [AllowedTypes] attribute. Finally,
+        /// it the property type does not represent FHIR metadata, it is overridden using
+        /// the [DeclaredType] attribute.
+        /// </remark>
+        public Type[] FhirType { get; private set; }
+
+        /// <summary>
+        /// The <see cref="ClassMapping" /> that represents the type of this property.
+        /// </summary>
+        /// <remarks>This is effectively the ClassMapping for the <see cref="ImplementingType" /> unless a
+        /// <see cref="DeclaredTypeAttribute" /> specifies otherwise.</remarks>
+        public ClassMapping PropertyTypeMapping { get; private set; }
+
+        /// <summary>
+        /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
+        /// on this property.
+        /// </summary>
+        public ValidationAttribute[] ValidationAttributes { get; private set; } = Array.Empty<ValidationAttribute>();
+
+        /// <summary>
+        /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
+        /// </summary>
+        public readonly PropertyInfo NativeProperty;
+
+        /// <summary>
+        /// The release of FHIR for which the metadata was extracted from the property.
+        /// </summary>
+        public readonly FhirRelease Release;
+
+        /// <summary>
+        /// For a bound element, this is the name of the binding.
+        /// </summary>
+        public string? BindingName { get; private set; }
+
+        /// <summary>
+        /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
+        /// </summary>
+        /// <remarks>There should generally be no reason to call this method, as you can easily get the required PropertyMapping via
+        /// a ClassMapping - which will cache this information as well. This constructor is public for historical reasons only.</remarks>
+        public static bool TryCreate(PropertyInfo prop, [NotNullWhen(true)] out PropertyMapping? result, ClassMapping declaringClass, FhirRelease release)
+        {
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
+            result = default;
+
+            // If there is no [FhirElement] on the property, skip it
+            var elementAttr = ClassMapping.GetAttribute<FhirElementAttribute>(prop, release);
+            if (elementAttr == null) return false;
+
+            // If there is an explicit [NotMapped] on the property, skip it
+            // (in combination with `Since` useful to remove a property from the serialization)
+            var notmappedAttr = ClassMapping.GetAttribute<NotMappedAttribute>(prop, release);
+            if (notmappedAttr != null) return false;
+
+            // We broadly use .IsArray here - this means arrays in POCOs cannot be used to represent
+            // FHIR repeating elements. If we would allow this, we'd also have stuff like `string` and binary
+            // data as repeating element, and would need to exclude these exceptions on a case by case basis.
+            // This is pretty ugly, so we prefer to not support arrays - you should use lists instead.
+            bool isCollection = ReflectionHelper.IsTypedCollection(prop.PropertyType) && !prop.PropertyType.IsArray;
+
+            var cardinalityAttr = ClassMapping.GetAttribute<CardinalityAttribute>(prop, release);
+
+            // Get to the actual (native) type representing this element
+            var implementingType = prop.PropertyType;
+            if (isCollection) implementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
+            if (ReflectionHelper.IsNullableType(implementingType)) implementingType = ReflectionHelper.GetNullableArgument(implementingType);
+
+            // Determine the .NET type that represents the FHIR type for this element.
+            // This is normally just the ImplementingType itself, but can be overridden
+            // with the [DeclaredType] attribute.
+            var declaredType = ClassMapping.GetAttribute<DeclaredTypeAttribute>(prop, release);
+            var fhirType = declaredType?.Type ??
+                (typeof(Enum).GetTypeInfo().IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
+
+            if (!ClassMapping.TryGetMappingForType(fhirType, release, out var propertyTypeMapping))
+                throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
+                    $"{fhirType}, for which a classmapping cannot be found.");
+
+            // The [AllowedElements] attribute can specify a set of allowed types for this element.
+            // If this is a choice element, then take this list as the declared list of FHIR types,
+            // otherwise assume this is the implementing FHIR type above
+            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
+
+            var fhirTypes = allowedTypes?.Types?.Any() == true ?
+                allowedTypes.Types : new[] { fhirType };
+
+            var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
+
+            result = new PropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping!, fhirTypes, release)
+            {
+                InSummary = elementAttr.InSummary,
+                IsModifier = elementAttr.IsModifier,
+                Choice = elementAttr.Choice,
+                SerializationHint = elementAttr.XmlSerialization,
+                Order = elementAttr.Order,
+                IsCollection = isCollection,
+                IsMandatoryElement = cardinalityAttr?.Min > 0,
+                IsPrimitive = isPrimitive,
+                RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
+                ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
+                FiveWs = elementAttr.FiveWs,
+                BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
+            };
+
+            return true;
+        }
+
+        /// <summary>
+        /// This function tried to figure out a concrete type for the element represented by this property.
+        /// If it cannot derive a concrete type, it will just return <see cref="ImplementingType"/>.
+        /// </summary>
+        internal Type GetInstantiableType()
+        {
+            if (!ImplementingType.IsAbstract)
+                return ImplementingType;
+
+            // Ok, so we're in abstract type land, maybe FhirType can help us
+            if (FhirType.Length == 1)
+                return FhirType[0];
+
+            // No, just return ImplementingType then.
             return ImplementingType;
+        }
 
-        // Ok, so we're in abstract type land, maybe FhirType can help us
-        if (FhirType.Length == 1)
-            return FhirType[0];
-
-        // No, just return ImplementingType then.
-        return ImplementingType;
-    }
-
-    internal string QualifiedPropName => $"{DeclaringClass.Name}.{Name}";
-
-    private static bool isAllowedNativeTypeForDataTypeValue(Type type) =>
-        type.IsEnum || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
-
-// I have disabled this code since the deserializer and serializer no longer use these properties
-// instead they are calling TryGetValue and TrySetValue of the new dynamic/overflow subsystem.
-// Since these properties would enable some novel usecases in the future (like creating custom properties
-// that set cross-version extensions), I have left the code in place.
- #if USE_GETTER_SETTER_AND_CODEGEN
-
-    /// <summary>
-    /// The function to use to get the value of this property on an instance of the class.
-    /// </summary>
-    /// <remarks>If not explicitly set, the framework will determine the fastest way to get the value
-    /// the first time get is called.</remarks>
-    public Func<Base, object?> Getter
-    {
-        get => LazyInitializer.EnsureInitialized(ref _getter, buildValueGetter)!;
-        init => _getter = value;
-    }
-
-    private Func<Base, object?>? _getter;
-
-    private Func<Base, object?> buildValueGetter()
-    {
-        // If this is a custom property, or this platform does not support code generation,
-        // use dictionary access, otherwise use the generated getter.
-        if (NativeProperty?.GetValueGetter<Base>() is { } getter) return getter;
-        return b => b.TryGetValue(Name, out var value) ? value : null;
-    }
-
-    /// <summary>
-    /// The function to use to set the value of this property on an instance of the class.
-    /// </summary>
-    /// <remarks>If not explicitly set, the framework will determine the fastest way to get the value
-    /// the first time set is called.</remarks>
-    public Action<Base, object?> Setter
-    {
-        get => LazyInitializer.EnsureInitialized(ref _setter, buildValueSetter)!;
-        init => _setter = value;
-    }
-
-    private Action<Base, object?>? _setter;
-
-    private Action<Base, object?> buildValueSetter()
-    {
-        // If this is a not custom property and the platform support codes generation,
-        // use the generated setter, unless we need overflow (type inequality).
-        if (NativeProperty?.GetValueSetter<Base>() is {} setter)
+        private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)
         {
-            return (b, v) =>
+            var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
+
+            return !isValueElement || isAllowedNativeTypeForDataTypeValue(prop.PropertyType)
+                ? isValueElement
+                : throw Error.Argument(nameof(prop), "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) " +
+                    "is not supported by the serializer.".FormatWith(buildQualifiedPropName(prop), prop.PropertyType.Name));
+        }
+
+        private static string buildQualifiedPropName(PropertyInfo p)
+            => $"{p.DeclaringType?.Name ?? throw Error.ArgumentNull(nameof(p.DeclaringType))}.{p.Name}";
+
+        private static bool isAllowedNativeTypeForDataTypeValue(Type type)
+        {
+            // Special case, allow Nullable<enum>
+            if (ReflectionHelper.IsNullableType(type))
+                type = ReflectionHelper.GetNullableArgument(type);
+
+            return type.IsEnum() || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
+        }
+
+        /// <summary>
+        /// Given an instance of the parent class, gets the value for this property.
+        /// </summary>
+        public object? GetValue(object instance) => LazyInitializer.EnsureInitialized(ref _getter, NativeProperty.GetValueGetter)!(instance);
+
+        private Func<object, object?>? _getter;
+
+        /// <summary>
+        /// Given an instance of the parent class, sets the value for this property.
+        /// </summary>
+        public void SetValue(object instance, object? value) =>
+            LazyInitializer.EnsureInitialized(ref _setter, NativeProperty.GetValueSetter)!(instance, value);
+
+        private Action<object, object?>? _setter;
+
+        #region IElementDefinitionSummary members
+        string IElementDefinitionSummary.ElementName => this.Name;
+
+        bool IElementDefinitionSummary.IsCollection => this.IsCollection;
+
+        bool IElementDefinitionSummary.IsRequired => this.IsMandatoryElement;
+
+        bool IElementDefinitionSummary.InSummary => this.InSummary;
+
+        /// <inheritdoc/>
+        bool IElementDefinitionSummary.IsModifier => this.IsModifier;
+
+        bool IElementDefinitionSummary.IsChoiceElement => this.Choice == ChoiceType.DatatypeChoice;
+
+        bool IElementDefinitionSummary.IsResource => this.Choice == ChoiceType.ResourceChoice;
+
+        string? IElementDefinitionSummary.DefaultTypeName => null;
+
+        ITypeSerializationInfo[] IElementDefinitionSummary.Type
+        {
+            get
             {
-                if (v is null || NativeProperty.PropertyType.IsInstanceOfType(v))
-                    setter(b, v);
-                else
-                    b.SetValue(Name, v);
-            };
+                LazyInitializer.EnsureInitialized(ref _types, buildTypes);
+                return _types!;
+            }
         }
 
-        return (b,v) => b.SetValue(Name, v);
-    }
-#endif
+        private ITypeSerializationInfo[]? _types;
 
-    public PropertyMapping PromoteToList()
-    {
-        if(FhirType.Length > 1) throw new InvalidOperationException("Cannot promote a choice element to a list");
+        string? IElementDefinitionSummary.NonDefaultNamespace => null;
 
-        var listType = typeof(List<>).MakeGenericType(ImplementingType);
-        return new PropertyMapping(DeclaringClass, Name, listType);
-    }
-
-    #region IElementDefinitionSummary members
-    string IElementDefinitionSummary.ElementName => this.Name;
-
-    bool IElementDefinitionSummary.IsCollection => this.IsCollection;
-
-    bool IElementDefinitionSummary.IsRequired => this.IsMandatoryElement;
-
-    bool IElementDefinitionSummary.InSummary => this.InSummary;
-
-    /// <inheritdoc/>
-    bool IElementDefinitionSummary.IsModifier => this.IsModifier;
-
-    bool IElementDefinitionSummary.IsChoiceElement => this.Choice == ChoiceType.DatatypeChoice;
-
-    bool IElementDefinitionSummary.IsResource => this.Choice == ChoiceType.ResourceChoice;
-
-    string? IElementDefinitionSummary.DefaultTypeName => null;
-
-    ITypeSerializationInfo[] IElementDefinitionSummary.Type
-    {
-        get
-        {
-            LazyInitializer.EnsureInitialized(ref _types, buildTypes);
-            return _types!;
-        }
-    }
-
-    private ITypeSerializationInfo[]? _types;
-
-    string? IElementDefinitionSummary.NonDefaultNamespace => null;
-
-    XmlRepresentation IElementDefinitionSummary.Representation =>
-        SerializationHint != XmlRepresentation.None ?
+        XmlRepresentation IElementDefinitionSummary.Representation =>
+            SerializationHint != XmlRepresentation.None ?
             SerializationHint : XmlRepresentation.XmlElement;
 
-    int IElementDefinitionSummary.Order => Order ?? Int32.MaxValue;
+        int IElementDefinitionSummary.Order => Order;
 
-    private ITypeSerializationInfo[] buildTypes()
-    {
-        if (PropertyTypeMapping.IsBackboneType)
-            return [PropertyTypeMapping];
-
-        if (IsPrimitive)
+        private ITypeSerializationInfo[] buildTypes()
         {
-            throw new NotSupportedException(
-                $"Encountered unexpected primitive type {Name} for ITypedElement.InstanceType.");
+            var elementTypeMapping = PropertyTypeMapping;
+
+            if (elementTypeMapping!.IsBackboneType)
+            {
+                var info = elementTypeMapping;
+                return new ITypeSerializationInfo[] { info };
+            }
+            else if (IsPrimitive)
+            {
+                // Backwards compat hack: the primitives (since .value is never queried, this
+                // means Element.id, Narrative.div and Extension.url) should be returned as FHIR type names, not
+                // system (CQL) type names.
+                var bwcompatType = Name switch
+                {
+                    "url" => "uri",
+                    "id" => "string",
+                    "div" => "xhtml",
+                    _ => throw new NotSupportedException($"Encountered unexpected primitive type {Name} in backward compat behaviour for ITypedElement.InstanceType.")
+                };
+
+                return new[] { (ITypeSerializationInfo)new PocoTypeReferenceInfo(bwcompatType) };
+            }
+            else
+            {
+                var names = FhirType.Select(ft => getFhirTypeName(ft));
+                return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
+            }
+
+            string getFhirTypeName(Type ft)
+            {
+                // The special case where the mapping name is a backbone element name can safely
+                // be ignored here, since that is handled by the first case in the if statement above.
+                return ClassMapping.TryGetMappingForType(ft, Release, out var tm)
+                    ? ((IStructureDefinitionSummary)tm!).TypeName
+                    : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
+                        $"'{buildQualifiedPropName(NativeProperty)}', but it does not seem to" +
+                        $"be a valid FHIR type POCO.");
+            }
         }
 
-        var names = FhirType.Select(getFhirTypeName);
-        return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
-
-        string getFhirTypeName(Type ft)
+        private struct PocoTypeReferenceInfo : IStructureDefinitionReference
         {
-            // The special case where the mapping name is a backbone element name can safely
-            // be ignored here, since that is handled by the first case in the if statement above.
-            return Inspector.FindOrImportClassMapping(ft) is {} tm
-                ? ((IStructureDefinitionSummary)tm).TypeName
-                : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
-                                                  $"'{QualifiedPropName}', but it does not seem to" +
-                                                  $"be a valid FHIR type POCO.");
+            public PocoTypeReferenceInfo(string canonical)
+            {
+                ReferredType = canonical;
+            }
+
+            public string ReferredType { get; private set; }
         }
-    }
 
-    private readonly struct PocoTypeReferenceInfo(string canonical) : IStructureDefinitionReference
-    {
-        public string ReferredType { get; } = canonical;
+        #endregion
     }
-
-    #endregion
 }
+
+#nullable restore

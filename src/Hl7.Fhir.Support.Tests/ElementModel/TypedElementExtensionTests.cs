@@ -7,7 +7,7 @@ using EM= Hl7.Fhir.ElementModel.Types;
 namespace Hl7.Fhir.ElementModel
 {
     [TestClass]
-    public class VersionedConversionExtensionsTests
+    public class TypedElementExtensionsTests
     {
         private readonly IStructureDefinitionSummaryProvider _provider = new NoTypeProvider();
 

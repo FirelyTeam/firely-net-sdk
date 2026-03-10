@@ -5,7 +5,6 @@ using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -58,9 +57,9 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void WorksWithTypedElementSerializers()
         {
-            var sig = new Bundle { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
+            var sig = new Bundle() { Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
             var json =  sig.ToTypedElement().ToJson();
-            //json.Should().Contain("\"who\"");
+            json.Should().Contain("\"who\"");
             var sig2 = FhirJsonNode.Parse(json).ToPoco();
             sig.IsExactly(sig2).Should().BeTrue();
         }
@@ -69,15 +68,16 @@ namespace Hl7.Fhir.Serialization.Tests
         public void WorksWithPocoSerializers()
         {
             var sig = new Bundle() { Type = Bundle.BundleType.Document, Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
-            var json = FhirJsonSerializer.Default.SerializeToString(sig);
+            var json = new FhirJsonPocoSerializer().SerializeToString(sig);
             json.Should().Contain("\"who\"");
-            var sig2 = new FhirJsonDeserializer().DeserializeResource(json);
+            var sig2 = new FhirJsonPocoDeserializer().DeserializeResource(json);
             sig.IsExactly(sig2).Should().BeTrue();
 
-            var xml = FhirXmlSerializer.Default.SerializeToString(sig);
+            var xml = new FhirXmlPocoSerializer().SerializeToString(sig);
             xml.Should().Contain("<who>");
-            var sig3 = new FhirXmlDeserializer().DeserializeResource(xml);
+            var sig3 = new FhirXmlPocoDeserializer().DeserializeResource(xml);
             sig.IsExactly(sig3).Should().BeTrue();
+
         }
     }
 }

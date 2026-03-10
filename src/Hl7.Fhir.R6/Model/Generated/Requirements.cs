@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r6.expansions@6.0.0-ballot3, hl7.fhir.r6.core@6.0.0-ballot3
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,10 +10,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
-#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,13 +51,13 @@ namespace Hl7.Fhir.Model
   /// </remarks>
   [Serializable]
   [DataContract]
-  [FhirType("Requirements","http://hl7.org/fhir/StructureDefinition/Requirements")]
+  [FhirType("Requirements","http://hl7.org/fhir/StructureDefinition/Requirements", IsResource=true)]
   public partial class Requirements : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName => "Requirements";
+    public override string TypeName { get { return "Requirements"; } }
 
     /// <summary>
     /// Description Needed Here
@@ -112,190 +108,167 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Requirements.imports", IsBackboneType=true)]
+    [FhirType("Requirements#Imports", IsNestedType=true)]
+    [BackboneType("Requirements.imports")]
     public partial class ImportsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "Requirements.imports";
+      public override string TypeName { get { return "Requirements#Imports"; } }
 
       /// <summary>
-      /// Source of imported statements.
+      /// Source of imported statements
       /// </summary>
       [FhirElement("reference", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Canonical? ReferenceElement
+      public Hl7.Fhir.Model.Canonical ReferenceElement
       {
-        get
-        {
-          if(_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["reference"]);
-          return _ReferenceElement;
-        }
-
-        set
-        {
-          if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            Overflow.Remove("reference");
-          _ReferenceElement = value;
-          OnPropertyChanged("ReferenceElement");
-        }
-
+        get { return _ReferenceElement; }
+        set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
       }
 
-      private Hl7.Fhir.Model.Canonical? _ReferenceElement;
+      private Hl7.Fhir.Model.Canonical _ReferenceElement;
 
       /// <summary>
       /// Source of imported statements
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Reference
+      public string Reference
       {
-        get => ReferenceElement?.Value;
+        get { return ReferenceElement != null ? ReferenceElement.Value : null; }
         set
         {
-          ReferenceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          if (value == null)
+            ReferenceElement = null;
+          else
+            ReferenceElement = new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("Reference");
         }
       }
 
       /// <summary>
-      /// Statement key.
+      /// Statement key
       /// </summary>
       [FhirElement("key", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.Id> KeyElement
       {
-        get
-        {
-          if(_KeyElement.InOverflow<List<Hl7.Fhir.Model.Id>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Id>), Overflow["key"]);
-          return _KeyElement ??= [];
-        }
-
-        set
-        {
-          if (_KeyElement.InOverflow<List<Hl7.Fhir.Model.Id>>())
-            Overflow.Remove("key");
-          _KeyElement = value;
-          OnPropertyChanged("KeyElement");
-        }
-
+        get { if(_KeyElement==null) _KeyElement = new List<Hl7.Fhir.Model.Id>(); return _KeyElement; }
+        set { _KeyElement = value; OnPropertyChanged("KeyElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Id>? _KeyElement;
+      private List<Hl7.Fhir.Model.Id> _KeyElement;
 
       /// <summary>
       /// Statement key
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?> Key
+      public IEnumerable<string> Key
       {
-        get => _KeyElement?.Select(elem => elem.Value) ?? [];
+        get { return KeyElement != null ? KeyElement.Select(elem => elem.Value) : null; }
         set
         {
           if (value == null)
-            KeyElement = null!;
+            KeyElement = null;
           else
             KeyElement = new List<Hl7.Fhir.Model.Id>(value.Select(elem=>new Hl7.Fhir.Model.Id(elem)));
           OnPropertyChanged("Key");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ImportsComponent dest)
+        var dest = other as ImportsComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_ReferenceElement is not null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)_ReferenceElement.DeepCopyInternal();
-        if(_KeyElement is not null) dest.KeyElement = new List<Hl7.Fhir.Model.Id>(_KeyElement.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)ReferenceElement.DeepCopy();
+        if(KeyElement.Any()) dest.KeyElement = new List<Hl7.Fhir.Model.Id>(KeyElement.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ImportsComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ImportsComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ImportsComponent otherT) return false;
+        var otherT = other as ImportsComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
-        if(!comparer.ListEquals(_KeyElement, otherT._KeyElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ImportsComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (ReferenceElement != null) yield return ReferenceElement;
+          foreach (var elem in KeyElement) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+          foreach (var elem in KeyElement) { if (elem != null) yield return new ElementValue("key", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "reference":
-            if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            {
-              value = Overflow["reference"];
-              return true;
-            }
-            value = _ReferenceElement;
-            return (value as Hl7.Fhir.Model.Canonical) is not null;
+            value = ReferenceElement;
+            return ReferenceElement is not null;
           case "key":
-            if (_KeyElement.InOverflow<List<Hl7.Fhir.Model.Id>>())
-            {
-              value = Overflow["key"];
-              return true;
-            }
-            value = _KeyElement;
-            return (value as List<Hl7.Fhir.Model.Id>)?.Any() is true;
+            value = KeyElement;
+            return KeyElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "reference":
-            if (value is not (Hl7.Fhir.Model.Canonical or null))
-            {
-              ReferenceElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
-              Overflow["reference"] = value;
-            }
-            else ReferenceElement = (Hl7.Fhir.Model.Canonical?)value;
-            return this;
-          case "key":
-            if (value is not (List<Hl7.Fhir.Model.Id> or null))
-            {
-              KeyElement = OverflowNull<List<Hl7.Fhir.Model.Id>>.INSTANCE;
-              Overflow["key"] = value;
-            }
-            else KeyElement = (List<Hl7.Fhir.Model.Id>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_ReferenceElement is not null && !_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-        if (_KeyElement?.Any() is true && !_KeyElement.InOverflow<List<Hl7.Fhir.Model.Id>>()) yield return new KeyValuePair<string,object>("key",_KeyElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+        if (KeyElement?.Any() == true) yield return new KeyValuePair<string,object>("key",KeyElement);
       }
 
     }
@@ -309,185 +282,166 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Requirements.actor", IsBackboneType=true)]
+    [FhirType("Requirements#Actor", IsNestedType=true)]
+    [BackboneType("Requirements.actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "Requirements.actor";
+      public override string TypeName { get { return "Requirements#Actor"; } }
 
       /// <summary>
-      /// Actor referenced.
+      /// Actor referenced
       /// </summary>
       [FhirElement("reference", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Canonical? ReferenceElement
+      public Hl7.Fhir.Model.Canonical ReferenceElement
       {
-        get
-        {
-          if(_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["reference"]);
-          return _ReferenceElement;
-        }
-
-        set
-        {
-          if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            Overflow.Remove("reference");
-          _ReferenceElement = value;
-          OnPropertyChanged("ReferenceElement");
-        }
-
+        get { return _ReferenceElement; }
+        set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
       }
 
-      private Hl7.Fhir.Model.Canonical? _ReferenceElement;
+      private Hl7.Fhir.Model.Canonical _ReferenceElement;
 
       /// <summary>
       /// Actor referenced
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Reference
+      public string Reference
       {
-        get => ReferenceElement?.Value;
+        get { return ReferenceElement != null ? ReferenceElement.Value : null; }
         set
         {
-          ReferenceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          if (value == null)
+            ReferenceElement = null;
+          else
+            ReferenceElement = new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("Reference");
         }
       }
 
       /// <summary>
-      /// Unique label for actor (used in statements).
+      /// Unique label for actor (used in statements)
       /// </summary>
       [FhirElement("key", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? KeyElement
+      public Hl7.Fhir.Model.Id KeyElement
       {
-        get
-        {
-          if(_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["key"]);
-          return _KeyElement;
-        }
-
-        set
-        {
-          if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            Overflow.Remove("key");
-          _KeyElement = value;
-          OnPropertyChanged("KeyElement");
-        }
-
+        get { return _KeyElement; }
+        set { _KeyElement = value; OnPropertyChanged("KeyElement"); }
       }
 
-      private Hl7.Fhir.Model.Id? _KeyElement;
+      private Hl7.Fhir.Model.Id _KeyElement;
 
       /// <summary>
       /// Unique label for actor (used in statements)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Key
+      public string Key
       {
-        get => KeyElement?.Value;
+        get { return KeyElement != null ? KeyElement.Value : null; }
         set
         {
-          KeyElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          if (value == null)
+            KeyElement = null;
+          else
+            KeyElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Key");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not ActorComponent dest)
+        var dest = other as ActorComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_ReferenceElement is not null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)_ReferenceElement.DeepCopyInternal();
-        if(_KeyElement is not null) dest.KeyElement = (Hl7.Fhir.Model.Id)_KeyElement.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)ReferenceElement.DeepCopy();
+        if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new ActorComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new ActorComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not ActorComponent otherT) return false;
+        var otherT = other as ActorComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
-        if(!comparer.Equals(_KeyElement, otherT._KeyElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as ActorComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (ReferenceElement != null) yield return ReferenceElement;
+          if (KeyElement != null) yield return KeyElement;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+          if (KeyElement != null) yield return new ElementValue("key", KeyElement);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "reference":
-            if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            {
-              value = Overflow["reference"];
-              return true;
-            }
-            value = _ReferenceElement;
-            return (value as Hl7.Fhir.Model.Canonical) is not null;
+            value = ReferenceElement;
+            return ReferenceElement is not null;
           case "key":
-            if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            {
-              value = Overflow["key"];
-              return true;
-            }
-            value = _KeyElement;
-            return (value as Hl7.Fhir.Model.Id) is not null;
+            value = KeyElement;
+            return KeyElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "reference":
-            if (value is not (Hl7.Fhir.Model.Canonical or null))
-            {
-              ReferenceElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
-              Overflow["reference"] = value;
-            }
-            else ReferenceElement = (Hl7.Fhir.Model.Canonical?)value;
-            return this;
-          case "key":
-            if (value is not (Hl7.Fhir.Model.Id or null))
-            {
-              KeyElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
-              Overflow["key"] = value;
-            }
-            else KeyElement = (Hl7.Fhir.Model.Id?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_ReferenceElement is not null && !_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-        if (_KeyElement is not null && !_KeyElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("key",_KeyElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+        if (KeyElement is not null) yield return new KeyValuePair<string,object>("key",KeyElement);
       }
 
     }
@@ -500,125 +454,93 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Requirements.statement", IsBackboneType=true)]
+    [FhirType("Requirements#Statement", IsNestedType=true)]
+    [BackboneType("Requirements.statement")]
     public partial class StatementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "Requirements.statement";
+      public override string TypeName { get { return "Requirements#Statement"; } }
 
       /// <summary>
-      /// Key that identifies this statement.
+      /// Key that identifies this statement
       /// </summary>
       [FhirElement("key", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? KeyElement
+      public Hl7.Fhir.Model.Id KeyElement
       {
-        get
-        {
-          if(_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["key"]);
-          return _KeyElement;
-        }
-
-        set
-        {
-          if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            Overflow.Remove("key");
-          _KeyElement = value;
-          OnPropertyChanged("KeyElement");
-        }
-
+        get { return _KeyElement; }
+        set { _KeyElement = value; OnPropertyChanged("KeyElement"); }
       }
 
-      private Hl7.Fhir.Model.Id? _KeyElement;
+      private Hl7.Fhir.Model.Id _KeyElement;
 
       /// <summary>
       /// Key that identifies this statement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Key
+      public string Key
       {
-        get => KeyElement?.Value;
+        get { return KeyElement != null ? KeyElement.Value : null; }
         set
         {
-          KeyElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          if (value == null)
+            KeyElement = null;
+          else
+            KeyElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Key");
         }
       }
 
       /// <summary>
-      /// Short Human label for this statement.
+      /// Short Human label for this statement
       /// </summary>
       [FhirElement("label", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString? LabelElement
+      public Hl7.Fhir.Model.FhirString LabelElement
       {
-        get
-        {
-          if(_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["label"]);
-          return _LabelElement;
-        }
-
-        set
-        {
-          if (_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            Overflow.Remove("label");
-          _LabelElement = value;
-          OnPropertyChanged("LabelElement");
-        }
-
+        get { return _LabelElement; }
+        set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString? _LabelElement;
+      private Hl7.Fhir.Model.FhirString _LabelElement;
 
       /// <summary>
       /// Short Human label for this statement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Label
+      public string Label
       {
-        get => LabelElement?.Value;
+        get { return LabelElement != null ? LabelElement.Value : null; }
         set
         {
-          LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+          if (value == null)
+            LabelElement = null;
+          else
+            LabelElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Label");
         }
       }
 
       /// <summary>
-      /// SHALL | SHOULD | MAY | SHOULD-NOT | SHALL-NOT.
+      /// SHALL | SHOULD | MAY | SHOULD-NOT | SHALL-NOT
       /// </summary>
       [FhirElement("conformance", Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Binding("versionAlgorithm")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>> ConformanceElement
       {
-        get
-        {
-          if(_ConformanceElement.InOverflow<List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>>())
-            throw CodedValidationException.FromTypes(typeof(List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>), Overflow["conformance"]);
-          return _ConformanceElement ??= [];
-        }
-
-        set
-        {
-          if (_ConformanceElement.InOverflow<List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>>())
-            Overflow.Remove("conformance");
-          _ConformanceElement = value;
-          OnPropertyChanged("ConformanceElement");
-        }
-
+        get { if(_ConformanceElement==null) _ConformanceElement = new List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(); return _ConformanceElement; }
+        set { _ConformanceElement = value; OnPropertyChanged("ConformanceElement"); }
       }
 
-      private List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>? _ConformanceElement;
+      private List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>> _ConformanceElement;
 
       /// <summary>
       /// SHALL | SHOULD | MAY | SHOULD-NOT | SHALL-NOT
@@ -627,11 +549,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<Hl7.Fhir.Model.Requirements.ConformanceExpectation?> Conformance
       {
-        get => _ConformanceElement?.Select(elem => elem.Value) ?? [];
+        get { return ConformanceElement != null ? ConformanceElement.Select(elem => elem.Value) : null; }
         set
         {
           if (value == null)
-            ConformanceElement = null!;
+            ConformanceElement = null;
           else
             ConformanceElement = new List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>(elem)));
           OnPropertyChanged("Conformance");
@@ -639,30 +561,17 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Set to true if requirements statement is conditional.
+      /// Set to true if requirements statement is conditional
       /// </summary>
       [FhirElement("conditionality", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean? ConditionalityElement
+      public Hl7.Fhir.Model.FhirBoolean ConditionalityElement
       {
-        get
-        {
-          if(_ConditionalityElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["conditionality"]);
-          return _ConditionalityElement;
-        }
-
-        set
-        {
-          if (_ConditionalityElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            Overflow.Remove("conditionality");
-          _ConditionalityElement = value;
-          OnPropertyChanged("ConditionalityElement");
-        }
-
+        get { return _ConditionalityElement; }
+        set { _ConditionalityElement = value; OnPropertyChanged("ConditionalityElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean? _ConditionalityElement;
+      private Hl7.Fhir.Model.FhirBoolean _ConditionalityElement;
 
       /// <summary>
       /// Set to true if requirements statement is conditional
@@ -671,148 +580,101 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Conditionality
       {
-        get => ConditionalityElement?.Value;
+        get { return ConditionalityElement != null ? ConditionalityElement.Value : null; }
         set
         {
-          ConditionalityElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+          if (value == null)
+            ConditionalityElement = null;
+          else
+            ConditionalityElement = new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Conditionality");
         }
       }
 
       /// <summary>
-      /// The actual requirement.
+      /// The actual requirement
       /// </summary>
       [FhirElement("requirement", Order=80)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown? RequirementElement
+      public Hl7.Fhir.Model.Markdown RequirementElement
       {
-        get
-        {
-          if(_RequirementElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["requirement"]);
-          return _RequirementElement;
-        }
-
-        set
-        {
-          if (_RequirementElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-            Overflow.Remove("requirement");
-          _RequirementElement = value;
-          OnPropertyChanged("RequirementElement");
-        }
-
+        get { return _RequirementElement; }
+        set { _RequirementElement = value; OnPropertyChanged("RequirementElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown? _RequirementElement;
+      private Hl7.Fhir.Model.Markdown _RequirementElement;
 
       /// <summary>
       /// The actual requirement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Requirement
+      public string Requirement
       {
-        get => RequirementElement?.Value;
+        get { return RequirementElement != null ? RequirementElement.Value : null; }
         set
         {
-          RequirementElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+          if (value == null)
+            RequirementElement = null;
+          else
+            RequirementElement = new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Requirement");
         }
       }
 
       /// <summary>
-      /// Another statement this is refining, tightening, or establishing more context for.
+      /// Another statement this is refining, tightening, or establishing more context for
       /// </summary>
       [FhirElement("derivedFrom", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.Requirements.DerivedFromComponent? DerivedFrom
+      public Hl7.Fhir.Model.Requirements.DerivedFromComponent DerivedFrom
       {
-        get
-        {
-          if(_DerivedFrom.InOverflow<Hl7.Fhir.Model.Requirements.DerivedFromComponent>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Requirements.DerivedFromComponent), Overflow["derivedFrom"]);
-          return _DerivedFrom;
-        }
-
-        set
-        {
-          if (_DerivedFrom.InOverflow<Hl7.Fhir.Model.Requirements.DerivedFromComponent>())
-            Overflow.Remove("derivedFrom");
-          _DerivedFrom = value;
-          OnPropertyChanged("DerivedFrom");
-        }
-
+        get { return _DerivedFrom; }
+        set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
       }
 
-      private Hl7.Fhir.Model.Requirements.DerivedFromComponent? _DerivedFrom;
+      private Hl7.Fhir.Model.Requirements.DerivedFromComponent _DerivedFrom;
 
       /// <summary>
-      /// Higher-level requirement or statement which this is a logical sub-requirement of.
+      /// Higher-level requirement or statement which this is a logical sub-requirement of
       /// </summary>
       [FhirElement("partOf", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Requirements.PartOfComponent? PartOf
+      public Hl7.Fhir.Model.Requirements.PartOfComponent PartOf
       {
-        get
-        {
-          if(_PartOf.InOverflow<Hl7.Fhir.Model.Requirements.PartOfComponent>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Requirements.PartOfComponent), Overflow["partOf"]);
-          return _PartOf;
-        }
-
-        set
-        {
-          if (_PartOf.InOverflow<Hl7.Fhir.Model.Requirements.PartOfComponent>())
-            Overflow.Remove("partOf");
-          _PartOf = value;
-          OnPropertyChanged("PartOf");
-        }
-
+        get { return _PartOf; }
+        set { _PartOf = value; OnPropertyChanged("PartOf"); }
       }
 
-      private Hl7.Fhir.Model.Requirements.PartOfComponent? _PartOf;
+      private Hl7.Fhir.Model.Requirements.PartOfComponent _PartOf;
 
       /// <summary>
-      /// Design artifact that satisfies this requirement.
+      /// Design artifact that satisfies this requirement
       /// </summary>
       [FhirElement("satisfiedBy", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUrl> SatisfiedByElement
       {
-        get
-        {
-          if(_SatisfiedByElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirUrl>), Overflow["satisfiedBy"]);
-          return _SatisfiedByElement ??= [];
-        }
-
-        set
-        {
-          if (_SatisfiedByElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-            Overflow.Remove("satisfiedBy");
-          _SatisfiedByElement = value;
-          OnPropertyChanged("SatisfiedByElement");
-        }
-
+        get { if(_SatisfiedByElement==null) _SatisfiedByElement = new List<Hl7.Fhir.Model.FhirUrl>(); return _SatisfiedByElement; }
+        set { _SatisfiedByElement = value; OnPropertyChanged("SatisfiedByElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirUrl>? _SatisfiedByElement;
+      private List<Hl7.Fhir.Model.FhirUrl> _SatisfiedByElement;
 
       /// <summary>
       /// Design artifact that satisfies this requirement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?> SatisfiedBy
+      public IEnumerable<string> SatisfiedBy
       {
-        get => _SatisfiedByElement?.Select(elem => elem.Value) ?? [];
+        get { return SatisfiedByElement != null ? SatisfiedByElement.Select(elem => elem.Value) : null; }
         set
         {
           if (value == null)
-            SatisfiedByElement = null!;
+            SatisfiedByElement = null;
           else
             SatisfiedByElement = new List<Hl7.Fhir.Model.FhirUrl>(value.Select(elem=>new Hl7.Fhir.Model.FhirUrl(elem)));
           OnPropertyChanged("SatisfiedBy");
@@ -820,45 +682,31 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// External artifact (rule/document etc. that) created this requirement.
+      /// External artifact (rule/document etc. that) created this requirement
       /// </summary>
       [FhirElement("reference", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUrl> ReferenceElement
       {
-        get
-        {
-          if(_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirUrl>), Overflow["reference"]);
-          return _ReferenceElement ??= [];
-        }
-
-        set
-        {
-          if (_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-            Overflow.Remove("reference");
-          _ReferenceElement = value;
-          OnPropertyChanged("ReferenceElement");
-        }
-
+        get { if(_ReferenceElement==null) _ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(); return _ReferenceElement; }
+        set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirUrl>? _ReferenceElement;
+      private List<Hl7.Fhir.Model.FhirUrl> _ReferenceElement;
 
       /// <summary>
       /// External artifact (rule/document etc. that) created this requirement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?> Reference
+      public IEnumerable<string> Reference
       {
-        get => _ReferenceElement?.Select(elem => elem.Value) ?? [];
+        get { return ReferenceElement != null ? ReferenceElement.Select(elem => elem.Value) : null; }
         set
         {
           if (value == null)
-            ReferenceElement = null!;
+            ReferenceElement = null;
           else
             ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(value.Select(elem=>new Hl7.Fhir.Model.FhirUrl(elem)));
           OnPropertyChanged("Reference");
@@ -866,340 +714,222 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Who asked for this statement.
+      /// Who asked for this statement
       /// </summary>
       [FhirElement("source", Order=130, FiveWs="FiveWs.source")]
       [CLSCompliant(false)]
       [References("CareTeam","Device","Group","HealthcareService","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get
-        {
-          if(_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["source"]);
-          return _Source ??= [];
-        }
-
-        set
-        {
-          if (_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            Overflow.Remove("source");
-          _Source = value;
-          OnPropertyChanged("Source");
-        }
-
+        get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+        set { _Source = value; OnPropertyChanged("Source"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference>? _Source;
+      private List<Hl7.Fhir.Model.ResourceReference> _Source;
 
       /// <summary>
-      /// Key of relevant actor.
+      /// Key of relevant actor
       /// </summary>
       [FhirElement("actor", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      [AllowNull]
       public List<Hl7.Fhir.Model.Id> ActorElement
       {
-        get
-        {
-          if(_ActorElement.InOverflow<List<Hl7.Fhir.Model.Id>>())
-            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Id>), Overflow["actor"]);
-          return _ActorElement ??= [];
-        }
-
-        set
-        {
-          if (_ActorElement.InOverflow<List<Hl7.Fhir.Model.Id>>())
-            Overflow.Remove("actor");
-          _ActorElement = value;
-          OnPropertyChanged("ActorElement");
-        }
-
+        get { if(_ActorElement==null) _ActorElement = new List<Hl7.Fhir.Model.Id>(); return _ActorElement; }
+        set { _ActorElement = value; OnPropertyChanged("ActorElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Id>? _ActorElement;
+      private List<Hl7.Fhir.Model.Id> _ActorElement;
 
       /// <summary>
       /// Key of relevant actor
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?> Actor
+      public IEnumerable<string> Actor
       {
-        get => _ActorElement?.Select(elem => elem.Value) ?? [];
+        get { return ActorElement != null ? ActorElement.Select(elem => elem.Value) : null; }
         set
         {
           if (value == null)
-            ActorElement = null!;
+            ActorElement = null;
           else
             ActorElement = new List<Hl7.Fhir.Model.Id>(value.Select(elem=>new Hl7.Fhir.Model.Id(elem)));
           OnPropertyChanged("Actor");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not StatementComponent dest)
+        var dest = other as StatementComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_KeyElement is not null) dest.KeyElement = (Hl7.Fhir.Model.Id)_KeyElement.DeepCopyInternal();
-        if(_LabelElement is not null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)_LabelElement.DeepCopyInternal();
-        if(_ConformanceElement is not null) dest.ConformanceElement = new List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(_ConformanceElement.DeepCopyInternal());
-        if(_ConditionalityElement is not null) dest.ConditionalityElement = (Hl7.Fhir.Model.FhirBoolean)_ConditionalityElement.DeepCopyInternal();
-        if(_RequirementElement is not null) dest.RequirementElement = (Hl7.Fhir.Model.Markdown)_RequirementElement.DeepCopyInternal();
-        if(_DerivedFrom is not null) dest.DerivedFrom = (Hl7.Fhir.Model.Requirements.DerivedFromComponent)_DerivedFrom.DeepCopyInternal();
-        if(_PartOf is not null) dest.PartOf = (Hl7.Fhir.Model.Requirements.PartOfComponent)_PartOf.DeepCopyInternal();
-        if(_SatisfiedByElement is not null) dest.SatisfiedByElement = new List<Hl7.Fhir.Model.FhirUrl>(_SatisfiedByElement.DeepCopyInternal());
-        if(_ReferenceElement is not null) dest.ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(_ReferenceElement.DeepCopyInternal());
-        if(_Source is not null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(_Source.DeepCopyInternal());
-        if(_ActorElement is not null) dest.ActorElement = new List<Hl7.Fhir.Model.Id>(_ActorElement.DeepCopyInternal());
+        base.CopyTo(dest);
+        if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
+        if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
+        if(ConformanceElement.Any()) dest.ConformanceElement = new List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>(ConformanceElement.DeepCopy());
+        if(ConditionalityElement != null) dest.ConditionalityElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalityElement.DeepCopy();
+        if(RequirementElement != null) dest.RequirementElement = (Hl7.Fhir.Model.Markdown)RequirementElement.DeepCopy();
+        if(DerivedFrom != null) dest.DerivedFrom = (Hl7.Fhir.Model.Requirements.DerivedFromComponent)DerivedFrom.DeepCopy();
+        if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.Requirements.PartOfComponent)PartOf.DeepCopy();
+        if(SatisfiedByElement.Any()) dest.SatisfiedByElement = new List<Hl7.Fhir.Model.FhirUrl>(SatisfiedByElement.DeepCopy());
+        if(ReferenceElement.Any()) dest.ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(ReferenceElement.DeepCopy());
+        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());
+        if(ActorElement.Any()) dest.ActorElement = new List<Hl7.Fhir.Model.Id>(ActorElement.DeepCopy());
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new StatementComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new StatementComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not StatementComponent otherT) return false;
+        var otherT = other as StatementComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_KeyElement, otherT._KeyElement)) return false;
-        if(!comparer.Equals(_LabelElement, otherT._LabelElement)) return false;
-        if(!comparer.ListEquals(_ConformanceElement, otherT._ConformanceElement)) return false;
-        if(!comparer.Equals(_ConditionalityElement, otherT._ConditionalityElement)) return false;
-        if(!comparer.Equals(_RequirementElement, otherT._RequirementElement)) return false;
-        if(!comparer.Equals(_DerivedFrom, otherT._DerivedFrom)) return false;
-        if(!comparer.Equals(_PartOf, otherT._PartOf)) return false;
-        if(!comparer.ListEquals(_SatisfiedByElement, otherT._SatisfiedByElement)) return false;
-        if(!comparer.ListEquals(_ReferenceElement, otherT._ReferenceElement)) return false;
-        if(!comparer.ListEquals(_Source, otherT._Source)) return false;
-        if(!comparer.ListEquals(_ActorElement, otherT._ActorElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
+        if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+        if( !DeepComparable.Matches(ConformanceElement, otherT.ConformanceElement)) return false;
+        if( !DeepComparable.Matches(ConditionalityElement, otherT.ConditionalityElement)) return false;
+        if( !DeepComparable.Matches(RequirementElement, otherT.RequirementElement)) return false;
+        if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
+        if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
+        if( !DeepComparable.Matches(SatisfiedByElement, otherT.SatisfiedByElement)) return false;
+        if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.Matches(Source, otherT.Source)) return false;
+        if( !DeepComparable.Matches(ActorElement, otherT.ActorElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as StatementComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
+        if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+        if( !DeepComparable.IsExactly(ConformanceElement, otherT.ConformanceElement)) return false;
+        if( !DeepComparable.IsExactly(ConditionalityElement, otherT.ConditionalityElement)) return false;
+        if( !DeepComparable.IsExactly(RequirementElement, otherT.RequirementElement)) return false;
+        if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
+        if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
+        if( !DeepComparable.IsExactly(SatisfiedByElement, otherT.SatisfiedByElement)) return false;
+        if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
+        if( !DeepComparable.IsExactly(ActorElement, otherT.ActorElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (KeyElement != null) yield return KeyElement;
+          if (LabelElement != null) yield return LabelElement;
+          foreach (var elem in ConformanceElement) { if (elem != null) yield return elem; }
+          if (ConditionalityElement != null) yield return ConditionalityElement;
+          if (RequirementElement != null) yield return RequirementElement;
+          if (DerivedFrom != null) yield return DerivedFrom;
+          if (PartOf != null) yield return PartOf;
+          foreach (var elem in SatisfiedByElement) { if (elem != null) yield return elem; }
+          foreach (var elem in ReferenceElement) { if (elem != null) yield return elem; }
+          foreach (var elem in Source) { if (elem != null) yield return elem; }
+          foreach (var elem in ActorElement) { if (elem != null) yield return elem; }
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (KeyElement != null) yield return new ElementValue("key", KeyElement);
+          if (LabelElement != null) yield return new ElementValue("label", LabelElement);
+          foreach (var elem in ConformanceElement) { if (elem != null) yield return new ElementValue("conformance", elem); }
+          if (ConditionalityElement != null) yield return new ElementValue("conditionality", ConditionalityElement);
+          if (RequirementElement != null) yield return new ElementValue("requirement", RequirementElement);
+          if (DerivedFrom != null) yield return new ElementValue("derivedFrom", DerivedFrom);
+          if (PartOf != null) yield return new ElementValue("partOf", PartOf);
+          foreach (var elem in SatisfiedByElement) { if (elem != null) yield return new ElementValue("satisfiedBy", elem); }
+          foreach (var elem in ReferenceElement) { if (elem != null) yield return new ElementValue("reference", elem); }
+          foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
+          foreach (var elem in ActorElement) { if (elem != null) yield return new ElementValue("actor", elem); }
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "key":
-            if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            {
-              value = Overflow["key"];
-              return true;
-            }
-            value = _KeyElement;
-            return (value as Hl7.Fhir.Model.Id) is not null;
+            value = KeyElement;
+            return KeyElement is not null;
           case "label":
-            if (_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-            {
-              value = Overflow["label"];
-              return true;
-            }
-            value = _LabelElement;
-            return (value as Hl7.Fhir.Model.FhirString) is not null;
+            value = LabelElement;
+            return LabelElement is not null;
           case "conformance":
-            if (_ConformanceElement.InOverflow<List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>>())
-            {
-              value = Overflow["conformance"];
-              return true;
-            }
-            value = _ConformanceElement;
-            return (value as List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>)?.Any() is true;
+            value = ConformanceElement;
+            return ConformanceElement?.Any() == true;
           case "conditionality":
-            if (_ConditionalityElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-            {
-              value = Overflow["conditionality"];
-              return true;
-            }
-            value = _ConditionalityElement;
-            return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+            value = ConditionalityElement;
+            return ConditionalityElement is not null;
           case "requirement":
-            if (_RequirementElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-            {
-              value = Overflow["requirement"];
-              return true;
-            }
-            value = _RequirementElement;
-            return (value as Hl7.Fhir.Model.Markdown) is not null;
+            value = RequirementElement;
+            return RequirementElement is not null;
           case "derivedFrom":
-            if (_DerivedFrom.InOverflow<Hl7.Fhir.Model.Requirements.DerivedFromComponent>())
-            {
-              value = Overflow["derivedFrom"];
-              return true;
-            }
-            value = _DerivedFrom;
-            return (value as Hl7.Fhir.Model.Requirements.DerivedFromComponent) is not null;
+            value = DerivedFrom;
+            return DerivedFrom is not null;
           case "partOf":
-            if (_PartOf.InOverflow<Hl7.Fhir.Model.Requirements.PartOfComponent>())
-            {
-              value = Overflow["partOf"];
-              return true;
-            }
-            value = _PartOf;
-            return (value as Hl7.Fhir.Model.Requirements.PartOfComponent) is not null;
+            value = PartOf;
+            return PartOf is not null;
           case "satisfiedBy":
-            if (_SatisfiedByElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-            {
-              value = Overflow["satisfiedBy"];
-              return true;
-            }
-            value = _SatisfiedByElement;
-            return (value as List<Hl7.Fhir.Model.FhirUrl>)?.Any() is true;
+            value = SatisfiedByElement;
+            return SatisfiedByElement?.Any() == true;
           case "reference":
-            if (_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-            {
-              value = Overflow["reference"];
-              return true;
-            }
-            value = _ReferenceElement;
-            return (value as List<Hl7.Fhir.Model.FhirUrl>)?.Any() is true;
+            value = ReferenceElement;
+            return ReferenceElement?.Any() == true;
           case "source":
-            if (_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
-            {
-              value = Overflow["source"];
-              return true;
-            }
-            value = _Source;
-            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
+            value = Source;
+            return Source?.Any() == true;
           case "actor":
-            if (_ActorElement.InOverflow<List<Hl7.Fhir.Model.Id>>())
-            {
-              value = Overflow["actor"];
-              return true;
-            }
-            value = _ActorElement;
-            return (value as List<Hl7.Fhir.Model.Id>)?.Any() is true;
+            value = ActorElement;
+            return ActorElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "key":
-            if (value is not (Hl7.Fhir.Model.Id or null))
-            {
-              KeyElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
-              Overflow["key"] = value;
-            }
-            else KeyElement = (Hl7.Fhir.Model.Id?)value;
-            return this;
-          case "label":
-            if (value is not (Hl7.Fhir.Model.FhirString or null))
-            {
-              LabelElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-              Overflow["label"] = value;
-            }
-            else LabelElement = (Hl7.Fhir.Model.FhirString?)value;
-            return this;
-          case "conformance":
-            if (value is not (List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>> or null))
-            {
-              ConformanceElement = OverflowNull<List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>>.INSTANCE;
-              Overflow["conformance"] = value;
-            }
-            else ConformanceElement = (List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>?)value!;
-            return this;
-          case "conditionality":
-            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-            {
-              ConditionalityElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-              Overflow["conditionality"] = value;
-            }
-            else ConditionalityElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-            return this;
-          case "requirement":
-            if (value is not (Hl7.Fhir.Model.Markdown or null))
-            {
-              RequirementElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-              Overflow["requirement"] = value;
-            }
-            else RequirementElement = (Hl7.Fhir.Model.Markdown?)value;
-            return this;
-          case "derivedFrom":
-            if (value is not (Hl7.Fhir.Model.Requirements.DerivedFromComponent or null))
-            {
-              DerivedFrom = OverflowNull<Hl7.Fhir.Model.Requirements.DerivedFromComponent>.INSTANCE;
-              Overflow["derivedFrom"] = value;
-            }
-            else DerivedFrom = (Hl7.Fhir.Model.Requirements.DerivedFromComponent?)value;
-            return this;
-          case "partOf":
-            if (value is not (Hl7.Fhir.Model.Requirements.PartOfComponent or null))
-            {
-              PartOf = OverflowNull<Hl7.Fhir.Model.Requirements.PartOfComponent>.INSTANCE;
-              Overflow["partOf"] = value;
-            }
-            else PartOf = (Hl7.Fhir.Model.Requirements.PartOfComponent?)value;
-            return this;
-          case "satisfiedBy":
-            if (value is not (List<Hl7.Fhir.Model.FhirUrl> or null))
-            {
-              SatisfiedByElement = OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.INSTANCE;
-              Overflow["satisfiedBy"] = value;
-            }
-            else SatisfiedByElement = (List<Hl7.Fhir.Model.FhirUrl>?)value!;
-            return this;
-          case "reference":
-            if (value is not (List<Hl7.Fhir.Model.FhirUrl> or null))
-            {
-              ReferenceElement = OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.INSTANCE;
-              Overflow["reference"] = value;
-            }
-            else ReferenceElement = (List<Hl7.Fhir.Model.FhirUrl>?)value!;
-            return this;
-          case "source":
-            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
-            {
-              Source = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
-              Overflow["source"] = value;
-            }
-            else Source = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
-            return this;
-          case "actor":
-            if (value is not (List<Hl7.Fhir.Model.Id> or null))
-            {
-              ActorElement = OverflowNull<List<Hl7.Fhir.Model.Id>>.INSTANCE;
-              Overflow["actor"] = value;
-            }
-            else ActorElement = (List<Hl7.Fhir.Model.Id>?)value!;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_KeyElement is not null && !_KeyElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("key",_KeyElement);
-        if (_LabelElement is not null && !_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("label",_LabelElement);
-        if (_ConformanceElement?.Any() is true && !_ConformanceElement.InOverflow<List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>>>()) yield return new KeyValuePair<string,object>("conformance",_ConformanceElement);
-        if (_ConditionalityElement is not null && !_ConditionalityElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("conditionality",_ConditionalityElement);
-        if (_RequirementElement is not null && !_RequirementElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("requirement",_RequirementElement);
-        if (_DerivedFrom is not null && !_DerivedFrom.InOverflow<Hl7.Fhir.Model.Requirements.DerivedFromComponent>()) yield return new KeyValuePair<string,object>("derivedFrom",_DerivedFrom);
-        if (_PartOf is not null && !_PartOf.InOverflow<Hl7.Fhir.Model.Requirements.PartOfComponent>()) yield return new KeyValuePair<string,object>("partOf",_PartOf);
-        if (_SatisfiedByElement?.Any() is true && !_SatisfiedByElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>()) yield return new KeyValuePair<string,object>("satisfiedBy",_SatisfiedByElement);
-        if (_ReferenceElement?.Any() is true && !_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-        if (_Source?.Any() is true && !_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("source",_Source);
-        if (_ActorElement?.Any() is true && !_ActorElement.InOverflow<List<Hl7.Fhir.Model.Id>>()) yield return new KeyValuePair<string,object>("actor",_ActorElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (KeyElement is not null) yield return new KeyValuePair<string,object>("key",KeyElement);
+        if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+        if (ConformanceElement?.Any() == true) yield return new KeyValuePair<string,object>("conformance",ConformanceElement);
+        if (ConditionalityElement is not null) yield return new KeyValuePair<string,object>("conditionality",ConditionalityElement);
+        if (RequirementElement is not null) yield return new KeyValuePair<string,object>("requirement",RequirementElement);
+        if (DerivedFrom is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+        if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+        if (SatisfiedByElement?.Any() == true) yield return new KeyValuePair<string,object>("satisfiedBy",SatisfiedByElement);
+        if (ReferenceElement?.Any() == true) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+        if (ActorElement?.Any() == true) yield return new KeyValuePair<string,object>("actor",ActorElement);
       }
 
     }
@@ -1213,185 +943,166 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Requirements.statement.derivedFrom", IsBackboneType=true)]
+    [FhirType("Requirements#DerivedFrom", IsNestedType=true)]
+    [BackboneType("Requirements.statement.derivedFrom")]
     public partial class DerivedFromComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "Requirements.statement.derivedFrom";
+      public override string TypeName { get { return "Requirements#DerivedFrom"; } }
 
       /// <summary>
-      /// Pointer to Requirements instance.
+      /// Pointer to Requirements instance
       /// </summary>
       [FhirElement("reference", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Canonical? ReferenceElement
+      public Hl7.Fhir.Model.Canonical ReferenceElement
       {
-        get
-        {
-          if(_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["reference"]);
-          return _ReferenceElement;
-        }
-
-        set
-        {
-          if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            Overflow.Remove("reference");
-          _ReferenceElement = value;
-          OnPropertyChanged("ReferenceElement");
-        }
-
+        get { return _ReferenceElement; }
+        set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
       }
 
-      private Hl7.Fhir.Model.Canonical? _ReferenceElement;
+      private Hl7.Fhir.Model.Canonical _ReferenceElement;
 
       /// <summary>
       /// Pointer to Requirements instance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Reference
+      public string Reference
       {
-        get => ReferenceElement?.Value;
+        get { return ReferenceElement != null ? ReferenceElement.Value : null; }
         set
         {
-          ReferenceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          if (value == null)
+            ReferenceElement = null;
+          else
+            ReferenceElement = new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("Reference");
         }
       }
 
       /// <summary>
-      /// Key of referenced statement.
+      /// Key of referenced statement
       /// </summary>
       [FhirElement("key", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? KeyElement
+      public Hl7.Fhir.Model.Id KeyElement
       {
-        get
-        {
-          if(_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["key"]);
-          return _KeyElement;
-        }
-
-        set
-        {
-          if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            Overflow.Remove("key");
-          _KeyElement = value;
-          OnPropertyChanged("KeyElement");
-        }
-
+        get { return _KeyElement; }
+        set { _KeyElement = value; OnPropertyChanged("KeyElement"); }
       }
 
-      private Hl7.Fhir.Model.Id? _KeyElement;
+      private Hl7.Fhir.Model.Id _KeyElement;
 
       /// <summary>
       /// Key of referenced statement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Key
+      public string Key
       {
-        get => KeyElement?.Value;
+        get { return KeyElement != null ? KeyElement.Value : null; }
         set
         {
-          KeyElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          if (value == null)
+            KeyElement = null;
+          else
+            KeyElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Key");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not DerivedFromComponent dest)
+        var dest = other as DerivedFromComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_ReferenceElement is not null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)_ReferenceElement.DeepCopyInternal();
-        if(_KeyElement is not null) dest.KeyElement = (Hl7.Fhir.Model.Id)_KeyElement.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)ReferenceElement.DeepCopy();
+        if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new DerivedFromComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new DerivedFromComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not DerivedFromComponent otherT) return false;
+        var otherT = other as DerivedFromComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
-        if(!comparer.Equals(_KeyElement, otherT._KeyElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as DerivedFromComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (ReferenceElement != null) yield return ReferenceElement;
+          if (KeyElement != null) yield return KeyElement;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+          if (KeyElement != null) yield return new ElementValue("key", KeyElement);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "reference":
-            if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            {
-              value = Overflow["reference"];
-              return true;
-            }
-            value = _ReferenceElement;
-            return (value as Hl7.Fhir.Model.Canonical) is not null;
+            value = ReferenceElement;
+            return ReferenceElement is not null;
           case "key":
-            if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            {
-              value = Overflow["key"];
-              return true;
-            }
-            value = _KeyElement;
-            return (value as Hl7.Fhir.Model.Id) is not null;
+            value = KeyElement;
+            return KeyElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "reference":
-            if (value is not (Hl7.Fhir.Model.Canonical or null))
-            {
-              ReferenceElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
-              Overflow["reference"] = value;
-            }
-            else ReferenceElement = (Hl7.Fhir.Model.Canonical?)value;
-            return this;
-          case "key":
-            if (value is not (Hl7.Fhir.Model.Id or null))
-            {
-              KeyElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
-              Overflow["key"] = value;
-            }
-            else KeyElement = (Hl7.Fhir.Model.Id?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_ReferenceElement is not null && !_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-        if (_KeyElement is not null && !_KeyElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("key",_KeyElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+        if (KeyElement is not null) yield return new KeyValuePair<string,object>("key",KeyElement);
       }
 
     }
@@ -1405,436 +1116,338 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [Serializable]
     [DataContract]
-    [FhirType("Requirements.statement.partOf", IsBackboneType=true)]
+    [FhirType("Requirements#PartOf", IsNestedType=true)]
+    [BackboneType("Requirements.statement.partOf")]
     public partial class PartOfComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "Requirements.statement.partOf";
+      public override string TypeName { get { return "Requirements#PartOf"; } }
 
       /// <summary>
-      /// Pointer to Requirements instance.
+      /// Pointer to Requirements instance
       /// </summary>
       [FhirElement("reference", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Canonical? ReferenceElement
+      public Hl7.Fhir.Model.Canonical ReferenceElement
       {
-        get
-        {
-          if(_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["reference"]);
-          return _ReferenceElement;
-        }
-
-        set
-        {
-          if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            Overflow.Remove("reference");
-          _ReferenceElement = value;
-          OnPropertyChanged("ReferenceElement");
-        }
-
+        get { return _ReferenceElement; }
+        set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
       }
 
-      private Hl7.Fhir.Model.Canonical? _ReferenceElement;
+      private Hl7.Fhir.Model.Canonical _ReferenceElement;
 
       /// <summary>
       /// Pointer to Requirements instance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Reference
+      public string Reference
       {
-        get => ReferenceElement?.Value;
+        get { return ReferenceElement != null ? ReferenceElement.Value : null; }
         set
         {
-          ReferenceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
+          if (value == null)
+            ReferenceElement = null;
+          else
+            ReferenceElement = new Hl7.Fhir.Model.Canonical(value);
           OnPropertyChanged("Reference");
         }
       }
 
       /// <summary>
-      /// Key of referenced statement.
+      /// Key of referenced statement
       /// </summary>
       [FhirElement("key", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Id? KeyElement
+      public Hl7.Fhir.Model.Id KeyElement
       {
-        get
-        {
-          if(_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["key"]);
-          return _KeyElement;
-        }
-
-        set
-        {
-          if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            Overflow.Remove("key");
-          _KeyElement = value;
-          OnPropertyChanged("KeyElement");
-        }
-
+        get { return _KeyElement; }
+        set { _KeyElement = value; OnPropertyChanged("KeyElement"); }
       }
 
-      private Hl7.Fhir.Model.Id? _KeyElement;
+      private Hl7.Fhir.Model.Id _KeyElement;
 
       /// <summary>
       /// Key of referenced statement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string? Key
+      public string Key
       {
-        get => KeyElement?.Value;
+        get { return KeyElement != null ? KeyElement.Value : null; }
         set
         {
-          KeyElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
+          if (value == null)
+            KeyElement = null;
+          else
+            KeyElement = new Hl7.Fhir.Model.Id(value);
           OnPropertyChanged("Key");
         }
       }
 
-      protected internal override void CopyToInternal(Base other)
+      public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        if(other is not PartOfComponent dest)
+        var dest = other as PartOfComponent;
+
+        if (dest == null)
+        {
           throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
 
-        base.CopyToInternal(dest);
-        if(_ReferenceElement is not null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)_ReferenceElement.DeepCopyInternal();
-        if(_KeyElement is not null) dest.KeyElement = (Hl7.Fhir.Model.Id)_KeyElement.DeepCopyInternal();
+        base.CopyTo(dest);
+        if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.Canonical)ReferenceElement.DeepCopy();
+        if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
+        return dest;
       }
 
-      protected internal override Base DeepCopyInternal()
+      public override IDeepCopyable DeepCopy()
       {
-        var instance = new PartOfComponent();
-        CopyToInternal(instance);
-        return instance;
+        return CopyTo(new PartOfComponent());
       }
 
-      public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+      ///<inheritdoc />
+      public override bool Matches(IDeepComparable other)
       {
-        if(other is not PartOfComponent otherT) return false;
+        var otherT = other as PartOfComponent;
+        if(otherT == null) return false;
 
-        if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-        if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
-        if(!comparer.Equals(_KeyElement, otherT._KeyElement)) return false;
-        #pragma warning restore CS8604 // Possible null reference argument.
+        if(!base.Matches(otherT)) return false;
+        if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
 
         return true;
       }
 
-      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+      public override bool IsExactly(IDeepComparable other)
+      {
+        var otherT = other as PartOfComponent;
+        if(otherT == null) return false;
+
+        if(!base.IsExactly(otherT)) return false;
+        if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+        if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
+
+        return true;
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<Base> Children
+      {
+        get
+        {
+          foreach (var item in base.Children) yield return item;
+          if (ReferenceElement != null) yield return ReferenceElement;
+          if (KeyElement != null) yield return KeyElement;
+        }
+      }
+
+      [IgnoreDataMember]
+      public override IEnumerable<ElementValue> NamedChildren
+      {
+        get
+        {
+          foreach (var item in base.NamedChildren) yield return item;
+          if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
+          if (KeyElement != null) yield return new ElementValue("key", KeyElement);
+        }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
       {
         switch (key)
         {
           case "reference":
-            if (_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>())
-            {
-              value = Overflow["reference"];
-              return true;
-            }
-            value = _ReferenceElement;
-            return (value as Hl7.Fhir.Model.Canonical) is not null;
+            value = ReferenceElement;
+            return ReferenceElement is not null;
           case "key":
-            if (_KeyElement.InOverflow<Hl7.Fhir.Model.Id>())
-            {
-              value = Overflow["key"];
-              return true;
-            }
-            value = _KeyElement;
-            return (value as Hl7.Fhir.Model.Id) is not null;
+            value = KeyElement;
+            return KeyElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object? value)
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-        switch (key)
-        {
-          case "reference":
-            if (value is not (Hl7.Fhir.Model.Canonical or null))
-            {
-              ReferenceElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
-              Overflow["reference"] = value;
-            }
-            else ReferenceElement = (Hl7.Fhir.Model.Canonical?)value;
-            return this;
-          case "key":
-            if (value is not (Hl7.Fhir.Model.Id or null))
-            {
-              KeyElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
-              Overflow["key"] = value;
-            }
-            else KeyElement = (Hl7.Fhir.Model.Id?)value;
-            return this;
-          default:
-            return base.SetValue(key, value);
-        }
-
-      }
-
-      public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-      {
-        foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_ReferenceElement is not null && !_ReferenceElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-        if (_KeyElement is not null && !_KeyElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("key",_KeyElement);
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+        if (KeyElement is not null) yield return new KeyValuePair<string,object>("key",KeyElement);
       }
 
     }
 
     /// <summary>
-    /// Canonical identifier for this Requirements, represented as a URI (globally unique).
+    /// Canonical identifier for this Requirements, represented as a URI (globally unique)
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri? UrlElement
+    public Hl7.Fhir.Model.FhirUri UrlElement
     {
-      get
-      {
-        if(_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
-        return _UrlElement;
-      }
-
-      set
-      {
-        if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
-          Overflow.Remove("url");
-        _UrlElement = value;
-        OnPropertyChanged("UrlElement");
-      }
-
+      get { return _UrlElement; }
+      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri? _UrlElement;
+    private Hl7.Fhir.Model.FhirUri _UrlElement;
 
     /// <summary>
     /// Canonical identifier for this Requirements, represented as a URI (globally unique)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Url
+    public string Url
     {
-      get => UrlElement?.Value;
+      get { return UrlElement != null ? UrlElement.Value : null; }
       set
       {
-        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
+        if (value == null)
+          UrlElement = null;
+        else
+          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
 
     /// <summary>
-    /// Additional identifier for the Requirements (business identifier).
+    /// Additional identifier for the Requirements (business identifier)
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get
-      {
-        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
-        return _Identifier ??= [];
-      }
-
-      set
-      {
-        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          Overflow.Remove("identifier");
-        _Identifier = value;
-        OnPropertyChanged("Identifier");
-      }
-
+      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
+    private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Business version of the Requirements.
+    /// Business version of the Requirements
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? VersionElement
+    public Hl7.Fhir.Model.FhirString VersionElement
     {
-      get
-      {
-        if(_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["version"]);
-        return _VersionElement;
-      }
-
-      set
-      {
-        if (_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("version");
-        _VersionElement = value;
-        OnPropertyChanged("VersionElement");
-      }
-
+      get { return _VersionElement; }
+      set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _VersionElement;
+    private Hl7.Fhir.Model.FhirString _VersionElement;
 
     /// <summary>
     /// Business version of the Requirements
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Version
+    public string Version
     {
-      get => VersionElement?.Value;
+      get { return VersionElement != null ? VersionElement.Value : null; }
       set
       {
-        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          VersionElement = null;
+        else
+          VersionElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
 
     /// <summary>
-    /// How to compare versions.
+    /// How to compare versions
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType? VersionAlgorithm
+    public Hl7.Fhir.Model.DataType VersionAlgorithm
     {
-      get
-      {
-        if(_VersionAlgorithm.InOverflow<DynamicDataType>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["versionAlgorithm"]);
-        return _VersionAlgorithm;
-      }
-
-      set
-      {
-        if (_VersionAlgorithm.InOverflow<DynamicDataType>())
-          Overflow.Remove("versionAlgorithm");
-        _VersionAlgorithm = value;
-        OnPropertyChanged("VersionAlgorithm");
-      }
-
+      get { return _VersionAlgorithm; }
+      set { _VersionAlgorithm = value; OnPropertyChanged("VersionAlgorithm"); }
     }
 
-    private Hl7.Fhir.Model.DataType? _VersionAlgorithm;
+    private Hl7.Fhir.Model.DataType _VersionAlgorithm;
 
     /// <summary>
-    /// Name for this Requirements (computer friendly).
+    /// Name for this Requirements (computer friendly)
     /// </summary>
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? NameElement
+    public Hl7.Fhir.Model.FhirString NameElement
     {
-      get
-      {
-        if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
-        return _NameElement;
-      }
-
-      set
-      {
-        if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("name");
-        _NameElement = value;
-        OnPropertyChanged("NameElement");
-      }
-
+      get { return _NameElement; }
+      set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _NameElement;
+    private Hl7.Fhir.Model.FhirString _NameElement;
 
     /// <summary>
     /// Name for this Requirements (computer friendly)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Name
+    public string Name
     {
-      get => NameElement?.Value;
+      get { return NameElement != null ? NameElement.Value : null; }
       set
       {
-        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          NameElement = null;
+        else
+          NameElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
 
     /// <summary>
-    /// Name for this Requirements (human friendly).
+    /// Name for this Requirements (human friendly)
     /// </summary>
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? TitleElement
+    public Hl7.Fhir.Model.FhirString TitleElement
     {
-      get
-      {
-        if(_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["title"]);
-        return _TitleElement;
-      }
-
-      set
-      {
-        if (_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("title");
-        _TitleElement = value;
-        OnPropertyChanged("TitleElement");
-      }
-
+      get { return _TitleElement; }
+      set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _TitleElement;
+    private Hl7.Fhir.Model.FhirString _TitleElement;
 
     /// <summary>
     /// Name for this Requirements (human friendly)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Title
+    public string Title
     {
-      get => TitleElement?.Value;
+      get { return TitleElement != null ? TitleElement.Value : null; }
       set
       {
-        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          TitleElement = null;
+        else
+          TitleElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
 
     /// <summary>
-    /// draft | active | retired | unknown.
+    /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
+    [DeclaredType(Type = typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {
-      get
-      {
-        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
-        return _StatusElement;
-      }
-
-      set
-      {
-        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
-          Overflow.Remove("status");
-        _StatusElement = value;
-        OnPropertyChanged("StatusElement");
-      }
-
+      get { return _StatusElement; }
+      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -1843,39 +1456,29 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => StatusElement?.Value;
+      get { return StatusElement != null ? StatusElement.Value : null; }
       set
       {
-        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        if (value == null)
+          StatusElement = null;
+        else
+          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
 
     /// <summary>
-    /// For testing only - never for real usage.
+    /// For testing only - never for real usage
     /// </summary>
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
+    public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
-      get
-      {
-        if(_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["experimental"]);
-        return _ExperimentalElement;
-      }
-
-      set
-      {
-        if (_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          Overflow.Remove("experimental");
-        _ExperimentalElement = value;
-        OnPropertyChanged("ExperimentalElement");
-      }
-
+      get { return _ExperimentalElement; }
+      set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean? _ExperimentalElement;
+    private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
 
     /// <summary>
     /// For testing only - never for real usage
@@ -1884,385 +1487,272 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Experimental
     {
-      get => ExperimentalElement?.Value;
+      get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
       set
       {
-        ExperimentalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
+        if (value == null)
+          ExperimentalElement = null;
+        else
+          ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Experimental");
       }
     }
 
     /// <summary>
-    /// Date last changed.
+    /// Date last changed
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime? DateElement
+    public Hl7.Fhir.Model.FhirDateTime DateElement
     {
-      get
-      {
-        if(_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["date"]);
-        return _DateElement;
-      }
-
-      set
-      {
-        if (_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          Overflow.Remove("date");
-        _DateElement = value;
-        OnPropertyChanged("DateElement");
-      }
-
+      get { return _DateElement; }
+      set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime _DateElement;
 
     /// <summary>
     /// Date last changed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Date
+    public string Date
     {
-      get => DateElement?.Value;
+      get { return DateElement != null ? DateElement.Value : null; }
       set
       {
-        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
+        if (value == null)
+          DateElement = null;
+        else
+          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
 
     /// <summary>
-    /// Name of the publisher/steward (organization or individual).
+    /// Name of the publisher/steward (organization or individual)
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? PublisherElement
+    public Hl7.Fhir.Model.FhirString PublisherElement
     {
-      get
-      {
-        if(_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["publisher"]);
-        return _PublisherElement;
-      }
-
-      set
-      {
-        if (_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("publisher");
-        _PublisherElement = value;
-        OnPropertyChanged("PublisherElement");
-      }
-
+      get { return _PublisherElement; }
+      set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _PublisherElement;
+    private Hl7.Fhir.Model.FhirString _PublisherElement;
 
     /// <summary>
     /// Name of the publisher/steward (organization or individual)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Publisher
+    public string Publisher
     {
-      get => PublisherElement?.Value;
+      get { return PublisherElement != null ? PublisherElement.Value : null; }
       set
       {
-        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          PublisherElement = null;
+        else
+          PublisherElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
 
     /// <summary>
-    /// Contact details for the publisher.
+    /// Contact details for the publisher
     /// </summary>
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get
-      {
-        if(_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["contact"]);
-        return _Contact ??= [];
-      }
-
-      set
-      {
-        if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
-          Overflow.Remove("contact");
-        _Contact = value;
-        OnPropertyChanged("Contact");
-      }
-
+      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+      set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactDetail>? _Contact;
+    private List<Hl7.Fhir.Model.ContactDetail> _Contact;
 
     /// <summary>
-    /// Natural language description of the requirements.
+    /// Natural language description of the requirements
     /// </summary>
     [FhirElement("description", Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown? DescriptionElement
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get
-      {
-        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["description"]);
-        return _DescriptionElement;
-      }
-
-      set
-      {
-        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          Overflow.Remove("description");
-        _DescriptionElement = value;
-        OnPropertyChanged("DescriptionElement");
-      }
-
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
 
     /// <summary>
     /// Natural language description of the requirements
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Description
+    public string Description
     {
-      get => DescriptionElement?.Value;
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
       set
       {
-        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
 
     /// <summary>
-    /// The context that the content is intended to support.
+    /// The context that the content is intended to support
     /// </summary>
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get
-      {
-        if(_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.UsageContext>), Overflow["useContext"]);
-        return _UseContext ??= [];
-      }
-
-      set
-      {
-        if (_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
-          Overflow.Remove("useContext");
-        _UseContext = value;
-        OnPropertyChanged("UseContext");
-      }
-
+      get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.UsageContext>(); return _UseContext; }
+      set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
-    private List<Hl7.Fhir.Model.UsageContext>? _UseContext;
+    private List<Hl7.Fhir.Model.UsageContext> _UseContext;
 
     /// <summary>
-    /// Intended jurisdiction for Requirements (if applicable).
+    /// Intended jurisdiction for Requirements (if applicable)
     /// </summary>
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get
-      {
-        if(_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["jurisdiction"]);
-        return _Jurisdiction ??= [];
-      }
-
-      set
-      {
-        if (_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          Overflow.Remove("jurisdiction");
-        _Jurisdiction = value;
-        OnPropertyChanged("Jurisdiction");
-      }
-
+      get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+      set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept>? _Jurisdiction;
+    private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
 
     /// <summary>
-    /// Why this Requirements is defined.
+    /// Why this Requirements is defined
     /// </summary>
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown? PurposeElement
+    public Hl7.Fhir.Model.Markdown PurposeElement
     {
-      get
-      {
-        if(_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["purpose"]);
-        return _PurposeElement;
-      }
-
-      set
-      {
-        if (_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          Overflow.Remove("purpose");
-        _PurposeElement = value;
-        OnPropertyChanged("PurposeElement");
-      }
-
+      get { return _PurposeElement; }
+      set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown? _PurposeElement;
+    private Hl7.Fhir.Model.Markdown _PurposeElement;
 
     /// <summary>
     /// Why this Requirements is defined
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Purpose
+    public string Purpose
     {
-      get => PurposeElement?.Value;
+      get { return PurposeElement != null ? PurposeElement.Value : null; }
       set
       {
-        PurposeElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        if (value == null)
+          PurposeElement = null;
+        else
+          PurposeElement = new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Purpose");
       }
     }
 
     /// <summary>
-    /// Use and/or publishing restrictions.
+    /// Use and/or publishing restrictions
     /// </summary>
     [FhirElement("copyright", Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown? CopyrightElement
+    public Hl7.Fhir.Model.Markdown CopyrightElement
     {
-      get
-      {
-        if(_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["copyright"]);
-        return _CopyrightElement;
-      }
-
-      set
-      {
-        if (_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          Overflow.Remove("copyright");
-        _CopyrightElement = value;
-        OnPropertyChanged("CopyrightElement");
-      }
-
+      get { return _CopyrightElement; }
+      set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown? _CopyrightElement;
+    private Hl7.Fhir.Model.Markdown _CopyrightElement;
 
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? Copyright
+    public string Copyright
     {
-      get => CopyrightElement?.Value;
+      get { return CopyrightElement != null ? CopyrightElement.Value : null; }
       set
       {
-        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
+        if (value == null)
+          CopyrightElement = null;
+        else
+          CopyrightElement = new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
 
     /// <summary>
-    /// Copyright holder and year(s).
+    /// Copyright holder and year(s)
     /// </summary>
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
+    public Hl7.Fhir.Model.FhirString CopyrightLabelElement
     {
-      get
-      {
-        if(_CopyrightLabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["copyrightLabel"]);
-        return _CopyrightLabelElement;
-      }
-
-      set
-      {
-        if (_CopyrightLabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          Overflow.Remove("copyrightLabel");
-        _CopyrightLabelElement = value;
-        OnPropertyChanged("CopyrightLabelElement");
-      }
-
+      get { return _CopyrightLabelElement; }
+      set { _CopyrightLabelElement = value; OnPropertyChanged("CopyrightLabelElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString? _CopyrightLabelElement;
+    private Hl7.Fhir.Model.FhirString _CopyrightLabelElement;
 
     /// <summary>
     /// Copyright holder and year(s)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string? CopyrightLabel
+    public string CopyrightLabel
     {
-      get => CopyrightLabelElement?.Value;
+      get { return CopyrightLabelElement != null ? CopyrightLabelElement.Value : null; }
       set
       {
-        CopyrightLabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
+        if (value == null)
+          CopyrightLabelElement = null;
+        else
+          CopyrightLabelElement = new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("CopyrightLabel");
       }
     }
 
     /// <summary>
-    /// Other set of Requirements this builds on.
+    /// Other set of Requirements this builds on
     /// </summary>
     [FhirElement("derivedFrom", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromElement
     {
-      get
-      {
-        if(_DerivedFromElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Canonical>), Overflow["derivedFrom"]);
-        return _DerivedFromElement ??= [];
-      }
-
-      set
-      {
-        if (_DerivedFromElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>())
-          Overflow.Remove("derivedFrom");
-        _DerivedFromElement = value;
-        OnPropertyChanged("DerivedFromElement");
-      }
-
+      get { if(_DerivedFromElement==null) _DerivedFromElement = new List<Hl7.Fhir.Model.Canonical>(); return _DerivedFromElement; }
+      set { _DerivedFromElement = value; OnPropertyChanged("DerivedFromElement"); }
     }
 
-    private List<Hl7.Fhir.Model.Canonical>? _DerivedFromElement;
+    private List<Hl7.Fhir.Model.Canonical> _DerivedFromElement;
 
     /// <summary>
     /// Other set of Requirements this builds on
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?> DerivedFrom
+    public IEnumerable<string> DerivedFrom
     {
-      get => _DerivedFromElement?.Select(elem => elem.Value) ?? [];
+      get { return DerivedFromElement != null ? DerivedFromElement.Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
-          DerivedFromElement = null!;
+          DerivedFromElement = null;
         else
           DerivedFromElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("DerivedFrom");
@@ -2270,73 +1760,45 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// External requirements that apply here.
+    /// External requirements that apply here
     /// </summary>
     [FhirElement("imports", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Requirements.ImportsComponent> Imports
     {
-      get
-      {
-        if(_Imports.InOverflow<List<Hl7.Fhir.Model.Requirements.ImportsComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Requirements.ImportsComponent>), Overflow["imports"]);
-        return _Imports ??= [];
-      }
-
-      set
-      {
-        if (_Imports.InOverflow<List<Hl7.Fhir.Model.Requirements.ImportsComponent>>())
-          Overflow.Remove("imports");
-        _Imports = value;
-        OnPropertyChanged("Imports");
-      }
-
+      get { if(_Imports==null) _Imports = new List<Hl7.Fhir.Model.Requirements.ImportsComponent>(); return _Imports; }
+      set { _Imports = value; OnPropertyChanged("Imports"); }
     }
 
-    private List<Hl7.Fhir.Model.Requirements.ImportsComponent>? _Imports;
+    private List<Hl7.Fhir.Model.Requirements.ImportsComponent> _Imports;
 
     /// <summary>
-    /// External artifact (rule/document etc. that) created this set of requirements.
+    /// External artifact (rule/document etc. that) created this set of requirements
     /// </summary>
     [FhirElement("reference", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUrl> ReferenceElement
     {
-      get
-      {
-        if(_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirUrl>), Overflow["reference"]);
-        return _ReferenceElement ??= [];
-      }
-
-      set
-      {
-        if (_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-          Overflow.Remove("reference");
-        _ReferenceElement = value;
-        OnPropertyChanged("ReferenceElement");
-      }
-
+      get { if(_ReferenceElement==null) _ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(); return _ReferenceElement; }
+      set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirUrl>? _ReferenceElement;
+    private List<Hl7.Fhir.Model.FhirUrl> _ReferenceElement;
 
     /// <summary>
     /// External artifact (rule/document etc. that) created this set of requirements
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?> Reference
+    public IEnumerable<string> Reference
     {
-      get => _ReferenceElement?.Select(elem => elem.Value) ?? [];
+      get { return ReferenceElement != null ? ReferenceElement.Select(elem => elem.Value) : null; }
       set
       {
         if (value == null)
-          ReferenceElement = null!;
+          ReferenceElement = null;
         else
           ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(value.Select(elem=>new Hl7.Fhir.Model.FhirUrl(elem)));
         OnPropertyChanged("Reference");
@@ -2344,531 +1806,303 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Actor for these requirements.
+    /// Actor for these requirements
     /// </summary>
     [FhirElement("actor", Order=290, FiveWs="FiveWs.who")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Requirements.ActorComponent> Actor
     {
-      get
-      {
-        if(_Actor.InOverflow<List<Hl7.Fhir.Model.Requirements.ActorComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Requirements.ActorComponent>), Overflow["actor"]);
-        return _Actor ??= [];
-      }
-
-      set
-      {
-        if (_Actor.InOverflow<List<Hl7.Fhir.Model.Requirements.ActorComponent>>())
-          Overflow.Remove("actor");
-        _Actor = value;
-        OnPropertyChanged("Actor");
-      }
-
+      get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.Requirements.ActorComponent>(); return _Actor; }
+      set { _Actor = value; OnPropertyChanged("Actor"); }
     }
 
-    private List<Hl7.Fhir.Model.Requirements.ActorComponent>? _Actor;
+    private List<Hl7.Fhir.Model.Requirements.ActorComponent> _Actor;
 
     /// <summary>
-    /// Actual statement as markdown.
+    /// Actual statement as markdown
     /// </summary>
     [FhirElement("statement", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    [AllowNull]
     public List<Hl7.Fhir.Model.Requirements.StatementComponent> Statement
     {
-      get
-      {
-        if(_Statement.InOverflow<List<Hl7.Fhir.Model.Requirements.StatementComponent>>())
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Requirements.StatementComponent>), Overflow["statement"]);
-        return _Statement ??= [];
-      }
-
-      set
-      {
-        if (_Statement.InOverflow<List<Hl7.Fhir.Model.Requirements.StatementComponent>>())
-          Overflow.Remove("statement");
-        _Statement = value;
-        OnPropertyChanged("Statement");
-      }
-
+      get { if(_Statement==null) _Statement = new List<Hl7.Fhir.Model.Requirements.StatementComponent>(); return _Statement; }
+      set { _Statement = value; OnPropertyChanged("Statement"); }
     }
 
-    private List<Hl7.Fhir.Model.Requirements.StatementComponent>? _Statement;
+    private List<Hl7.Fhir.Model.Requirements.StatementComponent> _Statement;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
-    protected internal override void CopyToInternal(Base other)
+    public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      if(other is not Requirements dest)
+      var dest = other as Requirements;
+
+      if (dest == null)
+      {
         throw new ArgumentException("Can only copy to an object of the same type", "other");
+      }
 
-      base.CopyToInternal(dest);
-      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
-      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
-      if(_VersionElement is not null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)_VersionElement.DeepCopyInternal();
-      if(_VersionAlgorithm is not null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)_VersionAlgorithm.DeepCopyInternal();
-      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
-      if(_TitleElement is not null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)_TitleElement.DeepCopyInternal();
-      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
-      if(_ExperimentalElement is not null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)_ExperimentalElement.DeepCopyInternal();
-      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
-      if(_PublisherElement is not null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)_PublisherElement.DeepCopyInternal();
-      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(_Contact.DeepCopyInternal());
-      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
-      if(_UseContext is not null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(_UseContext.DeepCopyInternal());
-      if(_Jurisdiction is not null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(_Jurisdiction.DeepCopyInternal());
-      if(_PurposeElement is not null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)_PurposeElement.DeepCopyInternal();
-      if(_CopyrightElement is not null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)_CopyrightElement.DeepCopyInternal();
-      if(_CopyrightLabelElement is not null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)_CopyrightLabelElement.DeepCopyInternal();
-      if(_DerivedFromElement is not null) dest.DerivedFromElement = new List<Hl7.Fhir.Model.Canonical>(_DerivedFromElement.DeepCopyInternal());
-      if(_Imports is not null) dest.Imports = new List<Hl7.Fhir.Model.Requirements.ImportsComponent>(_Imports.DeepCopyInternal());
-      if(_ReferenceElement is not null) dest.ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(_ReferenceElement.DeepCopyInternal());
-      if(_Actor is not null) dest.Actor = new List<Hl7.Fhir.Model.Requirements.ActorComponent>(_Actor.DeepCopyInternal());
-      if(_Statement is not null) dest.Statement = new List<Hl7.Fhir.Model.Requirements.StatementComponent>(_Statement.DeepCopyInternal());
+      base.CopyTo(dest);
+      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
+      if(VersionAlgorithm != null) dest.VersionAlgorithm = (Hl7.Fhir.Model.DataType)VersionAlgorithm.DeepCopy();
+      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
+      if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
+      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+      if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
+      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
+      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+      if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
+      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
+      if(CopyrightLabelElement != null) dest.CopyrightLabelElement = (Hl7.Fhir.Model.FhirString)CopyrightLabelElement.DeepCopy();
+      if(DerivedFromElement.Any()) dest.DerivedFromElement = new List<Hl7.Fhir.Model.Canonical>(DerivedFromElement.DeepCopy());
+      if(Imports.Any()) dest.Imports = new List<Hl7.Fhir.Model.Requirements.ImportsComponent>(Imports.DeepCopy());
+      if(ReferenceElement.Any()) dest.ReferenceElement = new List<Hl7.Fhir.Model.FhirUrl>(ReferenceElement.DeepCopy());
+      if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.Requirements.ActorComponent>(Actor.DeepCopy());
+      if(Statement.Any()) dest.Statement = new List<Hl7.Fhir.Model.Requirements.StatementComponent>(Statement.DeepCopy());
+      return dest;
     }
 
-    protected internal override Base DeepCopyInternal()
+    public override IDeepCopyable DeepCopy()
     {
-      var instance = new Requirements();
-      CopyToInternal(instance);
-      return instance;
+      return CopyTo(new Requirements());
     }
 
-    public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
+    ///<inheritdoc />
+    public override bool Matches(IDeepComparable other)
     {
-      if(other is not Requirements otherT) return false;
+      var otherT = other as Requirements;
+      if(otherT == null) return false;
 
-      if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
-      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
-      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
-      if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
-      if(!comparer.Equals(_VersionAlgorithm, otherT._VersionAlgorithm)) return false;
-      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
-      if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
-      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
-      if(!comparer.Equals(_ExperimentalElement, otherT._ExperimentalElement)) return false;
-      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
-      if(!comparer.Equals(_PublisherElement, otherT._PublisherElement)) return false;
-      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
-      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
-      if(!comparer.ListEquals(_UseContext, otherT._UseContext)) return false;
-      if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
-      if(!comparer.Equals(_PurposeElement, otherT._PurposeElement)) return false;
-      if(!comparer.Equals(_CopyrightElement, otherT._CopyrightElement)) return false;
-      if(!comparer.Equals(_CopyrightLabelElement, otherT._CopyrightLabelElement)) return false;
-      if(!comparer.ListEquals(_DerivedFromElement, otherT._DerivedFromElement)) return false;
-      if(!comparer.ListEquals(_Imports, otherT._Imports)) return false;
-      if(!comparer.ListEquals(_ReferenceElement, otherT._ReferenceElement)) return false;
-      if(!comparer.ListEquals(_Actor, otherT._Actor)) return false;
-      if(!comparer.ListEquals(_Statement, otherT._Statement)) return false;
-      #pragma warning restore CS8604 // Possible null reference argument.
+      if(!base.Matches(otherT)) return false;
+      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+      if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
+      if( !DeepComparable.Matches(VersionAlgorithm, otherT.VersionAlgorithm)) return false;
+      if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+      if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
+      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
+      if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+      if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
+      if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
+      if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
+      if( !DeepComparable.Matches(PurposeElement, otherT.PurposeElement)) return false;
+      if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
+      if( !DeepComparable.Matches(CopyrightLabelElement, otherT.CopyrightLabelElement)) return false;
+      if( !DeepComparable.Matches(DerivedFromElement, otherT.DerivedFromElement)) return false;
+      if( !DeepComparable.Matches(Imports, otherT.Imports)) return false;
+      if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+      if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
+      if( !DeepComparable.Matches(Statement, otherT.Statement)) return false;
 
       return true;
     }
 
-    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    public override bool IsExactly(IDeepComparable other)
+    {
+      var otherT = other as Requirements;
+      if(otherT == null) return false;
+
+      if(!base.IsExactly(otherT)) return false;
+      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+      if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+      if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
+      if( !DeepComparable.IsExactly(VersionAlgorithm, otherT.VersionAlgorithm)) return false;
+      if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+      if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+      if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
+      if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+      if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
+      if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
+      if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
+      if( !DeepComparable.IsExactly(PurposeElement, otherT.PurposeElement)) return false;
+      if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
+      if( !DeepComparable.IsExactly(CopyrightLabelElement, otherT.CopyrightLabelElement)) return false;
+      if( !DeepComparable.IsExactly(DerivedFromElement, otherT.DerivedFromElement)) return false;
+      if( !DeepComparable.IsExactly(Imports, otherT.Imports)) return false;
+      if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+      if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
+      if( !DeepComparable.IsExactly(Statement, otherT.Statement)) return false;
+
+      return true;
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<Base> Children
+    {
+      get
+      {
+        foreach (var item in base.Children) yield return item;
+        if (UrlElement != null) yield return UrlElement;
+        foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+        if (VersionElement != null) yield return VersionElement;
+        if (VersionAlgorithm != null) yield return VersionAlgorithm;
+        if (NameElement != null) yield return NameElement;
+        if (TitleElement != null) yield return TitleElement;
+        if (StatusElement != null) yield return StatusElement;
+        if (ExperimentalElement != null) yield return ExperimentalElement;
+        if (DateElement != null) yield return DateElement;
+        if (PublisherElement != null) yield return PublisherElement;
+        foreach (var elem in Contact) { if (elem != null) yield return elem; }
+        if (DescriptionElement != null) yield return DescriptionElement;
+        foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+        foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
+        if (PurposeElement != null) yield return PurposeElement;
+        if (CopyrightElement != null) yield return CopyrightElement;
+        if (CopyrightLabelElement != null) yield return CopyrightLabelElement;
+        foreach (var elem in DerivedFromElement) { if (elem != null) yield return elem; }
+        foreach (var elem in Imports) { if (elem != null) yield return elem; }
+        foreach (var elem in ReferenceElement) { if (elem != null) yield return elem; }
+        foreach (var elem in Actor) { if (elem != null) yield return elem; }
+        foreach (var elem in Statement) { if (elem != null) yield return elem; }
+      }
+    }
+
+    [IgnoreDataMember]
+    public override IEnumerable<ElementValue> NamedChildren
+    {
+      get
+      {
+        foreach (var item in base.NamedChildren) yield return item;
+        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+        foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+        if (VersionElement != null) yield return new ElementValue("version", VersionElement);
+        if (VersionAlgorithm != null) yield return new ElementValue("versionAlgorithm", VersionAlgorithm);
+        if (NameElement != null) yield return new ElementValue("name", NameElement);
+        if (TitleElement != null) yield return new ElementValue("title", TitleElement);
+        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
+        if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
+        if (DateElement != null) yield return new ElementValue("date", DateElement);
+        if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
+        foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+        foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
+        foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
+        if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
+        if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
+        if (CopyrightLabelElement != null) yield return new ElementValue("copyrightLabel", CopyrightLabelElement);
+        foreach (var elem in DerivedFromElement) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
+        foreach (var elem in Imports) { if (elem != null) yield return new ElementValue("imports", elem); }
+        foreach (var elem in ReferenceElement) { if (elem != null) yield return new ElementValue("reference", elem); }
+        foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", elem); }
+        foreach (var elem in Statement) { if (elem != null) yield return new ElementValue("statement", elem); }
+      }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
     {
       switch (key)
       {
         case "url":
-          if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
-          {
-            value = Overflow["url"];
-            return true;
-          }
-          value = _UrlElement;
-          return (value as Hl7.Fhir.Model.FhirUri) is not null;
+          value = UrlElement;
+          return UrlElement is not null;
         case "identifier":
-          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
-          {
-            value = Overflow["identifier"];
-            return true;
-          }
-          value = _Identifier;
-          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
+          value = Identifier;
+          return Identifier?.Any() == true;
         case "version":
-          if (_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["version"];
-            return true;
-          }
-          value = _VersionElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = VersionElement;
+          return VersionElement is not null;
         case "versionAlgorithm":
-          if (_VersionAlgorithm.InOverflow<DynamicDataType>())
-          {
-            value = Overflow["versionAlgorithm"];
-            return true;
-          }
-          value = _VersionAlgorithm;
-          return (value as Hl7.Fhir.Model.DataType) is not null;
+          value = VersionAlgorithm;
+          return VersionAlgorithm is not null;
         case "name":
-          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["name"];
-            return true;
-          }
-          value = _NameElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = NameElement;
+          return NameElement is not null;
         case "title":
-          if (_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["title"];
-            return true;
-          }
-          value = _TitleElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = TitleElement;
+          return TitleElement is not null;
         case "status":
-          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
-          {
-            value = Overflow["status"];
-            return true;
-          }
-          value = _StatusElement;
-          return (value as Code<Hl7.Fhir.Model.PublicationStatus>) is not null;
+          value = StatusElement;
+          return StatusElement is not null;
         case "experimental":
-          if (_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
-          {
-            value = Overflow["experimental"];
-            return true;
-          }
-          value = _ExperimentalElement;
-          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
         case "date":
-          if (_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
-          {
-            value = Overflow["date"];
-            return true;
-          }
-          value = _DateElement;
-          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
+          value = DateElement;
+          return DateElement is not null;
         case "publisher":
-          if (_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["publisher"];
-            return true;
-          }
-          value = _PublisherElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = PublisherElement;
+          return PublisherElement is not null;
         case "contact":
-          if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
-          {
-            value = Overflow["contact"];
-            return true;
-          }
-          value = _Contact;
-          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
+          value = Contact;
+          return Contact?.Any() == true;
         case "description":
-          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          {
-            value = Overflow["description"];
-            return true;
-          }
-          value = _DescriptionElement;
-          return (value as Hl7.Fhir.Model.Markdown) is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "useContext":
-          if (_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
-          {
-            value = Overflow["useContext"];
-            return true;
-          }
-          value = _UseContext;
-          return (value as List<Hl7.Fhir.Model.UsageContext>)?.Any() is true;
+          value = UseContext;
+          return UseContext?.Any() == true;
         case "jurisdiction":
-          if (_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
-          {
-            value = Overflow["jurisdiction"];
-            return true;
-          }
-          value = _Jurisdiction;
-          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
         case "purpose":
-          if (_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          {
-            value = Overflow["purpose"];
-            return true;
-          }
-          value = _PurposeElement;
-          return (value as Hl7.Fhir.Model.Markdown) is not null;
+          value = PurposeElement;
+          return PurposeElement is not null;
         case "copyright":
-          if (_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>())
-          {
-            value = Overflow["copyright"];
-            return true;
-          }
-          value = _CopyrightElement;
-          return (value as Hl7.Fhir.Model.Markdown) is not null;
+          value = CopyrightElement;
+          return CopyrightElement is not null;
         case "copyrightLabel":
-          if (_CopyrightLabelElement.InOverflow<Hl7.Fhir.Model.FhirString>())
-          {
-            value = Overflow["copyrightLabel"];
-            return true;
-          }
-          value = _CopyrightLabelElement;
-          return (value as Hl7.Fhir.Model.FhirString) is not null;
+          value = CopyrightLabelElement;
+          return CopyrightLabelElement is not null;
         case "derivedFrom":
-          if (_DerivedFromElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>())
-          {
-            value = Overflow["derivedFrom"];
-            return true;
-          }
-          value = _DerivedFromElement;
-          return (value as List<Hl7.Fhir.Model.Canonical>)?.Any() is true;
+          value = DerivedFromElement;
+          return DerivedFromElement?.Any() == true;
         case "imports":
-          if (_Imports.InOverflow<List<Hl7.Fhir.Model.Requirements.ImportsComponent>>())
-          {
-            value = Overflow["imports"];
-            return true;
-          }
-          value = _Imports;
-          return (value as List<Hl7.Fhir.Model.Requirements.ImportsComponent>)?.Any() is true;
+          value = Imports;
+          return Imports?.Any() == true;
         case "reference":
-          if (_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
-          {
-            value = Overflow["reference"];
-            return true;
-          }
-          value = _ReferenceElement;
-          return (value as List<Hl7.Fhir.Model.FhirUrl>)?.Any() is true;
+          value = ReferenceElement;
+          return ReferenceElement?.Any() == true;
         case "actor":
-          if (_Actor.InOverflow<List<Hl7.Fhir.Model.Requirements.ActorComponent>>())
-          {
-            value = Overflow["actor"];
-            return true;
-          }
-          value = _Actor;
-          return (value as List<Hl7.Fhir.Model.Requirements.ActorComponent>)?.Any() is true;
+          value = Actor;
+          return Actor?.Any() == true;
         case "statement":
-          if (_Statement.InOverflow<List<Hl7.Fhir.Model.Requirements.StatementComponent>>())
-          {
-            value = Overflow["statement"];
-            return true;
-          }
-          value = _Statement;
-          return (value as List<Hl7.Fhir.Model.Requirements.StatementComponent>)?.Any() is true;
+          value = Statement;
+          return Statement?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object? value)
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
-      switch (key)
-      {
-        case "url":
-          if (value is not (Hl7.Fhir.Model.FhirUri or null))
-          {
-            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
-            Overflow["url"] = value;
-          }
-          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
-          return this;
-        case "identifier":
-          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
-          {
-            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
-            Overflow["identifier"] = value;
-          }
-          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
-          return this;
-        case "version":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            VersionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["version"] = value;
-          }
-          else VersionElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "versionAlgorithm":
-          if (value is not (Hl7.Fhir.Model.DataType or null))
-          {
-            VersionAlgorithm = OverflowNull<DynamicDataType>.INSTANCE;
-            Overflow["versionAlgorithm"] = value;
-          }
-          else VersionAlgorithm = (Hl7.Fhir.Model.DataType?)value;
-          return this;
-        case "name":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["name"] = value;
-          }
-          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "title":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            TitleElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["title"] = value;
-          }
-          else TitleElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "status":
-          if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
-          {
-            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
-            Overflow["status"] = value;
-          }
-          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
-          return this;
-        case "experimental":
-          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
-          {
-            ExperimentalElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
-            Overflow["experimental"] = value;
-          }
-          else ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean?)value;
-          return this;
-        case "date":
-          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
-          {
-            DateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
-            Overflow["date"] = value;
-          }
-          else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
-          return this;
-        case "publisher":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            PublisherElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["publisher"] = value;
-          }
-          else PublisherElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "contact":
-          if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))
-          {
-            Contact = OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.INSTANCE;
-            Overflow["contact"] = value;
-          }
-          else Contact = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
-          return this;
-        case "description":
-          if (value is not (Hl7.Fhir.Model.Markdown or null))
-          {
-            DescriptionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-            Overflow["description"] = value;
-          }
-          else DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
-          return this;
-        case "useContext":
-          if (value is not (List<Hl7.Fhir.Model.UsageContext> or null))
-          {
-            UseContext = OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.INSTANCE;
-            Overflow["useContext"] = value;
-          }
-          else UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
-          return this;
-        case "jurisdiction":
-          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
-          {
-            Jurisdiction = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
-            Overflow["jurisdiction"] = value;
-          }
-          else Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
-          return this;
-        case "purpose":
-          if (value is not (Hl7.Fhir.Model.Markdown or null))
-          {
-            PurposeElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-            Overflow["purpose"] = value;
-          }
-          else PurposeElement = (Hl7.Fhir.Model.Markdown?)value;
-          return this;
-        case "copyright":
-          if (value is not (Hl7.Fhir.Model.Markdown or null))
-          {
-            CopyrightElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
-            Overflow["copyright"] = value;
-          }
-          else CopyrightElement = (Hl7.Fhir.Model.Markdown?)value;
-          return this;
-        case "copyrightLabel":
-          if (value is not (Hl7.Fhir.Model.FhirString or null))
-          {
-            CopyrightLabelElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
-            Overflow["copyrightLabel"] = value;
-          }
-          else CopyrightLabelElement = (Hl7.Fhir.Model.FhirString?)value;
-          return this;
-        case "derivedFrom":
-          if (value is not (List<Hl7.Fhir.Model.Canonical> or null))
-          {
-            DerivedFromElement = OverflowNull<List<Hl7.Fhir.Model.Canonical>>.INSTANCE;
-            Overflow["derivedFrom"] = value;
-          }
-          else DerivedFromElement = (List<Hl7.Fhir.Model.Canonical>?)value!;
-          return this;
-        case "imports":
-          if (value is not (List<Hl7.Fhir.Model.Requirements.ImportsComponent> or null))
-          {
-            Imports = OverflowNull<List<Hl7.Fhir.Model.Requirements.ImportsComponent>>.INSTANCE;
-            Overflow["imports"] = value;
-          }
-          else Imports = (List<Hl7.Fhir.Model.Requirements.ImportsComponent>?)value!;
-          return this;
-        case "reference":
-          if (value is not (List<Hl7.Fhir.Model.FhirUrl> or null))
-          {
-            ReferenceElement = OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.INSTANCE;
-            Overflow["reference"] = value;
-          }
-          else ReferenceElement = (List<Hl7.Fhir.Model.FhirUrl>?)value!;
-          return this;
-        case "actor":
-          if (value is not (List<Hl7.Fhir.Model.Requirements.ActorComponent> or null))
-          {
-            Actor = OverflowNull<List<Hl7.Fhir.Model.Requirements.ActorComponent>>.INSTANCE;
-            Overflow["actor"] = value;
-          }
-          else Actor = (List<Hl7.Fhir.Model.Requirements.ActorComponent>?)value!;
-          return this;
-        case "statement":
-          if (value is not (List<Hl7.Fhir.Model.Requirements.StatementComponent> or null))
-          {
-            Statement = OverflowNull<List<Hl7.Fhir.Model.Requirements.StatementComponent>>.INSTANCE;
-            Overflow["statement"] = value;
-          }
-          else Statement = (List<Hl7.Fhir.Model.Requirements.StatementComponent>?)value!;
-          return this;
-        default:
-          return base.SetValue(key, value);
-      }
-
-    }
-
-    public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
-    {
-      foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_VersionElement is not null && !_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("version",_VersionElement);
-      if (_VersionAlgorithm is not null && !_VersionAlgorithm.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("versionAlgorithm",_VersionAlgorithm);
-      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
-      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_ExperimentalElement is not null && !_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("experimental",_ExperimentalElement);
-      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (_PublisherElement is not null && !_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
-      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (_UseContext?.Any() is true && !_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>()) yield return new KeyValuePair<string,object>("useContext",_UseContext);
-      if (_Jurisdiction?.Any() is true && !_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-      if (_PurposeElement is not null && !_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
-      if (_CopyrightElement is not null && !_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
-      if (_CopyrightLabelElement is not null && !_CopyrightLabelElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("copyrightLabel",_CopyrightLabelElement);
-      if (_DerivedFromElement?.Any() is true && !_DerivedFromElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>()) yield return new KeyValuePair<string,object>("derivedFrom",_DerivedFromElement);
-      if (_Imports?.Any() is true && !_Imports.InOverflow<List<Hl7.Fhir.Model.Requirements.ImportsComponent>>()) yield return new KeyValuePair<string,object>("imports",_Imports);
-      if (_ReferenceElement?.Any() is true && !_ReferenceElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-      if (_Actor?.Any() is true && !_Actor.InOverflow<List<Hl7.Fhir.Model.Requirements.ActorComponent>>()) yield return new KeyValuePair<string,object>("actor",_Actor);
-      if (_Statement?.Any() is true && !_Statement.InOverflow<List<Hl7.Fhir.Model.Requirements.StatementComponent>>()) yield return new KeyValuePair<string,object>("statement",_Statement);
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (VersionAlgorithm is not null) yield return new KeyValuePair<string,object>("versionAlgorithm",VersionAlgorithm);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
+      if (CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",CopyrightElement);
+      if (CopyrightLabelElement is not null) yield return new KeyValuePair<string,object>("copyrightLabel",CopyrightLabelElement);
+      if (DerivedFromElement?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFromElement);
+      if (Imports?.Any() == true) yield return new KeyValuePair<string,object>("imports",Imports);
+      if (ReferenceElement?.Any() == true) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (Statement?.Any() == true) yield return new KeyValuePair<string,object>("statement",Statement);
     }
 
   }

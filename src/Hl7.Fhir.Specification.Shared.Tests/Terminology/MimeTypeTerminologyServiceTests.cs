@@ -26,8 +26,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.IsExactly(new FhirString($"'invalid' is not a valid MIME type."))
-                .Should().BeTrue();
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"'invalid' is not a valid MIME type."));
 
 
             parameters = new ValidateCodeParameters()
@@ -36,8 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
-                .Subject.Value.IsExactly(new FhirBoolean(true))
-                .Should().BeTrue();
+                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
 
             parameters = new ValidateCodeParameters()
                 .WithValueSet(MIMETYPEVS)
@@ -83,8 +81,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.IsExactly(new FhirString($"'invalid' is not a valid MIME type."))
-                .Should().BeTrue();
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"'invalid' is not a valid MIME type."));
+
 
             parameters = new ValidateCodeParameters()
                    .WithValueSet(valueset)
@@ -92,8 +90,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
-                .Subject.Value.IsExactly(new FhirBoolean(true))
-                .Should().BeTrue();
+                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
         }
 
         [TestMethod]

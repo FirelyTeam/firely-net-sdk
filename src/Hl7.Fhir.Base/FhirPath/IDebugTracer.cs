@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
 
@@ -19,11 +18,11 @@ namespace Hl7.FhirPath
     {
         void TraceCall(Expression expr,
             int contextId,
-            IEnumerable<PocoNode> focus,
-            IEnumerable<PocoNode> thisValue,
-            PocoNode index,
-            IEnumerable<PocoNode> totalValue,
-            IEnumerable<PocoNode> result,
-            IEnumerable<KeyValuePair<string, IEnumerable<PocoNode>>> variables);
+            IEnumerable<ITypedElement> focus,
+            IEnumerable<ITypedElement> thisValue,
+            ITypedElement index,
+            IEnumerable<ITypedElement> totalValue,
+            IEnumerable<ITypedElement> result,
+            IEnumerable<KeyValuePair<string, IEnumerable<ITypedElement>>> variables);
     }
 }
