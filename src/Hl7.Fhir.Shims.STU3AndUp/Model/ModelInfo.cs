@@ -196,24 +196,25 @@ public partial class ModelInfo
 
     public static Canonical? CanonicalUriForFhirCoreType(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;
 
-        private static readonly Lazy<ModelInspector> _modelInspector = new(() =>
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
-#pragma warning restore CS0618 // Type or member is obsolete
-            if (inspector.FhirRelease != Specification.FhirRelease.STU3)
-            {
-                // In case of release 4 or higher, also load the assembly with common conformance resources, like StructureDefinition
-                inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
-            }
-            return inspector;
-        });
-
         /// <summary>
         /// Gets the <see cref="ModelInspector"/> providing metadata for the resources and
         /// datatypes in this release of FHIR.
         /// </summary>
-        public static ModelInspector ModelInspector => _modelInspector.Value;
+        public static ModelInspector ModelInspector
+        {
+            get
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
+#pragma warning restore CS0618 // Type or member is obsolete
+                if (inspector.FhirRelease != Specification.FhirRelease.STU3)
+                {
+                    // In case of release 4 or higher, also load the assembly with common conformance resources, like StructureDefinition
+                    inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
+                }
+                return inspector;
+            }
+        }
     }
 
 public static class ModelInfoExtensions
