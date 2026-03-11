@@ -21,7 +21,7 @@ public partial class BaseTerminologyService
     {
         try
         {
-            var validParams = new ClosureParameters(parameters.NoDuplicates());
+            var validParams = new ClosureParameters(parameters);
             TerminologyValidationHelpers.ValidateClosureParameters(validParams.Name, validParams.Concept, validParams.Version);
             return await Closure(validParams).ConfigureAwait(false);
         }
