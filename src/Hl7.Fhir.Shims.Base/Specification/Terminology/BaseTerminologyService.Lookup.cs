@@ -49,7 +49,7 @@ public partial class BaseTerminologyService
     {
         try
         {
-            var validParams = new LookupParameters(parameters.NoDuplicates());
+            var validParams = new LookupParameters(parameters);
             TerminologyValidationHelpers.ValidateLookupParameters(validParams.Code, validParams.Coding, validParams.System);
             return await Lookup(validParams).ConfigureAwait(false);
         }
