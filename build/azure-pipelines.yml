@@ -11,6 +11,7 @@ trigger:
     - hotfix/*
     - hotfix-*
     - refs/tags/v*
+    - support/*
   batch: True
 
 name: $(date:yyyyMMdd)$(rev:.r)
