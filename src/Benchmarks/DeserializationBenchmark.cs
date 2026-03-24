@@ -17,7 +17,7 @@ namespace Firely.Sdk.Benchmarks
         internal SourceNode XmlSourceNode;
         internal BaseFhirXmlDeserializer XmlDeserializer;
         internal BaseFhirJsonDeserializer JsonDeserializer;
-        internal XmlReader XmlReader;
+
         internal JsonSerializerOptions Options;
 
         [GlobalSetup]
@@ -55,10 +55,10 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public Resource XmlDictionaryDeserializer()
         {
-            XmlReader = XmlReader.Create(new StringReader(XmlData));
+            using var _xmlReader = XmlReader.Create(new StringReader(XmlData));
             try
             {
-                return XmlDeserializer.DeserializeResource(XmlReader);
+                return XmlDeserializer.DeserializeResource(_xmlReader);
             }
             catch (DeserializationFailedException e)
             {
