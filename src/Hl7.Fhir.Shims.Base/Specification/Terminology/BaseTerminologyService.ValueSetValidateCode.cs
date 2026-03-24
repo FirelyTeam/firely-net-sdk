@@ -59,9 +59,10 @@ public partial class BaseTerminologyService
 
     protected async virtual T.Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
     {
+        var canonical = $"{parameters.Url!}|{parameters.ValueSetVersion?.Value}";
         var valueSet = parameters.ValueSet as ValueSet
-                       ?? await ResolveValueSet(new($"{parameters.Url!}|{parameters.ValueSetVersion?.Value}")).ConfigureAwait(false)
-                       ?? throw FhirOperationException.Unresolvable("Unable to resolve ValueSet.");
+                       ?? await ResolveValueSet(new(canonical)).ConfigureAwait(false)
+                       ?? throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet {canonical}.");
         
         if (parameters.CodeableConcept is not null)
             return await validateConcept(valueSet, parameters.CodeableConcept, parameters.Abstract).ConfigureAwait(false);
