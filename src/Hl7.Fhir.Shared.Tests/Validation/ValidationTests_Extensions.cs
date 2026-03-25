@@ -323,5 +323,18 @@ namespace Hl7.Fhir.Tests.Validation
             var errors = patient.Validate(ModelInfo.ModelInspector);
             errors.Should().Contain(err => err.MemberName == "DivElement");
         }
+        
+        [TestMethod]
+        public void Validation_WithCardinality_ReportsFailureMember()
+        {
+            var contextComponent = new StructureDefinition.ContextComponent { Type = StructureDefinition.ExtensionContextType.Element };
+            var classMapping = ModelInfo.ModelInspector.FindClassMapping(contextComponent.GetType());
+
+            classMapping.Should().NotBeNull();
+
+            var errorsProp = contextComponent.Validate();
+
+            errorsProp.Should().ContainSingle().Which.MemberName.Should().Be(nameof(StructureDefinition.ContextComponent.ExpressionElement));
+        }
     }
 }

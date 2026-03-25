@@ -40,6 +40,9 @@ public class FhirAttributeValidator : IPocoValidator
                 : "element";
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
         }
+        
+        // if context doesn't have MemberName, set it explicitly
+        context.MemberName ??= propertyMapping.NativeProperty.Name;
 
         // check whether the value is assignable to the property, we'll complain in runAttributeValidation about other issues
         if (!propertyMapping.PropertyType.IsInstanceOfType(propertyValue))
@@ -78,7 +81,7 @@ public class FhirAttributeValidator : IPocoValidator
                 {
                     // Add the name of the property to the path, so we can display the correct name of the element,
                     // even if it does not really contain any values.
-                    var nestedContext = context with { PathProducer = () => $"{context.PathProducer()}.{propMapping.Name}" };
+                    var nestedContext = context with { PathProducer = () => $"{context.PathProducer()}.{propMapping.Name}", MemberName = propMapping.NativeProperty?.Name };
 
                     errors.AddRange(runAttributeValidation(propValue, [cardinality], nestedContext));
                 }
