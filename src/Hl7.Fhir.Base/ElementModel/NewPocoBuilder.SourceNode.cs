@@ -74,7 +74,7 @@ internal partial class NewPocoBuilder
                 : new ClassMapping(_inspector, resourceType, typeof(DynamicResource));
 
         var propertyClassMapping = propertyMapping is not null
-            ? getClassMapping(propertyMapping.ImplementingType)
+            ? getClassMapping(propertyMapping.GetInstantiableType())
             : null;
 
         if (propertyMapping?.Choice == ChoiceType.DatatypeChoice)
