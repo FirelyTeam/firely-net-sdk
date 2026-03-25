@@ -46,37 +46,31 @@ public static class VersionedConversionExtensions
     public static ITypedElement ToTypedElement(this Base @base, string? rootName = null) =>
         @base.ToTypedElement(ModelInfo.ModelInspector, rootName);
     
-    extension(ISourceNode source)
+    public static Base ToPoco(this ISourceNode source, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
+        source.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
+
+    public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings? settings = null) where T : Base
     {
-        public Base ToPoco(Type? pocoType = null, PocoBuilderSettings? settings = null) =>
-            source.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
+        if (source is PocoNode { Poco: T poco })
+            return poco;
 
-        public T ToPoco<T>(PocoBuilderSettings? settings = null) where T : Base
-        {
-            if (source is PocoNode { Poco: T poco })
-                return poco;
-
-            return (T)source.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
-        }
-
-        public PocoNode ToPocoNode() =>
-            source.ToPocoNode(ModelInfo.ModelInspector, source.Name);
+        return (T)source.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
     }
 
-    extension(ITypedElement element)
+    public static PocoNode ToPocoNode(this ISourceNode source) =>
+        source.ToPocoNode(ModelInfo.ModelInspector, source.Name);
+
+    public static Base ToPoco(this ITypedElement element, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
+        element.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
+
+    public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings? settings = null) where T : Base
     {
-        public Base ToPoco(Type? pocoType = null, PocoBuilderSettings? settings = null) =>
-            element.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
+        if (element is PocoNode { Poco: T {} poco })
+            return poco;
 
-        public T ToPoco<T>(PocoBuilderSettings? settings = null) where T : Base
-        {
-            if (element is PocoNode { Poco: T {} poco })
-                return poco;
-
-            return (T)element.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
-        }
-
-        public PocoNode ToPocoNode() =>
-            element.ToPocoNode(ModelInfo.ModelInspector, element.Name);
+        return (T)element.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
     }
+
+    public static PocoNode ToPocoNode(this ITypedElement element) =>
+        element.ToPocoNode(ModelInfo.ModelInspector, element.Name);
 }
