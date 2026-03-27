@@ -27,7 +27,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: Communication,
+      MemberName: Language,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.communication[0].language' with minimum cardinality 1 must be present.,

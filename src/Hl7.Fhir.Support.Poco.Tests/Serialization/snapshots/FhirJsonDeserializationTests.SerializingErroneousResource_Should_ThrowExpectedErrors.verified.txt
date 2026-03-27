@@ -14,7 +14,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: Extension,
+      MemberName: UrlElement,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.extension[0].url' with minimum cardinality 1 must be present.,
@@ -820,7 +820,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: Link,
+      MemberName: TypeElement,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.link[0].type' with minimum cardinality 1 must be present.,
@@ -833,7 +833,7 @@
     },
     {
       Type: CodedValidationException,
-      MemberName: Link,
+      MemberName: Other,
       IssueSeverity: Error,
       IssueType: Required,
       BaseErrorMessage: Element 'Patient.link[0].other' with minimum cardinality 1 must be present.,
