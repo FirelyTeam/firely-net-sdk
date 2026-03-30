@@ -17,11 +17,18 @@ public enum DeserializationMode
     Strict,
 
     /// <summary>
-    /// In this mode, the deserializer will ignore <see cref="Recoverable"/> errors, as long as the data can
-    /// be captured in the POCO model without using "overflow". This means that in this mode, after deserialization,
-    /// all properties and primitive `Value` properties are guaranteed not to throw because of incorrect data.
-    /// Also, no unknown elements will be not be allowed, so <see cref="Base.Overflow"/> can be ignored.
+    /// In this mode, the deserializer will ignore <see cref="Recoverable"/> errors, but will still report
+    /// errors that would cause data to end up in overflow (such as unknown elements or type mismatches).
+    /// This means that if deserialization succeeds without throwing, all properties and primitive <c>Value</c>
+    /// properties are guaranteed not to throw, and <see cref="Base.HasOverflow"/> is guaranteed to be
+    /// <c>false</c> on the returned POCO.
     /// </summary>
+    /// <remarks>
+    /// Note that overflow data is still captured during parsing even in this mode. If an overflow-causing
+    /// error is encountered, an exception is thrown, but the partial result — including any overflow — can
+    /// be retrieved from the exception. Use <see cref="Recoverable"/> or <see cref="BackwardsCompatible"/>
+    /// if you want unknown elements to be silently accepted into overflow without throwing.
+    /// </remarks>
     NoOverflow,
 
     /// <summary>

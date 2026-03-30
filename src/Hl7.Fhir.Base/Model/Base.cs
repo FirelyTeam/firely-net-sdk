@@ -56,6 +56,12 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     public bool HasOverflow => _overflow?.Count > 0;
 
     /// <summary>
+    /// Removes all overflow elements from this object.
+    /// </summary>
+    /// <remarks>This does not recursively clear overflow on child elements.</remarks>
+    public void ClearOverflow() => _overflow?.Clear();
+
+    /// <summary>
     /// A dictionary containing all elements that are not explicitly defined in the class.
     /// </summary>
     protected Dictionary<string, object> Overflow =>
