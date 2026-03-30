@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -30,6 +31,7 @@ public static partial class TypedElementExtensions
     
     public static ISourceNode ToSourceNode(this ITypedElement node) => node as ISourceNode ?? new TypedElementToSourceNodeAdapter(node);
 
+    [OverloadResolutionPriority(1)]
     public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings? settings = null) where T : Base
     {
         if (element is PocoNode { Poco: T poco })
@@ -38,6 +40,7 @@ public static partial class TypedElementExtensions
         return (T)new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings() { AllowUnrecognizedEnums = true, IgnoreUnknownMembers = true }).BuildFrom(element, typeof(T));
     }
 
+    [OverloadResolutionPriority(1)]
     public static Base ToPoco(this ITypedElement element, ModelInspector inspector, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
         new NewPocoBuilder(inspector, settings ?? new PocoBuilderSettings() { AllowUnrecognizedEnums = true, IgnoreUnknownMembers = true }).BuildFrom(element, pocoType);
 
@@ -60,6 +63,7 @@ public static partial class TypedElementExtensions
     /// Serializes an <see cref="ITypedElement"/> instance into a <see cref="JObject"/>
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
+    [OverloadResolutionPriority(1)]
     public static JObject ToJObject(this ITypedElement source) => new FhirJsonBuilder().Build(source);
 
     /// <summary>
@@ -67,6 +71,7 @@ public static partial class TypedElementExtensions
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Json.</param>
+    [OverloadResolutionPriority(1)]
     public static string ToJson(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode { Poco: Resource resource } node)
@@ -77,6 +82,7 @@ public static partial class TypedElementExtensions
 
     /// <inheritdoc cref="ToJson(Hl7.Fhir.ElementModel.ITypedElement,bool)"/>
     [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    [OverloadResolutionPriority(1)]
     public static async Task<string> ToJsonAsync(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode { Poco: Resource resource } node)
@@ -105,11 +111,13 @@ public static partial class TypedElementExtensions
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
     /// <param name="writer">The <see cref="JsonWriter"/> to write the serialized data to.</param>
+    [OverloadResolutionPriority(1)]
     public static void WriteTo(this ITypedElement source, JsonWriter writer) =>
         new FhirJsonBuilder().Build(source).writeTo(writer);
 
     /// <inheritdoc cref="WriteTo(Hl7.Fhir.ElementModel.ITypedElement,Newtonsoft.Json.JsonWriter)"/>
     [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    [OverloadResolutionPriority(1)]
     public static async Task WriteToAsync(this ITypedElement source, JsonWriter destination) =>
         await new FhirJsonBuilder().Build(source).writeToAsync(destination).ConfigureAwait(false);
 
@@ -134,6 +142,7 @@ public static partial class TypedElementExtensions
     /// Serializes an <see cref="ITypedElement"/> instance into a <see cref="XDocument"/>
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
+    [OverloadResolutionPriority(1)]
     public static XDocument ToXDocument(this ITypedElement source) =>
         new FhirXmlBuilder().Build(source);
 
@@ -142,6 +151,7 @@ public static partial class TypedElementExtensions
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Xml.</param>
+    [OverloadResolutionPriority(1)]
     public static string ToXml(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode node)
@@ -155,16 +165,19 @@ public static partial class TypedElementExtensions
     /// </summary>
     /// <param name="source">The instance to serialize.</param>
     /// <param name="writer">The <see cref="XmlWriter"/> to write the serialized data to.</param>
+    [OverloadResolutionPriority(1)]
     public static void WriteTo(this ITypedElement source, XmlWriter writer) =>
         new FhirXmlBuilder().Build(source).writeTo(writer);
 
     /// <inheritdoc cref="WriteTo(Hl7.Fhir.ElementModel.ITypedElement,System.Xml.XmlWriter)"/>
     [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    [OverloadResolutionPriority(1)]
     public static async Task WriteToAsync(this ITypedElement source, XmlWriter destination) =>
         await new FhirXmlBuilder().Build(source).writeToAsync(destination).ConfigureAwait(false);
 
     /// <inheritdoc cref="ToXml(Hl7.Fhir.ElementModel.ITypedElement,bool)"/>
     [Obsolete("Async support will be removed in the next major release, please use the non-async version instead")]
+    [OverloadResolutionPriority(1)]
     public static async Task<string> ToXmlAsync(this ITypedElement source, bool pretty = false)
     {
         if (source is not PocoNode node)
