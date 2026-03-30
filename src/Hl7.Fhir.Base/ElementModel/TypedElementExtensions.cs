@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.ElementModel;
 
@@ -23,6 +24,7 @@ public static partial class TypedElementExtensions
     public static IEnumerable<ITypedElement> Children(this IEnumerable<ITypedElement> nodes, string? name = null) =>
             nodes.SelectMany(n => n.Children(name));
 
+        [OverloadResolutionPriority(1)]
         public static IEnumerable<ITypedElement> Descendants(this ITypedElement element)
         {
             foreach (var child in element.Children())
@@ -40,12 +42,14 @@ public static partial class TypedElementExtensions
             elements.SelectMany(e => e.Descendants());
 
 
+        [OverloadResolutionPriority(1)]
         public static IEnumerable<ITypedElement> DescendantsAndSelf(this ITypedElement element) =>
             (new[] { element }).Concat(element.Descendants());
 
         public static IEnumerable<ITypedElement> DescendantsAndSelf(this IEnumerable<ITypedElement> elements) =>
             elements.SelectMany(e => e.DescendantsAndSelf());
 
+        [OverloadResolutionPriority(1)]
         public static void Visit(this ITypedElement root, Action<int, ITypedElement> visitor) => root.visit(visitor, 0);
 
         private static void visit(this ITypedElement root, Action<int, ITypedElement> visitor, int depth = 0)
@@ -58,15 +62,18 @@ public static partial class TypedElementExtensions
             }
         }
 
+        [OverloadResolutionPriority(1)]
         public static IDisposable Catch(this ITypedElement source, ExceptionNotificationHandler handler) =>
             source is IExceptionSource s ? s.Catch(handler) : throw new NotImplementedException("Element does not implement IExceptionSource.");
 
+        [OverloadResolutionPriority(1)]
         public static void VisitAll(this ITypedElement nav) => nav.Visit((_, n) =>
         {
             var dummyValue = n.Value;
             var dummyDefinition = n.Definition;
         });
 
+        [OverloadResolutionPriority(1)]
         public static List<ExceptionNotification> VisitAndCatch(this ITypedElement node)
         {
             var errors = new List<ExceptionNotification>();
@@ -81,8 +88,11 @@ public static partial class TypedElementExtensions
 
 
 
+        [OverloadResolutionPriority(1)]
         public static IEnumerable<object> Annotations(this ITypedElement nav, Type type) =>
         nav is IAnnotated ann ? ann.Annotations(type) : Enumerable.Empty<object>();
+
+        [OverloadResolutionPriority(1)]
         public static T? Annotation<T>(this ITypedElement nav) =>
             nav is IAnnotated ann ? ann.Annotation<T>() : default;
 
