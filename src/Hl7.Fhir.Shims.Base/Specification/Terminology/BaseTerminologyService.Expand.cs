@@ -65,12 +65,13 @@ public partial class BaseTerminologyService
             throw FhirOperationException.NotSupported("The 'context' parameter is not supported.");
 
         var expander = new ValueSetExpander(CreateExpanderSettings(parameters));
-        
+
+        var canonical = $"{parameters.Url!}|{parameters.ValueSetVersion?.Value}";
         var vs = parameters.ValueSet as ValueSet 
-                 ?? await ResolveValueSet(new($"{parameters.Url!}|{parameters.ValueSetVersion?.Value}")).ConfigureAwait(false);
+                 ?? await ResolveValueSet(new(canonical)).ConfigureAwait(false);
 
         if (vs is null)
-            throw FhirOperationException.Unresolvable("Unable to resolve ValueSet.");
+            throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet {canonical}.");
 
         // do not regenerate expansion if already present
         if (!vs.HasExpansion)

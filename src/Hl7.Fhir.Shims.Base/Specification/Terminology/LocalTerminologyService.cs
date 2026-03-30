@@ -51,7 +51,8 @@ public class LocalTerminologyService : BaseTerminologyService
 
     protected internal override async Task<ValueSet> ResolveValueSet(Canonical canonical)
     {
-        var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
+        var canonicalString = canonical.ToString();
+        var valueset = await _resolver.FindValueSetAsync(canonicalString).ConfigureAwait(false);
 
         if (valueset is not null)
             return valueset;
@@ -62,7 +63,7 @@ public class LocalTerminologyService : BaseTerminologyService
         if (_resolver is ICommonConformanceSource source)
 #endif
         {
-            var cs = source.FindCodeSystemByValueSet(canonical);
+            var cs = source.FindCodeSystemByValueSet(canonicalString);
             if (cs != null)
             {
                 valueset = new()
@@ -110,7 +111,7 @@ public class LocalTerminologyService : BaseTerminologyService
             }
         }
 
-        throw FhirOperationException.Unresolvable("Unable to resolve ValueSet.");
+        throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet {canonicalString}.");
     }
 
     private async Task<ValueSet> getExpandedValueSet(ValueSet vs, string operation)
