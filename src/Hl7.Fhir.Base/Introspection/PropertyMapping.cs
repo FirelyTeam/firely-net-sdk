@@ -370,10 +370,12 @@ public class PropertyMapping : IElementDefinitionSummary
         }
 
         ClassMapping resolveExistingMapping(string typeName) =>
-            (typeName.Contains('/')
+            (isCanonical(typeName)
                 ? declaringClass.Inspector.FindClassMappingByCanonical(typeName)
                 : declaringClass.Inspector.FindClassMapping(typeName))
             ?? throw new InvalidOperationException($"Cannot find a class mapping for summary type '{typeName}' on element '{declaringClass.Name}.{elementSummary.ElementName}'.");
+
+        static bool isCanonical(string value) => Uri.TryCreate(value, UriKind.Absolute, out _);
 
         static Type determineImplementingType(Type[] nativeTypes, ChoiceType choice) => choice switch
         {

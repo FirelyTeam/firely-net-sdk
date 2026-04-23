@@ -237,6 +237,65 @@ namespace Hl7.Fhir.Tests.Introspection
             inspector.FindClassMapping(typeof(DynamicResource)).Should().BeSameAs(dynamicResourceMapping,
                 "custom mappings should be registered by name/canonical, not by ambiguous runtime type");
         }
+
+        [TestMethod]
+        public void ImportingExistingSummaryByCanonicalRegistersCanonicalAlias()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var resourceSummary = new TestStructureDefinitionSummary(
+                "CanonicalUpgradeResource",
+                isAbstract: false,
+                isResource: true,
+                elements: []);
+
+            var importedByName = inspector.Import(resourceSummary);
+            var importedByCanonical = inspector.Import(resourceSummary, "http://example.org/fhir/StructureDefinition/CanonicalUpgradeResource");
+
+            importedByCanonical.Should().BeSameAs(importedByName);
+            inspector.FindClassMapping("CanonicalUpgradeResource").Should().BeSameAs(importedByName);
+            inspector.FindClassMappingByCanonical("http://example.org/fhir/StructureDefinition/CanonicalUpgradeResource")
+                .Should().BeSameAs(importedByName);
+            inspector.Provide("http://example.org/fhir/StructureDefinition/CanonicalUpgradeResource")
+                .Should().BeSameAs(importedByName);
+        }
+
+        [TestMethod]
+        public void CanResolveSummaryPropertyTypeByUrnCanonical()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var referencedSummary = new TestStructureDefinitionSummary(
+                "CanonicalDatatype",
+                isAbstract: false,
+                isResource: false,
+                elements: [])
+            {
+                Canonical = "urn:uuid:0f8fad5b-d9cb-469f-a165-70867728950e"
+            };
+
+            inspector.Import(referencedSummary, referencedSummary.Canonical);
+
+            var resourceSummary = new TestStructureDefinitionSummary(
+                "UrnReferenceResource",
+                isAbstract: false,
+                isResource: true,
+                elements:
+                [
+                    new TestElementDefinitionSummary("value", [new TestStructureDefinitionReference(referencedSummary.Canonical)], order: 10)
+                ]);
+
+            var mapping = inspector.Import(resourceSummary, "http://example.org/fhir/StructureDefinition/UrnReferenceResource");
+            var value = mapping.FindMappedElementByName("value");
+            var serializedType = ((IElementDefinitionSummary)value!).Type.Single();
+
+            value.Should().NotBeNull();
+            value!.PropertyTypeMapping.Should().BeSameAs(inspector.FindClassMappingByCanonical(referencedSummary.Canonical));
+            serializedType.Should().BeAssignableTo<IStructureDefinitionReference>();
+            ((IStructureDefinitionReference)serializedType).ReferredType.Should().Be(referencedSummary.Canonical);
+        }
     }
 
     internal sealed class TestStructureDefinitionSummary : IStructureDefinitionSummary
@@ -252,6 +311,8 @@ namespace Hl7.Fhir.Tests.Introspection
         }
 
         public string TypeName { get; }
+
+        public string Canonical { get; init; }
 
         public bool IsAbstract { get; }
 

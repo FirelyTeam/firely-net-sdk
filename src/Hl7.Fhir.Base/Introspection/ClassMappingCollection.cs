@@ -84,8 +84,11 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
                 _byType.TryRemove(kvp.Key, out _);
         }
 
-        if (item.Canonical is not null)
-            _byCanonical.TryRemove(item.Canonical, out _);
+        foreach (var kvp in _byCanonical)
+        {
+            if (ReferenceEquals(kvp.Value, item))
+                _byCanonical.TryRemove(kvp.Key, out _);
+        }
 
         return true;
     }
@@ -115,6 +118,17 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
     public void RegisterTypeAlias(Type type, ClassMapping mapping)
     {
         _byType[type] = mapping;
+    }
+
+    /// <summary>
+    /// Registers a canonical alias for an existing <see cref="ClassMapping"/>.
+    /// Unlike <see cref="Add"/>, this only updates the canonical lookup and does not affect the
+    /// name or type dictionaries. This is used when a mapping is first imported by name and later
+    /// associated with a canonical identifier.
+    /// </summary>
+    public void RegisterCanonicalAlias(string canonical, ClassMapping mapping)
+    {
+        _byCanonical[canonical] = mapping;
     }
 
     /// <summary>

@@ -261,7 +261,14 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
             return existingByCanonical;
 
         if (FindClassMapping(mappingName) is { } existingByName)
+        {
+            if (canonical is null)
+                return existingByName;
+
+            // register the canonical for the mapping as well
+            _classMappings.RegisterCanonicalAlias(canonical, existingByName);
             return existingByName;
+        }
 
         if (!ClassMapping.TryCreate(this, summary, mappingName, out var newMapping, canonical))
             throw new InvalidOperationException($"Could not create a class mapping for summary '{mappingName}'.");
@@ -398,9 +405,12 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 
     /// <inheritdoc cref="IStructureDefinitionSummaryProvider.Provide(string)"/>
     public IStructureDefinitionSummary? Provide(string canonical) =>
-        canonical.Contains('/') ?
+        isCanonical(canonical) ?
             FindClassMappingByCanonical(canonical)
             : FindClassMapping(canonical);
+
+    private static bool isCanonical(string value) =>
+        Uri.TryCreate(value, UriKind.Absolute, out _);
 
     #region IModelInfo
 
