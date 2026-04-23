@@ -121,6 +121,39 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public async Tasks.Task CanBuildClassMappingFromCustomResourceStructureDefinition()
+        {
+            var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
+            var summary = await provider.ProvideAsync("http://hl7.org/fhir/StructureDefinition/MyCustomResource");
+
+            summary.Should().NotBeNull();
+
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).Assembly);
+
+            var mapping = inspector.Import(summary!, "http://hl7.org/fhir/StructureDefinition/MyCustomResource");
+
+            mapping.Name.Should().Be("MyCustomResource");
+            mapping.NativeType.Should().Be(typeof(DynamicResource));
+            inspector.FindClassMapping("MyCustomResource").Should().BeSameAs(mapping);
+            inspector.FindClassMappingByCanonical("http://hl7.org/fhir/StructureDefinition/MyCustomResource").Should().BeSameAs(mapping);
+
+            var upperCaseElement = mapping.FindMappedElementByName("UpperCaseElement");
+            upperCaseElement.Should().NotBeNull();
+            upperCaseElement!.PropertyTypeMapping.Name.Should().Be("boolean");
+            upperCaseElement.PropertyTypeMapping.IsFhirPrimitive.Should().BeTrue();
+
+            var lowerCaseElement = mapping.FindMappedElementByName("lowerCaseElement");
+            lowerCaseElement.Should().NotBeNull();
+            lowerCaseElement!.PropertyTypeMapping.Name.Should().Be("boolean");
+            lowerCaseElement.PropertyTypeMapping.IsFhirPrimitive.Should().BeTrue();
+
+            var instance = mapping.CreateInstance();
+            instance.Should().BeOfType<DynamicResource>();
+            ((DynamicResource)instance).DynamicTypeName.Should().Be("MyCustomResource");
+        }
+
+        [TestMethod]
         public void TestAutoDeriveTypeForPolymorphicElement()
         {
             // Explicit types will be passed through on polymorphic elements

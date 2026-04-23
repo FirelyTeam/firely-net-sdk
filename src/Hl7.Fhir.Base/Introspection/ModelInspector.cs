@@ -246,6 +246,32 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     }
 
     /// <summary>
+    /// Imports FHIR metadata from a <see cref="IStructureDefinitionSummary"/>.
+    /// This is primarily intended for custom resources/types that are backed by dynamic POCOs.
+    /// </summary>
+    public ClassMapping Import(IStructureDefinitionSummary summary, string? canonical = null) =>
+        Import(summary, summary.TypeName, canonical);
+
+    internal ClassMapping Import(IStructureDefinitionSummary summary, string mappingName, string? canonical = null)
+    {
+        if (summary is null) throw Error.ArgumentNull(nameof(summary));
+        if (mappingName is null) throw Error.ArgumentNull(nameof(mappingName));
+
+        if (canonical is not null && FindClassMappingByCanonical(canonical) is { } existingByCanonical)
+            return existingByCanonical;
+
+        if (FindClassMapping(mappingName) is { } existingByName)
+            return existingByName;
+
+        if (!ClassMapping.TryCreate(this, summary, mappingName, out var newMapping, canonical))
+            throw new InvalidOperationException($"Could not create a class mapping for summary '{mappingName}'.");
+
+        _classMappings.Add(newMapping);
+
+        return newMapping;
+    }
+
+    /// <summary>
     /// Validates that a type being imported is compatible with this ModelInspector's FHIR release.
     /// </summary>
     /// <param name="type">The type being imported</param>

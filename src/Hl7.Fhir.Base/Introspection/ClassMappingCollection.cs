@@ -37,7 +37,13 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
         var propKey = mapping.Name;
         _byName[propKey] = mapping;
 
-        _byType[mapping.NativeType] = mapping;
+        // Custom mappings intentionally do not participate in the type index.
+        // Multiple custom resources/backbones may share the same runtime type
+        // (e.g. DynamicResource / DynamicDataType), so indexing them by type would
+        // make later imports overwrite earlier ones and would make type-based lookup
+        // ambiguous. Will be solved in follow up task.
+        if (!mapping.IsCustomMapping)
+            _byType[mapping.NativeType] = mapping;
 
         var canonical = mapping.Canonical;
         if (canonical is not null)

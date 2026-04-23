@@ -14,6 +14,8 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -151,6 +153,151 @@ namespace Hl7.Fhir.Tests.Introspection
             inspector.FindClassMapping(typeof(ValidateCodeParameters)).Should().BeNull(
                 "alias entries for derived types must be cleaned up when the base mapping is removed");
         }
+
+        [TestMethod]
+        public void CanImportCustomClassMappingFromStructureDefinitionSummary()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var componentSummary = new TestStructureDefinitionSummary(
+                "BackboneElement",
+                isAbstract: true,
+                isResource: false,
+                elements:
+                [
+                    new TestElementDefinitionSummary("value", [new TestStructureDefinitionReference("string")], order: 10)
+                ]);
+
+            var resourceSummary = new TestStructureDefinitionSummary(
+                "CustomResource",
+                isAbstract: false,
+                isResource: true,
+                elements:
+                [
+                    new TestElementDefinitionSummary("identifier", [new TestStructureDefinitionReference("string")], isRequired: true, order: 10),
+                    new TestElementDefinitionSummary("component", [componentSummary], isCollection: true, order: 20),
+                    new TestElementDefinitionSummary("value", [new TestStructureDefinitionReference("string"), new TestStructureDefinitionReference("boolean")], isChoiceElement: true, order: 30)
+                ]);
+
+            var mapping = inspector.Import(resourceSummary, "http://example.org/fhir/StructureDefinition/CustomResource");
+
+            mapping.Name.Should().Be("CustomResource");
+            mapping.NativeType.Should().Be(typeof(DynamicResource));
+            inspector.FindClassMapping("CustomResource").Should().BeSameAs(mapping);
+            inspector.FindClassMappingByCanonical("http://example.org/fhir/StructureDefinition/CustomResource").Should().BeSameAs(mapping);
+            inspector.Provide("CustomResource").Should().BeSameAs(mapping);
+
+            var instance = mapping.CreateInstance();
+            instance.Should().BeOfType<DynamicResource>();
+            ((DynamicResource)instance).DynamicTypeName.Should().Be("CustomResource");
+
+            ((IStructureDefinitionSummary)mapping).TypeName.Should().Be("CustomResource");
+            ((IStructureDefinitionSummary)mapping).IsAbstract.Should().BeFalse();
+
+            var identifier = mapping.FindMappedElementByName("identifier");
+            identifier.Should().NotBeNull();
+            identifier!.IsMandatoryElement.Should().BeTrue();
+            identifier.SerializationHint.Should().Be(XmlRepresentation.XmlElement);
+
+            var component = mapping.FindMappedElementByName("component");
+            component.Should().NotBeNull();
+            component!.IsCollection.Should().BeTrue();
+            component.PropertyTypeMapping.Name.Should().Be("CustomResource.component");
+            component.PropertyTypeMapping.NativeType.Should().Be(typeof(DynamicDataType));
+            ((IStructureDefinitionSummary)component.PropertyTypeMapping).TypeName.Should().Be("BackboneElement");
+            ((IStructureDefinitionSummary)component.PropertyTypeMapping).IsAbstract.Should().BeTrue();
+            ((IElementDefinitionSummary)component).Type.Single().Should().BeSameAs(component.PropertyTypeMapping);
+
+            var choice = (IElementDefinitionSummary)mapping.FindMappedElementByName("value")!;
+            choice.IsChoiceElement.Should().BeTrue();
+            choice.Type.Should().OnlyContain(t => t is IStructureDefinitionReference);
+            choice.Type.Cast<IStructureDefinitionReference>().Select(t => t.ReferredType)
+                .Should().BeEquivalentTo(["string", "boolean"]);
+        }
+
+        [TestMethod]
+        public void ImportingCustomStructureDefinitionMappingDoesNotOverwriteDynamicRuntimeTypeLookup()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var dynamicResourceMapping = inspector.FindClassMapping(typeof(DynamicResource));
+            dynamicResourceMapping.Should().NotBeNull();
+
+            var resourceSummary = new TestStructureDefinitionSummary(
+                "AnotherCustomResource",
+                isAbstract: false,
+                isResource: true,
+                elements: []);
+
+            var imported = inspector.Import(resourceSummary);
+
+            inspector.FindClassMapping("AnotherCustomResource").Should().BeSameAs(imported);
+            inspector.FindClassMapping(typeof(DynamicResource)).Should().BeSameAs(dynamicResourceMapping,
+                "custom mappings should be registered by name/canonical, not by ambiguous runtime type");
+        }
+    }
+
+    internal sealed class TestStructureDefinitionSummary : IStructureDefinitionSummary
+    {
+        private readonly IReadOnlyCollection<IElementDefinitionSummary> _elements;
+
+        public TestStructureDefinitionSummary(string typeName, bool isAbstract, bool isResource, IReadOnlyCollection<IElementDefinitionSummary> elements)
+        {
+            TypeName = typeName;
+            IsAbstract = isAbstract;
+            IsResource = isResource;
+            _elements = elements;
+        }
+
+        public string TypeName { get; }
+
+        public bool IsAbstract { get; }
+
+        public bool IsResource { get; }
+
+        public IReadOnlyCollection<IElementDefinitionSummary> GetElements() => _elements;
+    }
+
+    internal sealed class TestElementDefinitionSummary : IElementDefinitionSummary
+    {
+        public TestElementDefinitionSummary(string elementName, ITypeSerializationInfo[] type, bool isCollection = false,
+            bool isRequired = false, bool inSummary = false, bool isChoiceElement = false, bool isResource = false,
+            bool isModifier = false, string defaultTypeName = null, string nonDefaultNamespace = null,
+            XmlRepresentation representation = XmlRepresentation.XmlElement, int order = 0)
+        {
+            ElementName = elementName;
+            Type = type;
+            IsCollection = isCollection;
+            IsRequired = isRequired;
+            InSummary = inSummary;
+            IsChoiceElement = isChoiceElement;
+            IsResource = isResource;
+            IsModifier = isModifier;
+            DefaultTypeName = defaultTypeName;
+            NonDefaultNamespace = nonDefaultNamespace;
+            Representation = representation;
+            Order = order;
+        }
+
+        public string ElementName { get; }
+        public bool IsCollection { get; }
+        public bool IsRequired { get; }
+        public bool InSummary { get; }
+        public bool IsChoiceElement { get; }
+        public bool IsResource { get; }
+        public bool IsModifier { get; }
+        public ITypeSerializationInfo[] Type { get; }
+        public string DefaultTypeName { get; }
+        public string NonDefaultNamespace { get; }
+        public XmlRepresentation Representation { get; }
+        public int Order { get; }
+    }
+
+    internal sealed class TestStructureDefinitionReference(string referredType) : IStructureDefinitionReference
+    {
+        public string ReferredType { get; } = referredType;
     }
 
     [FhirEnumeration("SomeEnum")]
