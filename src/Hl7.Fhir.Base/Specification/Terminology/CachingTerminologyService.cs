@@ -139,8 +139,6 @@ internal static class ParametersExtensions
         {
             if (parameter.getPartHashCode() is { } hashPart)
                 hash.Add(hashPart);
-            else
-                return null;
         }
         return hash.ToHashCode();
     }
@@ -157,8 +155,6 @@ internal static class ParametersExtensions
         {
             if(subpart.getPartHashCode() is { } subpartHash)
                 hash.Add(subpartHash);
-            else
-                return null;
         }
         return hash.ToHashCode();
     }
