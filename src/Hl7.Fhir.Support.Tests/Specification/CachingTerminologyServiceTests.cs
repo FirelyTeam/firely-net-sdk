@@ -74,10 +74,16 @@ public class CachingTerminologyServiceTests
     }
 
     [TestMethod]
-    public async Task ParametersWithResource_DoesNotCache()
+    public async Task ParametersWithResource_DoesntBreakCache_CachedPerObject()
     {
         // Arrange
         var parametersWithResource = new Parameters();
+        parametersWithResource.Parameter.Add(new Parameters.ParameterComponent
+        {
+            Name = "resource",
+            Resource = new Bundle()
+        });
+        var parametersWithAnotherResource = new Parameters();
         parametersWithResource.Parameter.Add(new Parameters.ParameterComponent
         {
             Name = "resource",
@@ -90,9 +96,12 @@ public class CachingTerminologyServiceTests
         // Act
         await _cachingService.ValueSetValidateCode(parametersWithResource);
         await _cachingService.ValueSetValidateCode(parametersWithResource);
+        await _cachingService.ValueSetValidateCode(parametersWithAnotherResource);
+        await _cachingService.ValueSetValidateCode(parametersWithAnotherResource);
 
-        // Assert - Should call underlying service twice since resource parameters aren't cached
-        await _mockService.Received(2).ValueSetValidateCode(parametersWithResource, null, false);
+        // Assert - Should call underlying service once, but a different resource should result in a different cache key
+        await _mockService.Received(1).ValueSetValidateCode(parametersWithResource, null, false);
+        await _mockService.Received(1).ValueSetValidateCode(parametersWithAnotherResource, null, false);
     }
 
     [TestMethod]
