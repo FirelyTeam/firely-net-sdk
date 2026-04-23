@@ -139,8 +139,6 @@ internal static class ParametersExtensions
         {
             if (parameter.getPartHashCode() is { } hashPart)
                 hash.Add(hashPart);
-            else
-                return null;
         }
         return hash.ToHashCode();
     }
@@ -152,13 +150,11 @@ internal static class ParametersExtensions
         if(part.Value != null)
             hash.Add(getTerminologyValueHashCode(part.Value));
         if(part.Resource != null)
-            return null;
+            return part.Resource.GetHashCode();
         foreach (var subpart in part.Part)
         {
             if(subpart.getPartHashCode() is { } subpartHash)
                 hash.Add(subpartHash);
-            else
-                return null;
         }
         return hash.ToHashCode();
     }
@@ -203,7 +199,7 @@ internal static class ParametersExtensions
                 hash.Add(dt.Value);
                 break;
             default:
-                return null;
+                return parameterValue.GetHashCode();
         }
         
         return hash.ToHashCode();
