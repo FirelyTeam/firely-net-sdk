@@ -204,8 +204,8 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     
     private ClassMapping? importType(Base instance)
     {
-        if (instance is IDynamicType { DynamicTypeName: {} typeName } && !string.IsNullOrWhiteSpace(typeName))
-            return FindClassMapping(typeName);
+        if (instance is IDynamicType { DynamicTypeName: {} typeName } && !string.IsNullOrWhiteSpace(typeName) && FindClassMapping(typeName) is {} cm)
+            return cm;
 
         return ImportType(instance.GetType());
     }
