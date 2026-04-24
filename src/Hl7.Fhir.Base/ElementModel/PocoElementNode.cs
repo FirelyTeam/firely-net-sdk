@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             _inspector = inspector;
-            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType())!;
+            _myClassMapping = _inspector.FindOrImportClassMapping(root)!;
 
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
@@ -46,11 +46,12 @@ namespace Hl7.Fhir.ElementModel
             Current = instance;
             _inspector = inspector;
 
-            var instanceType = definition.Choice != ChoiceType.None
-                ? instance.GetType()
-                : determineInstanceType(definition);
-            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType)!;
-            InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
+            if (definition.Choice != ChoiceType.None)
+                _myClassMapping = _inspector.FindOrImportClassMapping(instance);
+            else
+                _myClassMapping = _inspector.FindOrImportClassMapping(determineInstanceType(definition));
+
+            InstanceType = ((IStructureDefinitionSummary)_myClassMapping!).TypeName;
             Definition = definition;
 
             ExceptionHandler = parent.ExceptionHandler;

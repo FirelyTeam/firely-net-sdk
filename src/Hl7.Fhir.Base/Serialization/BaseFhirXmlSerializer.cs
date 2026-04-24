@@ -75,7 +75,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             writer.WriteStartElement(r.TypeName, XmlNs.FHIR);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
-        if (Inspector.FindOrImportClassMapping(element.GetType()) is not {} mapping)
+        if (Inspector.FindOrImportClassMapping(element) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 

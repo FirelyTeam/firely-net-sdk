@@ -201,6 +201,14 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
             .Distinct()
             .ToList()!;
     }
+    
+    private ClassMapping? importType(Base instance)
+    {
+        if (instance is IDynamicType { DynamicTypeName: {} typeName } && !string.IsNullOrWhiteSpace(typeName))
+            return FindClassMapping(typeName);
+
+        return ImportType(instance.GetType());
+    }
 
     /// <summary>
     /// Extracts the FHIR metadata from a <see cref="Type"/> into a <see cref="ClassMapping"/> and
@@ -348,6 +356,13 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// </summary>
     /// <returns>May return <c>null</c> if the type cannot be imported.</returns>
     public ClassMapping? FindOrImportClassMapping(Type nativeType) => ImportType(nativeType);
+    
+    /// <summary>
+    /// Tries to retrieve an already imported <see cref="ClassMapping"/> and will import
+    /// it when not found.
+    /// </summary>
+    /// <returns>May return <c>null</c> if the mapping is not know and type cannot be imported.</returns>
+    public ClassMapping? FindOrImportClassMapping(Base instance) => importType(instance);
 
     /// <summary>
     /// Retrieves an already imported <see cref="ClassMapping" /> given a FHIR type name.
@@ -355,6 +370,17 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// <remarks>The search for the mapping by namem is case-insensitive.</remarks>
     public ClassMapping? FindClassMapping(string fhirTypeName) =>
         _classMappings.ByName.GetValueOrDefault(fhirTypeName);
+    
+    /// <summary>
+    /// Retrieves an already imported <see cref="ClassMapping" /> given an instance of a FHIR type.
+    /// </summary>
+    public ClassMapping? FindClassMapping(Base instance)
+    {
+        if(instance is IDynamicType { DynamicTypeName: {} typeName} && !string.IsNullOrWhiteSpace(typeName))
+            return FindClassMapping(typeName);
+        
+        return FindClassMapping(instance.GetType());
+    }
 
     /// <summary>
     /// Retrieves an already imported <see cref="ClassMapping" /> given a Type.

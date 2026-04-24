@@ -14,6 +14,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -295,6 +296,65 @@ namespace Hl7.Fhir.Tests.Introspection
             value!.PropertyTypeMapping.Should().BeSameAs(inspector.FindClassMappingByCanonical(referencedSummary.Canonical));
             serializedType.Should().BeAssignableTo<IStructureDefinitionReference>();
             ((IStructureDefinitionReference)serializedType).ReferredType.Should().Be(referencedSummary.Canonical);
+        }
+
+        [TestMethod]
+        public void SerializingCustomDynamicResourceShouldUseImportedChoiceMapping()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var resourceSummary = new TestStructureDefinitionSummary(
+                "CustomChoiceResource",
+                isAbstract: false,
+                isResource: true,
+                elements:
+                [
+                    new TestElementDefinitionSummary(
+                        "value",
+                        [new TestStructureDefinitionReference("string"), new TestStructureDefinitionReference("boolean")],
+                        isChoiceElement: true,
+                        order: 10)
+                ]);
+
+            var mapping = inspector.Import(resourceSummary, "http://example.org/fhir/StructureDefinition/CustomChoiceResource");
+            var instance = (DynamicResource)mapping.CreateInstance();
+            instance.SetValue("value", new FhirBoolean(true));
+
+            var json = new BaseFhirJsonSerializer(inspector).SerializeToString(instance);
+
+            json.Should().Contain("\"resourceType\":\"CustomChoiceResource\"");
+            json.Should().Contain("\"valueBoolean\":true",
+                "the imported custom ClassMapping declares value[x], so the serializer should suffix the property name using that mapping");
+            json.Should().NotContain("\"value\":true",
+                "falling back to the generic DynamicResource mapping drops the choice metadata even though DynamicTypeName is correct");
+        }
+
+        [TestMethod]
+        public void ToTypedElementLegacyShouldExposeImportedCustomDefinition()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var resourceSummary = new TestStructureDefinitionSummary(
+                "LegacyCustomResource",
+                isAbstract: false,
+                isResource: true,
+                elements:
+                [
+                    new TestElementDefinitionSummary("flag", [new TestStructureDefinitionReference("boolean")], order: 10)
+                ]);
+
+            var mapping = inspector.Import(resourceSummary, "http://example.org/fhir/StructureDefinition/LegacyCustomResource");
+            var instance = (DynamicResource)mapping.CreateInstance();
+            instance.SetValue("flag", new FhirBoolean(true));
+
+            var typed = instance.ToTypedElementLegacy(inspector);
+
+            typed.InstanceType.Should().Be("LegacyCustomResource",
+                "legacy POCO-to-typed-element conversion should preserve the imported custom mapping identity instead of falling back to DynamicResource");
+            typed.Children("flag").Single().InstanceType.Should().Be("boolean",
+                "child definitions should come from the imported custom mapping so custom elements remain navigable");
         }
     }
 

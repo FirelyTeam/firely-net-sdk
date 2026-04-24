@@ -41,7 +41,7 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
         // Multiple custom resources/backbones may share the same runtime type
         // (e.g. DynamicResource / DynamicDataType), so indexing them by type would
         // make later imports overwrite earlier ones and would make type-based lookup
-        // ambiguous. Will be solved in follow up task.
+        // ambiguous.
         if (!mapping.IsCustomMapping)
             _byType[mapping.NativeType] = mapping;
 
