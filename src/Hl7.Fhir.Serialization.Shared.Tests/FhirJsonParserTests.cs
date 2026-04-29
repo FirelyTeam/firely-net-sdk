@@ -76,4 +76,26 @@ public class FhirJsonParserTests
         details.OriginalValue.Should().Be(42);
         details.OriginalValue.Should().BeOfType<int>();
     }
+
+    [TestMethod]
+    public void FhirJsonParser_LargeIntegerValue_RoundtripsAsNumber()
+    {
+        // Regression test: large longs must roundtrip as JSON numbers, not strings.
+        string json = """
+                      {
+                        "resourceType": "Observation",
+                        "status": "final",
+                        "code": { "text": "test" },
+                        "valueQuantity": {
+                          "value": 20231128235900
+                        }
+                      }
+                      """;
+
+        var node = FhirJsonNode.Parse(json);
+        var roundtripped = node.ToJson();
+
+        roundtripped.Should().Contain("20231128235900");
+        roundtripped.Should().NotContain("\"20231128235900\"");
+    }
 }

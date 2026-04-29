@@ -188,9 +188,8 @@ namespace Hl7.Fhir.Serialization
 
         private JValue buildValue(object value, string requiredType = null) => value switch
         {
-            bool or decimal or Int32 or Int16 or ulong or double or BigInteger or float => new JValue(value),
+            bool or decimal or Int32 or Int16 or ulong or double or BigInteger or float or long => new JValue(value),
             string s => preserveWhiteSpaceInValues ? new JValue(s) : new JValue(s.Trim()),
-            long l when requiredType is "integer" or "unsignedInt" or "positiveInt" => new JValue(l),
             _ => new JValue(PrimitiveTypeConverter.ConvertTo<string>(value)),
         };
     }
