@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotElementMatcherTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotGeneratorManifestTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotGeneratorMappingSuppressionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotGeneratorTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotSourceTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\TestElementBaseAnnotation.cs" />

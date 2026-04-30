@@ -549,9 +549,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                             if (idx < 0)
                             {
                                 // New item from differential - add it (but only if not suppressed)
-                                if (!diffItem.HasSuppressExtension())
+                                if (!suppress(diffItem))
                                 {
-                                    mergedItem = (T)diffItem.DeepCopy();
+                                    mergedItem = diffItem.DeepCopy();
                                     result.Add(mergedItem);
                                 }
                             }
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             {
                                 // Matching item exists in snapshot
                                 // Check if diff item has suppress extension
-                                if (diffItem.HasSuppressExtension())
+                                if (suppress(diffItem))
                                 {
                                     // Remove the inherited item - it's being suppressed
                                     result.RemoveAt(idx);
@@ -581,6 +581,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
                 return result;
+            }
+
+            bool suppress<T>(T item) where T : Element, IExtendable
+            {
+                return _generator.Settings.RespectSuppressExtension && item.HasSuppressExtension();
             }
 
             // Custom merge logic for mappings that respects the suppress extension

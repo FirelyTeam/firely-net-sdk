@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
+            other.RespectSuppressExtension = RespectSuppressExtension;
             // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
@@ -73,6 +74,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Enable this setting to automatically generate missing element id values.</summary>
         public bool GenerateElementIds { get; set; } = true;
+
+        /// <summary>
+        /// If enabled (default), the snapshot generator will respect a suppress extension on mappings and examples
+        /// and not merge them from the base profile.
+        /// If disabled, then the snapshot generator will ignore the suppress extension and merge all mappings and examples
+        /// from the base profile.
+        /// </summary>
+        public bool RespectSuppressExtension { get; set; } = true;
 
         // [WMR 20161004] Always try to merge element type profiles
 
