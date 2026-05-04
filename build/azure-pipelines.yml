@@ -38,8 +38,15 @@ resources:
     
 
 stages:
+- template: check-skip-stage.yml@templates
+  parameters:
+    ignorePatterns:
+      - '.+\.md$'
+
 - stage: build
   displayName: Build
+  dependsOn: checkSkipStage
+  condition: and(succeeded(), ne(dependencies.checkSkipStage.outputs['checkChanges.evaluateIgnorePatterns.skip'], 'true'))
   jobs:
   - job: restoreAndBuild
     displayName: 'Build Artifacts'
