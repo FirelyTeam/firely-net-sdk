@@ -41,7 +41,6 @@ stages:
 - template: check-skip-stage.yml@templates
   parameters:
     ignorePatterns:
-      - '^docs/.+'
       - '.+\.md$'
 
 - stage: build
