@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-		<PackageReference Update="MSTest.TestFramework" Version="4.1.0" />
+		<PackageReference Update="MSTest.TestFramework" Version="4.2.1" />
 	</ItemGroup>
 	
 	<ItemGroup>
