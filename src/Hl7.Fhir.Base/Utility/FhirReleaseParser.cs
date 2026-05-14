@@ -63,6 +63,9 @@ namespace Hl7.Fhir.Utility
                 //Official R5 versions (and technical corrections) => 5.0.x
                 string s when s.StartsWith("5.0") => FhirRelease.R5,
 
+                //All R6 versions
+                string s when s.StartsWith("6.0") => FhirRelease.R6,
+
                 _ => null
             };
 
@@ -85,6 +88,7 @@ namespace Hl7.Fhir.Utility
                 FhirRelease.R4 => "4.0.1",
                 FhirRelease.R4B => "4.3.0",
                 FhirRelease.R5 => "5.0.0",
+                FhirRelease.R6 => "6.0.0-ballot3", // This is the version the SDK currently supports
                 _ => throw new NotSupportedException($"Unknown FHIR version {fhirRelease}")
             };
         }
@@ -118,6 +122,7 @@ namespace Hl7.Fhir.Utility
                 // this discussion.
                 "4.3" => FhirRelease.R4B,
                 "5.0" => FhirRelease.R5,
+                "6.0" => FhirRelease.R6,
                 _ => null
             };
 
@@ -143,6 +148,7 @@ namespace Hl7.Fhir.Utility
                 // this discussion.
                 FhirRelease.R4B => "4.3",
                 FhirRelease.R5 => "5.0",
+                FhirRelease.R6 => "6.0",
                 _ => throw new NotSupportedException($"Unknown FHIR version {fhirRelease}")
             };
         }
@@ -172,6 +178,7 @@ namespace Hl7.Fhir.Utility
                 "hl7.fhir.r4.core" => FhirRelease.R4,
                 "hl7.fhir.r4b.core" => FhirRelease.R4B,
                 "hl7.fhir.r5.core" => FhirRelease.R5,
+                "hl7.fhir.r6.core-ballot3" => FhirRelease.R6, // This is the version the SDK currently supports
                 _ => null
             };
 
@@ -192,6 +199,7 @@ namespace Hl7.Fhir.Utility
                 FhirRelease.R4 => "hl7.fhir.r4.core",
                 FhirRelease.R4B => "hl7.fhir.r4b.core",
                 FhirRelease.R5 => "hl7.fhir.r5.core",
+                FhirRelease.R6 => "hl7.fhir.r6.core-ballot3", // This is the version the SDK currently supports
                 _ => throw new NotSupportedException($"Unknown FHIR version {fhirRelease}")
             };
         }
