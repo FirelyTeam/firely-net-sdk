@@ -400,8 +400,8 @@ namespace Hl7.Fhir.Model
     /// R6 1st Draft Ballot.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("6.0.0-ballo1"), Description("6.0.0-ballot1")]
-    N6_0_0Ballo1,
+    [EnumLiteral("6.0.0-ballot1"), Description("6.0.0-ballot1")]
+    N6_0_0Ballot1,
     /// <summary>
     /// R6 2nd Draft Ballot.
     /// (system: http://hl7.org/fhir/FHIR-version)

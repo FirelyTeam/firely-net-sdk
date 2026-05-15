@@ -27,10 +27,18 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual(FhirRelease.R4, FhirReleaseParser.Parse("4.0.0"));
             Assert.AreEqual(FhirRelease.R4, FhirReleaseParser.Parse("4.0.1"));
 
+            Assert.AreEqual(FhirRelease.R4B, FhirReleaseParser.Parse("4.1.0"));
+            Assert.AreEqual(FhirRelease.R4B, FhirReleaseParser.Parse("4.3.0"));
+
             Assert.AreEqual(FhirRelease.R5, FhirReleaseParser.Parse("4.2.0"));
             Assert.AreEqual(FhirRelease.R5, FhirReleaseParser.Parse("4.5.0"));
+            Assert.AreEqual(FhirRelease.R5, FhirReleaseParser.Parse("5.0.0-ballot"));
             Assert.AreEqual(FhirRelease.R5, FhirReleaseParser.Parse("5.0.0"));
+
+            Assert.AreEqual(FhirRelease.R6, FhirReleaseParser.Parse("6.0.0-ballot3"));
+            Assert.AreEqual(FhirRelease.R6, FhirReleaseParser.Parse("6.0.0"));
         }
+        
         [TestMethod]
         public void TestTryParseFhirReleaseFromVersion()
         {
@@ -43,8 +51,12 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual(FhirRelease.STU3, version);
             Assert.IsTrue(FhirReleaseParser.TryParse("4.0.0", out version));
             Assert.AreEqual(FhirRelease.R4, version);
+            Assert.IsTrue(FhirReleaseParser.TryParse("4.3.0", out version));
+            Assert.AreEqual(FhirRelease.R4B, version);
             Assert.IsTrue(FhirReleaseParser.TryParse("5.0.0", out version));
             Assert.AreEqual(FhirRelease.R5, version);
+            Assert.IsTrue(FhirReleaseParser.TryParse("6.0.0-ballot3", out version));
+            Assert.AreEqual(FhirRelease.R6, version);
 
             Assert.IsFalse(FhirReleaseParser.TryParse("0.0.0.0.1", out version));
             Assert.IsNull(version);
@@ -60,6 +72,7 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual("4.0.1", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R4));
             Assert.AreEqual("4.3.0", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R4B));
             Assert.AreEqual("5.0.0", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R5));
+            Assert.AreEqual("6.0.0-ballot3", FhirReleaseParser.FhirVersionFromRelease(FhirRelease.R6));
         }
 
         [TestMethod]
@@ -69,7 +82,9 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual("1.0", FhirReleaseParser.MimeVersionFromFhirRelease(FhirRelease.DSTU2));
             Assert.AreEqual("3.0", FhirReleaseParser.MimeVersionFromFhirRelease(FhirRelease.STU3));
             Assert.AreEqual("4.0", FhirReleaseParser.MimeVersionFromFhirRelease(FhirRelease.R4));
+            Assert.AreEqual("4.3", FhirReleaseParser.MimeVersionFromFhirRelease(FhirRelease.R4B));
             Assert.AreEqual("5.0", FhirReleaseParser.MimeVersionFromFhirRelease(FhirRelease.R5));
+            Assert.AreEqual("6.0", FhirReleaseParser.MimeVersionFromFhirRelease(FhirRelease.R6));
         }
 
         [TestMethod]
@@ -79,7 +94,9 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual(FhirRelease.DSTU2, FhirReleaseParser.FhirReleaseFromMimeVersion("1.0"));
             Assert.AreEqual(FhirRelease.STU3, FhirReleaseParser.FhirReleaseFromMimeVersion("3.0"));
             Assert.AreEqual(FhirRelease.R4, FhirReleaseParser.FhirReleaseFromMimeVersion("4.0"));
+            Assert.AreEqual(FhirRelease.R4B, FhirReleaseParser.FhirReleaseFromMimeVersion("4.3"));
             Assert.AreEqual(FhirRelease.R5, FhirReleaseParser.FhirReleaseFromMimeVersion("5.0"));
+            Assert.AreEqual(FhirRelease.R6, FhirReleaseParser.FhirReleaseFromMimeVersion("6.0"));
         }
 
         [TestMethod]
@@ -94,8 +111,12 @@ namespace Hl7.Fhir.Utility.Tests
             Assert.AreEqual(FhirRelease.STU3, version);
             Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromMimeVersion("4.0", out version));
             Assert.AreEqual(FhirRelease.R4, version);
+            Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromMimeVersion("4.3", out version));
+            Assert.AreEqual(FhirRelease.R4B, version);
             Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromMimeVersion("5.0", out version));
             Assert.AreEqual(FhirRelease.R5, version);
+            Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromMimeVersion("6.0", out version));
+            Assert.AreEqual(FhirRelease.R6, version);
 
             Assert.IsFalse(FhirReleaseParser.TryGetFhirReleaseFromMimeVersion("0.0.0.0.1", out version));
             Assert.IsNull(version);
@@ -104,29 +125,41 @@ namespace Hl7.Fhir.Utility.Tests
         [TestMethod]
         public void TestFhirCorePackageFromFhirVersion()
         {
+            Assert.AreEqual("hl7.fhir.r2.core", FhirReleaseParser.CorePackageNameFromFhirRelease(FhirRelease.DSTU2));
             Assert.AreEqual("hl7.fhir.r3.core", FhirReleaseParser.CorePackageNameFromFhirRelease(FhirRelease.STU3));
             Assert.AreEqual("hl7.fhir.r4.core", FhirReleaseParser.CorePackageNameFromFhirRelease(FhirRelease.R4));
+            Assert.AreEqual("hl7.fhir.r4b.core", FhirReleaseParser.CorePackageNameFromFhirRelease(FhirRelease.R4B));
             Assert.AreEqual("hl7.fhir.r5.core", FhirReleaseParser.CorePackageNameFromFhirRelease(FhirRelease.R5));
+            Assert.AreEqual("hl7.fhir.r6.core-ballot3", FhirReleaseParser.CorePackageNameFromFhirRelease(FhirRelease.R6));
         }
 
         [TestMethod]
         public void FhirReleaseFromCorePackageName()
         {
+            Assert.AreEqual(FhirRelease.DSTU2, FhirReleaseParser.FhirReleaseFromCorePackageName("hl7.fhir.r2.core"));
             Assert.AreEqual(FhirRelease.STU3, FhirReleaseParser.FhirReleaseFromCorePackageName("hl7.fhir.r3.core"));
             Assert.AreEqual(FhirRelease.R4, FhirReleaseParser.FhirReleaseFromCorePackageName("hl7.fhir.r4.core"));
+            Assert.AreEqual(FhirRelease.R4B, FhirReleaseParser.FhirReleaseFromCorePackageName("hl7.fhir.r4b.core"));
             Assert.AreEqual(FhirRelease.R5, FhirReleaseParser.FhirReleaseFromCorePackageName("hl7.fhir.r5.core"));
+            Assert.AreEqual(FhirRelease.R6, FhirReleaseParser.FhirReleaseFromCorePackageName("hl7.fhir.r6.core-ballot3"));
         }
 
         [TestMethod]
         public void TestTryFhirReleaseFromCorePackageName()
         {
             FhirRelease? version = null;
+            Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.r2.core", out version));
+            Assert.AreEqual(FhirRelease.DSTU2, version);
             Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.r3.core", out version));
             Assert.AreEqual(FhirRelease.STU3, version);
             Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.r4.core", out version));
             Assert.AreEqual(FhirRelease.R4, version);
+            Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.r4b.core", out version));
+            Assert.AreEqual(FhirRelease.R4B, version);
             Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.r5.core", out version));
             Assert.AreEqual(FhirRelease.R5, version);
+            Assert.IsTrue(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.r6.core-ballot3", out version));
+            Assert.AreEqual(FhirRelease.R6, version);
 
             Assert.IsFalse(FhirReleaseParser.TryGetFhirReleaseFromCorePackageName("hl7.fhir.core.r3", out version));
             Assert.IsNull(version);
@@ -143,6 +176,7 @@ namespace Hl7.Fhir.Utility.Tests
                 FhirRelease.R4,
                 FhirRelease.R4B,
                 FhirRelease.R5,
+                FhirRelease.R6
             };
             listOfReleases.Should().BeInAscendingOrder();
         }
