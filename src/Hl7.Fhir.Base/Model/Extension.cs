@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Model;
 /// <summary>
 /// Optional Extensions Element
 /// </summary>
-[System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_url}}")]
+[System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={Url}}")]
 public partial class Extension : ICoded
 {
     public Extension()
