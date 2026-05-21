@@ -174,7 +174,13 @@ namespace Hl7.Fhir.Model
         {
           if(_Include.InOverflow<List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>), Overflow["include"]);
-          return _Include ??= [];
+          var list = _Include ??= [];
+          // Ensure all components in the list have the correct TypeName
+          foreach (var component in list)
+          {
+            component.SetTypeName("ValueSet.compose.include");
+          }
+          return list;
         }
 
         set
@@ -182,6 +188,14 @@ namespace Hl7.Fhir.Model
           if (_Include.InOverflow<List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>>())
             Overflow.Remove("include");
           _Include = value;
+          // Set TypeName for all include components
+          if (_Include != null)
+          {
+            foreach (var component in _Include)
+            {
+              component.SetTypeName("ValueSet.compose.include");
+            }
+          }
           OnPropertyChanged("Include");
         }
 
@@ -202,7 +216,13 @@ namespace Hl7.Fhir.Model
         {
           if(_Exclude.InOverflow<List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>), Overflow["exclude"]);
-          return _Exclude ??= [];
+          var list = _Exclude ??= [];
+          // Ensure all components in the list have the correct TypeName
+          foreach (var component in list)
+          {
+            component.SetTypeName("ValueSet.compose.exclude");
+          }
+          return list;
         }
 
         set
@@ -210,6 +230,14 @@ namespace Hl7.Fhir.Model
           if (_Exclude.InOverflow<List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>>())
             Overflow.Remove("exclude");
           _Exclude = value;
+          // Set TypeName for all exclude components
+          if (_Exclude != null)
+          {
+            foreach (var component in _Exclude)
+            {
+              component.SetTypeName("ValueSet.compose.exclude");
+            }
+          }
           OnPropertyChanged("Exclude");
         }
 
@@ -429,7 +457,21 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName => "ValueSet.compose.include";
+      private string? _typeName;
+      
+      /// <summary>
+      /// Gets the type name for this component.
+      /// Returns "ValueSet.compose.exclude" if explicitly set, otherwise "ValueSet.compose.include".
+      /// </summary>
+      public override string TypeName => _typeName ?? "ValueSet.compose.include";
+
+      /// <summary>
+      /// Internal method to set the type name for serialization purposes.
+      /// </summary>
+      internal void SetTypeName(string typeName)
+      {
+        _typeName = typeName;
+      }
 
       /// <summary>
       /// The system the codes come from.
