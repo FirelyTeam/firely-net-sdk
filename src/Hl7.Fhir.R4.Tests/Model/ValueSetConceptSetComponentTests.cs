@@ -32,10 +32,7 @@ namespace Hl7.Fhir.Tests.Model
             };
             valueSet.Compose.Include.Add(includeComponent);
             
-            // Access the Include property to trigger TypeName setting
-            var _ = valueSet.Compose.Include;
-            
-            // Assert
+            // Assert - TypeName is set automatically when adding to list via setter
             includeComponent.TypeName.Should().Be("ValueSet.compose.include",
                 "ConceptSetComponent used in Include should have TypeName 'ValueSet.compose.include'");
         }
@@ -57,7 +54,7 @@ namespace Hl7.Fhir.Tests.Model
             // Access the Exclude property to trigger TypeName setting
             var _ = valueSet.Compose.Exclude;
             
-            // Assert
+            // Assert - TypeName is set when accessing the property
             excludeComponent.TypeName.Should().Be("ValueSet.compose.exclude",
                 "ConceptSetComponent used in Exclude should have TypeName 'ValueSet.compose.exclude'");
         }
@@ -92,10 +89,7 @@ namespace Hl7.Fhir.Tests.Model
             valueSet.Compose.Include.Add(component2);
             valueSet.Compose.Include.Add(component3);
             
-            // Access the Include property to trigger TypeName setting
-            var _ = valueSet.Compose.Include;
-            
-            // Assert
+            // Assert - TypeName is set automatically when adding to list via setter
             component1.TypeName.Should().Be("ValueSet.compose.include");
             component2.TypeName.Should().Be("ValueSet.compose.include");
             component3.TypeName.Should().Be("ValueSet.compose.include");
@@ -118,7 +112,7 @@ namespace Hl7.Fhir.Tests.Model
             // Access the Exclude property to trigger TypeName setting
             var _ = valueSet.Compose.Exclude;
             
-            // Assert
+            // Assert - TypeName is set when accessing the property
             component1.TypeName.Should().Be("ValueSet.compose.exclude");
             component2.TypeName.Should().Be("ValueSet.compose.exclude");
         }
@@ -133,13 +127,13 @@ namespace Hl7.Fhir.Tests.Model
             // Act - add to include first
             var component = new ValueSet.ConceptSetComponent { System = "http://example.com" };
             valueSet.Compose.Include.Add(component);
-            var _ = valueSet.Compose.Include; // Trigger TypeName setting
+            var _ = valueSet.Compose.Include;  // Trigger TypeName setting
             component.TypeName.Should().Be("ValueSet.compose.include");
             
             // Act - remove from include and add to exclude
             valueSet.Compose.Include.Clear();
             valueSet.Compose.Exclude.Add(component);
-            var __ = valueSet.Compose.Exclude; // Trigger TypeName setting
+            _ = valueSet.Compose.Exclude;  // Trigger TypeName setting
             
             // Assert - TypeName should now be exclude
             component.TypeName.Should().Be("ValueSet.compose.exclude",
@@ -156,13 +150,13 @@ namespace Hl7.Fhir.Tests.Model
             // Act - add to exclude first
             var component = new ValueSet.ConceptSetComponent { System = "http://example.com" };
             valueSet.Compose.Exclude.Add(component);
-            var _ = valueSet.Compose.Exclude; // Trigger TypeName setting
+            var _ = valueSet.Compose.Exclude;  // Trigger TypeName setting
             component.TypeName.Should().Be("ValueSet.compose.exclude");
             
             // Act - remove from exclude and add to include
             valueSet.Compose.Exclude.Clear();
             valueSet.Compose.Include.Add(component);
-            var __ = valueSet.Compose.Include; // Trigger TypeName setting
+            _ = valueSet.Compose.Include;  // Trigger TypeName setting
             
             // Assert - TypeName should now be include
             component.TypeName.Should().Be("ValueSet.compose.include",
