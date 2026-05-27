@@ -20,13 +20,28 @@
 	<!-- Main Dependencies (all frameworks) -->
 	<ItemGroup>
 		<PackageVersion Include="Fhir.Metrics" Version="1.3.1" />
-		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.7" />
 		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.203" />
 		<PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageVersion Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
 	</ItemGroup>
 
+	<!-- Keep netstandard(s) in sync with the lowest version of the LTS version. https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' OR '$(TargetFramework)' == 'net8.0' ">
+		<!-- Keep Microsoft.Extensions.* packages in sync with the lowest LTS version -->
+		
+		<!-- https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/#versions-body-tab -->
+		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+	</ItemGroup>
+
+	<!-- Add a new Condition block for all other LTS versions. https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core  -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
+		<!-- Keep Microsoft.Extensions.* packages in sync with this Condition's LTS version -->
+
+		<!-- https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/#versions-body-tab -->
+		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.7" />
+	</ItemGroup>
+	
 	<!-- Framework-Specific Dependencies for netstandard2.1 -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
 		<PackageVersion Include="System.Buffers" Version="4.6.1" />
