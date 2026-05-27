@@ -26,6 +26,7 @@
 		<PackageVersion Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
 	</ItemGroup>
 
+
 	<!-- Keep netstandard(s) in sync with the lowest version of the LTS version. https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' OR '$(TargetFramework)' == 'net8.0' ">
 		<!-- Keep Microsoft.Extensions.* packages in sync with the lowest LTS version -->
@@ -45,7 +46,9 @@
 	<!-- Framework-Specific Dependencies for netstandard2.1 -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
 		<PackageVersion Include="System.Buffers" Version="4.6.1" />
-		<PackageVersion Include="System.Text.Json" Version="10.0.7" />
+
+		<!-- Keep System.Text.Json package in sync with the lowest concrete LTS version when under "netstandard" defintions  -->
+		<PackageVersion Include="System.Text.Json" Version="8.0.6" />
 	</ItemGroup>
 
 	<!-- Benchmarking Packages -->
