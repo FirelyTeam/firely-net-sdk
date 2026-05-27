@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
 	<Import Project="..\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems" Label="Shared" />
 
@@ -29,7 +29,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	  <PackageReference Include="Newtonsoft.Json" />
 	</ItemGroup>
 
 </Project>
+

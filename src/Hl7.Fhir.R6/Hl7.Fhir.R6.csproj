@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\firely-net-sdk.props" />
 	<Import Project="..\platforms.props" />
@@ -18,3 +18,4 @@
 	</ItemGroup>
 	
 </Project>
+

@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    
+
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <OutputType>Exe</OutputType>
         <DefineConstants>SDK6;PROJECT</DefineConstants>
+        <!-- Disable Central Package Management for this project due to multi-version package testing -->
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     </PropertyGroup>
     
     <PropertyGroup>
@@ -17,7 +19,7 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
         <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.0" Condition="'$(OS)' == 'Windows_NT'"/>
     </ItemGroup>
     
