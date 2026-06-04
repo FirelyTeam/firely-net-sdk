@@ -68,7 +68,7 @@ namespace Hl7.FhirPath.Parser
 
         public static readonly Parser<string> DelimitedIdentifier =
 
-            DelimitedContents('"')
+            DelimitedContents('"') // Included for backward compatibility with older versions of fhirpath
             .XOr(DelimitedContents('`'));
 
         // identifier
@@ -83,7 +83,7 @@ namespace Hl7.FhirPath.Parser
         //  : '%' identifier
         //  ;
         public static readonly Parser<string> ExternalConstant =
-            Parse.Char('%').Then(c => Identifier.XOr(String))
+            Parse.Char('%').Then(_ => Identifier.XOr(String))
             .Named("external constant");
 
         // DATE
@@ -172,6 +172,15 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<bool> Bool =
             Parse.String("true").XOr(Parse.String("false")).Text().Select(s => (bool)P.Boolean.Parse(s));
 
+        // COMMENTS: // and /* ... */
+        private static readonly CommentParser CommentParse = new CommentParser("//", "/*", "*/", "\n");
+
+        public static readonly Parser<string> Comment =
+            CommentParse.SingleLineComment.Text();
+
+        public static readonly Parser<string> CommentBlock =
+            CommentParse.MultiLineComment.Text();
+
         //qualifiedIdentifier
         //   : identifier ('.' identifier)*
         //   ;
@@ -182,9 +191,6 @@ namespace Hl7.FhirPath.Parser
             from _ in Parse.Char('$')
             from name in Parse.String("this").XOr(Parse.String("index")).Or(Parse.String("total")).Text()
             select name;
-
-        public static readonly Parser<string> Quantity =
-           Parse.Regex(P.Quantity.QUANTITYREGEX);
     }
 
 

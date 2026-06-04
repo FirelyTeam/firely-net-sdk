@@ -212,11 +212,18 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void RetainsFractions()
         {
             var input = @"2020-04-17T10:24:13.1882432-05:00";
-            var datetime = ElementModel.Types.DateTime.Parse(input);
+            var datetime = Types.DateTime.Parse(input);
             var offset = datetime.ToDateTimeOffset(TimeSpan.Zero);
-            var output = ElementModel.Types.DateTime.FormatDateTimeOffset(offset);
+            var output = Types.DateTime.FormatDateTimeOffset(offset);
 
             output.Should().Be(input);
+        }
+
+        [TestMethod]
+        public void IsNullWhenInvalid()
+        {
+            P.DateTime.TryParse("hi", out var parsed).Should().BeFalse();
+            parsed.Should().BeNull();
         }
     }
 }

@@ -7,28 +7,28 @@ using EM= Hl7.Fhir.ElementModel.Types;
 namespace Hl7.Fhir.ElementModel
 {
     [TestClass]
-    public class TypedElementExtensionsTests
+    public class VersionedConversionExtensionsTests
     {
         private readonly IStructureDefinitionSummaryProvider _provider = new NoTypeProvider();
 
-        [DynamicData(nameof(getEqualityData), DynamicDataSourceType.Method)]
-        [DataTestMethod]
+        [DynamicData(nameof(getEqualityData))]
+        [TestMethod]
         public void IsExactlyEqualToTest(IReadOnlyDictionary<string, object> left, IReadOnlyDictionary<string, object> right, bool ignoreOrder, bool result)
         {
             // Act
             toTypedElement(left).IsExactlyEqualTo(toTypedElement(right), ignoreOrder).Should().Be(result);
         }
 
-        [DynamicData(nameof(getMatchesData), DynamicDataSourceType.Method)]
-        [DataTestMethod]
+        [DynamicData(nameof(getMatchesData))]
+        [TestMethod]
         public void MatchesTest(IReadOnlyDictionary<string, object> input, IReadOnlyDictionary<string, object> pattern, bool result)
         {
             // Act
             toTypedElement(input).Matches(toTypedElement(pattern)).Should().Be(result);
         }
 
-        [DynamicData(nameof(getValueEqualityData), DynamicDataSourceType.Method)]
-        [DataTestMethod]
+        [DynamicData(nameof(getValueEqualityData))]
+        [TestMethod]
         public void ValueEqualityTest(object left, object right, bool result)
         {
             // Act

@@ -10,21 +10,22 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 #nullable enable
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : ITypedElement, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IShortPathGenerator, IAnnotated, IExceptionSource
     {
         private class Cache
         {
             public readonly object _lock = new();
 
             public string? Id;
-            public IEnumerable<ScopedNode>? ContainedResources;
-            public IEnumerable<BundledResource>? BundledResources;
+            public ReferencedResourceCache? ContainedResources;
+            public ReferencedResourceCache? BundledResources;
 
             public string? InstanceUri;
         }
@@ -47,12 +48,12 @@ namespace Hl7.Fhir.ElementModel
             Current = wrapped;
             ExceptionHandler = parentNode.ExceptionHandler;
             ParentResource = parentNode.AtResource ? parentNode : parentResource;
+            Parent = parentNode;
 
             _fullUrl = fullUrl;
 
             if (Current.Name == "entry")
                 _fullUrl = Current.Children("fullUrl").FirstOrDefault()?.Value as string ?? _fullUrl;
-
         }
 
         public ExceptionNotificationHandler? ExceptionHandler { get; set; }
@@ -68,6 +69,11 @@ namespace Hl7.Fhir.ElementModel
         public readonly ScopedNode? ParentResource;
 
         /// <summary>
+        /// The resource or element which is the direct parent of this node.
+        /// </summary>
+        public ScopedNode? Parent { get; }
+
+        /// <summary>
         /// Returns the location of the current element within its most direct parent resource or datatype.
         /// </summary>
         /// <remarks>
@@ -81,13 +87,19 @@ namespace Hl7.Fhir.ElementModel
         public string Name => Current.Name;
 
         /// <inheritdoc/>
-        public string InstanceType => Current.InstanceType;
+        public string? InstanceType => Current.InstanceType;
 
         /// <inheritdoc/>
-        public object Value => Current.Value;
+        public object? Value => Current.Value;
 
         /// <inheritdoc/>
         public string Location => Current.Location;
+
+        public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out ScopedNode? result)
+            => (result = ((ReferencedResourceCache)this.BundledResources()).ResolveReference(fullUrl)) is not null;
+
+        public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out ScopedNode? result) 
+            => (result = (this.ContainedResourcesWithId()).ResolveReference(id)) is not null;
 
         /// <summary>
         /// Whether this node is a root element of a Resource.
@@ -97,7 +109,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// The instance type of the resource this element is part of.
         /// </summary>
-        public string NearestResourceType => ParentResource == null ? Location : ParentResource.InstanceType;
+        public string? NearestResourceType => ParentResource == null ? Location : ParentResource.InstanceType;
 
         /// <summary>
         /// The %resource context, as defined by FHIRPath
@@ -123,7 +135,7 @@ namespace Hl7.Fhir.ElementModel
         }
 
         /// <inheritdoc />
-        public IElementDefinitionSummary Definition => Current.Definition;
+        public IElementDefinitionSummary? Definition => Current.Definition;
 
         /// <summary>
         /// Get the list of container parents in a list, nearest parent first.
@@ -160,20 +172,43 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public IEnumerable<ScopedNode> ContainedResources()
         {
-            if (_cache.ContainedResources == null)
+            return getOrInitContainedCache().Resources;
+        }
+        
+        internal ReferencedResourceCache ContainedResourcesWithId()
+        {
+            return getOrInitContainedCache();
+        }
+
+        private ReferencedResourceCache getOrInitContainedCache()
+        {
+            if (_cache.ContainedResources != null) return _cache.ContainedResources;
+            
+            if (AtResource)
             {
-                _cache.ContainedResources = AtResource ?
-                    this.Children("contained").Cast<ScopedNode>() :
-                    Enumerable.Empty<ScopedNode>();
+                var referenceEntryPairs = from contained in this.Children("contained")
+                    let id = contained.Children("id").FirstOrDefault()?.Value as string
+                    let resource = contained as ScopedNode
+                    select new KeyValuePair<string, ScopedNode?>(id, resource);
+                _cache.ContainedResources = new ReferencedResourceCache(referenceEntryPairs);
             }
+            else
+                _cache.ContainedResources = new ReferencedResourceCache([]);
+
             return _cache.ContainedResources;
         }
 
         /// <summary>
         /// A tuple of a bundled resource plus its Bundle.entry.fullUrl property.
         /// </summary>
-        public class BundledResource
+        public class BundledResource()
         {
+            public BundledResource(string? fullUrl, ScopedNode? resource) : this()
+            {
+                FullUrl = fullUrl;
+                Resource = resource;
+            }
+            
             public string? FullUrl;
             public ScopedNode? Resource;
         }
@@ -183,20 +218,37 @@ namespace Hl7.Fhir.ElementModel
         /// </summary>
         public IEnumerable<BundledResource> BundledResources()
         {
-            if (_cache.BundledResources == null)
+            if (_cache.BundledResources != null) return _cache.BundledResources;
+            
+            if (InstanceType == "Bundle")
             {
-                if (InstanceType == "Bundle")
-                    _cache.BundledResources = from e in this.Children("entry")
-                                              let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
-                                              let resource = e.Children("resource").FirstOrDefault() as ScopedNode
-                                              select new BundledResource { FullUrl = fullUrl, Resource = resource };
-                else
-                    _cache.BundledResources = Enumerable.Empty<BundledResource>();
+                var referenceEntryPairs = new List<KeyValuePair<string?, ScopedNode>>();
+                var versionedEntries = this.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
+                foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").FirstOrDefault()?.Value as string))
+                {
+                    referenceEntryPairs.Add(new KeyValuePair<string?, ScopedNode>(versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First()));
+                    referenceEntryPairs.AddRange(
+                        versionedResourceGroup.Select(
+                            entry => new KeyValuePair<string, ScopedNode>(
+                                (versionedResourceGroup.Key + "/_history/" + entry.Children("resource").Children("meta").Children("versionId").First().Value), 
+                                entry.Children("resource").Single()
+                            )
+                        )!
+                    );
+                }
+                var unversionedEntries = this.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
+                referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string?, ScopedNode>(
+                    (entry.Children("fullUrl").FirstOrDefault()?.Value as string), 
+                    entry.Children("resource").First()
+                )));
+                _cache.BundledResources = new ReferencedResourceCache(referenceEntryPairs);
             }
+                    
+            else
+                _cache.BundledResources = new ReferencedResourceCache([]);
 
             return _cache.BundledResources;
         }
-
 
         private readonly string? _fullUrl = null;
 
@@ -232,7 +284,13 @@ namespace Hl7.Fhir.ElementModel
         public IEnumerable<object> Annotations(Type type) => type == typeof(ScopedNode) ? (new[] { this }) : Current.Annotations(type);
 
         /// <inheritdoc />
-        public IEnumerable<ITypedElement> Children(string? name = null) =>
+        IEnumerable<ITypedElement> ITypedElement.Children(string? name) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+        
+        /// <inheritdoc />
+        public IEnumerable<ScopedNode> Children(string? name = null) =>
+            Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
+
+        public string ShortPath => Current is ElementNode en ? en.ShortPath : Current.Location;
     }
 }

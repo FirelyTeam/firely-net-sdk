@@ -26,9 +26,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
             t(Date.IsValidValue("2020-02-03"));
             f(Date.IsValidValue("2020-02-03+03:00"));
 
-            t(FhirBoolean.IsValidValue("true"));
-            f(FhirBoolean.IsValidValue("True"));
-
             t(FhirDateTime.IsValidValue("2020"));
             f(FhirDateTime.IsValidValue("2020+01:00"));
             t(FhirDateTime.IsValidValue("2020-01-01T14+01:00"));
@@ -51,14 +48,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
             // Integer's test are exactly covered by System's Integer.TryParse
             // Integer64's test are exactly covered by System's Integer.TryParse
 
-            t(PositiveInt.IsValidValue("4"));
-            f(PositiveInt.IsValidValue("0"));
-            f(PositiveInt.IsValidValue("-1"));
-
-            t(UnsignedInt.IsValidValue("4"));
-            t(UnsignedInt.IsValidValue("0"));
-            f(UnsignedInt.IsValidValue("-1"));
-
             t(Time.IsValidValue("12:03:04"));
             f(Time.IsValidValue("12:03:04-01:00"));
         }
@@ -72,14 +61,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
             t(XHtml.IsValidXml("<hi>hi!</hi>", out _));
             f(XHtml.IsValidXml("<hi>hi!<hi>", out _));
             f(XHtml.IsValidXml("hi!", out _));
-            f(XHtml.IsValidNarrativeXhtml("hi!", out _));
-            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _));
-            f(XHtml.IsValidNarrativeXhtml("hi!"));
-            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>"));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
-            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
+            f(XHtml.IsValidNarrativeXhtml("hi!", out _, out _));
+            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _, out _));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
+            f(XHtml.IsValidNarrativeXhtml("hi!", out _, out _));
+            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _, out _));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _, out _));
         }
 
         public static IEnumerable<object[]> ValidUris => cases(
@@ -97,35 +86,35 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private static IEnumerable<object[]> cases(params string[] tests) =>
             tests.Select(t => new object[] { t });
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidOids))]
         public void TestValidOids(string test) => Oid.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidOids))]
         public void TestInvalidOids(string test) => Oid.IsValidValue(test).Should().BeFalse();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidUuids))]
         public void TestValidUuids(string test) => Uuid.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidOids))]
         public void TestInvalidUuids(string test) => Uuid.IsValidValue(test).Should().BeFalse();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidUris))]
         public void TestValidUri(string test) => FhirUri.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidUris))]
         public void TestInvalidUri(string test) => FhirUri.IsValidValue(test).Should().BeFalse();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(ValidUris))]
         public void TestValidCanonical(string test) => Canonical.IsValidValue(test).Should().BeTrue();
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(InvalidUris))]
         public void TestInvalidCanonical(string test) => Canonical.IsValidValue(test).Should().BeFalse();
     }

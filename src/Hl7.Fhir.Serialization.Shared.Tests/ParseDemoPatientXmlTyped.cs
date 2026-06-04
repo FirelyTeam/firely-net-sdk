@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
+        private ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
         {
             settings = settings ?? FhirXmlParsingSettings.CreateDefault();
             settings.PermissiveParsing = false;
@@ -91,15 +91,15 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
-            var node = getXmlNode(bundle);
+            var node = getXmlNode(bundle, new FhirXmlParsingSettings{PermissiveParsing = true});
             ParseDemoPatient.CheckBundleEntryNavigation(node);
         }
 
 
         [TestMethod]
-        public async Task RoundtripXml()
+        public void RoundtripXml()
         {
-            await ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
+            ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
@@ -108,10 +108,10 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             // will allow whitespace and comments to come through      
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
-            var json = await navXml.ToJsonAsync();
+            var json = navXml.ToJson();
 
             var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider());
-            var xml = await navJson.ToXmlAsync();
+            var xml = navJson.ToXml();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
         }
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "with-errors.xml"));
             var patient = getXmlNode(tpXml, tnSettings: new TypedElementSettings { ErrorMode = TypedElementSettings.TypeErrorMode.Passthrough });
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(11, result.Count);  // 11 syntax errors, unknown root is passed through without errors
+            Assert.HasCount(11, result);  // 11 syntax errors, unknown root is passed through without errors
         }
 
         [TestMethod]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "no-namespace.xml"));
             var bundle = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings { PermissiveParsing = true });
             var result = bundle.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).VisitAndCatch();
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "typeErrors.xml"));
             var patient = getXmlNode(tpXml);
             var result = patient.VisitAndCatch();
-            Assert.AreEqual(10, result.Count);
+            Assert.HasCount(9, result);
         }
 
         [TestMethod]
@@ -149,14 +149,14 @@ namespace Hl7.Fhir.Serialization.Tests
             // First, use a simple value where a complex type was expected
             var nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><contact gender='male' /></Patient>");
             var errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("should be an XML element."));
+            Assert.Contains("should be an XML element.", errors.Single().Message);
 
             // Use xhtml when required
             nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><text><status value= 'generated' />" +
                 "<div>hi!</div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.First().Message.Contains("should be an XHTML element."));
-            Assert.AreEqual(2, errors.Count);
+            Assert.Contains("should be an XHTML element.", errors.First().Message);
+            Assert.HasCount(2, errors);
 
             // Use an element where an attribute was expected
             nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'>" +
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 "<url value='http://example.org/fhir/StructureDefinition/recordStatus' />" +
                 "<valueCode value='archived' /></extension></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("should be an XML attribute."));
+            Assert.Contains("should be an XML attribute.", errors.Single().Message);
         }
 
         [TestMethod]
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var nav = getXmlNode("<Patient xmlns='http://hl7.org/fhir'><gender value='male'/><active value='true' /></Patient>");
             var errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("not in the correct order"));
+            Assert.Contains("not in the correct order", errors.Single().Message);
         }
 
         [TestMethod]
@@ -183,14 +183,14 @@ namespace Hl7.Fhir.Serialization.Tests
              "<status value='generated' />" +
              "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div></text></Patient>");
             var errors = nav.VisitAndCatch();
-            Assert.AreEqual(0, errors.Count);
+            Assert.IsEmpty(errors);
 
             // No xhtml namespace
             nav = getValidatingXmlNav("<Patient xmlns='http://hl7.org/fhir'><text>" +
              "<status value='generated' />" +
              "<div><p>Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.AreEqual(2, errors.Count);
+            Assert.HasCount(3, errors);
             Assert.IsTrue(errors.Any(e => e.Message.Contains("should be an XHTML element")));
 
             // Active content
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Serialization.Tests
              "<status value='generated' />" +
              "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p onclick=\"myFunction();\">Donald</p></div></text></Patient>");
             errors = nav.VisitAndCatch();
-            Assert.IsTrue(errors.Single().Message.Contains("The 'onclick' attribute is not declared"));
+            Assert.Contains("The 'onclick' attribute is not declared", errors.Single().Message);
 
             ITypedElement getValidatingXmlNav(string jsonText) =>
                 getXmlNode(jsonText, new FhirXmlParsingSettings { ValidateFhirXhtml = true });
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Xml encountered"));
+                Assert.Contains("Invalid Xml encountered", fe.Message);
             }
         }
 

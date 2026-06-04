@@ -240,12 +240,16 @@ namespace Hl7.Fhir.Rest
 
         private static string construct(Uri endpoint, IEnumerable<string> components)
         {
-            UriBuilder builder = new UriBuilder(endpoint);
-            builder.Path = builder.Path.EnsureEndsWith(@"/");
+            // Manually construct the URL to preserve the original host casing.
+            // We cannot use UriBuilder because it normalizes the host to lowercase.
+            // EnsureEndsWith ensures proper path handling for all base URI scenarios:
+            //   - "http://Example.Org/fhir" -> "http://Example.Org/fhir/"
+            //   - "http://Example.Org/fhir/" -> "http://Example.Org/fhir/"
+            //   - "http://Example.Org/fhir/base" -> "http://Example.Org/fhir/base/"
+            var originalString = endpoint.OriginalString.EnsureEndsWith(@"/");
             string _components = string.Join("/", components).Trim('/');
-            builder.Path = builder.Path + _components;
-
-            return builder.Uri.ToString();
+            
+            return originalString + _components;
         }
 
         private static string construct(Uri endpoint, params string[] components)
@@ -298,7 +302,7 @@ namespace Hl7.Fhir.Rest
 
                 if (uri.IsAbsoluteUri)
                 {
-                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/")).EnsureEndsWith("/");
+                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/", StringComparison.Ordinal)).EnsureEndsWith("/");
                     BaseUri = new Uri(baseUri, UriKind.Absolute);
                 }
 
@@ -469,22 +473,15 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public bool IsTargetOf(ResourceIdentity reference)
         {
-            if (reference.BaseUri != null)
-            {
-                //TODO: According to the spec, this comparison should ignore http/https
-                //(see http.html#2.1.0.1, under the header 'identity')
-                if (BaseUri != reference.BaseUri) return false;
-            }
-
-            if (ResourceType != reference.ResourceType) return false;
-            if (Id != reference.Id) return false;
-
-            if (reference.VersionId != null)
-            {
-                if (VersionId != reference.VersionId) return false;
-            }
-
-            return true;
+            if (reference.BaseUri != null && BaseUri != reference.BaseUri) 
+                return false;
+            if(reference.ResourceType != null && ResourceType != reference.ResourceType) 
+                return false;
+            if (Id != reference.Id) 
+                return false;
+            if (reference.VersionId == null) 
+                return true;
+            return VersionId == reference.VersionId;
         }
 
         public bool IsTargetOf(string reference)
@@ -512,6 +509,17 @@ namespace Hl7.Fhir.Rest
             if (uri == null) return false;
 
             return HttpUtil.IsRestResourceIdentity(uri.OriginalString);
+        }
+
+        /// <summary>
+        /// Returns the string representation of this ResourceIdentity, preserving the original casing of the host.
+        /// </summary>
+        /// <returns>The original string representation of the URI</returns>
+        public override string ToString()
+        {
+            // Use OriginalString to preserve the case of the host
+            // The base Uri.ToString() lowercases the host, which breaks case-sensitive URL matching
+            return OriginalString;
         }
 
     }

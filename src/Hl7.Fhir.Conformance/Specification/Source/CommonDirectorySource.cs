@@ -13,10 +13,8 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -24,7 +22,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -360,7 +358,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Gets the configuration settings that the behavior of the PoCo parser.</summary>
-        public ParserSettings ParserSettings => _settings.ParserSettings;
+        public DeserializerSettings ParserSettings => _settings.ParserSettings;
 
         /// <summary>Gets the configuration settings that control the behavior of the XML parser.</summary>
         public FhirXmlParsingSettings XmlParserSettings => _settings.XmlParserSettings;
@@ -581,20 +579,60 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
-        public Resource? ResolveByUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByUri(uri, _inspector);
-            return summary is not null ? loadResourceInternal<Resource>(summary) : null;
-        }
+        public Resource? ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
-        public Resource? ResolveByCanonicalUri(string uri)
+        public Resource? ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            var summary = GetSummaries().ResolveByUri(uri, _inspector);
+
+            if(summary is null)
+                return ResolverException.ArtifactSummaryNoMatch(uri);
+
+            Resource? resource;
+            try
+            {
+                resource = loadResourceInternal<Resource>(summary);
+            }
+            catch(ArgumentException ex)
+            {
+                return ResolverException.ArtifactSummaryArgumentException(ex);
+            }
+
+            if (resource is null)
+                return ResolverException.NotFound();
+            
+            return resource;
+        }
+
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri, _inspector);
-            return summary is not null ? loadResourceInternal<Resource>(summary) : null;
+
+            if(summary is null)
+                return ResolverException.ArtifactSummaryNoMatch(uri);
+            
+            Resource? resource;
+            try
+            {
+                resource = loadResourceInternal<Resource>(summary);
+            }
+            catch(ArgumentException ex)
+            {
+                return ResolverException.ArtifactSummaryArgumentException(ex);
+            }
+
+            if (resource is null)
+                return ResolverException.NotFound();
+            
+            return resource;
         }
 
         #endregion
@@ -856,7 +894,7 @@ namespace Hl7.Fhir.Specification.Source
                 try
                 {
                     // Process files in parallel
-                    var loopResult = T.Parallel.For(0, cnt,
+                    var loopResult = Tasks.Parallel.For(0, cnt,
                         // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                         i =>
                         {
@@ -936,7 +974,8 @@ namespace Hl7.Fhir.Specification.Source
 
             // Also use the current PoCo parser settings
             var pocoSettings = PocoBuilderSettings.CreateDefault();
-            _settings.ParserSettings?.CopyTo(pocoSettings);
+            if (_settings.ParserSettings is { } ps)
+                pocoSettings.CopyFrom(ps);
 
             T? result = null;
 
@@ -1000,9 +1039,11 @@ namespace Hl7.Fhir.Specification.Source
         protected IEnumerable<string> GetFileNames() => GetSummaries().Where(s => s.Origin is not null)
             .Select(s => Path.GetFileName(s.Origin!)).Distinct();
 
-        public T.Task<Resource?> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
+        public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
 
-        public T.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         #endregion
 

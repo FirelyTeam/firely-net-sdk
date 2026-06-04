@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 
@@ -58,11 +59,10 @@ namespace Hl7.FhirPath
         /// <param name="expression">Expression which is to be evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>The result(s) of the expression</returns>
-        public IEnumerable<ITypedElement> Select(ITypedElement input, string expression, EvaluationContext? ctx = null)
+        public IEnumerable<PocoNode> Select(PocoNode input, string expression, EvaluationContext? ctx = null)
         {
-            input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator(input, ctx ?? new EvaluationContext());
         }
 
         /// <summary>
@@ -72,11 +72,10 @@ namespace Hl7.FhirPath
         /// <param name="expression">Expression which is to be evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>The single result of the expression, and null if the expression returns multiple results</returns>
-        public object? Scalar(ITypedElement input, string expression, EvaluationContext? ctx = null)
+        public object? Scalar(PocoNode input, string expression, EvaluationContext? ctx = null)
         {
-            input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.Scalar(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.Scalar(input, ctx ?? new EvaluationContext());
         }
 
         /// <summary>
@@ -86,11 +85,10 @@ namespace Hl7.FhirPath
         /// <param name="expression">Expression which is to be evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if expression returns true of empty, otheriwse false</returns>
-        public bool Predicate(ITypedElement input, string expression, EvaluationContext? ctx = null)
+        public bool Predicate(PocoNode input, string expression, EvaluationContext? ctx = null)
         {
-            input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.Predicate(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.Predicate(input, ctx ?? new EvaluationContext());
         }
 
         /// <summary>
@@ -100,11 +98,10 @@ namespace Hl7.FhirPath
         /// <param name="expression">Expression which is to be evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if expression returns true , and false if expression returns empty of false.</returns>
-        public bool IsTrue(ITypedElement input, string expression, EvaluationContext? ctx = null)
+        public bool IsTrue(PocoNode input, string expression, EvaluationContext? ctx = null)
         {
-            input = input.ToScopedNode();
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.IsTrue(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.IsTrue(input, ctx ?? new EvaluationContext());
         }
 
 
@@ -116,12 +113,10 @@ namespace Hl7.FhirPath
         /// <param name="expression">Expression which is to be evaluated</param>
         /// <param name="ctx">Context of the evaluation</param>
         /// <returns>True if the result of an expression is equal to a given boolean, otherwise false</returns>
-        public bool IsBoolean(ITypedElement input, string expression, bool value, EvaluationContext? ctx = null)
+        public bool IsBoolean(PocoNode input, string expression, bool value, EvaluationContext? ctx = null)
         {
-            input = input.ToScopedNode();
-
             var evaluator = GetCompiledExpression(expression);
-            return evaluator.IsBoolean(value, input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator.IsBoolean(value, input, ctx ?? new EvaluationContext());
         }
 
     }

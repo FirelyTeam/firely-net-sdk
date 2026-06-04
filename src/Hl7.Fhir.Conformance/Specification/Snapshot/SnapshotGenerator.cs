@@ -44,7 +44,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Resolve the associated base profile snapshot and merge the <see cref="StructureDefinition.Differential"/> component.
         /// </summary>
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
-        public async T.Task UpdateAsync(StructureDefinition structure)
+        public async Tasks.Task UpdateAsync(StructureDefinition structure)
         {
             structure.Snapshot = new StructureDefinition.SnapshotComponent()
             {
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Does not modify the <see cref="StructureDefinition.Snapshot"/> property of the specified instance.
         /// </summary>
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
-        public async T.Task<List<ElementDefinition>> GenerateAsync(StructureDefinition structure)
+        public async Tasks.Task<List<ElementDefinition>> GenerateAsync(StructureDefinition structure)
         {
             if (structure == null) { throw Error.ArgumentNull(nameof(structure)); }
             if (string.IsNullOrEmpty(structure.Url))
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
         /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
-        public T.Task<IList<ElementDefinition>> ExpandElementAsync(IElementList elements, ElementDefinition element)
+        public Tasks.Task<IList<ElementDefinition>> ExpandElementAsync(IElementList elements, ElementDefinition element)
             => elements is null ? throw Error.ArgumentNull(nameof(elements)) : ExpandElementAsync(elements.Element, element);
 
         /// <inheritdoc cref="ExpandElementAsync(IElementList, ElementDefinition)" />
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
         /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
-        public async T.Task<IList<ElementDefinition>> ExpandElementAsync(IList<ElementDefinition> elements, ElementDefinition element)
+        public async Tasks.Task<IList<ElementDefinition>> ExpandElementAsync(IList<ElementDefinition> elements, ElementDefinition element)
         {
             if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
@@ -233,6 +233,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 await expandElement(nav).ConfigureAwait(false);
+
+                foreach (var elem in nav.Elements)
+                    elem.RemoveAllNonInheritableExtensions();
             }
             finally
             {
@@ -250,7 +253,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance positioned on the target element to be expanded.</param>
         /// <returns><c>true</c> if the element is succesfully expanded, or <c>false</c> otherwise.</returns>
         /// <exception cref="ArgumentException">The specified navigator is not positioned on an element.</exception>
-        public async T.Task<bool> ExpandElementAsync(ElementDefinitionNavigator nav)
+        public async Tasks.Task<bool> ExpandElementAsync(ElementDefinitionNavigator nav)
         {
             nav.ThrowIfNullOrNotPositioned(nameof(nav));
 
@@ -260,7 +263,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             _stack.OnStartRecursion();
             try
             {
-                return await expandElement(nav).ConfigureAwait(false);
+                var result = await expandElement(nav).ConfigureAwait(false);
+
+                foreach (var elem in nav.Elements)
+                    elem.RemoveAllNonInheritableExtensions();
+
+                return result;
             }
             finally
             {
@@ -278,7 +286,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="diff">Another set of element constraints to merge on top of the base.</param>
         /// <param name="mergeElementId">Determines if the snapshot should inherit Element.id values from the differential.</param>
         /// <returns>A new <see cref="ElementDefinition"/> instance.</returns>
-        //public async T.Task<ElementDefinition> MergeElementDefinitionAsync(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+        //public async Tasks.Task<ElementDefinition> MergeElementDefinitionAsync(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         public ElementDefinition MergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         {
             var result = (ElementDefinition)snap.DeepCopy();
@@ -294,7 +302,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <param name="structure">the StructureDefinition to get the base from</param>
         /// <returns>The parent of <paramref name="structure"/>, skipping the interface classes</returns>
-        internal async T.Task<StructureDefinition> getBaseDefinition(StructureDefinition structure)
+        internal async Tasks.Task<StructureDefinition> getBaseDefinition(StructureDefinition structure)
         {
             if (structure?.BaseDefinition is null) return null;
 
@@ -318,7 +326,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Expand the differential component of the specified structure and return the expanded element list.
         /// The given structure is not modified.
         /// </summary>
-        private async T.Task<List<ElementDefinition>> generate(StructureDefinition structure)
+        private async Tasks.Task<List<ElementDefinition>> generate(StructureDefinition structure)
         {
             Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' (#{structure.GetHashCode()}) ...");
 
@@ -465,8 +473,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
-                snapshot.Element.RemoveAllConstrainedByDiffExtensions();
-                snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
+                snapshot.RemoveAllNonInheritableExtensions();
+                snapshot.Element.RemoveAllSnapshotGeneratorAnnotations();
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -552,7 +560,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(elem.IsRootElement());
                 if (!string.IsNullOrEmpty(elem.SliceName))
                 {
-                    if (sd.Url != Canonical.CanonicalUriForFhirCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
+                    if (sd.Url != Canonical.ForCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
                     {
                         addIssueInvalidSliceNameOnRootElement(elem, sd);
                     }
@@ -567,7 +575,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// If the element has a name reference, then merge from the targeted element.
         /// Otherwise, if the element has a custom type profile, then merge it.
         /// </summary>
-        private async T.Task<bool> expandElement(ElementDefinitionNavigator nav)
+        private async Tasks.Task<bool> expandElement(ElementDefinitionNavigator nav)
         {
             // [WMR 20170614] NEW: keepElementId
             // Maintain existing root element ID if called from the public ExpandElement method
@@ -604,6 +612,27 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20190926] #1123 Remove annotations and fix Base components!
                 copyChildren(nav, sourceNav);
+
+                // [EK 20250618] #3177 Ensure we don't have both children and a contentReference.
+                // We should restore the Type, since that's expected information if there is no
+                // content reference available.
+                defn.ContentReference = null;
+                defn.Type = sourceNav.Current.Type.DeepCopy().ToList();
+
+                // [EK 20250618] #3177 shouldn't we also copy other elements from
+                // sourceNav.Current, like defaultValue, fixed, pattern, example, minValue,
+                // maxValue, maxLength, or binding (everything that eld-5 forbids) now
+                // we don't have the contentReference anymore?
+                // defn.DefaultValue = (DataType)sourceNav.Current.DefaultValue.DeepCopy();
+                // defn.Fixed = (DataType)sourceNav.Current.Fixed.DeepCopy();
+                // defn.Pattern = (DataType)sourceNav.Current.Pattern.DeepCopy();
+                // defn.Example = sourceNav.Current.Example.DeepCopy().ToList();
+                // defn.MinValue = (DataType)sourceNav.Current.MinValue?.DeepCopy();
+                // defn.MaxValue = (DataType)sourceNav.Current.MaxValue?.DeepCopy();
+                // defn.MaxLength = sourceNav.Current.MaxLength;
+                // defn.Binding = (ElementDefinition.ElementDefinitionBindingComponent)sourceNav.Current.Binding?.DeepCopy();
+                // On second thought, a contentReference always points to a BackboneElement,
+                // and none of these properties make real sense for a BackboneElement.
 
                 // [WMR 20180410]
                 // - Regenerate element IDs
@@ -665,7 +694,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
-        private async T.Task<bool> expandElementType(ElementDefinitionNavigator nav, StructureDefinition typeStructure)
+        private async Tasks.Task<bool> expandElementType(ElementDefinitionNavigator nav, StructureDefinition typeStructure)
         {
             // [WMR 20170208] TODO: Expand profile snapshot if necessary
             if (typeStructure != null && typeStructure.HasSnapshot)
@@ -707,7 +736,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Merge children of the currently selected element from differential into snapshot.</summary>
-        private async T.Task merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        private async Tasks.Task merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var snapPos = snap.Bookmark();
             var diffPos = diff.Bookmark();
@@ -796,7 +825,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Create a new resource element without a base element definition (for core type & resource profiles)
-        private async T.Task createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        private async Tasks.Task createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var (targetElement, typeStructure) = await getBaseElementForElementType(diff.Current).ConfigureAwait(false);
             addConstraintSource(targetElement, typeStructure?.Url);
@@ -906,7 +935,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
-        private async T.Task mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        private async Tasks.Task mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // [WMR 20160816] Multiple inheritance - diamond problem
             // Element inherits constraints from base profile and also from any local type profile
@@ -1037,7 +1066,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private async T.Task ensureAbsoluteContentReferences(ElementDefinitionNavigator nav, string baseTypeUrl)
+        private async Tasks.Task ensureAbsoluteContentReferences(ElementDefinitionNavigator nav, string baseTypeUrl)
         {
             var bookmark = nav.Bookmark();
 
@@ -1054,7 +1083,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             nav.ReturnToBookmark(bookmark);
         }
 
-        private async T.Task ensureAbsoluteContentReference(FhirUri contentReferenceElement, string baseTypeUrl)
+        private async Tasks.Task ensureAbsoluteContentReference(FhirUri contentReferenceElement, string baseTypeUrl)
         {
             if (contentReferenceElement.Value?.StartsWith("#") == true)
             {
@@ -1063,7 +1092,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private async T.Task<string> getCanonicalUrlFromCoreType(string baseTypeUrl)
+        private async Tasks.Task<string> getCanonicalUrlFromCoreType(string baseTypeUrl)
         {
             var coreType = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(baseTypeUrl).ConfigureAwait(false);
             return coreType.Url;
@@ -1117,7 +1146,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static readonly string DOMAINRESOURCE_EXTENSION_PATH = FhirTypeNames.DOMAINRESOURCE_NAME + ".extension";
 
         // Resolve the type profile of the currently selected element and merge into snapshot
-        private async T.Task<bool> mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        private async Tasks.Task<bool> mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // Debug.Print("[mergeTypeProfiles] {0} : {1}", diff.Path, diff.Current.Type != null && diff.Current.Type.Count == 1 ? diff.Current.PrimaryTypeCode() : null);
 
@@ -1439,35 +1468,35 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// Copy child elements from <paramref name="typeNav"/> to <paramref name="nav"/>.
+        /// Copy child elements from <paramref name="source"/> to <paramref name="dest"/>.
         /// Remove existing annotations, fix Base components
         /// </summary>
         // [WMR 20170501] OBSOLETE: notify listeners - moved to prepareTypeProfileChildren
-        private static bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav) // , StructureDefinition typeStructure)
+        private static bool copyChildren(ElementDefinitionNavigator dest, ElementDefinitionNavigator source) // , StructureDefinition typeStructure)
         {
             // [WMR 20170426] IMPORTANT!
             // Do NOT modify typeNav/typeStructure
             // Call by mergeTypeProfiles: typeNav/typeStructure refers to modified clone of global type profile
             // Call by expandElement:     typeNav/typeStructure refers to global cached type profile (!)
 
-            Debug.Assert(!nav.AtRoot);
-            Debug.Assert(!typeNav.AtRoot);
+            Debug.Assert(!dest.AtRoot);
+            Debug.Assert(!source.AtRoot);
 
             // [WMR 20170220] CopyChildren returns false if nav already has children
-            if (nav.CopyChildren(typeNav))
+            if (dest.CopyChildren(source))
             {
                 // Fix the copied elements and notify observers
 
                 // [WMR 20190926] Also support contentReference
-                // typeNav positioned at target element of base profile (not the root element)
+                // source positioned at target element of base profile (not the root element)
                 // => process only the current subtree, not the full structure
 
-                var typeRootPath = typeNav.Path;
-                var typeRootPos = typeNav.OrdinalPosition.Value; // 0 for element type, >0 for content reference
-                var typeElems = typeNav.Elements;
-                var elems = nav.Elements;
+                var typeRootPath = source.Path;
+                var typeRootPos = source.OrdinalPosition.Value; // 0 for element type, >0 for content reference
+                var typeElems = source.Elements;
+                var elems = dest.Elements;
 
-                for (int pos = nav.OrdinalPosition.Value + 1, i = typeRootPos + 1;
+                for (int pos = dest.OrdinalPosition.Value + 1, i = typeRootPos + 1;
                     i < typeElems.Count && pos < elems.Count;
                     i++, pos++)
                 {
@@ -1476,7 +1505,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20190926] For contentReference, only process partial subtree
                     // Proceed while current target element is a (grand)child of the start element
 
-                    if (typeRootPos > 0 // If typeNav represents target of a contentReference...
+                    if (typeRootPos > 0 // If source represents target of a contentReference...
                                         // and if this element is NOT a child of the target contentReference...
                         && !ElementDefinitionNavigator.IsChildPath(typeRootPath, typeElem.Path))
                     {
@@ -1487,8 +1516,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var elem = elems[pos];
 
                     // [WMR 20160826] Never inherit Changed extension from base profile!
-                    elem.RemoveAllConstrainedByDiffExtensions();
-                    elem.RemoveAllConstrainedByDiffAnnotations();
+                    elem.RemoveAllNonInheritableExtensions();
+                    elem.RemoveAllSnapshotGeneratorAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20170424] Inherit existing base components from type profile
@@ -1696,7 +1725,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private async T.Task startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
+        private async Tasks.Task startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry
             // (Extension slices need not have a slicing entry)
@@ -1842,7 +1871,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         //   'C'
         //
 
-        private async T.Task addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
+        private async Tasks.Task addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
 
@@ -2090,7 +2119,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private async T.Task<StructureDefinition> getStructureForElementType(ElementDefinition elementDef, bool ensureSnapshot)
+        private async Tasks.Task<StructureDefinition> getStructureForElementType(ElementDefinition elementDef, bool ensureSnapshot)
         {
             Debug.Assert(elementDef != null);
             // Debug.Assert(elementDef.Type.Count > 0);
@@ -2100,7 +2129,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Resolve StructureDefinition for the specified typeRef component
         // Expand snapshot and generate ElementDefinition.Base components if necessary
-        private async T.Task<StructureDefinition> getStructureForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, bool ensureSnapshot)
+        private async Tasks.Task<StructureDefinition> getStructureForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, bool ensureSnapshot)
         {
             var location = elementDef.Path;
             StructureDefinition baseStructure = null;
@@ -2127,7 +2156,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Otherwise, or if the custom type profile is missing, then try to resolve the core type profile
             // [MV 20191217] stop when it is a special type (System.*). Introduced in the technical correction 4.0.1
             var typeCodeElem = typeRef.CodeElement;
-            if (!isValidProfile && typeCodeElem != null && typeCodeElem.ObjectValue is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
+            if (!isValidProfile && typeCodeElem != null && typeCodeElem.JsonValue is string typeName && !typeName.StartsWith("http://hl7.org/fhirpath/System."))
             {
                 baseStructure = await getStructureDefinitionForTypeCode(AsyncResolver, typeCodeElem).ConfigureAwait(false);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
@@ -2147,7 +2176,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
         /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
         /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
-        private static async T.Task<StructureDefinition> getStructureDefinitionForTypeCode(IAsyncResourceResolver resolver, FhirUri typeCodeElement)
+        private static async Tasks.Task<StructureDefinition> getStructureDefinitionForTypeCode(IAsyncResourceResolver resolver, FhirUri typeCodeElement)
         {
             StructureDefinition sd = null;
             var typeCode = typeCodeElement.Value;
@@ -2158,7 +2187,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 // Unknown/custom core type; try to resolve from raw object value
-                var typeName = typeCodeElement.ObjectValue as string;
+                var typeName = typeCodeElement.JsonValue as string;
                 if (!string.IsNullOrEmpty(typeName))
                 {
                     sd = await resolver.FindStructureDefinitionForCoreTypeAsync(typeName).ConfigureAwait(false);
@@ -2167,33 +2196,37 @@ namespace Hl7.Fhir.Specification.Snapshot
             return sd;
         }
 
-        private async T.Task<StructureDefinition> getStructureForContentReference(ElementDefinitionNavigator nav, bool ensureSnapshot)
+        private async Tasks.Task<StructureDefinition> getStructureForContentReference(ElementDefinitionNavigator nav, bool ensureSnapshot)
         {
             Debug.Assert(nav != null);
             Debug.Assert(nav.Current != null);
 
-            var elementDef = nav.Current;
-            var location = elementDef.Path;
+            var coreType = getCoreType(nav);
 
-            var contentReference = elementDef.ContentReference; // e.g. "#Questionnaire.item"
+            if (string.IsNullOrEmpty(coreType))
+                return null;
 
-            // [WMR 20181212] TODO: Handle logical models, where StructureDefinition.type returns an uri
+            var location = nav.Current.Path;
 
-            var coreType = nav.StructureDefinition?.Type
-                // Fall back to root element name...?
-                ?? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1));
+            // Try to resolve the custom element type profile reference
+            var coreSd = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(coreType).ConfigureAwait(false);
+            _ = ensureSnapshot
+                ? await this.ensureSnapshot(coreSd, coreType, location).ConfigureAwait(false)
+                : this.verifyStructure(coreSd, coreType, location);
 
-            if (!string.IsNullOrEmpty(coreType))
-            {
-                // Try to resolve the custom element type profile reference
-                var coreSd = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(coreType).ConfigureAwait(false);
-                _ = ensureSnapshot
-                    ? await this.ensureSnapshot(coreSd, coreType, location).ConfigureAwait(false)
-                    : this.verifyStructure(coreSd, coreType, location);
-                return coreSd;
-            }
+            return coreSd;
+        }
 
-            return null;
+        private static string getCoreType(ElementDefinitionNavigator nav)
+        {
+            if (nav.StructureDefinition?.Type != null)
+                return nav.StructureDefinition.Type;
+
+            var contentReference = nav.Current.ContentReference; // e.g. "#Questionnaire.item"
+
+            return contentReference.StartsWith("#")
+                ? ElementDefinitionNavigator.GetPathRoot(contentReference.Substring(1))  // Fall back to root element name...?
+                : contentReference.Split('#').First(); // return url
         }
 
         private bool verifyStructure(StructureDefinition sd, string profileUrl, string location = null)
@@ -2211,7 +2244,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // - the specified StructureDef is not null
         // - the snapshot component is not empty (expand on demand if necessary)
         // - The ElementDefinition.Base components are propertly initialized (regenerate if necessary)
-        private async T.Task<bool> ensureSnapshot(StructureDefinition sd, string profileUri, string location = null)
+        private async Tasks.Task<bool> ensureSnapshot(StructureDefinition sd, string profileUri, string location = null)
         {
             if (!verifyStructure(sd, profileUri, location)) { return false; }
             profileUri = sd.Url;
@@ -2264,7 +2297,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Resolve the base element definition for the specified element = the snapshot root element of the associated type profile
-        private async T.Task<(ElementDefinition, StructureDefinition typeProfile)> getBaseElementForElementType(ElementDefinition elementDef)
+        private async Tasks.Task<(ElementDefinition, StructureDefinition typeProfile)> getBaseElementForElementType(ElementDefinition elementDef)
         {
             Debug.Assert(elementDef != null);
             if (elementDef == null)
@@ -2278,7 +2311,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Resolve the base element definition for the specified element type = the snapshot root element of the associated type profile
-        private async T.Task<(ElementDefinition, StructureDefinition typeProfile)> getBaseElementForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef)
+        private async Tasks.Task<(ElementDefinition, StructureDefinition typeProfile)> getBaseElementForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef)
         {
             var typeProfile = await getStructureForTypeRef(elementDef, typeRef, false).ConfigureAwait(false);
 
@@ -2291,7 +2324,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Try to resolve from existing snapshot, if it exists and is valid
         // Try to resolve from partial snapshot, if it is currently being generated (higher up on the stack)
         // Otherwise recursively resolve the associated base profile root element definition (if it exists) and merge with differential root
-        private async T.Task<ElementDefinition> getSnapshotRootElement(StructureDefinition sd, string profileUri, string location)
+        private async Tasks.Task<ElementDefinition> getSnapshotRootElement(StructureDefinition sd, string profileUri, string location)
         {
             // Debug.Print("[SnapshotGenerator.getSnapshotRootElement] profileUri = '{0}' - resolving root element definition...", profileUri);
             if (!verifyStructure(sd, profileUri, location)) { return null; }
@@ -2445,12 +2478,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Walks up the profile hierarchy by resolving base profiles from the current <see cref="IResourceResolver"/> instance.
         /// </summary>
         /// <returns><c>true</c> if the profile type is equal to or derived from the specified type, or <c>false</c> otherwise.</returns>
-        private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, string type, StructureDefinition profile)
+        private static async Tasks.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, string type, StructureDefinition profile)
             => resolver is not null
                 ? await isValidTypeProfile(resolver, new HashSet<string>(), type, profile).ConfigureAwait(false)
                 : throw new ArgumentNullException(nameof(resolver));
 
-        private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
+        private static async Tasks.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
         {
             // Recursively walk up the base profile hierarchy until we find a profile on baseType
             if (type == null) { return true; }

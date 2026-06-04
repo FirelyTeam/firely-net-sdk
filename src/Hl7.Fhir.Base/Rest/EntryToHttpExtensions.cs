@@ -19,30 +19,35 @@ namespace Hl7.Fhir.Rest
 
 
     internal static class EntryToHttpExtensions
-    {     
+    {
         public static HttpRequestMessage ToHttpRequestMessage(
             this Bundle.EntryComponent entry,
             Uri baseUrl,
             IFhirSerializationEngine ser,
             string? fhirVersion,
-            FhirClientSettings settings)
+            FhirClientSettings settings,
+            bool binaryEndpoint = false)
         {
             var request = entry.Request;
             var interaction = entry.Annotation<InteractionType>();
-            var method = request.Method?.toHttpMethod(interaction)
+            var method = request?.Method?.toHttpMethod(interaction)
                         ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(request));
             var serialization = settings.PreferredFormat;
 
-            var uri = getRequestUrl(request.Url, baseUrl);
+            var uri = getRequestUrl(baseUrl, request.Url ?? throw new ArgumentException("EntryComponent should specify a Request.Url.", nameof(request.Url)));
+
             var message = new HttpRequestMessage(method, uri);
+
+            if (!(binaryEndpoint && settings.BinaryReceivePreference == BinaryTransferBehaviour.UseData))
+            {
+                message = settings.UseFormatParameter
+                    ? message.WithFormatParameter(serialization)
+                    : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
+            }
 
             message = setBody(message)
                 .WithDefaultAgent()
                 .WithPreconditions(request.IfMatch, request.IfNoneMatch, request.IfModifiedSince, request.IfNoneExist);
-
-            message = settings.UseFormatParameter
-                ? message.WithFormatParameter(serialization)
-                : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
 
             bool canHaveReturnPreference = interaction is InteractionType.Create or InteractionType.Update or InteractionType.Patch or InteractionType.Transaction;
 
@@ -63,7 +68,7 @@ namespace Hl7.Fhir.Rest
 
                 message = entry.Resource switch
                 {
-                    Binary bin => message.WithBinaryContent(bin),
+                    Binary binaryData when settings.BinarySendBehaviour is BinaryTransferBehaviour.UseData => message.WithBinaryContent(binaryData),
                     Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
                     Resource resource => message.WithResourceContent(resource, serialization, ser, fhirVersion),
                     null => message.WithNoBody()
@@ -73,7 +78,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static Uri getRequestUrl(string requestUrl, Uri baseUrl)
+        private static Uri getRequestUrl(Uri baseUrl, string requestUrl)
         {
             // Create an absolute uri when the interaction.Url is relative.
             var uri = new Uri(
@@ -89,11 +94,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-#if NETSTANDARD
-        private readonly static HttpMethod HTTP_PATCH = new("PATCH");
-#else
+
         private readonly static HttpMethod HTTP_PATCH = HttpMethod.Patch;
-#endif
+
 
         /// <summary>
         /// Converts the <see cref="Bundle.HTTPVerb" /> (e.g. from a <see cref="Bundle.RequestComponent.Method"/>) to a <see cref="HttpMethod"/>. />

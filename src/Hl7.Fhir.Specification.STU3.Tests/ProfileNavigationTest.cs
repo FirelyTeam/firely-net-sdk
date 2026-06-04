@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsFalse(nav.JumpToNameReference("#IDontExist"));
 
-            Assert.ThrowsException<NotSupportedException>(() =>
+            Assert.Throws<NotSupportedException>(() =>
                 nav.JumpToNameReference("http://then.nl/test#A-Named-Constraint"));
         }
 
@@ -631,9 +631,9 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestGetBaseSliceName()
         {
-            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(null));
-            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(""));
-            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName("1"));
+            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName(null));
+            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName(""));
+            Assert.IsNull(ElementDefinitionNavigator.GetBaseSliceName("1"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/1"));
             Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/2"));
@@ -674,47 +674,47 @@ namespace Hl7.Fhir.Specification.Tests
             nav.MoveToFirstChild();     // A
             Assert.IsTrue(nav.MoveToChild("B"));
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "1");
+            Assert.AreEqual("1", nav.Current.SliceName);
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "2");
+            Assert.AreEqual("2", nav.Current.SliceName);
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "3");
+            Assert.AreEqual("3", nav.Current.SliceName);
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToPreviousSlice());
-            Assert.AreEqual(nav.Current.SliceName, "2");
+            Assert.AreEqual("2", nav.Current.SliceName);
 
             Assert.IsTrue(nav.MoveToNext("C"));
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "1");
+            Assert.AreEqual("1", nav.Current.SliceName);
             // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nav.Current.SliceName, "1/1");
+            Assert.AreEqual("1/1", nav.Current.SliceName);
 
             var bm = nav.Bookmark();
             // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nav.Current.SliceName, "1/1/1");
+            Assert.AreEqual("1/1/1", nav.Current.SliceName);
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "1/1/2");
+            Assert.AreEqual("1/1/2", nav.Current.SliceName);
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToPreviousSlice());
-            Assert.AreEqual(nav.Current.SliceName, "1/1/1");
+            Assert.AreEqual("1/1/1", nav.Current.SliceName);
             // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.IsTrue(nav.ReturnToBookmark(bm));
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "1/2");
+            Assert.AreEqual("1/2", nav.Current.SliceName);
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.SliceName, "1/3");
+            Assert.AreEqual("1/3", nav.Current.SliceName);
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
-            Assert.AreEqual(nav.Current.SliceName, "2");
+            Assert.AreEqual("2", nav.Current.SliceName);
 
             Assert.IsTrue(nav.MoveToNext("D"));
             Assert.IsFalse(nav.MoveToNext());
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, false)]
         [DataRow("A", null, true)]
         [DataRow("A/B", null, false)]

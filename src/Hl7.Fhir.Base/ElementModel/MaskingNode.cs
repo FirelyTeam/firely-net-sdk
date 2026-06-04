@@ -16,7 +16,6 @@ namespace Hl7.Fhir.ElementModel
 {
     public class MaskingNode : ITypedElement, IAnnotated, IExceptionSource
     {
-
         /// <summary>
         /// Set to true when a complex type property is mandatory so all its children need to be included
         /// </summary>
@@ -59,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
           new MaskingNode(node, new MaskingNodeSettings
           {
               IncludeMandatory = true,
-              IncludeElements = new[] { "id", "total" },
+              IncludeElements = new[] { "id", "total", "link" },
           });
 
         public MaskingNode(ITypedElement source, MaskingNodeSettings settings = null)

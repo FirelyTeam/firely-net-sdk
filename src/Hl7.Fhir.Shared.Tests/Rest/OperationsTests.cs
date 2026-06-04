@@ -93,14 +93,14 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeByIdHttpClient()
+        public async Task InvokeValidateCodeByIdHttpClient()
         {
             using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
 
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = client.ValidateCode("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
-            Assert.IsTrue(result.Result?.Value == true);
+            var result = await client.ValidateCodeAsync("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
+            Assert.IsTrue(result.Result?.Value);
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             var result = await client.ValidateCodeAsync(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"),
                   coding: coding, @abstract: new FhirBoolean(false));
-            Assert.IsTrue(result.Result?.Value == true);
+            Assert.IsTrue(result.Result?.Value);
         }
 
         [TestMethod]
@@ -127,8 +127,8 @@ namespace Hl7.Fhir.Tests.Rest
             var vs = await client.ReadAsync<ValueSet>("ValueSet/c80-facilitycodes");
             Assert.IsNotNull(vs);
 
-            var result = client.ValidateCode(valueSet: vs, coding: coding);
-            Assert.IsTrue(result.Result?.Value == true);
+            var result = await client.ValidateCodeAsync(valueSet: vs, coding: coding);
+            Assert.IsTrue(result.Result?.Value);
         }
 
         [TestMethod]

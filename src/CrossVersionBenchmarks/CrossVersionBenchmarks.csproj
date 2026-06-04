@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <DefineConstants>SDK6;PROJECT</DefineConstants>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Optimize>true</Optimize>
+        <Configuration>Release</Configuration>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.0" Condition="'$(OS)' == 'Windows_NT'"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Hl7.Fhir.R5" Version="4.2.0" Condition="$(DefineConstants.Contains('SDK4'))" />
+        <PackageReference Include="Hl7.Fhir.R5" Version="5.1.0" Condition="$(DefineConstants.Contains('SDK5'))" />
+        <PackageReference Include="Hl7.Fhir.R5" Version="6.0.0-alpha2" Condition="$(DefineConstants.Contains('SDK6'))" />
+        <ProjectReference Include="..\Hl7.Fhir.R5\Hl7.Fhir.R5.csproj" Condition="$(DefineConstants.Contains('PROJECT'))" />
+        <ProjectReference Include="..\Hl7.Fhir.Specification.Data.R5\Hl7.Fhir.Specification.Data.R5.csproj" Condition="$(DefineConstants.Contains('PROJECT'))" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="TestData\**\*.json;TestData\**\*.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+</Project>

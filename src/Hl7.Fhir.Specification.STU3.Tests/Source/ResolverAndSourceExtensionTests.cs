@@ -13,7 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [TestMethod]
-        public async T.Task ResolveStructureDefs()
+        public async Tasks.Task ResolveStructureDefs()
         {
             var extDefn = await source.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
             Assert.IsNotNull(extDefn);
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task ResolveCoreStructureDefs()
+        public async Tasks.Task ResolveCoreStructureDefs()
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             var patDefn = source.FindStructureDefinitionForCoreType("Patient");
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task FindValueSet()
+        public async Tasks.Task FindValueSet()
         {
             // As defined in the spec here: http://hl7.org/fhir/2016Sep/valueset-contact-point-system.html
 
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task GetCoreModelTypeByName()
+        public async Tasks.Task GetCoreModelTypeByName()
         {
             var pat = await source.FindStructureDefinitionForCoreTypeAsync("Patient");
             Assert.IsNotNull(pat);
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task FindStructureDefinitionForCoreTypeLogicalModel()
+        public async Tasks.Task FindStructureDefinitionForCoreTypeLogicalModel()
         {
             var ccdaAnyCanonical = "http://hl7.org/fhir/cda/StructureDefinition/ANY";
             var resolver = new MultiResolver(source, new LogicalModelTypeResourceResolver());
@@ -135,20 +135,21 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class LogicalModelTypeResourceResolver : IResourceResolver
         {
-            public Resource ResolveByCanonicalUri(string uri)
+            public ResolverResult TryResolveByCanonicalUri(string uri)
             {
                 var customLogicalModelDataTypeXml = File.ReadAllText(Path.Combine("TestData/ccda", "CCDA_ANY.xml"));
-                var sd = new FhirXmlParser().Parse<StructureDefinition>(customLogicalModelDataTypeXml);
+                var sd = new FhirXmlDeserializer().Deserialize<StructureDefinition>(customLogicalModelDataTypeXml);
                 if (sd.Type.Equals(uri))
                     return sd;
 
-                return null;
+                return ResolverException.NotFound();
             }
 
-            public Resource ResolveByUri(string uri)
-            {
-                throw new NotImplementedException();
-            }
+            public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+            
+            public ResolverResult TryResolveByUri(string uri) => throw new NotImplementedException();
+            
+            public Resource ResolveByUri(string uri) => throw new NotImplementedException();
         }
 
     }

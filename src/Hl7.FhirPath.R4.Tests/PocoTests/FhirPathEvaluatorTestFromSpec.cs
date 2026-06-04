@@ -69,7 +69,7 @@ namespace Hl7.FhirPath.R4.Tests
             var input = focus.ToTypedElement();
             var container = resource?.ToTypedElement();
 
-            Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext(container)));
+            Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext()));
         }
 
         private enum ErrorType
@@ -84,19 +84,19 @@ namespace Hl7.FhirPath.R4.Tests
             {
                 var resourceNav = resource.ToTypedElement();
                 resourceNav.Select(expression);
-                Assert.IsTrue(false, "Should have been invalid");
+                Assert.Fail("Should have been invalid");
             }
             catch (FormatException)
             {
-                if (type != ErrorType.Syntax) Assert.IsTrue(false, "Invalid should have been of type syntax");
+                if (type != ErrorType.Syntax) Assert.Fail("Invalid should have been of type syntax");
             }
             catch (InvalidCastException)
             {
-                if (type != ErrorType.Semantics) Assert.IsTrue(false, "Invalid should have been of type semantics");
+                if (type != ErrorType.Semantics) Assert.Fail("Invalid should have been of type semantics");
             }
             catch (InvalidOperationException)
             {
-                if (type != ErrorType.Semantics) Assert.IsTrue(false, "Invalid should have been of type semantics2");
+                if (type != ErrorType.Semantics) Assert.Fail("Invalid should have been of type semantics2");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             Console.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
-            Assert.IsTrue(0 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            Assert.AreEqual(0, numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest, IEnumerable<string> ignoreTestcases)
@@ -177,11 +177,11 @@ namespace Hl7.FhirPath.R4.Tests
                 bool invalid = expressionNode.Attribute("invalid")?.Value == "true";
 
                 if (mode?.Value == "strict" || invalid) continue; // don't do 'strict' or invlaid tests yet
-                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
+                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath/input");
 
                 if (!_cache.ContainsKey(inputfile))
                 {
-                    _cache.Add(inputfile, new FhirXmlParser().Parse<Model.DomainResource>(
+                    _cache.Add(inputfile, FhirXmlDeserializer.OSTRICH.Deserialize<Model.DomainResource>(
                         File.ReadAllText(Path.Combine(basepath, inputfile))));
                 }
                 // Now perform this unit test
@@ -278,8 +278,8 @@ namespace Hl7.FhirPath.R4.Tests
         {
             // obsolete:
             // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
-            var parser = new FhirXmlParser();
-            Model.Bundle b = parser.Parse<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
+            var parser = new FhirXmlDeserializer();
+            Model.Bundle b = parser.Deserialize<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 
             foreach (Model.Bundle.EntryComponent be in b.Entry)
             {

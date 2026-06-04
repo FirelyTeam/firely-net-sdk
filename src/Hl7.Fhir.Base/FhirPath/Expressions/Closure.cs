@@ -1,43 +1,110 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
     internal class Closure
     {
-        public Closure()
+        internal int Id { get; private set; }
+
+        public Closure(EvaluationContext ctx)
         {
+            EvaluationContext = ctx;
+            Id = ctx.IncrementClosuresCreatedCount();
+            _debugTracerActive = ctx.DebugTracer != null;
         }
+
+        public Closure(Closure parent, EvaluationContext ctx)
+        {
+            Parent = parent;
+            EvaluationContext = ctx;
+            Id = ctx.IncrementClosuresCreatedCount();
+            _debugTracerActive = ctx.DebugTracer != null;
+        }
+
+        /// <summary>
+        /// When the debug/trace is enabled this property is used to record the focus of the closure.
+        /// <br/>VALUE IS NOT USED OUTSIDE DEBUG - without debug/tracer, the value is not consistent.
+        /// </summary>
+        /// <remarks>
+        /// It is set in the delegate produced for each node by the evaluator visitor.
+        /// The debug tracer will reset the focus in the closure after calling the delegate it's wrapping.
+        /// ensuring that argument evaluation doesn't impact the focus logged in the debug trace in other
+        /// calls.
+        /// </remarks>
+        public IEnumerable<PocoNode> focus
+        {
+            get
+            {
+                if (!_debugTracerActive)
+                    return [];
+                return _focus;
+            }
+            set
+            {
+                if (!_debugTracerActive)
+                    return;
+                _focus = value;
+            }
+        }
+
+        private IEnumerable<PocoNode> _focus;
+        private bool _debugTracerActive = false;
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(ITypedElement root, EvaluationContext ctx = null)
+        public static Closure Root(IEnumerable<PocoNode> root, EvaluationContext ctx = null)
         {
-            var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.CreateDefault() };
+            var newContext = ctx ?? new EvaluationContext();
 
-            var input = new[] { root };
-            newContext.SetThis(input);
-            newContext.SetThat(input);
-            newContext.SetIndex(ElementNode.CreateList(0));
-            newContext.SetOriginalContext(input);
-            if (ctx.Resource != null) newContext.SetResource(new[] { ctx.Resource });
-            if (ctx.RootResource != null) newContext.SetRootResource(new[] { ctx.RootResource });
+            if (root is PocoNodeOrList node)
+            {
+                newContext.Resource ??= node.GetResourceContext();
+                newContext.RootResource ??= node.GetRootResourceContext();
+            }
+            else
+            {
+                newContext.RootResource ??= newContext.Resource;
+            }
+            
+            var newClosure = new Closure(ctx ?? new EvaluationContext());
 
-            return newContext;
+            foreach (var assignment in newClosure.EvaluationContext.Environment)
+            {
+                newClosure.SetValue(assignment.Key, assignment.Value);
+            }
+            
+            newClosure.SetThis(root);
+            newClosure.SetThat(root);
+            newClosure.SetIndex(PocoNode.ForPrimitive<Integer>(1));
+            newClosure.SetOriginalContext(root);
+            
+            if (newContext.Resource != null) newClosure.SetResource(newContext.Resource);
+            if (newContext.RootResource != null) newClosure.SetRootResource(newContext.RootResource);
+
+            return newClosure;
         }
 
-        private Dictionary<string, IEnumerable<ITypedElement>> _namedValues = new Dictionary<string, IEnumerable<ITypedElement>>();
+        private Dictionary<string, IEnumerable<PocoNode>> _namedValues = new ();
 
-        public virtual void SetValue(string name, IEnumerable<ITypedElement> value)
+        internal IEnumerable<KeyValuePair<string, IEnumerable<PocoNode>>> Variables()
+        {
+            return _namedValues;
+        }
+        
+        public virtual void SetValue(string name, IEnumerable<PocoNode> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -48,18 +115,14 @@ namespace Hl7.FhirPath.Expressions
 
         public virtual Closure Nest()
         {
-            return new Closure()
-            {
-                Parent = this,
-                EvaluationContext = this.EvaluationContext
-            };
+            return new Closure(this, EvaluationContext);
         }
 
 
-        public virtual IEnumerable<ITypedElement> ResolveValue(string name)
+        public virtual IEnumerable<PocoNode> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            _namedValues.TryGetValue(name, out IEnumerable<ITypedElement> result);
+            _namedValues.TryGetValue(name, out IEnumerable<PocoNode> result);
 
             if (result != null) return result;
 
@@ -71,6 +134,14 @@ namespace Hl7.FhirPath.Expressions
             }
 
             return null;
+        }
+
+        private static ScopedNode getResourceFromNode(ScopedNode node) => node.AtResource ? node : node.ParentResource;
+
+        private static ScopedNode getRootResourceFromNode(ScopedNode node)
+        {
+            var resource = getResourceFromNode(node);
+            return resource?.Name is "contained" ? resource.ParentResource : resource;
         }
     }
 }

@@ -161,16 +161,29 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
         public Resource? ResolveByCanonicalUri(string uri) => FileSource.ResolveByCanonicalUri(uri);
 
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByUri(string uri) => FileSource.TryResolveByUri(uri);
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByCanonicalUri(string uri) => FileSource.TryResolveByCanonicalUri(uri);
+
         public Task<Resource?> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
         public Task<Resource?> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
+        
+        ///<inheritdoc/>
+        public Task<ResolverResult> TryResolveByUriAsync(string uri) => FileSource.TryResolveByUriAsync(uri);
+        ///<inheritdoc/>
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => FileSource.TryResolveByCanonicalUriAsync(uri);
 
         #endregion
 
         /// <summary>
-        /// Unpacks the zip-file and constructs a new FileArtifactSource on the unzipped directory
+        /// Unpacks the zip-file and constructs a new <see cref="CommonDirectorySource"/> on the unzipped directory.
+        /// If extraction fails, clears the cache and retries once.
         /// </summary>
-        /// <remarks>This is an expensive operations and should be run once. As well, it unpacks files on the
-        /// file system and is not thread-safe.</remarks>
+        /// <remarks>
+        /// This is an expensive operation and should be run once. As well, it unpacks files on the
+        /// file system and is not thread-safe.
+        /// </remarks>
         private CommonDirectorySource createSource()
         {
             if (!File.Exists(ZipPath))
@@ -179,7 +192,25 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             var zc = new ZipCacher(ZipPath, CacheDirectory);
-            var source = new CommonDirectorySource(_inspector, zc.GetContentDirectory(), _settings);
+
+            try
+            {
+                return createDirectorySource(zc);
+            }
+            catch
+            {
+                // Retries once if extraction fails
+                zc.Refresh();
+                return createDirectorySource(zc);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="CommonDirectorySource"/> from the extracted ZIP archive contents.
+        /// </summary>
+        private CommonDirectorySource createDirectorySource(ZipCacher zipCacher)
+        {
+            var source = new CommonDirectorySource(_inspector, zipCacher.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
@@ -189,14 +220,12 @@ namespace Hl7.Fhir.Specification.Source
             return source;
         }
 
-
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected internal virtual string DebuggerDisplay
             => $"{GetType().Name} for '{ZipPath}'"
             + (IsPrepared ? $" | Extracted to '{ExtractPath}'" : null);
-
     }
 }
 

@@ -1,10 +1,8 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.IO;
 using System.Linq;
 using Tasks = System.Threading.Tasks;
@@ -33,52 +31,44 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Tasks.Task CanSerializeSubtree()
         {
-            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var tpJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            // If on a Unix platform replace \\r\\n in json strings to \\n.
-            if(Environment.NewLine == "\n")
-                tpJson = tpJson.Replace(@"\r\n", @"\n");
-            var pat = await (new FhirXmlParser()).ParseAsync<Patient>(tpXml);
+            var tpXml = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.xml"));
+            var tpJson = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+
+            var pat = FhirXmlDeserializer.OSTRICH.Deserialize<Patient>(tpXml);
 
             // Should work on the parent resource
             var navXml = getXmlNode(tpXml);
             var navJson = await getJsonNode(tpJson);
             var navPoco = pat.ToTypedElement();
-            await testSubtree(navXml, navJson, navPoco);
+            testSubtree(navXml, navJson, navPoco);
 
             // An on a child that's a normal datatype
             var subnavXml = navXml.Children("photo").First();
             var subnavJson = navJson.Children("photo").First();
             var subnavPoco = navPoco.Children("photo").First();
-            await testSubtree(subnavXml, subnavJson, subnavPoco);
-
-            // And on a child that's a primitive datatype
-            //subnavXml = navXml.Children("id").First();
-            //subnavJson = navJson.Children("id").First();
-            //subnavPoco = navPoco.Children("id").First();
-            //testSubtree(subnavXml, subnavJson, subnavPoco);
+            testSubtree(subnavXml, subnavJson, subnavPoco);
 
             // And on a contained resource
             subnavXml = navXml.Children("contained").First();
             subnavJson = navJson.Children("contained").First();
             subnavPoco = navPoco.Children("contained").First();
-            await testSubtree(subnavXml, subnavJson, subnavPoco);
+            testSubtree(subnavXml, subnavJson, subnavPoco);
 
             // And on a child of the contained resource
             subnavXml = navXml.Children("contained").First().Children("name").First();
             subnavJson = navJson.Children("contained").First().Children("name").First();
             subnavPoco = navPoco.Children("contained").First().Children("name").First();
-            await testSubtree(subnavXml, subnavJson, subnavPoco);
+            testSubtree(subnavXml, subnavJson, subnavPoco);
         }
 
-        private async Tasks.Task testSubtree(ITypedElement navXml, ITypedElement navJson, ITypedElement navPoco)
+        private void testSubtree(ITypedElement navXml, ITypedElement navJson, ITypedElement navPoco)
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
-            var navRtXml = await JsonParsingHelpers.ParseToTypedElement(await navXml.ToJsonAsync(), navXml.InstanceType,
+            var navRtXml = JsonParsingHelpers.ParseToTypedElement(navXml.ToJson(), navXml.InstanceType,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
             var navRtJson = navJson.ToPoco().ToTypedElement(navJson.Name);
-            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(await navPoco.ToXmlAsync(), navPoco.InstanceType,
+            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(navPoco.ToXml(), navPoco.InstanceType,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }
@@ -87,8 +77,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var result = subnavXml.IsEqualTo(subnavJson);
             Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
-            Assert.IsTrue(subnavJson.IsEqualTo(subnavPoco).Success);
-            Assert.IsTrue(subnavPoco.IsEqualTo(subnavXml).Success);
+            result = subnavJson.IsEqualTo(subnavPoco);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
+            result = subnavPoco.IsEqualTo(subnavXml);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
         }
     }
 
@@ -109,17 +101,19 @@ namespace Hl7.Fhir.Serialization.Tests
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
+            json = json.Replace("\r","");
             return (await FhirJsonNode.ParseAsync(json, rootName, settings)).ToTypedElement(provider, null, tnSettings);
         }
 
-        internal static async Tasks.Task<ITypedElement> ParseToTypedElement(string json, string type, IStructureDefinitionSummaryProvider provider, string rootName = null,
+        internal static ITypedElement ParseToTypedElement(string json, string type, IStructureDefinitionSummaryProvider provider, string rootName = null,
             FhirJsonParsingSettings settings = null, TypedElementSettings tnSettings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
-            return (await FhirJsonNode.ParseAsync(json, rootName, settings)).ToTypedElement(provider, type, tnSettings);
+            json = json.Replace("\r","");
+            return (FhirJsonNode.Parse(json, rootName, settings)).ToTypedElement(provider, type, tnSettings);
         }
     }
 
@@ -129,6 +123,8 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             if (xml == null) throw Error.ArgumentNull(nameof(xml));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
+
+            xml = xml.Replace("\r","");
 
             return FhirXmlNode.Parse(xml, settings).ToTypedElement(provider, null, tnSettings);
         }
@@ -140,6 +136,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (type == null) throw Error.ArgumentNull(nameof(type));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));
 
+            xml = xml.Replace("\r","");
             return FhirXmlNode.Parse(xml, settings).ToTypedElement(provider, type, tnSettings);
         }
 

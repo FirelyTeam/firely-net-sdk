@@ -18,7 +18,7 @@ using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification
         public StructureDefinitionWalker FromCanonical(string canonical, IEnumerable<string>? targetProfiles = null) =>
             TaskHelper.Await(() => FromCanonicalAsync(canonical, targetProfiles));
 
-        public async T.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical, IEnumerable<string>? targetProfiles = null)
+        public async Tasks.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical, IEnumerable<string>? targetProfiles = null)
         {
             var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
             if (sd == null)
@@ -173,9 +173,12 @@ namespace Hl7.Fhir.Specification
             }
             else if (Current.Current.Type.Count >= 1)
             {
+                // no use returning multiple "reference" profiles when they only differ in targetReference
                 return Current.Current.Type
-                    .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
-                    .Select(group => FromCanonical(group.Key!, group.SelectMany(g => g))); // no use returning multiple "reference" profiles when they only differ in targetReference
+                    .GroupBy(t => t.GetTypeProfile() ?? throw new InvalidOperationException("Found TypeRef without profile or code."),
+                        t => t.TargetProfile)
+                    .Select(group => FromCanonical(group.Key,
+                        group.SelectMany(g => g!).Where(g => g is not null).Select(g => g!)));
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
@@ -225,9 +228,10 @@ namespace Hl7.Fhir.Specification
                 throw new StructureDefinitionWalkerException($"resolve() should only be called on elements of type Reference at '{Current.CanonicalPath()}'.");
 
             return Current.Current.Type
-                    .Where(t => t.IsReference() && t.TargetProfile.Any())
-                    .SelectMany(t => t.TargetProfile)
-                    .Select(c => FromCanonical(c));
+                    .Where(t => t.IsReference() && t.TargetProfile?.Any() == true)
+                    .SelectMany(t => t.TargetProfile!)
+                    .Where(tp => tp is not null)
+                    .Select(c => FromCanonical(c!));
         }
 
         /// <summary>

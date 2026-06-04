@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Rest
 
             var endp = location.AbsoluteUri;
             var bUrl = baseUrl.AbsoluteUri;
-            
+
             return endp.StartsWith(bUrl) ? new Uri(endp.Substring(bUrl.Length).TrimStart('/'), UriKind.Relative) : location;
         }
 
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Rest
             // return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
             using var stream = new MemoryStream(body);
             using var reader = new StreamReader(stream, enc, true);
-            
+
             return reader.ReadToEnd();
         }
 
@@ -178,10 +178,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static bool IsRestResourceIdentity(this Uri uri)
-        {
-            return IsRestResourceIdentity(uri.OriginalString);
-        }
+        public static bool IsRestResourceIdentity(this Uri uri) => IsRestResourceIdentity(uri.OriginalString);
 
         public static bool IsRestResourceIdentity(string uri)
         {
@@ -208,29 +205,16 @@ namespace Hl7.Fhir.Rest
             return false;
         }
 
-        public static bool IsInformational(this HttpStatusCode code)
-        {
-            return (int)code >= 100 && (int)code < 200;
-        }
-        public static bool IsSuccessful(this HttpStatusCode code)
-        {
-            return (int)code >= 200 && (int)code < 300;
-        }
+        public static bool IsBinaryEndpoint(Uri uri) => IsBinaryEndpoint(uri.OriginalString);
 
-        public static bool IsRedirection(this HttpStatusCode code)
-        {
-            return (int)code >= 300 && (int)code < 400;
-        }
+        public static bool IsInformational(this HttpStatusCode code) => (int)code >= 100 && (int)code < 200;
+        public static bool IsSuccessful(this HttpStatusCode code) => (int)code >= 200 && (int)code < 300;
 
-        public static bool IsClientError(this HttpStatusCode code)
-        {
-            return (int)code >= 400 && (int)code < 500;
-        }
+        public static bool IsRedirection(this HttpStatusCode code) => (int)code >= 300 && (int)code < 400;
 
-        public static bool IsServerError(this HttpStatusCode code)
-        {
-            return (int)code >= 500 && (int)code < 600;
-        }
+        public static bool IsClientError(this HttpStatusCode code) => (int)code >= 400 && (int)code < 500;
+
+        public static bool IsServerError(this HttpStatusCode code) => (int)code >= 500 && (int)code < 600;
     }
 
 
@@ -247,37 +231,6 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         [EnumLiteral("lenient")]
         Lenient
-    }
-
-    [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
-    public enum Prefer
-    {
-        /// <summary>
-        /// Prefer to receive the full resource in the body after completion of the interaction
-        /// </summary>
-        [EnumLiteral("representation")]
-        ReturnRepresentation,
-
-        /// <summary>
-        /// Prefer to not a receive a body after completion of the interaction
-        /// </summary>
-        [EnumLiteral("minimal")]
-        ReturnMinimal,
-
-        /// <summary>
-        /// Prefer to receive an OperationOutcome resource containing hints and warnings about the 
-        /// operation rather than the full resource
-        /// </summary>
-        [EnumLiteral("OperationOutcome")]
-        OperationOutcome,
-
-        /// <summary>
-        /// Prefer to run the operation as an asynchronous request
-        /// (http://hl7.org/fhir/r4/async.html)
-        /// - This may also be applicable in prior versions (though not part of that stamdard)
-        /// </summary>
-        [EnumLiteral("respond-async")]
-        RespondAsync
     }
 
     public enum ReturnPreference

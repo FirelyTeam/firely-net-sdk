@@ -9,16 +9,15 @@
 #nullable enable
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Linq;
-using Hl7.Fhir.Serialization;
-using System;
-using System.Text.Unicode;
 using System.Text;
-using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
@@ -32,8 +31,9 @@ namespace Hl7.Fhir.Rest
 
         public static HttpContent CreateContentFromBinary(Binary b)
         {
-            var content = new ByteArrayContent(b.Data ?? b.Content);
-            content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType);
+            var content = new ByteArrayContent(b.Data ?? b.Content ?? throw new InvalidOperationException("Binary resource has no content"));
+            content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType ?? "application/octet-stream");
+            content.Headers.LastModified = b.Meta?.LastUpdated;
 
             if (b.SecurityContext?.Reference is { } secRef)
                 content.Headers.Add(HttpUtil.SECURITYCONTEXT, secRef);
@@ -51,7 +51,10 @@ namespace Hl7.Fhir.Rest
         {
             var bodyParameters = pars.Parameter
                 .Where(p => p.Name is not null && p.Value is not null)
-                .Select(p => new KeyValuePair<string, string>(p.Name, p.Value.ToString()!))
+                .Select(p =>
+                    new KeyValuePair<string, string>(
+                        p.Name!,
+                        p.Value!.ToString()!))
                 .ToList();
 
             var content = new FormUrlEncodedContent(bodyParameters);
@@ -134,8 +137,8 @@ namespace Hl7.Fhir.Rest
             string? contentTypeFhirVersion,
             bool requestCompressedResponse)
         {
-            message.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(
-                    ContentType.BuildContentType(serialization, contentTypeFhirVersion)));
+            message.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(ContentType.BuildContentType(serialization, contentTypeFhirVersion, true)));
+            message.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue(Encoding.UTF8.WebName));
 
             if (requestCompressedResponse)
             {

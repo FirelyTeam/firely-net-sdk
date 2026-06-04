@@ -7,11 +7,13 @@ using Hl7.FhirPath.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace HL7.FhirPath.Tests
 {
     [TestClass]
+    [SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments")]
     public class FunctionsTests
     {
         public static IEnumerable<object[]> ExistenceFunctionTestcases() =>
@@ -278,7 +280,7 @@ namespace HL7.FhirPath.Tests
                     ("'abcdefg'.indexOf('bc') = 1", true, false),
                     ("'abcdefg'.indexOf('x') = -1", true, false),
                     ("'abcdefg'.indexOf('abcdefg') = 0", true, false),
-                    ("('a' | 'b').indexOf('a')", true, true),  // should throw an error
+                    ("('a' | 'b').indexOf('a') = 0", true, false), // used to throw an exception, but indexOf is now implemented for collections
 
                     // function substring(start : Integer [, length : Integer]) : String
                     ("{}.substring(0).empty()", true, false),
@@ -496,11 +498,11 @@ namespace HL7.FhirPath.Tests
                 ;
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(AllFunctionTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(AllFunctionTestcases))]
         public void AssertTestcases(string expression, bool expected, bool invalid = false)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
+            PocoNode dummy = PocoNode.ForPrimitive<FhirBoolean>(true);
 
             if (invalid)
             {
@@ -517,8 +519,7 @@ namespace HL7.FhirPath.Tests
         public void TraceTest()
         {
             ITypedElement dummy = ElementNode.ForPrimitive(true);
-            var ctx = EvaluationContext.CreateDefault();
-            ctx.Tracer = tracer;
+            var ctx = new EvaluationContext { Tracer = tracer };
             dummy.IsBoolean("(1 | 2).trace('test').empty()", true, ctx);
 
             static void tracer(string name, IEnumerable<ITypedElement> list)
@@ -542,13 +543,13 @@ namespace HL7.FhirPath.Tests
             {
                 iterations++;
 
-                return ElementNode.CreateList(iterations);
+                return PocoNode.ForPrimitive<Integer>(iterations);
             });
 
             var expression = new FhirPathCompiler(symbols).Compile("once()");
-            var result = expression.Scalar(null, new EvaluationContext());
+            var result = expression.Scalar(null!, new EvaluationContext());
 
-            Assert.AreEqual(result, 1);
+            Assert.AreEqual(1, result);
         }
 
         /// <summary>
@@ -559,11 +560,11 @@ namespace HL7.FhirPath.Tests
         {
             Coding c = new("http://nu.nl", "nl");
             var te = c.ToTypedElement(ModelInspector.Base);
-            Assert.IsTrue(te.IsBoolean($"system.endsWith(code)", true));
-            Assert.IsTrue(te.IsBoolean($"system.endsWith(%context.code)", true));
-            Assert.IsTrue(te.IsBoolean($"system.endsWith('nl')", true));
-            Assert.IsTrue(te.IsBoolean($"system.endsWith(code.toString())", true));
-            Assert.IsTrue(te.IsBoolean($"system.endsWith('banana')", false));
+            Assert.IsTrue(te.IsBoolean("system.endsWith(code)", true));
+            Assert.IsTrue(te.IsBoolean("system.endsWith(%context.code)", true));
+            Assert.IsTrue(te.IsBoolean("system.endsWith('nl')", true));
+            Assert.IsTrue(te.IsBoolean("system.endsWith(code.toString())", true));
+            Assert.IsTrue(te.IsBoolean("system.endsWith('banana')", false));
         }
 
         /// <summary>
@@ -576,6 +577,35 @@ namespace HL7.FhirPath.Tests
 
             var result = nav.Select("repeat('teststring')");
             result.Should().ContainSingle(ite => ((string)ite.Value) == "teststring");
+        }
+
+        public static IEnumerable<object[]> EmptyStringValueTestcases() =>
+            new[]{
+                "startsWith('a')",
+                "replace('a','b')",
+                "toBoolean()",
+                "toChars()",
+            }.Select(e => new object[] { e, typeof(FhirString) });
+
+        public static IEnumerable<object[]> EmptyDecimalValueTestcases() =>
+            new[]{
+                "round()",
+                "toBoolean()"
+            }.Select(e => new object[] { e, typeof(FhirDecimal) });
+
+        public static IEnumerable<object[]> EmptyValueTestcases() => EmptyStringValueTestcases().Union(EmptyDecimalValueTestcases());
+
+        [TestMethod]
+        [DynamicData(nameof(EmptyValueTestcases))]
+        public void AssertEmptyValueTestcases(string expression, Type data)
+        {
+            // Create a primitive with no value, just an extension
+            var emptyPrimitive = (PrimitiveType)Activator.CreateInstance(data)!;
+            emptyPrimitive.SetBoolExtension("http://nu.nl", true);
+            var dummy = emptyPrimitive.ToTypedElement(ModelInspector.Base);
+
+            // Run the expression. With the correct null prop, this should return empty.
+            dummy.Select(expression).Should().BeEmpty();
         }
     }
 }

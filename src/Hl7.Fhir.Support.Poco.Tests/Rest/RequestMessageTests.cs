@@ -16,6 +16,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -23,6 +24,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Test
 {
@@ -30,7 +32,8 @@ namespace Hl7.Fhir.Test
     public class RequestMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
+        private static readonly IFhirSerializationEngine TESTENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
         private static readonly string TESTVERSION = "3.0.1";
 
         private static HttpRequestMessage makeMessage(
@@ -84,57 +87,6 @@ namespace Hl7.Fhir.Test
             HttpRequestMessage build(InteractionType interaction) => makeMessage(settings, interaction: interaction);
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        [TestMethod]
-        [DataRow(Prefer.ReturnRepresentation, ReturnPreference.Representation, false)]
-        [DataRow(Prefer.OperationOutcome, ReturnPreference.OperationOutcome, false)]
-        [DataRow(Prefer.ReturnMinimal, ReturnPreference.Minimal, false)]
-        [DataRow(Prefer.RespondAsync, null, true)]
-        [DataRow(null, null, false)]
-        public void TestConvertPreferredReturn(Prefer? setting, ReturnPreference? pref, bool isAsync)
-        {
-            var settings = new FhirClientSettings { PreferredReturn = setting };
-            settings.ReturnPreference.Should().Be(pref);
-            settings.UseAsync.Should().Be(isAsync);
-        }
-
-        [TestMethod]
-        [DataRow(null, false, null)]
-        [DataRow(null, true, Prefer.RespondAsync)]
-        [DataRow(ReturnPreference.Minimal, false, Prefer.ReturnMinimal)]
-        [DataRow(ReturnPreference.Representation, false, Prefer.ReturnRepresentation)]
-        [DataRow(ReturnPreference.OperationOutcome, false, Prefer.OperationOutcome)]
-        [DataRow(ReturnPreference.OperationOutcome, true, Prefer.RespondAsync)]
-        public void TestConvertReturnPreference(ReturnPreference? pref, bool isAsync, Prefer? setting)
-        {
-            var settings = new FhirClientSettings { ReturnPreference = pref, UseAsync = isAsync };
-            settings.PreferredReturn.Should().Be(setting);
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
-        [TestMethod]
-        [DataRow(false, DecompressionMethods.None)]
-        [DataRow(true, DecompressionMethods.GZip)]
-        public void ConvertCompressionRequestBody(bool compress, DecompressionMethods method)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var settings = new FhirClientSettings { CompressRequestBody = compress };
-#pragma warning restore CS0618 // Type or member is obsolete
-            settings.RequestBodyCompressionMethod.Should().Be(method);
-        }
-
-        [TestMethod]
-        [DataRow(DecompressionMethods.None, false)]
-        [DataRow(DecompressionMethods.GZip, true)]
-        [DataRow(DecompressionMethods.Deflate, true)]
-        public void ConvertRequestBodyCompression(DecompressionMethods method, bool compress)
-        {
-            var settings = new FhirClientSettings { RequestBodyCompressionMethod = method };
-#pragma warning disable CS0618 // Type or member is obsolete
-            settings.CompressRequestBody.Should().Be(compress);
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-
         [TestMethod]
         public void TestRequestUrl()
         {
@@ -143,7 +95,7 @@ namespace Hl7.Fhir.Test
             var request = makeMessage();
             request.RequestUri!.Should().Be(url);
 
-            var settings = new FhirClientSettings { UseFormatParameter = true };
+            var settings = new FhirClientSettings { UseFormatParameter = true, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             request = makeMessage(settings);
             request.RequestUri!.Should().Be(url + "?_format=xml");
 
@@ -199,43 +151,54 @@ namespace Hl7.Fhir.Test
         [DataRow(ResourceFormat.Json)]
         public void SetAccept(ResourceFormat fmt)
         {
-            var settings = new FhirClientSettings { PreferredFormat = fmt };
+            var settings = new FhirClientSettings { PreferredFormat = fmt, BinaryReceivePreference = BinaryTransferBehaviour.UseResource };
             var request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
-            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
+            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION, true));
             request.Headers.AcceptEncoding.Should().BeEmpty();
 
             settings.PreferCompressedResponses = true;
             request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
-            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
+            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION, true));
             request.Headers.AcceptEncoding.Select(h => h.Value).Should().BeEquivalentTo("gzip", "deflate");
         }
 
-        [TestMethod]
-        public async Task TestBinaryBody()
+        private static readonly Binary testBinary = new Binary
         {
-            var bin = new Binary
-            {
 #if STU3
                     Data = Encoding.UTF8.GetBytes("test body"),
 #else
-                Content = Encoding.UTF8.GetBytes("test body"),
+            Content = Encoding.UTF8.GetBytes("test body"),
 #endif
-                ContentType = "text/plain"
-            };
+            ContentType = "text/plain"
+        };
 
-            var entryRequest = makeMessage(resource: bin, interaction: InteractionType.Create);
+        [TestMethod]
+        public async Task TestBinaryAsBinary()
+        {
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData }, resource: testBinary, interaction: InteractionType.Create);
             Assert.IsNotNull(entryRequest.Content);
-            Assert.AreEqual(bin.ContentType, entryRequest.Content.Headers.ContentType!.MediaType);
+            Assert.AreEqual(testBinary.ContentType, entryRequest.Content.Headers.ContentType!.MediaType);
             Assert.AreEqual("test body", await entryRequest.Content.ReadAsStringAsync());
         }
 
+        [TestMethod]
+        public async Task TestBinaryAsResource()
+        {
+            var entryRequest = makeMessage(new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseResource }, resource: testBinary, interaction: InteractionType.Create);
+
+            var resource = await entryRequest.Content!.ReadResourceFromMessage(TESTENGINE);
+            var binary = resource.Should().BeOfType<Binary>().Subject;
+
+            binary.ContentType.Should().Be("text/plain");
+            (binary.Data ?? binary.Content).Should().BeEquivalentTo(testBinary.Content ?? testBinary.Data);
+        }
 
         [TestMethod]
         [DataRow(false)]
         [DataRow(true)]
         public async Task TestResourceBody(bool hasLu)
         {
-            var pat = new TestPatient
+            var pat = new Patient
             {
                 Active = true,
             };
@@ -249,7 +212,7 @@ namespace Hl7.Fhir.Test
             var xml = await entryRequest.Content.ReadAsStringAsync();
 
             xml.Should().StartWith("<Patient");
-            
+
             if (!hasLu)
                 entryRequest.Content!.Headers.LastModified.Should().Be(null);
             else
@@ -259,12 +222,12 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Task TestBodyCompression()
         {
-            var pat = new TestPatient
+            var pat = new Patient
             {
                 Active = true,
             };
 
-            var settings = new FhirClientSettings {  RequestBodyCompressionMethod = DecompressionMethods.GZip };
+            var settings = new FhirClientSettings { RequestBodyCompressionMethod = DecompressionMethods.GZip };
             var entryRequest = makeMessage(settings: settings, resource: pat, method: Bundle.HTTPVerb.POST);
 
             entryRequest.Content!.Headers.ContentType!.ToString().Should().Be(ContentType.BuildContentType(ResourceFormat.Xml, TESTVERSION));
@@ -322,7 +285,7 @@ namespace Hl7.Fhir.Test
         {
             var request = makeMessage(method: verb, interaction: interaction);
             request.Method.Method.Should().Be(method);
-        }      
+        }
     }
 }
 

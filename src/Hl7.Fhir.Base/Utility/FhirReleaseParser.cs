@@ -8,11 +8,10 @@
 
 using Hl7.Fhir.Specification;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Utility
 {
-
-
     public class FhirReleaseParser
     {
         /// <summary>
@@ -31,7 +30,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="version">Fhir Release version number</param>
         /// <param name="release">Official FHIR Release</param>
         /// <returns>true if the conversion succeeded; false otherwise.</returns>
-        public static bool TryParse(string version, out FhirRelease? release)
+        public static bool TryParse(string version, [NotNullWhen(true)] out FhirRelease? release)
         {
             release = version switch
             {
@@ -84,8 +83,8 @@ namespace Hl7.Fhir.Utility
                 FhirRelease.DSTU2 => "1.0.2",
                 FhirRelease.STU3 => "3.0.2",
                 FhirRelease.R4 => "4.0.1",
-                FhirRelease.R4B => "4.3.0-snapshot1",
-                FhirRelease.R5 => "5.0.0-snapshot1",
+                FhirRelease.R4B => "4.3.0",
+                FhirRelease.R5 => "5.0.0",
                 _ => throw new NotSupportedException($"Unknown FHIR version {fhirRelease}")
             };
         }
@@ -106,7 +105,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="fhirMimeVersion">'fhirversion' MIME-Type parameter</param>
         /// <param name="release">Official FHIR Release</param>
         /// <returns>true if the conversion succeeded; false otherwise.</returns>
-        public static bool TryGetFhirReleaseFromMimeVersion(string fhirMimeVersion, out FhirRelease? release)
+        public static bool TryGetFhirReleaseFromMimeVersion(string fhirMimeVersion, [NotNullWhen(true)] out FhirRelease? release)
         {
             release = fhirMimeVersion switch
             {
@@ -164,7 +163,7 @@ namespace Hl7.Fhir.Utility
         /// <param name="packageName">FHIR Core package name</param>
         /// <param name="release">Official FHIR Release</param>
         /// <returns>true if the conversion succeeded; false otherwise</returns>
-        public static bool TryGetFhirReleaseFromCorePackageName(string packageName, out FhirRelease? release)
+        public static bool TryGetFhirReleaseFromCorePackageName(string packageName, [NotNullWhen(true)] out FhirRelease? release)
         {
             release = packageName switch
             {

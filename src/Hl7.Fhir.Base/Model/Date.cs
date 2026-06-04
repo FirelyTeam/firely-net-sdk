@@ -27,128 +27,145 @@
   
 
 */
-
-using System;
-using P = Hl7.Fhir.ElementModel.Types;
-
 #nullable enable
 
-namespace Hl7.Fhir.Model
+using Hl7.Fhir.Validation;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+namespace Hl7.Fhir.Model;
+
+public partial class Date
 {
-    public partial class Date
+    public Date(int year, int month, int day)
+        : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTHDAY, year,
+            month, day))
     {
-        public Date(int year, int month, int day)
-            : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTHDAY, year, month, day))
+    }
+
+    public Date(int year, int month)
+        : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTH, year,
+            month))
+    {
+    }
+
+    public Date(int year) : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEAR,
+        year))
+    {
+    }
+
+    public static Date FromDateTimeOffset(DateTimeOffset date) => new(date.Year, date.Month, date.Day);
+
+    /// <summary>
+    /// Gets the current date in the local timezone.
+    /// </summary>
+    public static Date Today() => FromDateTimeOffset(DateTimeOffset.Now);
+
+    /// <summary>
+    /// Gets the current date in UTC.
+    /// </summary>
+    public static Date UtcToday() => FromDateTimeOffset(DateTimeOffset.UtcNow);
+
+    [NonSerialized] // To prevent binary serialization from serializing this field
+    private P.Date? _parsedValue = null;
+
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached Date value.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
+    {
+        if (_parsedValue is not null || base.JsonValue is null) return null;
+
+        _parsedValue = null;
+
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
+
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
+    }
+
+    private static P.Date? doParse(string value) =>
+        P.Date.TryParse(value, out var v) && !v.HasOffset ? v : null;
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => doParse(value) is not null;
+
+    /// <summary>
+    /// Converts a Fhir Date to a CQL <see cref="P.Date"/>.
+    /// </summary>
+    /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
+    public bool TryToSystemDate([NotNullWhen(true)] out P.Date? date)
+    {
+        if (ValidateObjectValue(null) is not null || _parsedValue is null)
         {
+            date = null;
+            return false;
         }
 
-        public Date(int year, int month)
-            : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTH, year, month))
+        date = _parsedValue;
+        return true;
+    }
+
+    /// <summary>
+    /// Converts a Fhir Date to a CQL <see cref="P.Date"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when the Value is null.</exception>
+    /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Date.</exception>
+    public P.Date ToSystemDate()
+    {
+        if (ValidateObjectValue(null) is {} error)
+            throw error;
+
+        if(_parsedValue is null)
+            throw new InvalidOperationException("Value is null");
+
+        return _parsedValue;
+    }
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDate(out var date) ? date : null;
+
+    /// <summary>
+    /// Converts this Fhir Fhir Date to a <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date.</returns>
+    public DateTimeOffset ToDateTimeOffset()
+    {
+        var dt = ToSystemDate();
+
+        // Since Value is not null and the parsed value is valid, dto will not be null
+        return dt.ToDateTimeOffset(TimeSpan.Zero);
+    }
+
+    /// <summary>
+    /// Convert this Fhir Date to a <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <returns>True if the value of the Fhir Date is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
+    public bool TryToDateTimeOffset(out DateTimeOffset dto)
+    {
+        if (TryToSystemDate(out var dt))
         {
+            dto = dt.ToDateTimeOffset(TimeSpan.Zero);
+            return true;
         }
 
-        public Date(int year) : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEAR, year))
+        dto = default;
+        return false;
+    }
+
+
+    public override object? JsonValue
+    {
+        get => base.JsonValue;
+        set
         {
-        }
-
-        public static Date FromDateTimeOffset(DateTimeOffset date) => new(date.Year, date.Month, date.Day);
-
-        /// <summary>
-        /// Gets the current date in the local timezone.
-        /// </summary>
-        public static Date Today() => FromDateTimeOffset(DateTimeOffset.Now);
-
-        /// <summary>
-        /// Gets the current date in UTC.
-        /// </summary>
-        public static Date UtcToday() => FromDateTimeOffset(DateTimeOffset.UtcNow);
-
-        [NonSerialized]  // To prevent binary serialization from serializing this field
-        private P.Date? _parsedValue = null;
-
-        // This is a sentintel value that marks that the current string representation is
-        // not parseable, so we don't have to try again. It's value is never used, it's just
-        // checked by reference.
-        private static readonly P.Date INVALID_VALUE = P.Date.FromDateTimeOffset(DateTimeOffset.MinValue);
-
-        /// <summary>
-        /// Converts a Fhir Date to a <see cref="P.Date"/>.
-        /// </summary>
-        /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
-        public bool TryToDate(out P.Date? date)
-        {
-            if (_parsedValue is null)
-            {
-                if (Value is not null && !(P.Date.TryParse(Value, out _parsedValue) && !_parsedValue!.HasOffset))
-                    _parsedValue = INVALID_VALUE;
-            }
-
-            if (hasInvalidParsedValue())
-            {
-                date = null;
-                return false;
-            }
-            else
-            {
-                date = _parsedValue;
-                return true;
-            }
-
-            bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
-        }
-
-        /// <summary>
-        /// Converts a Fhir Date to a <see cref="P.Date"/>.
-        /// </summary>
-        /// <returns>The Date, or null if the <see cref="Value"/> is null.</returns>
-        /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Date.</exception>
-        public P.Date? ToDate() => TryToDate(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid date.");
-
-        protected override void OnObjectValueChanged()
-        {
+            base.JsonValue = value;
             _parsedValue = null;
-            base.OnObjectValueChanged();
         }
-
-        /// <summary>
-        /// Converts this Fhir Fhir Date to a <see cref="DateTimeOffset"/>.
-        /// </summary>
-        /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date.</returns>
-        public DateTimeOffset? ToDateTimeOffset()
-        {
-            if (Value == null) return null;   // Note: this behaviour is inconsistent with ToDateTimeOffset() in FhirDateTime
-
-            // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
-            if (!TryToDate(out var dt))
-                throw new FormatException($"Date '{Value}' was not recognized as a valid datetime.");
-
-            // Since Value is not null and the parsed value is valid, dto will not be null
-            return dt!.ToDateTimeOffset(TimeSpan.Zero);
-        }
-
-        /// <summary>
-        /// Convert this Fhir Date to a <see cref="DateTimeOffset"/>.
-        /// </summary>
-        /// <returns>True if the value of the Fhir Date is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
-        public bool TryToDateTimeOffset(out DateTimeOffset dto)
-        {
-            if (Value is not null && TryToDate(out var dt))
-            {
-                dto = dt!.ToDateTimeOffset(TimeSpan.Zero);
-                return true;
-            }
-            else
-            {
-                dto = default;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => P.Date.TryParse(value, out var parsed) && !parsed!.HasOffset;
     }
 }
-
-#nullable restore

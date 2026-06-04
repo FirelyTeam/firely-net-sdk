@@ -9,6 +9,7 @@
  */
 
 using FluentAssertions;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -21,10 +22,12 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -68,13 +71,6 @@ namespace Hl7.Fhir.Tests.Rest
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            // Ignore SSL certificate errors
-            ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-               | SecurityProtocolType.Tls12
-               | SecurityProtocolType.Tls11
-               | SecurityProtocolType.Tls13;
-
             CreateItems();
         }
 
@@ -83,7 +79,7 @@ namespace Hl7.Fhir.Tests.Rest
             var client = new FhirClient(TestEndpoint);
 
             client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+            client.Settings.ReturnPreference = ReturnPreference.Representation;
 
             var pat = new Patient()
             {
@@ -118,11 +114,11 @@ namespace Hl7.Fhir.Tests.Rest
 
             // Create the patient
             Console.WriteLine($"Upserting patient {PATIENTID}.");
-            Patient p = client.Update(pat);
+            Patient p = client.UpdateAsync(pat).WaitResult();
             Assert.IsNotNull(p);
 
             Console.WriteLine($"Upserting location {LOCATIONID}.");
-            Location l = client.Update(loc);
+            Location l = client.UpdateAsync(loc).WaitResult();
 
             Assert.IsNotNull(l);
         }
@@ -135,11 +131,11 @@ namespace Hl7.Fhir.Tests.Rest
         }    
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task FetchConformanceHttpClient()
+        public async Tasks.Task FetchConformanceHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
 
-            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings = client.Settings.ParserSettings with {AllowUnrecognizedEnums = true };
             var entry = await client.CapabilityStatementAsync();
 
             Assert.IsNotNull(entry);
@@ -147,7 +143,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
-            entry = client.CapabilityStatement(SummaryType.True);
+            entry = await client.CapabilityStatementAsync(SummaryType.True);
 
             Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
             Assert.IsNotNull(entry);
@@ -157,12 +153,12 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
             Assert.AreNotEqual(0, entry.Rest[0].Resource.Count, "There is expected to be at least 1 resource defined in the conformance statement");
-            Assert.IsTrue(entry.Rest[0].Resource[0].Type is not null, "The resource type should be provided");
+            Assert.IsNotNull(entry.Rest[0].Resource[0].Type, "The resource type should be provided");
             Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
         }
 
         [TestMethod, Ignore("FS Endpoint returns not implemented"), TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task PatchHttpClient()
+        public async Tasks.Task PatchHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
 
@@ -173,20 +169,20 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, Ignore("FS Endpoint does not support conditional PATCH"), TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task CondionalPatchHttpClient()
+        public async Tasks.Task CondionalPatchHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
 
             var patchparams = new Parameters();
             patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
             var condition = new SearchParams().Where("name=Donald");
-            await client.PatchAsync<Patient>(condition, patchparams);
+            await client.ConditionalPatchAsync<Patient>(condition, patchparams);
         }
 
         [TestMethod(), TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         [DataRow(ResourceFormat.Json)]
         [DataRow(ResourceFormat.Xml)]
-        public async T.Task ReadWithFormatHttpClient(ResourceFormat fmt)
+        public async Tasks.Task ReadWithFormatHttpClient(ResourceFormat fmt)
         {
             using var client = new FhirClient(TestEndpoint);
             client.Settings.PreferredFormat = fmt;
@@ -196,7 +192,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod(), TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task ReadWithCompressionReceive()
+        public async Tasks.Task ReadWithCompressionReceive()
         {
             using var client = new FhirClient(TestEndpoint, new FhirClientSettings { PreferCompressedResponses = true });
             var pat = await client.ReadAsync<Patient>(PATIENTIDEP);
@@ -204,16 +200,18 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        [ExpectedException(typeof(FhirOperationException))]
-        public void ReadWrongResourceTypeHttpClient()
+        public async Tasks.Task ReadWrongResourceTypeHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
-            var l = client.Read<Patient>(LOCATIONIDEP);
-            Trace.WriteLine(l);
+            await Assert.ThrowsAsync<FhirOperationException>(async () =>
+            {
+                var l = await client.ReadAsync<Patient>(LOCATIONIDEP);
+                Trace.WriteLine(l);
+            });
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task ReadHttpClient()
+        public async Tasks.Task ReadHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
 
@@ -224,7 +222,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(LOCATIONID, loc.Id);
             Assert.IsNotNull(loc.Meta.VersionId);
 
-            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", LOCATIONID, loc.Meta.VersionId));
+            var loc2 = await client.ReadAsync<Location>(ResourceIdentity.Build("Location", LOCATIONID, loc.Meta.VersionId));
             Assert.IsNotNull(loc2);
             Assert.AreEqual(loc2.Id, loc.Id);
             Assert.AreEqual(loc2.Meta.VersionId, loc.Meta.VersionId);
@@ -246,7 +244,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(await jsonSer.SerializeToStringAsync(loc),
                 await jsonSer.SerializeToStringAsync(loc3));
 
-            var loc4 = client.Read<Location>(loc.ResourceIdentity());
+            var loc4 = await client.ReadAsync<Location>(loc.ResourceIdentity());
             Assert.IsNotNull(loc4);
             Assert.AreEqual(await jsonSer.SerializeToStringAsync(loc),
                 await jsonSer.SerializeToStringAsync(loc4));
@@ -254,74 +252,76 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ReadRelativeHttpClient()
+        public async Tasks.Task ReadRelativeHttpClient()
         {
             using FhirClient client = new FhirClient(TestEndpoint);
 
-            var loc = client.Read<Location>(new Uri(LOCATIONIDEP, UriKind.Relative));
+            var loc = await client.ReadAsync<Location>(new Uri(LOCATIONIDEP, UriKind.Relative));
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
             var ri = ResourceIdentity.Build(TestEndpoint, "Location", LOCATIONID);
-            loc = client.Read<Location>(ri);
+            loc = await client.ReadAsync<Location>(ri);
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
         }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task SearchHttpClient()
+        public async Tasks.Task SearchHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
 
-            var result = client.Search<Patient>();
+            var result = await client.SearchAsync<Patient>();
             Assert.IsNotNull(result);
             
             result = await client.SearchAsync<DiagnosticReport>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count <= 2);
+            Assert.IsLessThanOrEqualTo(2, result.Entry.Count);
         }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        [ExpectedException(typeof(ArgumentException))]
-        public void SearchInvalidCriteriaHttpClient()
+        public async Tasks.Task SearchInvalidCriteriaHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
-            var result = client.Search<Patient>(new string[] { "test" });
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var result = await client.SearchAsync<Patient>(["test"]);
+            });
         }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         [DataRow(ResourceFormat.Xml)]
         [DataRow(ResourceFormat.Json)]
-        public void PagingHttpClient(ResourceFormat format)
+        public async Tasks.Task PagingHttpClient(ResourceFormat format)
         {
             using var client = new FhirClient(TestEndpoint);
             client.Settings.PreferredFormat = format;
 
-            var result = client.Search<Patient>(pageSize: 2);
+            var result = await client.SearchAsync<Patient>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.AreEqual(2,result.Entry.Count);
+            Assert.HasCount(2, result.Entry);
 
             var firstId = result.Entry.First().Resource.Id;
 
             // Browse forward
-            result = client.Continue(result);
+            result = await client.ContinueAsync(result);
             Assert.IsNotNull(result);
             var nextId = result.Entry.First().Resource.Id;
             Assert.AreNotEqual(firstId, nextId);
 
             // Browse to first
-            result = client.Continue(result, PageDirection.First);
+            result = await client.ContinueAsync(result, PageDirection.First);
             Assert.IsNotNull(result);
             var prevId = result.Entry.First().Resource.Id;
             Assert.AreEqual(firstId, prevId);
 
             // Forward, then backwards
-            result = client.Continue(result, PageDirection.Next);
+            result = await client.ContinueAsync(result, PageDirection.Next);
             Assert.IsNotNull(result);
-            result = client.Continue(result, PageDirection.Previous);
+            result = await client.ContinueAsync(result, PageDirection.Previous);
             Assert.IsNotNull(result);
             prevId = result.Entry.First().Resource.Id;
             Assert.AreEqual(firstId, prevId);
@@ -329,10 +329,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task CreateAndFullRepresentationHttpClient()
+        public async Tasks.Task CreateAndFullRepresentationHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
+            client.Settings.ReturnPreference = ReturnPreference.Representation;       // which is also the default
 
             var pat = await client.ReadAsync<Patient>(PATIENTIDEP);
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Tests.Rest
             var patC = await client.CreateAsync(pat);
             Assert.IsNotNull(patC);
 
-            client.Settings.PreferredReturn = Prefer.ReturnMinimal;
+            client.Settings.ReturnPreference = ReturnPreference.Minimal;
             patC = await client.CreateAsync(pat);
 
             Assert.IsNull(patC);
@@ -353,11 +353,9 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             // Now validate this resource
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
-            var p = new Parameters
-            {
-                { "resource", pat }
-            };
+            client.Settings.ReturnPreference = ReturnPreference.Representation;     // which is also the default
+            var p = new Parameters();
+            p.Add("resource", pat);
             var oI = await client.InstanceOperationAsync(ri.WithoutVersion(), "validate", p);
             oI.Should().BeOfType<OperationOutcome>();
         }
@@ -366,15 +364,15 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task CreateEditDeleteHttpClient()
+        public async Tasks.Task CreateEditDeleteHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
             await testCreateEditDeleteAsync(client);
         }
 
-        private async T.Task testCreateEditDeleteAsync(BaseFhirClient client)
+        private async Tasks.Task testCreateEditDeleteAsync(BaseFhirClient client)
         {
-            var pat = client.Read<Patient>(PATIENTIDEP);
+            var pat = await client.ReadAsync<Patient>(PATIENTIDEP);
             pat.Id = null;
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
@@ -391,12 +389,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe2);
             Assert.AreEqual(fe.Id, fe2.Id);
             Assert.AreNotEqual(fe.ResourceIdentity(), fe2.ResourceIdentity());
-            Assert.AreEqual(2, fe2.Identifier.Count);
+            Assert.HasCount(2, fe2.Identifier);
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
-            var fe3 = client.Update(fe);
+            var fe3 = await client.UpdateAsync(fe);
             Assert.IsNotNull(fe3);
-            Assert.AreEqual(3, fe3.Identifier.Count);
+            Assert.HasCount(3, fe3.Identifier);
 
             await client.DeleteAsync(fe3);
 
@@ -421,7 +419,7 @@ namespace Hl7.Fhir.Tests.Rest
         [Ignore("Interestingly, the history count results varies over time.")]
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task HistoryHttpClient()
+        public async Tasks.Task HistoryHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
 
@@ -432,7 +430,7 @@ namespace Hl7.Fhir.Tests.Rest
             Bundle history = await client.HistoryAsync(createdTestPatientUrl);
             Assert.IsNotNull(history);
 
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -441,13 +439,13 @@ namespace Hl7.Fhir.Tests.Rest
 
             history = await client.TypeHistoryAsync("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
-            Assert.AreEqual(4, history.Entry.Count);   // there's a race condition here, sometimes this is 5.
+            Assert.HasCount(4, history.Entry);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
             history = await client.TypeHistoryAsync<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
-            Assert.AreEqual(4, history.Entry.Count);
+            Assert.HasCount(4, history.Entry);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -455,7 +453,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 history = await client.WholeSystemHistoryAsync(timestampBeforeCreationAndDeletions.ToUniversalTime());
                 Assert.IsNotNull(history);
-                Assert.IsTrue(4 <= history.Entry.Count, "Whole System history should have at least 4 new events");
+                Assert.IsLessThanOrEqualTo(history.Entry.Count, 4, "Whole System history should have at least 4 new events");
                 // Check that the number of patients that have been created is what we expected
                 Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
                 Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
@@ -465,7 +463,7 @@ namespace Hl7.Fhir.Tests.Rest
         [Ignore("FS returns not implemented.")]
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task ManipulateMetaHttpClient()
+        public async Tasks.Task ManipulateMetaHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);
             
@@ -502,7 +500,7 @@ namespace Hl7.Fhir.Tests.Rest
             verifyMeta(par, false, key);
 
             // Should be present when doing type Meta()
-            par = client.Meta(ResourceType.Patient);  // Sync for a change
+            par = await client.MetaAsync(ResourceType.Patient);
             verifyMeta(par, false, key);
 
             // Should be present when doing System Meta()
@@ -516,14 +514,14 @@ namespace Hl7.Fhir.Tests.Rest
             newMeta.Security.Add(new Coding("http://mysystem.com/sec", "5678-" + key));
             newMeta.Tag.Add(new Coding("http://mysystem.com/tag", "sometag2-" + key));
 
-            client.AddMeta(loc, newMeta);
+            await client.AddMetaAsync(loc, newMeta);
             var pat3 = await client.ReadAsync<Patient>(loc);
 
             // New and old meta should be present on instance
             verifyMeta(pat3.Meta, true, key);
 
             // New and old meta should be present on Meta()
-            par = client.Meta(loc);
+            par = await client.MetaAsync(loc);
             verifyMeta(par, true, key);
 
             // New and old meta should be present when doing type Meta()
@@ -580,7 +578,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentExceptionHttpClient()
+        public async Tasks.Task TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentExceptionHttpClient()
         {
             // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed.
             // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the
@@ -601,9 +599,15 @@ namespace Hl7.Fhir.Tests.Rest
                       
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task CallsCallbacksHttpClientHandler()
+        public async Tasks.Task CallsCallbacksHttpClientHandler()
         {
-            using var handler = new HttpClientEventHandler();
+            using var handler = new HttpClientEventHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true                
+            };
 
             using (FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler))
                 await check(handler, client);
@@ -612,9 +616,9 @@ namespace Hl7.Fhir.Tests.Rest
             using (FhirClient client = new(TestEndpoint, messageHandler: handler))
                 await check(handler, client);               
 
-            static async T.Task check(HttpClientEventHandler handler, FhirClient client)
+            static async Tasks.Task check(HttpClientEventHandler handler, FhirClient client)
             {
-                client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+                client.Settings.ParserSettings = client.Settings.ParserSettings with { AllowUnrecognizedEnums = true };
 
                 bool calledBefore = false;
                 HttpStatusCode? status = null;
@@ -640,28 +644,34 @@ namespace Hl7.Fhir.Tests.Rest
 
                 var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                Assert.Contains("<Patient", bodyText);
 
                 calledBefore = false;
-                client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
                 Assert.IsTrue(calledBefore);
                 Assert.IsNotNull(bodyOut);
 
                 bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                Assert.Contains("<Patient", bodyText);
             }
         }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CallsCallbacksHttpClient()
+        public async Tasks.Task CallsCallbacksHttpClient()
         {
-            using (var handler = new HttpClientEventHandler())
+            using (var handler = new HttpClientEventHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            })
             using (var httpClient = new HttpClient(handler))
             {
                 using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))
                 {
-                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+                    client.Settings.ParserSettings = client.Settings.ParserSettings with { AllowUnrecognizedEnums = true };
 
                     bool calledBefore = false;
                     HttpStatusCode? status = null;
@@ -680,28 +690,28 @@ namespace Hl7.Fhir.Tests.Rest
                         status = e.RawResponse.StatusCode;
                     };
 
-                    var pat = client.Read<Patient>("Patient/" + PATIENTID);
+                    var pat = await client.ReadAsync<Patient>("Patient/" + PATIENTID);
                     Assert.IsTrue(calledBefore);
                     Assert.IsNotNull(status);
                     Assert.IsNotNull(body);
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
-                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
                     Assert.IsTrue(calledBefore);
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
                 using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))
                 {
-                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+                    client.Settings.ParserSettings = client.Settings.ParserSettings with { AllowUnrecognizedEnums = true };
 
                     bool calledBefore = false;
                     HttpStatusCode? status = null;
@@ -720,22 +730,22 @@ namespace Hl7.Fhir.Tests.Rest
                         status = e.RawResponse.StatusCode;
                     };
 
-                    var pat = client.Read<Patient>("Patient/" + PATIENTID);
+                    var pat = await client.ReadAsync<Patient>("Patient/" + PATIENTID);
                     Assert.IsTrue(calledBefore);
                     Assert.IsNotNull(status);
                     Assert.IsNotNull(body);
 
                     var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
 
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
 
                     calledBefore = false;
-                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    await client.UpdateAsync(pat); // create cannot be called with an ID (which was retrieved)
                     Assert.IsTrue(calledBefore);
                     Assert.IsNotNull(bodyOut);
 
                     bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                    Assert.Contains("<Patient", bodyText);
                 }
             }
         }
@@ -761,7 +771,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]   // Currently ignoring, as spark.furore.com returns Status 500.
-        public async T.Task TestReceiveHtmlIsHandledHttpClient()
+        public async Tasks.Task TestReceiveHtmlIsHandledHttpClient()
         {
             using var client = new FhirClient("http://nu.nl");        // an address that returns html
             
@@ -777,10 +787,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task TestRefreshHttpClient()
+        public async Tasks.Task TestRefreshHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);                   
-            var result = client.Read<Patient>("Patient/" + PATIENTID);
+            var result = await client.ReadAsync<Patient>("Patient/" + PATIENTID);
 
             var orig = result.Name[0].FamilyElement.Value;
 
@@ -794,7 +804,7 @@ namespace Hl7.Fhir.Tests.Rest
       
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task TestReceiveErrorStatusIsHandledHttpClient()
+        public async Tasks.Task TestReceiveErrorStatusIsHandledHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);// an address that returns Status 404 with an OperationOutcome
             
@@ -822,7 +832,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async T.Task TestAuthenticationOnBeforeHttpClient()
+        public async Tasks.Task TestAuthenticationOnBeforeHttpClient()
         {
             using FhirClient client = new FhirClient(TestEndpoint);
             client.RequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "bad-bearer");
@@ -842,10 +852,10 @@ namespace Hl7.Fhir.Tests.Rest
         /// Test for showing issue https://github.com/FirelyTeam/firely-net-sdk/issues/128
         /// </summary>
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async T.Task TestCreatingBinaryResourceHttpClient()
+        public async Tasks.Task TestCreatingBinaryResourceHttpClient()
         {
             byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
-            using (var client = new FhirClient(TestEndpoint))
+            using (var client = new FhirClient(TestEndpoint, new FhirClientSettings{BinarySendBehaviour = BinaryTransferBehaviour.UseResource, BinaryReceivePreference = BinaryTransferBehaviour.UseData}))
             {
                 var binary = new Binary() { Data = arr, ContentType = "image/png" };
                 var result = await client.CreateAsync(binary);
@@ -865,10 +875,10 @@ namespace Hl7.Fhir.Tests.Rest
         /// Test for showing issue https://github.com/FirelyTeam/firely-net-sdk/issues/1681
         /// </summary>
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async T.Task TestPreferOperationOutcome()
+        public async Tasks.Task TestPreferOperationOutcome()
         {
             FhirClient client = new FhirClient(TestEndpoint);
-            client.Settings.PreferredReturn = Prefer.OperationOutcome;
+            client.Settings.ReturnPreference = ReturnPreference.OperationOutcome;
 
             var pat = new Patient()
             {
@@ -882,7 +892,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async T.Task TestMultipleMessageHandlersInFhirClient()
+        public async Tasks.Task TestMultipleMessageHandlersInFhirClient()
         {
             var testMessageHandler = new TestMessageHandler();
             var testDegatingHandler = new TestDeligatingHandler()
@@ -894,6 +904,62 @@ namespace Hl7.Fhir.Tests.Rest
             var loc = await client.ReadAsync<Location>(LOCATIONIDEP);
             Assert.IsNotNull(testDegatingHandler.LastRequest);
             Assert.IsNotNull(testMessageHandler.LastResponse);
+        }
+        
+        
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Tasks.Task TestBinaryOperations()
+        {
+            var client = new FhirClient(TestEndpoint, new FhirClientSettings { BinarySendBehaviour = BinaryTransferBehaviour.UseData, BinaryReceivePreference = BinaryTransferBehaviour.UseData });
+            var binary = FhirSerializationEngineFactory.Strict(ModelInspector.Base).DeserializeFromJson(await File.ReadAllTextAsync("/Users/kasdejong/RiderProjects/firely-net-sdk/src/Hl7.Fhir.Shared.Tests/TestData/BinaryPicture.json")) as Binary;
+            
+            var created = await client.CreateAsync<Binary>(binary!);
+            created.Should().BeOfType(typeof(Binary));
+            
+            var read = await client.ReadAsync<Binary>(created.ResourceIdentity());
+            read.Should().BeOfType(typeof(Binary));
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Tasks.Task FhirClient_ResourceBase_ResourceIdentity_ShouldBeConsistent()
+        {
+            var client = new FhirClient(TestEndpoint);
+            var patient = new Patient()
+            {
+                BirthDate = "1972-11-30",
+                Name = new List<HumanName>()
+                {
+                    new HumanName()
+                    {
+                        Given = new List<string>() {"test_given"},
+                        Family = "Donald",
+                    }
+                },
+                Identifier = new List<Identifier>()
+                {
+                    new Identifier()
+                    {
+                        System = "urn:oid:1.2.36.146.595.217.0.1",
+                        Value = "12345"
+                    }
+                }
+            };
+
+            Console.WriteLine("Unsaved Patient");
+            patient.ResourceBase.Should().BeNull();
+            patient.ResourceIdentity().Should().BeNull();
+
+            Console.WriteLine("Saved Patient");
+            var newPatient = await client.CreateAsync(patient);
+            newPatient?.ResourceBase.Should().Be(TestEndpoint + "/");
+            newPatient?.ResourceIdentity().ToString().Should().Be(TestEndpoint + "/Patient/" + newPatient.Id + "/_history/" + newPatient.Meta.VersionId);
+
+            Console.WriteLine("Read Patient");
+            var patientGet = await client.ReadAsync<Patient>($"Patient/{newPatient.Id}");
+            patientGet?.ResourceBase.Should().Be(TestEndpoint + "/");
+            patientGet?.ResourceIdentity().ToString().Should().Be(TestEndpoint + "/Patient/" + patientGet.Id + "/_history/" + patientGet.Meta.VersionId);
         }
     }
 

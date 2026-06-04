@@ -5,14 +5,14 @@ using Hl7.Fhir.Specification.Terminology;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     public class SharedExpansionTests
     {
         [Fact]
-        public async T.Task CanCallThroughLocalTerminologyService()
+        public async Tasks.Task CanCallThroughLocalTerminologyService()
         {
             var vs1 = new ValueSet { Url = "http://source", Status = PublicationStatus.Active }
                 .Includes(i => i.System("http://nu.nl").Concepts("1", "2", "3"));
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task CanCombineValueSets()
+        public async Tasks.Task CanCombineValueSets()
         {
             var vs1 = buildVs("http://valuesetA", "1", "2", "3").Includes(i => i.System("http://systemX").Concepts("A"));
             var vs2 = buildVs("http://valuesetB", "2", "3", "4");
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task CatchesCyclicExpansions()
+        public async Tasks.Task CatchesCyclicExpansions()
         {
             var resolver = new InMemoryResourceResolver();
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task TestExpandingVsWithUnknownSystem()
+        public async Tasks.Task TestExpandingVsWithUnknownSystem()
         {
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = new InMemoryResourceResolver() });
@@ -113,6 +113,123 @@ namespace Hl7.Fhir.Specification.Tests
             var job = async () => await expander.ExpandAsync(vs);
             await job.Should().ThrowAsync<ValueSetUnknownException>().WithMessage("The ValueSet expander cannot find codesystem 'http://www.unknown.org/', so the expansion cannot be completed.");
         }
+
+        [Fact]
+        public async Tasks.Task TestExcludingOnlyParent()
+        {
+            var resolver = new InMemoryResourceResolver();
+            var vs = new ValueSet
+            {
+                Compose = new()
+                {
+                    Include = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Filter = new List<ValueSet.FilterComponent>
+                            {
+                                new()
+                                {
+                                    Property = "concept",
+                                    Op = FilterOperator.IsA,
+                                    Value = "parent"
+                                }
+                            }
+                        }
+                    },
+                    Exclude = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Concept = new List<ValueSet.ConceptReferenceComponent>
+                            {
+                                new()
+                                {
+                                    Code = "parent"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var cs = new CodeSystem
+            {
+                Url = "http://www.unknown.org/",
+                Content = CodeSystemContentMode.Complete,
+                Concept = new List<CodeSystem.ConceptDefinitionComponent>
+                {
+                    new()
+                    {
+                        Code = "parent",
+                        Concept = new List<CodeSystem.ConceptDefinitionComponent>
+                        {
+                            new()
+                            {
+                                Code = "child1"
+                            },
+                            new()
+                            {
+                                Code = "child2"
+                            }
+                        }
+                    }
+                }
+            };
+
+            resolver.Add(cs, vs);
+
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = resolver });
+            await expander.ExpandAsync(vs);
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(["child1", "child2"]);
+
+
+            vs.Compose.Exclude = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Concept = new List<ValueSet.ConceptReferenceComponent>
+                            {
+                                new()
+                                {
+                                    Code = "parent"
+                                },
+                                new()
+                                {
+                                    Code = "child1"
+                                }
+                            }
+                        }
+                    };
+
+            resolver.Reload(cs, vs);
+            await expander.ExpandAsync(vs);
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEquivalentTo(["child2"]);
+
+            vs.Compose.Exclude = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new()
+                        {
+                            System = "http://www.unknown.org/",
+                            Filter = new List<ValueSet.FilterComponent>
+                            {
+                                new()
+                                {
+                                    Property = "concept",
+                                    Op = FilterOperator.IsA,
+                                    Value = "parent"
+                                }
+                            }
+                        }
+                    };
+
+            resolver.Reload(cs, vs);
+            await expander.ExpandAsync(vs);
+            vs.Expansion.Contains.Select(c => c.Code).Should().BeEmpty();
+
+        }
     }
 }
-

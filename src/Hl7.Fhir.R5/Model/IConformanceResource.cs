@@ -27,72 +27,28 @@
   
 */
 
-namespace Hl7.Fhir.Model
-{
-    public partial class SearchParameter : IVersionableConformanceResource
-    {
+namespace Hl7.Fhir.Model;
 
-    }
+public partial class SearchParameter : IVersionableConformanceResource;
 
-    public partial class OperationDefinition : IVersionableConformanceResource
-    {
+public partial class OperationDefinition : IVersionableConformanceResource;
 
-    }
+public partial class MessageDefinition : IVersionableConformanceResource;
 
-    public partial class MessageDefinition : IVersionableConformanceResource
-    {
+public partial class ImplementationGuide : IVersionableConformanceResource;
 
-    }
+public partial class CompartmentDefinition : IVersionableConformanceResource;
 
-    public partial class ImplementationGuide : IVersionableConformanceResource
-    {
-    }
+public partial class ConceptMap : IVersionableConformanceResource;
 
-    public partial class CompartmentDefinition : IVersionableConformanceResource
-    {
+public partial class NamingSystem : IConformanceResource;
+public partial class StructureMap : IVersionableConformanceResource;
+public partial class GraphDefinition : IVersionableConformanceResource;
 
-    }
+public partial class TestScript : IVersionableConformanceResource;
 
-    public partial class ConceptMap : IVersionableConformanceResource
-    {
+public partial class Library : IVersionableConformanceResource;
 
-    }
+public partial class Questionnaire : IVersionableConformanceResource;
 
-    public partial class NamingSystem : IConformanceResource
-    {
-
-    }
-    public partial class StructureMap : IVersionableConformanceResource
-    {
-
-    }
-    public partial class GraphDefinition : IVersionableConformanceResource
-    {
-
-    }
-    public partial class TestScript : IVersionableConformanceResource
-    {
-
-    }
-
-
-    //public partial class ExpansionProfile : IVersionableConformanceResource
-    //{
-    //    public Markdown Purpose
-    //    {
-    //        get { return null; }
-    //        set { throw new NotImplementedException(); }
-    //    }
-    //}
-
-    public partial class Questionnaire : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class TerminologyCapabilities : IVersionableConformanceResource
-    {
-
-    }
-
-}
+public partial class TerminologyCapabilities : IVersionableConformanceResource;

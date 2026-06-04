@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             }
             catch (Exception ex)
             {
-                if (!expectException) Assert.IsTrue(false, $"[{input}] gave an exception: {ex.Message} ");
+                if (!expectException) Assert.Fail($"[{input}] gave an exception: {ex.Message} ");
                 return;
             }
             if (expectException) Assert.Fail($"[{input}] should give an exception");

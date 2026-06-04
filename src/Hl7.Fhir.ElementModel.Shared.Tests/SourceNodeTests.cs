@@ -116,7 +116,7 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void ReadsFromNav()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpXml = File.ReadAllText(@"TestData/fp-test-patient.xml");
             var xmlnode = FhirXmlNode.Parse(tpXml);
             var nodes = SourceNode.FromNode(xmlnode);
             Assert.IsTrue(xmlnode.IsEqualTo(nodes).Success);

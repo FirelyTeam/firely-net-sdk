@@ -9,6 +9,8 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -67,9 +69,17 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = Typecasts.ParseQuantity(left);
+                l = left is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
             if (right.InstanceType == "Quantity" && r == null)
-                r = Typecasts.ParseQuantity(right);
+                r = right is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -107,7 +117,6 @@ namespace Hl7.FhirPath.Functions
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
         }
 
-
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {
             left = upcastOne(left, right);
@@ -118,13 +127,13 @@ namespace Hl7.FhirPath.Functions
             static P.Any upcastOne(P.Any value, P.Any other) =>
                 value switch
                 {
-                    P.Integer _ when other is P.Long => (P.Long)(P.Integer)value,
-                    P.Integer _ when other is P.Decimal => (P.Decimal)(P.Integer)value,
-                    P.Integer _ when other is P.Quantity => (P.Quantity)(P.Integer)value,
-                    P.Long _ when other is P.Decimal => (P.Decimal)(P.Long)value,
-                    P.Long _ when other is P.Quantity => (P.Quantity)(P.Long)value,
-                    P.Decimal _ when other is P.Quantity => (P.Quantity)(P.Decimal)value,
-                    P.Date _ when other is P.DateTime => (P.DateTime)(P.Date)value,
+                    P.Integer integer when other is P.Long => (P.Long)integer,
+                    P.Integer integer when other is P.Decimal => (P.Decimal)integer,
+                    P.Integer integer when other is P.Quantity => (P.Quantity)integer,
+                    P.Long @long when other is P.Decimal => (P.Decimal)@long,
+                    P.Long @long when other is P.Quantity => (P.Quantity)@long,
+                    P.Decimal @decimal when other is P.Quantity => (P.Quantity)@decimal,
+                    P.Date date when other is P.DateTime => (P.DateTime)date,
                     _ => value
                 };
         }
@@ -158,9 +167,17 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = Typecasts.ParseQuantity(left);
+                l = left is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
             if (right.InstanceType == "Quantity" && r == null)
-                r = Typecasts.ParseQuantity(right);
+                r = right is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -207,7 +224,7 @@ namespace Hl7.FhirPath.Functions
 
 
 
-        public static bool? Compare(P.Any left, P.Any right, string op)
+        public static bool? Compare(P.Any? left, P.Any? right, string op)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
             // (though we might handle this more generally with the null-propagating functionality of the compiler
@@ -243,7 +260,29 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
+        public static int? CompareTo(P.Any left, P.Any right)
+        {
+            // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
+            // (though we might handle this more generally with the null-propagating functionality of the compiler
+            // framework already.
+            if (left == null || right == null) return null;
+
+            // Try to convert both operands to a common type if they differ.
+            // When that fails, the CompareTo function on each type will itself
+            // report an error if they cannot handle that.
+            // TODO: in the end the engine/compiler will handle this and report an overload resolution fail
+            tryCoerce(ref left, ref right);
+
+            if (left is P.ICqlOrderable orderable) return orderable.CompareTo(right);
+
+            // Now, only the non-comparables are left (coding, concept, boolean).
+            // TODO: We should be able to retrieve the cql name of the type, not the
+            // dotnet type somehow.
+            throw new InvalidOperationException($"Values of type {left.GetType().Name} is not an ordered type and cannot be compared.");
+        }
+
         public static readonly IEqualityComparer<ITypedElement> TypedElementEqualityComparer = new ValueProviderEqualityComparer();
+        public static readonly IComparer<ITypedElement?> TypedElementComparer = new ValueProviderComparer();
 
         private class ValueProviderEqualityComparer : IEqualityComparer<ITypedElement>
         {
@@ -271,6 +310,23 @@ namespace Hl7.FhirPath.Functions
                 }
 
                 return result;
+            }
+        }
+
+        private class ValueProviderComparer : IComparer<ITypedElement?>
+        {
+            public int Compare(ITypedElement? x, ITypedElement? y)
+            {
+                if (x is null && y is null) return 0;
+                if (x is null) return -1;
+                if (y is null) return 1;
+                if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
+                {
+                    if (x is OrderedNode opn && opn.Descending)
+                        return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                    return EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                }
+                return 0;
             }
         }
     }

@@ -3,8 +3,9 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -17,7 +18,7 @@ namespace Hl7.Fhir.Specification.Tests
             return new CachedResolver(
                 new SnapshotSource(
                 new MultiResolver(
-                    new DirectorySource(@"TestData\validation"),
+                    new DirectorySource(Path.Combine("TestData", "validation")),
                     ZipSource.CreateValidationSource())));
         }
 
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static IAsyncResourceResolver _source = null;
 
         [TestMethod]
-        public async T.Task WalkIntoTypeMembers()
+        public async Tasks.Task WalkIntoTypeMembers()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -54,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("uri.extension", elem.Child("extension").Current.Path);
 
             // Try move to the special value member
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
+            Assert.Throws<StructureDefinitionWalkerException>(() => elem.Child("value"), "Primitives should not have a 'value' member");
 
             // Move into a component
             elem = walker.Child("component");
@@ -75,14 +76,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // should not walk into value[x] when unconstrained to a single type
             elem = walker.Child("value");
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Child("system"));  // i.e. a Quantity
+            Assert.Throws<StructureDefinitionWalkerException>(() => elem.Child("system"));  // i.e. a Quantity
 
             // can't walk into an unknown child
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => walker.Child("ewout"));
+            Assert.Throws<StructureDefinitionWalkerException>(() => walker.Child("ewout"));
         }
 
         [TestMethod]
-        public async T.Task WalkIntoChoice()
+        public async Tasks.Task WalkIntoChoice()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkAcrossReference()
+        public async Tasks.Task WalkAcrossReference()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -115,14 +116,14 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkAcrossInlineExtension()
+        public async Tasks.Task WalkAcrossInlineExtension()
         {
             var sd = await _source.FindStructureDefinitionAsync("http://unittest.com/StructureDefinition/patient-sliced-complex-extension");
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
             nav.JumpToFirst("Patient.communication");
             nav.MoveToNextSlice();
 
-            var fortest = await nav.StructureDefinition.ToXmlAsync();
+            var fortest = nav.StructureDefinition.ToXml();
             var walker = new StructureDefinitionWalker(nav, _source);
 
             var elem = walker.Extension("http://hl7.org/fhir/StructureDefinition/patient-proficiency");
@@ -133,5 +134,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-
-

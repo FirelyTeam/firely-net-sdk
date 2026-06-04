@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonUntyped
     {
-        public async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
+        private async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
             await FhirJsonNode.ParseAsync(json, settings: settings);
 
         async Task<ISourceNode> FhirJsonNodeParse(string json, string rootName) =>
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = await getJsonNodeU(tp);
 #pragma warning disable 612, 618
-            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElement(), typed: false);
+            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElementLegacy(), typed: false);
 #pragma warning restore 612, 618
         }
 
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var output = await xmlNav.ToJsonAsync();
+                var output = xmlNav.ToJson();
                 Assert.Fail();
             }
             catch (NotSupportedException)
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var bundle = await File.ReadAllTextAsync(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = await getJsonNodeU(bundle);
 #pragma warning disable 612,618
-            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElement());
+            ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElementLegacy());
 #pragma warning restore 612, 618
         }
 
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual("deceasedBoolean", db.Name);
             Assert.AreEqual("true", db.Text);
             var details = (db as IAnnotated).Annotation<JsonSerializationDetails>();
-            Assert.AreEqual(true, details.OriginalValue);
+            Assert.IsTrue((bool?)details.OriginalValue);
 
             Assert.AreEqual("3", patient.Children("multipleBirthInteger").Single().Text);
 
@@ -185,11 +185,13 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException), "Expected an InvalidOperationException about resourceType is missing.")]
         public async Task CatchResourceTypeMissing()
         {
-            var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
-            _ = await FhirJsonNodeParse(json, null);
+            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
+                _ = await FhirJsonNodeParse(json, null);
+            });
         }
 
         [TestMethod]
@@ -238,7 +240,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             catch (FormatException fe)
             {
-                Assert.IsTrue(fe.Message.Contains("Invalid Json encountered"));
+                Assert.Contains("Invalid Json encountered", fe.Message);
             }
         }
     }

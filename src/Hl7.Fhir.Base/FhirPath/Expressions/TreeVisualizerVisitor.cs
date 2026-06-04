@@ -26,7 +26,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override StringBuilder VisitFunctionCall(FunctionCallExpression expression)
         {
-            append("func {0}".FormatWith(expression.FunctionName));
+            append("func {0} ({1})".FormatWith(expression.FunctionName, expression.GetType().Name));
             appendType(expression);
 
             incr();
@@ -66,7 +66,7 @@ namespace Hl7.FhirPath.Expressions
 
         public override StringBuilder VisitVariableRef(VariableRefExpression expression)
         {
-            append("var {0}".FormatWith(expression.Name));
+            append("var {0} ({1})".FormatWith(expression.Name, expression.GetType().Name));
             appendType(expression);
 
             return _result;

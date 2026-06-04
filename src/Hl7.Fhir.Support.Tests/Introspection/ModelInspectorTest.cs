@@ -11,6 +11,8 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Introspection
@@ -28,11 +30,11 @@ namespace Hl7.Fhir.Tests.Introspection
 
             var way = inspector.FindClassMapping("Way");
             Assert.IsNotNull(way);
-            Assert.AreEqual(way.NativeType, typeof(Way));
+            Assert.AreEqual(typeof(Way), way.NativeType);
 
             var way2 = inspector.FindClassMapping("Way2");
             Assert.IsNotNull(way2);
-            Assert.AreEqual(way2.NativeType, typeof(Way2));
+            Assert.AreEqual(typeof(Way2), way2.NativeType);
 
             var noway = inspector.FindClassMapping("nonexistent");
             Assert.IsNull(noway);
@@ -73,6 +75,82 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNull(codeOfT);
         }
 
+        [TestMethod]
+        public void CanManipulateClassMappingsList()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+
+            // Inspect the HL7.Fhir.Model common assembly
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            // Try to remove a mapping
+            var metaMapping = inspector.FindClassMapping("Meta");
+            inspector.ClassMappings.Remove(metaMapping);
+            inspector.FindClassMapping("Meta").Should().BeNull();
+
+            // And add it back.
+            inspector.ClassMappings.Add(metaMapping);
+            inspector.FindClassMapping("Meta").Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Regression test: types derived from FHIR POCOs (e.g. ValidateCodeParameters which derives
+        /// from Parameters) must be importable by ModelInspector even though they do not carry their
+        /// own [FhirType] attribute.  The base type's ClassMapping must be returned.
+        /// </summary>
+        [TestMethod]
+        public void FindOrImportClassMappingReturnsMappingForDerivedParametersType()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            // ValidateCodeParameters derives from Parameters but has no [FhirType] attribute.
+            var mapping = inspector.FindOrImportClassMapping(typeof(ValidateCodeParameters));
+            mapping.Should().NotBeNull("a derived FHIR type should fall back to its base type's mapping");
+            mapping!.NativeType.Should().Be(typeof(Parameters), "the mapping should belong to the FHIR base type");
+
+            // A second lookup must hit the cache and return the same mapping.
+            var mappingAgain = inspector.FindOrImportClassMapping(typeof(ValidateCodeParameters));
+            mappingAgain.Should().BeSameAs(mapping);
+        }
+
+        /// <summary>
+        /// Same as above but for CodeSystemValidateCodeParameters.
+        /// </summary>
+        [TestMethod]
+        public void FindOrImportClassMappingReturnsMappingForDerivedCodeSystemParametersType()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            var mapping = inspector.FindOrImportClassMapping(typeof(CodeSystemValidateCodeParameters));
+            mapping.Should().NotBeNull();
+            mapping!.NativeType.Should().Be(typeof(Parameters));
+        }
+
+        /// <summary>
+        /// When a base mapping is removed from the inspector, any alias entries that were cached
+        /// for derived types must also be removed so that stale lookups are not returned.
+        /// </summary>
+        [TestMethod]
+        public void RemovingBaseMappingAlsoClearsAliasesForDerivedTypes()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+
+            // Prime the alias cache for ValidateCodeParameters → Parameters mapping.
+            var alias = inspector.FindOrImportClassMapping(typeof(ValidateCodeParameters));
+            alias.Should().NotBeNull();
+
+            // Now remove the Parameters mapping.
+            var parametersMapping = inspector.FindClassMapping(typeof(Parameters));
+            parametersMapping.Should().NotBeNull();
+            inspector.ClassMappings.Remove(parametersMapping!);
+
+            // The alias entry for ValidateCodeParameters must also be gone.
+            inspector.FindClassMapping(typeof(ValidateCodeParameters)).Should().BeNull(
+                "alias entries for derived types must be cleaned up when the base mapping is removed");
+        }
     }
 
     [FhirEnumeration("SomeEnum")]

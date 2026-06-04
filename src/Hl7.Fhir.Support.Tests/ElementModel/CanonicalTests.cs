@@ -41,6 +41,16 @@ namespace Hl7.Fhir.ElementModel.Tests
             testee.HasAnchor.Should().BeTrue();
             testee.Fragment.Should().Be("anchor");
             testee.IsAbsolute.Should().BeTrue();
+            
+            // no path
+            testee = new Canonical("http://example.org|3.4.5#anchor");
+            testee.Value.Should().Be("http://example.org|3.4.5#anchor");
+            testee.Uri.Should().Be("http://example.org");
+            testee.HasVersion.Should().BeTrue();
+            testee.Version.Should().Be("3.4.5");
+            testee.HasAnchor.Should().BeTrue();
+            testee.Fragment.Should().Be("anchor");
+            testee.IsAbsolute.Should().BeTrue();
         }
 
         [TestMethod]

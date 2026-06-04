@@ -11,19 +11,23 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Dataflow;
+using Vonk.FhirPath.R4.Tests;
 using P = Hl7.Fhir.ElementModel.Types;
+using ScopedNode = Hl7.Fhir.ElementModel.ScopedNode;
 
-namespace Hl7.FhirPath.R4.Tests
+namespace Hl7.Fhir.FhirPath.R4.Tests
 {
     [TestClass]
     public class FhirPathTest
@@ -59,7 +63,7 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<PocoNode> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
@@ -77,7 +81,7 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.IsTrue(traced);
 
             traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<PocoNode> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");
@@ -138,9 +142,9 @@ namespace Hl7.FhirPath.R4.Tests
         public void TestImplicitQuantityCast()
         {
             var obs = new Observation { Value = new Hl7.Fhir.Model.Quantity(75m, "kg") };
-            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value > 74 'kg'"));
-            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value = 75 'kg'"));
-            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value ~ 75 'kg'"));
+            Assert.IsTrue(obs.Predicate("Observation.value > 74 'kg'"));
+            Assert.IsTrue(obs.Predicate("Observation.value = 75 'kg'"));
+            Assert.IsTrue(obs.Predicate("Observation.value ~ 75 'kg'"));
         }
 
         [TestMethod]
@@ -187,8 +191,16 @@ namespace Hl7.FhirPath.R4.Tests
         //    Assert.False(TypeInfo.Any.CanBeCastTo(typeof(long)));
         //}
 
+
+
         [TestMethod]
-        public void TestFhirPathRootResource()
+        [DataRow("entry.first().resource.contained", "contained-1", "patient-1")]
+        [DataRow("entry.first().resource.contained.id", "contained-1", "patient-1")]
+        [DataRow("entry.first().resource.id", "patient-1", "patient-1")]
+        [DataRow("entry.first().resource", "patient-1", "patient-1")]
+        [DataRow("Bundle", "bundle-1", "bundle-1")]
+        [DataRow("id", "bundle-1", "bundle-1")]
+        public void TestFhirPathRootResource(string expression, string resource, string rootResource)
         {
             var bundle = new Bundle() { Type = Bundle.BundleType.Collection, Id = "bundle-1" };
             var patient = new Patient() { Id = "patient-1" };
@@ -199,40 +211,9 @@ namespace Hl7.FhirPath.R4.Tests
 
             var patBundle = new ScopedNode(bundle.ToTypedElement());
 
-            // focus on the contained resource
-            EvaluationContext ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource.contained")?.FirstOrDefault() as ScopedNode);
-            Assert.AreEqual("contained-1", patBundle.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource.id", ctx));
-
-            // focus on the id of the contained resource
-            ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource.contained.id")?.FirstOrDefault() as ScopedNode);
-            Assert.AreEqual("contained-1", patBundle.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource.id", ctx));
-
-            // focus on the property of the entry resource
-            ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource.id")?.FirstOrDefault() as ScopedNode);
-            Assert.AreEqual("patient-1", patBundle.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource.id", ctx));
-
-            // focus on the entry resource
-            ctx = new FhirEvaluationContext(patBundle.Select("entry.first().resource")?.FirstOrDefault() as ScopedNode);
-            Assert.AreEqual("patient-1", patBundle.Scalar("%resource.id", ctx));
-            Assert.AreEqual("patient-1", patBundle.Scalar("%rootResource.id", ctx));
-
-            // focus on bundle 
-            ctx = new FhirEvaluationContext(patBundle);
-            Assert.AreEqual("bundle-1", patBundle.Scalar("%resource.id", ctx));
-            Assert.AreEqual("bundle-1", patBundle.Scalar("%rootResource.id", ctx));
-
-            // focus on a property of the bundle 
-            ctx = new FhirEvaluationContext(patBundle.Select("id")?.FirstOrDefault() as ScopedNode);
-            Assert.AreEqual("bundle-1", patBundle.Scalar("%resource.id", ctx));
-            Assert.AreEqual("bundle-1", patBundle.Scalar("%rootResource.id", ctx));
-
-            // Testing %context and $this
-            var node = patBundle.Select("entry.first().resource.contained")?.FirstOrDefault();
-            Assert.AreEqual("contained-1", node.Scalar("%context.id", ctx));
-            Assert.AreEqual("contained-1", node.Scalar("$this.id", ctx));
+            var node = patBundle.Select(expression).FirstOrDefault()!;
+            node.Scalar("%resource.id").Should().Be(resource);
+            node.Scalar("%rootResource.id").Should().Be(rootResource);
         }
 
         [TestMethod]
@@ -244,7 +225,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var divExists = nav.Scalar("text.`div`.exists()");
 
-            Assert.AreEqual(true, divExists);
+            Assert.IsTrue((bool?)divExists);
         }
 
         [TestMethod]
@@ -256,10 +237,10 @@ namespace Hl7.FhirPath.R4.Tests
             var nav = bundle.ToTypedElement().Select("Bundle.entry[0].resource").FirstOrDefault();
 
             var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
-            Assert.AreEqual(true, absolutueInvariantcheck);
+            Assert.IsTrue((bool?)absolutueInvariantcheck);
 
             var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
-            Assert.AreEqual(true, invariantcheck);
+            Assert.IsTrue((bool?)invariantcheck);
 
         }
 
@@ -275,8 +256,8 @@ namespace Hl7.FhirPath.R4.Tests
                    (FhirDateTime.Now(), "dateTime"),
                }.Select(t => new object[] { t.input, t.castToDataType });
 
-        [DataTestMethod]
-        [DynamicData(nameof(CastAsDataTypeTestCases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(CastAsDataTypeTestCases))]
         public void AssertCastAs(PrimitiveType input, string castToDataType)
         {
             var observation = new Observation { Value = input };
@@ -346,12 +327,11 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.IsTrue(result.Any());
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(MemberOfTestData), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(MemberOfTestData))]
         public void MemberOfTests(Base poco, string expression, bool? expectedResult)
         {
-            var context = FhirEvaluationContext.CreateDefault();
-            context.TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource());
+            var context = new FhirEvaluationContext { TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource()) };
 
             var result = poco.Scalar(expression, context);
 
@@ -405,7 +385,7 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void MemberOfTestsWithoutTerminologyService()
         {
-            var context = FhirEvaluationContext.CreateDefault();
+            var context = new FhirEvaluationContext();
 
             Action action = () => new Code("male").Scalar("memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", context);
 
@@ -415,8 +395,7 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void MemberOfTestWithExampleFromSpecification()
         {
-            var context = FhirEvaluationContext.CreateDefault();
-            context.TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource());
+            var context = new FhirEvaluationContext { TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource()) };
 
             Observation observation = new()
             {
@@ -437,7 +416,52 @@ namespace Hl7.FhirPath.R4.Tests
 
             result.Should().ContainSingle().Subject
                 .Should().BeOfType<Observation.ComponentComponent>()
-                .Subject.Code.Should().BeEquivalentTo(new CodeableConcept("http://loinc.org", "2708-6"));
+                .Subject.Code.IsExactly(new CodeableConcept("http://loinc.org", "2708-6")).Should().BeTrue();
+        }
+        
+                
+        [TestMethod]
+        public void PersistRootOfTypedElement_PocoBase()
+        {
+            var res = SourceNode.Resource("Bundle", "Bundle",
+            SourceNode.Node("link", 
+            SourceNode.Valued("url", "test")
+            )
+            );
+            
+            var expr = ((ITypedElement)res.ToPoco(ModelInspector.Base).ToPocoNode()).Children("link").First();
+            var loc = expr.Select("url").Select(x => x.Location).Single();
+            loc.Should().Be("Bundle.link[0].url[0]");
+        }
+        
+        [TestMethod]
+        public void PersistRootOfTypedElement_NoTypeInfo()
+        {
+            var res = SourceNode.Resource("Bundle", "Bundle",
+            SourceNode.Node("link", 
+            SourceNode.Valued("url", "test")
+            )
+            );
+            
+ #pragma warning disable CS0618 // Type or member is obsolete
+            var expr = res.ToTypedElementLegacy().Children("link").First();
+ #pragma warning restore CS0618 // Type or member is obsolete
+            var loc = expr.Select("url").Select(x => x.Location).Single();
+            loc.Should().Be("Bundle.link[0].url[0]");
+        }
+        
+        [TestMethod]
+        public void PersistRootOfTypedElement_StructuredInformationProvider()
+        {
+            var res = SourceNode.Resource("Bundle", "Bundle",
+            SourceNode.Node("link", 
+            SourceNode.Valued("url", "test")
+            )
+            );
+
+            var expr = res.ToTypedElement(ModelInspector.Base).Children("link").First();
+            var loc = expr.Select("url").Select(x => x.Location).Single();
+            loc.Should().Be("Bundle.link[0].url[0]");
         }
     }
 }

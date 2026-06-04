@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 }
             };
 
-            return new MultiTerminologyService(mimeTypeRoutingSettings, localTermRoutingSettings);
+            return new MultiTerminologyService(mimeTypeRoutingSettings, languageRoutingSettings, localTermRoutingSettings);
         }
 
     }

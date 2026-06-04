@@ -14,6 +14,7 @@ This library was a collective effort by the following developers:
 * Henley Devereux (Artisan Technology Group)
 * Kenneth Myhra (Kufu)
 * Gino Canessa (Microsoft)
+* Kas de Jong (Firely)
 
 Thanks to:
 * The Azure API for FHIR team at Microsoft for their PRs

@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromFormatParam("application/fhir+json"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(ResourceFormat.Json, "3.0", "application/fhir+json; charset=utf-8; fhirVersion=3.0")]
         [DataRow(ResourceFormat.Xml, "3.0", "application/fhir+xml; charset=utf-8; fhirVersion=3.0")]
         [DataRow(ResourceFormat.Json, "4.0", "application/fhir+json; charset=utf-8; fhirVersion=4.0")]
@@ -46,10 +46,18 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [DataRow(ResourceFormat.Json, "", true, "application/fhir+json")]
+        [DataRow(ResourceFormat.Xml, "", true, "application/fhir+xml")]
+        public void TestBuildingContentTypeWithExcludeCharSet(ResourceFormat format, string fhirVersion, bool excludeCharset, string expected)
+        {
+            ContentType.BuildContentType(format, fhirVersion, excludeCharset).Should().Be(expected);
+        }
+
+        [TestMethod]
         public void GetResourceFormatSupportsCharset()
         {
-            Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml;charset=ISO-8859-1"), ResourceFormat.Xml);
-            Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml"), ResourceFormat.Xml);
+            Assert.AreEqual(ResourceFormat.Xml, ContentType.GetResourceFormatFromContentType("text/xml;charset=ISO-8859-1"));
+            Assert.AreEqual(ResourceFormat.Xml, ContentType.GetResourceFormatFromContentType("text/xml"));
         }
     }
 }

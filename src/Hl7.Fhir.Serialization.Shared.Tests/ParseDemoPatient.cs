@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsNotNull(id);
         }
 
-        public static async Task RoundtripXml(Func<string, object> navCreator)
+        public static void RoundtripXml(Func<string, object> navCreator)
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
 
@@ -109,7 +109,6 @@ namespace Hl7.Fhir.Serialization.Tests
             switch (nav)
             {
                 case ISourceNode _:
-                    break;
                 case ITypedElement _:
                     break;
                 default:
@@ -117,8 +116,8 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             string output;
-            if (nav is ISourceNode isn2) output = await isn2.ToXmlAsync();
-            else if (nav is ITypedElement ien2) output = await ien2.ToXmlAsync();
+            if (nav is ISourceNode isn2) output = isn2.ToXml();
+            else if (nav is ITypedElement ien2) output = ien2.ToXml();
             else
                 throw Error.InvalidOperation("Fix unit test");
 
@@ -145,15 +144,15 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             string output;
-            if (nav is ISourceNode isn2) output = await isn2.ToJsonAsync();
-            else if (nav is ITypedElement ien2) output = await ien2.ToJsonAsync();
+            if (nav is ISourceNode isn2) output = isn2.ToJson();
+            else if (nav is ITypedElement ien2) output = ien2.ToJson();
             else
                 throw Error.InvalidOperation("Fix unit test");
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame(filename, expected, output, errors);
             Console.WriteLine(string.Join("\r\n", errors));
-            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+            Assert.IsEmpty(errors, "Errors were encountered comparing converted content");
         }
 
         public static void CanReadThroughTypedElement(ITypedElement n, bool typed)
@@ -183,7 +182,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             Assert.IsTrue(text.MoveNext());
             Assert.AreEqual("div", text.Current.Name);
-            Assert.IsTrue(((string)text.Current.Value).StartsWith("<div xmlns="));       // special handling of xhtml
+            Assert.StartsWith("<div xmlns=", (string)text.Current.Value);       // special handling of xhtml
             if (typed) Assert.AreEqual("xhtml", text.Current.InstanceType);
 
             Assert.IsFalse(text.Current.Children().Any()); // cannot move into xhtml
@@ -238,7 +237,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var dec = n.Children("deceased").Single();
                 Assert.AreEqual("boolean", dec.InstanceType);
-                Assert.AreEqual(false, dec.Value);
+                Assert.IsFalse((bool?)dec.Value);
             }
             else
             {

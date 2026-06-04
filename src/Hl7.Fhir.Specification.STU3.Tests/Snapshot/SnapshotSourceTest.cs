@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Snapshot;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotSourceTest
     {
         [TestMethod]
-        public async T.Task TestElementSnapshot()
+        public async Tasks.Task TestElementSnapshot()
         {
             // Request core Element snapshot; verify recursion handling
 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(sd.Snapshot.IsCreatedBySnapshotGenerator());
 
             var elems = sd.Snapshot.Element;
-            Assert.AreEqual(elemCnt, elems.Count);
+            Assert.HasCount(elemCnt, elems);
 
             void assert_ele1(ElementDefinition eld)
             {
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new SnapshotSource(cachedSource);
 
             // Verify that SnapshotGenerator ctor rejects SnapshotSource arguments
-            Assert.ThrowsException<ArgumentException>(() => new SnapshotGenerator(src));
+            Assert.Throws<ArgumentException>(() => new SnapshotGenerator(src));
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new SnapshotSource(cachedSource);
 
             // Verify that SnapshotSource ctor rejects SnapshotSource arguments
-            Assert.ThrowsException<ArgumentException>(() => new SnapshotSource(src));
+            Assert.Throws<ArgumentException>(() => new SnapshotSource(src));
         }
 
     }

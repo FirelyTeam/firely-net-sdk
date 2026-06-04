@@ -4,6 +4,8 @@
   [string]$suffix = [string]::Empty
 )
 
+Write-Host "##[section]Updating version information in $propFile"
+
 $xml = [xml](get-content $propFile)
 
 # newVersion is not set, so getting it from the fhir-net-api.props
@@ -11,9 +13,10 @@ If ([string]::IsNullOrEmpty($newVersion))
 {
 	#Get the version (without suffix)
 	$newVersion = $xml.Project.PropertyGroup.VersionPrefix
+	Write-Host "##[command]Using existing version from file: $newVersion"
 }
 	
-Write-Host "Replacing version information with version: [$newVersion] suffix: [$suffix]" 
+Write-Host "##[command]Replacing version information with version: [$newVersion] suffix: [$suffix]"
 
 #Replacing the version and suffix
 (Get-Content $propFile) |
@@ -22,3 +25,5 @@ Write-Host "Replacing version information with version: [$newVersion] suffix: [$
         -replace "<VersionSuffix>.*</VersionSuffix>", "<VersionSuffix>$suffix</VersionSuffix>" `
     } |
     Set-Content $propFile
+
+Write-Host "##[section]Version update completed successfully!"

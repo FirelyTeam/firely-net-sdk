@@ -12,10 +12,9 @@ namespace Firely.Sdk.Benchmarks
     [MemoryDiagnoser]
     public class SerializationBenchmarks
     {
-        internal TestPatient Patient;
-        JsonSerializerOptions Options;
-        BaseFhirXmlPocoSerializer XmlSerializer;
-
+        internal Patient Patient;
+        private JsonSerializerOptions _options;
+        private FhirXmlSerializer _xmlSerializer;
 
         [GlobalSetup]
         public void BenchmarkSetup()
@@ -24,33 +23,37 @@ namespace Firely.Sdk.Benchmarks
             var data = File.ReadAllText(filename);
             // For now, deserialize with the existing deserializer, until we have completed
             // the dynamicserializer too.
-            Patient = FhirJsonNode.Parse(data).ToPoco<TestPatient>(ModelInspector.ForType<TestPatient>());
-            Options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
-            XmlSerializer = new BaseFhirXmlPocoSerializer(Hl7.Fhir.Specification.FhirRelease.STU3);
+            Patient = FhirJsonNode.Parse(data).ToPoco<Patient>();
+            _options = new JsonSerializerOptions().ForFhir();
+            _xmlSerializer = new FhirXmlSerializer();
         }
 
         [Benchmark]
         public string JsonDictionarySerializer()
         {
-            return JsonSerializer.Serialize(Patient, Options);
+            return JsonSerializer.Serialize(Patient, _options);
         }
 
         [Benchmark]
         public string XmlDictionarySerializer()
         {
-            return SerializationUtil.WriteXmlToString(Patient, (o, w) => XmlSerializer.Serialize(o, w));
+            return SerializationUtil.WriteXmlToString(w => _xmlSerializer.Serialize(Patient, w));
         }
 
         [Benchmark]
         public string TypedElementSerializerJson()
         {
-            return Patient.ToTypedElement(ModelInspector.ForType<TestPatient>()).ToJson();
+#pragma warning disable SDK0001
+            return Patient.ToTypedElement().ToJson();
+#pragma warning restore SDK0001
         }
 
         [Benchmark]
         public string TypedElementSerializerXml()
         {
-            return Patient.ToTypedElement(ModelInspector.ForType<TestPatient>()).ToXml();
+#pragma warning disable SDK0001
+            return Patient.ToTypedElement().ToXml();
+#pragma warning restore SDK0001
         }
     }
 }

@@ -74,23 +74,23 @@ namespace Hl7.Fhir.Test
 
             rl.AddParam("newParamA", "1");
             rl.SetParam("newParamB", "2");
-            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=1&newParamB=2"));
+            Assert.EndsWith("oauth=XXX&newParamA=1&newParamB=2", rl.ToString());
 
             rl.SetParam("newParamA", "3");
             rl.ClearParam("newParamB");
-            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3"));
+            Assert.EndsWith("oauth=XXX&newParamA=3", rl.ToString());
 
             rl.AddParam("newParamA", "4");
-            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3&newParamA=4"));
+            Assert.EndsWith("oauth=XXX&newParamA=3&newParamA=4", rl.ToString());
 
             rl.AddParam("newParamB", "5");
-            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=3&newParamA=4&newParamB=5"));
+            Assert.EndsWith("oauth=XXX&newParamA=3&newParamA=4&newParamB=5", rl.ToString());
 
             rl.SetParam("newParamA", "6");
-            Assert.IsTrue(rl.ToString().EndsWith("oauth=XXX&newParamA=6&newParamB=5"));
+            Assert.EndsWith("oauth=XXX&newParamA=6&newParamB=5", rl.ToString());
 
             rl.ClearParams();
-            Assert.IsTrue(rl.ToString().EndsWith("search"));
+            Assert.EndsWith("search", rl.ToString());
         }
 
         [TestMethod]

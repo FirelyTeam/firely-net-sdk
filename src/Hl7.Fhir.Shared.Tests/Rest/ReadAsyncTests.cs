@@ -4,7 +4,7 @@ using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 using static Hl7.Fhir.Tests.Rest.FhirClientTests;
 
 namespace Hl7.Fhir.Core.AsyncTests
@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async T.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
+        public async Tasks.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
         {
             using var client = new FhirClient(ENDPOINT);
 
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public async T.Task Read_UsingLocationString_ResultReturnedHttpClient()
+        public async Tasks.Task Read_UsingLocationString_ResultReturnedHttpClient()
         {
             using var client = new FhirClient(ENDPOINT);
             

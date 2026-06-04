@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -6,8 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Support.Poco;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Linq;
 
@@ -104,21 +105,17 @@ namespace Hl7.Fhir.ElementModel
 
             ScopedNode? locateLocalResource(ResourceIdentity identity)
             {
-                var url = identity.ToString();
-
                 foreach (var parent in scopedNode.ParentResources())
                 {
-                    if (parent.InstanceType == FhirTypeConstants.BUNDLE)
+                    if (parent.InstanceType == FhirTypeNames.BUNDLE)
                     {
-                        var result = parent.BundledResources().FirstOrDefault(br => br.FullUrl == url)?.Resource;
-                        if (result != null) return result;
+                        return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(identity.ToString()); // safe cast but we cannot change the signature
                     }
-                    else
-                    {
-                        if (parent.Id() == url) return parent;
-                        var result = parent.ContainedResources().FirstOrDefault(cr => cr.Id() == url);
-                        if (result != null) return result;
-                    }
+
+                    if (parent.Id() == identity.Id)
+                        return parent;
+                    if (parent.ContainedResourcesWithId().ResolveReference(identity.Id ?? identity.ToString()) is { } resource) // safe cast but we cannot change the signature
+                        return resource;
                 }
 
                 return null;
@@ -136,7 +133,7 @@ namespace Hl7.Fhir.ElementModel
             string? url = element switch
             {
                 { Value: string s } => s,
-                { InstanceType: FhirTypeConstants.REFERENCE } => element.ParseResourceReference()?.Reference,
+                { InstanceType: FhirTypeNames.REFERENCE } => element.ParseResourceReference()?.Reference,
                 _ => null
             };
 

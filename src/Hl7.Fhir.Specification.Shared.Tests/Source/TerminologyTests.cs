@@ -3,6 +3,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using Xunit;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -23,9 +24,10 @@ namespace Hl7.Fhir.Specification.Tests
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
 
         [Fact]
-        public async T.Task ExpansionOfWholeSystem()
+        public async Tasks.Task ExpansionOfWholeSystem()
         {
-            var issueTypeVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
+            var result = await _resolverWithoutExpansions.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type");
+            var issueTypeVs = result.Value.DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
@@ -73,9 +75,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task ExpansionOfComposeInclude()
+        public async Tasks.Task ExpansionOfComposeInclude()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/resource-security-category")).DeepCopy() as ValueSet;
+            var result = await _resolver.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/resource-security-category");
+            var testVs = result.Value.DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
@@ -85,9 +88,10 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async T.Task ExpansionOfComposeImport()
+        public async Tasks.Task ExpansionOfComposeImport()
         {
-            var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version")).DeepCopy() as ValueSet;
+            var result = await _resolverWithoutExpansions.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version");
+            var testVs = result.Value.DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
@@ -102,9 +106,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task TestIncludeDesignation()
+        public async Tasks.Task TestIncludeDesignation()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
+            var result = await _resolver.TryResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus");
+            var testVs = result.Value.DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
 
@@ -161,7 +166,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task TestPropertyRetrieval()
+        public async Tasks.Task TestPropertyRetrieval()
         {
             var testCs = await _resolver.FindCodeSystemAsync("http://hl7.org/fhir/item-type");
 
@@ -173,7 +178,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        private async T.Task testServiceAsync(ITerminologyService svc)
+        private async Tasks.Task testServiceAsync(ITerminologyService svc)
         {
             var vsUrl = "http://hl7.org/fhir/ValueSet/administrative-gender";
             var result = await validateCodedValue(svc, vsUrl, code: "female", system: "http://hl7.org/fhir/administrative-gender");
@@ -220,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTSDisplayIncorrectAsWarningAsync()
+        public async Tasks.Task LocalTSDisplayIncorrectAsWarningAsync()
         {
             var svc = new LocalTerminologyService(_resolver);
 
@@ -237,7 +242,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async void LocalTSDisplayIncorrectAsMessage()
+        public async Tasks.Task LocalTSDisplayIncorrectAsMessage()
         {
             var svc = new LocalTerminologyService(_resolver);
             var inParams = new ValidateCodeParameters()
@@ -260,7 +265,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTermServiceValidateCodeTest()
+        public async Tasks.Task LocalTermServiceValidateCodeTest()
         {
             var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
@@ -283,7 +288,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async void LocalTermServiceValidateCodeWithParamsTest()
+        public async Tasks.Task LocalTermServiceValidateCodeWithParamsTest()
         {
             var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
@@ -319,10 +324,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
+        public async Tasks.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -335,15 +340,15 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
+            Assert.Equal(System.Net.HttpStatusCode.BadRequest, exception.Status);
         }
 
 
         [Fact]
-        public async T.Task LocalTermServiceUsingDuplicateParameters()
+        public async Tasks.Task LocalTermServiceUsingDuplicateParameters()
         {
             var svc = new LocalTerminologyService(_resolver);
-            var inParams = new Parameters
+            var inParams = new ValidateCodeParameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -366,11 +371,11 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var exception = await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, exception.Status);
+            Assert.Equal(System.Net.HttpStatusCode.BadRequest, exception.Status);
         }
 
         [Fact]
-        public async T.Task LocalTermServiceValidateCodeFromImplicitValueSet()
+        public async Tasks.Task LocalTermServiceValidateCodeFromImplicitValueSet()
         {
             var csUrl = "http://fire.ly/CodeSystem/test-cs";
             var customResolver = new OnlyCodeSystemResolver(csUrl);
@@ -385,11 +390,11 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async T.Task TestOperationOutcomesAsync()
+        public async Tasks.Task TestOperationOutcomesAsync()
         {
             var svc = new LocalTerminologyService(_resolver);
 
-            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", system: "test", context: "Partient.gender");
 
             isSuccess(result).Should().BeFalse();
             getMessage(result).Should().Contain("does not exist in the value set");
@@ -397,7 +402,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceTranslateSimpleTranslate()
+        public async Tasks.Task ExternalServiceTranslateSimpleTranslate()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -445,7 +450,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceTranslateSimpleAutomap()
+        public async Tasks.Task ExternalServiceTranslateSimpleAutomap()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -463,7 +468,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
+        public async Tasks.Task ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -499,7 +504,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupInactiveStatus()
+        public async Tasks.Task ExternalServiceLookupInactiveStatus()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -531,7 +536,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceLookupSNOMEDCode()
+        public async Tasks.Task ExternalServiceLookupSNOMEDCode()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -546,7 +551,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceExpandExplicitValueSet()
+        public async Tasks.Task ExternalServiceExpandExplicitValueSet()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -557,7 +562,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceExpandImplicitValueSetWithFilter()
+        public async Tasks.Task ExternalServiceExpandImplicitValueSetWithFilter()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -615,14 +620,14 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceSubsumesConceptASubsumesConceptB()
+        public async Tasks.Task ExternalServiceSubsumesConceptASubsumesConceptB()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new SubsumesParameters()
-                .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
-                .Build();
+                .WithCode(codeA: "235856003", codeB: "3738000",
+                    system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430");
 
             var result = await svc.Subsumes(parameters);
 
@@ -633,11 +638,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-
-
-
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceValidateCodeTest()
+        public async Tasks.Task ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
@@ -653,7 +655,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async T.Task FallbackServiceValidateCodeTestAsync()
+        public async Tasks.Task FallbackServiceValidateCodeTestAsync()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
@@ -668,7 +670,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async void FallbackServiceValidateCodeWithParamsTest()
+        public async Tasks.Task FallbackServiceValidateCodeWithParamsTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
@@ -685,7 +687,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async T.Task FallbackServiceValidateCodeTestWithVS()
+        public async Tasks.Task FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
             var service = new ExternalTerminologyService(client);
@@ -708,7 +710,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
         /// </summary>
         [Fact, Trait("Category", "LongRunner")]
-        public async T.Task RunValueSetExpanderMultiThreaded()
+        public async Tasks.Task RunValueSetExpanderMultiThreaded()
         {
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<(string uri, int total)>();
@@ -757,9 +759,65 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [Fact]
+        public void TestValidateCodeParametersCode()
+        {
+            var parameters = new ValidateCodeParameters()
+                .WithCode("bar", "http://foo.com", "1.0.4", "barDisplay", "nl-NL", "Patient.gender", true);
+
+            parameters.Code.Value.Should().Be("bar");
+            parameters.System.Value.Should().Be("http://foo.com");
+            parameters.SystemVersion.Value.Should().Be("1.0.4");
+            parameters.DisplayLanguage.Value.Should().Be("nl-NL");
+            parameters.Display.Value.Should().Be("barDisplay");
+            parameters.Context.Value.Should().Be("Patient.gender");
+            parameters.InferSystem.Value.Should().Be(true);
+
+            var paramResource = parameters;
+
+            paramResource.Parameter.Should().HaveCount(7);
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "code" && ((Code)p.Value).Value == "bar");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "system" && ((FhirUri)p.Value).Value == "http://foo.com");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "systemVersion" && ((FhirString)p.Value).Value == "1.0.4");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "display" && ((FhirString)p.Value).Value == "barDisplay");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "displayLanguage" && ((Code)p.Value).Value == "nl-NL");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "context" && ((FhirUri)p.Value).Value == "Patient.gender");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "inferSystem" && ((FhirBoolean)p.Value).Value == true);
+        }
+
+        [Fact]
+        public void TestValidateCodeParametersValueSet()
+        {
+            var parameters = new ValidateCodeParameters()
+               .WithValueSet("http://foo.bar", "Patient.gender", new ValueSet(), "1.0.4");
+
+            parameters.Url.Value.Should().Be("http://foo.bar");
+            parameters.Context.Value.Should().Be("Patient.gender");
+            parameters.ValueSet.Should().NotBeNull();
+            parameters.ValueSetVersion.Value.Should().Be("1.0.4");
+
+            var paramResource = parameters;
+
+            paramResource.Parameter.Should().HaveCount(4);
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "url" && ((FhirUri)p.Value).Value == "http://foo.bar");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "context" && ((FhirUri)p.Value).Value == "Patient.gender");
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "valueSet" && ((ValueSet)p.Resource) != null);
+            paramResource.Parameter.Should().ContainSingle(p => p.Name == "valueSetVersion" && ((FhirString)p.Value).Value == "1.0.4");
+
+
+            parameters = new ValidateCodeParameters()
+              .WithValueSet(new Canonical("http://foo.bar/ValueSet/foo|1.0.4#fragment"));
+            parameters.Url.Value.Should().Be("http://foo.bar/ValueSet/foo#fragment");
+            parameters.ValueSetVersion.Value.Should().Be("1.0.4");
+
+            parameters = new ValidateCodeParameters()
+              .WithValueSet(new Canonical("#fragment"));
+            parameters.Url.Value.Should().Be("#fragment");
+        }
+
 
         #region helper functions
-        private static T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
+        private static Tasks.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
             string system = null, string version = null, string display = null,
             Coding coding = null, CodeableConcept codeableConcept = null)
         {
@@ -793,10 +851,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                return await T.Task.FromResult(uri == _myOnlyVS.Url) ? _myOnlyVS : null;
+                return await Tasks.Task.FromResult(uri == _myOnlyVS.Url) ? _myOnlyVS : null;
             }
-
+            
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+
+            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
+
+            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _myOnlyVS.Url ? _myOnlyVS : ResolverException.NotFound());
+
         }
 
         private class OnlyCodeSystemResolver : IAsyncResourceResolver, ICommonConformanceSource
@@ -843,10 +906,20 @@ namespace Hl7.Fhir.Specification.Tests
             }
             public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => throw new NotImplementedException();
             public Resource ResolveByCanonicalUri(string uri) => throw new NotImplementedException();
+            public ResolverResult TryResolveByUri(string uri) => throw new NotImplementedException();
+
+            public ResolverResult TryResolveByCanonicalUri(string uri) => throw new NotImplementedException();
+
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                return await T.Task.FromResult(uri == _onlyCs.Url ? _onlyCs : null);
+                var resource = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+                return resource.Value;
             }
+
+            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
+
+            public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult<ResolverResult>(uri == _onlyCs.Url ? _onlyCs : ResolverException.NotFound());
+
             public Resource ResolveByUri(string uri) => throw new NotImplementedException();
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
             public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
@@ -854,4 +927,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-

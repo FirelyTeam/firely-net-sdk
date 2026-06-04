@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -15,8 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
-using T = System.Threading.Tasks;
+using System.Xml.Linq;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -25,7 +28,7 @@ namespace Hl7.Fhir.Tests.Serialization
     {
         private readonly FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         private readonly FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
-        private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+        private readonly FhirXmlDeserializer _fhirXmlDeserializer = new FhirXmlDeserializer();
 
         [TestMethod]
         public void TestConstructSystemTextJsonSerializer()
@@ -34,31 +37,31 @@ namespace Hl7.Fhir.Tests.Serialization
             var p = new Patient
             {
                 BirthDate = "1972-11-30",     // present in both summary and full
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+                Photo = [new Attachment() { ContentType = "text/plain" }]
             };
 
 
             var jsonText = JsonSerializer.Serialize(p, options);
-            Assert.IsTrue(jsonText.Contains("birthDate"));
+            Assert.Contains("birthDate", jsonText);
         }
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
-        public async T.Task TestSummary()
+        public async Tasks.Task TestSummary()
         {
             var p = new Patient
             {
                 BirthDate = "1972-11-30",     // present in both summary and full
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+                Photo = [new Attachment() { ContentType = "text/plain" }]
             };
 
-            var full = await FhirXmlSerializer.SerializeToStringAsync(p);
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
+            var full = FhirXmlSerializer.SerializeToString(p);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
-            var summ = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
-            Assert.IsTrue(summ.Contains("<birthDate"));
-            Assert.IsFalse(summ.Contains("<photo"));
+            var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            Assert.Contains("<birthDate", summ);
+            Assert.DoesNotContain("<photo", summ);
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
             var q = new Questionnaire();
@@ -66,79 +69,77 @@ namespace Hl7.Fhir.Tests.Serialization
             q.Status = PublicationStatus.Active;
             q.Date = "2015-09-27";
             q.Title = "TITLE";
-            q.Item = new List<Questionnaire.ItemComponent>();
-            q.Item.Add(new Questionnaire.ItemComponent()
-            {
-                LinkId = "linkid",
-                Text = new Markdown("TEXT")
-            });
+            q.Item =
+            [
+                new Questionnaire.ItemComponent() { LinkId = "linkid", Text = new Markdown("TEXT") }
+            ];
 
             Assert.IsNull(q.Meta, "Meta element has not been created.");
-            var qfull = await FhirXmlSerializer.SerializeToStringAsync(q);
+            var qfull = FhirXmlSerializer.SerializeToString(q);
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
             Console.WriteLine("summary: Fhir.Rest.SummaryType.False");
             Console.WriteLine(qfull);
-            Assert.IsTrue(qfull.Contains("Test Questionnaire"));
-            Assert.IsTrue(qfull.Contains("<status value=\"active\""));
-            Assert.IsTrue(qfull.Contains("<date value=\"2015-09-27\""));
-            Assert.IsTrue(qfull.Contains("<title value=\"TITLE\""));
-            Assert.IsTrue(qfull.Contains("<text value=\"TEXT\""));
-            Assert.IsTrue(qfull.Contains("<linkId value=\"linkid\""));
+            Assert.Contains("Test Questionnaire", qfull);
+            Assert.Contains("<status value=\"active\"", qfull);
+            Assert.Contains("<date value=\"2015-09-27\"", qfull);
+            Assert.Contains("<title value=\"TITLE\"", qfull);
+            Assert.Contains("<text value=\"TEXT\"", qfull);
+            Assert.Contains("<linkId value=\"linkid\"", qfull);
 
-            var qSum = await FhirXmlSerializer.SerializeToStringAsync(q, summary: Fhir.Rest.SummaryType.True);
+            var qSum = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.True);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.True");
             Console.WriteLine(qSum);
-            Assert.IsFalse(qSum.Contains("Test Questionnaire"));
-            Assert.IsTrue(qSum.Contains("<status value=\"active\""));
-            Assert.IsTrue(qSum.Contains("<date value=\"2015-09-27\""));
-            Assert.IsTrue(qSum.Contains("<title value=\"TITLE\""));
-            Assert.IsFalse(qSum.Contains("<text value=\"TEXT\""));
-            Assert.IsFalse(qSum.Contains("<linkId value=\"linkid\""));
+            Assert.DoesNotContain("Test Questionnaire", qSum);
+            Assert.Contains("<status value=\"active\"", qSum);
+            Assert.Contains("<date value=\"2015-09-27\"", qSum);
+            Assert.Contains("<title value=\"TITLE\"", qSum);
+            Assert.DoesNotContain("<text value=\"TEXT\"", qSum);
+            Assert.DoesNotContain("<linkId value=\"linkid\"", qSum);
 
-            var qData = await FhirXmlSerializer.SerializeToStringAsync(q, summary: Fhir.Rest.SummaryType.Data);
+            var qData = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Data);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Data");
             Console.WriteLine(qData);
-            Assert.IsFalse(qData.Contains("Test Questionnaire"));
-            Assert.IsTrue(qData.Contains("<meta"));
-            Assert.IsTrue(qData.Contains("<text value=\"TEXT\""));
-            Assert.IsTrue(qData.Contains("<status value=\"active\""));
-            Assert.IsTrue(qData.Contains("<date value=\"2015-09-27\""));
-            Assert.IsTrue(qData.Contains("<title value=\"TITLE\""));
-            Assert.IsTrue(qData.Contains("<linkId value=\"linkid\""));
+            Assert.DoesNotContain("Test Questionnaire", qData);
+            Assert.Contains("<meta", qData);
+            Assert.Contains("<text value=\"TEXT\"", qData);
+            Assert.Contains("<status value=\"active\"", qData);
+            Assert.Contains("<date value=\"2015-09-27\"", qData);
+            Assert.Contains("<title value=\"TITLE\"", qData);
+            Assert.Contains("<linkId value=\"linkid\"", qData);
 
             q.Meta = new Meta { VersionId = "v2" };
-            var qText = await FhirXmlSerializer.SerializeToStringAsync(q, summary: Fhir.Rest.SummaryType.Text);
+            var qText = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Text);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Text");
             Console.WriteLine(qText);
-            Assert.IsTrue(qText.Contains("Test Questionnaire"));
-            Assert.IsTrue(qText.Contains("<meta"));
-            Assert.IsTrue(qText.Contains("<status value=\"active\""));
-            Assert.IsFalse(qText.Contains("<text value=\"TEXT\""));
-            Assert.IsFalse(qText.Contains("<date value=\"2015-09-27\""));
-            Assert.IsFalse(qText.Contains("<title value=\"TITLE\""));
-            Assert.IsFalse(qText.Contains("<linkId value=\"linkid\""));
-            Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.Contains("Test Questionnaire", qText);
+            Assert.Contains("<meta", qText);
+            Assert.Contains("<status value=\"active\"", qText);
+            Assert.DoesNotContain("<text value=\"TEXT\"", qText);
+            Assert.DoesNotContain("<date value=\"2015-09-27\"", qText);
+            Assert.DoesNotContain("<title value=\"TITLE\"", qText);
+            Assert.DoesNotContain("<linkId value=\"linkid\"", qText);
+            Assert.AreEqual(0, q.Meta.Tag.Count(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED"), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
             // make sure we accept the crappy output with empty groups
             var nav = await FhirXmlNode.ParseAsync(qText, new FhirXmlParsingSettings { PermissiveParsing = true });
 
-            var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
-            Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            var qInflate = nav.ToPoco<Questionnaire>();
+            Assert.AreEqual(1, qInflate.Meta.Tag.Count(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED"), "Subsetted Tag should not still be there.");
         }
 
         [TestMethod]
-        public async T.Task TestIncludeMandatory()
+        public void TestIncludeMandatory()
         {
             var l = new Library();
             l.Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") };
             l.Id = "testId";
             l.Language = "testLang";
-            var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(l, Fhir.Rest.SummaryType.Count);
+            var summaryElements = FhirXmlSerializer.SerializeToString(l, Fhir.Rest.SummaryType.Count);
 
-            Assert.IsFalse(summaryElements.Contains("<language"));
-            Assert.IsTrue(summaryElements.Contains("<type>"));
-            Assert.IsTrue(summaryElements.Contains("<id value=\"testId\""));
+            Assert.DoesNotContain("<language", summaryElements);
+            Assert.Contains("<type>", summaryElements);
+            Assert.Contains("<id value=\"testId\"", summaryElements);
 
             var customMaskingNode = new MaskingNode(new ScopedNode(l.ToTypedElement()), new MaskingNodeSettings
             {
@@ -146,11 +147,11 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
-            var result = await customMaskingNode.ToXmlAsync(settings: new FhirXmlSerializationSettings());
+            var result = customMaskingNode.ToXml();
 
-            Assert.IsFalse(result.Contains("<language>"));
-            Assert.IsTrue(result.Contains("<type>"));
-            Assert.IsFalse(result.Contains("<id value=\"testId\""));
+            Assert.DoesNotContain("<language>", result);
+            Assert.Contains("<type>", result);
+            Assert.DoesNotContain("<id value=\"testId\"", result);
 
             var b = new Bundle
             {
@@ -168,57 +169,52 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.None
             });
 
-            result = await customMaskingNodeForBundle.ToXmlAsync(settings: new FhirXmlSerializationSettings());
+            result = customMaskingNodeForBundle.ToXml();
 
-            Assert.IsTrue(result.Contains("<type value=\"collection\""));
-            Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
+            Assert.Contains("<type value=\"collection\"", result);
+            Assert.DoesNotContain("<id value=\"bundle-id\"", result);
         }
 
         [TestMethod]
-        public async T.Task TestElements()
+        public void TestElements()
         {
             var p = new Patient
             {
                 BirthDate = "1972-11-30",
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+                Photo = [new Attachment() { ContentType = "text/plain" }]
             };
             var elements = new[] { "photo" };
 
-            var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.False, elements: elements);
-            Assert.IsFalse(summaryElements.Contains("<birthDate"));
-            Assert.IsTrue(summaryElements.Contains("<photo"));
+            var summaryElements = FhirXmlSerializer.SerializeToString(p, SummaryType.False, elements: elements);
+            Assert.DoesNotContain("<birthDate", summaryElements);
+            Assert.Contains("<photo", summaryElements);
 
-            var noSummarySpecified = await FhirXmlSerializer.SerializeToStringAsync(p, elements: elements);
-            Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
-            Assert.IsTrue(noSummarySpecified.Contains("<photo"));
-
-            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.True, elements: elements));
-            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Count, elements: elements));
-            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Data, elements: elements));
-            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Text, elements: elements));
+            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, SummaryType.False, elements: elements);
+            Assert.DoesNotContain("<birthDate", noSummarySpecified);
+            Assert.Contains("<photo", noSummarySpecified);
         }
 
         [TestMethod]
-        public async T.Task TestWithMetadata()
+        public void TestWithMetadata()
         {
             var p = new Patient
             {
                 BirthDate = "1972-11-30"
             };
 
-            var pSum = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
+            var pSum = FhirXmlSerializer.SerializeToString(p, summary: SummaryType.True);
             Assert.IsNull(p.Meta, "Meta should not be there");
 
             p.Meta = new Meta { VersionId = "v2" }; // introducing meta data ourselves. 
 
-            pSum = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
+            pSum = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsNotNull(p.Meta, "Meta should still be there");
-            Assert.AreEqual(0, p.Meta.Tag.Where(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.AreEqual(0, p.Meta.Tag.Count(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED"), "Subsetted Tag should not still be there.");
         }
 
 
         [TestMethod]
-        public async T.Task TestBundleSummary()
+        public void TestBundleSummary()
         {
             var p = new Patient
             {
@@ -231,43 +227,39 @@ namespace Hl7.Fhir.Tests.Serialization
             b.Total = 1;
             b.Type = Bundle.BundleType.Searchset;
 
-            var full = await FhirXmlSerializer.SerializeToStringAsync(b);
-            Assert.IsTrue(full.Contains("<entry"));
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
-            Assert.IsTrue(full.Contains("<total"));
+            var full = FhirXmlSerializer.SerializeToString(b);
+            Assert.Contains("<entry", full);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
+            Assert.Contains("<total", full);
 
-            var summ = await FhirXmlSerializer.SerializeToStringAsync(b, summary: Fhir.Rest.SummaryType.True);
-            Assert.IsTrue(summ.Contains("<entry"));
-            Assert.IsTrue(summ.Contains("<birthDate"));
-            Assert.IsFalse(summ.Contains("<photo"));
-            Assert.IsTrue(summ.Contains("<total"));
+            var summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.True);
+            Assert.Contains("<entry", summ);
+            Assert.Contains("<birthDate", summ);
+            Assert.DoesNotContain("<photo", summ);
+            Assert.Contains("<total", summ);
 
-            summ = await FhirXmlSerializer.SerializeToStringAsync(b, summary: Fhir.Rest.SummaryType.Count);
-            Assert.IsFalse(summ.Contains("<entry"));
-            Assert.IsFalse(summ.Contains("<birthDate"));
-            Assert.IsFalse(summ.Contains("<photo"));
-            Assert.IsTrue(summ.Contains("<total"));
-            Assert.IsTrue(summ.Contains("<type"));
+            summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.Count);
+            Assert.DoesNotContain("<entry", summ);
+            Assert.DoesNotContain("<birthDate", summ);
+            Assert.DoesNotContain("<photo", summ);
+            Assert.Contains("<total", summ);
+            Assert.Contains("<type", summ);
         }
 
         [TestMethod]
-        public async T.Task TestBundleWithSummaryJson()
+        [DataRow("summary/bundle-summary-true.json", SummaryType.True)]
+        [DataRow("summary/bundle-summary-false.json", SummaryType.False)]
+        [DataRow("summary/bundle-summary-data.json", SummaryType.Data)]
+        [DataRow("summary/bundle-summary-text.json", SummaryType.Text)]
+        [DataRow("summary/bundle-summary-count.json", SummaryType.Count)]
+        [DataRow("summary/bundle-summary-true.xml", SummaryType.True)]
+        [DataRow("summary/bundle-summary-false.xml", SummaryType.False)]
+        [DataRow("summary/bundle-summary-data.xml", SummaryType.Data)]
+        [DataRow("summary/bundle-summary-text.xml", SummaryType.Text)]
+        [DataRow("summary/bundle-summary-count.xml", SummaryType.Count)]
+        public void TestBundleWithSummaryJson(string expectedFile, SummaryType mode)
         {
-            Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
-            {
-                { "summary\\bundle-summary-true.json", SummaryType.True },
-                { "summary\\bundle-summary-false.json", SummaryType.False },
-                { "summary\\bundle-summary-data.json", SummaryType.Data },
-                { "summary\\bundle-summary-text.json", SummaryType.Text },
-                { "summary\\bundle-summary-count.json", SummaryType.Count },
-                { "summary\\bundle-summary-true.xml", SummaryType.True },
-                { "summary\\bundle-summary-false.xml", SummaryType.False },
-                { "summary\\bundle-summary-data.xml", SummaryType.Data },
-                { "summary\\bundle-summary-text.xml", SummaryType.Text },
-                { "summary\\bundle-summary-count.xml", SummaryType.Count }
-            };
-
             var patientOne = new Patient
             {
 
@@ -288,7 +280,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Active = true,
                 Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "bb-king" },
-                Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
+                Name = [new HumanName { Family = "King", Use = HumanName.NameUse.Nickname }]
             };
 
             var bundle = new Bundle()
@@ -296,76 +288,78 @@ namespace Hl7.Fhir.Tests.Serialization
                 Id = "my-bundle",
                 Total = 1803,
                 Type = Bundle.BundleType.Searchset,
-                Entry = new List<Bundle.EntryComponent> {
-                        new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
-                        new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
+                Entry =
+                [
+                    new()
+                    {
+                        Resource = patientOne,
+                        FullUrl = "http://base/Patient/patient-one",
+                        Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match }
+                    },
+                    new()
+                    {
+                        Resource = patientTwo,
+                        FullUrl = "http://base/Patient/patient-two",
+                        Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match }
                     }
+                ]
             };
 
-            foreach (var pair in data)
-            {
-                var expectedFile = pair.Key;
-                var mode = pair.Value;
-
                 bool inJson = Path.GetExtension(expectedFile) == ".json";
-                var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(bundle, mode) :
-                                    await FhirXmlSerializer.SerializeToStringAsync(bundle, mode);
+            var actualData = inJson ? FhirJsonSerializer.SerializeToString(bundle, mode) :
+                                FhirXmlSerializer.SerializeToString(bundle, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
-                Assert.AreEqual(actualData, expectedData);
-            }
+
+            if(inJson)
+                JsonAssert.AreSame(expectedFile, expectedData, actualData);
+            else
+                XmlAssert.AreSame(expectedFile, XDocument.Parse(expectedData), XDocument.Parse(actualData));
         }
 
         [TestMethod]
-        public async T.Task TestResourceWithSummary()
+        [DataRow("summary/summary-true.json", SummaryType.True)]
+        [DataRow("summary/summary-false.json", SummaryType.False)]
+        [DataRow("summary/summary-data.json", SummaryType.Data)]
+        [DataRow("summary/summary-text.json", SummaryType.Text)]
+        [DataRow("summary/summary-true.xml", SummaryType.True)]
+        [DataRow("summary/summary-false.xml", SummaryType.False)]
+        [DataRow("summary/summary-data.xml", SummaryType.Data)]
+        [DataRow("summary/summary-text.xml", SummaryType.Text)]
+        public void TestResourceWithSummary(string expectedFile, SummaryType mode)
         {
-            Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
+            var patientOne = new Patient
             {
-                { "summary\\summary-true.json", SummaryType.True },
-                { "summary\\summary-false.json", SummaryType.False },
-                { "summary\\summary-data.json", SummaryType.Data },
-                { "summary\\summary-text.json", SummaryType.Text },
-                { "summary\\summary-true.xml", SummaryType.True },
-                { "summary\\summary-false.xml", SummaryType.False },
-                { "summary\\summary-data.xml", SummaryType.Data },
-                { "summary\\summary-text.xml", SummaryType.Text }
+
+                Id = "patient-one",
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
+                Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
             };
 
-            foreach (var pair in data)
-            {
-                var expectedFile = pair.Key;
-                var mode = pair.Value;
+            bool inJson = Path.GetExtension(expectedFile) == ".json";
+        var actualData = inJson ? FhirJsonSerializer.SerializeToString(patientOne, mode) :
+                            FhirXmlSerializer.SerializeToString(patientOne, mode);
+            var expectedData = TestDataHelper.ReadTestData(expectedFile);
 
-                var patientOne = new Patient
-                {
-
-                    Id = "patient-one",
-                    Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
-                    Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
-
-                    Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
-
-                    Active = true,
-                    BirthDate = "2015-07-09",
-                    Gender = AdministrativeGender.Male
-                };
-
-                // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
-                bool inJson = Path.GetExtension(expectedFile) == ".json";
-                var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(patientOne, mode) :
-                                    await FhirXmlSerializer.SerializeToStringAsync(patientOne, mode);
-                var expectedData = TestDataHelper.ReadTestData(expectedFile);
-                Assert.AreEqual(expectedData, actualData, $"SummaryType.{mode} in file {pair.Key}");
-            }
+        if(inJson)
+            JsonAssert.AreSame(expectedFile, expectedData, actualData);
+        else
+            XmlAssert.AreSame(expectedFile, XDocument.Parse(expectedData), XDocument.Parse(actualData));
         }
 
         [TestMethod]
-        public async T.Task TestIdInSummary()
+        public void TestIdInSummary()
         {
             var p = new Patient
             {
                 Id = "test-id-1",
                 BirthDate = "1972-11-30",     // present in both summary and full
-                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } },
+                Photo = [new Attachment() { ContentType = "text/plain", Creation = "45" }],
                 ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" },
 
                 Text = new Narrative
@@ -373,50 +367,47 @@ namespace Hl7.Fhir.Tests.Serialization
                     Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Some test narrative</div>"
                 },
                 Meta = new Meta(),
-                Contained = new List<Resource>
-                {
-                    new Organization() { Id = "temp", Name = "temp org", Active = true }
-                }
+                Contained = [new Organization() { Id = "temp", Name = "temp org", Active = true }]
             };
 
             p.AddExtension("http://example.org/ext", new FhirString("dud"));
 
-            var full = await FhirXmlSerializer.SerializeToStringAsync(p);
-            Assert.IsTrue(full.Contains("narrative"));
-            Assert.IsTrue(full.Contains("dud"));
-            Assert.IsTrue(full.Contains("temp org"));
-            Assert.IsTrue(full.Contains("<id value="));
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
-            Assert.IsTrue(full.Contains("text/plain"));
+            var full = FhirXmlSerializer.SerializeToString(p);
+            Assert.Contains("narrative", full);
+            Assert.Contains("dud", full);
+            Assert.Contains("temp org", full);
+            Assert.Contains("<id value=", full);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
+            Assert.Contains("text/plain", full);
 
-            full = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Hl7.Fhir.Rest.SummaryType.False);
-            Assert.IsTrue(full.Contains("narrative"));
-            Assert.IsTrue(full.Contains("dud"));
-            Assert.IsTrue(full.Contains("temp org"));
-            Assert.IsTrue(full.Contains("contain"));
-            Assert.IsTrue(full.Contains("<id value="));
-            Assert.IsTrue(full.Contains("<birthDate"));
-            Assert.IsTrue(full.Contains("<photo"));
-            Assert.IsTrue(full.Contains("text/plain"));
+            full = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.False);
+            Assert.Contains("narrative", full);
+            Assert.Contains("dud", full);
+            Assert.Contains("temp org", full);
+            Assert.Contains("contain", full);
+            Assert.Contains("<id value=", full);
+            Assert.Contains("<birthDate", full);
+            Assert.Contains("<photo", full);
+            Assert.Contains("text/plain", full);
 
-            var summ = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
-            Assert.IsFalse(summ.Contains("narrative"));
-            Assert.IsFalse(summ.Contains("dud"));
-            Assert.IsFalse(summ.Contains("contain"));
-            Assert.IsTrue(summ.Contains("temp org"));
-            Assert.IsTrue(summ.Contains("<id value="));
-            Assert.IsTrue(summ.Contains("<birthDate"));
-            Assert.IsFalse(summ.Contains("<photo"));
+            var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            Assert.DoesNotContain("narrative", summ);
+            Assert.DoesNotContain("dud", summ);
+            Assert.DoesNotContain("contain", summ);
+            Assert.Contains("temp org", summ);
+            Assert.Contains("<id value=", summ);
+            Assert.Contains("<birthDate", summ);
+            Assert.DoesNotContain("<photo", summ);
 
-            var data = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
-            Assert.IsFalse(data.Contains("narrative"));
-            Assert.IsTrue(data.Contains("contain"));
-            Assert.IsTrue(data.Contains("dud"));
-            Assert.IsTrue(data.Contains("temp org"));
-            Assert.IsTrue(data.Contains("<id value="));
-            Assert.IsTrue(data.Contains("<birthDate"));
-            Assert.IsTrue(data.Contains("<photo"));
+            var data = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
+            Assert.DoesNotContain("narrative", data);
+            Assert.Contains("contain", data);
+            Assert.Contains("dud", data);
+            Assert.Contains("temp org", data);
+            Assert.Contains("<id value=", data);
+            Assert.Contains("<birthDate", data);
+            Assert.Contains("<photo", data);
         }
     }
 }

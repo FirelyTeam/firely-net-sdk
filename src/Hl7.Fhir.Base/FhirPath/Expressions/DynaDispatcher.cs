@@ -1,16 +1,18 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.Model.PocoNode>;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -25,18 +27,19 @@ namespace Hl7.FhirPath.Expressions
         private readonly string _name;
         private readonly SymbolTable _scope;
 
-        public IEnumerable<ITypedElement> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public FocusCollection Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            var actualArgs = new List<IEnumerable<ITypedElement>>();
+            var actualArgs = new List<FocusCollection>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
-            if (!focus.Any()) return ElementNode.EmptyList;
+            context.focus = focus;
+            if (!focus.Any()) return [];
 
             actualArgs.Add(focus);
             var newCtx = context.Nest(focus);
 
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa=>!aa.Any())) return ElementNode.EmptyList;
+            if (actualArgs.Any(aa => !aa.Any())) return [];
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 
@@ -46,9 +49,13 @@ namespace Hl7.FhirPath.Expressions
                 {
                     // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
                     // Need to clean up this duplicate logic later
+                    var argFuncs = actualArgs.Select(InvokeeFactory.Return);
+                    var result = entry(context, argFuncs);
 
-                    var argFuncs = actualArgs.Select(arg => InvokeeFactory.Return(arg));
-                    return entry(context, argFuncs);
+                    // Dynamically dispatched function arguments aren't wrapped
+                    // for the debug/trace, so need to manually put the focus back
+                    context.focus = focus;
+                    return result;
                 }
                 catch (TargetInvocationException tie)
                 {

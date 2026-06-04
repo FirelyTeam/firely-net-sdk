@@ -56,10 +56,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsNotNull(parsed);
             Assert.IsNotNull(parsed.Differential?.Element);
-            Assert.AreEqual(1, parsed.Differential.Element.Count);
+            Assert.HasCount(1, parsed.Differential.Element);
             var examples = parsed.Differential.Element[0].Example;
             Assert.IsNotNull(examples);
-            Assert.AreEqual(1, examples.Count);
+            Assert.HasCount(1, examples);
             var example = examples[0];
             Assert.IsNotNull(example);
             Assert.AreEqual(orgExample.Label, example.Label);
@@ -72,11 +72,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var xmlFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.xml");
-            var xml = await new FhirXmlSerializer().SerializeToStringAsync(resource);
+            var xml = new FhirXmlSerializer().SerializeToString(resource);
             await File.WriteAllTextAsync(xmlFile, xml);
 
             xml = await File.ReadAllTextAsync(xmlFile);
-            var parsed = await new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(xml);
+            var parsed = new FhirXmlDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable)).Deserialize<T>(xml);
 
             return parsed;
         }
@@ -86,11 +86,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var jsonFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.json");
-            var json = await new FhirJsonSerializer().SerializeToStringAsync(resource);
+            var json = new FhirJsonSerializer().SerializeToString(resource);
             await File.WriteAllTextAsync(jsonFile, json);
 
             json = await File.ReadAllTextAsync(jsonFile);
-            var parsed = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(json);
+            var parsed = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable)).Deserialize<T>(json);
 
             return parsed;
         }

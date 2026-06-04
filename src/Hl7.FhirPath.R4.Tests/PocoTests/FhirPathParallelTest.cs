@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Vonk.FhirPath.R4.Tests
 {
@@ -17,25 +17,24 @@ namespace Vonk.FhirPath.R4.Tests
     public class FhirPathExtensionsTests
     {
         private static Dictionary<string, ValueSet> Resources;
-        private static TestContext Context;
+
+        public TestContext TestContext { get; set; }
 
         [ClassInitialize]
         public static void Initialize(TestContext ctx)
         {
-            Context = ctx;
             var specSource = ZipSource.CreateValidationSource();
 
             Resources = specSource.FindAll<ValueSet>().ToDictionary<ValueSet, string>(sd => sd.Url);
             //By putting all the url's in a dictionary we can be sure there are no duplicates. 
-
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public async T.Task TestSelectMethods()
+        public async Tasks.Task TestSelectMethods()
         {
-            await MassiveParallelSelectsShouldBeCorrect("Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
-            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context)));
+            await MassiveParallelSelectsShouldBeCorrect("Api", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
+            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => nav.Select(expr, context)));
         }
 
         /// <summary>
@@ -46,15 +45,14 @@ namespace Vonk.FhirPath.R4.Tests
         /// This may indicate a multithreading problem in the FhirPath evaluation.
         /// You may need to run the test in Release mode to reveal the error.
         /// </summary>
-        public static async T.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
+        public async Tasks.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
             var buffer = new BufferBlock<ValueSet>();
             var processor = new ActionBlock<ValueSet>(r =>
                 {
-                    var typedElement = r.ToTypedElement();
-                    var evalContext = new EvaluationContext(typedElement);
-                    var canonical = selector(typedElement, "url", evalContext).Single().Value.ToString();
+                    var evalContext = new EvaluationContext();
+                    var canonical = selector(r.ToPocoNode(), "url", evalContext).Single().Value.ToString();
                     actual.Add((canonical, r));
                 }
                 ,
@@ -74,7 +72,7 @@ namespace Vonk.FhirPath.R4.Tests
             buffer.Complete();
             await processor.Completion;
             sw.Stop();
-            Context.WriteLine($"Extracting urls took {sw.Elapsed.ToString("c")} ms");
+            TestContext.WriteLine($"Extracting urls took {sw.Elapsed.ToString("c")} ms");
 
             Assert.AreEqual(actual.Count(), resources.Count(), $"{testName}: All Resources should have a url.");
             Assert.IsFalse(actual
@@ -127,12 +125,11 @@ namespace Vonk.FhirPath.R4.Tests
         }
 
 
-        public static IEnumerable<ITypedElement> Select(this ITypedElement input, string expression, EvaluationContext ctx = null)
+        public static IEnumerable<ITypedElement> Select(this PocoNode input, string expression, EvaluationContext ctx = null)
         {
             var evaluator = GetCompiledExpression(expression);
-            return evaluator(input, ctx ?? EvaluationContext.CreateDefault());
+            return evaluator(input, ctx ?? new EvaluationContext());
         }
 
     }
 }
-

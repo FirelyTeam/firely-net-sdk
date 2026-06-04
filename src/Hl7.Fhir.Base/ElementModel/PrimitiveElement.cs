@@ -54,9 +54,7 @@ namespace Hl7.Fhir.ElementModel
             InstanceType = useFullTypeName ? systemType.FullName : systemType.Name;
             Name = name ?? "@primitivevalue@";
         }
-
-
-
+        
 
         public string Name { get; private set; }
 

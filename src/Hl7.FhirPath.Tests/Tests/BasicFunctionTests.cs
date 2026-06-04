@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -10,9 +10,11 @@
 //extern alias dstu2;
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -23,14 +25,24 @@ namespace Hl7.FhirPath.Tests
     {
         private static void isB(string expr, object value = null)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(value ?? true);
-            Assert.IsTrue(dummy.IsBoolean(expr, true));
+            var dummyOrValue = PocoNode.ForAnyPrimitive(value ?? true);
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            Assert.IsTrue(evaluator.IsBoolean(true, dummyOrValue!, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() }));
         }
 
         private static object scalar(string expr)
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
-            return dummy.Scalar(expr);
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(null!, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
+        }
+
+        private static object scalar(PocoNode focus, string expr)
+        {
+            var compiler = new FhirPathCompiler();
+            var evaluator = compiler.Compile(expr, true);
+            return evaluator.Scalar(focus, new EvaluationContext() { DebugTracer = new DiagnosticsDebugTracer() });
         }
 
         [TestMethod]
@@ -39,7 +51,7 @@ namespace Hl7.FhirPath.Tests
 #pragma warning disable CS0618 // Type or member is internal
             var input = SourceNode.Node("root",
                     SourceNode.Valued("child", "Hello world!"),
-                    SourceNode.Valued("child", "4")).ToTypedElement();
+                    SourceNode.Valued("child", "4")).ToTypedElementLegacy();
 #pragma warning restore CS0618 // Type or member is internal
             Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
@@ -215,25 +227,25 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void StringConcatenationAndEmpty()
         {
-            ITypedElement dummy = ElementNode.ForPrimitive(true);
+            PocoNode dummy = PocoNode.ForAnyPrimitive(true);
 
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' + '' + 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'' + 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'DEF' + ''"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' + '' + 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'' + 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'DEF' + ''"));
 
-            Assert.IsNull(dummy.Scalar("{} + 'DEF'"));
-            Assert.IsNull(dummy.Scalar("'ABC' + {} + 'DEF'"));
-            Assert.IsNull(dummy.Scalar("'ABC' + {}"));
+            Assert.IsNull(scalar(dummy, "{} + 'DEF'"));
+            Assert.IsNull(scalar(dummy, "'ABC' + {} + 'DEF'"));
+            Assert.IsNull(scalar(dummy, "'ABC' + {}"));
 
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' & '' & 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'' & 'DEF'"));
-            Assert.AreEqual("DEF", dummy.Scalar("'DEF' & ''"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' & '' & 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'' & 'DEF'"));
+            Assert.AreEqual("DEF", scalar(dummy, "'DEF' & ''"));
 
-            Assert.AreEqual("DEF", dummy.Scalar("{} & 'DEF'"));
-            Assert.AreEqual("ABCDEF", dummy.Scalar("'ABC' & {} & 'DEF'"));
-            Assert.AreEqual("ABC", dummy.Scalar("'ABC' & {}"));
+            Assert.AreEqual("DEF", scalar(dummy, "{} & 'DEF'"));
+            Assert.AreEqual("ABCDEF", scalar(dummy, "'ABC' & {} & 'DEF'"));
+            Assert.AreEqual("ABC", scalar(dummy, "'ABC' & {}"));
 
-            Assert.IsNull(dummy.Scalar("'ABC' & {} & 'DEF' + {}"));
+            Assert.IsNull(scalar(dummy, "'ABC' & {} & 'DEF' + {}"));
         }
 
         [TestMethod]
@@ -260,6 +272,16 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        [DataRow("(1 | 2 | 3).indexOf(3)", 2)]
+        [DataRow("((1 | 2 | 3).combine(2)).indexOf(2, 2)", 3)]
+        [DataRow("((1 | 2 | 3).combine(2)).lastIndexOf(2)", 3)]
+        [DataRow("(1 | 2).combine(2 | 1).lastIndexOf(1, 2)", 0)]
+        public void TestStringIndexOf(string expr, int expected)
+        {
+            Assert.AreEqual(expected, scalar(expr));
+        }
+
+        [TestMethod]
         public void TestDivZero()
         {
             Assert.IsNull(scalar("1 / 0"));
@@ -273,32 +295,34 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void TestStringJoin()
         {
-            var dummy = ElementNode.CreateList("This ", "is ", "one ", "sentence", ".");
+            var dummy = PocoNode.FromList<FhirString>(["This ", "is ", "one ", "sentence", "."]);
             var result = dummy.FpJoin(string.Empty);
             Assert.IsNotNull(result);
             Assert.AreEqual("This is one sentence.", result);
 
-            dummy = ElementNode.CreateList("a", "b", "c");
+            dummy = PocoNode.FromList<FhirString>(["a", "b", "c"]);
             result = dummy.FpJoin();
             Assert.IsNotNull(result);
             Assert.AreEqual("abc", result);
 
-            dummy = ElementNode.CreateList();
+            dummy = PocoNode.FromList<FhirString>([]);
             result = dummy.FpJoin(string.Empty);
             Assert.AreEqual(string.Empty, result);
 
-            dummy = ElementNode.CreateList("This", "is", "a", "separated", "sentence.");
+            dummy = PocoNode.FromList<FhirString>(["This", "is", "a", "separated", "sentence."]);
             result = dummy.FpJoin(";");
             Assert.IsNotNull(result);
             Assert.AreEqual("This;is;a;separated;sentence.", result);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void TestStringJoinError()
         {
-            var dummy = ElementNode.CreateList("This", "is", "sentence", "with", 1, "number.");
-            dummy.FpJoin(string.Empty);
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                var dummy = PocoNode.FromList<FhirString>(["This", "is", "sentence", "with", 1, "number."]);
+                dummy.FpJoin(string.Empty);
+            });
         }
     }
 

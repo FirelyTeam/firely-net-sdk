@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -61,5 +62,12 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
+        [TestMethod]
+        public async System.Threading.Tasks.Task CapabilityStatementCopyrightCommentIssueTest()
+        {
+            const string copyrightComment = "...";
+
+            await appendTextIssueTest("CapabilityStatement", "copyright", mergeAppendText(MARKDOWN_COMMENT, copyrightComment));
+        }
     }
 }

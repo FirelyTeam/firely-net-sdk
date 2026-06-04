@@ -54,8 +54,8 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             p.ActiveElement.AddExtension("http://something.org", new Integer(314));
 
-            Assert.AreEqual(true, p.Scalar("Patient.active.first()"));
-            Assert.AreEqual(true, p.Scalar("Patient.active[0]"));
+            Assert.IsTrue((bool?)p.Scalar("Patient.active.first()"));
+            Assert.IsTrue((bool?)p.Scalar("Patient.active[0]"));
             Assert.AreEqual("314", p.Scalar("Patient.active[0].id[0]"));
 
             var extensions = p.Select("Patient.active[0].extension");
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             // FHIR specific function does not work for ITypedElement extension methods
             var data = ElementNode.ForPrimitive("hello!");
-            Assert.ThrowsException<ArgumentException>(() => data.IsTrue("hasValue()"));
+            Assert.Throws<ArgumentException>(() => data.IsTrue("hasValue()"));
         }
 
         [TestMethod]
@@ -82,21 +82,21 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         {
             Patient p = new Patient();
 
-            Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
-            Assert.AreEqual(false, p.Predicate("Patient.active.exists()"));
+            Assert.IsFalse(p.Predicate("Patient.active.hasValue()"));
+            Assert.IsFalse(p.Predicate("Patient.active.exists()"));
 
             p.Active = true;
-            Assert.AreEqual(true, p.Predicate("Patient.active.hasValue()"));
-            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+            Assert.IsTrue(p.Predicate("Patient.active.hasValue()"));
+            Assert.IsTrue(p.Predicate("Patient.active.exists()"));
 
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
-            Assert.AreEqual(true, p.Predicate("Patient.active.hasValue()"));
-            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+            Assert.IsTrue(p.Predicate("Patient.active.hasValue()"));
+            Assert.IsTrue(p.Predicate("Patient.active.exists()"));
 
             p.ActiveElement = new FhirBoolean();
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
-            Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
-            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+            Assert.IsFalse(p.Predicate("Patient.active.hasValue()"));
+            Assert.IsTrue(p.Predicate("Patient.active.exists()"));
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var poco = await (new FhirJsonParser()).ParseAsync<Patient>(json);
+            var poco = (new FhirJsonDeserializer()).Deserialize<Patient>(json);
             var pocoP = poco.ToTypedElement();
             var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
@@ -130,14 +130,14 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void IncorrectPathInTwoSuccessiveRepeatingMembers()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "issue-444-testdata.xml"));
-            var cs = (new FhirXmlParser()).Parse<CapabilityStatement>(xml);
+            var cs = (new FhirXmlDeserializer()).Deserialize<CapabilityStatement>(xml);
             var nav = cs.ToTypedElement();
 
             var rest = nav.Children().Where(c => c.Name == "rest").FirstOrDefault();
 
             Assert.IsNotNull(rest);
 
-            Assert.IsTrue(rest.Location.Contains("CapabilityStatement.rest[0]"));
+            Assert.Contains("CapabilityStatement.rest[0]", rest.Location);
         }
 
 
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void PocoTypedElementPerformance()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+            var cs = FhirXmlDeserializer.OSTRICH.Deserialize<Patient>(xml);
             var nav = cs.ToTypedElement();
 
             TypedElementPerformance(nav);

@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 // Use alias to avoid conflict with Hl7.Fhir.Model.Task
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task FindCodeSystem()
+        public async Tasks.Task FindCodeSystem()
         {
             // A Fhir codesystem
             var vs = await source.FindCodeSystemAsync("http://hl7.org/fhir/contact-point-system");
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task FindValueSets()
+        public async Tasks.Task FindValueSets()
         {
             // A Fhir valueset
             var vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/contact-point-system");
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
-            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+            Assert.EndsWith("v2-tables.xml", vs.GetOrigin());
 
             vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
-            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
+            Assert.EndsWith("profiles-resources.xml", rs.GetOrigin());
 
             rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(rs);
@@ -200,21 +200,21 @@ namespace Hl7.Fhir.Specification.Tests
                                 @"c:\blie\bit.xml", @"c:\blie\bit.json", @"c:\blie\bit.txt" };
 
             var res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferXml);
-            Assert.AreEqual(5, res.Count);
+            Assert.HasCount(5, res);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
             Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
-            Assert.AreEqual(5, res.Count);
+            Assert.HasCount(5, res);
             Assert.IsFalse(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
             Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.KeepBoth);
-            Assert.AreEqual(6, res.Count);
+            Assert.HasCount(6, res);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
         }
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task TestJsonBundleRetrieval()
+        public async Tasks.Task TestJsonBundleRetrieval()
         {
             var jsonSource = new DirectorySource(
                 Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
         [TestMethod]
-        public async T.Task TestThreadSafety()
+        public async Tasks.Task TestThreadSafety()
         {
             // Verify thread safety by resolving same uri simultaneously from different threads
             // DirectorySource should synchronize access and only call prepare once.
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
-            var tasks = new T.Task[threadCount];
+            var tasks = new Tasks.Task[threadCount];
             var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
 
             var sw = new Stopwatch();
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Specification.Tests
             for (int i = 0; i < threadCount; i++)
             {
                 var idx = i;
-                tasks[i] = T.Task.Run(
+                tasks[i] = Tasks.Task.Run(
                     () =>
                     {
                         var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Specification.Tests
                 );
             }
 
-            await T.Task.WhenAll(tasks);
+            await Tasks.Task.WhenAll(tasks);
             sw.Stop();
 
             var first = results[0];
@@ -451,12 +451,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestRefreshAll() => await TestRefreshAsync(true);
+        public void TestRefreshAll() => testRefresh(true);
 
         [TestMethod]
-        public async T.Task TestRefreshFile() => await TestRefreshAsync(false);
+        public void TestRefreshFile() => testRefresh(false);
 
-        async T.Task TestRefreshAsync(bool refreshAll)
+        private static void testRefresh(bool refreshAll)
         {
             // Create a temporary folder with a single artifact file
             const string srcFileName = "TestPatient.xml";
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Initialize source and verify index
                 var source = new DirectorySource(tmpFolderPath);
                 var fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 void Refresh(params string[] files)
@@ -490,30 +490,30 @@ namespace Hl7.Fhir.Specification.Tests
                 File.Move(tmpFilePath, newFilePath);
                 Refresh(tmpFilePath, newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(newFileName, fileNames[0]);
 
                 // Delete file and refresh source
                 File.Delete(newFilePath);
                 Refresh(newFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(0, fileNames.Count);
+                Assert.IsEmpty(fileNames);
 
                 // Recreate file and refresh source
                 File.Copy(srcFilePath, tmpFilePath);
                 Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 // [WMR 20190528] Update file and refresh source
                 var summaries = source.ListSummaries().ToList();
                 Assert.IsNotNull(summaries);
-                Assert.AreEqual(1, summaries.Count);
+                Assert.HasCount(1, summaries);
                 var summary = summaries[0];
                 var uri = summary.ResourceUri;
                 const string uriPrefix = @"http://example.org/Patient/";
-                Assert.IsTrue(uri.StartsWith(uriPrefix));
+                Assert.StartsWith(uriPrefix, uri);
                 var id = uri.Substring(uriPrefix.Length);
                 Assert.AreEqual("pat1", id);
 
@@ -527,20 +527,20 @@ namespace Hl7.Fhir.Specification.Tests
                     patient = node.ToPoco<Patient>();
                 }
                 Assert.IsNotNull(patient);
-                Assert.AreEqual(patient.Id, "pat1");
+                Assert.AreEqual("pat1", patient.Id);
                 patient.Id = "CHANGED";
                 var serializer = new FhirXmlSerializer();
-                var xml = await serializer.SerializeToStringAsync(patient);
+                var xml = serializer.SerializeToString(patient);
                 File.WriteAllText(tmpFilePath, xml);
 
                 // Verify that Refresh updates the summary information
                 Refresh(tmpFilePath);
                 fileNames = source.ListArtifactNames().ToList();
-                Assert.AreEqual(1, fileNames.Count);
+                Assert.HasCount(1, fileNames);
                 Assert.AreEqual(srcFileName, fileNames[0]);
 
                 summaries = source.ListSummaries().ToList();
-                Assert.AreEqual(1, summaries.Count);
+                Assert.HasCount(1, summaries);
                 summary = summaries[0];
                 Assert.AreEqual(uriPrefix + patient.Id, summary.ResourceUri);
 
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestParserSettings()
+        public void TestParserSettings()
         {
             // Create an invalid patient resource on disk
             var obs = new Observation()
@@ -561,14 +561,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Comment = " " // Illegal empty value
             };
             var nav = obs.ToTypedElement();
-            var xml = await nav.ToXmlAsync();
+            var xml = nav.ToXml();
 
             var folderPath = Path.Combine(Path.GetTempPath(), "TestDirectorySource");
             var filePath = Path.Combine(folderPath, "TestPatient.xml");
 
             try
             {
-
                 Directory.CreateDirectory(folderPath);
                 File.WriteAllText(filePath, xml);
 
@@ -581,7 +580,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(@"http://example.org/Observation/1", uri);
 
                 // Expecting resolving to fail, because of illegal empty value
-                Assert.ThrowsException<FormatException>(() => { src.ResolveByUri(uri); });
+                Assert.Throws<FormatException>(() => { src.ResolveByUri(uri); });
 
                 // Bypass all verification; specifically, accept empty values
                 src.XmlParserSettings.PermissiveParsing = true;

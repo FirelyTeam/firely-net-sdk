@@ -2,8 +2,9 @@
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -16,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
             return new CachedResolver(
                 new SnapshotSource(
                 new MultiResolver(
-                    new DirectorySource(@"TestData\validation"),
+                    new DirectorySource(Path.Combine("TestData", "validation")),
                     new ZipSource("specification.zip"))));
         }
 
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static CachedResolver _source = null;
 
         [TestMethod]
-        public async T.Task WalkIntoTypeMembers()
+        public async Tasks.Task WalkIntoTypeMembers()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -48,14 +49,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // should not walk into value[x] when unconstrained to a single type
             elem = walker.Child("value");
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => elem.Walk("system").First());  // i.e. a Quantity
+            Assert.Throws<StructureDefinitionWalkerException>(() => elem.Walk("system").First());  // i.e. a Quantity
 
             // can't walk into an unknown child
-            Assert.ThrowsException<StructureDefinitionWalkerException>(() => walker.Walk("ewout").First());
+            Assert.Throws<StructureDefinitionWalkerException>(() => walker.Walk("ewout").First());
         }
 
         [TestMethod]
-        public async T.Task WalkIntoChoice()
+        public async Tasks.Task WalkIntoChoice()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkAcrossReference()
+        public async Tasks.Task WalkAcrossReference()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -84,7 +85,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkToThis()
+        public async Tasks.Task WalkToThis()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -95,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkToExtension()
+        public async Tasks.Task WalkToExtension()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -105,7 +106,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkToExtensionSingleChoice()
+        public async Tasks.Task WalkToExtensionSingleChoice()
         {
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -117,7 +118,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkToInlineExtensionConstraints()
+        public async Tasks.Task WalkToInlineExtensionConstraints()
         {
             var sd = await _source.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/observation-profile-for-discriminator-test");
             var walker = new StructureDefinitionWalker(sd, _source);
@@ -130,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task WalkToInlineComplexExtensionConstraints()
+        public async Tasks.Task WalkToInlineComplexExtensionConstraints()
         {
             var sd = await _source.FindStructureDefinitionAsync("http://unittest.com/StructureDefinition/patient-sliced-complex-extension");
             var nav = ElementDefinitionNavigator.ForSnapshot(sd);
@@ -146,7 +147,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public async T.Task ParseInvalidDiscriminatorExpressions()
+        public async Tasks.Task ParseInvalidDiscriminatorExpressions()
         {
             var patientDef = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
             var schemas = new StructureDefinitionWalker(new ElementDefinitionNavigator(patientDef), _source);
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             void eval(string expr)
             {
-                Assert.ThrowsException<DiscriminatorFormatException>(() => schemas.Walk(expr));
+                Assert.Throws<DiscriminatorFormatException>(() => schemas.Walk(expr));
             }
         }
 
@@ -173,5 +174,3 @@ namespace Hl7.Fhir.Specification.Tests
 
     }
 }
-
-

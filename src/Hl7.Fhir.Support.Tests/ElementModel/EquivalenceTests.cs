@@ -51,8 +51,8 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsFalse(EqualityOperators.IsEquivalentTo(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R")));
             Assert.IsFalse(EqualityOperators.IsEquivalentTo(new Integer(0), new String("hi!")));
 
-            Assert.ThrowsException<System.ArgumentException>(() => EqualityOperators.Compare(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R"), "="));
-            Assert.ThrowsException<System.ArgumentException>(() => EqualityOperators.Compare(new Integer(0), new String("hi!"), ">="));
+            Assert.Throws<System.InvalidOperationException>(() => EqualityOperators.Compare(new Quantity(4.0m, "kg"), new Code("http://nu.nl", "R"), "="));
+            Assert.Throws<System.InvalidOperationException>(() => EqualityOperators.Compare(new Integer(0), new String("hi!"), ">="));
         }
 
         internal static IEnumerable<object[]> equalityTestcases() =>
@@ -244,15 +244,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             }.Select(t => new[] { t.Item1, t.Item2, t.Item3 });
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(equalityTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(equalityTestcases))]
         public void EqualityTest(object a, object b, bool? s)
         {
             doEqEquivTest(a, b, s, nameof(ICqlEquatable.IsEqualTo));
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(equivalenceTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(equivalenceTestcases))]
         public void EquivalenceTest(object a, object b, bool? s)
         {
             doEqEquivTest(a, b, s, nameof(ICqlEquatable.IsEquivalentTo));
@@ -350,11 +350,11 @@ namespace Hl7.Fhir.ElementModel.Tests
                 (Quantity.Parse("24.0 'kg'"), null, null),
              }.Select(t => new[] { t.Item1, t.Item2, t.Item3 });
 
-        [DataTestMethod]
-        [DynamicData(nameof(orderingTestcases), DynamicDataSourceType.Method)]
+        [TestMethod]
+        [DynamicData(nameof(orderingTestcases))]
         public void OrderingTest(object a, object b, int? s)
         {
-            if (s == 1 || s == -1)
+            if (s is 1 or -1)
             {
                 doOrderingTest(a, b, s);
                 doOrderingTest(b, a, -s);

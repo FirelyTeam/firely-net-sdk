@@ -173,5 +173,12 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             output.Should().Be("1972-11-30T" + input);
         }
+
+        [TestMethod]
+        public void IsNullWhenInvalid()
+        {
+            P.Time.TryParse("hi", out var time).Should().BeFalse();
+            time.Should().BeNull();
+        }
     }
 }

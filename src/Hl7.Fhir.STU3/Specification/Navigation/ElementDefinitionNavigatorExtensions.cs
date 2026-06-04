@@ -10,12 +10,13 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
     internal static class ElementDefinitionNavigatorExtensions
     {
-        internal static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
+        internal static string? GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
             // This was required for 3.0.0, but was rectified in the 3.0.1 technical update
             //if (cc.Key == "ele-1")
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         internal static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
-            var desc = cc.Key;
+            var desc = cc.Key ?? "(unnamed)";
 
             if (cc.Human != null)
                 desc += " \"" + cc.Human + "\"";
@@ -37,7 +38,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// Resolve a the contentReference in a navigator and returns a navigator that is located on the target of the contentReference.
         /// </summary>
         /// <remarks>The current navigator must be located at an element that contains a contentReference.</remarks>
-        public static bool TryFollowContentReference(this ElementDefinitionNavigator sourceNavigator, Func<string, StructureDefinition?> resolver, out ElementDefinitionNavigator? targetNavigator)
+        public static bool TryFollowContentReference(this ElementDefinitionNavigator sourceNavigator, Func<string, StructureDefinition?> resolver, [NotNullWhen(true)] out ElementDefinitionNavigator? targetNavigator)
         {
             targetNavigator = null;
 

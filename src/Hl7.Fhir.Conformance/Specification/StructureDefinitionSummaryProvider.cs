@@ -14,7 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification
 {
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification
             _typeNameMapper = mapper ?? DefaultTypeNameMapper;
         }
 
-        public async T.Task<IStructureDefinitionSummary> ProvideAsync(string canonical)
+        public async Tasks.Task<IStructureDefinitionSummary> ProvideAsync(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
             string mappedCanonical = canonical;

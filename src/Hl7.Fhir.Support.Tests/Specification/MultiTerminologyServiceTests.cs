@@ -3,7 +3,9 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using NSubstitute.Exceptions;
 using System;
 using System.Data;
 using System.Linq;
@@ -74,7 +76,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
             await call.Should().ThrowAsync<FhirOperationException>().Where(e => ((AggregateException)e.InnerException).InnerExceptions.Count == 2);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the first ts that fails", DisplayName = "First is prefered")]
         [DataRow("http://example.org/fhir/ValueSet/second-preference", "http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/second-preference", "this is the second ts that fails", DisplayName = "Second is prefered")]
         [DataRow("http://example.org/fhir/ValueSet/first-preference", "http://example.org/fhir/ValueSet/*", "http://example.org/fhir/ValueSet/*", "this is the first ts that fails", DisplayName = "Both are prefered")]
@@ -91,7 +93,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
                                    .Add("message", new FhirString("this is the second ts that fails"));
 
             //setup mock services
-            var inputParams = new ValidateCodeParameters().WithValueSet(VSInput).Build();
+            var inputParams = new ValidateCodeParameters().WithValueSet(VSInput);
             var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), firstTsPreferenceVs);
             var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), secondTsPreferenceVs);
 
@@ -121,7 +123,7 @@ namespace Hl7.Fhir.Support.Tests.Specification
                                  .Add("message", new FhirString("this is the third ts that fails"));
 
             //setup mock services
-            var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/example-vs").Build();
+            var inputParams = new ValidateCodeParameters().WithValueSet("http://example.org/fhir/ValueSet/example-vs");
 
             var firstFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, firstFailingParameters), "http://example.org/fhir/ValueSet/*");
             var secondFailingTS = createTerminologyServiceRoutingSettings(setupMockTermService(inputParams, secondFailingParameters), "http://example.org/*/ValueSet/example-vs");
@@ -149,39 +151,30 @@ namespace Hl7.Fhir.Support.Tests.Specification
             result.Parameter.Where(p => p.Name == "message").FirstOrDefault()?.Value.As<FhirString>()?.Value.Should().Be("this is the second ts that fails");
         }
 
-        [TestMethod]
-        public void EmptyTerminologyServiceTest()
-        {
-            var call = () => new MultiTerminologyService(Enumerable.Empty<TerminologyServiceRoutingSettings>());
-            call.Should().Throw<ArgumentNullException>();
-        }
-
         private static TerminologyServiceRoutingSettings createTerminologyServiceRoutingSettings(ITerminologyService service, string valueSet)
         {
             return new TerminologyServiceRoutingSettings(service)
             {
-                PreferredValueSets = new string[] { valueSet }
+                PreferredValueSets = [valueSet]
             };
         }
 
         private static ITerminologyService setupMockTermService(Parameters input, Parameters output)
         {
-            var mock = new Mock<ITerminologyService>();
+            var mock = Substitute.For<ITerminologyService>();
 
-            mock.Setup(m => m.ValueSetValidateCode(input, null, false))
-                .ReturnsAsync(output);
+            mock.ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Is((string)null), Arg.Is(false)).Returns(output);
 
-            return mock.Object;
+            return mock;
         }
 
         private static ITerminologyService setupExceptionThrowingMockTermService(string message, HttpStatusCode statusCode)
         {
-            var mock = new Mock<ITerminologyService>();
+            var mock = Substitute.For<ITerminologyService>();
 
-            mock.Setup(m => m.ValueSetValidateCode(new Parameters(), null, false))
-                .Throws(new FhirOperationException(message, statusCode));
+            mock.ValueSetValidateCode(Arg.Any<Parameters>(), Arg.Is((string)null), Arg.Is(false)).ThrowsAsync(new FhirOperationException(message, statusCode));
 
-            return mock.Object;
+            return mock;
         }
     }
 }

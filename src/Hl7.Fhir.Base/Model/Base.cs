@@ -1,147 +1,182 @@
 ﻿/*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
+
+  Redistribution and use in source and binary forms, with or without modification,
   are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
+
+   * Redistributions of source code must retain the above copyright notice, this
      list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
+   * Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
      and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
+   * Neither the name of HL7 nor the names of its contributors may be used to
+     endorse or promote products derived from this software without specific
      prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
-  
+
 */
 
-using Hl7.Fhir.Introspection;
+#nullable enable
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
 {
-    [Serializable]
-    [FhirType("Base", "http://hl7.org/fhir/StructureDefinition/Base")]
-    [DataContract]
-    public abstract class Base : IDeepCopyable, IDeepComparable,
-        IAnnotated, IAnnotatable, IValidatableObject, INotifyPropertyChanged, IReadOnlyDictionary<string, object>
+    /// <summary>
+    /// FHIR Type Name
+    /// </summary>
+    public virtual string TypeName => GetType().Name;
+    
+    private Dictionary<string, object>? _overflow = null;
+
+    /// <summary>
+    /// Whether the object has any overflow elements.
+    /// </summary>
+    public bool HasOverflow => _overflow?.Count > 0;
+
+    /// <summary>
+    /// Removes all overflow elements from this object.
+    /// </summary>
+    /// <remarks>This does not recursively clear overflow on child elements.</remarks>
+    public void ClearOverflow() => _overflow?.Clear();
+
+    /// <summary>
+    /// A dictionary containing all elements that are not explicitly defined in the class.
+    /// </summary>
+    protected Dictionary<string, object> Overflow =>
+        LazyInitializer.EnsureInitialized(ref _overflow, () => new Dictionary<string, object>())!;
+
+    #region << Annotations >>
+
+    [NonSerialized] private AnnotationList? _annotations = null;
+
+    private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
+
+    public IEnumerable<object> Annotations(Type type)
     {
-        public virtual bool IsExactly(IDeepComparable other) => other is Base;
+        if (type == typeof(IFhirValueProvider))
+            return [this];
+        
+        if (annotations.OfType(type).ToList() is { Count: > 0 } annotation)
+            return annotation;
 
-        public virtual bool Matches(IDeepComparable other) => other is Base;
+        if (annotations.TryGetAnnotation(out TypedElementAnnotatedProvider? original))
+            return original.OriginalElement.Annotations(type);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="other"></param>
-        /// <remarks>Does a deep-copy of all elements, except UserData</remarks>
-        /// <returns></returns>
-        public virtual IDeepCopyable CopyTo(IDeepCopyable other)
+        return [];
+    }
+
+    public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
+
+    public void RemoveAnnotations(Type type) => annotations.RemoveAnnotations(type);
+
+    #endregion
+
+    #region INotifyPropertyChanged
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string property) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+
+    #endregion
+
+    /// <summary>
+    /// Sets the value of an element in the POCO, or, if the element is not defined, in the overflow dictionary.
+    /// </summary>
+    /// <param name="key">The name of the element.</param>
+    /// <param name="value">Either a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</param>
+    /// <returns>The currect object, so the calls can be chained fluently.</returns>
+    /// <exception cref="InvalidCastException">Thrown if the value is not a <c>Base</c> or <c>IReadOnlyList&lt;Base&gt;</c>.</exception>
+    /// <remarks>If the value is set to <c>null</c>, the property is set to null, or, if not defined, the
+    /// element is removed from the overflow dictionary. If the key refers to an existing property, the value
+    /// must be compatible with the type of the property in the POCO, otherwise an <see cref="InvalidCastException"/> is thrown.</remarks>
+    public virtual Base SetValue(string key, object? value)
+    {
+        if (value is null && HasOverflow)
+            Overflow.Remove(key);
+        else
         {
-            if (other is Base dest)
-            {
-                if (_annotations is not null)
-                    dest.annotations.AddRange(annotations);
-
-                return dest;
-            }
-            else
-                throw new ArgumentException("Can only copy to an object of the same type", nameof(other));
+            if (value is not Base && value is not IReadOnlyList<Base>)
+                throw new InvalidCastException($"Value for key '{key}' must be of type Base or a list of type Base.");
+            Overflow[key] = value;
         }
 
-        public abstract IDeepCopyable DeepCopy();
+        return this;
+    }
 
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) => Enumerable.Empty<ValidationResult>();
+    /// <summary>
+    /// /// Gets the value of an element in the POCO, or, if the element is not defined, in the overflow dictionary.
+    /// </summary>
+    /// <param name="key">The name of the element.</param>
+    /// <returns>A <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</returns>
+    /// <exception cref="KeyNotFoundException">If the element is not set, or is an empty list.</exception>
+    public object this[string key]
+    {
+        get => this.TryGetValue(key, out var value)
+            ? value
+            : throw new KeyNotFoundException($"Element '{key}' is not a known FHIR element or has no value.");
+        set => SetValue(key, value);
+    }
 
-        #region << Annotations >>
-        [NonSerialized]
-        private AnnotationList _annotations = null;
+    /// <summary>
+    /// Gets the value of an element in the POCO, or, if the element is not defined, in the overflow dictionary.
+    /// </summary>
+    /// <param name="key">The name of the element.</param>
+    /// <param name="value">Will be a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</param>
+    /// <returns><c>true</c> if the given value was set in the POCO or present in the overflow dictionary, <c>false</c> otherwise.
+    /// For lists, this means they should not be empty.</returns>
+    public virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    {
+        if (HasOverflow) return Overflow.TryGetValue(key, out value);
 
-        private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => new());
+        value = null;
+        return false;
+    }
 
-        public IEnumerable<object> Annotations(Type type) => annotations.OfType(type);
+    /// <summary>
+    /// Enumerates all non-empty elements in the POCO and the overflow dictionary.
+    /// </summary>
+    /// <returns>A <see cref="KeyValuePair{TKey,TValue}" /> containing the key and the value, which is
+    /// either a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</returns>
+    public virtual IEnumerable<KeyValuePair<string, object>> EnumerateElements() => _overflow ?? [];
 
-        public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
+    /// <summary>
+    /// Compare the children of this Base object with the children of another Base object using the specified comparer.
+    /// </summary>
+    /// <remarks>The <paramref name="comparer"/> must implement both <c>IEqualityComparer&lt;Base&gt;</c> and
+    /// <c>IEqualityComparer&lt;IEnumerable&lt;Base&gt;&gt;</c>.</remarks>
+    public virtual bool CompareChildren(Base other, IEqualityComparer<Base> comparer) => true;
 
-        public void RemoveAnnotations(Type type) => annotations.RemoveAnnotations(type);
-        #endregion
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(String property) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion
-
-        public virtual string TypeName => "Base";
-
-        /// <summary>
-        /// Enumerate all child nodes.
-        /// Return a sequence of child elements, components and/or properties.
-        /// Child nodes are returned in the order defined by the FHIR specification.
-        /// First returns child nodes inherited from any base class(es), recursively.
-        /// Finally returns child nodes defined by the current class.
-        /// </summary>
-        public virtual IEnumerable<Base> Children { get { return Enumerable.Empty<Base>(); } }
-
-        /// <summary>
-        /// Enumerate all child nodes.
-        /// Return a sequence of child elements, components and/or properties.
-        /// Child nodes are returned as tuples with the name and the node itself, in the order defined 
-        /// by the FHIR specification.
-        /// First returns child nodes inherited from any base class(es), recursively.
-        /// Finally returns child nodes defined by the current class.
-        /// </summary>
-        public virtual IEnumerable<ElementValue> NamedChildren => Enumerable.Empty<ElementValue>();
-
-        public IReadOnlyDictionary<string, object> AsReadOnlyDictionary() => this;
-
-        #region IReadOnlyDictionary
-        IEnumerable<string> IReadOnlyDictionary<string, object>.Keys => GetElementPairs().Select(kvp => kvp.Key);
-
-        IEnumerable<object> IReadOnlyDictionary<string, object>.Values => GetElementPairs().Select(kvp => kvp.Value);
-
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => GetElementPairs().Count();
-
-        object IReadOnlyDictionary<string, object>.this[string key] => TryGetValue(key, out var value) ? value : throw new KeyNotFoundException();
-
-        bool IReadOnlyDictionary<string, object>.ContainsKey(string key) => TryGetValue(key, out _);
-
-        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => GetElementPairs().GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetElementPairs().GetEnumerator();
-
-        bool IReadOnlyDictionary<string, object>.TryGetValue(string key, out object value) => TryGetValue(key, out value);
-        #endregion
-
-        protected virtual bool TryGetValue(string key, out object value)
-        {
-            value = default;
-            return false;
-        }
-
-        protected virtual IEnumerable<KeyValuePair<string, object>> GetElementPairs() => Enumerable.Empty<KeyValuePair<string, object>>();
+    /// <summary>
+    /// Validate invariants that hold across properties, or cannot be expressed by attributes on properties.
+    /// </summary>
+    protected internal virtual IReadOnlyCollection<CodedValidationException> ValidateInvariants(PocoValidationContext validationContext)
+    {
+       if(!this.EnumerateElements().Any())
+           return [CodedValidationException.ELEMENT_CANNOT_BE_EMPTY(validationContext)];
+       
+       return [];
     }
 }

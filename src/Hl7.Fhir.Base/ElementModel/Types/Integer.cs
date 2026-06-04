@@ -8,104 +8,101 @@
 
 #nullable enable
 
-using Hl7.Fhir.Utility;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
-using static Hl7.Fhir.Utility.Result;
 
-namespace Hl7.Fhir.ElementModel.Types
+namespace Hl7.Fhir.ElementModel.Types;
+
+public class Integer(int value) : Any, IComparable, ICqlEquatable, ICqlOrderable
 {
-    public class Integer : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
+    public Integer() : this(default) { }
+
+    public int Value { get; } = value;
+
+    public static Integer Parse(string value) =>
+        TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid integer.");
+
+    public static bool TryParse(string representation, [NotNullWhen(true)] out Integer? value)
     {
-        public Integer() : this(default) { }
+        if (representation == null) throw new ArgumentNullException(nameof(representation));
 
-        public Integer(int value) => Value = value;
-
-        public int Value { get; }
-
-        public static Integer Parse(string value) =>
-            TryParse(value, out var result) ? result : throw new FormatException($"String '{value}' was not recognized as a valid integer.");
-
-        public static bool TryParse(string representation, out Integer value)
-        {
-            if (representation == null) throw new ArgumentNullException(nameof(representation));
-
-            (var succ, var val) = Any.DoConvert(() => XmlConvert.ToInt32(representation));
-            value = new Integer(val);
-            return succ;
-        }
-
-        /// <summary>
-        /// Determines if two integers are equal according to CQL equality rules.
-        /// </summary>
-        /// <remarks>For integers, CQL and .NET equality rules are aligned.
-        /// </remarks>
-        public override bool Equals(object? obj) => obj is Integer i && Value == i.Value;
-
-        public static bool operator ==(Integer a, Integer b) => Equals(a, b);
-        public static bool operator !=(Integer a, Integer b) => !Equals(a, b);
-
-        /// <summary>
-        /// Compares two integers, according to CQL equality rules
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        /// <remarks>For integers, CQL and .NET comparison rules are aligned.</remarks>
-        public int CompareTo(object? obj)
-        {
-            return obj switch
-            {
-                null => 1,
-                Integer i => Value.CompareTo(i.Value),
-                _ => throw NotSameTypeComparison(this, obj)
-            };
-        }
-
-        public static bool operator <(Integer a, Integer b) => a.CompareTo(b) < 0;
-        public static bool operator <=(Integer a, Integer b) => a.CompareTo(b) <= 0;
-        public static bool operator >(Integer a, Integer b) => a.CompareTo(b) > 0;
-        public static bool operator >=(Integer a, Integer b) => a.CompareTo(b) >= 0;
-
-
-        public override int GetHashCode() => Value.GetHashCode();
-        public override string ToString() => XmlConvert.ToString(Value);
-
-        public static implicit operator int(Integer i) => i.Value;
-        public static implicit operator Long(Integer i) => new Long(i.Value);
-        public static implicit operator Decimal(Integer i) => new Decimal(i.Value);
-        public static implicit operator Quantity(Integer i) => new Quantity((decimal)i.Value, Quantity.UCUM_UNIT);
-
-        public static explicit operator Integer(int i) => new Integer(i);
-        public static explicit operator Boolean(Integer i) => ((ICqlConvertible)i).TryConvertToBoolean().ValueOrThrow();
-        public static explicit operator String(Integer i) => ((ICqlConvertible)i).TryConvertToString().ValueOrThrow();
-
-        bool? ICqlEquatable.IsEqualTo(Any other) => other is { } ? Equals(other) : (bool?)null;
-        bool ICqlEquatable.IsEquivalentTo(Any other) => Equals(other);
-        int? ICqlOrderable.CompareTo(Any other) => other is { } ? CompareTo(other) : (int?)null;
-
-        Result<Boolean> ICqlConvertible.TryConvertToBoolean() =>
-                Value switch
-                {
-                    1 => Ok((Boolean)true),
-                    0 => Ok((Boolean)false),
-                    _ => CannotCastTo<Boolean>(this)
-                };
-
-        Result<Decimal> ICqlConvertible.TryConvertToDecimal() => Ok(new Decimal(Value));
-
-        Result<Quantity> ICqlConvertible.TryConvertToQuantity() => Ok(new Quantity(Value));
-
-        Result<String> ICqlConvertible.TryConvertToString() => Ok(new String(ToString()));
-
-        Result<Integer> ICqlConvertible.TryConvertToInteger() => Ok(this);
-
-        Result<Long> ICqlConvertible.TryConvertToLong() => Ok(new Long(this.Value));
-
-        Result<Ratio> ICqlConvertible.TryConvertToRatio() => CannotCastTo<Ratio>(this);
-        Result<Time> ICqlConvertible.TryConvertToTime() => CannotCastTo<Time>(this);
-        Result<Code> ICqlConvertible.TryConvertToCode() => CannotCastTo<Code>(this);
-        Result<Concept> ICqlConvertible.TryConvertToConcept() => CannotCastTo<Concept>(this);
-        Result<Date> ICqlConvertible.TryConvertToDate() => CannotCastTo<Date>(this);
-        Result<DateTime> ICqlConvertible.TryConvertToDateTime() => CannotCastTo<DateTime>(this);
+        var (succ, val) = DoConvert(() => XmlConvert.ToInt32(representation));
+        value = succ ? new Integer(val) : null;
+        return succ;
     }
+
+    /// <summary>
+    /// Determines if two integers are equal according to CQL equality rules.
+    /// </summary>
+    /// <remarks>For integers, CQL and .NET equality rules are aligned.
+    /// </remarks>
+    public override bool Equals(object? obj) => obj is Integer i && Value == i.Value;
+
+    public static bool operator ==(Integer a, Integer b) => Equals(a, b);
+    public static bool operator !=(Integer a, Integer b) => !Equals(a, b);
+
+    /// <summary>
+    /// Compares two integers, according to CQL equality rules
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    /// <remarks>For integers, CQL and .NET comparison rules are aligned.</remarks>
+    public int CompareTo(object? obj)
+    {
+        return obj switch
+        {
+            null => 1,
+            Integer i => Value.CompareTo(i.Value),
+            _ => throw NotSameTypeComparison(this, obj)
+        };
+    }
+
+    public static bool operator <(Integer a, Integer b) => a.CompareTo(b) < 0;
+    public static bool operator <=(Integer a, Integer b) => a.CompareTo(b) <= 0;
+    public static bool operator >(Integer a, Integer b) => a.CompareTo(b) > 0;
+    public static bool operator >=(Integer a, Integer b) => a.CompareTo(b) >= 0;
+
+
+    public override int GetHashCode() => Value.GetHashCode();
+    public override string ToString() => XmlConvert.ToString(Value);
+
+    public static implicit operator int(Integer i) => i.Value;
+    public static explicit operator Integer(int i) => new(i);
+    public static explicit operator Long(Integer i) => RunCast<Long>(i);
+    public static explicit operator Decimal(Integer i) => RunCast<Decimal>(i);
+    public static explicit operator Quantity(Integer i) => RunCast<Quantity>(i);
+    public static explicit operator Boolean(Integer i) => RunCast<Boolean>(i);
+    public static explicit operator String(Integer i) => RunCast<String>(i);
+
+    public override bool TryConvertTo(Type to, [NotNullWhen(true)] out Any? result)
+    {
+        result = null;
+
+       if (to == typeof(Integer))
+            result = this;
+       else if (to == typeof(Long))
+           result = new Long(Value);
+       else if (to == typeof(Decimal))
+           result = new Decimal(Value);
+       else if (to == typeof(Quantity))
+           result = new Quantity(Value);
+       else if (to == typeof(Boolean))
+           result = Value switch
+           {
+               1 => Boolean.True,
+               0 => Boolean.False,
+               _ => null
+           };
+       else if (to == typeof(String))
+           result = new String(ToString());
+
+        return result is not null;
+    }
+
+    bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null ? Equals(other) : null;
+    bool ICqlEquatable.IsEquivalentTo(Any? other) => Equals(other);
+    int? ICqlOrderable.CompareTo(Any? other) => other is not null ? CompareTo(other) : null;
+
+
 }

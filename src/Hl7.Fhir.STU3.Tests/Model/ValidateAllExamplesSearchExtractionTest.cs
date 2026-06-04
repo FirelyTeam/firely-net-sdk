@@ -19,180 +19,184 @@ using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
 
-namespace Hl7.Fhir.Tests.Model
+namespace Hl7.Fhir.Tests.Model;
+
+[TestClass]
+public class ValidateSearchExtractionAllExamplesTest
 {
-    [TestClass]
-    public class ValidateSearchExtractionAllExamplesTest
+    public ILookup<ResourceType, SearchParamDefinition> SpList;
+
+    [TestMethod]
+    [TestCategory("LongRunner")]
+    public void SearchExtractionAllExamples()
     {
-        public ILookup<ResourceType, ModelInfo.SearchParamDefinition> SpList;
+        SpList = ModelInfo.SearchParameters
+            .Where(spd => !String.IsNullOrEmpty(spd.Expression))
+            .Select(spd =>
+                new { Rt = (ResourceType)Enum.Parse(typeof(ResourceType), spd.Resource), Def = spd })
+            .ToLookup(ks => ks.Rt, es => es.Def);
+
+        searchExtractionAllExamplesInternal();
+    }
 
 
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void SearchExtractionAllExamples()
+    private void searchExtractionAllExamplesInternal()
+    {
+        var parser = FhirXmlDeserializer.RECOVERABLE;
+        int errorCount = 0;
+        int parserErrorCount = 0;
+        int testFileCount = 0;
+        var exampleSearchValues = new Dictionary<SearchParamDefinition, Holder>();
+        var zip = TestDataHelper.ReadTestZip("examples.zip");
+
+        using (zip)
         {
-            SpList = ModelInfo.SearchParameters
-                .Where(spd => !String.IsNullOrEmpty(spd.Expression))
-                .Select(spd =>
-                    new { Rt = (ResourceType)Enum.Parse(typeof(ResourceType), spd.Resource), Def = spd })
-                    .ToLookup(ks => ks.Rt, es => es.Def);
-
-            SearchExtractionAllExamplesInternal();
-     //       SearchExtractionAllExamplesInternal();
-        }
-
-
-        private void SearchExtractionAllExamplesInternal()
-        {
-            FhirXmlParser parser = new FhirXmlParser(new ParserSettings { PermissiveParsing = true });
-            int errorCount = 0;
-            int parserErrorCount = 0;
-            int testFileCount = 0;
-            var exampleSearchValues = new Dictionary<ModelInfo.SearchParamDefinition, Holder>();
-            var zip = TestDataHelper.ReadTestZip("examples.zip");
-
-            using (zip)
+            foreach (var entry in zip.Entries)
             {
-                foreach (var entry in zip.Entries)
+                Stream file = entry.Open();
+                using (file)
                 {
-                    Stream file = entry.Open();
-                    using (file)
+                    // Verified examples that fail validations
+
+                    //// vsd-3, vsd-8
+                    //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
+                    //    continue;
+
+                    testFileCount++;
+                    try
                     {
-                        // Verified examples that fail validations
+                        // Debug.WriteLine(String.Format("Validating {0}", file));
+                        var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
+                        var resource = parser.Deserialize<Resource>(reader);
 
-                        //// vsd-3, vsd-8
-                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                        //    continue;
+                        extractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 
-                        testFileCount++;
-                        try
+                        if (resource is Bundle bundle)
                         {
-                            // Debug.WriteLine(String.Format("Validating {0}", file));
-                            var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                            var resource = parser.Parse<Resource>(reader);
-
-                            ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
-
-                            if (resource is Bundle)
+                            foreach (var item in bundle.Entry)
                             {
-                                foreach (var item in (resource as Bundle).Entry)
+                                if (item.Resource != null)
                                 {
-                                    if (item.Resource != null)
-                                    {
-                                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
-                                    }
+                                    extractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
                                 }
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
-                            parserErrorCount++;
-                        }
-
                     }
-                }
-            }
-
-            var missingSearchValues = exampleSearchValues.Where(i => i.Value.count == 0);
-
-            if (missingSearchValues.Count() > 0)
-            {
-                Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
-                foreach (var item in missingSearchValues)
-                {
-                    Trace.WriteLine("\t" + item.Key.Resource.ToString() + "_" + item.Key.Name);
-                }
-                // Trace.WriteLine(outcome.ToString());
-                errorCount++;
-            }
-
-            Assert.IsTrue(43 >= errorCount, String.Format("Failed search parameter data extraction, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
-            Assert.AreEqual(0, parserErrorCount, String.Format("Failed search parameter data extraction, {0} files failed parsing", parserErrorCount));
-        }
-
-        private void ExtractValuesForSearchParameterFromFile(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource)
-        {
-            // Extract the search properties
-            resource.TryDeriveResourceType(out var rt);
-            var searchparameters = SpList[rt];
-            foreach (var index in searchparameters)
-            {
-                // prepare the search data cache
-                if (!exampleSearchValues.ContainsKey(index))
-                    exampleSearchValues.Add(index, new Holder());
-
-                // Extract the values from the example
-                ExtractExamplesFromResource(exampleSearchValues, resource, index);
-            }
-
-            // If there are any contained resources, extract index data from those too!
-            if (resource is DomainResource)
-            {
-                if ((resource as DomainResource).Contained != null && (resource as DomainResource).Contained.Count > 0)
-                {
-                    foreach (var conResource in (resource as DomainResource).Contained)
+                    catch (Exception ex)
                     {
-                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, conResource);
+                        Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
+                        parserErrorCount++;
                     }
+
                 }
             }
         }
 
+        var missingSearchValues = exampleSearchValues.Where(i => i.Value.Count == 0).ToArray();
 
-        class Holder
+        if (missingSearchValues.Any())
         {
-            public int count;
+            Debug.WriteLine(
+                $"\r\n------------------\r\n" +
+                $"Validation failed, missing data in {missingSearchValues.Length} of " +
+                $"{exampleSearchValues.Count} search parameters");
+
+            foreach (var item in missingSearchValues)
+            {
+                Trace.WriteLine("\t" + item.Key.Resource + "_" + item.Key.Name);
+            }
+            // Trace.WriteLine(outcome.ToString());
+            errorCount++;
         }
 
-       
-  
-        private static void ExtractExamplesFromResource(Dictionary<ModelInfo.SearchParamDefinition, Holder> exampleSearchValues, Resource resource, 
-            ModelInfo.SearchParamDefinition index )
+        Assert.IsGreaterThanOrEqualTo(errorCount,
+43, $"Failed search parameter data extraction, missing data in {missingSearchValues.Length} of " +
+            $"{exampleSearchValues.Count} search parameters");
+        Assert.AreEqual(0, parserErrorCount,
+            $"Failed search parameter data extraction, {parserErrorCount} files failed parsing");
+    }
+
+    private void extractValuesForSearchParameterFromFile(Dictionary<SearchParamDefinition, Holder> exampleSearchValues, Resource resource)
+    {
+        // Extract the search properties
+        resource.TryDeriveResourceType(out var rt);
+        var searchparameters = SpList[rt];
+        foreach (var index in searchparameters)
         {
-            var resourceModel = resource.ToTypedElement();
+            // prepare the search data cache
+            if (!exampleSearchValues.ContainsKey(index))
+                exampleSearchValues.Add(index, new Holder());
 
-            try
+            // Extract the values from the example
+            extractExamplesFromResource(exampleSearchValues, resource, index);
+        }
+
+        // If there are any contained resources, extract index data from those too!
+        if (resource is DomainResource domainResource)
+        {
+            if (domainResource.Contained is { Count: > 0 })
             {
-                var results = resourceModel.Select(index.Expression, new EvaluationContext(resourceModel));
-                if (results.Count() > 0)
+                foreach (var conResource in domainResource.Contained)
                 {
-                    foreach (var t2 in results)
+                    extractValuesForSearchParameterFromFile(exampleSearchValues, conResource);
+                }
+            }
+        }
+    }
+
+
+    private class Holder
+    {
+        public int Count;
+    }
+
+
+
+    private static void extractExamplesFromResource(Dictionary<SearchParamDefinition, Holder> exampleSearchValues, Resource resource,
+        SearchParamDefinition index )
+    {
+        var resourceModel = resource.ToTypedElement();
+
+        try
+        {
+            var results = resourceModel.Select(index.Expression, new EvaluationContext()).ToArray();
+            if (results.Any())
+            {
+                foreach (var t2 in results)
+                {
+                    if (t2 != null)
                     {
-                        if (t2 != null)
+                        exampleSearchValues[index].Count++;
+
+                        if (t2 is PocoElementNode { FhirValue: not null })
                         {
-                            exampleSearchValues[index].count++;
+                            // Validate the type of data returned against the type of search parameter
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
 
-                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
-                            {
-                                // Validate the type of data returned against the type of search parameter
-                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                                //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
-
-                            }
-                            //else if (t2.Value is Hl7.FhirPath.ConstantValue)
-                            //{
-                            //    //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
-                            //}
-                            else if (t2.Value is bool)
-                            {
-                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                                //    Debug.WriteLine((bool)t2.Value);
-                            }
-                            else
-                            {
-                                Debug.Write(index.Resource + "." + index.Name + ": ");
-                                Debug.WriteLine(t2.Value);
-                            }
+                        }
+                        //else if (t2.Value is Hl7.FhirPath.ConstantValue)
+                        //{
+                        //    //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                        //    //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
+                        //}
+                        else if (t2.Value is bool)
+                        {
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((bool)t2.Value);
+                        }
+                        else
+                        {
+                            Debug.Write(index.Resource + "." + index.Name + ": ");
+                            Debug.WriteLine(t2.Value);
                         }
                     }
                 }
             }
-            catch (ArgumentException ex)
-            {
-                Debug.WriteLine("FATAL: Error parsing expression in search index {0}.{1} {2}\r\n\t{3}", index.Resource, index.Name, index.Expression, ex.Message);
-            }
+        }
+        catch (ArgumentException ex)
+        {
+            Debug.WriteLine("FATAL: Error parsing expression in search index {0}.{1} {2}\r\n\t{3}", index.Resource, index.Name, index.Expression, ex.Message);
         }
     }
 }

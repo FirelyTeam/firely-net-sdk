@@ -221,14 +221,34 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
-        public Resource ResolveByUri(string uri) => FileSource.ResolveByUri(uri);
+        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
-        public Resource ResolveByCanonicalUri(string uri) => FileSource.ResolveByCanonicalUri(uri);
+        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
 
-        public Task<Resource> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
-        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
+        /// <param name="uri">A resource uri.</param>
+        public ResolverResult TryResolveByUri(string uri) => FileSource.TryResolveByUri(uri);
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        public ResolverResult TryResolveByCanonicalUri(string uri) => FileSource.TryResolveByCanonicalUri(uri);
+
+        public async Task<Resource> ResolveByUriAsync(string uri)
+        {
+            var result = await TryResolveByUriAsync(uri).ConfigureAwait(false);
+            return result.Value;
+        }
+        public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+        {
+            var result = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            return result.Value;
+        }
+        
+        /// <inheritdoc/>
+        public Task<ResolverResult> TryResolveByUriAsync(string uri) => FileSource.TryResolveByUriAsync(uri);
+        /// <inheritdoc/>
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => FileSource.TryResolveByCanonicalUriAsync(uri);
 
         #endregion
 
@@ -245,7 +265,25 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             var zc = new ZipCacher(ZipPath, CacheDirectory);
-            var source = new DirectorySource(zc.GetContentDirectory(), _settings);
+
+            try
+            {
+                return createDirectorySource(zc);
+            }
+            catch
+            {
+                // Retries once if extraction fails
+                zc.Refresh();
+                return createDirectorySource(zc);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="DirectorySource"/> from the extracted ZIP archive contents.
+        /// </summary>
+        private DirectorySource createDirectorySource(ZipCacher zipCacher)
+        {
+            var source = new DirectorySource(zipCacher.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))

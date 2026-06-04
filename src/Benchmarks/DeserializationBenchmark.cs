@@ -14,8 +14,8 @@ namespace Firely.Sdk.Benchmarks
     {
         internal string JsonData;
         internal string XmlData;
-        internal BaseFhirXmlPocoDeserializer XmlDeserializer;
-        internal BaseFhirJsonPocoDeserializer JsonDeserializer;
+        internal BaseFhirXmlDeserializer XmlDeserializer;
+        internal BaseFhirJsonDeserializer JsonDeserializer;
         internal XmlReader xmlreader;
         internal JsonSerializerOptions options;
 
@@ -28,10 +28,10 @@ namespace Firely.Sdk.Benchmarks
             var xmlFileName = Path.Combine("TestData", "fp-test-patient.xml");
             XmlData = File.ReadAllText(xmlFileName);
 
-            XmlDeserializer = new BaseFhirXmlPocoDeserializer(typeof(TestPatient).Assembly);
-            JsonDeserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
+            XmlDeserializer = new FhirXmlDeserializer();
+            JsonDeserializer = new FhirJsonDeserializer();
 
-            options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
+            options = new JsonSerializerOptions().ForFhir();
         }
 
         [Benchmark]
@@ -39,7 +39,7 @@ namespace Firely.Sdk.Benchmarks
         {
             try
             {
-                return JsonSerializer.Deserialize<TestPatient>(JsonData, options);
+                return JsonSerializer.Deserialize<Patient>(JsonData, options);
             }
             catch (DeserializationFailedException e)
             {
@@ -64,15 +64,15 @@ namespace Firely.Sdk.Benchmarks
 
 
         [Benchmark]
-        public TestPatient TypedElementDeserializerJson()
+        public Patient TypedElementDeserializerJson()
         {
-            return FhirJsonNode.Parse(JsonData).ToPoco<TestPatient>(ModelInspector.ForType<TestPatient>());
+            return FhirJsonNode.Parse(JsonData).ToPoco<Patient>();
         }
 
         [Benchmark]
         public Resource TypedElementDeserializerXml()
         {
-            return FhirXmlNode.Parse(XmlData).ToPoco<TestPatient>(ModelInspector.ForType<TestPatient>());
+            return FhirXmlNode.Parse(XmlData).ToPoco<Patient>();
         }
     }
 }

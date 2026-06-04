@@ -52,9 +52,6 @@ namespace Hl7.Fhir.Rest
 
         public const string VERSION_CONTENT_HEADER_NAME = "fhirVersion";
 
-        [Obsolete("Use VERSION_CONTENT_HEADER_NAME instead.")]
-        public const string VERSION_CONTENT_HEADER = "fhirVersion=";
-
         public static string DecompressionMethodHeaderValue(DecompressionMethods method) =>
             method.ToString().ToLowerInvariant();
 
@@ -102,8 +99,9 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="format">Whether the body is xml or json.</param>
         /// <param name="fhirVersion">Optional. The version of FHIR to add to the header.</param>
-        public static string BuildContentType(ResourceFormat format, string? fhirVersion = default) =>
-            BuildMediaType(format, fhirVersion).ToString();
+        /// <param name="excludeCharset">Optional. Whether exclude charset.</param>
+        public static string BuildContentType(ResourceFormat format, string? fhirVersion = default, bool excludeCharset = false) =>
+            BuildMediaType(format, fhirVersion, excludeCharset).ToString();
 
         /// <summary>
         /// Creates a <see cref="MediaTypeHeaderValue"/> for use in a Content-Type header, 
@@ -111,8 +109,9 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="format">Whether the body is xml or json.</param>
         /// <param name="fhirVersion">Optional. The version of FHIR to add to the header.</param>
+        /// <param name="excludeCharset">Optional. Whether exclude charset.</param>
         /// <exception cref="ArgumentException">Unsupported serialization.</exception>
-        public static MediaTypeHeaderValue BuildMediaType(ResourceFormat format, string? fhirVersion = default)
+        public static MediaTypeHeaderValue BuildMediaType(ResourceFormat format, string? fhirVersion = default, bool excludeCharset = false)
         {
             var contentType = format switch
             {
@@ -121,10 +120,11 @@ namespace Hl7.Fhir.Rest
                 _ => throw new ArgumentException("Cannot determine content type for data format " + format),
             };
 
-            var result = new MediaTypeHeaderValue(contentType)
+            var result = new MediaTypeHeaderValue(contentType);
+            if (!excludeCharset)
             {
-                CharSet = Encoding.UTF8.WebName
-            };
+                result.CharSet = Encoding.UTF8.WebName;
+            }
 
             if (fhirVersion is not null && SemVersion.TryParse(fhirVersion, out var version))
             {

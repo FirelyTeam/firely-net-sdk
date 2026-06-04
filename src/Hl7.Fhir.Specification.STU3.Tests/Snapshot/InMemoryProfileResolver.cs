@@ -3,7 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T=System.Threading.Tasks;
+using Tasks=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -33,12 +33,24 @@ namespace Hl7.Fhir.Specification.Tests
 
         #region IResourceResolver
 
-        public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
+        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+        public ResolverResult TryResolveByUri(string uri) => ResolverException.NotFound();
 
-        public Resource ResolveByUri(string uri) => null;
+        public ResolverResult TryResolveByCanonicalUri(string uri)
+        {
+            var resource = _resources[uri].FirstOrDefault();
+            if (resource is not null)
+                return resource;
 
-        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
-        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+            return ResolverException.NotFound();
+        }
+
+        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
+
+        public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         #endregion
 

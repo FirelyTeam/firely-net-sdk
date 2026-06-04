@@ -11,6 +11,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -22,6 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Tasks = System.Threading.Tasks;
 
@@ -37,6 +39,7 @@ namespace Hl7.FhirPath.Tests
             var patientRoot = ElementNode.Root(_provider, "Patient");
 
             var containedObs = ElementNode.Root(_provider, "Observation", "contained");
+            
             containedObs.Add(_provider, "value", true, "boolean");
             patientRoot.Add(_provider, containedObs);
 
@@ -71,12 +74,15 @@ namespace Hl7.FhirPath.Tests
             var obs = ElementNode.Root(_provider, "Observation");
             obs.Add(_provider, "id", "test");
 
+            patient.AddAnnotation(ModelInfo.ModelInspector);
+            obs.AddAnnotation(ModelInfo.ModelInspector);
+            
             patient.Add(_provider, obs, "contained");
 
             // Select on the root of the resource, path should match with resource name included
             var active = patient.Select("Patient.active");
             Assert.IsNotNull(active);
-            Assert.AreEqual(true, active.FirstOrDefault().Value);
+            Assert.IsTrue((bool?)active.FirstOrDefault().Value);
 
             // Select on the root of the resource, resource type does not match
             var id = obs.Select("Patient.id");
@@ -85,7 +91,7 @@ namespace Hl7.FhirPath.Tests
             // Select on root of the resource, path does not include the resourceType
             active = patient.Select("active");
             Assert.IsNotNull(active);
-            Assert.AreEqual(true, active.FirstOrDefault().Value);
+            Assert.IsTrue((bool?)active.FirstOrDefault().Value);
 
             // Select on the root of the resource, path is for a generic Resource / DomainResource element
             id = obs.Select("Resource.id");
@@ -107,11 +113,11 @@ namespace Hl7.FhirPath.Tests
 
             var result = customResource.Select("UpperCaseElement");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(true, result.FirstOrDefault().Value);
+            Assert.IsTrue((bool?)result.FirstOrDefault().Value);
 
             result = customResource.Select("lowerCaseElement");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(false, result.FirstOrDefault().Value);
+            Assert.IsFalse((bool?)result.FirstOrDefault().Value);
         }
 
         [TestMethod]
@@ -125,7 +131,7 @@ namespace Hl7.FhirPath.Tests
             // But if you leave the type out, Add() will try to determine the type
             obs = ElementNode.Root(_provider, "Observation");
 #if !NET40
-            Assert.ThrowsException<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
+            Assert.Throws<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
 #endif
             value = obs.Add(_provider, "value", true, "boolean");  // with an explicit type
             Assert.AreEqual("boolean", value.InstanceType);
@@ -160,12 +166,12 @@ namespace Hl7.FhirPath.Tests
 
             data = patient[1];
             Assert.AreEqual("active", data.Name);
-            Assert.AreEqual(true, data.Value);
+            Assert.IsTrue((bool?)data.Value);
             Assert.AreEqual("boolean", data.InstanceType);
         }
 
         [TestMethod]
-        public async Tasks.Task SuccessfullyCreated()
+        public void SuccessfullyCreated()
         {
             var patient = createPatient();
 
@@ -178,7 +184,7 @@ namespace Hl7.FhirPath.Tests
             pat.ActiveElement.SetStringExtension("urn:2", "world!");
             pat.Identifier.Add(new Identifier("http://nu.nl", "1234567"));
             pat.Identifier.Add(new Identifier("http://toen.nl", "7654321"));
-            XmlAssert.AreSame("in place", await pat.ToXmlAsync(), await patient.ToXmlAsync());
+            XmlAssert.AreSame("in place", pat.ToXml(), patient.ToXml());
         }
 
         [TestMethod]
@@ -266,8 +272,8 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void CanBuildFromITypedElement()
         {
-            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
-            var patientElem = (new FhirXmlParser()).Parse(tpXml).ToTypedElement();
+            var tpXml = File.ReadAllText(@"TestData/fp-test-patient.xml");
+            var patientElem = FhirXmlNode.Parse(tpXml).ToTypedElement(ModelInfo.ModelInspector);
             var nodes = ElementNode.FromElement(patientElem);
             Assert.IsTrue(patientElem.IsEqualTo(nodes).Success);
         }
@@ -298,7 +304,7 @@ namespace Hl7.FhirPath.Tests
             newActive.Value = false;
             patient.Replace(_provider, patient["active"].Single(), newActive);
             Assert.AreEqual(1, patient["active"].Count);
-            Assert.AreEqual(false, patient["active"].Single().Value);
+            Assert.IsFalse((bool?)patient["active"].Single().Value);
 
             var newIdentifier = ElementNode.Root(_provider, "Identifier");
             newIdentifier.Add(_provider, "system", "http://nos.nl");
@@ -318,7 +324,7 @@ namespace Hl7.FhirPath.Tests
 
             var activeChild = newElement["active"].Single();
             Assert.IsTrue((bool)activeChild.Value);
-            Assert.IsTrue(activeChild.Annotations<string>().Single() == "a string annotation");
+            Assert.AreEqual("a string annotation", activeChild.Annotations<string>().Single());
 
             var identifierSystemChild = newElement["identifier"][0]["system"].Single();
 
@@ -393,6 +399,12 @@ namespace Hl7.FhirPath.Tests
 
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
+                var resource = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+                return resource.Value;
+            }
+
+            public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+            {
                 var sd = await _resolver.FindStructureDefinitionAsync(uri);
                 if (!sd.HasSnapshot)
                 {
@@ -403,6 +415,8 @@ namespace Hl7.FhirPath.Tests
 
                 return sd;
             }
+
+            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }

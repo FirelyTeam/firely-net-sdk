@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System;
@@ -23,7 +25,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// to another valueset is encountered.
         /// </summary>
 #pragma warning disable CS0618 // Type or member is obsolete
-        public ISyncOrAsyncResourceResolver ValueSetSource { get; set; }
+        public ISyncOrAsyncResourceResolver? ValueSetSource { get; set; }
 #pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
@@ -67,3 +69,5 @@ namespace Hl7.Fhir.Specification.Terminology
 
     }
 }
+
+#nullable restore

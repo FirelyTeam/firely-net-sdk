@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -20,37 +21,37 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task VerifyAllTestDataSpecification()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location) + "\\TestData";
+            var path = Path.GetDirectoryName(location) + "/TestData";
             Console.WriteLine(path);
-            List<string> issues = new List<string>();
+            List<string> issues = [];
             await ValidateFolder(path, path, issues);
-            Assert.AreEqual(0, issues.Count);
+            Assert.IsEmpty(issues);
         }
 
         private async Tasks.Task ValidateFolder(string basePath, string path, List<string> issues)
         {
             if (skipFiles(path)) return;
 
-            var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
-            var jsonParser = new Serialization.FhirJsonParser();
+            var xmlParser = FhirXmlDeserializer.OSTRICH;
+            var jsonParser = FhirJsonDeserializer.OSTRICH;
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {
                 if (skipFiles(item)) continue;
 
                 string content = File.ReadAllText(item);
-                Resource resource = null;
+
                 try
                 {
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = await xmlParser.ParseAsync<Resource>(content);
+                        xmlParser.Deserialize<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = await jsonParser.ParseAsync<Resource>(content);
+                        jsonParser.Deserialize<Resource>(content);
                     }
                     else
                     {
@@ -63,8 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // migrate the content
 
-                        XmlDocument xmlDoc = new XmlDocument();
-                        xmlDoc.PreserveWhitespace = true;
+                        var xmlDoc = new XmlDocument { PreserveWhitespace = true };
                         xmlDoc.LoadXml(content);
                         XmlNamespaceManager nm = new XmlNamespaceManager(xmlDoc.NameTable);
                         nm.AddNamespace("fhir", "http://hl7.org/fhir");
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Specification.Tests
                         try
                         {
                             // and parse this
-                            resource = xmlParser.Parse<Resource>(xmlDoc.OuterXml);
+                            xmlParser.Deserialize<Resource>(xmlDoc.OuterXml);
                             Console.WriteLine($"        conversion to {ModelInfo.Version} success {new FileInfo(item).Name}");
 
                             // Save this back to the filesystem since it works!

@@ -19,9 +19,6 @@ namespace Hl7.Fhir.Model
 {
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {
-        [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
-        public string? Define { get; set; }
-
         [NotMapped]
         public bool HasExpansion => Expansion != null;
 
@@ -37,17 +34,17 @@ namespace Hl7.Fhir.Model
         {
             if (HasExpansion)
             {
-                return Expansion.Contains.CountConcepts();
+                return Expansion!.Contains.CountConcepts();
             }
             else
                 return null;
         }
 
-        public ValueSet.ContainsComponent FindInExpansion(String code, string? system = null)
+        public ValueSet.ContainsComponent? FindInExpansion(String code, string? system = null)
         {
             ensureExpansion();
 
-            return Expansion.Contains.FindCode(code, system);
+            return Expansion!.Contains.FindCode(code, system);
         }
 
         public void ImportExpansion(ValueSet other)
@@ -62,12 +59,13 @@ namespace Hl7.Fhir.Model
 
             if (this.HasExpansion)
             {
-                combinedExpansion.Parameter.AddRange(this.Expansion.Parameter);
+                combinedExpansion.Parameter.AddRange(this.Expansion!.Parameter);
                 combinedExpansion.Contains.AddRange(this.Expansion.Contains);
 
                 combinedExpansion.Total += this?.Expansion.Total ?? this.Expansion.Contains.CountConcepts();
             }
 
+            other.Expansion ??= new ExpansionComponent();
             combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
             combinedExpansion.Contains.AddRange(other.Expansion.Contains);
             combinedExpansion.Total += other.Expansion!.Total ?? other.Expansion.Contains.CountConcepts();

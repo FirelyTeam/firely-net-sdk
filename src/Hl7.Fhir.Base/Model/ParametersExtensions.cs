@@ -1,51 +1,52 @@
-﻿using Hl7.Fhir.Rest;
-using Hl7.Fhir.Utility;
+﻿/*
+ * Copyright (c) 2024, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ *
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
+ */
+
+#nullable enable
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
-namespace Hl7.Fhir.Model
+
+namespace Hl7.Fhir.Model;
+
+/// <summary>
+/// Extension methods for the Parameters class.
+/// </summary>
+public static class ParametersExtensions
 {
-    public static class ParametersExtensions
+    private const string CODEATTRIBUTE = "code";
+    private const string URLATTRIBUTE = "url";
+    private const string CONTEXTATTRIBUTE = "context";
+    private const string VALUESETATTRIBUTE = "valueSet";
+
+    extension(Parameters parameters)
     {
-        private const string CODEATTRIBUTE = "code";
-        private const string SYSTEMATTRIBUTE = "system";
-        private const string CONTEXTATTRIBUTE = "context";
-
-        public static bool TryGetDuplicates(this Parameters parameters, out IEnumerable<string> duplicates)
+        /// <summary>
+        /// Attempts to find duplicate parameter names in the Parameters.
+        /// </summary>
+        /// <param name="duplicates">Output parameter containing duplicate names.</param>
+        /// <returns>True if duplicates are found, false otherwise.</returns>
+        public bool TryGetDuplicates(out IEnumerable<string> duplicates)
         {
-            duplicates = parameters.Parameter?.Select(p => p.Name)?
-                          .GroupBy(x => x)
-                          .Where(g => g.Count() > 1)
-                          .Select(y => y.Key)
-                          .ToList();
+            duplicates = parameters.Parameter.Select(p => p.Name)
+                .GroupBy(x => x)
+                .Where(g => g.Count() > 1)
+                .Select(y => y.Key!)
+                .ToList();
 
-            return duplicates?.Any() == true;
+            return duplicates.Any();
         }
 
-        internal static Parameters NoDuplicates(this Parameters parameters)
-        {
-            //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.TryGetDuplicates(out var duplicates) == true)
-            {
-                //422 Unproccesable Entity
-                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}", (HttpStatusCode)422);
-            }
-
-            return parameters;
-        }
-
-        internal static void CheckForValidityOfValidateCodeParams(this Parameters parameters)
-        {
-            parameters.NoDuplicates();
-
-            //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.Parameter.Any(p => p.Name == CODEATTRIBUTE) && !(parameters.Parameter.Any(p => p.Name == SYSTEMATTRIBUTE) ||
-                                                                                    parameters.Parameter.Any(p => p.Name == CONTEXTATTRIBUTE)))
-            {
-                //422 Unproccesable Entity
-                throw new FhirOperationException($"If a code is provided, a system or a context must be provided", (HttpStatusCode)422);
-            }
-        }
+        /// <summary>
+        /// Checks if the Parameters contains a parameter with the specified name.
+        /// </summary>
+        /// <param name="name">The parameter name to look for.</param>
+        /// <returns>True if the parameter exists, false otherwise.</returns>
+        public bool HasParam(string name) => parameters.Parameter.Any(p => p.Name == name);
     }
 }

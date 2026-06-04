@@ -11,21 +11,16 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ElementModel\PocoTypedElementTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Introspection\FhirClassMappingTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\AnnotationTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\BundleExtensionsTest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\CodeEnumTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCompareTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCopyTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepMatchTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ModelInfoTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\NullExtensionsTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClientTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\OperationsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\ReadAsyncTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SearchAsyncTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SearchParamFixesTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\UpdateRefreshDeleteAsyncTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Serialization\DefaultModelFactoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\MeasurePerformance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\QueryParserTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\ResourceParsingTests.cs" />
@@ -36,10 +31,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestDataVersionCheck.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TrainingTests\Z-TrainingUnitTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validation\SearchDataExtraction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidatePatient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests_Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests_LowLevelApi.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\BinaryPicture.json" />
     <Content Include="$(MSBuildThisFileDirectory)TestData\bundle-contained-references.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

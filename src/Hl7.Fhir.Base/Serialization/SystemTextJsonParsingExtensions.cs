@@ -7,10 +7,8 @@
  */
 
 
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 using System;
-using System.Linq.Expressions;
-using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 #nullable enable
 
@@ -52,7 +50,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static bool TryGetNumber(this ref Utf8JsonReader reader, out object? value)
+        public static bool TryGetNumber(this ref Utf8JsonReader reader, [NotNullWhen(true)] out object? value)
         {
             value = null;
 
@@ -64,13 +62,9 @@ namespace Hl7.Fhir.Serialization
             return gotValue;
         }
 
-#if NETSTANDARD2_0
-        internal static bool IsNormal(this float f) => !float.IsNaN(f) && !float.IsInfinity(f);
-        internal static bool IsNormal(this double d) => !double.IsNaN(d) && !double.IsInfinity(d);
-#else
+
         internal static bool IsNormal(this float f) => float.IsNormal(f);
         internal static bool IsNormal(this double d) => double.IsNormal(d);
-#endif
 
         public static void Recover(this ref Utf8JsonReader reader)
         {
@@ -115,4 +109,3 @@ namespace Hl7.Fhir.Serialization
 }
 
 #nullable restore
-#endif

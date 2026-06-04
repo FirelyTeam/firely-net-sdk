@@ -13,11 +13,12 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using T = System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -37,32 +38,32 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ResolveByCanonicalFromZip()
         {
-            var extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
             var dirSource = new DirectorySource(Path.Combine("TestData", "validation"));
-            extDefn = dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0");
+            extDefn = dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0").Value;
 
-            Assert.ThrowsException<ArgumentException>(() => dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|"));
+            Assert.Throws<ArgumentException>(() => dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|").Value);
         }
 
         [TestMethod]
         public void ResolveByUriFromFhirPackage()
         {
-            var extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
@@ -76,8 +77,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
         {
-            var wa = new WebResolver() { TimeOut = DefaultTimeOut };
-
+            var settings = new FhirClientSettings { Timeout = DefaultTimeOut };
+            var wa = new WebResolver(ep => new FhirClient(ep, settings));
             var artifact = wa.ResolveByUri("http://test.fhir.org/r4/StructureDefinition/Observation");
 
             Assert.IsNotNull(artifact);
@@ -126,7 +127,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var artifact = wa.ResolveByUri("http://vonk.fire.ly/StructureDefinition/Patient");
 
                     Assert.IsNotNull(client);
-                    Assert.AreEqual(client.Status, 3);
+                    Assert.AreEqual(3, client.Status);
 
                     Assert.IsNotNull(artifact);
                     Assert.IsTrue(artifact is StructureDefinition);
@@ -136,9 +137,11 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod, TestCategory("IntegrationTest")]
-        public async T.Task RetrieveArtifactMulti()
+        public async Tasks.Task RetrieveArtifactMulti()
         {
-            var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
+            var settings = new FhirClientSettings { Timeout = DefaultTimeOut };
+            var wa = new WebResolver(ep => new FhirClient(ep, settings));
+            var resolver = new MultiResolver(source, wa);
 
             var vs = await resolver.ResolveByUriAsync("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -153,12 +156,12 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod, TestCategory("IntegrationTest")]
-        public async T.Task TestSourceCaching()
+        public async Tasks.Task TestSourceCaching()
         {
-            var src = new CachedResolver(
-                new MultiResolver(
-                    ZipSource.CreateValidationSource(),
-                    new WebResolver() { TimeOut = DefaultTimeOut }));
+            var settings = new FhirClientSettings { Timeout = DefaultTimeOut };
+            var wa = new WebResolver(ep => new FhirClient(ep, settings));
+
+            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(),wa));
 
             Stopwatch sw1 = new Stopwatch();
 
@@ -189,7 +192,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestCacheInvalidation()
+        public async Tasks.Task TestCacheInvalidation()
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
@@ -227,7 +230,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task TestCacheLoadingStrategy()
+        public async Tasks.Task TestCacheLoadingStrategy()
         {
             const string resourceUri = "http://hl7.org/fhir/ValueSet/currencies";
 
@@ -309,14 +312,13 @@ namespace Hl7.Fhir.Specification.Tests
             fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
             sw2.Stop();
 
-            Assert.IsTrue(sw2.ElapsedMilliseconds < sw.ElapsedMilliseconds);
+            Assert.IsLessThan(sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds);
             Debug.WriteLine(String.Format("First time {0}, second time {1}", sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds));
         }
 
-
         // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & ResolvingConflictException
         [TestMethod]
-        public async T.Task TestCanonicalUrlConflicts()
+        public void TestCanonicalUrlConflicts()
         {
             //const string srcFileName = "extension-definitions.xml";
             const string dupFileName = "patient-birthtime";
@@ -332,7 +334,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Save back to disk to create a conflicting duplicate
             var b = new Bundle();
             b.AddResourceEntry(ext, url);
-            var xml = await new FhirXmlSerializer().SerializeToStringAsync(b);
+            var xml = FhirXmlSerializer.Default.SerializeToString(b);
             var filePath = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + ".xml";
             var filePath2 = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + "2.xml";
             File.WriteAllText(filePath, xml);
@@ -348,7 +350,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Debug.WriteLine("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
                 Assert.IsNotNull(ex.Conflicts);
-                Assert.AreEqual(1, ex.Conflicts.Length);
+                Assert.HasCount(1, ex.Conflicts);
                 var conflict = ex.Conflicts[0];
                 Assert.AreEqual(url, conflict.Identifier);
                 Assert.IsTrue(conflict.Origins.Contains(filePath));
@@ -361,6 +363,51 @@ namespace Hl7.Fhir.Specification.Tests
                 File.Delete(filePath2);
             }
             Assert.IsTrue(conflictException);
+        }
+
+        [TestMethod]
+        public void PartialVersionMatching_ShouldWork()
+        {
+            // Arrange - Create test resources with different versions
+            var resources = new List<Resource>
+            {
+                new StructureDefinition
+                {
+                    Url = "http://example.org/StructureDefinition/TestProfile",
+                    Version = "1.5.0",
+                    Name = "TestProfile150"
+                },
+                new StructureDefinition
+                {
+                    Url = "http://example.org/StructureDefinition/TestProfile",
+                    Version = "1.5.1",
+                    Name = "TestProfile151"
+                },
+                new StructureDefinition
+                {
+                    Url = "http://example.org/StructureDefinition/TestProfile",
+                    Version = "1.6.0",
+                    Name = "TestProfile160"
+                }
+            };
+
+            var resolver = new InMemoryResourceResolver(resources);
+
+            // Act & Assert - Test exact version matching (should still work)
+            var exactResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.5.0");
+            Assert.IsNotNull(exactResult);
+            var exactSd = (StructureDefinition)exactResult;
+            Assert.AreEqual("1.5.0", exactSd.Version);
+
+            // Act & Assert - Test partial version matching (new functionality)
+            var partialResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.5");
+            Assert.IsNotNull(partialResult, "Partial version matching should return a result");
+            var partialSd = (StructureDefinition)partialResult;
+            Assert.StartsWith("1.5", partialSd.Version, $"Expected version starting with '1.5', but got '{partialSd.Version}'");
+
+            // Act & Assert - Test that wrong partial version returns null
+            var wrongResult = resolver.ResolveByCanonicalUri("http://example.org/StructureDefinition/TestProfile|1.4");
+            Assert.IsNull(wrongResult, "Non-matching partial version should return null");
         }
 
     }
