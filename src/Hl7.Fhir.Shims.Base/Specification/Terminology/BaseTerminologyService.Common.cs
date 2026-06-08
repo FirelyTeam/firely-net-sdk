@@ -165,5 +165,5 @@ public abstract partial class BaseTerminologyService : ITerminologyService
     /// <exception cref="NotImplementedException">
     /// Thrown if the method is not implemented in a derived class.
     /// </exception>
-    protected virtual T.Task<ValueSet?> ResolveValueSet(Canonical canonical) => throw new NotImplementedException();
+    protected internal virtual T.Task<ValueSet?> ResolveValueSet(Canonical canonical) => throw new NotImplementedException();
 }
