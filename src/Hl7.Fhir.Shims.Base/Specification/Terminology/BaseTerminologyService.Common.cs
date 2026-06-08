@@ -8,7 +8,6 @@
 
 #nullable enable
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using System;
 using T = System.Threading.Tasks;
 
@@ -153,11 +152,10 @@ public abstract partial class BaseTerminologyService : ITerminologyService
     /// <exception cref="NotImplementedException">
     /// Thrown if the method is not implemented in a derived class.
     /// </exception>
-    protected virtual T.Task<CodeSystem> ResolveCodeSystem(Canonical canonical) => throw new NotImplementedException();
+    protected virtual T.Task<CodeSystem?> ResolveCodeSystem(Canonical canonical) => throw new NotImplementedException();
 
     /// <summary>
-    /// Resolves a ValueSet by its canonical URL. This method MUST return a ValueSet or throw
-    /// a <see cref="FhirOperationException"/> indicating that the ValueSet could not be found.
+    /// Resolves a ValueSet by its canonical URL.
     /// Derived classes should override this method to provide the actual implementation.
     /// </summary>
     /// <param name="canonical">The canonical URL of the ValueSet to resolve.</param>
@@ -167,5 +165,5 @@ public abstract partial class BaseTerminologyService : ITerminologyService
     /// <exception cref="NotImplementedException">
     /// Thrown if the method is not implemented in a derived class.
     /// </exception>
-    protected internal virtual T.Task<ValueSet?> ResolveValueSet(Canonical canonical) => throw new NotImplementedException();
+    protected virtual T.Task<ValueSet?> ResolveValueSet(Canonical canonical) => throw new NotImplementedException();
 }
