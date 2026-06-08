@@ -46,7 +46,7 @@ public abstract class CustomValueSetTerminologyService : BaseTerminologyService
     /// </summary>
     /// <param name="canonical"></param>
     /// <returns></returns>
-    protected internal override Task<ValueSet> ResolveValueSet(Canonical canonical) => Task.FromResult(new ValueSet());
+    protected internal override Task<ValueSet?> ResolveValueSet(Canonical canonical) => Task.FromResult<ValueSet?>(new());
 
     /// <summary>
     /// Returns an uninitialized CodeSystem, as the implementations will verify only codes known to them. If CodeSystem is needed, override this method.
