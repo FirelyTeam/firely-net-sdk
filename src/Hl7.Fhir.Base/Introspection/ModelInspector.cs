@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Introspection;
 public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 {
     private static readonly ConcurrentDictionary<string, ModelInspector> _inspectedAssemblies = new();
-    
+
     // Cache for assembly-level FhirModelAssemblyAttribute to avoid repeated reflection calls
     private static readonly ConcurrentDictionary<Assembly, FhirModelAssemblyAttribute?> _assemblyAttributeCache = new();
 
@@ -249,39 +249,6 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 
         var nestedClasses = nestedTypes.Where(t => t is { IsClass: true, IsEnum: false });
         extractBackbonesFromClasses(nestedClasses);
-
-        return newMapping;
-    }
-
-    /// <summary>
-    /// Imports FHIR metadata from a <see cref="IStructureDefinitionSummary"/>.
-    /// This is primarily intended for custom resources/types that are backed by dynamic POCOs.
-    /// </summary>
-    public ClassMapping Import(IStructureDefinitionSummary summary, string? canonical = null) =>
-        Import(summary, summary.TypeName, canonical);
-
-    internal ClassMapping Import(IStructureDefinitionSummary summary, string mappingName, string? canonical = null)
-    {
-        if (summary is null) throw Error.ArgumentNull(nameof(summary));
-        if (mappingName is null) throw Error.ArgumentNull(nameof(mappingName));
-
-        if (canonical is not null && FindClassMappingByCanonical(canonical) is { } existingByCanonical)
-            return existingByCanonical;
-
-        if (FindClassMapping(mappingName) is { } existingByName)
-        {
-            if (canonical is null)
-                return existingByName;
-
-            // register the canonical for the mapping as well
-            _classMappings.RegisterCanonicalAlias(canonical, existingByName);
-            return existingByName;
-        }
-
-        if (!ClassMapping.TryCreate(this, summary, mappingName, out var newMapping, canonical))
-            throw new InvalidOperationException($"Could not create a class mapping for summary '{mappingName}'.");
-
-        _classMappings.Add(newMapping);
 
         return newMapping;
     }

@@ -71,14 +71,19 @@ public class PropertyMapping : IElementDefinitionSummary
         _propertyType = propertyType;
     }
 
+    /// <summary>
+    /// Creates a PropertyMapping from pre-computed type information, typically when building
+    /// mappings from a <see cref="Hl7.Fhir.Specification.IElementDefinitionSummary"/>.
+    /// </summary>
     [SetsRequiredMembers]
-    private PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, ClassMapping propertyTypeMapping,
-        Type implementingType, Type[] fhirTypes)
+    public PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, ClassMapping propertyTypeMapping,
+        Type implementingType, Type[] fhirTypes, IEnumerable<ITypeSerializationInfo>? typeInfos = null)
         : this(declaringClass, name, nativeProperty: null!)
     {
         PropertyTypeMapping = propertyTypeMapping;
         ImplementingType = implementingType;
         FhirType = fhirTypes;
+        TypeSerializationInfos = typeInfos?.ToArray();
         _propertyType = propertyType;
     }
 
@@ -214,10 +219,6 @@ public class PropertyMapping : IElementDefinitionSummary
     /// </summary>
     public string? BindingName { get; init; }
 
-    internal string? DefaultTypeNameOverride { get; init; }
-
-    internal string? NonDefaultNamespaceOverride { get; init; }
-
     /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
@@ -294,97 +295,6 @@ public class PropertyMapping : IElementDefinitionSummary
         };
 
         return true;
-    }
-
-    internal static PropertyMapping CreateFromSummary(ClassMapping declaringClass, IElementDefinitionSummary elementSummary)
-    {
-        if (declaringClass is null) throw Error.ArgumentNull(nameof(declaringClass));
-        if (elementSummary is null) throw Error.ArgumentNull(nameof(elementSummary));
-
-        var resolvedTypes = elementSummary.Type.Select(resolveTypeInfo).ToArray();
-
-        if (resolvedTypes.Length == 0)
-            throw new InvalidOperationException($"Element '{declaringClass.Name}.{elementSummary.ElementName}' does not declare any types.");
-
-        var choice = elementSummary.IsResource
-            ? ChoiceType.ResourceChoice
-            : elementSummary.IsChoiceElement
-                ? ChoiceType.DatatypeChoice
-                : ChoiceType.None;
-
-        var implementingType = determineImplementingType(resolvedTypes.Select(rt => rt.Mapping.NativeType).Distinct().ToArray(), choice);
-        var propertyTypeMapping = choice == ChoiceType.None
-            ? resolvedTypes[0].Mapping
-            : declaringClass.Inspector.FindOrImportClassMapping(implementingType)
-                ?? throw new InvalidOperationException($"Cannot find a class mapping for summary element '{declaringClass.Name}.{elementSummary.ElementName}' implementing type '{implementingType.Name}'.");
-
-        var propertyType = elementSummary.IsCollection
-            ? typeof(List<>).MakeGenericType(implementingType)
-            : implementingType;
-
-        return new(
-            declaringClass,
-            elementSummary.ElementName,
-            propertyType,
-            propertyTypeMapping,
-            implementingType,
-            resolvedTypes.Select(rt => rt.Mapping.NativeType).Distinct().ToArray())
-        {
-            Choice = choice,
-            IsCollection = elementSummary.IsCollection,
-            IsMandatoryElement = elementSummary.IsRequired,
-            InSummary = elementSummary.InSummary,
-            IsModifier = elementSummary.IsModifier,
-            SerializationHint = elementSummary.Representation,
-            Order = elementSummary.Order,
-            TypeSerializationInfos = resolvedTypes.Select(rt => rt.TypeInfo).ToArray(),
-            DefaultTypeNameOverride = elementSummary.DefaultTypeName,
-            NonDefaultNamespaceOverride = elementSummary.NonDefaultNamespace,
-        };
-
-        ResolvedTypeInfo resolveTypeInfo(ITypeSerializationInfo typeInfo) => typeInfo switch
-        {
-            IStructureDefinitionSummary summary => importSummaryType(summary),
-            IStructureDefinitionReference reference => importReferencedType(reference),
-            _ => throw Error.NotSupported($"Don't know how to derive property type information from type {typeInfo.GetType()}")
-        };
-
-        ResolvedTypeInfo importSummaryType(IStructureDefinitionSummary summary)
-        {
-            var mappingName = summary.TypeName is "BackboneElement" or "Element"
-                ? $"{declaringClass.Name}.{elementSummary.ElementName}"
-                : summary.TypeName;
-
-            var mapping = declaringClass.Inspector.Import(summary, mappingName, canonical: null);
-            var exportedTypeInfo = mapping.IsBackboneType
-                ? (ITypeSerializationInfo)mapping
-                : new PocoTypeReferenceInfo(((IStructureDefinitionSummary)mapping).TypeName);
-
-            return new ResolvedTypeInfo(mapping, exportedTypeInfo);
-        }
-
-        ResolvedTypeInfo importReferencedType(IStructureDefinitionReference reference)
-        {
-            var mapping = resolveExistingMapping(reference.ReferredType);
-            return new ResolvedTypeInfo(mapping, new PocoTypeReferenceInfo(reference.ReferredType));
-        }
-
-        ClassMapping resolveExistingMapping(string typeName) =>
-            (isCanonical(typeName)
-                ? declaringClass.Inspector.FindClassMappingByCanonical(typeName)
-                : declaringClass.Inspector.FindClassMapping(typeName))
-            ?? throw new InvalidOperationException($"Cannot find a class mapping for summary type '{typeName}' on element '{declaringClass.Name}.{elementSummary.ElementName}'.");
-
-        static bool isCanonical(string value) => Uri.TryCreate(value, UriKind.Absolute, out _);
-
-        static Type determineImplementingType(Type[] nativeTypes, ChoiceType choice) => choice switch
-        {
-            ChoiceType.ResourceChoice => typeof(Resource),
-            ChoiceType.DatatypeChoice => nativeTypes.All(t => typeof(PrimitiveType).IsAssignableFrom(t))
-                ? typeof(PrimitiveType)
-                : typeof(Model.DataType),
-            _ => nativeTypes[0]
-        };
     }
 
     private static Type determineMappingType(Type[]? overridingTypes, Type implementingType, FhirElementAttribute felem, string parentTypeName)
@@ -529,7 +439,11 @@ public class PropertyMapping : IElementDefinitionSummary
 
     bool IElementDefinitionSummary.IsResource => this.Choice == ChoiceType.ResourceChoice;
 
-    string? IElementDefinitionSummary.DefaultTypeName => DefaultTypeNameOverride;
+
+    /// <inheritdoc cref="IElementDefinitionSummary.DefaultTypeName" />
+    public string? DefaultTypeName { get; init; }
+    
+    string? IElementDefinitionSummary.DefaultTypeName => this.DefaultTypeName;
 
     ITypeSerializationInfo[] IElementDefinitionSummary.Type
     {
@@ -543,7 +457,11 @@ public class PropertyMapping : IElementDefinitionSummary
 
     private ITypeSerializationInfo[]? _types;
 
-    string? IElementDefinitionSummary.NonDefaultNamespace => NonDefaultNamespaceOverride;
+
+    /// <inheritdoc cref="IElementDefinitionSummary.NonDefaultNamespace" />
+    public string? NonDefaultNamespace { get; init; }
+    
+    string? IElementDefinitionSummary.NonDefaultNamespace => this.NonDefaultNamespace;
 
     XmlRepresentation IElementDefinitionSummary.Representation =>
         SerializationHint != XmlRepresentation.None ?
@@ -575,13 +493,6 @@ public class PropertyMapping : IElementDefinitionSummary
                                                   $"'{QualifiedPropName}', but it does not seem to" +
                                                   $"be a valid FHIR type POCO.");
         }
-    }
-
-    private readonly record struct ResolvedTypeInfo(ClassMapping Mapping, ITypeSerializationInfo TypeInfo);
-
-    private readonly struct PocoTypeReferenceInfo(string canonical) : IStructureDefinitionReference
-    {
-        public string ReferredType { get; } = canonical;
     }
 
     #endregion

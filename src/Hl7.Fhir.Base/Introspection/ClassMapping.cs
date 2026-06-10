@@ -16,7 +16,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -162,30 +161,6 @@ public class ClassMapping(
         return true;
     }
 
-    internal static bool TryCreate(ModelInspector parent, IStructureDefinitionSummary summary, string mappingName,
-        [NotNullWhen(true)] out ClassMapping? result, string? canonical = null)
-    {
-        if (summary is null) throw Error.ArgumentNull(nameof(summary));
-        if (mappingName is null) throw Error.ArgumentNull(nameof(mappingName));
-
-        result = new(parent, mappingName, determineNativeType(summary),
-            declaringClass => summary.GetElements().Select(element => PropertyMapping.CreateFromSummary(declaringClass, element)))
-        {
-            Canonical = canonical,
-            IsBackboneType = summary.TypeName is "BackboneElement" or "Element",
-            TypeNameOverride = summary.TypeName,
-            IsAbstractOverride = summary.IsAbstract,
-        };
-
-        return true;
-
-        static Type determineNativeType(IStructureDefinitionSummary summary) => summary switch
-        {
-            { IsResource: true } => typeof(DynamicResource),
-            _ => typeof(DynamicDataType)
-        };
-    }
-
     /// <summary>
     /// Is <c>true</c> when this class represents a Resource datatype.
     /// </summary>
@@ -292,15 +267,9 @@ public class ClassMapping(
     }
 
     #region IStructureDefinitionSummary members
-
-    /// <summary>
-    /// Override for logic from building ClassMapping from IStructureDefinitionSummary. 
-    /// </summary>
-    internal string? TypeNameOverride { get; init; }
     
     /// <inheritdoc />
     string IStructureDefinitionSummary.TypeName =>
-        TypeNameOverride ??
         this switch
         {
             { IsCodeOfT: true } => "code",
@@ -313,10 +282,10 @@ public class ClassMapping(
     /// <summary>
     /// Override for logic from building ClassMapping from IStructureDefinitionSummary. 
     /// </summary>
-    internal bool? IsAbstractOverride { get; init; }
+    public bool? IsAbstract { get; init; }
 
     /// <inheritdoc />
-    bool IStructureDefinitionSummary.IsAbstract => IsAbstractOverride ?? (((IStructureDefinitionSummary)this).TypeName == "BackboneElement" || NativeType.IsAbstract);
+    bool IStructureDefinitionSummary.IsAbstract => IsAbstract ?? (((IStructureDefinitionSummary)this).TypeName == "BackboneElement" || NativeType.IsAbstract);
 
     /// <inheritdoc />
     bool IStructureDefinitionSummary.IsResource => IsResource;
