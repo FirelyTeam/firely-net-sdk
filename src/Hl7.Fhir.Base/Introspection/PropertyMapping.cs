@@ -83,7 +83,7 @@ public class PropertyMapping : IElementDefinitionSummary
         PropertyTypeMapping = propertyTypeMapping;
         ImplementingType = implementingType;
         FhirType = fhirTypes;
-        TypeSerializationInfos = typeInfos?.ToArray();
+        _types = typeInfos?.ToArray();
         _propertyType = propertyType;
     }
 
@@ -143,8 +143,6 @@ public class PropertyMapping : IElementDefinitionSummary
     /// <remarks>This is effectively the ClassMapping for the <see cref="ImplementingType" /> unless a
     /// <see cref="AllowedTypesAttribute" /> specifies otherwise.</remarks>
     public required ClassMapping PropertyTypeMapping { get; init; }
-
-    private ITypeSerializationInfo[]? TypeSerializationInfos { get; init; }
 
     /// <summary>
     /// Whether the element can repeat.
@@ -449,7 +447,6 @@ public class PropertyMapping : IElementDefinitionSummary
     {
         get
         {
-            if (TypeSerializationInfos is not null) return TypeSerializationInfos;
             LazyInitializer.EnsureInitialized(ref _types, buildTypes);
             return _types!;
         }
