@@ -402,8 +402,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
             FindClassMappingByCanonical(canonical)
             : FindClassMapping(canonical);
 
-    private static bool isCanonical(string value) =>
-        Uri.TryCreate(value, UriKind.Absolute, out _);
+    private static bool isCanonical(string value) => value.Contains('/');
 
     #region IModelInfo
 

@@ -273,6 +273,7 @@ public class ClassMapping(
         this switch
         {
             { IsCodeOfT: true } => "code",
+            { IsBackboneType: true, IsCustomMapping: true } => "BackboneElement",
             { IsBackboneType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
                 "BackboneElement"
                 : "Element",
