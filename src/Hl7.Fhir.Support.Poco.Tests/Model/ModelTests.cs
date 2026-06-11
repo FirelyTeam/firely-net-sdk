@@ -438,6 +438,31 @@ public class ModelTests
         ];
         Assert.IsTrue(expected.SequenceEqual(children));
     }
+    [TestMethod]
+    public void ParametersSupportsCollectionInitializer()
+    {
+        // Verify that the collection initializer syntax works (issue #3447)
+        var p = new Parameters
+        {
+            { "param1", new FhirString("value1") },
+            { "param2", new FhirBoolean(true) }
+        };
+
+        p.Parameter.Should().HaveCount(2);
+        p.GetSingleValue<FhirString>("param1")!.Value.Should().Be("value1");
+        p.GetSingleValue<FhirBoolean>("param2")!.Value.Should().Be(true);
+    }
+
+    [TestMethod]
+    public void ParametersIsEnumerable()
+    {
+        var p = new Parameters();
+        p.Add("a", new FhirString("one"));
+        p.Add("b", new FhirString("two"));
+
+        var names = p.Select(pc => pc.Name).ToList();
+        names.Should().BeEquivalentTo(["a", "b"]);
+    }
 }
 
 #pragma warning restore CS0618 // Type or member is obsolete
