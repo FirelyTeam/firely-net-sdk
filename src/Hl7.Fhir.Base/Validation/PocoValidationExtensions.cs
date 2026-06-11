@@ -61,7 +61,7 @@ public static class PocoValidationExtensions
     {
         var errors = new List<CodedValidationException>();
 
-        var classMapping = validationContext.ModelInspector.FindOrImportClassMapping(value.GetType());
+        var classMapping = validationContext.ModelInspector.FindOrImportClassMapping(value);
         if (classMapping is null) return [];
 
         // Step 1: Validate the object properties.

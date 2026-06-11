@@ -590,6 +590,10 @@ public class BaseFhirXmlDeserializer
 
         ClassMapping propertyValueMapping = propertyMapping.Choice switch
         {
+            // A custom type mapping is used directly: resolving it via the .NET type (below) would
+            // lose the identity of the custom type, since custom types share the same dynamic .NET type.
+            ChoiceType.None or ChoiceType.ResourceChoice when propertyMapping.PropertyTypeMapping is { IsCustomMapping: true } customType =>
+                customType,
             ChoiceType.None or ChoiceType.ResourceChoice =>
                 parentMapping.Inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) ??
                 throw new InvalidOperationException($"Encountered property type {propertyMapping.GetInstantiableType()} for which" +

@@ -317,11 +317,34 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     public ClassMapping? FindOrImportClassMapping(Type nativeType) => ImportType(nativeType);
 
     /// <summary>
+    /// Tries to retrieve an already imported <see cref="ClassMapping"/> for the type of the
+    /// given instance and will import its type when no mapping is found.
+    /// </summary>
+    /// <remarks>For dynamic types, the instance's <see cref="IDynamicType.DynamicTypeName"/> is used
+    /// to locate a (custom) mapping registered under that name, before falling back to the
+    /// runtime type of the instance.</remarks>
+    /// <returns>May return <c>null</c> if no mapping is found and the type cannot be imported.</returns>
+    public ClassMapping? FindOrImportClassMapping(Base instance) =>
+        FindClassMapping(instance) ?? ImportType(instance.GetType());
+
+    /// <summary>
     /// Retrieves an already imported <see cref="ClassMapping" /> given a FHIR type name.
     /// </summary>
     /// <remarks>The search for the mapping by namem is case-insensitive.</remarks>
     public ClassMapping? FindClassMapping(string fhirTypeName) =>
         _classMappings.ByName.GetValueOrDefault(fhirTypeName);
+
+    /// <summary>
+    /// Retrieves an already imported <see cref="ClassMapping" /> for the type of the given instance.
+    /// </summary>
+    /// <remarks>For dynamic types, the instance's <see cref="IDynamicType.DynamicTypeName"/> is used
+    /// to locate a (custom) mapping registered under that name, before falling back to the
+    /// runtime type of the instance.</remarks>
+    public ClassMapping? FindClassMapping(Base instance) =>
+        instance is IDynamicType { DynamicTypeName: { } typeName } && !string.IsNullOrWhiteSpace(typeName)
+            && FindClassMapping(typeName) is { } customMapping
+            ? customMapping
+            : FindClassMapping(instance.GetType());
 
     /// <summary>
     /// Retrieves an already imported <see cref="ClassMapping" /> given a Type.

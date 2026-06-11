@@ -44,10 +44,10 @@ public partial record PocoNode
 
             // we could get definitions with FindOrImportClassMapping, but then we're modifying inspector mappings
             // which either should already have the type, or is expected to be immutable!
-            if (this.Parent is {} node && inspector.FindClassMapping(node.Poco.GetType()) is {} classMapping)
+            if (this.Parent is {} node && inspector.FindClassMapping(node.Poco) is {} classMapping)
                 return classMapping.FindMappedElementByName(Name);
 
-            if (inspector.FindClassMapping(Poco.GetType()) is {} cm)
+            if (inspector.FindClassMapping(Poco) is {} cm)
                 return ElementDefinitionSummary.ForRoot(cm, Name);
 
             return null;
@@ -92,7 +92,7 @@ public partial record PocoNode
         if (name is null) return Children().SelectMany(node => node);
         
         var trueElementName = this.FindInspector()?
-            .FindOrImportClassMapping(Poco.GetType())?
+            .FindOrImportClassMapping(Poco)?
             .FindMappedElementByChoiceName(name)?.Name;
         
         return Child(trueElementName ?? name) ?? Enumerable.Empty<ISourceNode>();
