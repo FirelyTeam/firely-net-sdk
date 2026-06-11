@@ -92,25 +92,25 @@ namespace Hl7.Fhir.Core.Tests.Rest
         [TestMethod]
         public async Task NoVerifyFhirVersionWithIncorrectPatient()
         {
-            // No server version check, but incorrect patient. This could be a wrong FHIR version. So we check the extra appended message
+            // With the new Recoverable serializer, unknown elements in the patient response are silently ignored
+            // (no exception is thrown), so the version hint behavior no longer applies.
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + TESTVERSION + @"""}";
             var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:"", ""unknownMember"": ""value""}";
             var act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson, false);
             await act
-                .Should().ThrowAsync<StructuralTypeException>()
-                .Where(e => e.Message.EndsWith("FHIR server with the correct FHIR version."));
+                .Should().NotThrowAsync();
         }
 
         [TestMethod]
         public async Task VerifyFhirVersionWithIncorrectPatient()
         {
-            // Server version check with an incorrect patient. So the error is legit
+            // With the new Recoverable serializer, unknown elements in the patient response are silently ignored
+            // (no exception is thrown).
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + TESTVERSION + @"""}";
             var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:"", ""unknownMember"": ""value""}";
             var act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson, true);
             await act
-                .Should().ThrowAsync<StructuralTypeException>()
-                .Where(e => !e.Message.EndsWith("FHIR server with the correct FHIR version."));
+                .Should().NotThrowAsync();
         }
 
         [TestMethod]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 new Uri("http://example.org"), TESTINSPECTOR)
             ;
             
-            (serializationEngineField!.Invoke(fhirClient2, []) is ElementModelSerializationEngine).Should().BeTrue();
+            (serializationEngineField!.Invoke(fhirClient2, []) is PocoSerializationEngine).Should().BeTrue();
             
             fhirClient2.Settings.SerializationEngine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
             

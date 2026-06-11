@@ -978,9 +978,7 @@ public partial class BaseFhirClient : IDisposable
 
     private IFhirSerializationEngine getSerializationEngine()
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings);
-#pragma warning restore CS0618 // Type or member is obsolete
+        return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Recoverable(Inspector);
     }
 
     private async Task verifyServerVersion(CancellationToken ct)
