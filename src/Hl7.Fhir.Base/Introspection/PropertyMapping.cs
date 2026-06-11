@@ -53,19 +53,11 @@ public class PropertyMapping : IElementDefinitionSummary
     public PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, Type[]? allowedTypes = null)
      : this(declaringClass, name, nativeProperty: null!)
     {
-        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
-
-        // Get to the actual (native) type representing this element
-        var implementingType = collectionItemType ?? propertyType;
-        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
-
-        if (declaringClass.Inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
-            throw new InvalidOperationException($"Custom property {name} is of type " +
-                                                $"{implementingType}, for which a classmapping cannot be found.");
+        var implementingType = unwrapPropertyType(propertyType, out var isCollection);
 
         Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
-        IsCollection = collectionItemType is not null;
-        PropertyTypeMapping = propertyTypeMapping;
+        IsCollection = isCollection;
+        PropertyTypeMapping = findMappingOrThrow(declaringClass, name, implementingType);
         FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
         ImplementingType = implementingType;
         _propertyType = propertyType;
@@ -92,24 +84,18 @@ public class PropertyMapping : IElementDefinitionSummary
         if (typeMappings.Length == 0)
             throw new ArgumentException("At least one type mapping must be provided.", nameof(fhirTypes));
 
-        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
+        var implementingType = unwrapPropertyType(propertyType, out var isCollection);
 
-        // Get to the actual (native) type representing this element
-        var implementingType = collectionItemType ?? propertyType;
-        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
+        Choice = typeMappings.Length > 1 ? ChoiceType.DatatypeChoice : ChoiceType.None;
+        IsCollection = isCollection;
 
         // For a single type, that type's mapping also serves as the property type mapping. For
         // choices, the property type mapping is the mapping for the declared (base) type of the
         // property, just like it is for reflected choice properties.
-        var propertyTypeMapping = typeMappings.Length == 1
+        PropertyTypeMapping = typeMappings.Length == 1
             ? typeMappings[0]
-            : declaringClass.Inspector.FindOrImportClassMapping(implementingType)
-              ?? throw new InvalidOperationException($"Custom property {name} is of type " +
-                                                     $"{implementingType}, for which a classmapping cannot be found.");
+            : findMappingOrThrow(declaringClass, name, implementingType);
 
-        Choice = typeMappings.Length > 1 ? ChoiceType.DatatypeChoice : ChoiceType.None;
-        IsCollection = collectionItemType is not null;
-        PropertyTypeMapping = propertyTypeMapping;
         FhirType = typeMappings.Select(tm => tm.NativeType).ToArray();
         ImplementingType = implementingType;
         _propertyType = propertyType;
@@ -122,6 +108,27 @@ public class PropertyMapping : IElementDefinitionSummary
             ? [new AllowedTypesAttribute(typeMappings.Select(tm => tm.Name).ToArray())]
             : [];
     }
+
+    /// <summary>
+    /// Derives the type representing the element from the declared type of a property,
+    /// unwrapping a repeating (List&lt;T&gt;) and/or nullable property type.
+    /// </summary>
+    private static Type unwrapPropertyType(Type propertyType, out bool isCollection)
+    {
+        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
+        isCollection = collectionItemType is not null;
+
+        // Get to the actual (native) type representing this element
+        var implementingType = collectionItemType ?? propertyType;
+        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
+
+        return implementingType;
+    }
+
+    private static ClassMapping findMappingOrThrow(ClassMapping declaringClass, string name, Type implementingType) =>
+        declaringClass.Inspector.FindOrImportClassMapping(implementingType)
+            ?? throw new InvalidOperationException($"Custom property {name} is of type " +
+                                                   $"{implementingType}, for which a classmapping cannot be found.");
 
     /// <summary>
     /// Returns <c>true</c> when this class is a custom mapping, basically a dynamic resource/type with
