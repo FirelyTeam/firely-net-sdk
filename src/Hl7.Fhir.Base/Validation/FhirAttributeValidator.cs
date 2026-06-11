@@ -33,6 +33,12 @@ public class FhirAttributeValidator : IPocoValidator
         PropertyMapping? propertyMapping,
         PocoValidationContext context)
     {
+        // An element is unknown when there is no mapping for it at all, or when its mapping was
+        // fabricated on the fly by the deserializer for an element it did not recognize (an
+        // "ad-hoc" mapping). Note that the latter can also happen on a custom class: custom
+        // properties that are a member of their declaring class are known and validated normally,
+        // but an unrecognized element on such a class gets an ad-hoc mapping too, and must still
+        // be reported here.
         if (propertyMapping is null || propertyMapping.IsPrimitive || isAdHocMapping(propertyMapping))
         {
             var serializedForm = propertyValue is Base b && b.Annotation<XmlRepresentationAnnotation>() is not null
