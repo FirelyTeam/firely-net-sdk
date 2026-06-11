@@ -24,6 +24,13 @@ namespace Hl7.Fhir.Introspection;
 /// <summary>
 /// Validates the type of a property against the allowed type choices.
 /// </summary>
+/// <remarks>The allowed types can be given as .NET types (<see cref="Types"/>), as FHIR type
+/// names (<see cref="TypeNames"/>), or both. The two lists are alternatives: a value is allowed
+/// when its .NET type matches one of <see cref="Types"/> (which takes inheritance into account),
+/// or when it resolves to a mapping whose name (or canonical) is listed in
+/// <see cref="TypeNames"/>. Note that custom types can only be matched by name: all custom types
+/// share the same dynamic .NET type, so a dynamic type listed in <see cref="Types"/> will never
+/// match.</remarks>
 [CLSCompliant(false)]
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAttribute
@@ -41,6 +48,16 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
     /// type, so a list of .NET types cannot faithfully express such choices.
     /// </summary>
     public AllowedTypesAttribute(string[] typeNames) : this(types: [])
+    {
+        TypeNames = typeNames;
+    }
+
+    /// <summary>
+    /// Creates an attribute that validates against allowed types given both as .NET types and
+    /// as FHIR type names. The lists are alternatives: a value is allowed when it matches
+    /// either of them (see the remarks on this class).
+    /// </summary>
+    public AllowedTypesAttribute(Type[] types, string[] typeNames) : this(types)
     {
         TypeNames = typeNames;
     }

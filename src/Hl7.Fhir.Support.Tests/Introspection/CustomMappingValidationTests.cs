@@ -140,6 +140,39 @@ namespace Hl7.Fhir.Tests.Introspection
         }
 
         [TestMethod]
+        public void MixedTypeAndNameBasedAllowedTypesActAsUnion()
+        {
+            var inspector = CustomTestModel.Create();
+            var mixedResource = new ClassMapping(inspector, "MixedChoiceResource", typeof(DynamicResource), r =>
+            [
+                new PropertyMapping(r, "value", typeof(DataType), [inspector.FindClassMapping("DataType")!])
+                {
+                    Order = 10,
+                    Choice = ChoiceType.DatatypeChoice,
+                    ValidationAttributes = [new AllowedTypesAttribute([typeof(FhirString)], ["MyCustomDatatype"])]
+                }
+            ]);
+            inspector.ClassMappings.Add(mixedResource);
+
+            var instance = (DynamicResource)mixedResource.CreateInstance();
+
+            // matched by the .NET type list
+            instance.SetValue("value", new FhirString("plain"));
+            instance.Validate(inspector).Should().BeEmpty();
+
+            // matched by the type name list
+            var custom = inspector.FindClassMapping("MyCustomDatatype")!.CreateInstance();
+            custom.SetValue("unit", new FhirString("kg"));
+            instance.SetValue("value", custom);
+            instance.Validate(inspector).Should().BeEmpty();
+
+            // matched by neither list
+            instance.SetValue("value", new FhirBoolean(true));
+            instance.Validate(inspector).Should().ContainSingle()
+                .Which.ErrorCode.Should().Be(CodedValidationException.CHOICE_TYPE_NOT_ALLOWED_CODE);
+        }
+
+        [TestMethod]
         public void ReflectedAllowedTypesValidationIsUnchanged()
         {
             var inspector = CustomTestModel.Create();
