@@ -14,22 +14,20 @@ public readonly record struct ResolverResult
     /// <summary>
     /// Whether the operation successfully retrieved a resource
     /// </summary>
+    #if NET8_0_OR_GREATER
+    [MemberNotNullWhen(true, nameof(Value))]
+    [MemberNotNullWhen(false, nameof(Error))]
+    #endif
     public bool Success => Value != null;
       
     /// <summary>
     /// Value retrieved from resource resolver
     /// </summary>
-#if NET8_0_OR_GREATER
-    [MemberNotNullWhen(true, nameof(Success))]
-#endif
     public Resource? Value { get; }
     
     /// <summary>
     /// Error encountered while attempting retrieval of resource
     /// </summary>
-#if NET8_0_OR_GREATER
-    [MemberNotNullWhen(false, nameof(Success))]
-#endif
     public ResolverException? Error { get; private init; }
 
     /// <summary>

@@ -73,6 +73,24 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsInstanceOfType(extDefn, typeof(NamingSystem));
         }
 
+        [TestMethod]
+        public void ResolverResultNullabilityContracts()
+        {
+            var success = new ResolverResult(new Patient());
+            Assert.IsTrue(success.Success);
+
+            Resource resource = success.Value;
+            Assert.IsNotNull(resource);
+            Assert.IsNull(success.Error);
+
+            var failure = new ResolverResult(ResolverException.NotFound());
+            Assert.IsFalse(failure.Success);
+
+            ResolverException error = failure.Error;
+            Assert.IsNotNull(error);
+            Assert.IsNull(failure.Value);
+        }
+
 
         [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()

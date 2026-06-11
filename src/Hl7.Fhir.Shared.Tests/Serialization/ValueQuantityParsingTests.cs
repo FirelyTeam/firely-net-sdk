@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
@@ -13,6 +15,42 @@ namespace Hl7.Fhir.Tests.Serialization
     [TestClass]
     public class ValueQuantityParsingTests
     {
+        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
+
+        // Example JSON from the bug report: valueQuantity.value contains a value larger than int.MaxValue
+        private const string LARGE_VALUE_OBSERVATION_JSON = """
+            {
+              "resourceType": "Observation",
+              "valueQuantity": {
+                "value": 20231128235900
+              }
+            }
+            """;
+
+        [TestMethod]
+        public void ParseLargeValueQuantity_LegacySerializer_DoesNotThrow()
+        {
+            // The legacy ElementModel serializer used to throw OverflowException for large long values
+            var engine = FhirSerializationEngineFactory.Legacy.Permissive(TESTINSPECTOR);
+            var result = engine.DeserializeFromJson(LARGE_VALUE_OBSERVATION_JSON);
+            result.Should().NotBeNull();
+            var observation = result.Should().BeOfType<Observation>().Subject;
+            var quantity = observation.Value.Should().BeOfType<Quantity>().Subject;
+            quantity.Value.Should().Be(20231128235900M);
+        }
+
+        [TestMethod]
+        public void ParseLargeValueQuantity_NewSerializer_DoesNotThrow()
+        {
+            // The new POCO-based serializer should also handle large decimal values
+            var engine = FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR);
+            var result = engine.DeserializeFromJson(LARGE_VALUE_OBSERVATION_JSON);
+            result.Should().NotBeNull();
+            var observation = result.Should().BeOfType<Observation>().Subject;
+            var quantity = observation.Value.Should().BeOfType<Quantity>().Subject;
+            quantity.Value.Should().Be(20231128235900M);
+        }
+
         [TestMethod]
         public async Tasks.Task RoundtripValueQuantityXml() => await RoundtripValueQuantity(true);
 

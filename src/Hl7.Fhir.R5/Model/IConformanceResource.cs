@@ -41,7 +41,7 @@ public partial class CompartmentDefinition : IVersionableConformanceResource;
 
 public partial class ConceptMap : IVersionableConformanceResource;
 
-public partial class NamingSystem : IConformanceResource;
+public partial class NamingSystem : IVersionableConformanceResource;
 public partial class StructureMap : IVersionableConformanceResource;
 public partial class GraphDefinition : IVersionableConformanceResource;
 

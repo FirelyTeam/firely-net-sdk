@@ -341,16 +341,13 @@ namespace Hl7.Fhir.Serialization
             {
                 if (value is null) return null;
 
-                try
-                {
-                    // Normalize long to int32 data types, because long would be later serialized as strings and 
-                    // not as integer. To serialize it as integer we convert long to integers
-                    if (value.Value is long && value.Type == JTokenType.Integer) return Convert.ToInt32(value.Value);
-                }
-                catch (OverflowException)
-                {
-                    raiseFormatError($"Value {value.Value} is outside the range of the Int32 type.", this.JsonValue);
-                }
+                // Normalize long to int32 (or decimal) data types, because long would be later serialized as strings and 
+                // not as integer. To serialize it as integer we convert long to integers. If the value is outside the
+                // range of Int32, FHIR does not allow it as an integer type; instead treat it as a decimal,
+                // which serializes back as a JSON number (not a string).
+                if (value.Value is long l && value.Type == JTokenType.Integer)
+                    return l is >= int.MinValue and <= int.MaxValue ? (object)(int)l : (decimal)l;
+
                 return value.Value;
             }
 

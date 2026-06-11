@@ -62,7 +62,7 @@ public partial class BaseTerminologyService
         var canonical = $"{parameters.Url!}|{parameters.ValueSetVersion?.Value}";
         var valueSet = parameters.ValueSet as ValueSet
                        ?? await ResolveValueSet(new(canonical)).ConfigureAwait(false)
-                       ?? throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet {canonical}.");
+                       ?? throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet '{canonical}'.");
         
         if (parameters.CodeableConcept is not null)
             return await validateConcept(valueSet, parameters.CodeableConcept, parameters.Abstract).ConfigureAwait(false);

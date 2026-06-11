@@ -33,22 +33,28 @@ public class FhirAttributeValidator : IPocoValidator
         PropertyMapping? propertyMapping,
         PocoValidationContext context)
     {
-        if (propertyMapping?.NativeProperty is null || propertyMapping.IsPrimitive)
+        // An element is unknown when there is no mapping for it at all, or when its mapping was
+        // fabricated on the fly by the deserializer for an element it did not recognize (an
+        // "ad-hoc" mapping). Note that the latter can also happen on a custom class: custom
+        // properties that are a member of their declaring class are known and validated normally,
+        // but an unrecognized element on such a class gets an ad-hoc mapping too, and must still
+        // be reported here.
+        if (propertyMapping is null || propertyMapping.IsPrimitive || isAdHocMapping(propertyMapping))
         {
             var serializedForm = propertyValue is Base b && b.Annotation<XmlRepresentationAnnotation>() is not null
                 ? "attribute"
                 : "element";
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
         }
-        
+
         // if context doesn't have MemberName, set it explicitly
-        context.MemberName ??= propertyMapping.NativeProperty.Name;
+        context.MemberName ??= propertyMapping.NativeProperty?.Name;
 
         // check whether the value is assignable to the property, we'll complain in runAttributeValidation about other issues
         if (!propertyMapping.PropertyType.IsInstanceOfType(propertyValue))
         {
             return [
-                CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context, propertyMapping.NativeProperty.Name),
+                CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context, propertyMapping.NativeProperty?.Name ?? propertyMapping.Name),
                 ..runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
             ];
         }
@@ -61,10 +67,11 @@ public class FhirAttributeValidator : IPocoValidator
     {
         var errors = new List<CodedValidationException>();
 
-        // For now, if we encounter a dynamic resource, we'll report that we have encountered an unknown
-        // resource type. In a future version, users will able to register custom dynamic types that are
-        // "known" to the validator, in which case those would not be reported here.
-        if (instance is DynamicResource dr && !BaseFhirJsonDeserializer.IsUnnamedResourceMapping(classMapping))
+        // If we encounter a dynamic resource that is not backed by a custom mapping registered
+        // with the inspector, we'll report that we have encountered an unknown resource type.
+        if (instance is DynamicResource dr
+            && !BaseFhirJsonDeserializer.IsUnnamedResourceMapping(classMapping)
+            && !isRegisteredCustomMapping(classMapping, context))
             errors.Add(CodedValidationException.UNKNOWN_RESOURCE_TYPE(context, dr.DynamicTypeName ?? "(unnamed)"));
 
         // Make sure we detect missing values - go over all members that have cardinality constraints
@@ -102,4 +109,21 @@ public class FhirAttributeValidator : IPocoValidator
         ValidatingFhirModelAttribute[] attributes,
         PocoValidationContext validationContext) =>
         attributes.SelectMany(vfma => vfma.Validate(candidateValue, validationContext)).ToArray();
+
+    /// <summary>
+    /// Whether this is an ad-hoc mapping, created on the fly (e.g. by the deserializer) for a
+    /// property that is not part of its declaring class. Custom mappings that are a member of
+    /// their declaring class represent known elements and should be validated normally.
+    /// </summary>
+    private static bool isAdHocMapping(PropertyMapping propertyMapping) =>
+        propertyMapping.NativeProperty is null &&
+        !ReferenceEquals(propertyMapping.DeclaringClass.FindMappedElementByName(propertyMapping.Name), propertyMapping);
+
+    /// <summary>
+    /// Whether this is a custom mapping that has been registered with the inspector, as opposed
+    /// to an ad-hoc mapping created by the deserializer for an unknown resource type.
+    /// </summary>
+    private static bool isRegisteredCustomMapping(ClassMapping classMapping, PocoValidationContext context) =>
+        classMapping.IsCustomMapping &&
+        ReferenceEquals(context.ModelInspector.FindClassMapping(classMapping.Name), classMapping);
 }

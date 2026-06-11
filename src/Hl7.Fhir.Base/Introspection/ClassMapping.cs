@@ -273,15 +273,24 @@ public class ClassMapping(
         this switch
         {
             { IsCodeOfT: true } => "code",
+            { IsBackboneType: true, IsCustomMapping: true } => "BackboneElement",
             { IsBackboneType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
                 "BackboneElement"
                 : "Element",
             _ => Name
         };
 
+    /// <summary>
+    /// Whether this type is an abstract type. Can only be set when the mapping is created;
+    /// when not set, this is derived from the <see cref="NativeType"/>. Mappings that are not
+    /// backed by a .NET type (e.g. mappings built from a StructureDefinition) should set this
+    /// explicitly, since their (dynamic) native type does not reflect the FHIR type's abstractness.
+    /// </summary>
+    public bool? IsAbstract { get; init; }
+
     /// <inheritdoc />
     bool IStructureDefinitionSummary.IsAbstract =>
-        ((IStructureDefinitionSummary)this).TypeName == "BackboneElement" || NativeType.IsAbstract;
+        IsAbstract ?? (((IStructureDefinitionSummary)this).TypeName == "BackboneElement" || NativeType.IsAbstract);
 
     /// <inheritdoc />
     bool IStructureDefinitionSummary.IsResource => IsResource;
