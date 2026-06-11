@@ -53,23 +53,82 @@ public class PropertyMapping : IElementDefinitionSummary
     public PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, Type[]? allowedTypes = null)
      : this(declaringClass, name, nativeProperty: null!)
     {
+        var implementingType = unwrapPropertyType(propertyType, out var isCollection);
+
+        Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
+        IsCollection = isCollection;
+        PropertyTypeMapping = findMappingOrThrow(declaringClass, name, implementingType);
+        FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
+        ImplementingType = implementingType;
+        _propertyType = propertyType;
+    }
+
+    /// <summary>
+    /// Creates a custom PropertyMapping for an element whose FHIR type(s) are given as
+    /// <see cref="ClassMapping"/>s rather than .NET types. This is the constructor to use for
+    /// mappings that are not backed by a reflectable .NET property, e.g. mappings built from
+    /// a StructureDefinition: multiple custom types share the same (dynamic) .NET type, so
+    /// only their ClassMappings can faithfully express the type(s) of the element.
+    /// </summary>
+    /// <param name="declaringClass">The mapping for the class this property is a member of.</param>
+    /// <param name="name">The name of the element this property represents.</param>
+    /// <param name="propertyType">The actual type of the property, as it would have been declared
+    /// on a POCO (so this may be a List&lt;T&gt; or nullable type).</param>
+    /// <param name="fhirTypes">The mappings for the FHIR type(s) of this element: a single mapping
+    /// for a normal element, multiple mappings for a choice element.</param>
+    [SetsRequiredMembers]
+    public PropertyMapping(ClassMapping declaringClass, string name, Type propertyType, IEnumerable<ClassMapping> fhirTypes)
+        : this(declaringClass, name, nativeProperty: null!)
+    {
+        var typeMappings = fhirTypes.ToArray();
+        if (typeMappings.Length == 0)
+            throw new ArgumentException("At least one type mapping must be provided.", nameof(fhirTypes));
+
+        var implementingType = unwrapPropertyType(propertyType, out var isCollection);
+
+        Choice = typeMappings.Length > 1 ? ChoiceType.DatatypeChoice : ChoiceType.None;
+        IsCollection = isCollection;
+
+        // For a single type, that type's mapping also serves as the property type mapping. For
+        // choices, the property type mapping is the mapping for the declared (base) type of the
+        // property, just like it is for reflected choice properties.
+        PropertyTypeMapping = typeMappings.Length == 1
+            ? typeMappings[0]
+            : findMappingOrThrow(declaringClass, name, implementingType);
+
+        FhirType = typeMappings.Select(tm => tm.NativeType).ToArray();
+        ImplementingType = implementingType;
+        _propertyType = propertyType;
+        _fhirTypeMappings = typeMappings;
+
+        // Type-based validation cannot distinguish between custom types (they share the same
+        // dynamic .NET type), so synthesize a name-based AllowedTypes validation from the
+        // given mappings. Callers can override this via the initializer if needed.
+        ValidationAttributes = typeMappings.Length > 1 || typeMappings.Any(tm => tm.IsCustomMapping)
+            ? [new AllowedTypesAttribute(typeMappings.Select(tm => tm.Name).ToArray())]
+            : [];
+    }
+
+    /// <summary>
+    /// Derives the type representing the element from the declared type of a property,
+    /// unwrapping a repeating (List&lt;T&gt;) and/or nullable property type.
+    /// </summary>
+    private static Type unwrapPropertyType(Type propertyType, out bool isCollection)
+    {
         _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
+        isCollection = collectionItemType is not null;
 
         // Get to the actual (native) type representing this element
         var implementingType = collectionItemType ?? propertyType;
         if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
 
-        if (declaringClass.Inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
-            throw new InvalidOperationException($"Custom property {name} is of type " +
-                                                $"{implementingType}, for which a classmapping cannot be found.");
-
-        Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None;
-        IsCollection = collectionItemType is not null;
-        PropertyTypeMapping = propertyTypeMapping;
-        FhirType = allowedTypes is not null ? allowedTypes.ToArray() : [implementingType];
-        ImplementingType = implementingType;
-        _propertyType = propertyType;
+        return implementingType;
     }
+
+    private static ClassMapping findMappingOrThrow(ClassMapping declaringClass, string name, Type implementingType) =>
+        declaringClass.Inspector.FindOrImportClassMapping(implementingType)
+            ?? throw new InvalidOperationException($"Custom property {name} is of type " +
+                                                   $"{implementingType}, for which a classmapping cannot be found.");
 
     /// <summary>
     /// Returns <c>true</c> when this class is a custom mapping, basically a dynamic resource/type with
@@ -118,8 +177,46 @@ public class PropertyMapping : IElementDefinitionSummary
     /// or, if present, via a list of types in the [AllowedTypes] attribute. Finally,
     /// it the property type does not represent FHIR metadata, it is overridden using
     /// the [DeclaredType] attribute.
+    /// Note that for custom mappings, multiple FHIR types share the same (dynamic) .NET type,
+    /// so this property cannot distinguish between them. Use <see cref="FhirTypeMappings"/>
+    /// instead, which is the authoritative list of types for this element.
     /// </remark>
     public required Type[] FhirType { get; init; }
+
+    /// <summary>
+    /// The list of possible FHIR types for this element, listed as their <see cref="ClassMapping"/>s.
+    /// For non-choice elements this is a single mapping, for choice elements the mappings of
+    /// the allowed choice types.
+    /// </summary>
+    /// <remarks>This is the authoritative representation of the element's types: unlike
+    /// <see cref="FhirType"/> it can distinguish between custom types that share the
+    /// same (dynamic) .NET type. For mappings created by reflection, the list is resolved
+    /// lazily from <see cref="FhirType"/>.</remarks>
+    public IReadOnlyList<ClassMapping> FhirTypeMappings
+    {
+        get
+        {
+            LazyInitializer.EnsureInitialized(ref _fhirTypeMappings, buildFhirTypeMappings);
+            return _fhirTypeMappings!;
+        }
+    }
+
+    private ClassMapping[]? _fhirTypeMappings;
+
+    private ClassMapping[] buildFhirTypeMappings()
+    {
+        // For backbone properties, the (single) type is the backbone's own mapping.
+        if (PropertyTypeMapping.IsBackboneType)
+            return [PropertyTypeMapping];
+
+        return FhirType.Select(resolve).ToArray();
+
+        ClassMapping resolve(Type ft) =>
+            Inspector.FindOrImportClassMapping(ft) ??
+            throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
+                                            $"'{QualifiedPropName}', but it does not seem to " +
+                                            $"be a valid FHIR type POCO.");
+    }
 
     /// <summary>
     /// The <see cref="ClassMapping" /> that represents the type of this property.
@@ -326,8 +423,8 @@ public class PropertyMapping : IElementDefinitionSummary
             return ImplementingType;
 
         // Ok, so we're in abstract type land, maybe FhirType can help us
-        if (FhirType.Length == 1)
-            return FhirType[0];
+        if (FhirTypeMappings.Count == 1)
+            return FhirTypeMappings[0].NativeType;
 
         // No, just return ImplementingType then.
         return ImplementingType;
@@ -399,10 +496,12 @@ public class PropertyMapping : IElementDefinitionSummary
 
     public PropertyMapping PromoteToList()
     {
-        if(FhirType.Length > 1) throw new InvalidOperationException("Cannot promote a choice element to a list");
+        if(FhirTypeMappings.Count > 1) throw new InvalidOperationException("Cannot promote a choice element to a list");
 
+        // Carry over the type mappings, so the promoted list keeps referring to the same
+        // (possibly custom) type as the original element.
         var listType = typeof(List<>).MakeGenericType(ImplementingType);
-        return new PropertyMapping(DeclaringClass, Name, listType);
+        return new PropertyMapping(DeclaringClass, Name, listType, FhirTypeMappings);
     }
 
     #region IElementDefinitionSummary members
@@ -444,33 +543,27 @@ public class PropertyMapping : IElementDefinitionSummary
 
     private ITypeSerializationInfo[] buildTypes()
     {
-        if (PropertyTypeMapping.IsBackboneType)
-            return [PropertyTypeMapping];
-
         if (IsPrimitive)
         {
             throw new NotSupportedException(
                 $"Encountered unexpected primitive type {Name} for ITypedElement.InstanceType.");
         }
 
-        var names = FhirType.Select(getFhirTypeName);
-        return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
-
-        string getFhirTypeName(Type ft)
-        {
-            // The special case where the mapping name is a backbone element name can safely
-            // be ignored here, since that is handled by the first case in the if statement above.
-            return Inspector.FindOrImportClassMapping(ft) is {} tm
-                ? ((IStructureDefinitionSummary)tm).TypeName
-                : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
-                                                  $"'{QualifiedPropName}', but it does not seem to" +
-                                                  $"be a valid FHIR type POCO.");
-        }
+        // Backbone mappings are themselves the IStructureDefinitionSummary for the type, all
+        // other types are returned as a reference by type name. Note that this is always the
+        // type NAME (also for custom types, which are registered by name with the inspector),
+        // never a canonical: consumers match these references against type names, e.g. when
+        // matching the type suffix of a choice element.
+        return FhirTypeMappings
+            .Select(tm => tm.IsBackboneType
+                ? (ITypeSerializationInfo)tm
+                : new PocoTypeReferenceInfo(((IStructureDefinitionSummary)tm).TypeName))
+            .ToArray();
     }
 
-    private readonly struct PocoTypeReferenceInfo(string canonical) : IStructureDefinitionReference
+    private readonly struct PocoTypeReferenceInfo(string typeName) : IStructureDefinitionReference
     {
-        public string ReferredType { get; } = canonical;
+        public string ReferredType { get; } = typeName;
     }
 
     #endregion
