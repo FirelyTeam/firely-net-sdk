@@ -32,6 +32,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,8 +43,13 @@ namespace Hl7.Fhir.Model;
 /// This is the Parameters partial class that adds all the specific functionality of a Parameters to the model
 /// </summary>
 [DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
-public partial class Parameters
+public partial class Parameters : IEnumerable<Parameters.ParameterComponent>
 {
+    /// <inheritdoc/>
+    public IEnumerator<ParameterComponent> GetEnumerator() => Parameter.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => Parameter.GetEnumerator();
+
     public Parameters()
     {
         // Nothing
