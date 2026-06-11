@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <VersionPrefix>2.1.1-beta1</VersionPrefix>
@@ -23,4 +23,3 @@
   </ItemGroup>
 
 </Project>
-
