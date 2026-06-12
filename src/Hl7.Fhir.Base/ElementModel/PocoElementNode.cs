@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -203,7 +204,7 @@ namespace Hl7.Fhir.ElementModel
                     _ => null
                 };
             }
-            catch (Exception e) when (e is FormatException or Validation.CodedValidationException)
+            catch (Exception e) when (e is FormatException or CodedValidationException)
             {
                 // If it fails, just return the unparsed contents
                 return (Current as PrimitiveType)?.JsonValue;
