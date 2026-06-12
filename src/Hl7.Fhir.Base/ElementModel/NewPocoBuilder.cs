@@ -70,8 +70,8 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             // other ITypedElement over an untyped source (e.g. a SourceNode tree backed by PocoNodes), where the value
             // could not be parsed and was passed through as a string. With numeric values the JsonValue will be already
             // good enough, but with strings it can represent integer, boolean, FhirDateTime, FhirUri etc.
-            // Now that we have the ClassMapping, we can check what is the expected primitive type and convert the
-            // string value accordingly, so we never produce e.g. an Integer with a string JsonValue.
+            // Now that we have the ClassMapping, we can attempt to convert the string to the expected JsonValue type
+            // (and keep the raw string when conversion fails, so POCO validation can report it).
             else if (value is string s && classMapping.PrimitiveValueProperty is { } valueProperty &&
                      (node is PocoNode { Poco: IDynamicType } || jsonValueRequiresConversion(valueProperty.ImplementingType)))
             {
