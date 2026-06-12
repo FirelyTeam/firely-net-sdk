@@ -203,7 +203,7 @@ namespace Hl7.Fhir.ElementModel
                     _ => null
                 };
             }
-            catch (FormatException)
+            catch (Exception e) when (e is FormatException or Validation.CodedValidationException)
             {
                 // If it fails, just return the unparsed contents
                 return (Current as PrimitiveType)?.JsonValue;

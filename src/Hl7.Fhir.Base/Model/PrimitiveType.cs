@@ -94,7 +94,7 @@ public partial class PrimitiveType : P.IToSystemPrimitive
                 { } prim => prim.JsonValue
             };
         }
-        catch (FormatException)
+        catch (Exception e) when (e is FormatException or CodedValidationException)
         {
             // If it fails, just return the unparsed contents
             return this.JsonValue;
