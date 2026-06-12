@@ -38,8 +38,24 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
+        // The source may be a SourceNode that was bound to a provider which could not resolve its type
+        // information (e.g. typed using ModelInspector.Base, which does not contain the resources of a
+        // specific FHIR release). In that case none of the values have been parsed: they would be passed
+        // through as raw strings and end up unparsed inside the POCOs built here. Since this builder does
+        // have the full metadata available, rebind the underlying source node to our inspector, so the
+        // data is correctly typed and parsed after all.
+        if (source is TypedElementOnSourceNode { Definition: null } unresolved && !ReferenceEquals(unresolved.Provider, inspector))
+            source = unresolved.ReTypeWith(inspector, unresolved.InstanceType ?? rootTypeFromHint());
+
         var classMapping = classMappingForElement(source, null, typeHint);
         return readFromElement(source, classMapping);
+
+        // Derive the name of the root type from the type hint, but only if it maps to a
+        // concrete type, since the root of a typed tree cannot be abstract.
+        string? rootTypeFromHint() =>
+            typeHint is not null && inspector.FindClassMapping(typeHint) is { NativeType.IsAbstract: false } hintMapping
+                ? hintMapping.Name
+                : null;
     }
 
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)
@@ -65,27 +81,12 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             if (newInstance is DynamicPrimitive)
                 objectValue = value;
             
-            // the ITypedElement was built with no type information about the value: either it is a PocoNode using
-            // Dynamic* pocos (e.g. built with ModelInspector.Base, or representing a custom resource), or it is any
-            // other ITypedElement over an untyped source (e.g. a SourceNode tree backed by PocoNodes), where the value
-            // could not be parsed and was passed through as a string. With numeric values the JsonValue will be already
-            // good enough, but with strings it can represent integer, boolean, FhirDateTime, FhirUri etc.
-            // Now that we have the ClassMapping, we can attempt to convert the string to the expected JsonValue type
-            // (and keep the raw string when conversion fails, so POCO validation can report it).
-            else if (value is string s && classMapping.PrimitiveValueProperty is { } valueProperty &&
-                     (node is PocoNode { Poco: IDynamicType } || jsonValueRequiresConversion(valueProperty.ImplementingType)))
-            {
-                try
-                {
-                    objectValue = PrimitiveTypeConverter.ConvertTo(s, valueProperty.ImplementingType);
-                }
-                catch (Exception e) when (e is FormatException or OverflowException)
-                {
-                    // If conversion fails, just keep the unparsed contents so the data is not lost -
-                    // POCO validation will report the invalid value.
-                    objectValue = s;
-                }
-            }
+            // the ITypedElement is a PocoNode built with no information about the Poco, whether built with ModelInspector.Base,
+            // or representing a custom resource - it will be using DynamicPrimitive to store the values typed as in serialization source.
+            // With numeric values the JsonValue will be already good enough, but with strings it can represent FhirDateTime, FhirUri etc.
+            // now that we have ClassMapping, we can check what is the expected primitive type and convert the string value accordingly
+            else if (node is PocoNode { Poco: IDynamicType } && value is string s && classMapping.PrimitiveValueProperty is not null)
+                objectValue = PrimitiveTypeConverter.ConvertTo(s, classMapping.PrimitiveValueProperty.ImplementingType);
             else
                 objectValue = convertTypedElementValue(value);
 
@@ -133,18 +134,6 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private static void raiseFormatError(string message, string location)
     {
         throw Error.Format("While building a POCO: " + message, location);
-    }
-
-    /// <summary>
-    /// Whether a string value needs to be converted before it can be used as the <see cref="PrimitiveType.JsonValue"/>
-    /// of the primitive with the given value property type. The JsonValue of a POCO primitive is a string for all
-    /// types except boolean (bool), integer/positiveInt/unsignedInt (int) and decimal (decimal). For these types we
-    /// attempt conversion of untyped string values; on failure the raw string may be preserved so validation can report it.
-    /// </summary>
-    private static bool jsonValueRequiresConversion(Type implementingType)
-    {
-        var type = Nullable.GetUnderlyingType(implementingType) ?? implementingType;
-        return type == typeof(bool) || type == typeof(int) || type == typeof(decimal);
     }
 
     private static Base buildNewInstance(ClassMapping mapping, bool hasValue)

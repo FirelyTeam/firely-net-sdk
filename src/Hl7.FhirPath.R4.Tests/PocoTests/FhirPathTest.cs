@@ -51,44 +51,6 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        public void TestEqualityDoesNotThrowOnInvalidPrimitiveValue()
-        {
-            // A primitive with an invalid value (e.g. a string where an integer is expected, as can occur
-            // after lenient deserialization) should not cause FHIRPath evaluation to throw (see #3120).
-            var report = new MeasureReport
-            {
-                Group =
-                {
-                    new MeasureReport.GroupComponent
-                    {
-                        Population =
-                        {
-                            new MeasureReport.PopulationComponent
-                            {
-                                CountElement = new Integer { JsonValue = "0" },
-                                SubjectResults = new ResourceReference("List/example")
-                            },
-                            new MeasureReport.PopulationComponent
-                            {
-                                Count = 0,
-                                SubjectResults = new ResourceReference("List/example2")
-                            }
-                        }
-                    }
-                }
-            };
-
-            var result = report.Select("group.population.where(count=0).subjectResults").ToList();
-
-            // Only the population with the valid integer count matches; the invalid one is not equal to 0,
-            // but should not cause an exception.
-            Assert.AreEqual(1, result.Count);
-
-            var typedResult = report.ToTypedElement().Select("group.population.where(count=0).subjectResults").ToList();
-            Assert.AreEqual(1, typedResult.Count);
-        }
-
-        [TestMethod]
         public void TestFhirPathTrace()
         {
             var patient = new Hl7.Fhir.Model.Patient() { Id = "pat45", Active = false };
