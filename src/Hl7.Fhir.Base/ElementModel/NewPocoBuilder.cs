@@ -138,8 +138,8 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     /// <summary>
     /// Whether a string value needs to be converted before it can be used as the <see cref="PrimitiveType.JsonValue"/>
     /// of the primitive with the given value property type. The JsonValue of a POCO primitive is a string for all
-    /// types except boolean (bool), integer/positiveInt/unsignedInt (int) and decimal (decimal) - leaving a string
-    /// in those would produce a corrupt POCO (see <see cref="PrimitiveType.JsonValue"/>).
+    /// types except boolean (bool), integer/positiveInt/unsignedInt (int) and decimal (decimal). For these types we
+    /// attempt conversion of untyped string values; on failure the raw string may be preserved so validation can report it.
     /// </summary>
     private static bool jsonValueRequiresConversion(Type implementingType)
     {
