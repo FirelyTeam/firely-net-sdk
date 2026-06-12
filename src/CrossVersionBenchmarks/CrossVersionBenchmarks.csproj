@@ -4,6 +4,9 @@
         <TargetFramework>net8.0</TargetFramework>
         <OutputType>Exe</OutputType>
         <DefineConstants>SDK6;PROJECT</DefineConstants>
+        <!-- Disable Central Package Management for this project: it references multiple
+             versions of the same package (Hl7.Fhir.R5) for cross-version benchmarking. -->
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     </PropertyGroup>
     
     <PropertyGroup>
