@@ -11,6 +11,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -196,6 +197,45 @@ public class TypedElementToPocoTests
         var poco = integer.ToPoco(pocoType: typeof(Integer));
         poco.Should().BeOfType<Integer>().Which.Value.Should().Be(1);
         poco.Annotation<PositionInfo>().Should().NotBeNull();
+    }
+
+    [TestMethod]
+    public void ConvertsStringValuesWhenBuildingFromUntypedSource()
+    {
+        // Simulates e.g. a MeasureReport being built from a SourceNode that is backed by a PocoNode without
+        // type information: primitive values are passed through as strings, and the builder should convert
+        // them to the correct JsonValue type, so we never end up with e.g. an Integer holding a string.
+        var reportNode = SourceNode.Resource("MeasureReport", "MeasureReport",
+            SourceNode.Valued("status", "complete"),
+            SourceNode.Node("group",
+                SourceNode.Node("population",
+                    SourceNode.Valued("count", "5"))));
+
+        // Building a PocoNode-backed tree without type information keeps the values as strings.
+        var untypedPocoNode = reportNode.ToTypedElement().ToPocoNode();
+
+        var report = ((ISourceNode)untypedPocoNode).ToPoco<MeasureReport>(ModelInfo.ModelInspector);
+        var count = report.Group[0].Population[0].CountElement;
+        count.JsonValue.Should().BeOfType<int>().And.Be(5);
+
+        // and FHIRPath comparisons against the integer should work
+        report.ToPocoNode().Select("group.population.where(count = 5)").Should().HaveCount(1);
+    }
+
+    [TestMethod]
+    public void KeepsInvalidStringValuesWhenBuildingFromUntypedSource()
+    {
+        // An unconvertible value should not throw while building, but be kept as the raw string,
+        // so POCO validation can report it.
+        var reportNode = SourceNode.Resource("MeasureReport", "MeasureReport",
+            SourceNode.Node("group",
+                SourceNode.Node("population",
+                    SourceNode.Valued("count", "five"))));
+
+        var untypedPocoNode = reportNode.ToTypedElement().ToPocoNode();
+
+        var report = ((ISourceNode)untypedPocoNode).ToPoco<MeasureReport>(ModelInfo.ModelInspector);
+        report.Group[0].Population[0].CountElement.JsonValue.Should().Be("five");
     }
 
     private T toPoco<T>(T source) where T : Base, new()
