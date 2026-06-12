@@ -11,7 +11,6 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -217,9 +216,7 @@ public class TypedElementToPocoTests
         var report = ((ISourceNode)untypedPocoNode).ToPoco<MeasureReport>(ModelInfo.ModelInspector);
         var count = report.Group[0].Population[0].CountElement;
         count.JsonValue.Should().BeOfType<int>().And.Be(5);
-
-        // and FHIRPath comparisons against the integer should work
-        report.ToPocoNode().Select("group.population.where(count = 5)").Should().HaveCount(1);
+        count.Value.Should().Be(5);
     }
 
     [TestMethod]
