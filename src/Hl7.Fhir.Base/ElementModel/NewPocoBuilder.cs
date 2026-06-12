@@ -79,7 +79,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
                 {
                     objectValue = PrimitiveTypeConverter.ConvertTo(s, valueProperty.ImplementingType);
                 }
-                catch (FormatException)
+                catch (Exception e) when (e is FormatException or OverflowException)
                 {
                     // If conversion fails, just keep the unparsed contents so the data is not lost -
                     // POCO validation will report the invalid value.
