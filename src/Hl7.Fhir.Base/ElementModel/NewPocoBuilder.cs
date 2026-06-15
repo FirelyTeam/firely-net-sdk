@@ -38,8 +38,24 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     {
         if (source == null) throw Error.ArgumentNull(nameof(source));
 
+        // The source may be a SourceNode that was bound to a provider which could not resolve its type
+        // information (e.g. typed using ModelInspector.Base, which does not contain the resources of a
+        // specific FHIR release). In that case none of the values have been parsed: they would be passed
+        // through as raw strings and end up unparsed inside the POCOs built here. Since this builder does
+        // have the full metadata available, rebind the underlying source node to our inspector, so the
+        // data is correctly typed and parsed after all.
+        if (source is TypedElementOnSourceNode { Definition: null } unresolved && !ReferenceEquals(unresolved.Provider, inspector))
+            source = unresolved.ReTypeWith(inspector, unresolved.InstanceType ?? rootTypeFromHint());
+
         var classMapping = classMappingForElement(source, null, typeHint);
         return readFromElement(source, classMapping);
+
+        // Derive the name of the root type from the type hint, but only if it maps to a
+        // concrete type, since the root of a typed tree cannot be abstract.
+        string? rootTypeFromHint() =>
+            typeHint is not null && inspector.FindClassMapping(typeHint) is { NativeType.IsAbstract: false } hintMapping
+                ? hintMapping.Name
+                : null;
     }
 
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)

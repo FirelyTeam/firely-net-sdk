@@ -198,6 +198,40 @@ public class TypedElementToPocoTests
         poco.Annotation<PositionInfo>().Should().NotBeNull();
     }
 
+    [TestMethod]
+    public void ConvertsStringValuesWhenBuildingFromUntypedSource()
+    {
+        // Simulates e.g. a MeasureReport being built from a SourceNode that was typed without the
+        // right type information (ModelInspector.Base does not know MeasureReport): primitive values
+        // are then passed through as strings. When the builder does have the metadata, it should
+        // rebind the source so we never end up with e.g. an Integer holding a string.
+        var reportNode = SourceNode.Resource("MeasureReport", "MeasureReport",
+            SourceNode.Valued("status", "complete"),
+            SourceNode.Node("group",
+                SourceNode.Node("population",
+                    SourceNode.Valued("count", "5"))));
+
+        var untypedPocoNode = reportNode.ToTypedElement().ToPocoNode();
+
+        var report = ((ISourceNode)untypedPocoNode).ToPoco<MeasureReport>(ModelInfo.ModelInspector);
+        var count = report.Group[0].Population[0].CountElement;
+        count.JsonValue.Should().BeOfType<int>().And.Be(5);
+        count.Value.Should().Be(5);
+    }
+
+    [TestMethod]
+    public void ThrowsOnInvalidStringValuesWhenBuildingFromUntypedSource()
+    {
+        // An unparseable value should be reported, just like on any other typed parse path.
+        var reportNode = SourceNode.Resource("MeasureReport", "MeasureReport",
+            SourceNode.Node("group",
+                SourceNode.Node("population",
+                    SourceNode.Valued("count", "five"))));
+
+        var act = () => reportNode.ToTypedElement().ToPocoNode();
+        act.Should().Throw<StructuralTypeException>().WithMessage("*'five' cannot be parsed as a integer*");
+    }
+
     private T toPoco<T>(T source) where T : Base, new()
     {
         var poco = toPoco(source.ToPocoNode());
