@@ -26,6 +26,31 @@ namespace Hl7.FhirPath.Expressions
 
         public override StringBuilder VisitFunctionCall(FunctionCallExpression expression)
         {
+            if (expression is NewNodeInstanceExpression ni)
+            {
+                append("new instance {0}".FormatWith(ni.TypeName));
+                appendType(expression);
+
+                incr();
+                foreach (var element in ni.Elements)
+                    element.Accept(this);
+                decr();
+
+                return _result;
+            }
+
+            if (expression is NodeInstanceElementExpression nel)
+            {
+                append("element {0}".FormatWith(nel.ElementName));
+                appendType(expression);
+
+                incr();
+                nel.Value.Accept(this);
+                decr();
+
+                return _result;
+            }
+
             append("func {0} ({1})".FormatWith(expression.FunctionName, expression.GetType().Name));
             appendType(expression);
 

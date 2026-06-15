@@ -11,6 +11,7 @@ using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Sprache;
 using P = Hl7.Fhir.ElementModel.Types;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -98,6 +99,45 @@ namespace Hl7.FhirPath.Parser
             ).Named("EmptyList")
             .Positioned();
 
+        // Instance Selector / Object Creation (STU):
+        //   «typename» '{' (elementSelector (',' elementSelector)* | ':') '}'
+        // A single element of an instance selector, e.g. "system : 'http://example.org'"
+        public static readonly Parser<Expression> ElementSelector =
+            (
+                from wsName in WhitespaceOrComments()
+                from name in Lexer.Identifier.Select(n => new IdentifierExpression(n).WithLeadingWS(wsName)).Positioned()
+                from wsColon in WhitespaceOrComments()
+                from colon in Parse.Char(':').Select(v => new SubToken(v).WithLeadingWS(wsColon)).Positioned()
+                from value in Parse.Ref(() => Expression)
+                select new NodeInstanceElementExpression(name, colon, value)
+            ).Named("ElementSelector")
+            .Positioned();
+
+        // The body of an instance selector is either a comma-delimited list of element selectors,
+        // or a single ':' representing an empty object (to distinguish '«typename» {:}' from the empty collection '{ }').
+        private static readonly Parser<(IEnumerable<Expression> elements, SubToken colon)> InstanceSelectorBody =
+            ElementSelector.DelimitedBy(Parse.Char(','))
+                .Select(els => (els, (SubToken)null))
+            .Or(
+                from wsColon in WhitespaceOrComments()
+                from colon in Parse.Char(':').Select(v => new SubToken(v).WithLeadingWS(wsColon)).Positioned()
+                select ((IEnumerable<Expression>)Enumerable.Empty<Expression>(), colon)
+            );
+
+        // Creates a new object of type «typename», setting the listed elements from the value expressions.
+        public static readonly Parser<Expression> InstanceSelector =
+            (
+                from wsType in WhitespaceOrComments()
+                from typeName in Parse.Ref(() => TypeSpec).Select(s => new IdentifierExpression(s).WithLeadingWS(wsType)).Positioned()
+                from wsBrace in WhitespaceOrComments()
+                from lbrace in Parse.Char('{').Select(v => new SubToken(v).WithLeadingWS(wsBrace)).Positioned()
+                from body in InstanceSelectorBody
+                from wsClose in WhitespaceOrComments()
+                from rbrace in Parse.Char('}').Select(v => new SubToken(v).WithLeadingWS(wsClose)).Positioned()
+                select new NewNodeInstanceExpression(typeName, lbrace, rbrace, body.elements, body.colon)
+            ).Named("InstanceSelector")
+            .Positioned();
+
         public static Parser<FunctionCallExpression> Function(Expression context)
         {
             return
@@ -158,6 +198,7 @@ namespace Hl7.FhirPath.Parser
             (
                 from wsLeading in WhitespaceOrComments()
                 from l in Literal
+                    .Or(InstanceSelector)
                     .Or(FunctionInvocation(AxisExpression.That))
                     .XOr(Lexer.ExternalConstant.Select(n => new SubToken(n)).Positioned().Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
                     .XOr(BracketExpr)

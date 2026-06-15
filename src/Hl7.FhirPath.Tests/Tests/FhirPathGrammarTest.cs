@@ -624,5 +624,72 @@ namespace Hl7.FhirPath.Tests
             Assert.IsFalse(x.Equals(y));
             Assert.IsFalse(x == y);
         }
+
+        [TestMethod]
+        public void FhirPath_Gramm_InstanceSelector()
+        {
+            var parser = Grammar.Expression.End();
+
+            // basic object creation
+            AssertParser.SucceedsMatch(parser, "Coding { system : 'http://example.org/demo', code : 'c1' }",
+                new NewNodeInstanceExpression(new IdentifierExpression("Coding"), new Expression[]
+                {
+                    new NodeInstanceElementExpression(new IdentifierExpression("system"), new ConstantExpression("http://example.org/demo")),
+                    new NodeInstanceElementExpression(new IdentifierExpression("code"), new ConstantExpression("c1")),
+                }));
+
+            // compact form (no whitespace) parses to the same AST
+            AssertParser.SucceedsMatch(parser, "Coding{system:'http://example.org/demo',code:'c1'}",
+                new NewNodeInstanceExpression(new IdentifierExpression("Coding"), new Expression[]
+                {
+                    new NodeInstanceElementExpression(new IdentifierExpression("system"), new ConstantExpression("http://example.org/demo")),
+                    new NodeInstanceElementExpression(new IdentifierExpression("code"), new ConstantExpression("c1")),
+                }));
+
+            // namespaced type name
+            AssertParser.SucceedsMatch(parser, "FHIR.Identifier { system : 'http://example.org/demo', value : 'N0001231' }",
+                new NewNodeInstanceExpression(new IdentifierExpression("FHIR.Identifier"), new Expression[]
+                {
+                    new NodeInstanceElementExpression(new IdentifierExpression("system"), new ConstantExpression("http://example.org/demo")),
+                    new NodeInstanceElementExpression(new IdentifierExpression("value"), new ConstantExpression("N0001231")),
+                }));
+
+            // empty object (with and without internal whitespace)
+            AssertParser.SucceedsMatch(parser, "Period {:}",
+                new NewNodeInstanceExpression(new IdentifierExpression("Period"), System.Array.Empty<Expression>()));
+            AssertParser.SucceedsMatch(parser, "Period { : }",
+                new NewNodeInstanceExpression(new IdentifierExpression("Period"), System.Array.Empty<Expression>()));
+
+            // primitive value element
+            AssertParser.SucceedsMatch(parser, "code { value : 'final' }",
+                new NewNodeInstanceExpression(new IdentifierExpression("code"), new Expression[]
+                {
+                    new NodeInstanceElementExpression(new IdentifierExpression("value"), new ConstantExpression("final")),
+                }));
+
+            // element value can be any fhirpath expression (here a path navigation)
+            AssertParser.SucceedsMatch(parser, "Coding { system : 'urn', code : gender }",
+                new NewNodeInstanceExpression(new IdentifierExpression("Coding"), new Expression[]
+                {
+                    new NodeInstanceElementExpression(new IdentifierExpression("system"), new ConstantExpression("urn")),
+                    new NodeInstanceElementExpression(new IdentifierExpression("code"), new ChildExpression(AxisExpression.That, "gender")),
+                }));
+
+            // nested instance selector as an element value
+            AssertParser.SucceedsMatch(parser, "CodeableConcept { coding : Coding { system : 's', code : 'MR' } }",
+                new NewNodeInstanceExpression(new IdentifierExpression("CodeableConcept"), new Expression[]
+                {
+                    new NodeInstanceElementExpression(new IdentifierExpression("coding"),
+                        new NewNodeInstanceExpression(new IdentifierExpression("Coding"), new Expression[]
+                        {
+                            new NodeInstanceElementExpression(new IdentifierExpression("system"), new ConstantExpression("s")),
+                            new NodeInstanceElementExpression(new IdentifierExpression("code"), new ConstantExpression("MR")),
+                        })),
+                }));
+
+            // 'Type {}' is NOT an instance selector: the empty object requires '{:}', and '{ }' is the empty collection
+            AssertParser.FailsMatch(parser, "Coding {}");
+            AssertParser.FailsMatch(parser, "Coding { }");
+        }
     }
 }

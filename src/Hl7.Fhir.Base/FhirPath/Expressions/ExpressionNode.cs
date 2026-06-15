@@ -607,6 +607,125 @@ namespace Hl7.FhirPath.Expressions
         NewNodeListInitExpression IPositionAware<NewNodeListInitExpression>.SetPos(Position startPos, int length) => SetPos<NewNodeListInitExpression>(startPos, length);
     }
 
+    /// <summary>
+    /// A single element selector within an <see cref="NewNodeInstanceExpression">instance selector</see>,
+    /// of the form <c>element : value</c> (e.g. <c>system : 'http://example.org'</c>).
+    /// </summary>
+    /// <remarks>
+    /// Modeled as a <see cref="FunctionCallExpression"/> (like <see cref="ChildExpression"/> and others) so the
+    /// public <see cref="ExpressionVisitor{T}"/> surface does not change; visitors special-case it. The value
+    /// expression is held as the single argument and the element name is held in <see cref="ElementNameToken"/>.
+    /// </remarks>
+    public class NodeInstanceElementExpression : FunctionCallExpression, Sprache.IPositionAware<NodeInstanceElementExpression>
+    {
+        internal const string ELEMENT_OP = OP_PREFIX + "elementselector";
+
+        public NodeInstanceElementExpression(IdentifierExpression name, Expression value) : base(AxisExpression.That, ELEMENT_OP, TypeSpecifier.Any, value)
+        {
+            ElementNameToken = name ?? throw Error.ArgumentNull(nameof(name));
+        }
+
+        public NodeInstanceElementExpression(IdentifierExpression name, SubToken colon, Expression value, ISourcePositionInfo location = null)
+            : base(AxisExpression.That, ELEMENT_OP, TypeSpecifier.Any, new[] { value ?? throw Error.ArgumentNull(nameof(value)) }, location)
+        {
+            ElementNameToken = name ?? throw Error.ArgumentNull(nameof(name));
+            Colon = colon;
+        }
+
+        /// <summary>
+        /// The element name as an identifier expression (preserves whitespace/position for round-tripping).
+        /// </summary>
+        public IdentifierExpression ElementNameToken { get; private set; }
+
+        /// <summary>
+        /// The name of the element being set on the created object.
+        /// </summary>
+        public string ElementName => ElementNameToken.Value;
+
+        /// <summary>
+        /// Raw parsed ':' token.
+        /// </summary>
+        public SubToken Colon { get; private set; }
+
+        /// <summary>
+        /// The expression whose result is assigned to the element.
+        /// </summary>
+        public Expression Value => Arguments.First();
+
+        public override bool Equals(object obj) => Equals(obj as NodeInstanceElementExpression);
+        public override bool Equals(Expression obj)
+        {
+            if (base.Equals(obj) && obj is NodeInstanceElementExpression ne)
+                return ne.ElementName == ElementName;
+
+            return false;
+        }
+
+        public override int GetHashCode() => base.GetHashCode() ^ ElementName.GetHashCode();
+
+        NodeInstanceElementExpression IPositionAware<NodeInstanceElementExpression>.SetPos(Position startPos, int length) => SetPos<NodeInstanceElementExpression>(startPos, length);
+    }
+
+    /// <summary>
+    /// The FHIRPath "Instance Selector / Object Creation" sub-expression, of the form
+    /// <c>«typename» { element : value, ... }</c> (or the empty form <c>«typename» {:}</c>).
+    /// </summary>
+    /// <remarks>
+    /// Creates a new object of the named type, with the listed <see cref="Elements"/> set from their value
+    /// expressions. Modeled as a <see cref="FunctionCallExpression"/> whose arguments are the
+    /// <see cref="NodeInstanceElementExpression"/> element selectors, keeping the public
+    /// <see cref="ExpressionVisitor{T}"/> surface unchanged.
+    /// </remarks>
+    public class NewNodeInstanceExpression : FunctionCallExpression, Sprache.IPositionAware<NewNodeInstanceExpression>
+    {
+        internal const string INSTANCE_OP = OP_PREFIX + "instanceselector";
+
+        public NewNodeInstanceExpression(IdentifierExpression typeName, IEnumerable<Expression> elements) : base(AxisExpression.That, INSTANCE_OP, TypeSpecifier.Any, elements)
+        {
+            TypeNameToken = typeName ?? throw Error.ArgumentNull(nameof(typeName));
+        }
+
+        public NewNodeInstanceExpression(IdentifierExpression typeName, SubToken leftBrace, SubToken rightBrace, IEnumerable<Expression> elements, SubToken emptyColon = null, ISourcePositionInfo location = null)
+            : base(AxisExpression.That, INSTANCE_OP, leftBrace, rightBrace, TypeSpecifier.Any, elements, location)
+        {
+            TypeNameToken = typeName ?? throw Error.ArgumentNull(nameof(typeName));
+            EmptyColon = emptyColon;
+        }
+
+        /// <summary>
+        /// The type name as an identifier expression (preserves whitespace/position for round-tripping).
+        /// </summary>
+        public IdentifierExpression TypeNameToken { get; private set; }
+
+        /// <summary>
+        /// The (optionally namespaced) name of the type to create, e.g. <c>Coding</c> or <c>FHIR.Identifier</c>.
+        /// </summary>
+        public string TypeName => TypeNameToken.Value;
+
+        /// <summary>
+        /// Raw parsed ':' token for the empty-object form (<c>{:}</c>); <c>null</c> when elements are present.
+        /// </summary>
+        public SubToken EmptyColon { get; private set; }
+
+        /// <summary>
+        /// The element selectors that set children on the created object.
+        /// </summary>
+        public IEnumerable<NodeInstanceElementExpression> Elements => Arguments.Cast<NodeInstanceElementExpression>();
+
+        public override bool Equals(object obj) => Equals(obj as NewNodeInstanceExpression);
+        public override bool Equals(Expression obj)
+        {
+            if (base.Equals(obj) && obj is NewNodeInstanceExpression ne)
+                return ne.TypeName == TypeName;
+
+            return false;
+        }
+
+        public override int GetHashCode() => base.GetHashCode() ^ TypeName.GetHashCode();
+
+        NewNodeInstanceExpression IPositionAware<NewNodeInstanceExpression>.SetPos(Position startPos, int length) => SetPos<NewNodeInstanceExpression>(startPos, length);
+    }
+
     public class VariableRefExpression : Expression, Sprache.IPositionAware<VariableRefExpression>
     {
         public VariableRefExpression(string name, ISourcePositionInfo location = null) : base(TypeSpecifier.Any, location)

@@ -117,6 +117,36 @@ namespace Hl7.FhirPath.Expressions
                 _result.Append("`");
                 return _result;
             }
+            if (expression is NewNodeInstanceExpression ni)
+            {
+                // The type name is a (possibly namespaced) qualified identifier, output verbatim.
+                _result.Append(ni.TypeName);
+                _result.Append("{");
+                if (!ni.Elements.Any())
+                {
+                    // empty object form: «typename» {:}
+                    _result.Append(":");
+                }
+                else
+                {
+                    var first = true;
+                    foreach (var element in ni.Elements)
+                    {
+                        if (!first) _result.Append(", ");
+                        element.Accept(this);
+                        first = false;
+                    }
+                }
+                _result.Append("}");
+                return _result;
+            }
+            if (expression is NodeInstanceElementExpression nel)
+            {
+                OutputIdentifierName(nel.ElementName);
+                _result.Append(": ");
+                nel.Value.Accept(this);
+                return _result;
+            }
             if (expression is UnaryExpression ue)
             {
                 ue.Focus.Accept(this);

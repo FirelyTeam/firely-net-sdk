@@ -164,6 +164,44 @@ namespace Hl7.FhirPath.Expressions
                 OutputTrailingTokens(expression);
                 return _result;
             }
+            if (expression is NewNodeInstanceExpression ni)
+            {
+                OutputPrecedingTokens(expression);
+                // The type name is a (possibly namespaced) qualified identifier, output verbatim so
+                // names like FHIR.Identifier round-trip without being backtick-delimited.
+                OutputPrecedingTokens(ni.TypeNameToken);
+                _result.Append(ni.TypeName);
+                OutputTrailingTokens(ni.TypeNameToken);
+                OutputSubToken(ni.LeftBrace);
+                if (ni.EmptyColon != null)
+                {
+                    OutputSubToken(ni.EmptyColon);
+                }
+                else
+                {
+                    var first = true;
+                    foreach (var element in ni.Elements)
+                    {
+                        if (!first) _result.Append(",");
+                        element.Accept(this);
+                        first = false;
+                    }
+                }
+                OutputSubToken(ni.RightBrace);
+                OutputTrailingTokens(expression);
+                return _result;
+            }
+            if (expression is NodeInstanceElementExpression nel)
+            {
+                OutputPrecedingTokens(expression);
+                OutputPrecedingTokens(nel.ElementNameToken);
+                OutputIdentifierName(nel.ElementName);
+                OutputTrailingTokens(nel.ElementNameToken);
+                OutputSubToken(nel.Colon);
+                nel.Value.Accept(this);
+                OutputTrailingTokens(expression);
+                return _result;
+            }
             if (expression is SortDirectionExpression sd)
             {
                 sd.Focus.Accept(this);

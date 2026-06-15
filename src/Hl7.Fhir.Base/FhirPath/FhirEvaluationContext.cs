@@ -16,6 +16,25 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.FhirPath
 {
+    /// <summary>
+    /// A factory that creates a new model object for the FHIRPath
+    /// <see href="https://build.fhir.org/ig/HL7/FHIRPath/en/#instance-selector">instance selector / object creation</see>
+    /// feature, e.g. <c>Coding { system: 'http://example.org', code: 'c1' }</c>.
+    /// </summary>
+    /// <param name="typeName">
+    /// The (optionally namespaced) name of the type to create, e.g. <c>Coding</c> or <c>FHIR.Identifier</c>.
+    /// </param>
+    /// <param name="elements">
+    /// The elements to set on the created object, in source order. Each entry pairs an element name with the
+    /// (non-empty) values that its value expression evaluated to. Elements whose value evaluated to an empty
+    /// collection are already excluded by the evaluator.
+    /// </param>
+    /// <returns>
+    /// The created object as an <see cref="ITypedElement"/>, or <c>null</c> when the type is unknown or cannot
+    /// be created (in which case the instance selector yields an empty collection).
+    /// </returns>
+    public delegate ITypedElement? ModelObjectFactory(string typeName, IReadOnlyCollection<KeyValuePair<string, IEnumerable<ITypedElement>>> elements);
+
     public class FhirEvaluationContext : EvaluationContext
     {
         /// <summary>Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
@@ -90,6 +109,16 @@ namespace Hl7.Fhir.FhirPath
             get { return _elementResolver; }
             set { _elementResolver = value; }
         }
+
+        /// <summary>
+        /// A factory used by the FHIRPath instance selector / object creation feature
+        /// (e.g. <c>Coding { system: 'http://example.org', code: 'c1' }</c>) to create the resulting object.
+        /// When not set, evaluating an instance selector expression will signal an error to the calling environment.
+        /// </summary>
+        /// <remarks>
+        /// For POCO-based FHIRPath evaluation this is defaulted to a factory that creates FHIR POCO objects.
+        /// </remarks>
+        public ModelObjectFactory? ObjectFactory { get; set; }
     }
 }
 

@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,11 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
         {
+            // The instance selector / object creation expression is a FunctionCallExpression subclass,
+            // but is not resolved through the symbol table - it is lowered directly to an object-creating Invokee.
+            if (expression is FP.NewNodeInstanceExpression instanceExpression)
+                return WrapForDebugTracer(buildInstanceSelector(instanceExpression), expression);
+
             var focus = expression.Focus.ToEvaluator(Symbols, _injectDebugHook);
             var arguments = new List<Invokee>() { focus };
             arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols, _injectDebugHook)));
@@ -74,6 +80,68 @@ namespace Hl7.FhirPath.Expressions
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
             return WrapForDebugTracer(InvokeeFactory.Return(ElementNode.EmptyList), expression);
+        }
+
+        /// <summary>
+        /// Lowers an instance selector / object creation expression
+        /// (e.g. <c>Coding { system: 'http://example.org', code: 'c1' }</c>) into an <see cref="Invokee"/>.
+        /// </summary>
+        /// <remarks>
+        /// Spec semantics: the input collection must contain a single item (empty input yields empty,
+        /// multiple items is an error). Each element's value expression is evaluated against that single item;
+        /// elements whose value is empty are omitted. The actual object is created by the FHIR-specific
+        /// <see cref="FhirEvaluationContext.ObjectFactory"/>.
+        /// </remarks>
+        private Invokee buildInstanceSelector(FP.NewNodeInstanceExpression expression)
+        {
+            var typeName = expression.TypeName;
+            var focusEvaluator = expression.Focus.ToEvaluator(Symbols, _injectDebugHook);
+            var elementEvaluators = expression.Elements
+                .Select(e => (name: e.ElementName, value: e.Value.ToEvaluator(Symbols, _injectDebugHook)))
+                .ToList();
+
+            return (Closure context, IEnumerable<Invokee> _) =>
+            {
+                var focus = focusEvaluator(context, InvokeeFactory.EmptyArgs);
+                context.focus = focus;
+
+                var focusItems = focus as IList<ITypedElement> ?? focus.ToList();
+
+                // If the input collection is empty, the result is empty.
+                if (focusItems.Count == 0)
+                    return ElementNode.EmptyList;
+
+                // If the input collection contains multiple items, signal an error to the calling environment.
+                if (focusItems.Count > 1)
+                    throw new InvalidOperationException(
+                        $"The instance selector for type '{typeName}' can only be evaluated on a single input item, " +
+                        $"but the input collection contains {focusItems.Count} items.");
+
+                var single = ElementNode.CreateList(focusItems[0]);
+                var elementContext = context.Nest(single);
+                elementContext.focus = single;
+                elementContext.SetThis(single);
+
+                var elements = new List<KeyValuePair<string, IEnumerable<ITypedElement>>>();
+                foreach (var (name, valueEvaluator) in elementEvaluators)
+                {
+                    var values = valueEvaluator(elementContext, InvokeeFactory.EmptyArgs).ToList();
+
+                    // If a child element's value is an empty collection, that element is not added to the object.
+                    if (values.Count > 0)
+                        elements.Add(new KeyValuePair<string, IEnumerable<ITypedElement>>(name, values));
+                }
+
+                var factory = (context.EvaluationContext as FhirEvaluationContext)?.ObjectFactory;
+                if (factory is null)
+                    throw new InvalidOperationException(
+                        $"Cannot evaluate the instance selector for type '{typeName}' because no object factory is configured. " +
+                        $"Use a {nameof(FhirEvaluationContext)} (which provides FHIR POCO object creation) or set " +
+                        $"{nameof(FhirEvaluationContext)}.{nameof(FhirEvaluationContext.ObjectFactory)}.");
+
+                var created = factory(typeName, elements);
+                return created is null ? ElementNode.EmptyList : ElementNode.CreateList(created);
+            };
         }
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression)

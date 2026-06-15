@@ -246,5 +246,32 @@ namespace Hl7.FhirPath.Tests
             var parser = Grammar.Expression.End();
             AssertParser.SucceedsEcho(parser, "4 = 4 implies 4 != 5 and ('h' ~ 'H' or 'a' !~ 'b')");
         }
+
+        [TestMethod]
+        public void FhirPath_Echo_InstanceSelector()
+        {
+            var parser = Grammar.Expression.End();
+
+            AssertParser.SucceedsEcho(parser, "Coding { system : 'http://example.org/demo', code : 'c1' }");
+            AssertParser.SucceedsEcho(parser, "Coding{system:'http://example.org/demo',code:'c1'}");
+            AssertParser.SucceedsEcho(parser, "FHIR.Identifier { system : 'http://example.org/demo', value : 'N0001231' }");
+            AssertParser.SucceedsEcho(parser, "Period {:}");
+            AssertParser.SucceedsEcho(parser, "Period { : }");
+            AssertParser.SucceedsEcho(parser, "code { value : 'final' }");
+            AssertParser.SucceedsEcho(parser, "CodeableConcept { coding : Coding { system : 's', code : 'MR' } }");
+            AssertParser.SucceedsEcho(parser, " Patient.select( Coding { system : 'urn', code : gender } )");
+            AssertParser.SucceedsEcho(parser, "Coding { /* a */ system : 'x' /* b */, code : 'y' }");
+        }
+
+        [TestMethod]
+        public void FhirPath_RoundTrip_InstanceSelector()
+        {
+            var parser = Grammar.Expression.End();
+
+            AssertParser.SucceedsRoundTrip(parser, "Coding { system : 'http://example.org/demo', code : 'c1' }",
+                "Coding{system: 'http://example.org/demo', code: 'c1'}");
+            AssertParser.SucceedsRoundTrip(parser, "Period {:}", "Period{:}");
+            AssertParser.SucceedsRoundTrip(parser, "FHIR.Identifier { value : 'N1' }", "FHIR.Identifier{value: 'N1'}");
+        }
     }
 }
