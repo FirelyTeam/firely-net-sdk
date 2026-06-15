@@ -66,6 +66,7 @@ namespace Hl7.FhirPath.Parser
                 .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeSpecifier.Boolean)).Positioned())
                 .Or(Quantity.Positioned())
                 .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Decimal)).Positioned())
+                .Or(Lexer.LongNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Long)).Positioned())
                 .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeSpecifier.Integer)).Positioned())
             from wsTrailing in WhitespaceOrComments()
             select l.CaptureWhitespaceAndComments(wsLeading, wsTrailing);

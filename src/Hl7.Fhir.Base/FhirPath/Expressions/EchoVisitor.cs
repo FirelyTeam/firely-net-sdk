@@ -110,7 +110,7 @@ namespace Hl7.FhirPath.Expressions
                     _result.Append($"{t}");
                     break;
                 case "Long":
-                    _result.Append($"{t}");
+                    _result.Append($"{t}L");
                     break;
                 case "Quantity":
                     if (expression.Value is P.Quantity q)

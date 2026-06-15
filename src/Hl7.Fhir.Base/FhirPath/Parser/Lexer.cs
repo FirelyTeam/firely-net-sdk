@@ -162,6 +162,14 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<Int32> IntegerNumber =
             Parse.Number.Select(s => Int32.Parse(s));
 
+        // LONGNUMBER
+        //   : [0-9]+ 'L'
+        //   ;
+        public static readonly Parser<long> LongNumber =
+            from num in Parse.Number
+            from suffix in Parse.Char('L')
+            select long.Parse(num);
+
         public static readonly Parser<decimal> DecimalNumber =
                    from num in Parse.Number
                    from dot in Parse.Char('.')

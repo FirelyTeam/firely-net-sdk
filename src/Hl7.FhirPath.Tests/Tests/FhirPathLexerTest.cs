@@ -345,6 +345,25 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_Lex_Long()
+        {
+            var parser = Lexer.LongNumber.End();
+
+            AssertParser.SucceedsMatch(parser, "0L", 0L);
+            AssertParser.SucceedsMatch(parser, "01L", 1L);
+
+            for (int i = 1; i < 100; i++)
+            {
+                AssertParser.SucceedsMatch(parser, i.ToString() + "L", (long)i);
+            }
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "a0L");
+            AssertParser.FailsMatch(parser, "0.1L");
+            AssertParser.FailsMatch(parser, "-3L");      // use unary '-' operator to make negative
+        }
+
+        [TestMethod]
         public void FhirPath_Lex_Decimal()
         {
             var parser = Lexer.DecimalNumber.End();

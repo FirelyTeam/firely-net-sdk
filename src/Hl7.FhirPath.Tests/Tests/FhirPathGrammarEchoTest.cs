@@ -28,6 +28,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsEcho(parser, "/*A*/@2013-12T");
             AssertParser.SucceedsEcho(parser, "/*A*/@T12:23:34/*B*/ ");
             AssertParser.SucceedsEcho(parser, "/*A*/@2014-12-13T12:00:00+02:00// Blah\n/*groan*/");
+            AssertParser.SucceedsEcho(parser, "/*A*/42L// Blah\n/*groan*/");
         }
 
         [TestMethod]
@@ -175,6 +176,7 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.SucceedsEcho(parser, "  -4");
             AssertParser.SucceedsEcho(parser, "4+  6");
+            AssertParser.SucceedsEcho(parser, "-42L");
         }
 
         [TestMethod]
