@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             new ElementDefinition.MappingComponent()
                             {
-                                Identity = "test-identity", 
+                                Identity = "test-identity",
                                 Map = "TestMapping.Patient"
                             }
                         }
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             new ElementDefinition.MappingComponent()
                             {
-                                Identity = "test-identity", 
+                                Identity = "test-identity",
                                 Map = "TestMapping.Patient"
                             }
                         }
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 new ElementDefinition.MappingComponent()
                                 {
-                                    Identity = "test-identity", 
+                                    Identity = "test-identity",
                                     Map = "TestMapping.Patient"
                                 }
                             }
