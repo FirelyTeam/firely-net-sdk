@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Start with inherited items from snapshot
                         result = new List<T>(snap.DeepCopy());
 
-                        var itemsToRemove = new List<int>();
+                        var itemsToRemove = new HashSet<int>();
 
                         // Process each diff item
                         foreach (var diffItem in diff)
