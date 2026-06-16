@@ -539,6 +539,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         // Start with inherited items from snapshot
                         result = new List<T>(snap.DeepCopy());
+
+                        var itemsToRemove = new HashSet<int>();
                         
                         // Process each diff item
                         foreach (var diffItem in diff)
@@ -561,22 +563,28 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Check if diff item has suppress extension
                                 if (suppress(diffItem))
                                 {
-                                    // Remove the inherited item - it's being suppressed
-                                    result.RemoveAt(idx);
+                                    // Tag the inherited item to be removed - it's being suppressed.
+                                    // We cannot remove it immediately from the result list, because that will
+                                    // break the matching logic for subsequent items in the snap list.
+                                    itemsToRemove.Add(idx);
                                     continue;
                                 }
-                                else
-                                {
-                                    // Merge diff with snap (normal cumulative behavior)
-                                    var snapItem = result[idx];
-                                    mergedItem = mergeComplexAttribute(snapItem, diffItem);
-                                    result[idx] = mergedItem;
-                                }
+
+                                // Merge diff with snap (normal cumulative behavior)
+                                var snapItem = result[idx];
+                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                result[idx] = mergedItem;
                             }
+                            
                             if (mergedItem != null)
                             {
                                 onConstraint(mergedItem);
                             }
+                        }
+
+                        foreach (var idx in itemsToRemove.OrderByDescending(i => i))
+                        {
+                            result.RemoveAt(idx);
                         }
                     }
                 }

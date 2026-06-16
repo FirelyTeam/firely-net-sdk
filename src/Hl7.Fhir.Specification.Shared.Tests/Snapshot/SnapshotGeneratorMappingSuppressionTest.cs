@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -403,6 +404,159 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     }
+                }
+            };
+        }
+
+        [TestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public async System.Threading.Tasks.Task TestSnapshotMappingsSuppressionWithExtension(bool respectSuppressExtension)
+        {
+            // Create a base profile with suppressed mappings
+            var baseProfile = CreateBaseProfileWithSuppressedMappings();
+            var diffMappings = baseProfile.Differential!.Element.FirstOrDefault(e => e.Path == "Account")!.Mapping;
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+
+            // Generate snapshot
+            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            await generator.UpdateAsync(baseProfile);
+            Assert.IsNotNull(baseProfile.Snapshot, "Should have snapshot");
+            
+            // Verify that mapping is NOT inherited due to suppression when respectSuppressExtension is true, and is inherited when respectSuppressExtension is false
+            var rootElement = baseProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Account");
+            Assert.IsNotNull(rootElement, "Should have Account root element");
+
+            foreach (var diffMapping in diffMappings)
+            {
+                var snapMapping = rootElement.Mapping?.FirstOrDefault(m => m.Identity == diffMapping.Identity && m.Map == diffMapping.Map);
+                
+                if (respectSuppressExtension)
+                    snapMapping.Should().BeNull("Mapping with suppress extension should not be in the snapshot when suppression is respected");
+                else
+                    snapMapping.Should().NotBeNull("Mapping with suppress extension should be in the snapshot when suppression is not respected");
+            }
+        }
+
+        [TestMethod]
+        public async System.Threading.Tasks.Task TestSnapshotDuplicateSuppressedMappingsDoNotThrow()
+        {
+            // Regression test: two diff entries with identical identity+map both suppressed would add
+            // the same snapshot index to itemsToRemove twice, causing ArgumentOutOfRangeException
+            // with List<int> but is safe with HashSet<int>.
+            var baseProfile = CreateProfileWithDuplicateSuppressedMappings();
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+
+            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = true });
+            await generator.UpdateAsync(baseProfile);
+            Assert.IsNotNull(baseProfile.Snapshot, "Should have snapshot");
+
+            var rootElement = baseProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Account");
+            Assert.IsNotNull(rootElement, "Should have Account root element");
+            var suppressedMapping = rootElement.Mapping?.FirstOrDefault(m => m.Identity == "rim" && m.Map == "Entity. Role, or Act");
+            suppressedMapping.Should().BeNull("Duplicated suppressed mapping should not appear in snapshot");
+        }
+
+        private StructureDefinition CreateProfileWithDuplicateSuppressedMappings()
+        {
+            var suppressExtension = new Extension
+            {
+                Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                Value = new FhirBoolean(true)
+            };
+
+            return new StructureDefinition
+            {
+                Id = "my-account-dup",
+                Url = "https://example.org/fhir/StructureDefinition/MyAccountDup",
+                Name = "MyAccountDup",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
+                Abstract = false,
+                Type = "Account",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Account",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element =
+                    [
+                        new ElementDefinition("Account")
+                        {
+                            Mapping =
+                            [
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Entity. Role, or Act",
+                                    Extension = [suppressExtension.DeepCopy()]
+                                },
+                                // Duplicate: same identity+map, also suppressed — would add same snap index twice
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Entity. Role, or Act",
+                                    Extension = [suppressExtension.DeepCopy()]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            };
+        }
+
+        private StructureDefinition CreateBaseProfileWithSuppressedMappings()
+        {
+            return new StructureDefinition
+            {
+                Id = "my-account",
+                Url = "https://example.org/fhir/StructureDefinition/MyAccount",
+                Name = "MyAccount",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
+                Abstract = false,
+                Type = "Account",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Account",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element =
+                    [
+                        new ElementDefinition("Account")
+                        {
+                            Mapping =
+                            [
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Entity. Role, or Act",
+                                    Extension =
+                                    [
+                                        new Extension
+                                        {
+                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                                            Value = new FhirBoolean(true)
+                                        }
+                                    ]
+                                },
+
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Account",
+                                    Extension =
+                                    [
+                                        new Extension
+                                        {
+                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                                            Value = new FhirBoolean(true)
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             };
         }
