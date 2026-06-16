@@ -71,7 +71,7 @@ public partial class BaseTerminologyService
                  ?? await ResolveValueSet(new(canonical)).ConfigureAwait(false);
 
         if (vs is null)
-            throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet {canonical}.");
+            throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet '{canonical}'.");
 
         // do not regenerate expansion if already present
         if (!vs.HasExpansion)

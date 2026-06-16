@@ -41,6 +41,14 @@ namespace Hl7.Fhir.ElementModel
             (InstanceType, Definition) = buildRootPosition(type);
         }
 
+        /// <summary>
+        /// Rebinds the underlying <see cref="ISourceNode"/> to another type information provider. This is useful
+        /// when the original provider could not resolve the type information for this node (so <see cref="Definition"/>
+        /// is <c>null</c> and values were passed through unparsed), but a more knowledgeable provider is available.
+        /// </summary>
+        internal TypedElementOnSourceNode ReTypeWith(IStructureDefinitionSummaryProvider provider, string? type = null) =>
+            new(_source, type, provider, _settings);
+
         private (string? instanceType, IElementDefinitionSummary? definition) buildRootPosition(string? type)
         {
             var rootType = type ?? _source.GetResourceTypeIndicator();

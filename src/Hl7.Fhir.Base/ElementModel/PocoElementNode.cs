@@ -31,7 +31,7 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             _inspector = inspector;
-            _myClassMapping = _inspector.FindOrImportClassMapping(root.GetType())!;
+            _myClassMapping = _inspector.FindOrImportClassMapping(root)!;
 
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
@@ -46,10 +46,7 @@ namespace Hl7.Fhir.ElementModel
             Current = instance;
             _inspector = inspector;
 
-            var instanceType = definition.Choice != ChoiceType.None
-                ? instance.GetType()
-                : determineInstanceType(definition);
-            _myClassMapping = _inspector.FindOrImportClassMapping(instanceType)!;
+            _myClassMapping = determineInstanceMapping(instance, definition);
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition;
 
@@ -58,9 +55,15 @@ namespace Hl7.Fhir.ElementModel
             ShortPath = shortPath;
         }
 
-        private Type determineInstanceType(PropertyMapping definition)
+        private ClassMapping determineInstanceMapping(Base instance, PropertyMapping definition)
         {
-            if (!definition.IsPrimitive) return definition.PropertyTypeMapping.NativeType;
+            // For a choice element, the instance determines the type. For other elements we use the
+            // declared type, which we already have as a mapping - note that going through the .NET
+            // type here instead would lose the identity of custom types, since these all share
+            // the same (dynamic) .NET type.
+            if (definition.Choice != ChoiceType.None)
+                return _inspector.FindOrImportClassMapping(instance)!;
+            if (!definition.IsPrimitive) return definition.PropertyTypeMapping;
             throw new NotSupportedException(
                 $"Encountered unexpected primitive type {Name} for PocoElementNode.InstanceType.");
         }
