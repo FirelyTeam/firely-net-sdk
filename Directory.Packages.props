@@ -40,14 +40,15 @@
 		<!-- Keep Microsoft.Extensions.* packages in sync with this Condition's LTS version -->
 
 		<!-- https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/#versions-body-tab -->
-		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.8" />
+		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.9" />
 	</ItemGroup>
 	
 	<!-- Framework-Specific Dependencies for netstandard2.1 -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
 		<PackageVersion Include="System.Buffers" Version="4.6.1" />
 
-		<!-- Keep System.Text.Json package in sync with the lowest concrete LTS version when under "netstandard" defintions  -->
+		<!-- Keep System.Text.Json package in sync with the lowest concrete LTS version when under "netstandard" definitions  -->
+        <!-- https://www.nuget.org/packages/System.Text.Json/#versions-body-tab -->
 		<PackageVersion Include="System.Text.Json" Version="8.0.6" />
 	</ItemGroup>
 
