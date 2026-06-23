@@ -32,7 +32,7 @@
 		<!-- Keep Microsoft.Extensions.* packages in sync with the lowest LTS version -->
 		
 		<!-- https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/#versions-body-tab -->
-		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.9" />
 	</ItemGroup>
 
 	<!-- Add a new Condition block for all other LTS versions. https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core  -->
