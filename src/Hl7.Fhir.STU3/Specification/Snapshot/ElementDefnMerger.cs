@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        // If snap is empty we still need to check for suppress extensions in diff
+                        // If snap is empty we still need to check for suppress extensions
                         result = diff.Where(x => !x.HasSuppressExtension()).Select(x => x.DeepCopy()).ToList();
                         onConstraint(result);
                     }
@@ -586,8 +586,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     else
                     {
-                        // If snap is exactly equal to diff we still need to check for suppress extensions in diff
-                        result = snap.Where(x => !x.HasSuppressExtension()).Select(x => x.DeepCopy()).ToList();
+                        // If snap is exactly equal to diff we still need to check for suppress extensions
+                        result = snap.Where(x => !x.HasSuppressExtension()).ToList();
                     }
                 }
                 return result;
