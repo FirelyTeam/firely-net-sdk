@@ -49,7 +49,7 @@
 
 		<!-- Keep System.Text.Json package in sync with the lowest concrete LTS version when under "netstandard" definitions  -->
         <!-- https://www.nuget.org/packages/System.Text.Json/#versions-body-tab -->
-		<PackageVersion Include="System.Text.Json" Version="8.0.6" />
+		<PackageVersion Include="System.Text.Json" Version="10.0.9" />
 	</ItemGroup>
 
 	<!-- Benchmarking Packages -->
