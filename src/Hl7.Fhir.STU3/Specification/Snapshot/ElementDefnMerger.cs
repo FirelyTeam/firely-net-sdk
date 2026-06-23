@@ -526,22 +526,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
                 {
-                    if (snap.IsNullOrEmpty() || diff.IsExactly(snap))
+                    if (snap.IsNullOrEmpty())
                     {
-                        // If snap is empty or snap is exactly equal to diff, we still need to check for suppress extensions
-
-                        result = new List<T>();
-
-                        foreach (var diffItem in diff)
-                        {
-                            if (!suppress(diffItem))
-                                result.Add(diffItem.DeepCopy());
-                        }
-
-                        if (snap.IsNullOrEmpty())
-                            onConstraint(result);
+                        // If snap is empty we still need to check for suppress extensions in diff
+                        result = diff.Where(x => !x.HasSuppressExtension()).Select(x => x.DeepCopy()).ToList();
+                        onConstraint(result);
                     }
-                    else 
+                    else if (!diff.IsExactly(snap))
                     {
                         // Start with inherited items from snapshot
                         result = new List<T>(snap.DeepCopy());
@@ -557,7 +548,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             if (idx < 0)
                             {
                                 // New item from differential - add it (but only if not suppressed)
-                                if (!suppress(diffItem))
+                                if (!diffItem.HasSuppressExtension())
                                 {
                                     mergedItem = diffItem.DeepCopy();
                                     result.Add(mergedItem);
@@ -567,7 +558,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             {
                                 // Matching item exists in snapshot
                                 // Check if diff item has suppress extension
-                                if (suppress(diffItem))
+                                if (diffItem.HasSuppressExtension())
                                 {
                                     // Tag the inherited item to be removed - it's being suppressed.
                                     // We cannot remove it immediately from the result list, because that will
@@ -593,27 +584,31 @@ namespace Hl7.Fhir.Specification.Snapshot
                             result.RemoveAt(idx);
                         }
                     }
+                    else
+                    {
+                        // If snap is exactly equal to diff we still need to check for suppress extensions in diff
+                        result = snap.Where(x => !x.HasSuppressExtension()).Select(x => x.DeepCopy()).ToList();
+                    }
                 }
                 return result;
-            }
-
-            bool suppress<T>(T item) where T : Element, IExtendable
-            {
-                return _generator.Settings.RespectSuppressExtension && item.HasSuppressExtension();
             }
 
             // Custom merge logic for mappings that respects the suppress extension
             // Inherit all mapping definitions from a parent resource unless someone added a suppress extension to it
             List<ElementDefinition.MappingComponent> mergeMappings(List<ElementDefinition.MappingComponent> snap, List<ElementDefinition.MappingComponent> diff)
             {
-                return mergeCollectionWithSuppression(snap, diff, (s, d) => isEqualString(s.Identity, d.Identity) && isEqualString(s.Map, d.Map));
+                return _generator.Settings.RespectSuppressExtension
+                    ? mergeCollectionWithSuppression(snap, diff, (s, d) => isEqualString(s.Identity, d.Identity) && isEqualString(s.Map, d.Map))
+                    : mergeCollection(snap, diff, (s, d) => isEqualString(s.Identity, d.Identity) && isEqualString(s.Map, d.Map));
             }
 
             // Custom merge logic for examples that respects the suppress extension
             // Inherit all example definitions from a parent resource unless someone added a suppress extension to it
             List<ElementDefinition.ExampleComponent> mergeExamples(List<ElementDefinition.ExampleComponent> snap, List<ElementDefinition.ExampleComponent> diff)
             {
-                return mergeCollectionWithSuppression(snap, diff, (s, d) => isEqualString(s.Label, d.Label));
+                return _generator.Settings.RespectSuppressExtension
+                    ? mergeCollectionWithSuppression(snap, diff, (s, d) => isEqualString(s.Label, d.Label))
+                    : mergeCollection(snap, diff, (s, d) => isEqualString(s.Label, d.Label));
             }
 
 
