@@ -302,6 +302,69 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.HasCount(1, patientElement.Example, "Example with suppress extension should be inherited when suppression is not respected");
         }
 
+        [TestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public async System.Threading.Tasks.Task TestExampleSuppressionExtensionInBaseProfile(bool respectSuppressExtension)
+        {
+            // Create a base profile with suppressed examples
+            const string path = "Patient.birthDate";
+            var baseProfile = CreateTestProfileForExample("MyPatient", "Patient", path, "http://hl7.org/fhir/StructureDefinition/Patient", addSuppressedExample: true);
+            var diffExamples = baseProfile.Differential!.Element.FirstOrDefault(e => e.Path == path)!.Example;
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+
+            // Generate snapshot
+            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            await generator.UpdateAsync(baseProfile);
+            Assert.IsNotNull(baseProfile.Snapshot, "Should have snapshot");
+
+            // Verify that example is NOT inherited due to suppression when respectSuppressExtension is true, and is inherited when respectSuppressExtension is false
+            var rootElement = baseProfile.Snapshot.Element.FirstOrDefault(e => e.Path == path);
+            Assert.IsNotNull(rootElement, $"Should have {path} element");
+
+            foreach (var diffExample in diffExamples)
+            {
+                var snapExample = rootElement.Example.FirstOrDefault(e => e.Label == diffExample.Label);
+
+                if (respectSuppressExtension)
+                    snapExample.Should().BeNull("Example with suppress extension should not be in the snapshot when suppression is respected");
+                else
+                    snapExample.Should().NotBeNull("Example with suppress extension should be in the snapshot when suppression is not respected");
+            }
+        }
+
+        [TestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public async System.Threading.Tasks.Task TestExampleSuppressionExtensionInDerivedProfile(bool respectSuppressExtension)
+        {
+            // Create a base profile with no examples and a derived profile with suppressed examples
+            const string path = "Patient.birthDate";
+            var baseProfile = CreateTestProfileForExample("MyPatient", "Patient", path, "http://hl7.org/fhir/StructureDefinition/Patient", addSuppressedExample: false);
+            var derivedProfile = CreateTestProfileForExample("MyDerivedPatient", "Patient", path, "http://example.org/fhir/StructureDefinition/MyPatient", addSuppressedExample: true);
+            var diffExamples = derivedProfile.Differential!.Element.FirstOrDefault(e => e.Path == path)!.Example;
+            var resolver = new CachedResolver(new MultiResolver(new InMemoryResourceResolver(baseProfile), ZipSource.CreateValidationSource()));
+
+            // Generate snapshot
+            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            await generator.UpdateAsync(derivedProfile);
+            Assert.IsNotNull(derivedProfile.Snapshot, "Should have snapshot");
+
+            // Verify that example is NOT inherited due to suppression when respectSuppressExtension is true, and is inherited when respectSuppressExtension is false
+            var rootElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == path);
+            Assert.IsNotNull(rootElement, $"Should have {path} element");
+
+            foreach (var diffExample in diffExamples)
+            {
+                var snapExample = rootElement.Example.FirstOrDefault(e => e.Label == diffExample.Label);
+
+                if (respectSuppressExtension)
+                    snapExample.Should().BeNull("Example with suppress extension should not be in the snapshot when suppression is respected");
+                else
+                    snapExample.Should().NotBeNull("Example with suppress extension should be in the snapshot when suppression is not respected");
+            }
+        }
+
         private StructureDefinition CreateBaseProfileWithExample()
         {
             return new StructureDefinition()
@@ -405,6 +468,56 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
+        }
+
+        private StructureDefinition CreateTestProfileForExample(string name, string type, string path, string baseUrl, bool addSuppressedExample)
+        {
+            var sd = new StructureDefinition
+            {
+                Id = name,
+                Url = $"http://example.org/fhir/StructureDefinition/{name}",
+                Name = name,
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                FhirVersion = ModelInfo.Version,
+                Abstract = false,
+                Type = type,
+                BaseDefinition = baseUrl,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent { Element = [] }
+            };
+
+            if (addSuppressedExample)
+            {
+                sd.Differential.Element.Add(new ElementDefinition(path)
+                {
+                    Example =
+                    [
+                        new ElementDefinition.ExampleComponent
+                        {
+                            Label = "Test",
+                            Value = new FhirDateTime("2005"),
+                            Extension =
+                            [
+                                new Extension
+                                {
+                                    Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
+                                    Value = new FhirBoolean(true)
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+            else
+            {
+                sd.Differential.Element.Add(new ElementDefinition(path)
+                {
+                    Short = "Some constraint"
+                });
+            }
+
+            return sd;
         }
 
         [TestMethod]

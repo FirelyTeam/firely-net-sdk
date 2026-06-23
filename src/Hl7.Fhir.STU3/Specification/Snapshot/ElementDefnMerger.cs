@@ -526,12 +526,22 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
                 {
-                    if (snap.IsNullOrEmpty())
+                    if (snap.IsNullOrEmpty() || diff.IsExactly(snap))
                     {
-                        result = (List<T>)diff.DeepCopy();
-                        onConstraint(result);
+                        // If snap is empty or snap is exactly equal to diff, we still need to check for suppress extensions
+
+                        result = new List<T>();
+
+                        foreach (var diffItem in diff)
+                        {
+                            if (!suppress(diffItem))
+                                result.Add(diffItem.DeepCopy());
+                        }
+
+                        if (snap.IsNullOrEmpty())
+                            onConstraint(result);
                     }
-                    else if (!diff.IsExactly(snap))
+                    else 
                     {
                         // Start with inherited items from snapshot
                         result = new List<T>(snap.DeepCopy());
