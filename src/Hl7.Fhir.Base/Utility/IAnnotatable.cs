@@ -16,6 +16,19 @@ public interface IAnnotatable : IAnnotated
     void AddAnnotation(object annotation);
 
     void RemoveAnnotations(Type type);
+
+    /// <summary>
+    /// Replaces any existing annotation of the same type with <paramref name="annotation"/>,
+    /// ensuring exactly one annotation of that type is present.
+    /// </summary>
+    void SetAnnotation(object annotation)
+    {
+        lock (this)
+        {
+            RemoveAnnotations(annotation.GetType());
+            AddAnnotation(annotation);
+        }
+    }
 }
 
 public static class AnnotatableExtensions
@@ -25,15 +38,14 @@ public static class AnnotatableExtensions
         annotatable.RemoveAnnotations(typeof(T));
     }
 
-    private static readonly object _lock = new();
-
     public static void SetAnnotation<A>(this IAnnotatable annotatable, A annotation)
     {
-        lock (_lock)
+        if (annotation != null)
+            annotatable.SetAnnotation(annotation);
+        else
         {
-            annotatable.RemoveAnnotations<A>();
-            if (annotation != null)
-                annotatable.AddAnnotation(annotation);
+            lock (annotatable)
+                annotatable.RemoveAnnotations<A>();
         }
     }
 }

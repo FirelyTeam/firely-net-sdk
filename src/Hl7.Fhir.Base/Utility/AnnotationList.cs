@@ -38,7 +38,7 @@ public class AnnotationList : IAnnotatable, IEnumerable<object>
     }
 
     /// <summary>
-    /// Add an annotation to the list, possibly replacing an existing one.
+    /// Add an annotation to the list, combining with existing ones.
     /// </summary>
     public void AddAnnotation(object annotation)
     {
@@ -52,6 +52,9 @@ public class AnnotationList : IAnnotatable, IEnumerable<object>
     /// Removes the annotation of the given type. If it does not exist, nothing happens.
     /// </summary>
     public void RemoveAnnotations(Type type) => annotations.TryRemove(type, out _);
+
+    /// <inheritdoc/>
+    public void SetAnnotation(object annotation) => annotations.AddOrUpdate(annotation.GetType(), [annotation], (_, _) => [annotation]);
 
     /// <summary>
     /// Returns all annotations of type <paramref name="type"/>
