@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else
                     {
                         // If snap is exactly equal to diff we still need to check for suppress extensions
-                        result = snap.Where(x => !x.HasSuppressExtension()).ToList();
+                        result = snap.Where(x => !x.HasSuppressExtension()).Select(x => x.DeepCopy()).ToList();
                     }
                 }
                 return result;
