@@ -63,3 +63,7 @@ updates:
         update-types: ["version-update:semver-patch"]
       - dependency-name: FluentAssertions
         versions: [">=8.0.0"]
+      - dependency-name: "Microsoft.Extensions.*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "System.Text.Json"
+        update-types: ["version-update:semver-major"]
