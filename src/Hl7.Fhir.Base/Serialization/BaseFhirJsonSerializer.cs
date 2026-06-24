@@ -253,7 +253,13 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             // Write a property with 'elementName'
             writer.WritePropertyName(elementName);
-            SerializePrimitiveValue(value.JsonValue, writer);
+
+            // due to System.Text.Json limitations described in https://github.com/FirelyTeam/firely-net-sdk/issues/3501
+            // Base64 strings need to be < 125MB, but the overload accepting byte array does not carry such limitation
+            // so we pass the underlying array down
+            var serializableValue = value is Base64Binary { Value.Length: > 0 } bin ? bin.Value : value.JsonValue;
+            
+            SerializePrimitiveValue(serializableValue, writer);
         }
 
         if (!value.EnumerateElements().Any()) return;
@@ -298,6 +304,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             case int i32: writer.WriteNumberValue(i32); break;
             case decimal dec: writer.WriteNumberValue(dec); break;
+            case byte[] bytes: writer.WriteBase64StringValue(bytes); break;
             // A little note about trimming and whitespaces. The spec says:
             // "(...) In JSON and Turtle whitespace in string values is always significant. Primitive types other than
             // string SHALL NOT have leading or trailing whitespace."
