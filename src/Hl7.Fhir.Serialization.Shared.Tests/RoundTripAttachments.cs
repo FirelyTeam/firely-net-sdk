@@ -5,8 +5,8 @@ using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Serialization.Tests;
@@ -97,5 +97,22 @@ public class RoundTripAttachments
 #endif
 
         }
+    }
+
+    [TestMethod]
+    public void RoundTripLargeBase64Binary()
+    {
+        // Exercises the byte[] code path with a 128 MB payload to guard against regressions
+        // introduced by the System.Text.Json base64 string size limit fix (~125 MB limit on strings).
+        var data = new byte[128 * 1024 * 1024];
+        new Random(42).NextBytes(data);
+        var attachment = new Attachment { DataElement = new Base64Binary(data) };
+
+        var serializer = new FhirJsonSerializer();
+        var json = serializer.SerializeToString(attachment);
+
+        var parser = new FhirJsonDeserializer();
+        var roundTripped = parser.Deserialize<Attachment>(json)!;
+        roundTripped.DataElement!.Value.Should().Equal(data);
     }
 }
