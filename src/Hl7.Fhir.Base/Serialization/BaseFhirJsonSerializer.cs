@@ -188,7 +188,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     writeStartArray(elementName, numNullsMissed, writer);
                 }
 
-                SerializePrimitiveInternal(value, writer);
+                SerializePrimitiveValue(value, writer);
             }
             else
             {
@@ -254,7 +254,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             // Write a property with 'elementName'
             writer.WritePropertyName(elementName);
-            SerializePrimitiveInternal(value, writer);
+            SerializePrimitiveValue(value, writer);
         }
 
         if (!value.EnumerateElements().Any()) return;
@@ -290,7 +290,27 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         writer.WriteRawValue(buffer.WrittenSpan, skipInputValidation: true);
     }
 
-    internal void SerializePrimitiveInternal(PrimitiveType value, Utf8JsonWriter writer)
+    /// <summary>
+    /// Serialize a primitive POCO into Json.
+    /// </summary>
+    /// <remarks>
+    /// For <see cref="Base64Binary"/> values, this method decodes the stored base64 string into a
+    /// pooled byte buffer and writes it via <see cref="Utf8JsonWriter.WriteBase64StringValue(ReadOnlySpan{byte})"/>,
+    /// bypassing the ~125 MB string-size limit in System.Text.Json (see
+    /// https://github.com/FirelyTeam/firely-net-sdk/issues/3501). If the stored value is not valid
+    /// base64, it falls back to writing the raw string so that error information is preserved.
+    /// All other primitive types are delegated to <see cref="SerializePrimitiveValue(object?, Utf8JsonWriter)"/>.
+    ///
+    /// To allow for future additions to the POCOs the list of primitives supported here
+    /// is larger than the set used by the current POCOs. Note that <c>DateTimeOffset</c> and
+    /// <c>byte[]</c> are considered to be "primitive" values here (used as the value in
+    /// <see cref="Instant"/> and <see cref="Base64Binary"/>).
+    ///
+    /// Note that the current version of System.Text.Json only allows numbers
+    /// to be written that fit in .NET's <see cref="decimal"/> type, which may be less
+    /// precision than required by the FHIR specification (http://hl7.org/fhir/json.html#primitive).
+    /// </remarks>
+    protected virtual void SerializePrimitiveValue(PrimitiveType value, Utf8JsonWriter writer)
     {
         // due to System.Text.Json limitations described in https://github.com/FirelyTeam/firely-net-sdk/issues/3501
         // Base64 strings need to be < 125MB, but the overload accepting byte array does not carry such limitation
