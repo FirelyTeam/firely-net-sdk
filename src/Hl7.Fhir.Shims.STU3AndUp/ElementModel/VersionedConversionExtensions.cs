@@ -51,11 +51,14 @@ public static class VersionedConversionExtensions
 
     public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings? settings = null) where T : Base
     {
-        if (source is PocoNode { Poco: T {} poco })
+        if (source is PocoNode { Poco: T poco })
             return poco;
 
         return (T)source.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
     }
+
+    public static PocoNode ToPocoNode(this ISourceNode source) =>
+        source.ToPocoNode(ModelInfo.ModelInspector, source.Name);
 
     public static Base ToPoco(this ITypedElement element, Type? pocoType = null, PocoBuilderSettings? settings = null) =>
         element.ToPoco(ModelInfo.ModelInspector, pocoType, settings);
@@ -68,6 +71,6 @@ public static class VersionedConversionExtensions
         return (T)element.ToPoco(ModelInfo.ModelInspector, typeof(T), settings);
     }
 
-    public static PocoNode ToPocoNode(this ITypedElement node) =>
-        node.ToPocoNode(ModelInfo.ModelInspector, node.Name);
+    public static PocoNode ToPocoNode(this ITypedElement element) =>
+        element.ToPocoNode(ModelInfo.ModelInspector, element.Name);
 }

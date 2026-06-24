@@ -54,7 +54,7 @@ internal class ElementModelSerializationEngine(
     {
         try
         {
-            return (Resource)deserializer().ToPoco(inspector, null, pocoSettings);
+            return (Resource)new LegacyPocoBuilder(inspector, pocoSettings).BuildFrom(deserializer(), (Type)null!);
         }
         catch (FormatException fe)
         {

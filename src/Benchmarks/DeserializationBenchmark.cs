@@ -1,6 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.IO;
@@ -14,10 +13,12 @@ namespace Firely.Sdk.Benchmarks
     {
         internal string JsonData;
         internal string XmlData;
+        internal SourceNode JsonSourceNode;
+        internal SourceNode XmlSourceNode;
         internal BaseFhirXmlDeserializer XmlDeserializer;
         internal BaseFhirJsonDeserializer JsonDeserializer;
-        internal XmlReader xmlreader;
-        internal JsonSerializerOptions options;
+
+        internal JsonSerializerOptions Options;
 
         [GlobalSetup]
         public void BenchmarkSetup()
@@ -31,7 +32,10 @@ namespace Firely.Sdk.Benchmarks
             XmlDeserializer = new FhirXmlDeserializer();
             JsonDeserializer = new FhirJsonDeserializer();
 
-            options = new JsonSerializerOptions().ForFhir();
+            JsonSourceNode = SourceNode.FromNode(FhirJsonNode.Parse(JsonData));
+            XmlSourceNode = SourceNode.FromNode(FhirXmlNode.Parse(XmlData));
+
+            Options = new JsonSerializerOptions().ForFhir();
         }
 
         [Benchmark]
@@ -39,7 +43,7 @@ namespace Firely.Sdk.Benchmarks
         {
             try
             {
-                return JsonSerializer.Deserialize<Patient>(JsonData, options);
+                return JsonSerializer.Deserialize<Patient>(JsonData, Options);
             }
             catch (DeserializationFailedException e)
             {
@@ -51,10 +55,10 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public Resource XmlDictionaryDeserializer()
         {
-            xmlreader = XmlReader.Create(new StringReader(XmlData));
+            using var xmlReader = XmlReader.Create(new StringReader(XmlData));
             try
             {
-                return XmlDeserializer.DeserializeResource(xmlreader);
+                return XmlDeserializer.DeserializeResource(xmlReader);
             }
             catch (DeserializationFailedException e)
             {
@@ -63,16 +67,32 @@ namespace Firely.Sdk.Benchmarks
         }
 
 
-        [Benchmark]
-        public Patient TypedElementDeserializerJson()
+        [Benchmark(Baseline = true)]
+        public Patient PocoBuilderViaBridgeJson()
         {
-            return FhirJsonNode.Parse(JsonData).ToPoco<Patient>();
+            return JsonSourceNode
+                .ToTypedElement(ModelInfo.ModelInspector)
+                .ToPoco<Patient>();
         }
 
         [Benchmark]
-        public Resource TypedElementDeserializerXml()
+        public Patient PocoBuilderDirectJson()
         {
-            return FhirXmlNode.Parse(XmlData).ToPoco<Patient>();
+            return JsonSourceNode.ToPoco<Patient>();
+        }
+
+        [Benchmark]
+        public Patient PocoBuilderViaBridgeXml()
+        {
+            return XmlSourceNode
+                .ToTypedElement(ModelInfo.ModelInspector)
+                .ToPoco<Patient>();
+        }
+
+        [Benchmark]
+        public Patient PocoBuilderDirectXml()
+        {
+            return XmlSourceNode.ToPoco<Patient>();
         }
     }
 }

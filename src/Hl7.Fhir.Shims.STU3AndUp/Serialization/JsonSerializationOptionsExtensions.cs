@@ -44,5 +44,3 @@ namespace Hl7.Fhir.Serialization
             options.ForFhir(ModelInfo.ModelInspector, converterOptions);
     }
 }
-
-#nullable restore
