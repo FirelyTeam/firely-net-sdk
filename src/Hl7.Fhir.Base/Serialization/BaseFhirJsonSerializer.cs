@@ -14,8 +14,10 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Buffers;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization;
@@ -187,7 +189,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     writeStartArray(elementName, numNullsMissed, writer);
                 }
 
-                SerializePrimitiveValue(value.JsonValue, writer);
+                SerializePrimitiveValue(value, writer);
             }
             else
             {
@@ -253,18 +255,22 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             // Write a property with 'elementName'
             writer.WritePropertyName(elementName);
-
-            // due to System.Text.Json limitations described in https://github.com/FirelyTeam/firely-net-sdk/issues/3501
-            // Base64 strings need to be < 125MB, but the overload accepting byte array does not carry such limitation
-            // so we pass the underlying array down
-            var serializableValue = value is Base64Binary { Value.Length: > 0 } bin ? bin.Value : value.JsonValue;
-            
-            SerializePrimitiveValue(serializableValue, writer);
+            SerializePrimitiveValue(value, writer);
         }
 
         if (!value.EnumerateElements().Any()) return;
         
         deferSerializeForFilter(elementName, value, writer, filter);
+    }
+    
+    private static void tryWriteBase64(Utf8JsonWriter writer, string text)
+    {
+        var maxSize = Base64.GetMaxDecodedFromUtf8Length(text.Length);
+        using var pool = MemoryPool<byte>.Shared.Rent(maxSize);
+        if (Convert.TryFromBase64Chars(text, pool.Memory.Span, out var written))
+            writer.WriteBase64StringValue(pool.Memory.Span[..written]);
+        else
+            writer.WriteStringValue(text);
     }
 
     private void deferSerializeForFilter(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
@@ -298,13 +304,17 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// to be written that fit in .NET's <see cref="decimal"/> type, which may be less
     /// precision than required by the FHIR specification (http://hl7.org/fhir/json.html#primitive).
     /// </remarks>
-    protected virtual void SerializePrimitiveValue(object? value, Utf8JsonWriter writer)
+    protected virtual void SerializePrimitiveValue(PrimitiveType value, Utf8JsonWriter writer)
     {
-        switch (value)
+        
+        switch (value.JsonValue)
         {
             case int i32: writer.WriteNumberValue(i32); break;
             case decimal dec: writer.WriteNumberValue(dec); break;
-            case byte[] bytes: writer.WriteBase64StringValue(bytes); break;
+            // due to System.Text.Json limitations described in https://github.com/FirelyTeam/firely-net-sdk/issues/3501
+            // Base64 strings need to be < 125MB, but the overload accepting byte array does not carry such limitation
+            // Accessing the Value property might result in CodedValidationException, so we need to 
+            case string s when value is Base64Binary: tryWriteBase64(writer, s); break;
             // A little note about trimming and whitespaces. The spec says:
             // "(...) In JSON and Turtle whitespace in string values is always significant. Primitive types other than
             // string SHALL NOT have leading or trailing whitespace."
