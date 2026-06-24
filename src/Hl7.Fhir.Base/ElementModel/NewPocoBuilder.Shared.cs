@@ -175,6 +175,11 @@ internal partial class NewPocoBuilder
         ET.Time => value.ToString()!,
         ET.Date => value.ToString()!,
 
+        // 'instant' is the only FHIR primitive whose POCO value property is a System.DateTimeOffset
+        // (rather than a string), so converting its literal yields a DateTimeOffset that must also be
+        // stored as the canonical string form, just like the CQL date/time types above.
+        DateTimeOffset dto => ET.DateTime.FromDateTimeOffset(dto).ToString()!,
+
         // Integer64 uses string in the POCOs.
         long l => new ET.Long(l).ToString(),
 

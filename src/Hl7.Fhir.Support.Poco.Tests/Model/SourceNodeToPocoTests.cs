@@ -158,6 +158,24 @@ public class SourceNodeToPocoTests
             .Which.Active.Should().Be(true);
     }
 
+    [TestMethod]
+    public void ConvertsInstantValueWhenBuildingFromSourceNode()
+    {
+        // 'instant' is the only FHIR primitive whose POCO value property is a System.DateTimeOffset
+        // (rather than a string). When built from an (untyped) source node, its literal must still be
+        // stored as the canonical string form in JsonValue, otherwise the string-backed instant
+        // validation rejects the value when it is read back.
+        const string lastUpdated = "2026-06-24T15:21:58.865+00:00";
+        var patient = SourceNode.Resource("Patient", "Patient",
+            SourceNode.Node("meta",
+                SourceNode.Valued("lastUpdated", lastUpdated)));
+
+        var poco = patient.ToPoco<Patient>(ModelInfo.ModelInspector);
+
+        poco.Meta!.LastUpdatedElement!.JsonValue.Should().BeOfType<string>();
+        poco.Meta.LastUpdated.Should().Be(DateTimeOffset.Parse(lastUpdated));
+    }
+
     private static SourceNode createPatientSourceNode() =>
         SourceNode.Resource("Patient", "Patient",
             SourceNode.Valued("active", "true"),
