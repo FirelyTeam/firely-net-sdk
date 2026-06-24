@@ -17,24 +17,12 @@ using System;
 namespace Hl7.Fhir.ElementModel;
 
 /// <summary>
-/// Traverses an <see cref="ITypedElement"/> tree and constructs a POCO from it.
+/// Traverses an <see cref="ITypedElement"/> or <see cref="ISourceNode"/> tree and constructs a POCO from it.
 /// </summary>
-internal partial class NewPocoBuilder
+/// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes used in the construction.</param>
+/// <param name="settings">Configuration for building the POCO.</param>
+internal partial class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
 {
-    private readonly ModelInspector _inspector;
-    private readonly PocoBuilderSettings? _settings;
-
-    /// <summary>
-    /// Initializes a builder that can traverse typed or source nodes and construct POCO instances.
-    /// </summary>
-    /// <param name="inspector">The inspector providing the necessary metadata about the FHIR POCO classes used in the construction.</param>
-    /// <param name="settings">Configuration for building the POCO.</param>
-    public NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? settings = null)
-    {
-        this._inspector = inspector ?? throw Error.ArgumentNull(nameof(inspector));
-        this._settings = settings;
-    }
-
     /// <summary>
     /// Build a POCO from an <see cref="ITypedElement"/>.
     /// </summary>
@@ -62,7 +50,7 @@ internal partial class NewPocoBuilder
 
         if (typeHint is null &&
             source.Annotation<IResourceTypeSupplier>()?.ResourceType is null &&
-            _inspector.FindClassMapping(source.Name) is { } rootMapping &&
+            inspector.FindClassMapping(source.Name) is { } rootMapping &&
             typeof(Base).IsAssignableFrom(rootMapping.NativeType))
         {
             return readFromElement(source, rootMapping);

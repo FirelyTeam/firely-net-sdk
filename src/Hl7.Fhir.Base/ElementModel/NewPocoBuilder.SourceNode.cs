@@ -41,7 +41,7 @@ internal partial class NewPocoBuilder
         {
             var propertyMapping = classMapping.FindMappedElementByChoiceName(child.Name);
 
-            if (propertyMapping is null && _settings?.IgnoreUnknownMembers == false)
+            if (propertyMapping is null && settings?.IgnoreUnknownMembers == false)
                 raiseFormatError($"Encountered unknown member '{child.Name}' while de-serializing", child.Location);
 
             var childClassMapping = classMappingForElement(child, propertyMapping);
@@ -69,9 +69,9 @@ internal partial class NewPocoBuilder
             return getClassMapping(typeHint);
 
         if (node.Annotation<IResourceTypeSupplier>()?.ResourceType is { } resourceType)
-            return _inspector.FindClassMapping(resourceType) is { IsResource: true } resourceMapping
+            return inspector.FindClassMapping(resourceType) is { IsResource: true } resourceMapping
                 ? resourceMapping
-                : new ClassMapping(_inspector, resourceType, typeof(DynamicResource));
+                : new ClassMapping(inspector, resourceType, typeof(DynamicResource));
 
         var propertyClassMapping = propertyMapping is not null
             ? getClassMapping(propertyMapping.GetInstantiableType())
@@ -82,10 +82,10 @@ internal partial class NewPocoBuilder
             var choiceSuffix = getChoiceTypeSuffix(node, propertyMapping);
             if (!string.IsNullOrEmpty(choiceSuffix))
             {
-                if (_inspector.FindClassMapping(choiceSuffix) is { } choiceMapping && typeof(Base).IsAssignableFrom(choiceMapping.NativeType))
+                if (inspector.FindClassMapping(choiceSuffix) is { } choiceMapping && typeof(Base).IsAssignableFrom(choiceMapping.NativeType))
                     return choiceMapping;
 
-                return new ClassMapping(_inspector, choiceSuffix, determineBestDynamicMappingForElement(node).NativeType);
+                return new ClassMapping(inspector, choiceSuffix, determineBestDynamicMappingForElement(node).NativeType);
             }
         }
 
@@ -96,9 +96,9 @@ internal partial class NewPocoBuilder
             return ClassMapping.DynamicPrimitive;
 
         if (propertyClassMapping is not null)
-            return determineBestDynamicMappingForType(node, propertyClassMapping.NativeType);
+            return determineBestDynamicMappingForType(propertyClassMapping.NativeType, node.Text is not null);
 
-        if (_inspector.FindClassMapping(node.Name) is { } exactMapping && typeof(Base).IsAssignableFrom(exactMapping.NativeType))
+        if (inspector.FindClassMapping(node.Name) is { } exactMapping && typeof(Base).IsAssignableFrom(exactMapping.NativeType))
             return exactMapping;
 
         return determineBestDynamicMappingForElement(node);
@@ -118,29 +118,17 @@ internal partial class NewPocoBuilder
         return normalizePrimitiveValueForPocoStorage(convertedValue);
     }
 
-    private static ClassMapping determineBestDynamicMappingForType(ISourceNode node, Type elementType)
-    {
-        if (typeof(Resource).IsAssignableFrom(elementType))
-            return ClassMapping.DynamicResource;
-        if (typeof(PrimitiveType).IsAssignableFrom(elementType) || node.Text is not null)
-            return ClassMapping.DynamicPrimitive;
-        if (typeof(DataType).IsAssignableFrom(elementType))
-            return ClassMapping.DynamicDataType;
-
-        throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
-    }
-
     private ClassMapping determineBestDynamicMappingForElement(ISourceNode node)
     {
         if (node.Annotation<IResourceTypeSupplier>()?.ResourceType is not null)
             return ClassMapping.DynamicResource;
 
-        if (_inspector.FindClassMapping(node.Name) is { } exactMapping && typeof(Base).IsAssignableFrom(exactMapping.NativeType))
+        if (inspector.FindClassMapping(node.Name) is { } exactMapping && typeof(Base).IsAssignableFrom(exactMapping.NativeType))
             return exactMapping;
 
         return node.Text is { }
-            ? new ClassMapping(_inspector, node.Name, typeof(DynamicPrimitive))
-            : new ClassMapping(_inspector, node.Name, typeof(DynamicDataType));
+            ? new ClassMapping(inspector, node.Name, typeof(DynamicPrimitive))
+            : new ClassMapping(inspector, node.Name, typeof(DynamicDataType));
     }
 }
 

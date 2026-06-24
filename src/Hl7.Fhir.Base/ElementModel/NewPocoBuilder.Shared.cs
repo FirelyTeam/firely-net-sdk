@@ -48,7 +48,7 @@ internal partial class NewPocoBuilder
 
     private void validateEnumLiteral(object originalValue, object storedValue, ClassMapping classMapping, string location)
     {
-        if (_settings?.AllowUnrecognizedEnums == false &&
+        if (settings?.AllowUnrecognizedEnums == false &&
             classMapping.EnumType is not null &&
             storedValue is string enumLiteral &&
             EnumUtility.ParseLiteral(enumLiteral, classMapping.EnumType) == null)
@@ -76,8 +76,8 @@ internal partial class NewPocoBuilder
     }
 
     private ClassMapping getClassMapping(Type t) =>
-        _inspector.FindClassMapping(t) ??
-        (ClassMapping.TryCreate(_inspector, t, out var newMapping)
+        inspector.FindClassMapping(t) ??
+        (ClassMapping.TryCreate(inspector, t, out var newMapping)
             ? newMapping
             : throw Error.InvalidOperation($"Cannot find ClassMapping for type '{t.Name}'."));
 
@@ -153,6 +153,19 @@ internal partial class NewPocoBuilder
             var typeString = convertedValue is IDynamicType dynamicType ? dynamicType.DynamicTypeName : convertedValue.GetType().Name;
             throw Error.InvalidOperation($"Cannot assign data of type {typeString} to property '{propertyName}'.");
         }
+    }
+
+    /// <exception cref="NotSupportedException">The property type is not a Resource or DataType subclass.</exception>
+    private static ClassMapping determineBestDynamicMappingForType(Type elementType, bool hasValue)
+    {
+        if (typeof(Resource).IsAssignableFrom(elementType))
+            return ClassMapping.DynamicResource;
+        if (typeof(PrimitiveType).IsAssignableFrom(elementType) || hasValue)
+            return ClassMapping.DynamicPrimitive;
+        if (typeof(DataType).IsAssignableFrom(elementType))
+            return ClassMapping.DynamicDataType;
+
+        throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
     }
 
     private static object normalizePrimitiveValueForPocoStorage(object value) => value switch

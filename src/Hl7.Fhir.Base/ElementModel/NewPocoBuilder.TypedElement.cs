@@ -13,14 +13,30 @@ internal partial class NewPocoBuilder
     private Base readFromElement(ITypedElement node, ClassMapping classMapping)
     {
         var newInstance = buildNewInstance(classMapping, node.Value is { });
+
+        // add a link back to TypedElement to persist its annotations on pocos.
+        // This is specifically for backwards compatibility with many implementations of ITypedElement
+        // wrappers that implement their own annotations. Base will then check for this annotation and
+        // call the original TypedElement.Annotations().
         attachAnnotationsFrom(node, newInstance);
+
+        // Capture the instance type if this is a dynamic type.
         setDynamicTypeName(newInstance, node.InstanceType ?? node.Annotation<IResourceTypeSupplier>()?.ResourceType, classMapping);
 
+        // Value is a kind of pseudo-property, so we need to handle it separately.
+        // If this is a standard Fhir primitive, we need to convert the ITypedElement.Value
+        // to the used ObjectValue, if not, just set the value immediately on the DynamicPrimitive.
         if (node.Value is { } value)
         {
             object objectValue;
             if (newInstance is DynamicPrimitive)
                 objectValue = value;
+            
+            // The ITypedElement is a PocoNode built with no information about the Poco — whether built
+            // with ModelInspector.Base or representing a custom resource — so it uses DynamicPrimitive
+            // to store values typed as in the serialization source. With numeric values the JsonValue
+            // will already be correct, but with strings it can represent FhirDateTime, FhirUri, etc.
+            // Now that we have the ClassMapping, convert the string to the expected primitive type.
             else if (node is PocoNode { Poco: IDynamicType } && value is string s && classMapping.PrimitiveValueProperty is not null)
                 objectValue = PrimitiveTypeConverter.ConvertTo(s, classMapping.PrimitiveValueProperty.ImplementingType);
             else
@@ -35,15 +51,21 @@ internal partial class NewPocoBuilder
             validateEnumLiteral(value, objectValue, classMapping, node.Location);
         }
 
+        // Now, read the children
         foreach (var child in node.Children())
         {
             var propertyMapping = classMapping.FindMappedElementByChoiceName(child.Name);
 
-            if (propertyMapping is null && _settings?.IgnoreUnknownMembers == false)
+            if (propertyMapping is null && settings?.IgnoreUnknownMembers == false)
                 raiseFormatError($"Encountered unknown member '{child.Name}' while de-serializing", child.Location);
 
             var childClassMapping = classMappingForElement(child, propertyMapping);
             var convertedValue = readFromElement(child, childClassMapping);
+
+            // In case the convertedValue does not agree with the actual POCO type of the property, this
+            // method will throw an InvalidCastException. Later, we could salvage the data we have so far
+            // and put it in an annotation. This will be fixed in
+            // https://github.com/FirelyTeam/firely-net-sdk/issues/2908.
             assignOrAddProperty(
                 child.Name,
                 newInstance,
@@ -59,7 +81,7 @@ internal partial class NewPocoBuilder
     private ClassMapping classMappingForElement(ITypedElement node, PropertyMapping? propertyMapping, Type? typeHint = null)
     {
         var propertyClassMapping = propertyMapping is not null
-            ? getClassMapping(propertyMapping.ImplementingType)
+            ? getClassMapping(propertyMapping.GetInstantiableType())
             : null;
 
         // we're coming from a context where original PocoNode was built without necessary
@@ -70,45 +92,46 @@ internal partial class NewPocoBuilder
             if (propertyClassMapping is { NativeType.IsAbstract: false })
                 return propertyClassMapping;
 
-            if (node.Name.Substring(propertyMapping!.Name.Length) is { Length: > 0 } choice && _inspector.FindClassMapping(choice) is { } cm)
+            if (node.Name.Substring(propertyMapping!.Name.Length) is { Length: > 0 } choice && inspector.FindClassMapping(choice) is { } cm)
                 return cm;
         }
 
+        // If we have a concrete instanceType, and it's not the same as the property type, we need to
+        // check if we have a mapping for it. If we do, we can use that.
+        // Note that this is not the same as the "best" mapping, which is determined below.
+        // We "purposefully" create the suboptimal mapping anyway so our instance type is preserved.
         if (node.InstanceType is { } instanceType)
         {
             if (instanceType == (propertyClassMapping is not null ? getMappingTypeName(propertyClassMapping) : null) ||
                 (instanceType == "code" && propertyClassMapping?.IsCodeOfT is true))
-                return propertyClassMapping!;
+                return propertyClassMapping!; // propertyClassMapping matches the instanceType, we can safely use that
 
-            if (!instanceType.StartsWith("Dynamic") && _inspector.FindClassMapping(instanceType) is { } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
+            // try to get mapping for instanceType, but only if we're not in a dynamic context
+            if (!instanceType.StartsWith("Dynamic") && inspector.FindClassMapping(instanceType) is { } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
                 return mapping;
         }
+
+        // Normal case: we have a property mapping and it's not abstract, so we can use the actual
+        // type used by the POCO. The "IsPrimitive" check avoids picking up .NET string mappings for
+        // Extension.url and Element.id. This can go when
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/2963 is solved.
+        //
+        // Note the else here: we never return the propertyClassMapping when we have an instanceType
+        // that does not correspond to that mapping.
         else if (propertyClassMapping is { NativeType.IsAbstract: false, IsPrimitive: false })
             return propertyClassMapping;
 
+        // We don't know the type, but we know the type being requested.
         if (typeHint is not null)
             return getClassMapping(typeHint);
 
+        // No usable concrete type in the property, nor in the instance type, so create one of our
+        // dynamic flavours. If we do have an abstract type on the property, use that as a hint.
         if (propertyClassMapping is not null)
-            return determineBestDynamicMappingForType(node, propertyClassMapping.NativeType);
+            return determineBestDynamicMappingForType(propertyClassMapping.NativeType, node.Value is { });
 
+        // Failing all that, guess the best dynamic type based on the instance data.
         return determineBestDynamicMappingForElement(node);
-    }
-
-    /// <summary>
-    /// Determine the "best" dynamic type, based on the abstract type of a POCO property.
-    /// </summary>
-    /// <exception cref="NotSupportedException">The POCO's property is not a Resource or DataType subclass.</exception>
-    private ClassMapping determineBestDynamicMappingForType(ITypedElement node, Type elementType)
-    {
-        if (typeof(Resource).IsAssignableFrom(elementType))
-            return ClassMapping.DynamicResource;
-        if (typeof(PrimitiveType).IsAssignableFrom(elementType) || node.Value is { })
-            return ClassMapping.DynamicPrimitive;
-        if (typeof(DataType).IsAssignableFrom(elementType))
-            return ClassMapping.DynamicDataType;
-
-        throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
     }
 
     /// <summary>

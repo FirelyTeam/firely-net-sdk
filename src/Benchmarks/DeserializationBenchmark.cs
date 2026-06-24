@@ -55,10 +55,10 @@ namespace Firely.Sdk.Benchmarks
         [Benchmark]
         public Resource XmlDictionaryDeserializer()
         {
-            using var _xmlReader = XmlReader.Create(new StringReader(XmlData));
+            using var xmlReader = XmlReader.Create(new StringReader(XmlData));
             try
             {
-                return XmlDeserializer.DeserializeResource(_xmlReader);
+                return XmlDeserializer.DeserializeResource(xmlReader);
             }
             catch (DeserializationFailedException e)
             {
@@ -68,7 +68,7 @@ namespace Firely.Sdk.Benchmarks
 
 
         [Benchmark(Baseline = true)]
-        public Patient TypedElementBridgeDeserializerJson()
+        public Patient PocoBuilderViaBridgeJson()
         {
             return JsonSourceNode
                 .ToTypedElement(ModelInfo.ModelInspector)
@@ -76,13 +76,13 @@ namespace Firely.Sdk.Benchmarks
         }
 
         [Benchmark]
-        public Patient DirectSourceNodeDeserializerJson()
+        public Patient PocoBuilderDirectJson()
         {
             return JsonSourceNode.ToPoco<Patient>();
         }
 
         [Benchmark]
-        public Patient TypedElementBridgeDeserializerXml()
+        public Patient PocoBuilderViaBridgeXml()
         {
             return XmlSourceNode
                 .ToTypedElement(ModelInfo.ModelInspector)
@@ -90,7 +90,7 @@ namespace Firely.Sdk.Benchmarks
         }
 
         [Benchmark]
-        public Patient DirectSourceNodeDeserializerXml()
+        public Patient PocoBuilderDirectXml()
         {
             return XmlSourceNode.ToPoco<Patient>();
         }

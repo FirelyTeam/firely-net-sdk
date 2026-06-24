@@ -11,8 +11,10 @@
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -116,6 +118,44 @@ public class SourceNodeToPocoTests
 
         patient.Name.Should().ContainSingle();
         patient.Name[0].Should().BeSameAs(name);
+    }
+
+    [TestMethod]
+    public void DirectSourceNodeToPocoThrowsOnUnknownMemberWhenNotIgnored()
+    {
+        var patient = SourceNode.Resource("Patient", "Patient",
+            SourceNode.Valued("unknownField", "value"));
+
+        var settings = new PocoBuilderSettings { IgnoreUnknownMembers = false };
+        var act = () => patient.ToPoco(ModelInfo.ModelInspector, typeof(Patient), settings);
+
+        act.Should().Throw<FormatException>()
+            .WithMessage("*unknownField*");
+    }
+
+    [TestMethod]
+    public void DirectSourceNodeToPocoThrowsOnInvalidEnumWhenNotAllowed()
+    {
+        var patient = SourceNode.Resource("Patient", "Patient",
+            SourceNode.Valued("gender", "not-a-valid-gender"));
+
+        var settings = new PocoBuilderSettings { AllowUnrecognizedEnums = false };
+        var act = () => patient.ToPoco(ModelInfo.ModelInspector, typeof(Patient), settings);
+
+        act.Should().Throw<FormatException>()
+            .WithMessage("*not-a-valid-gender*");
+    }
+
+    [TestMethod]
+    public void BuilderIgnoresAbstractResourceTypeHintAndBuildsConcreteType()
+    {
+        var source = SourceNode.Resource("Patient", "Patient",
+            SourceNode.Valued("active", "true"));
+
+        var poco = new NewPocoBuilder(ModelInfo.ModelInspector).BuildFrom(source, typeof(Resource));
+
+        poco.Should().BeOfType<Patient>()
+            .Which.Active.Should().Be(true);
     }
 
     private static SourceNode createPatientSourceNode() =>
