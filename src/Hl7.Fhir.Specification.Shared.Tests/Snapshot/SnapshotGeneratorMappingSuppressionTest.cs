@@ -20,6 +20,54 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class SnapshotGeneratorMappingSuppressionTest
     {
+        private static readonly string ELEMENTDEFINITION_BESTPRACTISE_EXT = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice";
+        
+        public class TestCase(bool useSuppressExt, bool respectSuppressExt, bool? value)
+        {
+            public bool IsSuppressed => useSuppressExt && respectSuppressExt && value == true;
+
+            public SnapshotGeneratorSettings CreateSnapshotGeneratorSettings()
+            {
+                return new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExt };
+            }
+
+            public List<Extension> CreateExtension()
+            {
+                return
+                [
+                    new Extension
+                    {
+                        Url = useSuppressExt ? SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT : ELEMENTDEFINITION_BESTPRACTISE_EXT,
+                        Value = new FhirBoolean(value)
+                    }
+                ];
+            }
+
+            public override string ToString()
+            {
+                return $"Ext={(useSuppressExt ? "suppress" : "bestpractice")} | Value={(value.HasValue ? value.Value.ToString() : "<null>")} | RespectSuppressExtension={respectSuppressExt}";
+            }
+        }
+
+        public static IEnumerable<object[]> TestCases()
+        {
+            yield return [new TestCase(useSuppressExt: true, respectSuppressExt: true, value: true)];
+            yield return [new TestCase(useSuppressExt: true, respectSuppressExt: true, value: false)];
+            yield return [new TestCase(useSuppressExt: true, respectSuppressExt: true, value: null)];
+            
+            yield return [new TestCase(useSuppressExt: true, respectSuppressExt: false, value: true)];
+            yield return [new TestCase(useSuppressExt: true, respectSuppressExt: false, value: false)];
+            yield return [new TestCase(useSuppressExt: true, respectSuppressExt: false, value: null)];
+
+            yield return [new TestCase(useSuppressExt: false, respectSuppressExt: true, value: true)];
+            yield return [new TestCase(useSuppressExt: false, respectSuppressExt: true, value: false)];
+            yield return [new TestCase(useSuppressExt: false, respectSuppressExt: true, value: null)];
+
+            yield return [new TestCase(useSuppressExt: false, respectSuppressExt: false, value: true)];
+            yield return [new TestCase(useSuppressExt: false, respectSuppressExt: false, value: false)];
+            yield return [new TestCase(useSuppressExt: false, respectSuppressExt: false, value: null)];
+        }
+
         [TestMethod]
         [DataRow(true)]
         [DataRow(false)]
@@ -44,14 +92,14 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile without suppress extension
             var derivedProfile = CreateDerivedProfileWithoutSuppression();
-            
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Generate snapshot
             var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
             await generator.UpdateAsync(derivedProfile);
@@ -65,9 +113,8 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestMappingSuppressionWithExtension(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestMappingSuppressionWithExtension(TestCase testCase)
         {
             // Create a base profile with a mapping that already has snapshot
             var baseProfile = CreateBaseProfileWithMapping();
@@ -88,16 +135,16 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile with suppress extension on mapping
-            var derivedProfile = CreateDerivedProfileWithSuppressedMapping();
-            
+            var derivedProfile = CreateDerivedProfileWithSuppressedMapping(testCase);
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Generate snapshot
-            var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(mockResolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
 
             // Verify that mapping is NOT inherited due to suppression when respectSuppressExtension is true, and is inherited when respectSuppressExtension is false
@@ -105,10 +152,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(rootElement, "Should have Patient root element");
             var inheritedMapping = rootElement.Mapping?.FirstOrDefault(m => m.Identity == "test-identity");
 
-            if (respectSuppressExtension)
-                Assert.IsNull(inheritedMapping, "Mapping with suppress extension should not be inherited when suppression is respected");
+            if (testCase.IsSuppressed)
+                Assert.IsNull(inheritedMapping, "Mapping should not be inherited when suppressed");
             else
-                Assert.IsNotNull(inheritedMapping, "Mapping with suppress extension should be inherited when suppression is not respected");
+                Assert.IsNotNull(inheritedMapping, "Mapping should be inherited when not suppressed");
         }
 
         private StructureDefinition CreateBaseProfileWithMapping()
@@ -166,7 +213,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        private StructureDefinition CreateDerivedProfileWithSuppressedMapping()
+        private StructureDefinition CreateDerivedProfileWithSuppressedMapping(TestCase testCase)
         {
             return new StructureDefinition()
             {
@@ -190,14 +237,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 {
                                     Identity = "test-identity",
                                     Map = "TestMapping.Patient",
-                                    Extension = new List<Extension>()
-                                    {
-                                        new Extension()
-                                        {
-                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
-                                            Value = new FhirBoolean(true)
-                                        }
-                                    }
+                                    Extension = testCase.CreateExtension()
                                 }
                             }
                         }
@@ -205,7 +245,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
         }
-        
+
         [TestMethod]
         [DataRow(true)]
         [DataRow(false)]
@@ -230,20 +270,20 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             // Create a derived profile without suppress extension
             var derivedProfile = CreateDerivedProfileWithoutExampleSuppression();
-            
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Create snapshot generator
             var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
-            
+
             // Generate snapshot for the derived profile  
             await generator.UpdateAsync(derivedProfile);
-            
+
             // Assert that the derived profile inherited the example from the base
             Assert.IsNotNull(derivedProfile.Snapshot);
             var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
@@ -255,9 +295,8 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestExampleSuppressionExtension(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestExampleSuppressionExtension(TestCase testCase)
         {
             // Create a base profile with an example that already has snapshot
             var baseProfile = CreateBaseProfileWithExample();
@@ -280,15 +319,15 @@ namespace Hl7.Fhir.Specification.Tests
             };
             
             // Create a derived profile that suppresses the inherited example
-            var derivedProfile = CreateDerivedProfileWithExampleSuppression();
-            
+            var derivedProfile = CreateDerivedProfileWithExampleSuppression(testCase);
+
             // Mock resolver to return base profile when requested
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            
+
             // Create snapshot generator
-            var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
-            
+            var generator = new SnapshotGenerator(mockResolver, testCase.CreateSnapshotGeneratorSettings());
+
             // Generate snapshot for the derived profile
             await generator.UpdateAsync(derivedProfile);
 
@@ -297,25 +336,24 @@ namespace Hl7.Fhir.Specification.Tests
             var patientElement = derivedProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(patientElement);
 
-            if (respectSuppressExtension)
-                Assert.IsEmpty(patientElement.Example, "Example with suppress extension should not be inherited when suppression is respected");
+            if (testCase.IsSuppressed)
+                Assert.IsEmpty(patientElement.Example, "Example should not be inherited when suppressed");
             else
-                Assert.HasCount(1, patientElement.Example, "Example with suppress extension should be inherited when suppression is not respected");
+                Assert.HasCount(1, patientElement.Example, "Example should be inherited when not suppressed");
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestExampleSuppressionExtensionInBaseProfile(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestExampleSuppressionExtensionInBaseProfile(TestCase testCase)
         {
             // Create a base profile with suppressed examples
             const string path = "Patient.birthDate";
-            var baseProfile = CreateTestProfileForExample("MyPatient", "Patient", path, "http://hl7.org/fhir/StructureDefinition/Patient", addSuppressedExample: true);
+            var baseProfile = CreateTestProfileForExample("MyPatient", "Patient", path, "http://hl7.org/fhir/StructureDefinition/Patient", testCase);
             var diffExamples = baseProfile.Differential!.Element.FirstOrDefault(e => e.Path == path)!.Example;
             var resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
             // Generate snapshot
-            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(resolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(baseProfile);
             Assert.IsNotNull(baseProfile.Snapshot, "Should have snapshot");
 
@@ -327,27 +365,26 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var snapExample = rootElement.Example.FirstOrDefault(e => e.Label == diffExample.Label);
 
-                if (respectSuppressExtension)
-                    snapExample.Should().BeNull("Example with suppress extension should not be in the snapshot when suppression is respected");
+                if (testCase.IsSuppressed)
+                    snapExample.Should().BeNull("Example should not be in the snapshot when suppressed");
                 else
-                    snapExample.Should().NotBeNull("Example with suppress extension should be in the snapshot when suppression is not respected");
+                    snapExample.Should().NotBeNull("Example should be in the snapshot when not suppressed");
             }
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestExampleSuppressionExtensionInDerivedProfile(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestExampleSuppressionExtensionInDerivedProfile(TestCase testCase)
         {
             // Create a base profile with no examples and a derived profile with suppressed examples
             const string path = "Patient.birthDate";
-            var baseProfile = CreateTestProfileForExample("MyPatient", "Patient", path, "http://hl7.org/fhir/StructureDefinition/Patient", addSuppressedExample: false);
-            var derivedProfile = CreateTestProfileForExample("MyDerivedPatient", "Patient", path, "http://example.org/fhir/StructureDefinition/MyPatient", addSuppressedExample: true);
+            var baseProfile = CreateTestProfileForExample("MyPatient", "Patient", path, "http://hl7.org/fhir/StructureDefinition/Patient", null);
+            var derivedProfile = CreateTestProfileForExample("MyDerivedPatient", "Patient", path, "http://example.org/fhir/StructureDefinition/MyPatient", testCase);
             var diffExamples = derivedProfile.Differential!.Element.FirstOrDefault(e => e.Path == path)!.Example;
             var resolver = new CachedResolver(new MultiResolver(new InMemoryResourceResolver(baseProfile), ZipSource.CreateValidationSource()));
 
             // Generate snapshot
-            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(resolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
             Assert.IsNotNull(derivedProfile.Snapshot, "Should have snapshot");
 
@@ -359,10 +396,10 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var snapExample = rootElement.Example.FirstOrDefault(e => e.Label == diffExample.Label);
 
-                if (respectSuppressExtension)
-                    snapExample.Should().BeNull("Example with suppress extension should not be in the snapshot when suppression is respected");
+                if (testCase.IsSuppressed)
+                    snapExample.Should().BeNull("Example should not be in the snapshot when suppressed");
                 else
-                    snapExample.Should().NotBeNull("Example with suppress extension should be in the snapshot when suppression is not respected");
+                    snapExample.Should().NotBeNull("Example should be in the snapshot when not suppressed");
             }
         }
 
@@ -428,12 +465,12 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        private StructureDefinition CreateDerivedProfileWithExampleSuppression()
+        private StructureDefinition CreateDerivedProfileWithExampleSuppression(TestCase testCase)
         {
             return new StructureDefinition()
             {
                 Id = "derived-patient-profile-with-example-suppression",
-                Url = "http://example.org/fhir/StructureDefinition/derived-patient-with-example-suppression", 
+                Url = "http://example.org/fhir/StructureDefinition/derived-patient-with-example-suppression",
                 Name = "DerivedPatientProfileWithExampleSuppression",
                 Status = PublicationStatus.Active,
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,
@@ -455,14 +492,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 {
                                     Label = "test-example",
                                     Value = new FhirString("Example patient name"),
-                                    Extension = new List<Extension>()
-                                    {
-                                        new Extension()
-                                        {
-                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
-                                            Value = new FhirBoolean(true)
-                                        }
-                                    }
+                                    Extension = testCase.CreateExtension()
                                 }
                             }
                         }
@@ -471,7 +501,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        private StructureDefinition CreateTestProfileForExample(string name, string type, string path, string baseUrl, bool addSuppressedExample)
+        private StructureDefinition CreateTestProfileForExample(string name, string type, string path, string baseUrl, TestCase testCase)
         {
             var sd = new StructureDefinition
             {
@@ -488,7 +518,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Differential = new StructureDefinition.DifferentialComponent { Element = [] }
             };
 
-            if (addSuppressedExample)
+            if (testCase != null)
             {
                 sd.Differential.Element.Add(new ElementDefinition(path)
                 {
@@ -498,14 +528,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Label = "Test",
                             Value = new FhirDateTime("2005"),
-                            Extension =
-                            [
-                                new Extension
-                                {
-                                    Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
-                                    Value = new FhirBoolean(true)
-                                }
-                            ]
+                            Extension = testCase.CreateExtension()
                         }
                     ]
                 });
@@ -522,17 +545,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestSnapshotMappingsSuppressionWithExtension(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestSnapshotMappingsSuppressionWithExtension(TestCase testCase)
         {
             // Create a base profile with suppressed mappings
-            var baseProfile = CreateBaseProfileWithSuppressedMappings();
+            var baseProfile = CreateBaseProfileWithSuppressedMappings(testCase);
             var diffMappings = baseProfile.Differential!.Element.FirstOrDefault(e => e.Path == "Account")!.Mapping;
             var resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
             // Generate snapshot
-            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(resolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(baseProfile);
             Assert.IsNotNull(baseProfile.Snapshot, "Should have snapshot");
             
@@ -544,48 +566,139 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var snapMapping = rootElement.Mapping?.FirstOrDefault(m => m.Identity == diffMapping.Identity && m.Map == diffMapping.Map);
                 
-                if (respectSuppressExtension)
-                    snapMapping.Should().BeNull("Mapping with suppress extension should not be in the snapshot when suppression is respected");
+                if (testCase.IsSuppressed)
+                    snapMapping.Should().BeNull("Mapping should not be in the snapshot when suppressed");
                 else
-                    snapMapping.Should().NotBeNull("Mapping with suppress extension should be in the snapshot when suppression is not respected");
+                    snapMapping.Should().NotBeNull("Mapping should be in the snapshot when not suppressed");
             }
         }
 
+        private StructureDefinition CreateBaseProfileWithSuppressedMappings(TestCase testCase)
+        {
+            return new StructureDefinition
+            {
+                Id = "my-account",
+                Url = "https://example.org/fhir/StructureDefinition/MyAccount",
+                Name = "MyAccount",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
+                Abstract = false,
+                Type = "Account",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Account",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element =
+                    [
+                        new ElementDefinition("Account")
+                        {
+                            Mapping =
+                            [
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Entity. Role, or Act",
+                                    Extension = testCase.CreateExtension()
+                                },
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Account",
+                                    Extension = testCase.CreateExtension()
+                                }
+                            ]
+                        }
+                    ]
+                }
+            };
+        }
+
         [TestMethod]
-        public async System.Threading.Tasks.Task TestSnapshotDuplicateSuppressedMappingsDoNotThrow()
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestSnapshotDuplicateSuppressedMappingsDoNotThrow(TestCase testCase)
         {
             // Regression test: two diff entries with identical identity+map both suppressed would add
             // the same snapshot index to itemsToRemove twice, causing ArgumentOutOfRangeException
             // with List<int> but is safe with HashSet<int>.
-            var baseProfile = CreateProfileWithDuplicateSuppressedMappings();
+            var baseProfile = CreateProfileWithDuplicateSuppressedMappings(testCase);
             var resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
-            var generator = new SnapshotGenerator(resolver, new SnapshotGeneratorSettings { RespectSuppressExtension = true });
+            var generator = new SnapshotGenerator(resolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(baseProfile);
             Assert.IsNotNull(baseProfile.Snapshot, "Should have snapshot");
 
             var rootElement = baseProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Account");
             Assert.IsNotNull(rootElement, "Should have Account root element");
-            var suppressedMapping = rootElement.Mapping?.FirstOrDefault(m => m.Identity == "rim" && m.Map == "Entity. Role, or Act");
-            suppressedMapping.Should().BeNull("Duplicated suppressed mapping should not appear in snapshot");
+            var mappings = rootElement.Mapping?.Where(m => m.Identity == "rim" && m.Map == "Entity. Role, or Act");
+            
+            if (testCase.IsSuppressed)
+                mappings.Should().HaveCount(0, "Mapping should not appear in snapshot when suppressed");
+            else
+                mappings.Should().HaveCount(1, "Mapping should appear once in snapshot when not suppressed and duplicate is removed");
+        }
+
+        private StructureDefinition CreateProfileWithDuplicateSuppressedMappings(TestCase testCase)
+        {
+            return new StructureDefinition
+            {
+                Id = "my-account-dup",
+                Url = "https://example.org/fhir/StructureDefinition/MyAccountDup",
+                Name = "MyAccountDup",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
+                Abstract = false,
+                Type = "Account",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Account",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element =
+                    [
+                        new ElementDefinition("Account")
+                        {
+                            Mapping =
+                            [
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Entity. Role, or Act",
+                                    Extension = testCase.CreateExtension()
+                                },
+                                // Duplicate: same identity+map, also suppressed — would add same snap index twice
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "rim",
+                                    Map = "Entity. Role, or Act",
+                                    Extension = testCase.CreateExtension()
+                                }
+                            ]
+                        }
+                    ]
+                }
+            };
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestExampleSuppressionWhenSnapEqualsDiff(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestExampleSuppressionWhenSnapEqualsDiff(TestCase testCase)
         {
             // Exercises the else branch: snap is non-empty and diff.IsExactly(snap) is true while
             // some items carry the suppress extension (e.g. a snapshot previously generated without
             // suppression is re-expanded with the same differential).
-            var suppressExt = new Extension { Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT, Value = new FhirBoolean(true) };
             var suppressedExample = new ElementDefinition.ExampleComponent
             {
                 Label = "suppress-me",
                 Value = new FhirString("suppressed value"),
-                Extension = [suppressExt.DeepCopy()]
+                Extension = testCase.CreateExtension()
             };
-            var keptExample = new ElementDefinition.ExampleComponent { Label = "keep-me", Value = new FhirString("kept value") };
+            
+            var keptExample = new ElementDefinition.ExampleComponent
+            {
+                Label = "keep-me", 
+                Value = new FhirString("kept value")
+            };
 
             var baseProfile = new StructureDefinition
             {
@@ -631,33 +744,26 @@ namespace Hl7.Fhir.Specification.Tests
 
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(mockResolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
 
             var patientElement = derivedProfile.Snapshot!.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(patientElement);
 
-            if (respectSuppressExtension)
-            {
-                patientElement.Example.Should().NotContain(e => e.Label == "suppress-me", "suppress-extension example should be removed");
-                patientElement.Example.Should().Contain(e => e.Label == "keep-me", "unsuppressed example should be retained");
-            }
+            if (testCase.IsSuppressed)
+                patientElement.Example.Should().NotContain(e => e.Label == "suppress-me", "example should be removed when suppressed");
             else
-            {
-                patientElement.Example.Should().Contain(e => e.Label == "suppress-me", "example should be kept when suppression is not respected");
-                patientElement.Example.Should().Contain(e => e.Label == "keep-me", "unsuppressed example should always be retained");
-            }
+                patientElement.Example.Should().Contain(e => e.Label == "suppress-me", "example should be kept when not suppressed");
+
+            patientElement.Example.Should().Contain(e => e.Label == "keep-me", "unsuppressed example should always be retained");
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestMappingSuppressionWhenSnapIsEmpty(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestMappingSuppressionWhenSnapIsEmpty(TestCase testCase)
         {
             // Exercises the snap-empty branch for mappings: base snapshot has no mappings,
             // differential adds a mapping with a suppress extension.
-            var suppressExt = new Extension { Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT, Value = new FhirBoolean(true) };
-
             var baseProfile = new StructureDefinition
             {
                 Id = "base-no-mappings",
@@ -704,9 +810,13 @@ namespace Hl7.Fhir.Specification.Tests
                                 {
                                     Identity = "test-id",
                                     Map = "Patient",
-                                    Extension = [suppressExt.DeepCopy()]
+                                    Extension = testCase.CreateExtension()
                                 },
-                                new ElementDefinition.MappingComponent { Identity = "keep-id", Map = "Patient.keep" }
+                                new ElementDefinition.MappingComponent
+                                {
+                                    Identity = "keep-id", 
+                                    Map = "Patient.keep"
+                                }
                             ]
                         }
                     ]
@@ -715,32 +825,26 @@ namespace Hl7.Fhir.Specification.Tests
 
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(mockResolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
 
             var patientElement = derivedProfile.Snapshot!.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(patientElement);
 
-            if (respectSuppressExtension)
-            {
-                patientElement.Mapping.Should().NotContain(m => m.Identity == "test-id", "suppressed mapping should be filtered from new-item-in-snap-empty path");
-                patientElement.Mapping.Should().Contain(m => m.Identity == "keep-id", "unsuppressed mapping should be added");
-            }
+            if (testCase.IsSuppressed)
+                patientElement.Mapping.Should().NotContain(m => m.Identity == "test-id", "mapping should be filtered from new-item-in-snap-empty path when suppressed");
             else
-            {
-                patientElement.Mapping.Should().Contain(m => m.Identity == "test-id", "mapping should be kept when suppression is not respected");
-                patientElement.Mapping.Should().Contain(m => m.Identity == "keep-id", "unsuppressed mapping should always be added");
-            }
+                patientElement.Mapping.Should().Contain(m => m.Identity == "test-id", "mapping should be kept when not suppressed");
+
+            patientElement.Mapping.Should().Contain(m => m.Identity == "keep-id", "unsuppressed mapping should always be added");
         }
 
         [TestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async System.Threading.Tasks.Task TestPartialExampleSuppressionRetainsUnsuppressedItems(bool respectSuppressExtension)
+        [DynamicData(nameof(TestCases))]
+        public async System.Threading.Tasks.Task TestPartialExampleSuppressionRetainsUnsuppressedItems(TestCase testCase)
         {
             // Snap is empty; diff has two examples — one suppressed, one not.
             // With suppression on, only the unsuppressed item should appear in the snapshot.
-            var suppressExt = new Extension { Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT, Value = new FhirBoolean(true) };
 
             var baseProfile = new StructureDefinition
             {
@@ -788,9 +892,13 @@ namespace Hl7.Fhir.Specification.Tests
                                 {
                                     Label = "suppress-me",
                                     Value = new FhirString("suppressed"),
-                                    Extension = [suppressExt.DeepCopy()]
+                                    Extension = testCase.CreateExtension()
                                 },
-                                new ElementDefinition.ExampleComponent { Label = "keep-me", Value = new FhirString("kept") }
+                                new ElementDefinition.ExampleComponent
+                                {
+                                    Label = "keep-me", 
+                                    Value = new FhirString("kept")
+                                }
                             ]
                         }
                     ]
@@ -799,126 +907,18 @@ namespace Hl7.Fhir.Specification.Tests
 
             var mockResolver = new InMemoryResourceResolver();
             mockResolver.Add(baseProfile);
-            var generator = new SnapshotGenerator(mockResolver, new SnapshotGeneratorSettings { RespectSuppressExtension = respectSuppressExtension });
+            var generator = new SnapshotGenerator(mockResolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(derivedProfile);
 
             var patientElement = derivedProfile.Snapshot!.Element.FirstOrDefault(e => e.Path == "Patient");
             Assert.IsNotNull(patientElement);
 
-            if (respectSuppressExtension)
-            {
-                patientElement.Example.Should().NotContain(e => e.Label == "suppress-me", "suppressed example should be filtered out");
-                patientElement.Example.Should().Contain(e => e.Label == "keep-me", "unsuppressed example should be present");
-            }
+            if (testCase.IsSuppressed)
+                patientElement.Example.Should().NotContain(e => e.Label == "suppress-me", "example should be filtered out when suppressed");
             else
-            {
-                patientElement.Example.Should().Contain(e => e.Label == "suppress-me", "example should be kept when suppression is not respected");
-                patientElement.Example.Should().Contain(e => e.Label == "keep-me", "unsuppressed example should always be present");
-            }
-        }
+                patientElement.Example.Should().Contain(e => e.Label == "suppress-me", "example should be kept when not suppressed");
 
-        private StructureDefinition CreateProfileWithDuplicateSuppressedMappings()
-        {
-            var suppressExtension = new Extension
-            {
-                Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
-                Value = new FhirBoolean(true)
-            };
-
-            return new StructureDefinition
-            {
-                Id = "my-account-dup",
-                Url = "https://example.org/fhir/StructureDefinition/MyAccountDup",
-                Name = "MyAccountDup",
-                Status = PublicationStatus.Draft,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
-                Abstract = false,
-                Type = "Account",
-                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Account",
-                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-                Differential = new StructureDefinition.DifferentialComponent
-                {
-                    Element =
-                    [
-                        new ElementDefinition("Account")
-                        {
-                            Mapping =
-                            [
-                                new ElementDefinition.MappingComponent
-                                {
-                                    Identity = "rim",
-                                    Map = "Entity. Role, or Act",
-                                    Extension = [suppressExtension.DeepCopy()]
-                                },
-                                // Duplicate: same identity+map, also suppressed — would add same snap index twice
-                                new ElementDefinition.MappingComponent
-                                {
-                                    Identity = "rim",
-                                    Map = "Entity. Role, or Act",
-                                    Extension = [suppressExtension.DeepCopy()]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            };
-        }
-
-        private StructureDefinition CreateBaseProfileWithSuppressedMappings()
-        {
-            return new StructureDefinition
-            {
-                Id = "my-account",
-                Url = "https://example.org/fhir/StructureDefinition/MyAccount",
-                Name = "MyAccount",
-                Status = PublicationStatus.Draft,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                FhirVersion = EnumUtility.ParseLiteral<FHIRVersion>(ModelInfo.Version),
-                Abstract = false,
-                Type = "Account",
-                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Account",
-                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-                Differential = new StructureDefinition.DifferentialComponent
-                {
-                    Element =
-                    [
-                        new ElementDefinition("Account")
-                        {
-                            Mapping =
-                            [
-                                new ElementDefinition.MappingComponent
-                                {
-                                    Identity = "rim",
-                                    Map = "Entity. Role, or Act",
-                                    Extension =
-                                    [
-                                        new Extension
-                                        {
-                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
-                                            Value = new FhirBoolean(true)
-                                        }
-                                    ]
-                                },
-
-                                new ElementDefinition.MappingComponent
-                                {
-                                    Identity = "rim",
-                                    Map = "Account",
-                                    Extension =
-                                    [
-                                        new Extension
-                                        {
-                                            Url = SnapshotGeneratorExtensions.ELEMENTDEFINITION_SUPPRESS_EXT,
-                                            Value = new FhirBoolean(true)
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            };
+            patientElement.Example.Should().Contain(e => e.Label == "keep-me", "unsuppressed example should always be present");
         }
     }
 }
