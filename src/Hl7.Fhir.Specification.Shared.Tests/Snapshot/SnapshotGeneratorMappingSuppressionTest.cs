@@ -621,8 +621,9 @@ namespace Hl7.Fhir.Specification.Tests
             // Regression test: two diff entries with identical identity+map both suppressed would add
             // the same snapshot index to itemsToRemove twice, causing ArgumentOutOfRangeException
             // with List<int> but is safe with HashSet<int>.
-            var baseProfile = CreateProfileWithDuplicateSuppressedMappings(testCase);
             var resolver = new CachedResolver(ZipSource.CreateValidationSource());
+            var inheritedMapping = await FindInheritedAccountMappingAsync(resolver);
+            var baseProfile = CreateProfileWithDuplicateSuppressedMappings(testCase, inheritedMapping.Identity, inheritedMapping.Map);
 
             var generator = new SnapshotGenerator(resolver, testCase.CreateSnapshotGeneratorSettings());
             await generator.UpdateAsync(baseProfile);
@@ -630,7 +631,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var rootElement = baseProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Account");
             Assert.IsNotNull(rootElement, "Should have Account root element");
-            var mappings = rootElement.Mapping?.Where(m => m.Identity == "rim" && m.Map == "Entity. Role, or Act");
+            var mappings = rootElement.Mapping?.Where(m => m.Identity == inheritedMapping.Identity && m.Map == inheritedMapping.Map);
             
             if (testCase.IsSuppressed)
                 mappings.Should().HaveCount(0, "Mapping should not appear in snapshot when suppressed");
@@ -638,7 +639,19 @@ namespace Hl7.Fhir.Specification.Tests
                 mappings.Should().HaveCount(1, "Mapping should appear once in snapshot when not suppressed and duplicate is removed");
         }
 
-        private StructureDefinition CreateProfileWithDuplicateSuppressedMappings(TestCase testCase)
+        private async System.Threading.Tasks.Task<(string Identity, string Map)> FindInheritedAccountMappingAsync(CachedResolver resolver)
+        {
+            var account = await resolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Account");
+            var rootElement = account?.Snapshot?.Element?.FirstOrDefault(e => e.Path == "Account");
+            var inheritedMapping = rootElement?.Mapping?.FirstOrDefault(m => m.Identity == "rim");
+
+            Assert.IsNotNull(inheritedMapping, "Base Account snapshot should contain a rim mapping");
+            Assert.IsFalse(string.IsNullOrEmpty(inheritedMapping.Map), "Base Account rim mapping should have a map");
+
+            return (inheritedMapping.Identity, inheritedMapping.Map);
+        }
+
+        private StructureDefinition CreateProfileWithDuplicateSuppressedMappings(TestCase testCase, string identity, string map)
         {
             return new StructureDefinition
             {
@@ -662,15 +675,15 @@ namespace Hl7.Fhir.Specification.Tests
                             [
                                 new ElementDefinition.MappingComponent
                                 {
-                                    Identity = "rim",
-                                    Map = "Entity. Role, or Act",
+                                    Identity = identity,
+                                    Map = map,
                                     Extension = testCase.CreateExtension()
                                 },
                                 // Duplicate: same identity+map, also suppressed — would add same snap index twice
                                 new ElementDefinition.MappingComponent
                                 {
-                                    Identity = "rim",
-                                    Map = "Entity. Role, or Act",
+                                    Identity = identity,
+                                    Map = map,
                                     Extension = testCase.CreateExtension()
                                 }
                             ]
