@@ -1008,6 +1008,64 @@ public partial class FhirJsonDeserializationTests
         JsonAssert.AreSame("parsed", json, serialized);
     }
 
+    [TestMethod]
+    public void WrongCaseNames_DefaultMode_NoErrors()
+    {
+        // In the default (non-Strict) mode, case-sensitivity issues are filtered and should not surface.
+        var settings = new DeserializerSettings();
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        // Wrong-case property name
+        var json = """{"resourceType":"Patient","Id":"test"}""";
+        var result = deserializer.DeserializeResource(json);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+
+        // Wrong-case resource type
+        json = """{"resourceType":"patient","id":"test"}""";
+        result = deserializer.DeserializeResource(json);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    public void WrongCaseNames_BackwardsCompatibleMode_NoErrors()
+    {
+        // BackwardsCompatible mode must also suppress case-sensitivity errors.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.BackwardsCompatible);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var json = """{"resourceType":"patient","Id":"test"}""";
+        var result = deserializer.DeserializeResource(json);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    [DataRow("""{"resourceType":"Patient","Id":"test"}""", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_PropertyName")]
+    [DataRow("""{"resourceType":"patient","id":"test"}""", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ResourceType")]
+    [DataRow("""{"resourceType":"Patient","deceasedDatetime":"2022-05"}""", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    public void WrongCaseNames_StrictMode_ReportsError(string json, string expectedErrorCode)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var act = () => deserializer.DeserializeResource(json);
+        act.Should().Throw<DeserializationFailedException>()
+            .Which.Exceptions.Should().Contain(e => e.ErrorCode == expectedErrorCode);
+    }
+
+    [TestMethod]
+    // Also verifies that a multi-word type suffix like "CodeableConcept" does not produce a false positive.
+    [DataRow("""{"resourceType":"Patient","id":"test","deceasedDateTime":"2022-05"}""", DisplayName = "Correct_DateTimeChoice")]
+    [DataRow("""{"resourceType":"Observation","id":"test","status":"final","code":{"text":"t"},"valueCodeableConcept":{"text":"x"}}""", DisplayName = "Correct_CodeableConceptChoice")]
+    public void CorrectCaseNames_StrictMode_NoError(string json)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        // Should not throw: no JSON135 errors on correct casing.
+        var act = () => deserializer.DeserializeResource(json);
+        act.Should().NotThrow();
+    }
+
 // This test is only relevant when we have getter/setter codegen enabled. - See PropertyMapping's
 // Getter and Setter, which are also excluded by this preprocessor directive.
 #if USE_GETTER_SETTER_AND_CODEGEN

@@ -14,6 +14,10 @@ public enum DeserializationMode
     /// <summary>
     /// Do not ignore any errors (default behaviour for most implementations). Will report all errors.
     /// </summary>
+    /// <remarks>
+    /// The set of issues reported in Strict mode may expand across releases as new validations are added.
+    /// Do not rely on a fixed set of error codes being raised in this mode.
+    /// </remarks>
     Strict,
 
     /// <summary>

@@ -564,11 +564,14 @@ public class BaseFhirXmlDeserializer
     {
         var resourceType = reader.LocalName;
 
-        return inspector.FindClassMapping(resourceType) switch
-        {
-            null or { IsResource: false } => new ClassMapping(inspector, resourceType, typeof(DynamicResource)),
-            { } resourceMapping => resourceMapping,
-        };
+        var resourceMapping = inspector.FindClassMapping(resourceType);
+        if (resourceMapping is null or { IsResource: false })
+            return new ClassMapping(inspector, resourceType, typeof(DynamicResource));
+
+        if (!string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
+            state.Errors.Add(ERR.RESOURCE_TYPE_WRONG_CASE(reader, state.Path.GetInstancePath(), resourceType, resourceMapping.Name));
+
+        return resourceMapping;
     }
 
     /// <summary>
@@ -584,9 +587,11 @@ public class BaseFhirXmlDeserializer
         PocoDeserializerState state,
         XmlReader reader)
     {
-        var propertyMapping = parentMapping.FindMappedElementByName(elementName)
-                                    ?? parentMapping.FindMappedElementByChoiceName(elementName)
-                                    ?? getUnknownPropMapping();
+        var byNameMapping = parentMapping.FindMappedElementByName(elementName);
+        bool propCaseMismatch = byNameMapping is not null && !string.Equals(byNameMapping.Name, elementName, StringComparison.Ordinal);
+        var propertyMapping = byNameMapping
+                              ?? parentMapping.FindMappedElementByChoiceName(elementName)
+                              ?? getUnknownPropMapping();
 
         ClassMapping propertyValueMapping = propertyMapping.Choice switch
         {
@@ -602,6 +607,9 @@ public class BaseFhirXmlDeserializer
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported.")
         };
 
+        if (propCaseMismatch)
+            state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(reader, state.Path.GetInstancePath(), elementName, byNameMapping!.Name));
+
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 
         ClassMapping getChoiceClassMapping()
@@ -615,6 +623,12 @@ public class BaseFhirXmlDeserializer
                 if (foundChoiceMapping is null)
                 {
                     foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, getDynamicTypeMapping());
+                }
+                else
+                {
+                    var expectedSuffix = char.ToUpperInvariant(foundChoiceMapping.Name[0]) + foundChoiceMapping.Name[1..];
+                    if (!string.Equals(typeSuffix, expectedSuffix, StringComparison.Ordinal))
+                        state.Errors.Add(ERR.CHOICE_TYPE_SUFFIX_WRONG_CASE(reader, state.Path.GetInstancePath(), typeSuffix, expectedSuffix));
                 }
 
                 return foundChoiceMapping;

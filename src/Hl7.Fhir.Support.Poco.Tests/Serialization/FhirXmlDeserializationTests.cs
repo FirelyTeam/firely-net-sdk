@@ -682,4 +682,63 @@ public partial class FhirXmlDeserializationTests
         var serialized = serializer.SerializeToString(parsed);
         XmlAssert.AreSame("parsed", json, serialized);
     }
+
+    [TestMethod]
+    public void WrongCaseNames_DefaultMode_NoErrors()
+    {
+        // In the default (non-Strict) mode, case-sensitivity issues are filtered and should not surface.
+        var settings = new DeserializerSettings();
+        var deserializer = getTestDeserializer(settings);
+
+        var content = "<Patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></Patient>";
+        var reader = constructReader(content);
+        reader.Read();
+        var result = deserializer.DeserializeResource(reader);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    public void WrongCaseNames_BackwardsCompatibleMode_NoErrors()
+    {
+        // BackwardsCompatible mode must also suppress case-sensitivity errors.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.BackwardsCompatible);
+        var deserializer = getTestDeserializer(settings);
+
+        var content = "<patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></patient>";
+        var reader = constructReader(content);
+        reader.Read();
+        var result = deserializer.DeserializeResource(reader);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></Patient>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_PropertyName")]
+    [DataRow("<patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/></patient>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ResourceType")]
+    [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDatetime value=\"2022-05\"/></Patient>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    public void WrongCaseNames_StrictMode_ReportsError(string xmlContent, string expectedErrorCode)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var reader = constructReader(xmlContent);
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        _ = deserializer.DeserializeResourceInternal(reader, state);
+        state.Errors.Should().Contain(e => e.ErrorCode == expectedErrorCode);
+    }
+
+    [TestMethod]
+    // Also verifies that a multi-word type suffix like "CodeableConcept" does not produce a false positive.
+    [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/><deceasedDateTime value=\"2022-05\"/></Patient>", DisplayName = "Correct_DateTimeChoice")]
+    [DataRow("<Observation xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/><status value=\"final\"/><code><text value=\"t\"/></code><valueCodeableConcept><text value=\"x\"/></valueCodeableConcept></Observation>", DisplayName = "Correct_CodeableConceptChoice")]
+    public void CorrectCaseNames_StrictMode_NoError(string content)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var reader = constructReader(content);
+        reader.Read();
+        var state = new PocoDeserializerState();
+        _ = deserializer.DeserializeResourceInternal(reader, state);
+        state.Errors.Should().NotContain(e => e.ErrorCode == ERR.ELEMENT_NAME_WRONG_CASE_CODE);
+    }
 }

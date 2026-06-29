@@ -652,11 +652,14 @@ public class BaseFhirJsonDeserializer
         var resourceType = scanForResourceType(ref reader, state);
         if (resourceType is null) return makeUnnamedResourceMapping(state.Path.GetInstancePath());
 
-        return _inspector.FindClassMapping(resourceType) switch
-        {
-            null or { IsResource: false } => new ClassMapping(_inspector, resourceType, typeof(DynamicResource)),
-            { } resourceMapping => resourceMapping,
-        };
+        var resourceMapping = _inspector.FindClassMapping(resourceType);
+        if (resourceMapping is null or { IsResource: false })
+            return new ClassMapping(_inspector, resourceType, typeof(DynamicResource));
+
+        if (!string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
+            state.Errors.Add(ERR.RESOURCE_TYPE_WRONG_CASE(ref reader, state.Path.GetInstancePath(), resourceType, resourceMapping.Name));
+
+        return resourceMapping;
     }
 
     private const string UNNAMED_RESOURCE_NAME_PREFIX = "UnnamedResource_";
@@ -723,12 +726,16 @@ public class BaseFhirJsonDeserializer
         // separate "value" property in Json. If it does, treat it like an unknown property.
         bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && propNameWithoutUnderscore == "value";
 
+        bool caseMismatch = false;
         var propertyMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore)
                               ?? (isUnexpectedValueProperty ? null : lookupPropertyInDefinition())
                               ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
 
         // Simulate us moving into the element, so we get an error at the right location
         state.EnterElement(propertyMapping.Name);
+
+        if (caseMismatch)
+            state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(ref reader, state.Path.GetInstancePath(), propNameWithoutUnderscore, propertyMapping.Name));
 
         var propertyValueMapping = propertyMapping.Choice switch
         {
@@ -748,9 +755,17 @@ public class BaseFhirJsonDeserializer
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 
-        PropertyMapping? lookupPropertyInDefinition() =>
-            parentMapping.FindMappedElementByName(propNameWithoutUnderscore)
-            ?? parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
+        PropertyMapping? lookupPropertyInDefinition()
+        {
+            var byName = parentMapping.FindMappedElementByName(propNameWithoutUnderscore);
+            if (byName is not null)
+            {
+                if (!string.Equals(byName.Name, propNameWithoutUnderscore, StringComparison.Ordinal))
+                    caseMismatch = true;
+                return byName;
+            }
+            return parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
+        }
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {
@@ -764,6 +779,12 @@ public class BaseFhirJsonDeserializer
                 {
                     var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
                     foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, guessedDynamicType);
+                }
+                else
+                {
+                    var expectedSuffix = char.ToUpperInvariant(foundChoiceMapping.Name[0]) + foundChoiceMapping.Name[1..];
+                    if (!string.Equals(typeSuffix, expectedSuffix, StringComparison.Ordinal))
+                        state.Errors.Add(ERR.CHOICE_TYPE_SUFFIX_WRONG_CASE(ref r, state.Path.GetInstancePath(), typeSuffix, expectedSuffix));
                 }
 
                 return foundChoiceMapping;

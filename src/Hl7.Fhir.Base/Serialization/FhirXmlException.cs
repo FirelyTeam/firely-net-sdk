@@ -46,6 +46,7 @@ public class FhirXmlException(
     public const string ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE = "XML124";
     public const string ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE = "XML125";
     public const string STRING_SHOULD_NOT_HAVE_LEADING_OR_TRAILING_WHITESPACE = "XML126";
+    public const string ELEMENT_NAME_WRONG_CASE_CODE = "XML127";
 
     // Fatal errors - there is dataloss so processing should not continue.
     internal static FhirXmlException MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE, $"Encountered multiple elements in a resource container. Only a single resource is allowed.", "Multiple resources in contained", OO_Sev.Fatal);
@@ -80,7 +81,12 @@ public class FhirXmlException(
     
     // XML strings do not accept leading or trailing whitespaces and will become trimmed during parsing
     internal static FhirXmlException STRING_SHOULD_NOT_HAVE_LEADING_TRAILING_WHITESPACE(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, STRING_SHOULD_NOT_HAVE_LEADING_OR_TRAILING_WHITESPACE, $"Attribute '{attributeName}' should not contain leading or trailing whitespace.", "Invalid whitespace", OO_Sev.Warning);
-    
+
+    // Data is still captured correctly using the case-insensitive lookup, but the name violates the spec.
+    internal static FhirXmlException ELEMENT_NAME_WRONG_CASE(XmlReader reader, string instancePath, string given, string expected) => Initialize(reader, instancePath, ELEMENT_NAME_WRONG_CASE_CODE, $"Element '{given}' has incorrect casing, expected '{expected}'.", "Element name has wrong case", OO_Sev.Error);
+    internal static FhirXmlException CHOICE_TYPE_SUFFIX_WRONG_CASE(XmlReader reader, string instancePath, string given, string expected) => Initialize(reader, instancePath, ELEMENT_NAME_WRONG_CASE_CODE, $"Choice type suffix '{given}' has incorrect casing, expected '{expected}'.", "Choice type suffix has wrong case", OO_Sev.Error);
+    internal static FhirXmlException RESOURCE_TYPE_WRONG_CASE(XmlReader reader, string instancePath, string given, string expected) => Initialize(reader, instancePath, ELEMENT_NAME_WRONG_CASE_CODE, $"Resource type '{given}' has incorrect casing, expected '{expected}'.", "Resource type has wrong case", OO_Sev.Error);
+
     /// <summary>
     /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer
     /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture

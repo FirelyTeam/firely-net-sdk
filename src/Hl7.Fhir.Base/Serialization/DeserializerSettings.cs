@@ -41,7 +41,8 @@ public record DeserializerSettings
         init => _exceptionFilter = value;
     }
 
-    private readonly Predicate<CodedException>? _exceptionFilter;
+    private readonly Predicate<CodedException>? _exceptionFilter
+        = CodedExceptionFilters.FilterCaseSensitivityIssues;
 
     /// <summary>
     /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exception
@@ -120,12 +121,14 @@ public record DeserializerSettings
             },
             DeserializationMode.BackwardsCompatible => this with
             {
-                ExceptionFilter = CodedExceptionFilters.FilterBackwardsCompatibilityIssues,
+                ExceptionFilter = CodedExceptionFilters.FilterBackwardsCompatibilityIssues
+                                  .Or(CodedExceptionFilters.FilterCaseSensitivityIssues),
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Recoverable => this with
             {
-                ExceptionFilter = CodedExceptionFilters.FilterRecoverableIssues,
+                ExceptionFilter = CodedExceptionFilters.FilterRecoverableIssues
+                                  .Or(CodedExceptionFilters.FilterCaseSensitivityIssues),
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.SyntaxOnly => this with
@@ -136,7 +139,8 @@ public record DeserializerSettings
             },
             DeserializationMode.NoOverflow => this with
             {
-                ExceptionFilter = CodedExceptionFilters.FilterNoOverflowIssues,
+                ExceptionFilter = CodedExceptionFilters.FilterNoOverflowIssues
+                                  .Or(CodedExceptionFilters.FilterCaseSensitivityIssues),
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Ostrich => this with

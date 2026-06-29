@@ -39,6 +39,14 @@ public static class CodedExceptionFilters
               FhirXmlException.BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES.Contains(ce.ErrorCode);
 
     /// <summary>
+    /// A predicate that returns true if a <see cref="CodedException"/> is a case-sensitivity issue.
+    /// These issues are only reported in <see cref="DeserializationMode.Strict"/> mode.
+    /// </summary>
+    internal static readonly Predicate<CodedException> FilterCaseSensitivityIssues =
+        new[] { FhirJsonException.ELEMENT_NAME_WRONG_CASE_CODE, FhirXmlException.ELEMENT_NAME_WRONG_CASE_CODE }
+            .IsInList();
+
+    /// <summary>
     /// Combines two predicates for a <see cref="CodedException"/> with a logical AND.
     /// </summary>
     [return: NotNullIfNotNull(nameof(a))]
