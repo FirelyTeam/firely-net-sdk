@@ -37,7 +37,7 @@ public static class PocoSerializationExtensions
     /// <param name="instance">The instance to serialize.</param>
     /// <param name="pretty">Formats and indents the serialized Json.</param>
     public static string ToXml(this Base instance, bool pretty = false) =>
-        FhirXmlSerializer.Default.SerializeToString(instance);
+        FhirXmlSerializer.Default.SerializeToString(instance, pretty);
 
     // 20241217
     [Obsolete("We're cleaning up the POCO API surface, please use FhirJsonSerializer.Default.SerializeToBytes() instead.")]
@@ -59,7 +59,7 @@ public static class PocoSerializationExtensions
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public static async Tasks.Task<string> ToXmlAsync(this Base source, bool pretty = false) =>
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-        FhirXmlSerializer.Default.SerializeToString(source);
+        FhirXmlSerializer.Default.SerializeToString(source, pretty);
 
     // 20241217
     [Obsolete("We're cleaning up the POCO API surface, please use FhirXmlSerializer.Default.SerializeToBytes() instead.")]
