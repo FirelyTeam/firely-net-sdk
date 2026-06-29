@@ -113,9 +113,9 @@ public class ModelInspectorMembersTest
         ClassMapping.TryCreate(ModelInspector.Base, typeof(Canonical), out var canonicalMapping);
         canonicalMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("System.String");
 
-        // ConcactPoint.System - a Code<T> -> Code
+        // ContactPoint.System - a Code<T>
         ClassMapping.TryCreate(ModelInspector.Base, typeof(ContactPoint), out var contactPointMapping);
-        contactPointMapping.FindMappedElementByName("system").PropertyTypeMapping.Name.Should().Be("code");
+        contactPointMapping.FindMappedElementByName("system").PropertyTypeMapping.Name.Should().Be("codeOfT<Hl7.Fhir.Model.ContactPoint+ContactPointSystem>");
 
         // ContactPoint.Value - a FhirString
         contactPointMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("string");

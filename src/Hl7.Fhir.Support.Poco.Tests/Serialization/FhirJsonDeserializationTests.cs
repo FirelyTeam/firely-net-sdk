@@ -446,6 +446,26 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
+    public void TestDeserializeCodeOfTIntoPoco()
+    {
+        const string json = """
+                            {
+                                "resourceType": "Observation",
+                                "status": "final",
+                                "code": { "text": "heart rate" }
+                            }
+                            """;
+
+        var parsed = FhirJsonDeserializer.DEFAULT.DeserializeResource(json)
+            .Should().BeOfType<Observation>().Subject;
+
+        // Observation.StatusElement is a Code<ObservationStatus>
+        parsed.StatusElement.Should().BeOfType<Code<ObservationStatus>>();
+        parsed.StatusElement!.JsonValue.Should().Be("final");
+        parsed.Status.Should().Be(ObservationStatus.Final);
+    }
+
+    [TestMethod]
     public void TestBase64Parsing()
     {
         var attachment = deserializeAttachment(new FhirJsonConverterOptions());

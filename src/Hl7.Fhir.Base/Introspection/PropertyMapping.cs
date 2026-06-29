@@ -405,9 +405,11 @@ public class PropertyMapping : IElementDefinitionSummary
         if (typeof(Enum).IsAssignableFrom(implementingType))
             return typeof(Enum);
 
+        // To ensure CreateInstance indeed creates pocos that fit the expected property values, we need to return the
+        // implementing type, so PropertyMapping.PropertyTypeMapping will link to the exact ClassMapping needed
         // For all Code<T>, we use the mapping for Coding
-        if (implementingType.IsConstructedGenericType && implementingType.GetGenericTypeDefinition() == typeof(Code<>))
-            return typeof(Code);
+        // if (implementingType.IsConstructedGenericType && implementingType.GetGenericTypeDefinition() == typeof(Code<>))
+        //     return typeof(Code);
 
         // Otherwise, we simply use the mapping for the actual implementing type.
         return implementingType;
