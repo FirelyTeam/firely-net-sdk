@@ -590,8 +590,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     else
                     {
-                        // If snap is exactly equal to diff we still need to check for suppress extensions
-                        result = snap.Where(x => !x.HasSuppressExtension()).Select(x => x.DeepCopy()).ToList();
+                        // If snap is exactly equal to diff we still need to check for suppress extensions.
+                        // In mergeCollection this code branch would be equivalent to: result = snap.
+                        // So it is not necessary to make copies of the elements.
+                        result = snap.Where(x => !x.HasSuppressExtension()).ToList();
                     }
                 }
                 return result;
@@ -601,9 +603,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Inherit all mapping definitions from a parent resource unless someone added a suppress extension to it
             List<ElementDefinition.MappingComponent> mergeMappings(List<ElementDefinition.MappingComponent> snap, List<ElementDefinition.MappingComponent> diff)
             {
-                return _generator.Settings.RespectSuppressExtension 
-                    ? mergeCollectionWithSuppression(snap, diff, (s, d) => IsEqualString(s.Identity, d.Identity) && IsEqualString(s.Map, d.Map)) 
-                    : mergeCollection(snap, diff, (s, d) => IsEqualString(s.Identity, d.Identity) && IsEqualString(s.Map, d.Map));
+                return _generator.Settings.RespectSuppressExtension
+                    ? mergeCollectionWithSuppression(snap, diff, matchMappings)
+                    : mergeCollection(snap, diff, matchMappings);
             }
 
             // Custom merge logic for examples that respects the suppress extension
@@ -611,8 +613,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             List<ElementDefinition.ExampleComponent> mergeExamples(List<ElementDefinition.ExampleComponent> snap, List<ElementDefinition.ExampleComponent> diff)
             {
                 return _generator.Settings.RespectSuppressExtension
-                    ? mergeCollectionWithSuppression(snap, diff, (s, d) => IsEqualString(s.Label, d.Label))
-                    : mergeCollection(snap, diff, (s, d) => IsEqualString(s.Label, d.Label));
+                    ? mergeCollectionWithSuppression(snap, diff, matchExamples)
+                    : mergeCollection(snap, diff, matchExamples);
             }
 
             // Merge two collections
@@ -859,8 +861,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return result;
             }
 
-
-
             static string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
                 // Note: Element.ElementId is a simple string property (not Element)
@@ -915,7 +915,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             static bool matchTypeCodes(ElementDefinition.TypeRefComponent x, ElementDefinition.TypeRefComponent y)
                 => !(x is null) && !(y is null) && IsEqualType(x.Code, y.Code);
 
-            static bool matchCanonicals(Canonical x, Canonical y) => matchStringValues(x, y);
+            static bool matchMappings(ElementDefinition.MappingComponent x, ElementDefinition.MappingComponent y)
+            {
+                return matchStringValues(x.IdentityElement, y.IdentityElement) &&
+                       matchStringValues(x.MapElement, y.MapElement);
+            }
+
+            static bool matchExamples(ElementDefinition.ExampleComponent x, ElementDefinition.ExampleComponent y)
+            {
+                return matchStringValues(x.LabelElement, y.LabelElement);
+            }
 
             static bool matchStringValues<T>(T x, T y) where T : PrimitiveType, IValue<string>
                 => !(x is null) && !(y is null) && IsEqualString(x.Value, y.Value);
