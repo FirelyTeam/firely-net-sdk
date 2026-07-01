@@ -121,14 +121,12 @@ public record DeserializerSettings
             },
             DeserializationMode.BackwardsCompatible => this with
             {
-                ExceptionFilter = CodedExceptionFilters.FilterBackwardsCompatibilityIssues
-                                  .Or(CodedExceptionFilters.FilterCaseSensitivityIssues),
+                ExceptionFilter = CodedExceptionFilters.FilterBackwardsCompatibilityIssues,
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Recoverable => this with
             {
-                ExceptionFilter = CodedExceptionFilters.FilterRecoverableIssues
-                                  .Or(CodedExceptionFilters.FilterCaseSensitivityIssues),
+                ExceptionFilter = CodedExceptionFilters.FilterRecoverableIssues,
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.SyntaxOnly => this with
@@ -139,8 +137,7 @@ public record DeserializerSettings
             },
             DeserializationMode.NoOverflow => this with
             {
-                ExceptionFilter = CodedExceptionFilters.FilterNoOverflowIssues
-                                  .Or(CodedExceptionFilters.FilterCaseSensitivityIssues),
+                ExceptionFilter = CodedExceptionFilters.FilterNoOverflowIssues,
                 NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Ostrich => this with

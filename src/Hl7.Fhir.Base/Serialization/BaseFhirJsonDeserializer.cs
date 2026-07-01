@@ -726,16 +726,35 @@ public class BaseFhirJsonDeserializer
         // separate "value" property in Json. If it does, treat it like an unknown property.
         bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && propNameWithoutUnderscore == "value";
 
-        bool caseMismatch = false;
-        var propertyMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore)
-                              ?? (isUnexpectedValueProperty ? null : lookupPropertyInDefinition())
-                              ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
+        var localMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore);
+        PropertyMapping? byNameMapping = null;
+        PropertyMapping? byChoiceMapping = null;
+        string? caseMismatchExpectedName = null;
+
+        if (localMapping is null && !isUnexpectedValueProperty)
+        {
+            byNameMapping = parentMapping.FindMappedElementByName(propNameWithoutUnderscore);
+            if (byNameMapping is not null && !string.Equals(byNameMapping.Name, propNameWithoutUnderscore, StringComparison.Ordinal))
+                caseMismatchExpectedName = byNameMapping.Name;
+            else
+            {
+                byChoiceMapping = parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore, ignoreCase: true);
+                if (byChoiceMapping is not null &&
+                    !string.Equals(byChoiceMapping.Name, propNameWithoutUnderscore[..byChoiceMapping.Name.Length], StringComparison.Ordinal))
+                    caseMismatchExpectedName = byChoiceMapping.Name + propNameWithoutUnderscore[byChoiceMapping.Name.Length..];
+            }
+        }
+
+        var propertyMapping = localMapping
+            ?? byNameMapping
+            ?? byChoiceMapping
+            ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
 
         // Simulate us moving into the element, so we get an error at the right location
         state.EnterElement(propertyMapping.Name);
 
-        if (caseMismatch)
-            state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(ref reader, state.Path.GetInstancePath(), propNameWithoutUnderscore, propertyMapping.Name));
+        if (caseMismatchExpectedName is not null)
+            state.Errors.Add(ERR.PROPERTY_NAME_WRONG_CASE(ref reader, state.Path.GetInstancePath(), propNameWithoutUnderscore, caseMismatchExpectedName));
 
         var propertyValueMapping = propertyMapping.Choice switch
         {
@@ -754,18 +773,6 @@ public class BaseFhirJsonDeserializer
         state.ExitElement();
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
-
-        PropertyMapping? lookupPropertyInDefinition()
-        {
-            var byName = parentMapping.FindMappedElementByName(propNameWithoutUnderscore);
-            if (byName is not null)
-            {
-                if (!string.Equals(byName.Name, propNameWithoutUnderscore, StringComparison.Ordinal))
-                    caseMismatch = true;
-                return byName;
-            }
-            return parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
-        }
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {

@@ -1039,9 +1039,10 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    [DataRow("""{"resourceType":"Patient","Id":"test"}""", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_PropertyName")]
-    [DataRow("""{"resourceType":"patient","id":"test"}""", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ResourceType")]
-    [DataRow("""{"resourceType":"Patient","deceasedDatetime":"2022-05"}""", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    [DataRow("""{"resourceType":"Patient","Id":"test"}""", ERR.PROPERTY_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_PropertyName")]
+    [DataRow("""{"resourceType":"patient","id":"test"}""", ERR.RESOURCE_TYPE_WRONG_CASE_CODE, DisplayName = "WrongCase_ResourceType")]
+    [DataRow("""{"resourceType":"Patient","deceasedDatetime":"2022-05"}""", ERR.PROPERTY_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    [DataRow("""{"resourceType":"Observation","status":"final","code":{"text":"t"},"ValueString":"hello"}""", ERR.PROPERTY_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoicePrefix")]
     public void WrongCaseNames_StrictMode_ReportsError(string json, string expectedErrorCode)
     {
         var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);

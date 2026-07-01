@@ -588,9 +588,24 @@ public class BaseFhirXmlDeserializer
         XmlReader reader)
     {
         var byNameMapping = parentMapping.FindMappedElementByName(elementName);
-        bool propCaseMismatch = byNameMapping is not null && !string.Equals(byNameMapping.Name, elementName, StringComparison.Ordinal);
+        string? caseMismatchExpectedName = null;
+
+        PropertyMapping? byChoiceMapping = null;
+        if (byNameMapping is not null)
+        {
+            if (!string.Equals(byNameMapping.Name, elementName, StringComparison.Ordinal))
+                caseMismatchExpectedName = byNameMapping.Name;
+        }
+        else
+        {
+            byChoiceMapping = parentMapping.FindMappedElementByChoiceName(elementName, ignoreCase: true);
+            if (byChoiceMapping is not null &&
+                !string.Equals(byChoiceMapping.Name, elementName[..byChoiceMapping.Name.Length], StringComparison.Ordinal))
+                caseMismatchExpectedName = byChoiceMapping.Name + elementName[byChoiceMapping.Name.Length..];
+        }
+
         var propertyMapping = byNameMapping
-                              ?? parentMapping.FindMappedElementByChoiceName(elementName)
+                              ?? byChoiceMapping
                               ?? getUnknownPropMapping();
 
         ClassMapping propertyValueMapping = propertyMapping.Choice switch
@@ -607,8 +622,8 @@ public class BaseFhirXmlDeserializer
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported.")
         };
 
-        if (propCaseMismatch)
-            state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(reader, state.Path.GetInstancePath(), elementName, byNameMapping!.Name));
+        if (caseMismatchExpectedName is not null)
+            state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(reader, state.Path.GetInstancePath(), elementName, caseMismatchExpectedName));
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 

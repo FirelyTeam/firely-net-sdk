@@ -715,6 +715,7 @@ public partial class FhirXmlDeserializationTests
     [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></Patient>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_PropertyName")]
     [DataRow("<patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/></patient>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ResourceType")]
     [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDatetime value=\"2022-05\"/></Patient>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    [DataRow("<Observation xmlns=\"http://hl7.org/fhir\"><status value=\"final\"/><code><text value=\"t\"/></code><ValueString value=\"hello\"/></Observation>", ERR.ELEMENT_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoicePrefix")]
     public void WrongCaseNames_StrictMode_ReportsError(string xmlContent, string expectedErrorCode)
     {
         var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);

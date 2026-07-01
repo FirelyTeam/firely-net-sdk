@@ -243,7 +243,7 @@ public class ClassMapping(
     /// so for where there is no suffix. In this case, however, <see cref="FindMappedElementByName(string)"/>
     /// is faster.
     /// </remarks>
-    public PropertyMapping? FindMappedElementByChoiceName(string name)
+    public PropertyMapping? FindMappedElementByChoiceName(string name, bool ignoreCase = false)
     {
         if (name == null) throw Error.ArgumentNull(nameof(name));
 
@@ -251,8 +251,9 @@ public class ClassMapping(
         if (FindMappedElementByName(name) is { } pm) return pm;
 
         // Now, check the choice elements for a match.
+        var comparisonType = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
         var matches = PropertyMappingsInternal.ChoiceProperties
-            .Where(m => name.StartsWith(m.Name)).ToList();
+            .Where(m => name.StartsWith(m.Name, comparisonType)).ToList();
 
         // Loop through possible matches and return the longest match.
         if (matches.Any())
