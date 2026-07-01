@@ -739,9 +739,15 @@ public class BaseFhirJsonDeserializer
             else
             {
                 byChoiceMapping = parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore, ignoreCase: true);
-                if (byChoiceMapping is not null &&
-                    !string.Equals(byChoiceMapping.Name, propNameWithoutUnderscore[..byChoiceMapping.Name.Length], StringComparison.Ordinal))
-                    caseMismatchExpectedName = byChoiceMapping.Name + propNameWithoutUnderscore[byChoiceMapping.Name.Length..];
+                if (byChoiceMapping is not null)
+                {
+                    var actualPrefix = propNameWithoutUnderscore[..byChoiceMapping.Name.Length];
+                    if (!string.Equals(byChoiceMapping.Name, actualPrefix, StringComparison.Ordinal))
+                    {
+                        var actualSuffix = propNameWithoutUnderscore[byChoiceMapping.Name.Length..];
+                        caseMismatchExpectedName = byChoiceMapping.Name + normalizeChoiceSuffix(actualSuffix);
+                    }
+                }
             }
         }
 
@@ -773,6 +779,13 @@ public class BaseFhirJsonDeserializer
         state.ExitElement();
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
+
+        // Resolves the suffix to its actual datatype mapping (case-insensitively) so the casing
+        // suggested in a wrong-case-prefix error is correct even when the suffix is also wrong-case.
+        string normalizeChoiceSuffix(string suffix) =>
+            parentMapping.Inspector.FindClassMapping(suffix) is { } typeMapping
+                ? char.ToUpperInvariant(typeMapping.Name[0]) + typeMapping.Name[1..]
+                : suffix;
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {

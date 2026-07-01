@@ -599,9 +599,15 @@ public class BaseFhirXmlDeserializer
         else
         {
             byChoiceMapping = parentMapping.FindMappedElementByChoiceName(elementName, ignoreCase: true);
-            if (byChoiceMapping is not null &&
-                !string.Equals(byChoiceMapping.Name, elementName[..byChoiceMapping.Name.Length], StringComparison.Ordinal))
-                caseMismatchExpectedName = byChoiceMapping.Name + elementName[byChoiceMapping.Name.Length..];
+            if (byChoiceMapping is not null)
+            {
+                var actualPrefix = elementName[..byChoiceMapping.Name.Length];
+                if (!string.Equals(byChoiceMapping.Name, actualPrefix, StringComparison.Ordinal))
+                {
+                    var actualSuffix = elementName[byChoiceMapping.Name.Length..];
+                    caseMismatchExpectedName = byChoiceMapping.Name + normalizeChoiceSuffix(actualSuffix);
+                }
+            }
         }
 
         var propertyMapping = byNameMapping
@@ -626,6 +632,13 @@ public class BaseFhirXmlDeserializer
             state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(reader, state.Path.GetInstancePath(), elementName, caseMismatchExpectedName));
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
+
+        // Resolves the suffix to its actual datatype mapping (case-insensitively) so the casing
+        // suggested in a wrong-case-prefix error is correct even when the suffix is also wrong-case.
+        string normalizeChoiceSuffix(string suffix) =>
+            parentMapping.Inspector.FindClassMapping(suffix) is { } typeMapping
+                ? char.ToUpperInvariant(typeMapping.Name[0]) + typeMapping.Name[1..]
+                : suffix;
 
         ClassMapping getChoiceClassMapping()
         {

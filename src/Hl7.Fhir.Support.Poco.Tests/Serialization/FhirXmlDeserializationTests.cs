@@ -729,6 +729,24 @@ public partial class FhirXmlDeserializationTests
     }
 
     [TestMethod]
+    public void WrongCase_ChoicePrefixAndSuffix_SuggestsFullyCorrectedName()
+    {
+        // When both the choice prefix ("Value") and the type suffix ("Datetime") have wrong casing,
+        // the suggested name in the error message should be fully corrected ("valueDateTime"), not
+        // just have its prefix fixed ("valueDatetime").
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var content = "<Observation xmlns=\"http://hl7.org/fhir\"><status value=\"final\"/><code><text value=\"t\"/></code><ValueDatetime value=\"2022-05\"/></Observation>";
+        var reader = constructReader(content);
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        _ = deserializer.DeserializeResourceInternal(reader, state);
+        state.Errors.Should().Contain(e => e.ErrorCode == ERR.ELEMENT_NAME_WRONG_CASE_CODE
+                                            && e.Message.Contains("valueDateTime"));
+    }
+
+    [TestMethod]
     // Also verifies that a multi-word type suffix like "CodeableConcept" does not produce a false positive.
     [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/><deceasedDateTime value=\"2022-05\"/></Patient>", DisplayName = "Correct_DateTimeChoice")]
     [DataRow("<Observation xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/><status value=\"final\"/><code><text value=\"t\"/></code><valueCodeableConcept><text value=\"x\"/></valueCodeableConcept></Observation>", DisplayName = "Correct_CodeableConceptChoice")]

@@ -1054,6 +1054,22 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
+    public void WrongCase_ChoicePrefixAndSuffix_SuggestsFullyCorrectedName()
+    {
+        // When both the choice prefix ("Value") and the type suffix ("Datetime") have wrong casing,
+        // the suggested name in the error message should be fully corrected ("valueDateTime"), not
+        // just have its prefix fixed ("valueDatetime").
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var json = """{"resourceType":"Observation","status":"final","code":{"text":"t"},"ValueDatetime":"2022-05"}""";
+        var act = () => deserializer.DeserializeResource(json);
+        act.Should().Throw<DeserializationFailedException>()
+            .Which.Exceptions.Should().Contain(e => e.ErrorCode == ERR.PROPERTY_NAME_WRONG_CASE_CODE
+                                                     && e.Message.Contains("valueDateTime"));
+    }
+
+    [TestMethod]
     // Also verifies that a multi-word type suffix like "CodeableConcept" does not produce a false positive.
     [DataRow("""{"resourceType":"Patient","id":"test","deceasedDateTime":"2022-05"}""", DisplayName = "Correct_DateTimeChoice")]
     [DataRow("""{"resourceType":"Observation","id":"test","status":"final","code":{"text":"t"},"valueCodeableConcept":{"text":"x"}}""", DisplayName = "Correct_CodeableConceptChoice")]
