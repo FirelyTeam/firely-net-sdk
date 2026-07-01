@@ -168,3 +168,22 @@ build/runbuild.txt
 dist/
 
 *.received.*
+
+
+# JetBrains Rider
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/httpRequests
+.idea/sonarlint/
+.idea/sonarlint.xml
+.idea/replstate.xml
+*.iws
+*.DotSettings.user
