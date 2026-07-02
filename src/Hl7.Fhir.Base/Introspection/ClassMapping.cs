@@ -243,7 +243,19 @@ public class ClassMapping(
     /// so for where there is no suffix. In this case, however, <see cref="FindMappedElementByName(string)"/>
     /// is faster.
     /// </remarks>
-    public PropertyMapping? FindMappedElementByChoiceName(string name, bool ignoreCase = false)
+    public PropertyMapping? FindMappedElementByChoiceName(string name) => FindMappedElementByChoiceName(name, ignoreCase: false);
+
+    /// <summary>
+    /// Returns the mapping for an element of this class by a name that
+    /// might be suffixed by a type name (e.g. for choice elements).
+    /// </summary>
+    /// <param name="name">The (possibly suffixed) name to look up.</param>
+    /// <param name="ignoreCase">If <c>true</c>, the choice prefix is matched case-insensitively.</param>
+    /// <remarks>Will also return properties for which the name is exactly the same,
+    /// so for where there is no suffix. In this case, however, <see cref="FindMappedElementByName(string)"/>
+    /// is faster.
+    /// </remarks>
+    public PropertyMapping? FindMappedElementByChoiceName(string name, bool ignoreCase)
     {
         if (name == null) throw Error.ArgumentNull(nameof(name));
 
