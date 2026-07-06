@@ -50,8 +50,6 @@ public class FhirJsonException(
     public const string UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE_CODE = "JSON132";
     public const string USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE = "JSON133";
     public const string UNDERSCORE_SHOULD_BE_OBJECT_CODE = "JSON134";
-    public const string PROPERTY_NAME_WRONG_CASE_CODE = "JSON135";
-    public const string RESOURCE_TYPE_WRONG_CASE_CODE = "JSON136";
 
     // Fatal errors - there is dataloss so processing should not continue.
     internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", "Duplicate property", OO_Sev.Fatal);
@@ -87,11 +85,6 @@ public class FhirJsonException(
 
     // This will use a DynamicXXX, so no data loss.
     internal static FhirJsonException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, $"Choice element '{elementName}' should be suffixed by a type.", "Expected type suffix", OO_Sev.Error);
-
-    // Data is still captured correctly using the case-insensitive lookup, but the name violates the spec.
-    internal static FhirJsonException PROPERTY_NAME_WRONG_CASE(ref Utf8JsonReader reader, string instancePath, string given, string expected) => Initialize(ref reader, instancePath, PROPERTY_NAME_WRONG_CASE_CODE, $"Property '{given}' has incorrect casing, expected '{expected}'.", "Property has wrong case", OO_Sev.Error);
-    internal static FhirJsonException CHOICE_TYPE_SUFFIX_WRONG_CASE(ref Utf8JsonReader reader, string instancePath, string given, string expected) => Initialize(ref reader, instancePath, PROPERTY_NAME_WRONG_CASE_CODE, $"Property type suffix '{given}' has incorrect casing, expected '{expected}'.", "Choice type suffix has wrong case", OO_Sev.Error);
-    internal static FhirJsonException RESOURCE_TYPE_WRONG_CASE(ref Utf8JsonReader reader, string instancePath, string given, string expected) => Initialize(ref reader, instancePath, RESOURCE_TYPE_WRONG_CASE_CODE, $"Resource type '{given}' has incorrect casing, expected '{expected}'.", "Resource type has wrong case", OO_Sev.Error);
 
     // Will store the data as a DynamicResource
     internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType valueToken, string value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found token {valueToken} with value {value}.", "Invalid resource type", OO_Sev.Error);

@@ -19,12 +19,15 @@ public static class CodedExceptionFilters
     /// A predicate that returns true if a <see cref="CodedException"/> is a case-sensitivity issue.
     /// These issues are only reported in <see cref="DeserializationMode.Strict"/> mode.
     /// </summary>
+    /// <remarks>Whether a filter ignores or reports these issues does not only determine whether they
+    /// are returned to the caller: the deserializers also use it to decide whether a wrong-cased name is
+    /// still bound to the element it (nearly) matches, see
+    /// <see cref="DeserializerSettings.UsesStrictCaseBinding"/>.</remarks>
     internal static readonly Predicate<CodedException> FilterCaseSensitivityIssues =
         new[]
         {
-            FhirJsonException.PROPERTY_NAME_WRONG_CASE_CODE,
-            FhirJsonException.RESOURCE_TYPE_WRONG_CASE_CODE,
-            FhirXmlException.ELEMENT_NAME_WRONG_CASE_CODE
+            CodedValidationException.WRONG_CASED_ELEMENT_CODE,
+            CodedValidationException.WRONG_CASED_RESOURCE_TYPE_CODE
         }.IsInList();
 
     /// <summary>
@@ -33,8 +36,7 @@ public static class CodedExceptionFilters
     /// See <see cref="DeserializationMode.Recoverable"/>.
     /// </summary>
     public static readonly Predicate<CodedException> FilterRecoverableIssues =
-        ce => (ce is ExtendedCodedException ece && ece.IssueSeverity != OperationOutcome.IssueSeverity.Fatal)
-              || FilterCaseSensitivityIssues(ce);
+        ce => ce is ExtendedCodedException ece && ece.IssueSeverity != OperationOutcome.IssueSeverity.Fatal;
 
     /// <summary>
     /// A predicate that returns true if an error recoverable and also does not require

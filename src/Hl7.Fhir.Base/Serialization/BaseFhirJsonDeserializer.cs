@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
+using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
 #nullable enable
@@ -55,6 +56,20 @@ public class BaseFhirJsonDeserializer
     public DeserializerSettings Settings { get; set; }
 
     private readonly ModelInspector _inspector;
+
+    // Caches DeserializerSettings.UsesStrictCaseBinding(), which is invoked for every element, per
+    // settings instance. The settings' relevant properties are init-only, so as long as the same
+    // instance is assigned to Settings, the cached answer remains valid.
+    private (DeserializerSettings settings, bool strict)? _caseBindingCache;
+
+    private bool usesStrictCaseBinding()
+    {
+        if (_caseBindingCache is { } cached && ReferenceEquals(cached.settings, Settings)) return cached.strict;
+
+        var strict = Settings.UsesStrictCaseBinding();
+        _caseBindingCache = (Settings, strict);
+        return strict;
+    }
 
     /// <summary>
     /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
@@ -253,12 +268,14 @@ public class BaseFhirJsonDeserializer
         var result = deserializeRhs(existingValue, ref reader, propertyName, metadata, state);
         target.SetValue(elementName, result);
 
-        doPropertyValidation(target, result, metadata, state, line, pos);
+        // Pass the name as encountered in the serialized form (without the '_' prefix), so the
+        // validator can also detect names that only differ from the defined name by casing.
+        doPropertyValidation(target, usesUnderscore ? propertyName[1..] : propertyName, result, metadata, state, line, pos);
 
         state.ExitElement();
     }
 
-    private void doPropertyValidation(Base target, object propertyValue, PropertyValueMapping metadata, PocoDeserializerState state, long line, long pos)
+    private void doPropertyValidation(Base target, string serializedName, object propertyValue, PropertyValueMapping metadata, PocoDeserializerState state, long line, long pos)
     {
         if (Settings.Validator is null) return;
 
@@ -283,7 +300,7 @@ public class BaseFhirJsonDeserializer
         void runPropertyValidation()
         {
             var c = context;
-            state.Errors.Add(Settings.Validator.ValidateProperty(metadata.PropertyMapping.Name, propertyValue, metadata.PropertyMapping,
+            state.Errors.Add(Settings.Validator.ValidateProperty(serializedName, propertyValue, metadata.PropertyMapping,
                 c));
         }
     }
@@ -656,8 +673,14 @@ public class BaseFhirJsonDeserializer
         if (resourceMapping is null or { IsResource: false })
             return new ClassMapping(_inspector, resourceType, typeof(DynamicResource));
 
-        if (!string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
-            state.Errors.Add(ERR.RESOURCE_TYPE_WRONG_CASE(ref reader, state.Path.GetInstancePath(), resourceType, resourceMapping.Name));
+        // The inspector finds resource types case-insensitively, so the data can still be parsed
+        // into the correct POCO, but a wrong-cased resource type name violates the spec and is
+        // reported. This is a model-level validation, so it is skipped when the validator is off.
+        if (Settings.Validator is not null && !string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
+        {
+            var (line, pos) = reader.GetLocation();
+            state.Errors.Add(COVE.WRONG_CASED_RESOURCE_TYPE(state.Path.GetInstancePath(), line, pos, resourceType, resourceMapping.Name));
+        }
 
         return resourceMapping;
     }
@@ -727,40 +750,29 @@ public class BaseFhirJsonDeserializer
         bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && propNameWithoutUnderscore == "value";
 
         var localMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore);
-        PropertyMapping? byNameMapping = null;
-        PropertyMapping? byChoiceMapping = null;
-        string? caseMismatchExpectedName = null;
+        PropertyMapping? definedMapping = null;
 
-        if (localMapping is null && !isUnexpectedValueProperty)
+        if (localMapping is null && !isUnexpectedValueProperty
+            && parentMapping.TryFindElement(propNameWithoutUnderscore) is { } lookup)
         {
-            byNameMapping = parentMapping.FindMappedElementByName(propNameWithoutUnderscore);
-            if (byNameMapping is not null && !string.Equals(byNameMapping.Name, propNameWithoutUnderscore, StringComparison.Ordinal))
-                caseMismatchExpectedName = byNameMapping.Name;
-            else
-            {
-                byChoiceMapping = parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore, ignoreCase: true);
-                if (byChoiceMapping is not null)
-                {
-                    var actualPrefix = propNameWithoutUnderscore[..byChoiceMapping.Name.Length];
-                    if (!string.Equals(byChoiceMapping.Name, actualPrefix, StringComparison.Ordinal))
-                    {
-                        var actualSuffix = propNameWithoutUnderscore[byChoiceMapping.Name.Length..];
-                        caseMismatchExpectedName = byChoiceMapping.Name + normalizeChoiceSuffix(actualSuffix);
-                    }
-                }
-            }
+            // The lookup also finds names that differ from a defined element name only by casing.
+            // Whether such a wrong-cased name is still bound to the element it nearly matches is
+            // decided by DeserializerSettings.UsesStrictCaseBinding (see there for the rationale):
+            // - lenient: bind using exactly the matching rules of SDK 6.2 and earlier, so behaviour
+            //   is unchanged for callers that tolerate wrong-case errors;
+            // - strict: only bind exactly-cased names. A wrong-cased name falls through to
+            //   getUnknownPropMapping() below, so the data is preserved under its original name in
+            //   the overflow, and the validator reports it (WRONG_CASED_ELEMENT + UNKNOWN_ELEMENT).
+            if (usesStrictCaseBinding() ? lookup.IsExactCase : lookup.MatchedByLegacyRules)
+                definedMapping = lookup.Mapping;
         }
 
         var propertyMapping = localMapping
-            ?? byNameMapping
-            ?? byChoiceMapping
+            ?? definedMapping
             ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
 
         // Simulate us moving into the element, so we get an error at the right location
         state.EnterElement(propertyMapping.Name);
-
-        if (caseMismatchExpectedName is not null)
-            state.Errors.Add(ERR.PROPERTY_NAME_WRONG_CASE(ref reader, state.Path.GetInstancePath(), propNameWithoutUnderscore, caseMismatchExpectedName));
 
         var propertyValueMapping = propertyMapping.Choice switch
         {
@@ -780,13 +792,6 @@ public class BaseFhirJsonDeserializer
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
 
-        // Resolves the suffix to its actual datatype mapping (case-insensitively) so the casing
-        // suggested in a wrong-case-prefix error is correct even when the suffix is also wrong-case.
-        string normalizeChoiceSuffix(string suffix) =>
-            parentMapping.Inspector.FindClassMapping(suffix) is { } typeMapping
-                ? char.ToUpperInvariant(typeMapping.Name[0]) + typeMapping.Name[1..]
-                : suffix;
-
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {
             string typeSuffix = propNameWithoutUnderscore[propertyMapping.Name.Length..];
@@ -799,12 +804,6 @@ public class BaseFhirJsonDeserializer
                 {
                     var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
                     foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, guessedDynamicType);
-                }
-                else
-                {
-                    var expectedSuffix = char.ToUpperInvariant(foundChoiceMapping.Name[0]) + foundChoiceMapping.Name[1..];
-                    if (!string.Equals(typeSuffix, expectedSuffix, StringComparison.Ordinal))
-                        state.Errors.Add(ERR.CHOICE_TYPE_SUFFIX_WRONG_CASE(ref r, state.Path.GetInstancePath(), typeSuffix, expectedSuffix));
                 }
 
                 return foundChoiceMapping;

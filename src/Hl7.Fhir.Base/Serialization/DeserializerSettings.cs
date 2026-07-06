@@ -41,8 +41,52 @@ public record DeserializerSettings
         init => _exceptionFilter = value;
     }
 
+    // By default (i.e. when no mode or explicit filter is chosen), case-sensitivity issues are
+    // ignored, so that the default behaviour of the deserializers is the same as in previous
+    // versions of the SDK, which did not detect these issues at all.
     private readonly Predicate<CodedException>? _exceptionFilter
         = CodedExceptionFilters.FilterCaseSensitivityIssues;
+
+    /// <summary>
+    /// Determines whether the deserializers should treat names that differ from a defined element or
+    /// resource type name only by casing ("wrong-cased names") as unknown, rather than binding the data
+    /// to the defined element like previous versions of the SDK did.
+    /// </summary>
+    /// <returns><c>true</c> when wrong-cased element names must be treated as unknown elements, so that
+    /// the data is preserved under its original name in the overflow dictionary and the validator reports
+    /// <see cref="CodedValidationException.WRONG_CASED_ELEMENT_CODE"/>. <c>false</c> when wrong-cased
+    /// names are bound to the element they nearly match, so the data remains available in the typed
+    /// POCO properties (the behaviour of SDK 6.2 and earlier).</returns>
+    /// <remarks>
+    /// <para>This decision is <b>intentionally derived from the <see cref="ExceptionFilter"/></b> in effect,
+    /// rather than from a separate setting. The reasoning: if the configured filter <em>reports</em>
+    /// wrong-case errors (as <see cref="DeserializationMode.Strict"/> does, since it reports everything),
+    /// deserialization will fail because of them - and a failing parse should faithfully preserve the
+    /// input rather than silently correct the name, so we bind strictly. If the filter <em>ignores</em>
+    /// these errors (the default, and all other modes), the caller has chosen to tolerate them, and we
+    /// keep the lenient legacy binding so the data ends up in the typed properties where it is most
+    /// useful. This way the reported errors always accurately describe what happened to the data, and
+    /// case strictness follows the chosen mode - or can be controlled explicitly with
+    /// <see cref="Enforcing"/> / <see cref="Ignoring"/> and the wrong-case error codes - without a
+    /// dedicated setting.</para>
+    /// <para>When <see cref="Validator"/> is <c>null</c> (<see cref="DeserializationMode.SyntaxOnly"/>
+    /// and <see cref="DeserializationMode.Ostrich"/>), all model validation is off. Wrong-case detection
+    /// is a model-level check, not a syntax check, so no wrong-case errors will be raised at all and
+    /// lenient binding is used.</para>
+    /// <para>The check works by asking the filter how it would treat a representative
+    /// <see cref="CodedValidationException.WRONG_CASED_ELEMENT_CODE"/> error. Custom filters therefore
+    /// participate automatically: a filter that reports this code gets strict binding, a filter that
+    /// ignores it gets lenient binding.</para>
+    /// </remarks>
+    internal bool UsesStrictCaseBinding() =>
+        Validator is not null &&
+        (ExceptionFilter is not { } filter || !filter(WRONG_CASE_PROBE));
+
+    // A representative wrong-case error, used only to ask the ExceptionFilter whether it would
+    // report or ignore errors with this code. Never surfaces to users.
+    private static readonly CodedValidationException WRONG_CASE_PROBE =
+        new(CodedValidationException.WRONG_CASED_ELEMENT_CODE,
+            "This is a probe instance, used to determine how the exception filter treats wrong-case errors. It should never be reported.");
 
     /// <summary>
     /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exception

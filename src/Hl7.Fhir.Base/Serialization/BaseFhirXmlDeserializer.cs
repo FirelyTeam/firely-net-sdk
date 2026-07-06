@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
+using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 using NotSupportedException = System.NotSupportedException;
 
@@ -57,6 +58,20 @@ public class BaseFhirXmlDeserializer
     public DeserializerSettings Settings { get; set; }
 
     private readonly ModelInspector _inspector;
+
+    // Caches DeserializerSettings.UsesStrictCaseBinding(), which is invoked for every element, per
+    // settings instance. The settings' relevant properties are init-only, so as long as the same
+    // instance is assigned to Settings, the cached answer remains valid.
+    private (DeserializerSettings settings, bool strict)? _caseBindingCache;
+
+    private bool usesStrictCaseBinding()
+    {
+        if (_caseBindingCache is { } cached && ReferenceEquals(cached.settings, Settings)) return cached.strict;
+
+        var strict = Settings.UsesStrictCaseBinding();
+        _caseBindingCache = (Settings, strict);
+        return strict;
+    }
 
     /// <summary>
     /// Deserialize the FHIR xml from the reader and create a new POCO resource containing the data from the reader.
@@ -560,7 +575,7 @@ public class BaseFhirXmlDeserializer
     /// Returns the <see cref="ClassMapping" /> for the object to be deserialized using the root property.
     /// </summary>
     /// <remarks>Assumes the reader is on the start of an object.</remarks>
-    private static ClassMapping determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
+    private ClassMapping determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
     {
         var resourceType = reader.LocalName;
 
@@ -568,8 +583,14 @@ public class BaseFhirXmlDeserializer
         if (resourceMapping is null or { IsResource: false })
             return new ClassMapping(inspector, resourceType, typeof(DynamicResource));
 
-        if (!string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
-            state.Errors.Add(ERR.RESOURCE_TYPE_WRONG_CASE(reader, state.Path.GetInstancePath(), resourceType, resourceMapping.Name));
+        // The inspector finds resource types case-insensitively, so the data can still be parsed
+        // into the correct POCO, but a wrong-cased resource type name violates the spec and is
+        // reported. This is a model-level validation, so it is skipped when the validator is off.
+        if (Settings.Validator is not null && !string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
+        {
+            var (line, pos) = reader.GenerateLineInfo();
+            state.Errors.Add(COVE.WRONG_CASED_RESOURCE_TYPE(state.Path.GetInstancePath(), line, pos, resourceType, resourceMapping.Name));
+        }
 
         return resourceMapping;
     }
@@ -587,32 +608,23 @@ public class BaseFhirXmlDeserializer
         PocoDeserializerState state,
         XmlReader reader)
     {
-        var byNameMapping = parentMapping.FindMappedElementByName(elementName);
-        string? caseMismatchExpectedName = null;
+        PropertyMapping? definedMapping = null;
 
-        PropertyMapping? byChoiceMapping = null;
-        if (byNameMapping is not null)
+        if (parentMapping.TryFindElement(elementName) is { } lookup)
         {
-            if (!string.Equals(byNameMapping.Name, elementName, StringComparison.Ordinal))
-                caseMismatchExpectedName = byNameMapping.Name;
-        }
-        else
-        {
-            byChoiceMapping = parentMapping.FindMappedElementByChoiceName(elementName, ignoreCase: true);
-            if (byChoiceMapping is not null)
-            {
-                var actualPrefix = elementName[..byChoiceMapping.Name.Length];
-                if (!string.Equals(byChoiceMapping.Name, actualPrefix, StringComparison.Ordinal))
-                {
-                    var actualSuffix = elementName[byChoiceMapping.Name.Length..];
-                    caseMismatchExpectedName = byChoiceMapping.Name + normalizeChoiceSuffix(actualSuffix);
-                }
-            }
+            // The lookup also finds names that differ from a defined element name only by casing.
+            // Whether such a wrong-cased name is still bound to the element it nearly matches is
+            // decided by DeserializerSettings.UsesStrictCaseBinding (see there for the rationale):
+            // - lenient: bind using exactly the matching rules of SDK 6.2 and earlier, so behaviour
+            //   is unchanged for callers that tolerate wrong-case errors;
+            // - strict: only bind exactly-cased names. A wrong-cased name falls through to
+            //   getUnknownPropMapping() below, so the data is preserved under its original name in
+            //   the overflow, and the validator reports it (WRONG_CASED_ELEMENT + UNKNOWN_ELEMENT).
+            if (usesStrictCaseBinding() ? lookup.IsExactCase : lookup.MatchedByLegacyRules)
+                definedMapping = lookup.Mapping;
         }
 
-        var propertyMapping = byNameMapping
-                              ?? byChoiceMapping
-                              ?? getUnknownPropMapping();
+        var propertyMapping = definedMapping ?? getUnknownPropMapping();
 
         ClassMapping propertyValueMapping = propertyMapping.Choice switch
         {
@@ -628,17 +640,7 @@ public class BaseFhirXmlDeserializer
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported.")
         };
 
-        if (caseMismatchExpectedName is not null)
-            state.Errors.Add(ERR.ELEMENT_NAME_WRONG_CASE(reader, state.Path.GetInstancePath(), elementName, caseMismatchExpectedName));
-
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
-
-        // Resolves the suffix to its actual datatype mapping (case-insensitively) so the casing
-        // suggested in a wrong-case-prefix error is correct even when the suffix is also wrong-case.
-        string normalizeChoiceSuffix(string suffix) =>
-            parentMapping.Inspector.FindClassMapping(suffix) is { } typeMapping
-                ? char.ToUpperInvariant(typeMapping.Name[0]) + typeMapping.Name[1..]
-                : suffix;
 
         ClassMapping getChoiceClassMapping()
         {
@@ -651,12 +653,6 @@ public class BaseFhirXmlDeserializer
                 if (foundChoiceMapping is null)
                 {
                     foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, getDynamicTypeMapping());
-                }
-                else
-                {
-                    var expectedSuffix = char.ToUpperInvariant(foundChoiceMapping.Name[0]) + foundChoiceMapping.Name[1..];
-                    if (!string.Equals(typeSuffix, expectedSuffix, StringComparison.Ordinal))
-                        state.Errors.Add(ERR.CHOICE_TYPE_SUFFIX_WRONG_CASE(reader, state.Path.GetInstancePath(), typeSuffix, expectedSuffix));
                 }
 
                 return foundChoiceMapping;

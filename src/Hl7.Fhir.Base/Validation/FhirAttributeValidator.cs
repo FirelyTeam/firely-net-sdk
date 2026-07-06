@@ -12,6 +12,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,8 +45,31 @@ public class FhirAttributeValidator : IPocoValidator
             var serializedForm = propertyValue is Base b && b.Annotation<XmlRepresentationAnnotation>() is not null
                 ? "attribute"
                 : "element";
+
+            // If the unknown name is a case-insensitive near miss of a defined element, the reason
+            // it is unknown is its incorrect casing. Report the casing violation alongside the
+            // unknown element, so both the cause and the fact that the data ended up in the
+            // overflow are visible.
+            var declaringMapping = propertyMapping?.DeclaringClass
+                ?? context.ModelInspector.FindOrImportClassMapping(context.ObjectInstance);
+            if (declaringMapping?.TryFindElement(name) is { IsExactCase: false } nearMiss)
+                return [
+                    CodedValidationException.WRONG_CASED_ELEMENT(context, name, nearMiss.CanonicalName),
+                    CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)
+                ];
+
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
         }
+
+        // The name - as encountered in the serialized form, or used as a key in the dictionary
+        // interface - may differ from the element's defined name only by casing (for choice
+        // elements: including the casing of the type suffix). The value is still validated against
+        // the element it nearly matches, but the casing violation itself is reported as well.
+        CodedValidationException[] caseErrors =
+            !string.Equals(name, propertyMapping.Name, StringComparison.Ordinal)
+            && propertyMapping.DeclaringClass.TryFindElement(name) is { IsExactCase: false } wrongCased
+                ? [CodedValidationException.WRONG_CASED_ELEMENT(context, name, wrongCased.CanonicalName)]
+                : [];
 
         // if context doesn't have MemberName, set it explicitly
         context.MemberName ??= propertyMapping.NativeProperty?.Name;
@@ -54,12 +78,16 @@ public class FhirAttributeValidator : IPocoValidator
         if (!propertyMapping.PropertyType.IsInstanceOfType(propertyValue))
         {
             return [
+                ..caseErrors,
                 CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context, propertyMapping.NativeProperty?.Name ?? propertyMapping.Name),
                 ..runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
             ];
         }
 
-        return runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context);
+        if (caseErrors.Length == 0)
+            return runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context);
+
+        return [.. caseErrors, .. runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)];
     }
 
    /// <inheritdoc />

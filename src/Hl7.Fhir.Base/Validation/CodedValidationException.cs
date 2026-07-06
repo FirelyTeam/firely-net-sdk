@@ -51,12 +51,18 @@ public class CodedValidationException : ExtendedCodedException
     public const string UNKNOWN_ELEMENT_CODE = "PVAL128";
     public const string ELEMENT_CANNOT_BE_EMPTY_CODE = "PVAL129";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "PVAL130";
+    public const string WRONG_CASED_ELEMENT_CODE = "PVAL131";
+    public const string WRONG_CASED_RESOURCE_TYPE_CODE = "PVAL132";
 
     // A list of all issues that would throw an exception if the user used the
     // properties on the POCOs (and specifically the Value prop on datatypes).
     // Otherwise said, if none of these are raised, the user should be able to
     // use the POCOs without us throwing validation exceptions and should not be
     // required to check the <see cref="Base.Overflow"/> for unknown elements.
+    // Note: WRONG_CASED_ELEMENT_CODE is deliberately NOT in this list. When a wrong-cased
+    // element ends up in the overflow (strict case binding), the parser raises UNKNOWN_ELEMENT
+    // alongside it, which is in this list - so DeserializationMode.NoOverflow keeps rejecting
+    // exactly the inputs it rejected before wrong-case detection was introduced.
     internal static readonly HashSet<string> ISSUES_CAUSED_BY_OVERFLOW =
     [
         INVALID_CODED_VALUE_CODE,
@@ -99,6 +105,22 @@ public class CodedValidationException : ExtendedCodedException
 
     internal static COVE UNKNOWN_RESOURCE_TYPE(PocoValidationContext? context, string resourceName) =>
         Initialize(context, UNKNOWN_RESOURCE_TYPE_CODE, $"Encountered unknown resource type '{resourceName}'.", "Unknown resource", OO_Sev.Error, OO_Typ.Value);
+
+    internal static COVE WRONG_CASED_ELEMENT(PocoValidationContext? context, string name, string canonicalName) =>
+        Initialize(context, WRONG_CASED_ELEMENT_CODE, wrongCasedElementMessage(name, canonicalName), "Element name has wrong case", OO_Sev.Error, OO_Typ.Value);
+
+    // Overload for use by the deserializers, which detect wrong-cased names at a point where no
+    // PocoValidationContext is available, but the exact source location is.
+    internal static COVE WRONG_CASED_ELEMENT(string instancePath, long? lineNumber, long? position, string name, string canonicalName) =>
+        new(WRONG_CASED_ELEMENT_CODE, wrongCasedElementMessage(name, canonicalName), "Element name has wrong case", instancePath, lineNumber, position, OO_Sev.Error, OO_Typ.Value, null);
+
+    // Overload for use by the deserializers, which detect wrong-cased resource type names at a point
+    // where no PocoValidationContext is available, but the exact source location is.
+    internal static COVE WRONG_CASED_RESOURCE_TYPE(string instancePath, long? lineNumber, long? position, string name, string canonicalName) =>
+        new(WRONG_CASED_RESOURCE_TYPE_CODE, $"Resource type '{name}' has incorrect casing, expected '{canonicalName}'.", "Resource type has wrong case", instancePath, lineNumber, position, OO_Sev.Error, OO_Typ.Value, null);
+
+    private static string wrongCasedElementMessage(string name, string canonicalName) =>
+        $"Element '{name}' has incorrect casing, expected '{canonicalName}'.";
 
     private static string niceValue(object? v)
     {

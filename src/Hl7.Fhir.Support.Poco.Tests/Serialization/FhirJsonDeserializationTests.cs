@@ -1039,10 +1039,10 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    [DataRow("""{"resourceType":"Patient","Id":"test"}""", ERR.PROPERTY_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_PropertyName")]
-    [DataRow("""{"resourceType":"patient","id":"test"}""", ERR.RESOURCE_TYPE_WRONG_CASE_CODE, DisplayName = "WrongCase_ResourceType")]
-    [DataRow("""{"resourceType":"Patient","deceasedDatetime":"2022-05"}""", ERR.PROPERTY_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
-    [DataRow("""{"resourceType":"Observation","status":"final","code":{"text":"t"},"ValueString":"hello"}""", ERR.PROPERTY_NAME_WRONG_CASE_CODE, DisplayName = "WrongCase_ChoicePrefix")]
+    [DataRow("""{"resourceType":"Patient","Id":"test"}""", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_PropertyName")]
+    [DataRow("""{"resourceType":"patient","id":"test"}""", COVE.WRONG_CASED_RESOURCE_TYPE_CODE, DisplayName = "WrongCase_ResourceType")]
+    [DataRow("""{"resourceType":"Patient","deceasedDatetime":"2022-05"}""", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    [DataRow("""{"resourceType":"Observation","status":"final","code":{"text":"t"},"ValueString":"hello"}""", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_ChoicePrefix")]
     public void WrongCaseNames_StrictMode_ReportsError(string json, string expectedErrorCode)
     {
         var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
@@ -1051,6 +1051,64 @@ public partial class FhirJsonDeserializationTests
         var act = () => deserializer.DeserializeResource(json);
         act.Should().Throw<DeserializationFailedException>()
             .Which.Exceptions.Should().Contain(e => e.ErrorCode == expectedErrorCode);
+    }
+
+    [TestMethod]
+    public void WrongCaseNames_StrictMode_PreservesDataInOverflow()
+    {
+        // In strict mode, a wrong-cased element is not silently corrected: it is treated as an
+        // unknown element, so the original data is preserved (and roundtrippable) in the overflow.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var json = """{"resourceType":"Patient","Active":true}""";
+        var act = () => deserializer.DeserializeResource(json);
+        var ex = act.Should().Throw<DeserializationFailedException>().Which;
+
+        // Both the casing violation and the resulting unknown element are reported.
+        ex.Exceptions.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
+        ex.Exceptions.Should().Contain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
+
+        // The data is in the overflow under its original name, not in the typed property.
+        var patient = ex.PartialResult.Should().BeOfType<Patient>().Subject;
+        patient.ActiveElement.Should().BeNull();
+        patient.TryGetValue("Active", out _).Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void WrongCaseResourceType_StrictMode_StillBindsToPocoType()
+    {
+        // Unlike elements, a wrong-cased resource type is still deserialized into the matching
+        // POCO type: falling back to a DynamicResource would degrade the entire resource to
+        // overflow data, which is disproportionate. The violation is reported with its own code.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var json = """{"resourceType":"patient","id":"test"}""";
+        var act = () => deserializer.DeserializeResource(json);
+        var ex = act.Should().Throw<DeserializationFailedException>().Which;
+
+        ex.Exceptions.Should().ContainSingle(e => e.ErrorCode == COVE.WRONG_CASED_RESOURCE_TYPE_CODE);
+        ex.PartialResult.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    public void WrongCaseNames_RecoverableModeWithEnforcedCaseErrors_UsesStrictBinding()
+    {
+        // Case-strict parsing can be turned on in any mode by enforcing the wrong-case error
+        // codes: the deserializer derives its binding behaviour from the ExceptionFilter
+        // (see DeserializerSettings.UsesStrictCaseBinding).
+        var settings = new DeserializerSettings()
+            .UsingMode(DeserializationMode.Recoverable)
+            .Enforcing([COVE.WRONG_CASED_ELEMENT_CODE]);
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var json = """{"resourceType":"Patient","Active":true}""";
+        var act = () => deserializer.DeserializeResource(json);
+        var ex = act.Should().Throw<DeserializationFailedException>().Which;
+
+        ex.Exceptions.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
+        ex.PartialResult.Should().BeOfType<Patient>().Which.ActiveElement.Should().BeNull();
     }
 
     [TestMethod]
@@ -1065,7 +1123,7 @@ public partial class FhirJsonDeserializationTests
         var json = """{"resourceType":"Observation","status":"final","code":{"text":"t"},"ValueDatetime":"2022-05"}""";
         var act = () => deserializer.DeserializeResource(json);
         act.Should().Throw<DeserializationFailedException>()
-            .Which.Exceptions.Should().Contain(e => e.ErrorCode == ERR.PROPERTY_NAME_WRONG_CASE_CODE
+            .Which.Exceptions.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE
                                                      && e.Message.Contains("valueDateTime"));
     }
 
@@ -1078,7 +1136,7 @@ public partial class FhirJsonDeserializationTests
         var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
         var deserializer = new FhirJsonDeserializer(settings);
 
-        // Should not throw: no JSON135 errors on correct casing.
+        // Should not throw: no wrong-case errors on correct casing.
         var act = () => deserializer.DeserializeResource(json);
         act.Should().NotThrow();
     }
