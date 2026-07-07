@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
+using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
 #nullable enable
@@ -55,6 +56,20 @@ public class BaseFhirJsonDeserializer
     public DeserializerSettings Settings { get; set; }
 
     private readonly ModelInspector _inspector;
+
+    // Caches DeserializerSettings.UsesStrictCaseBinding(), which is invoked for every element, per
+    // settings instance. The settings' relevant properties are init-only, so as long as the same
+    // instance is assigned to Settings, the cached answer remains valid.
+    private (DeserializerSettings settings, bool strict)? _caseBindingCache;
+
+    private bool usesStrictCaseBinding()
+    {
+        if (_caseBindingCache is { } cached && ReferenceEquals(cached.settings, Settings)) return cached.strict;
+
+        var strict = Settings.UsesStrictCaseBinding();
+        _caseBindingCache = (Settings, strict);
+        return strict;
+    }
 
     /// <summary>
     /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
@@ -253,12 +268,14 @@ public class BaseFhirJsonDeserializer
         var result = deserializeRhs(existingValue, ref reader, propertyName, metadata, state);
         target.SetValue(elementName, result);
 
-        doPropertyValidation(target, result, metadata, state, line, pos);
+        // Pass the name as encountered in the serialized form (without the '_' prefix), so the
+        // validator can also detect names that only differ from the defined name by casing.
+        doPropertyValidation(target, usesUnderscore ? propertyName[1..] : propertyName, result, metadata, state, line, pos);
 
         state.ExitElement();
     }
 
-    private void doPropertyValidation(Base target, object propertyValue, PropertyValueMapping metadata, PocoDeserializerState state, long line, long pos)
+    private void doPropertyValidation(Base target, string serializedName, object propertyValue, PropertyValueMapping metadata, PocoDeserializerState state, long line, long pos)
     {
         if (Settings.Validator is null) return;
 
@@ -283,7 +300,7 @@ public class BaseFhirJsonDeserializer
         void runPropertyValidation()
         {
             var c = context;
-            state.Errors.Add(Settings.Validator.ValidateProperty(metadata.PropertyMapping.Name, propertyValue, metadata.PropertyMapping,
+            state.Errors.Add(Settings.Validator.ValidateProperty(serializedName, propertyValue, metadata.PropertyMapping,
                 c));
         }
     }
@@ -652,11 +669,20 @@ public class BaseFhirJsonDeserializer
         var resourceType = scanForResourceType(ref reader, state);
         if (resourceType is null) return makeUnnamedResourceMapping(state.Path.GetInstancePath());
 
-        return _inspector.FindClassMapping(resourceType) switch
+        var resourceMapping = _inspector.FindClassMapping(resourceType);
+        if (resourceMapping is null or { IsResource: false })
+            return new ClassMapping(_inspector, resourceType, typeof(DynamicResource));
+
+        // The inspector finds resource types case-insensitively, so the data can still be parsed
+        // into the correct POCO, but a wrong-cased resource type name violates the spec and is
+        // reported. This is a model-level validation, so it is skipped when the validator is off.
+        if (Settings.Validator is not null && !string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
         {
-            null or { IsResource: false } => new ClassMapping(_inspector, resourceType, typeof(DynamicResource)),
-            { } resourceMapping => resourceMapping,
-        };
+            var (line, pos) = reader.GetLocation();
+            state.Errors.Add(COVE.WRONG_CASED_RESOURCE_TYPE(state.Path.GetInstancePath(), line, pos, resourceType, resourceMapping.Name));
+        }
+
+        return resourceMapping;
     }
 
     private const string UNNAMED_RESOURCE_NAME_PREFIX = "UnnamedResource_";
@@ -723,9 +749,26 @@ public class BaseFhirJsonDeserializer
         // separate "value" property in Json. If it does, treat it like an unknown property.
         bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && propNameWithoutUnderscore == "value";
 
-        var propertyMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore)
-                              ?? (isUnexpectedValueProperty ? null : lookupPropertyInDefinition())
-                              ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
+        var localMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore);
+        PropertyMapping? definedMapping = null;
+
+        if (localMapping is null && !isUnexpectedValueProperty
+            && parentMapping.TryFindElement(propNameWithoutUnderscore) is { } lookup)
+        {
+            // The lookup also finds names that differ from a defined element name only by casing.
+            // Whether such a wrong-cased name is still bound to the element it nearly matches is
+            // decided by DeserializerSettings.UsesStrictCaseBinding (see there for the rationale):
+            // - lenient: bind, so the data ends up in the typed property where it is most useful;
+            // - strict: only bind exactly-cased names. A wrong-cased name falls through to
+            //   getUnknownPropMapping() below, so the data is preserved under its original name in
+            //   the overflow, and the validator reports it (WRONG_CASED_ELEMENT + UNKNOWN_ELEMENT).
+            if (lookup.IsExactCase || !usesStrictCaseBinding())
+                definedMapping = lookup.Mapping;
+        }
+
+        var propertyMapping = localMapping
+            ?? definedMapping
+            ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
 
         // Simulate us moving into the element, so we get an error at the right location
         state.EnterElement(propertyMapping.Name);
@@ -747,10 +790,6 @@ public class BaseFhirJsonDeserializer
         state.ExitElement();
 
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
-
-        PropertyMapping? lookupPropertyInDefinition() =>
-            parentMapping.FindMappedElementByName(propNameWithoutUnderscore)
-            ?? parentMapping.FindMappedElementByChoiceName(propNameWithoutUnderscore);
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {

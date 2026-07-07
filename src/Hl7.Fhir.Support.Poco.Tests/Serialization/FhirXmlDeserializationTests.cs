@@ -682,4 +682,143 @@ public partial class FhirXmlDeserializationTests
         var serialized = serializer.SerializeToString(parsed);
         XmlAssert.AreSame("parsed", json, serialized);
     }
+
+    [TestMethod]
+    public void WrongCaseNames_DefaultMode_NoErrors()
+    {
+        // In the default (non-Strict) mode, case-sensitivity issues are filtered and should not surface.
+        var settings = new DeserializerSettings();
+        var deserializer = getTestDeserializer(settings);
+
+        var content = "<Patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></Patient>";
+        var reader = constructReader(content);
+        reader.Read();
+        var result = deserializer.DeserializeResource(reader);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    public void WrongCaseNames_BackwardsCompatibleMode_NoErrors()
+    {
+        // BackwardsCompatible mode must also suppress case-sensitivity errors.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.BackwardsCompatible);
+        var deserializer = getTestDeserializer(settings);
+
+        var content = "<patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></patient>";
+        var reader = constructReader(content);
+        reader.Read();
+        var result = deserializer.DeserializeResource(reader);
+        result.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    public void WrongCaseChoicePrefix_LenientModes_BindsToChoiceElement()
+    {
+        // SDK 6.2 and earlier matched the element-name part of a choice name case-sensitively, so
+        // "DeceasedBoolean" was treated as an unknown element. We consider that a bug: in lenient
+        // modes, all wrong-cased names bind to the element they nearly match.
+        var settings = new DeserializerSettings();
+        var deserializer = getTestDeserializer(settings);
+
+        var content = "<Patient xmlns=\"http://hl7.org/fhir\"><DeceasedBoolean value=\"true\"/></Patient>";
+        var reader = constructReader(content);
+        reader.Read();
+        var result = deserializer.DeserializeResource(reader);
+        result.Should().BeOfType<Patient>().Which.Deceased.Should().BeOfType<FhirBoolean>()
+            .Which.Value.Should().Be(true);
+    }
+
+    [TestMethod]
+    [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></Patient>", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_PropertyName")]
+    [DataRow("<patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/></patient>", COVE.WRONG_CASED_RESOURCE_TYPE_CODE, DisplayName = "WrongCase_ResourceType")]
+    [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDatetime value=\"2022-05\"/></Patient>", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]
+    [DataRow("<Observation xmlns=\"http://hl7.org/fhir\"><status value=\"final\"/><code><text value=\"t\"/></code><ValueString value=\"hello\"/></Observation>", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_ChoicePrefix")]
+    public void WrongCaseNames_StrictMode_ReportsError(string xmlContent, string expectedErrorCode)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var reader = constructReader(xmlContent);
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        _ = deserializer.DeserializeResourceInternal(reader, state);
+        state.Errors.Should().Contain(e => e.ErrorCode == expectedErrorCode);
+    }
+
+    [TestMethod]
+    public void WrongCaseNames_StrictMode_PreservesDataInOverflow()
+    {
+        // In strict mode, a wrong-cased element is not silently corrected: it is treated as an
+        // unknown element, so the original data is preserved (and roundtrippable) in the overflow.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var content = "<Patient xmlns=\"http://hl7.org/fhir\"><Active value=\"true\"/></Patient>";
+        var reader = constructReader(content);
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        var resource = deserializer.DeserializeResourceInternal(reader, state);
+
+        // The casing violation is reported - and only that: a near miss is never additionally
+        // reported as an unknown element.
+        state.Errors.Should().ContainSingle(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
+        state.Errors.Should().NotContain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
+
+        // The data is in the overflow under its original name, not in the typed property.
+        var patient = resource.Should().BeOfType<Patient>().Subject;
+        patient.ActiveElement.Should().BeNull();
+        patient.TryGetValue("Active", out _).Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void WrongCaseResourceType_StrictMode_StillBindsToPocoType()
+    {
+        // Unlike elements, a wrong-cased resource type is still deserialized into the matching
+        // POCO type: falling back to a DynamicResource would degrade the entire resource to
+        // overflow data, which is disproportionate. The violation is reported with its own code.
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var reader = constructReader("<patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/></patient>");
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        var resource = deserializer.DeserializeResourceInternal(reader, state);
+
+        state.Errors.Should().ContainSingle(e => e.ErrorCode == COVE.WRONG_CASED_RESOURCE_TYPE_CODE);
+        resource.Should().BeOfType<Patient>().Which.Id.Should().Be("test");
+    }
+
+    [TestMethod]
+    public void WrongCase_ChoicePrefixAndSuffix_SuggestsFullyCorrectedName()
+    {
+        // When both the choice prefix ("Value") and the type suffix ("Datetime") have wrong casing,
+        // the suggested name in the error message should be fully corrected ("valueDateTime"), not
+        // just have its prefix fixed ("valueDatetime").
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var content = "<Observation xmlns=\"http://hl7.org/fhir\"><status value=\"final\"/><code><text value=\"t\"/></code><ValueDatetime value=\"2022-05\"/></Observation>";
+        var reader = constructReader(content);
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        _ = deserializer.DeserializeResourceInternal(reader, state);
+        state.Errors.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE
+                                            && e.Message.Contains("valueDateTime"));
+    }
+
+    [TestMethod]
+    // Also verifies that a multi-word type suffix like "CodeableConcept" does not produce a false positive.
+    [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/><deceasedDateTime value=\"2022-05\"/></Patient>", DisplayName = "Correct_DateTimeChoice")]
+    [DataRow("<Observation xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/><status value=\"final\"/><code><text value=\"t\"/></code><valueCodeableConcept><text value=\"x\"/></valueCodeableConcept></Observation>", DisplayName = "Correct_CodeableConceptChoice")]
+    public void CorrectCaseNames_StrictMode_NoError(string content)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Strict);
+        var deserializer = getTestDeserializer(settings);
+        var reader = constructReader(content);
+        reader.Read();
+        var state = new PocoDeserializerState();
+        _ = deserializer.DeserializeResourceInternal(reader, state);
+        state.Errors.Should().NotContain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE
+                                              || e.ErrorCode == COVE.WRONG_CASED_RESOURCE_TYPE_CODE);
+    }
 }

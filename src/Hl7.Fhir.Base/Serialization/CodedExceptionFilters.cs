@@ -16,6 +16,21 @@ namespace Hl7.Fhir.Serialization;
 public static class CodedExceptionFilters
 {
     /// <summary>
+    /// A predicate that returns true if a <see cref="CodedException"/> is a case-sensitivity issue.
+    /// These issues are only reported in <see cref="DeserializationMode.Strict"/> mode.
+    /// </summary>
+    /// <remarks>Whether a filter ignores or reports these issues does not only determine whether they
+    /// are returned to the caller: the deserializers also use it to decide whether a wrong-cased name is
+    /// still bound to the element it (nearly) matches, see
+    /// <see cref="DeserializerSettings.UsesStrictCaseBinding"/>.</remarks>
+    internal static readonly Predicate<CodedException> FilterCaseSensitivityIssues =
+        new[]
+        {
+            CodedValidationException.WRONG_CASED_ELEMENT_CODE,
+            CodedValidationException.WRONG_CASED_RESOURCE_TYPE_CODE
+        }.IsInList();
+
+    /// <summary>
     /// A predicate that returns true if a <see cref="CodedException"/> is recoverable,
     /// which means that all data is represented in the POCO, so there is no data loss.
     /// See <see cref="DeserializationMode.Recoverable"/>.
@@ -30,13 +45,15 @@ public static class CodedExceptionFilters
     public static readonly Predicate<CodedException> FilterNoOverflowIssues =
         ce => FilterRecoverableIssues(ce) &&
               !CodedValidationException.ISSUES_CAUSED_BY_OVERFLOW.Contains(ce.ErrorCode);
+
     /// <summary>
     /// A predicate that returns true if a <see cref="CodedException"/> signifies a backwards compatibility issue.
     /// See <see cref="DeserializationMode.BackwardsCompatible"/>.
     /// </summary>
     public static readonly Predicate<CodedException> FilterBackwardsCompatibilityIssues =
         ce => FhirJsonException.BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES.Contains(ce.ErrorCode) ||
-              FhirXmlException.BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES.Contains(ce.ErrorCode);
+              FhirXmlException.BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES.Contains(ce.ErrorCode) ||
+              FilterCaseSensitivityIssues(ce);
 
     /// <summary>
     /// Combines two predicates for a <see cref="CodedException"/> with a logical AND.

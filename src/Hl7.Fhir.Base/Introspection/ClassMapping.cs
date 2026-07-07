@@ -241,7 +241,8 @@ public class ClassMapping(
     /// </summary>
     /// <remarks>Will also return properties for which the name is exactly the same,
     /// so for where there is no suffix. In this case, however, <see cref="FindMappedElementByName(string)"/>
-    /// is faster.
+    /// is faster. The element-name part of the name is matched case-sensitively (the type suffix is
+    /// matched case-insensitively by the callers that resolve it).
     /// </remarks>
     public PropertyMapping? FindMappedElementByChoiceName(string name)
     {
@@ -250,9 +251,14 @@ public class ClassMapping(
         // Returns correct mapping for unsuffixed names.
         if (FindMappedElementByName(name) is { } pm) return pm;
 
-        // Now, check the choice elements for a match.
+        return findChoiceMatch(name, StringComparison.Ordinal);
+    }
+
+    private PropertyMapping? findChoiceMatch(string name, StringComparison comparisonType)
+    {
+        // Check the choice elements for a prefix match.
         var matches = PropertyMappingsInternal.ChoiceProperties
-            .Where(m => name.StartsWith(m.Name)).ToList();
+            .Where(m => name.StartsWith(m.Name, comparisonType)).ToList();
 
         // Loop through possible matches and return the longest match.
         if (matches.Any())
@@ -265,6 +271,51 @@ public class ClassMapping(
         {
             return null;
         }
+    }
+
+    /// <summary>
+    /// Looks up the element that a (possibly choice-suffixed) serialized name refers to, matching
+    /// names case-insensitively, and reports whether the given name matches the definition exactly.
+    /// </summary>
+    /// <param name="name">The name for the element as encountered in the serialized form.</param>
+    /// <returns>The result of the lookup, or <c>null</c> when the name does not match any element
+    /// of this class, not even when compared case-insensitively.</returns>
+    /// <remarks>This is the single source of truth for detecting case-sensitivity violations in
+    /// element names: FHIR names are case-sensitive, but this lookup will also find "near misses"
+    /// that differ from a defined element name only by casing. Callers decide, based on
+    /// <see cref="ElementLookupResult.IsExactCase"/>, whether to bind the data to the found
+    /// element and/or to report an error.</remarks>
+    internal ElementLookupResult? TryFindElement(string name)
+    {
+        if (name == null) throw Error.ArgumentNull(nameof(name));
+
+        // Unsuffixed names: found via the (case-insensitive) name dictionary.
+        if (FindMappedElementByName(name) is { } byName)
+            return new ElementLookupResult(
+                byName,
+                byName.Name,
+                IsExactCase: string.Equals(name, byName.Name, StringComparison.Ordinal));
+
+        // Choice elements: the name is the element name plus a type suffix. The name dictionary
+        // was already consulted above, so only the choice-prefix scan remains to be done here.
+        if (findChoiceMatch(name, StringComparison.OrdinalIgnoreCase) is { } byChoice)
+        {
+            var canonicalName = byChoice.Name + normalizeChoiceSuffix(name[byChoice.Name.Length..]);
+            return new ElementLookupResult(
+                byChoice,
+                canonicalName,
+                IsExactCase: string.Equals(name, canonicalName, StringComparison.Ordinal));
+        }
+
+        return null;
+
+        // Resolves the suffix to its actual datatype mapping (case-insensitively) so the canonical
+        // name we suggest is correct even when the suffix casing is wrong. Suffixes that do not
+        // resolve to a known type carry no case information, so they are kept as-is.
+        string normalizeChoiceSuffix(string suffix) =>
+            suffix.Length > 0 && Inspector.FindClassMapping(suffix) is { } typeMapping
+                ? char.ToUpperInvariant(typeMapping.Name[0]) + typeMapping.Name[1..]
+                : suffix;
     }
 
     #region IStructureDefinitionSummary members
@@ -409,3 +460,16 @@ public class ClassMapping(
     internal static ClassMapping DynamicDataType => _dynDataMapping ??= ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicDataType)) ??
                                                     throw new InvalidOperationException($"{nameof(DynamicDataType)} mapping not found in Base.");
 }
+
+/// <summary>
+/// The result of looking up an element by a serialized name using <see cref="ClassMapping.TryFindElement(string)"/>.
+/// </summary>
+/// <param name="Mapping">The element that the name refers to (for choice elements: the unsuffixed choice element).</param>
+/// <param name="CanonicalName">The correctly-cased form of the given name, including a correctly-cased
+/// type suffix for choice elements. This is the name that should have been used in the serialized form.</param>
+/// <param name="IsExactCase">Whether the given name is exactly equal to <paramref name="CanonicalName"/>.
+/// When <c>false</c>, the name is a case-sensitivity violation ("near miss").</param>
+internal sealed record ElementLookupResult(
+    PropertyMapping Mapping,
+    string CanonicalName,
+    bool IsExactCase);

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
+using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 using NotSupportedException = System.NotSupportedException;
 
@@ -57,6 +58,20 @@ public class BaseFhirXmlDeserializer
     public DeserializerSettings Settings { get; set; }
 
     private readonly ModelInspector _inspector;
+
+    // Caches DeserializerSettings.UsesStrictCaseBinding(), which is invoked for every element, per
+    // settings instance. The settings' relevant properties are init-only, so as long as the same
+    // instance is assigned to Settings, the cached answer remains valid.
+    private (DeserializerSettings settings, bool strict)? _caseBindingCache;
+
+    private bool usesStrictCaseBinding()
+    {
+        if (_caseBindingCache is { } cached && ReferenceEquals(cached.settings, Settings)) return cached.strict;
+
+        var strict = Settings.UsesStrictCaseBinding();
+        _caseBindingCache = (Settings, strict);
+        return strict;
+    }
 
     /// <summary>
     /// Deserialize the FHIR xml from the reader and create a new POCO resource containing the data from the reader.
@@ -560,15 +575,24 @@ public class BaseFhirXmlDeserializer
     /// Returns the <see cref="ClassMapping" /> for the object to be deserialized using the root property.
     /// </summary>
     /// <remarks>Assumes the reader is on the start of an object.</remarks>
-    private static ClassMapping determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
+    private ClassMapping determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
     {
         var resourceType = reader.LocalName;
 
-        return inspector.FindClassMapping(resourceType) switch
+        var resourceMapping = inspector.FindClassMapping(resourceType);
+        if (resourceMapping is null or { IsResource: false })
+            return new ClassMapping(inspector, resourceType, typeof(DynamicResource));
+
+        // The inspector finds resource types case-insensitively, so the data can still be parsed
+        // into the correct POCO, but a wrong-cased resource type name violates the spec and is
+        // reported. This is a model-level validation, so it is skipped when the validator is off.
+        if (Settings.Validator is not null && !string.Equals(resourceMapping.Name, resourceType, StringComparison.Ordinal))
         {
-            null or { IsResource: false } => new ClassMapping(inspector, resourceType, typeof(DynamicResource)),
-            { } resourceMapping => resourceMapping,
-        };
+            var (line, pos) = reader.GenerateLineInfo();
+            state.Errors.Add(COVE.WRONG_CASED_RESOURCE_TYPE(state.Path.GetInstancePath(), line, pos, resourceType, resourceMapping.Name));
+        }
+
+        return resourceMapping;
     }
 
     /// <summary>
@@ -584,9 +608,22 @@ public class BaseFhirXmlDeserializer
         PocoDeserializerState state,
         XmlReader reader)
     {
-        var propertyMapping = parentMapping.FindMappedElementByName(elementName)
-                                    ?? parentMapping.FindMappedElementByChoiceName(elementName)
-                                    ?? getUnknownPropMapping();
+        PropertyMapping? definedMapping = null;
+
+        if (parentMapping.TryFindElement(elementName) is { } lookup)
+        {
+            // The lookup also finds names that differ from a defined element name only by casing.
+            // Whether such a wrong-cased name is still bound to the element it nearly matches is
+            // decided by DeserializerSettings.UsesStrictCaseBinding (see there for the rationale):
+            // - lenient: bind, so the data ends up in the typed property where it is most useful;
+            // - strict: only bind exactly-cased names. A wrong-cased name falls through to
+            //   getUnknownPropMapping() below, so the data is preserved under its original name in
+            //   the overflow, and the validator reports it (WRONG_CASED_ELEMENT + UNKNOWN_ELEMENT).
+            if (lookup.IsExactCase || !usesStrictCaseBinding())
+                definedMapping = lookup.Mapping;
+        }
+
+        var propertyMapping = definedMapping ?? getUnknownPropMapping();
 
         ClassMapping propertyValueMapping = propertyMapping.Choice switch
         {

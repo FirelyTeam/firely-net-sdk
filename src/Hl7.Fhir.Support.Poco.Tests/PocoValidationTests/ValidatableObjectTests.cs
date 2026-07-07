@@ -44,6 +44,42 @@ public class ValidatableObjectTests
         Assert.ThrowsExactly<COVE>(() => _ = c.Value);
     }
 
+    [TestMethod]
+    public void WrongCasedDictionaryKey_IsReportedByValidation()
+    {
+        // A wrong-cased element name used with the dictionary interface does not match the POCO
+        // property, so the data ends up in the overflow. Validation reports the casing violation.
+        var patient = new Patient();
+        patient.SetValue("Active", new FhirBoolean(true));
+
+        var errors = patient.Validate();
+        errors.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE && e.Message.Contains("'active'"));
+    }
+
+    [TestMethod]
+    public void WrongCasedChoiceDictionaryKey_IsReportedByValidation()
+    {
+        // Same for a suffixed choice-element key: it is unknown to the POCO, but validation
+        // detects that it only differs from a correct choice name by casing, and reports the
+        // casing violation instead of a generic unknown element.
+        var patient = new Patient();
+        patient.SetValue("DeceasedBoolean", new FhirBoolean(true));
+
+        var errors = patient.Validate();
+        errors.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE && e.Message.Contains("'deceasedBoolean'"));
+        errors.Should().NotContain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
+    }
+
+    [TestMethod]
+    public void CorrectlyCasedDictionaryKey_NoCaseError()
+    {
+        var patient = new Patient();
+        patient.SetValue("active", new FhirBoolean(true));
+
+        var errors = patient.Validate();
+        errors.Should().NotContain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
+    }
+
     private static void assertValid(Base o, string? errorCode = null)
     {
         var validationResult = o.Validate();
