@@ -241,29 +241,22 @@ public class ClassMapping(
     /// </summary>
     /// <remarks>Will also return properties for which the name is exactly the same,
     /// so for where there is no suffix. In this case, however, <see cref="FindMappedElementByName(string)"/>
-    /// is faster.
+    /// is faster. The element-name part of the name is matched case-sensitively (the type suffix is
+    /// matched case-insensitively by the callers that resolve it).
     /// </remarks>
-    public PropertyMapping? FindMappedElementByChoiceName(string name) => FindMappedElementByChoiceName(name, ignoreCase: false);
-
-    /// <summary>
-    /// Returns the mapping for an element of this class by a name that
-    /// might be suffixed by a type name (e.g. for choice elements).
-    /// </summary>
-    /// <param name="name">The (possibly suffixed) name to look up.</param>
-    /// <param name="ignoreCase">If <c>true</c>, the choice prefix is matched case-insensitively.</param>
-    /// <remarks>Will also return properties for which the name is exactly the same,
-    /// so for where there is no suffix. In this case, however, <see cref="FindMappedElementByName(string)"/>
-    /// is faster.
-    /// </remarks>
-    public PropertyMapping? FindMappedElementByChoiceName(string name, bool ignoreCase)
+    public PropertyMapping? FindMappedElementByChoiceName(string name)
     {
         if (name == null) throw Error.ArgumentNull(nameof(name));
 
         // Returns correct mapping for unsuffixed names.
         if (FindMappedElementByName(name) is { } pm) return pm;
 
-        // Now, check the choice elements for a match.
-        var comparisonType = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+        return findChoiceMatch(name, StringComparison.Ordinal);
+    }
+
+    private PropertyMapping? findChoiceMatch(string name, StringComparison comparisonType)
+    {
+        // Check the choice elements for a prefix match.
         var matches = PropertyMappingsInternal.ChoiceProperties
             .Where(m => name.StartsWith(m.Name, comparisonType)).ToList();
 
@@ -303,8 +296,9 @@ public class ClassMapping(
                 byName.Name,
                 IsExactCase: string.Equals(name, byName.Name, StringComparison.Ordinal));
 
-        // Choice elements: the name is the element name plus a type suffix.
-        if (FindMappedElementByChoiceName(name, ignoreCase: true) is { } byChoice)
+        // Choice elements: the name is the element name plus a type suffix. The name dictionary
+        // was already consulted above, so only the choice-prefix scan remains to be done here.
+        if (findChoiceMatch(name, StringComparison.OrdinalIgnoreCase) is { } byChoice)
         {
             var canonicalName = byChoice.Name + normalizeChoiceSuffix(name[byChoice.Name.Length..]);
             return new ElementLookupResult(
