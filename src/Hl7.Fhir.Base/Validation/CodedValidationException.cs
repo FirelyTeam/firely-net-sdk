@@ -59,10 +59,11 @@ public class CodedValidationException : ExtendedCodedException
     // Otherwise said, if none of these are raised, the user should be able to
     // use the POCOs without us throwing validation exceptions and should not be
     // required to check the <see cref="Base.Overflow"/> for unknown elements.
-    // Note: WRONG_CASED_ELEMENT_CODE is deliberately NOT in this list. When a wrong-cased
-    // element ends up in the overflow (strict case binding), the parser raises UNKNOWN_ELEMENT
-    // alongside it, which is in this list - so DeserializationMode.NoOverflow keeps rejecting
-    // exactly the inputs it rejected before wrong-case detection was introduced.
+    // Note: WRONG_CASED_ELEMENT_CODE is deliberately NOT in this list. A wrong-cased element
+    // only ends up in the overflow under strict case binding, and there UNKNOWN_ELEMENT (which
+    // is in this list) always accompanies it. Under lenient case binding (which is what
+    // DeserializationMode.NoOverflow uses) the data is bound to the typed property, so no
+    // overflow arises.
     internal static readonly HashSet<string> ISSUES_CAUSED_BY_OVERFLOW =
     [
         INVALID_CODED_VALUE_CODE,

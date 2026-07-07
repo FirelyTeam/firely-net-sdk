@@ -1039,6 +1039,21 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
+    public void WrongCaseChoicePrefix_LenientModes_BindsToChoiceElement()
+    {
+        // SDK 6.2 and earlier matched the element-name part of a choice name case-sensitively, so
+        // "DeceasedBoolean" was treated as an unknown element. We consider that a bug: in lenient
+        // modes, all wrong-cased names bind to the element they nearly match.
+        var settings = new DeserializerSettings();
+        var deserializer = new FhirJsonDeserializer(settings);
+
+        var json = """{"resourceType":"Patient","DeceasedBoolean":true}""";
+        var result = deserializer.DeserializeResource(json);
+        result.Should().BeOfType<Patient>().Which.Deceased.Should().BeOfType<FhirBoolean>()
+            .Which.Value.Should().Be(true);
+    }
+
+    [TestMethod]
     [DataRow("""{"resourceType":"Patient","Id":"test"}""", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_PropertyName")]
     [DataRow("""{"resourceType":"patient","id":"test"}""", COVE.WRONG_CASED_RESOURCE_TYPE_CODE, DisplayName = "WrongCase_ResourceType")]
     [DataRow("""{"resourceType":"Patient","deceasedDatetime":"2022-05"}""", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]

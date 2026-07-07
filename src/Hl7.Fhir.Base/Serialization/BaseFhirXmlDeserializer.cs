@@ -615,12 +615,11 @@ public class BaseFhirXmlDeserializer
             // The lookup also finds names that differ from a defined element name only by casing.
             // Whether such a wrong-cased name is still bound to the element it nearly matches is
             // decided by DeserializerSettings.UsesStrictCaseBinding (see there for the rationale):
-            // - lenient: bind using exactly the matching rules of SDK 6.2 and earlier, so behaviour
-            //   is unchanged for callers that tolerate wrong-case errors;
+            // - lenient: bind, so the data ends up in the typed property where it is most useful;
             // - strict: only bind exactly-cased names. A wrong-cased name falls through to
             //   getUnknownPropMapping() below, so the data is preserved under its original name in
             //   the overflow, and the validator reports it (WRONG_CASED_ELEMENT + UNKNOWN_ELEMENT).
-            if (usesStrictCaseBinding() ? lookup.IsExactCase : lookup.MatchedByLegacyRules)
+            if (lookup.IsExactCase || !usesStrictCaseBinding())
                 definedMapping = lookup.Mapping;
         }
 

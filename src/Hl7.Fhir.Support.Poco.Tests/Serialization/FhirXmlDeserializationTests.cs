@@ -712,6 +712,23 @@ public partial class FhirXmlDeserializationTests
     }
 
     [TestMethod]
+    public void WrongCaseChoicePrefix_LenientModes_BindsToChoiceElement()
+    {
+        // SDK 6.2 and earlier matched the element-name part of a choice name case-sensitively, so
+        // "DeceasedBoolean" was treated as an unknown element. We consider that a bug: in lenient
+        // modes, all wrong-cased names bind to the element they nearly match.
+        var settings = new DeserializerSettings();
+        var deserializer = getTestDeserializer(settings);
+
+        var content = "<Patient xmlns=\"http://hl7.org/fhir\"><DeceasedBoolean value=\"true\"/></Patient>";
+        var reader = constructReader(content);
+        reader.Read();
+        var result = deserializer.DeserializeResource(reader);
+        result.Should().BeOfType<Patient>().Which.Deceased.Should().BeOfType<FhirBoolean>()
+            .Which.Value.Should().Be(true);
+    }
+
+    [TestMethod]
     [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><Id value=\"test\"/></Patient>", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_PropertyName")]
     [DataRow("<patient xmlns=\"http://hl7.org/fhir\"><id value=\"test\"/></patient>", COVE.WRONG_CASED_RESOURCE_TYPE_CODE, DisplayName = "WrongCase_ResourceType")]
     [DataRow("<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDatetime value=\"2022-05\"/></Patient>", COVE.WRONG_CASED_ELEMENT_CODE, DisplayName = "WrongCase_ChoiceTypeSuffix")]

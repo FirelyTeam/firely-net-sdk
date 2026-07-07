@@ -282,7 +282,7 @@ public class ClassMapping(
 
     /// <summary>
     /// Looks up the element that a (possibly choice-suffixed) serialized name refers to, matching
-    /// names case-insensitively, and reports how well the given name matches the definition.
+    /// names case-insensitively, and reports whether the given name matches the definition exactly.
     /// </summary>
     /// <param name="name">The name for the element as encountered in the serialized form.</param>
     /// <returns>The result of the lookup, or <c>null</c> when the name does not match any element
@@ -290,8 +290,8 @@ public class ClassMapping(
     /// <remarks>This is the single source of truth for detecting case-sensitivity violations in
     /// element names: FHIR names are case-sensitive, but this lookup will also find "near misses"
     /// that differ from a defined element name only by casing. Callers decide, based on
-    /// <see cref="ElementLookupResult.IsExactCase"/> and <see cref="ElementLookupResult.MatchedByLegacyRules"/>,
-    /// whether to bind the data to the found element and/or to report an error.</remarks>
+    /// <see cref="ElementLookupResult.IsExactCase"/>, whether to bind the data to the found
+    /// element and/or to report an error.</remarks>
     internal ElementLookupResult? TryFindElement(string name)
     {
         if (name == null) throw Error.ArgumentNull(nameof(name));
@@ -301,8 +301,7 @@ public class ClassMapping(
             return new ElementLookupResult(
                 byName,
                 byName.Name,
-                IsExactCase: string.Equals(name, byName.Name, StringComparison.Ordinal),
-                MatchedByLegacyRules: true);
+                IsExactCase: string.Equals(name, byName.Name, StringComparison.Ordinal));
 
         // Choice elements: the name is the element name plus a type suffix.
         if (FindMappedElementByChoiceName(name, ignoreCase: true) is { } byChoice)
@@ -311,8 +310,7 @@ public class ClassMapping(
             return new ElementLookupResult(
                 byChoice,
                 canonicalName,
-                IsExactCase: string.Equals(name, canonicalName, StringComparison.Ordinal),
-                MatchedByLegacyRules: name.StartsWith(byChoice.Name, StringComparison.Ordinal));
+                IsExactCase: string.Equals(name, canonicalName, StringComparison.Ordinal));
         }
 
         return null;
@@ -477,13 +475,7 @@ public class ClassMapping(
 /// type suffix for choice elements. This is the name that should have been used in the serialized form.</param>
 /// <param name="IsExactCase">Whether the given name is exactly equal to <paramref name="CanonicalName"/>.
 /// When <c>false</c>, the name is a case-sensitivity violation ("near miss").</param>
-/// <param name="MatchedByLegacyRules">Whether this match would also have been found by the lookup rules
-/// used by the SDK before case-sensitivity violations were detected (SDK 6.2 and earlier): element names
-/// were compared case-insensitively, but the element-name part of a choice name was compared
-/// case-sensitively (only its type suffix was case-insensitive). Used to reproduce that legacy binding
-/// behaviour exactly when case-sensitivity violations are not treated as errors.</param>
 internal sealed record ElementLookupResult(
     PropertyMapping Mapping,
     string CanonicalName,
-    bool IsExactCase,
-    bool MatchedByLegacyRules);
+    bool IsExactCase);

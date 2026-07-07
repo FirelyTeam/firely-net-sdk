@@ -64,8 +64,8 @@ public record DeserializerSettings
     /// deserialization will fail because of them - and a failing parse should faithfully preserve the
     /// input rather than silently correct the name, so we bind strictly. If the filter <em>ignores</em>
     /// these errors (the default, and all other modes), the caller has chosen to tolerate them, and we
-    /// keep the lenient legacy binding so the data ends up in the typed properties where it is most
-    /// useful. This way the reported errors always accurately describe what happened to the data, and
+    /// bind the name to the element it nearly matches, so the data ends up in the typed properties
+    /// where it is most useful. This way the reported errors always accurately describe what happened to the data, and
     /// case strictness follows the chosen mode - or can be controlled explicitly with
     /// <see cref="Enforcing"/> / <see cref="Ignoring"/> and the wrong-case error codes - without a
     /// dedicated setting.</para>
