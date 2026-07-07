@@ -1080,9 +1080,10 @@ public partial class FhirJsonDeserializationTests
         var act = () => deserializer.DeserializeResource(json);
         var ex = act.Should().Throw<DeserializationFailedException>().Which;
 
-        // Both the casing violation and the resulting unknown element are reported.
-        ex.Exceptions.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
-        ex.Exceptions.Should().Contain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
+        // The casing violation is reported - and only that: a near miss is never additionally
+        // reported as an unknown element.
+        ex.Exceptions.Should().ContainSingle(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
+        ex.Exceptions.Should().NotContain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
 
         // The data is in the overflow under its original name, not in the typed property.
         var patient = ex.PartialResult.Should().BeOfType<Patient>().Subject;

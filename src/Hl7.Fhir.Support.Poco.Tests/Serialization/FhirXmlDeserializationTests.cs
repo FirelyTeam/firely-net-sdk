@@ -759,9 +759,10 @@ public partial class FhirXmlDeserializationTests
         var state = new PocoDeserializerState();
         var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-        // Both the casing violation and the resulting unknown element are reported.
-        state.Errors.Should().Contain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
-        state.Errors.Should().Contain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
+        // The casing violation is reported - and only that: a near miss is never additionally
+        // reported as an unknown element.
+        state.Errors.Should().ContainSingle(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE);
+        state.Errors.Should().NotContain(e => e.ErrorCode == COVE.UNKNOWN_ELEMENT_CODE);
 
         // The data is in the overflow under its original name, not in the typed property.
         var patient = resource.Should().BeOfType<Patient>().Subject;

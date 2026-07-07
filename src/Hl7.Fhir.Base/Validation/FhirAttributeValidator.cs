@@ -47,16 +47,14 @@ public class FhirAttributeValidator : IPocoValidator
                 : "element";
 
             // If the unknown name is a case-insensitive near miss of a defined element, the reason
-            // it is unknown is its incorrect casing. Report the casing violation alongside the
-            // unknown element, so both the cause and the fact that the data ended up in the
-            // overflow are visible.
+            // it is unknown is its incorrect casing - report the casing violation instead of the
+            // generic unknown element. So, a name always produces at most one of these errors:
+            // WRONG_CASED_ELEMENT when it nearly matches a defined element, UNKNOWN_ELEMENT when
+            // it does not match anything at all.
             var declaringMapping = propertyMapping?.DeclaringClass
                 ?? context.ModelInspector.FindOrImportClassMapping(context.ObjectInstance);
             if (declaringMapping?.TryFindElement(name) is { IsExactCase: false } nearMiss)
-                return [
-                    CodedValidationException.WRONG_CASED_ELEMENT(context, name, nearMiss.CanonicalName),
-                    CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)
-                ];
+                return [CodedValidationException.WRONG_CASED_ELEMENT(context, name, nearMiss.CanonicalName)];
 
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
         }
