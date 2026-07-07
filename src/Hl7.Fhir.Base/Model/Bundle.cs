@@ -118,10 +118,6 @@ namespace Hl7.Fhir.Model
 
         private void setLink(string rel, Uri? uri)
         {
-            if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-            if (Link == null) Link = new List<LinkComponent>();
-
             var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
 
             // Setting the link to null removes the entry
