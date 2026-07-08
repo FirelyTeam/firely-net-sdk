@@ -1,24 +1,11 @@
 ## Intro:
 
-This is a bugfix release with several stability and correctness improvements.
-
-**Serialization**
-- Fixed an `OverflowException` when serializing large decimal values with old parsing stack
-- Switched `FhirClient` to use the modern POCO serializer for better consistency
-- Fixed size limitations when serializing base64-encoded data
-- Fixed the `pretty` option being ignored when calling `ToXml()`
-
-**Snapshot generation**
-- Fixed incorrect behavior in collection merge when suppression extensions were involved, which could cause an index-out-of-range error or suppression being silently ignored
+This release includes a behavioral change in parsing alongside a minor bug fix. Please read the notes below carefully before upgrading.
 
 **POCO / type system**
-- `ISourceNode` now has a direct `ToPoco()` extension method
-- Fixed `instant` values being stored incorrectly when converting from an untyped source
-- Untyped sources are now correctly associated with the model when building POCOs
-- Custom resources and datatypes are now easier to define and build as a `ClassMapping` for `ModelInspector`
-- Restored collection initializer syntax support on the `Parameters` class
-- Added `IVersionableConformanceResource` to R5 `NamingSystem`
+- The SDK now detects incorrectly cased element and resource type names. Two new error codes are introduced: `PVAL131` (`WRONG_CASED_ELEMENT`) and `PVAL132` (`WRONG_CASED_RESOURCE_TYPE`).
+
+  > **Breaking change:** Parsers running in strict mode will now report errors when receiving data with incorrectly cased element or resource type names. Data that was previously silently corrected during parsing will now cause parse errors instead. Make sure your data sources use the correct casing as defined by the FHIR specification. All non-strict modes (BackwardsCompatible, Recoverable, NoOverflow, and the default) continue to bind leniently, preserving the behaviour from previous SDK versions. The exact handling of wrong-cased names in lenient modes is subject to change in future major versions of the SDK.
 
 **Other fixes**
-- Resolver base class now allows returning `null`, leaving it to the caller to decide whether to throw
-- Dependencies downgraded to align with the target framework version
+- Fixed redundant null-checks and initialization logic in bundle link handling.
