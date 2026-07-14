@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         
         public SubstituteBuilder Send(HttpResponseMessage response, Predicate<HttpRequestMessage> check)
         {
-            Instance.SendAsyncPublic(Arg.Is<HttpRequestMessage>(msg => msg != null && check(msg)), Arg.Any<CancellationToken>()).Returns(response);
+            Instance.SendAsyncPublic(Arg.Is<HttpRequestMessage>(msg => check(msg!)), Arg.Any<CancellationToken>()).Returns(response);
 
             return this;
         }

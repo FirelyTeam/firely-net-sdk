@@ -501,8 +501,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             await handlerMock.Received(1).SendAsyncPublic(
                 Arg.Is<HttpRequestMessage>(req =>
-                    req != null &&
-                    req.Content!.Headers.ContentType!.ToString() == "application/json-patch+json" &&
+                    req!.Content!.Headers.ContentType!.ToString() == "application/json-patch+json" &&
                     req.Content.ReadAsStringAsync().Result == body &&
                     req.RequestUri!.ToString().Contains("_format=json")
                     ),
