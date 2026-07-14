@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         public async Task TestCanCancelInteraction()
         {
             var mock = Substitute.For<SubstituteBuilder.TestHttpMessageHandler>();
-            mock.SendAsyncPublic(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>()).Returns(args => blocker((CancellationToken)args[1]));
+            mock.SendAsyncPublic(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>()).Returns(args => blocker((CancellationToken)args[1]!));
 
             bool isBlocking = false;
 
@@ -501,6 +501,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             await handlerMock.Received(1).SendAsyncPublic(
                 Arg.Is<HttpRequestMessage>(req =>
+                    req != null &&
                     req.Content!.Headers.ContentType!.ToString() == "application/json-patch+json" &&
                     req.Content.ReadAsStringAsync().Result == body &&
                     req.RequestUri!.ToString().Contains("_format=json")
