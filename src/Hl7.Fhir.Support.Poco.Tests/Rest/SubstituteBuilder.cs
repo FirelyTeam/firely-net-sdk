@@ -23,14 +23,14 @@ namespace Hl7.Fhir.Core.Tests.Rest
         
         public SubstituteBuilder Send(HttpResponseMessage response, Action<HttpRequestMessage> callback)
         {
-            Instance.SendAsyncPublic(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>()).Returns(response).AndDoes(msg => callback(msg.Arg<HttpRequestMessage>()));
+            Instance.SendAsyncPublic(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>()).Returns(response).AndDoes(msg => callback(msg.Arg<HttpRequestMessage>()!));
 
             return this;
         }
         
         public SubstituteBuilder Send(HttpResponseMessage response, Predicate<HttpRequestMessage> check)
         {
-            Instance.SendAsyncPublic(Arg.Is<HttpRequestMessage>(msg => check(msg)), Arg.Any<CancellationToken>()).Returns(response);
+            Instance.SendAsyncPublic(Arg.Is<HttpRequestMessage>(msg => check(msg!)), Arg.Any<CancellationToken>()).Returns(response);
 
             return this;
         }
