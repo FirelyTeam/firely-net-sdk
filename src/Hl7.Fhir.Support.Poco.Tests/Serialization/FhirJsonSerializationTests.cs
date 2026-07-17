@@ -68,11 +68,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
             Assert.AreEqual("treu", jdoc.RootElement
                 .GetProperty("active").GetString());
 
+            // An empty component has no content, so the property is omitted entirely
+            // instead of being serialized as an empty object.
             Patient p = new() { Contact = [new Patient.ContactComponent()] };
             jdoc = JsonDocument.Parse(JsonSerializer.Serialize(p, options));
-            var contactArray = jdoc.RootElement.GetProperty("contact");
-            contactArray.GetArrayLength().Should().Be(1);
-            contactArray[0].EnumerateObject().Should().BeEmpty();
+            jdoc.RootElement.TryGetProperty("contact", out _).Should().BeFalse();
         }
 
         /// <summary>

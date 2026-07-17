@@ -79,21 +79,22 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             return;
         }
 
-        writer.WriteStartObject();
-
-        if (element is Resource r and not DynamicResource { DynamicTypeName: null })
-            writer.WriteString("resourceType", r.TypeName);
-
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
+        // Resolved before any output is written, so a failure does not leave the writer in a broken state.
         if (Inspector.FindOrImportClassMapping(element) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
+
+        writer.WriteStartObject();
+
+        if (element is Resource r)
+            writer.WriteString("resourceType", r.TypeName);
 
         filter?.EnterObject(element, mapping);
 
         foreach (var member in element.EnumerateElements())
         {
-            var propertyMapping = mapping?.FindMappedElementByName(member.Key);
+            var propertyMapping = mapping.FindMappedElementByName(member.Key);
 
             if (filter?.TryEnterMember(member.Key, member.Value, propertyMapping) == false)
                 continue;
@@ -115,22 +116,11 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     serializeFhirPrimitiveList(propertyName, pts, writer, filter);
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
-                    {
-                        writer.WritePropertyName(propertyName);
-                        writer.WriteStartArray();
-
-                        foreach (var child in children)
-                            serializeInternal(child, writer, filter);
-
-                        writer.WriteEndArray();
-                        break;
-                    }
+                    serializeComplexList(propertyName, children, writer, filter);
+                    break;
                 case Base b:
-                    {
-                        writer.WritePropertyName(propertyName);
-                        serializeInternal(b, writer, filter);
-                        break;
-                    }
+                    serializeComplex(propertyName, b, writer, filter);
+                    break;
                 default:
                     throw new InvalidOperationException($"{nameof(element.EnumerateElements)} returned a non-Base element of type {member.Value.GetType()}.");
             }
@@ -141,6 +131,100 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         filter?.LeaveObject(element, mapping);
         writer.WriteEndObject();
     }
+
+    /// <summary>
+    /// Serializes a single complex (non-primitive) member, omitting the property entirely
+    /// when it would serialize to an empty object, which is not allowed by the FHIR spec.
+    /// </summary>
+    private void serializeComplex(string propertyName, Base element, Utf8JsonWriter writer, SerializationFilter? filter)
+    {
+        if (filter is null)
+        {
+            if (!hasContent(element)) return;
+
+            writer.WritePropertyName(propertyName);
+            serializeInternal(element, writer, filter);
+        }
+        else if (trySerializeToBuffer(element, writer.Options, writer.CurrentDepth, filter) is { } payload)
+        {
+            // With an active filter we cannot predict up-front whether any members survive,
+            // so serialize to a buffer first and only emit the property if it is non-empty.
+            writer.WritePropertyName(propertyName);
+            writeBufferedValue(payload, writer);
+        }
+    }
+
+    /// <summary>
+    /// Serializes a list of complex (non-primitive) members, skipping children that would
+    /// serialize to an empty object and omitting the property when no children remain.
+    /// </summary>
+    private void serializeComplexList(string propertyName, IReadOnlyList<Base?> children, Utf8JsonWriter writer, SerializationFilter? filter)
+    {
+        var wroteStartArray = false;
+
+        foreach (var child in children)
+        {
+            if (child is null)
+            {
+                // empty objects in arrays may occur in error situations; keep the placeholder.
+                ensureStartArray();
+                writer.WriteNullValue();
+            }
+            else if (filter is null)
+            {
+                if (!hasContent(child)) continue;
+
+                ensureStartArray();
+                serializeInternal(child, writer, filter);
+            }
+            // Until the array is open, items sit one level deeper than the writer's current depth.
+            else if (trySerializeToBuffer(child, writer.Options, writer.CurrentDepth + (wroteStartArray ? 0 : 1), filter, asArrayItem: true) is { } payload)
+            {
+                ensureStartArray();
+                writeBufferedValue(payload, writer);
+            }
+        }
+
+        if (wroteStartArray) writer.WriteEndArray();
+
+        void ensureStartArray()
+        {
+            if (wroteStartArray) return;
+            wroteStartArray = true;
+            writer.WriteStartArray(propertyName);
+        }
+    }
+
+    /// <summary>
+    /// Determines whether an element would produce any output when serialized (without a filter).
+    /// Elements without content must be omitted entirely according to the FHIR spec.
+    /// </summary>
+    private static bool hasContent(Base? element) => element switch
+    {
+        // nulls are serialized as placeholders (error situations), so they count as content.
+        null => true,
+        // resources always serialize their resourceType property.
+        Resource => true,
+        // primitive can have a value and complex parts
+        PrimitiveType { JsonValue: not null } => true,
+        _ => hasElementContent(element)
+    };
+
+    /// <summary>
+    /// Determines whether an element's children (id/extensions, not its value) would produce
+    /// any output when serialized without a filter - i.e. whether a '_elementName' property
+    /// would be non-empty.
+    /// </summary>
+    private static bool hasElementContent(Base element) =>
+        element.EnumerateElements().Any(m => memberHasContent(m.Value));
+
+    private static bool memberHasContent(object value) => value switch
+    {
+        PrimitiveType pt => hasContent(pt),
+        IReadOnlyList<Base?> list => list.Any(hasContent),
+        Base b => hasContent(b),
+        _ => true
+    };
 
     private static string addSuffixToElementName(string elementName, object elementValue)
     {
@@ -166,7 +250,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         Utf8JsonWriter writer,
         SerializationFilter? filter)
     {
-        if(values is null) throw new ArgumentNullException(nameof(values));
+        if (values is null) throw new ArgumentNullException(nameof(values));
 
         // Don't serialize empty collections.
         if (values.Count == 0) return;
@@ -210,7 +294,18 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         foreach (var value in values)
         {
-            if (value?.EnumerateElements().Any() == true)
+            // Empty objects are not allowed in the _elementName array. Without a filter we can
+            // predict emptiness cheaply; with an active filter id/extensions may be removed, so
+            // we serialize into a buffer first and only write the result when it is non-empty.
+            ReadOnlyMemory<byte>? payload = null;
+
+            var hasOutput = filter is null
+                ? value is not null && hasElementContent(value)
+                : value?.EnumerateElements().Any() == true
+                  // Until the array is open, items sit one level deeper than the writer's current depth.
+                  && (payload = trySerializeToBuffer(value, writer.Options, writer.CurrentDepth + (wroteStartArray ? 0 : 1), filter, asArrayItem: true)) is not null;
+
+            if (hasOutput)
             {
                 if (!wroteStartArray)
                 {
@@ -218,7 +313,10 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     writeStartArray("_" + elementName, numNullsMissed, writer);
                 }
 
-                serializeInternal(value, writer, filter);
+                if (payload is { } p)
+                    writeBufferedValue(p, writer);
+                else
+                    serializeInternal(value!, writer, filter);
             }
             else
             {
@@ -257,11 +355,34 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             SerializePrimitiveValue(value, writer);
         }
 
-        if (!value.EnumerateElements().Any()) return;
-        
-        deferSerializeForFilter(elementName, value, writer, filter);
+        // An empty object is not allowed as the value of the '_elementName' property. Without a
+        // filter we can predict emptiness cheaply; with an active filter id/extensions may be
+        // removed, so we serialize into a buffer first and only write the result when non-empty.
+        if (filter is null)
+        {
+            if (!hasElementContent(value)) return;
+
+            writer.WritePropertyName("_" + elementName);
+            serializeInternal(value, writer, filter);
+        }
+        else
+        {
+            if (!value.EnumerateElements().Any()) return;
+            if (trySerializeToBuffer(value, writer.Options, writer.CurrentDepth, filter) is not { } payload) return;
+
+            writer.WritePropertyName("_" + elementName);
+            writeBufferedValue(payload, writer);
+        }
     }
     
+    /// <summary>
+    /// Splices a buffered payload into the target writer. The payload was produced by
+    /// <see cref="trySerializeToBuffer"/> at the correct nesting depth, so its indentation
+    /// already matches the target writer and it can be copied verbatim.
+    /// </summary>
+    private static void writeBufferedValue(ReadOnlyMemory<byte> payload, Utf8JsonWriter writer) =>
+        writer.WriteRawValue(payload.Span, skipInputValidation: true);
+
     private static void tryWriteBase64(Utf8JsonWriter writer, string text)
     {
         var maxSize = Base64.GetMaxDecodedFromUtf8Length(text.Length);
@@ -272,22 +393,47 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             writer.WriteStringValue(text);
     }
 
-    private void deferSerializeForFilter(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
+    /// <summary>
+    /// Serializes the given element into a buffer, returning <c>null</c> when the result is an
+    /// empty object (either because the element was empty, or the filter removed all its members).
+    /// </summary>
+    private ReadOnlyMemory<byte>? trySerializeToBuffer(Base element, JsonWriterOptions options, int targetDepth, SerializationFilter? filter, bool asArrayItem = false)
     {
         var buffer = new ArrayBufferWriter<byte>();
-        using (var defer = new Utf8JsonWriter(buffer, writer.Options))
+        using (var defer = new Utf8JsonWriter(buffer, options))
         {
-            serializeInternal(value, defer, filter);
+            // Utf8JsonWriter offers no way to seed its starting depth, so for indented output we
+            // simulate the depth the payload will be spliced at by opening dummy arrays. The
+            // element then serializes with the indentation of its final nesting level, and the
+            // payload can be copied into the target writer verbatim (see writeBufferedValue).
+            // The prologue consists solely of '[' and whitespace while the element itself always
+            // serializes as an object, so it is sliced off by looking for the first '{'.
+            if (options.Indented)
+                for (var i = 0; i < targetDepth; i++)
+                    defer.WriteStartArray();
+
+            serializeInternal(element, defer, filter);
         }
 
-        // brackets only, so either object was empty, or we filtered everything out
-        const int expectedLength = 3;
-        if (buffer.WrittenCount < expectedLength) return;
-        
-        // Write a property with '_elementName'
-        writer.WritePropertyName("_" + elementName);
-        // write the deferred data
-        writer.WriteRawValue(buffer.WrittenSpan, skipInputValidation: true);
+        var written = buffer.WrittenMemory;
+        var start = written.Span.IndexOf((byte)'{');
+
+        // An empty object serializes to "{}" (2 bytes): either the element was empty, or the
+        // filter removed all its members. Note that a null element serializes to "null"
+        // (4 bytes) and is deliberately kept as a placeholder.
+        // Note: the explicit cast is required. Without it, the conditional's natural type is
+        // ReadOnlyMemory<byte> (via the implicit byte[] conversion for the null literal), which
+        // turns 'null' into an empty-but-non-null memory instead of a null Nullable.
+        const int emptyObjectLength = 2;
+        if (written.Length - start <= emptyObjectLength) return null;
+
+        // WriteRawValue emits the list separator but not the newline + indentation that normally
+        // precedes an array item, so for array items we keep the payload's own leading
+        // "\n<indent>" (the last newline of the dummy prologue sits right in front of the element).
+        if (asArrayItem && options.Indented)
+            start = written.Span[..start].LastIndexOf((byte)'\n');
+
+        return written[start..];
     }
 
     /// <summary>
@@ -314,7 +460,8 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     {
         // due to System.Text.Json limitations described in https://github.com/FirelyTeam/firely-net-sdk/issues/3501
         // Base64 strings need to be < 125MB, but the overload accepting byte array does not carry such limitation
-        // Accessing the Value property might result in CodedValidationException, so we need to 
+        // Accessing the Value property might result in CodedValidationException, so we need to
+        // pattern-match on the raw JsonValue instead of reading the parsed Value.
         if (value is Base64Binary { JsonValue: string { Length: > 0 } text })
             tryWriteBase64(writer, text);
         else
@@ -326,7 +473,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>
     /// To allow for future additions to the POCOs the list of primitives supported here
-    /// is larger than the set used by the current POCOs. Note that <c>DateTimeOffset</c>c> and
+    /// is larger than the set used by the current POCOs. Note that <c>DateTimeOffset</c> and
     /// <c>byte[]</c> are considered to be "primitive" values here (used as the value in
     /// <see cref="Instant"/> and <see cref="Base64Binary"/>).
     ///
