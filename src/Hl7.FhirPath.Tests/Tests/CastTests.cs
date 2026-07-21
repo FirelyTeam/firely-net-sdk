@@ -34,12 +34,12 @@ namespace Hl7.FhirPath.Tests
         {
             Assert.IsNull(Typecasts.UnboxTo(emptyColl, typeof(string)));
             collection.SequenceEqual(Typecasts.UnboxTo(collection, typeof(IEnumerable<PocoNode>)) as IEnumerable<PocoNode>);
-            Assert.AreEqual(complex, Typecasts.UnboxTo(singleC, typeof(PocoNode)));
+            Assert.AreSame(complex, Typecasts.UnboxTo(singleC, typeof(PocoNode)));
 
             Assert.AreEqual(4L, Typecasts.UnboxTo(singleV, typeof(long)));
             Assert.AreEqual(4L, Typecasts.UnboxTo(PocoNode.ForPrimitive<Integer64>("4"), typeof(long)));
 
-            Assert.AreEqual(complex, Typecasts.UnboxTo(complex, typeof(PocoNode)));
+            Assert.AreSame(complex, Typecasts.UnboxTo(complex, typeof(PocoNode)));
             Assert.IsNull(Typecasts.UnboxTo(null, typeof(string)));
             Assert.AreEqual(4L, Typecasts.UnboxTo(4L, typeof(long)));
             Assert.AreEqual("hi!", Typecasts.UnboxTo("hi!", typeof(string)));
@@ -74,7 +74,7 @@ namespace Hl7.FhirPath.Tests
 
             Assert.IsTrue(Typecasts.CanCastTo(complex, typeof(IEnumerable<PocoNode>)));
             var result = (IEnumerable<PocoNode>)Typecasts.CastTo(complex, typeof(IEnumerable<PocoNode>));
-            Assert.AreEqual(complex, result.Single());
+            Assert.AreSame(complex, result.Single());
             checkCast<PocoNode>(complex, complex);
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(bool)));
             Assert.IsFalse(Typecasts.CanCastTo(collection, typeof(bool?)));

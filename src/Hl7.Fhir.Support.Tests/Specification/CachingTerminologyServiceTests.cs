@@ -51,7 +51,7 @@ public class CachingTerminologyServiceTests
         var result = await _cachingService.ValueSetValidateCode(_testParameters, "id2", true);
 
         // Assert - Should return cached result and only call underlying service once
-        Assert.AreEqual(_expectedResult, result);
+        Assert.AreSame(_expectedResult, result);
         await _mockService.Received(1).ValueSetValidateCode(_testParameters, "id1", false);
         await _mockService.DidNotReceive().ValueSetValidateCode(_testParameters, "id2", true);
     }
@@ -68,7 +68,7 @@ public class CachingTerminologyServiceTests
         var result = await _cachingService.Translate(_testParameters, "different-id", true);
 
         // Assert - Should return cached result and only call underlying service once
-        Assert.AreEqual(_expectedResult, result);
+        Assert.AreSame(_expectedResult, result);
         await _mockService.Received(1).Translate(_testParameters, "original-id", false);
         await _mockService.DidNotReceive().Translate(_testParameters, "different-id", true);
     }

@@ -74,7 +74,7 @@ namespace Hl7.FhirPath.Tests
 
         public static void SucceedsMatch<T>(Parser<T> parser, string input)
         {
-            SucceedsWith<T>(parser, input, result => Assert.AreEqual(input, (IEnumerable<char>)result));
+            SucceedsWith<T>(parser, input, result => Assert.AreSequenceEqual(input, (IEnumerable<char>)result));
         }
 
         public static void SucceedsMatch<T>(Parser<T> parser, string input, T match)

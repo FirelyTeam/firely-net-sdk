@@ -30,7 +30,9 @@ namespace Hl7.Fhir.Support.Tests.Language
         [TestMethod]
         public void TestEquality()
         {
-            Assert.AreEqual(TypeSpecifier.Concept, TypeSpecifier.Concept);
+#pragma warning disable MSTEST0032 // Condition known to be always true - we're testing that Equals handles self-comparison
+            Assert.AreSame(TypeSpecifier.Concept, TypeSpecifier.Concept);
+#pragma warning restore MSTEST0032
             Assert.AreNotEqual(TypeSpecifier.Concept, TypeSpecifier.Code);
 #pragma warning disable CS1718 // Comparison made to same variable - we're testing the '==' operator here
             Assert.IsTrue(TypeSpecifier.Concept == TypeSpecifier.Concept);
