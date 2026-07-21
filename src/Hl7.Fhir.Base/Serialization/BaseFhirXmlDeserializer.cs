@@ -703,16 +703,14 @@ public class BaseFhirXmlDeserializer
 
         ClassMapping getChoiceClassMapping()
         {
-            string typeSuffix = elementName[propertyMapping.Name.Length..];
+            var typeSuffix = elementName.AsSpan(propertyMapping.Name.Length);
 
-            if (!string.IsNullOrEmpty(typeSuffix))
+            if (!typeSuffix.IsEmpty)
             {
-                var foundChoiceMapping = parentMapping.Inspector.FindClassMapping(typeSuffix);
-
-                if (foundChoiceMapping is null)
-                {
-                    foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, getDynamicTypeMapping());
-                }
+                // Span-based lookup avoids allocating the suffix substring for the common case
+                // where the suffix resolves to a known type.
+                var foundChoiceMapping = parentMapping.Inspector.FindClassMapping(typeSuffix)
+                                         ?? new ClassMapping(_inspector, typeSuffix.ToString(), getDynamicTypeMapping());
 
                 return foundChoiceMapping;
             }

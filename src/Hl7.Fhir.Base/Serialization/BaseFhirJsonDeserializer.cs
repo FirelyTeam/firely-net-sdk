@@ -793,19 +793,19 @@ public class BaseFhirJsonDeserializer
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {
-            string typeSuffix = propNameWithoutUnderscore[propertyMapping.Name.Length..];
+            var typeSuffix = propNameWithoutUnderscore.AsSpan(propertyMapping.Name.Length);
 
-            if (!string.IsNullOrEmpty(typeSuffix))
+            if (!typeSuffix.IsEmpty)
             {
+                // Span-based lookup avoids allocating the suffix substring for the common case
+                // where the suffix resolves to a known type.
                 var foundChoiceMapping = parentMapping.Inspector.FindClassMapping(typeSuffix);
 
-                if (foundChoiceMapping is null)
-                {
-                    var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
-                    foundChoiceMapping = new ClassMapping(_inspector, typeSuffix, guessedDynamicType);
-                }
+                if (foundChoiceMapping is not null)
+                    return foundChoiceMapping;
 
-                return foundChoiceMapping;
+                var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
+                return new ClassMapping(_inspector, typeSuffix.ToString(), guessedDynamicType);
             }
             else
             {

@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Buffers;
 using System.Buffers.Text;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -29,6 +30,23 @@ namespace Hl7.Fhir.Serialization;
 /// </remarks>
 public class BaseFhirJsonSerializer(ModelInspector inspector)
 {
+    private static readonly JsonEncodedText RESOURCE_TYPE_PROPERTY_NAME = JsonEncodedText.Encode("resourceType"u8);
+    private static readonly JsonEncodedText VALUE_PROPERTY_NAME = JsonEncodedText.Encode("value"u8);
+
+    // FHIR element names form a small closed set, so pre-encoding them (UTF-8 + escaping) once
+    // and reusing the result on every write is considerably cheaper than having Utf8JsonWriter
+    // encode the name on each call. Names of dynamic properties end up in these caches too,
+    // but they are bounded by the model(s) in use.
+    private static readonly ConcurrentDictionary<string, JsonEncodedText> _encodedNames = new();
+    private static readonly ConcurrentDictionary<string, JsonEncodedText> _encodedUnderscoreNames = new();
+    private static readonly ConcurrentDictionary<(string name, string type), string> _suffixedNames = new();
+
+    private static JsonEncodedText encodedName(string elementName) =>
+        _encodedNames.GetOrAdd(elementName, static n => JsonEncodedText.Encode(n));
+
+    private static JsonEncodedText encodedUnderscoreName(string elementName) =>
+        _encodedUnderscoreNames.GetOrAdd(elementName, static n => JsonEncodedText.Encode("_" + n));
+
     /// <summary>
     /// The <see cref="ModelInspector"/> to be used for serialization metadata.
     /// </summary>
@@ -57,7 +75,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         else
         {
             writer.WriteStartObject();
-            serializeFhirPrimitive("value", val, writer, filter);
+            serializeFhirPrimitive(VALUE_PROPERTY_NAME, val, writer, filter);
             writer.WriteEndObject();
         }
     }
@@ -88,7 +106,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         writer.WriteStartObject();
 
         if (element is Resource r)
-            writer.WriteString("resourceType", r.TypeName);
+            writer.WriteString(RESOURCE_TYPE_PROPERTY_NAME, r.TypeName);
 
         filter?.EnterObject(element, mapping);
 
@@ -107,19 +125,21 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                 _ => member.Key
             };
 
+            var encodedPropertyName = encodedName(propertyName);
+
             switch (member.Value)
             {
                 case PrimitiveType pt:
-                    serializeFhirPrimitive(propertyName, pt, writer, filter);
+                    serializeFhirPrimitive(encodedPropertyName, pt, writer, filter);
                     break;
                 case IReadOnlyList<PrimitiveType?> pts:
-                    serializeFhirPrimitiveList(propertyName, pts, writer, filter);
+                    serializeFhirPrimitiveList(encodedPropertyName, propertyName, pts, writer, filter);
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
-                    serializeComplexList(propertyName, children, writer, filter);
+                    serializeComplexList(encodedPropertyName, children, writer, filter);
                     break;
                 case Base b:
-                    serializeComplex(propertyName, b, writer, filter);
+                    serializeComplex(encodedPropertyName, b, writer, filter);
                     break;
                 default:
                     throw new InvalidOperationException($"{nameof(element.EnumerateElements)} returned a non-Base element of type {member.Value.GetType()}.");
@@ -136,7 +156,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// Serializes a single complex (non-primitive) member, omitting the property entirely
     /// when it would serialize to an empty object, which is not allowed by the FHIR spec.
     /// </summary>
-    private void serializeComplex(string propertyName, Base element, Utf8JsonWriter writer, SerializationFilter? filter)
+    private void serializeComplex(JsonEncodedText propertyName, Base element, Utf8JsonWriter writer, SerializationFilter? filter)
     {
         if (filter is null)
         {
@@ -158,7 +178,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// Serializes a list of complex (non-primitive) members, skipping children that would
     /// serialize to an empty object and omitting the property when no children remain.
     /// </summary>
-    private void serializeComplexList(string propertyName, IReadOnlyList<Base?> children, Utf8JsonWriter writer, SerializationFilter? filter)
+    private void serializeComplexList(JsonEncodedText propertyName, IReadOnlyList<Base?> children, Utf8JsonWriter writer, SerializationFilter? filter)
     {
         var wroteStartArray = false;
 
@@ -235,7 +255,10 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             _ => null
         };
 
-        return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName[1..];
+        return typeName is null
+            ? elementName
+            : _suffixedNames.GetOrAdd((elementName, typeName),
+                static key => key.name + char.ToUpperInvariant(key.type[0]) + key.type[1..]);
     }
 
     /// <summary>
@@ -245,6 +268,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// serialization into two Json properties called "elementName" and "_elementName" and
     /// may use Json <c>null</c>s as placeholders.</remarks>
     private void serializeFhirPrimitiveList(
+        JsonEncodedText encodedElementName,
         string elementName,
         IReadOnlyList<PrimitiveType?> values,
         Utf8JsonWriter writer,
@@ -269,7 +293,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                 if (!wroteStartArray)
                 {
                     wroteStartArray = true;
-                    writeStartArray(elementName, numNullsMissed, writer);
+                    writeStartArray(encodedElementName, numNullsMissed, writer);
                 }
 
                 SerializePrimitiveValue(value, writer);
@@ -310,7 +334,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                 if (!wroteStartArray)
                 {
                     wroteStartArray = true;
-                    writeStartArray("_" + elementName, numNullsMissed, writer);
+                    writeStartArray(encodedUnderscoreName(elementName), numNullsMissed, writer);
                 }
 
                 if (payload is { } p)
@@ -330,7 +354,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         if (wroteStartArray) writer.WriteEndArray();
     }
 
-    private static void writeStartArray(string propName, int numNulls, Utf8JsonWriter writer)
+    private static void writeStartArray(JsonEncodedText propName, int numNulls, Utf8JsonWriter writer)
     {
         writer.WriteStartArray(propName);
 
@@ -344,14 +368,18 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>FHIR primitives are handled separately here since they may require
     /// serialization into two Json properties called "elementName" and "_elementName".</remarks>
-    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
+    private void serializeFhirPrimitive(
+        JsonEncodedText encodedElementName,
+        PrimitiveType value,
+        Utf8JsonWriter writer,
+        SerializationFilter? filter)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
         if (value.JsonValue is not null)
         {
             // Write a property with 'elementName'
-            writer.WritePropertyName(elementName);
+            writer.WritePropertyName(encodedElementName);
             SerializePrimitiveValue(value, writer);
         }
 
@@ -362,7 +390,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             if (!hasElementContent(value)) return;
 
-            writer.WritePropertyName("_" + elementName);
+            writer.WritePropertyName(encodedUnderscoreName(encodedElementName.Value));
             serializeInternal(value, writer, filter);
         }
         else
@@ -370,7 +398,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             if (!value.EnumerateElements().Any()) return;
             if (trySerializeToBuffer(value, writer.Options, writer.CurrentDepth, filter) is not { } payload) return;
 
-            writer.WritePropertyName("_" + elementName);
+            writer.WritePropertyName(encodedUnderscoreName(encodedElementName.Value));
             writeBufferedValue(payload, writer);
         }
     }
