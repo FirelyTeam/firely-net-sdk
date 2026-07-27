@@ -83,15 +83,20 @@ public class BaseFhirXmlDeserializer
     /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(XmlReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
-        PocoDeserializerState state = new();
+        PocoDeserializerState state = new() { RetainComments = Settings.RetainComments };
 
         // If the stream has just been opened, move to the first token. (skip processing instructions, comments, whitespaces etc.)
-        reader.MoveToContent();
+        reader.MoveToContentCapturingComments(state);
 
         if (reader.Settings is not null && reader.Settings.DtdProcessing != DtdProcessing.Prohibit)
             reader.Settings.DtdProcessing = DtdProcessing.Prohibit;
 
         instance = DeserializeResourceInternal(reader, state);
+
+        // Whatever is left after the root element has been read are the comments trailing the document.
+        if (instance is not null)
+            addSourceComments(instance, documentEnd: state.TakePendingComments());
+
         issues = Settings.ExceptionFilter is { } filter
             ? state.Errors.Remove(filter)
             : state.Errors;
@@ -110,15 +115,19 @@ public class BaseFhirXmlDeserializer
     /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeElement(Type targetType, XmlReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
-        PocoDeserializerState state = new();
+        PocoDeserializerState state = new() { RetainComments = Settings.RetainComments };
 
         // If the stream has just been opened, move to the first token. (skip processing instructions, comments, whitespaces etc.)
-        reader.MoveToContent();
+        reader.MoveToContentCapturingComments(state);
 
         if (reader.Settings is not null && reader.Settings.DtdProcessing != DtdProcessing.Prohibit)
             reader.Settings.DtdProcessing = DtdProcessing.Prohibit;
 
         instance = DeserializeElementInternal(targetType, reader, state);
+
+        // Whatever is left after the root element has been read are the comments trailing the document.
+        addSourceComments(instance, documentEnd: state.TakePendingComments());
+
         issues = Settings.ExceptionFilter is { } filter
             ? state.Errors.Remove(filter)
             : state.Errors;
@@ -192,7 +201,10 @@ public class BaseFhirXmlDeserializer
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         var hasValueAttribute = reader.GetAttribute("value") != null;
-        
+
+        // The comments collected since the previous element was closed are the ones preceding this element.
+        var commentsBefore = state.TakePendingComments();
+
         if (Settings.AnnotateLineInfo)
             target.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
 
@@ -202,6 +214,8 @@ public class BaseFhirXmlDeserializer
         validateNameSpace(reader, state);
 
         readAttributes(target, mapping, reader, state);
+
+        string[]? closingComments = null;
 
         //Empty elements have no children e.g. <foo value="bar/>)
         if (!reader.IsEmptyElement)
@@ -234,7 +248,14 @@ public class BaseFhirXmlDeserializer
                         state.ExitElement();
                 }
             }
+
+            // We are on the closing tag now, so anything collected after the last child closes this element.
+            // This has to be taken here, before the read at the end of this method moves past the closing tag
+            // and starts collecting the comments that precede our next sibling.
+            closingComments = state.TakePendingComments();
         }
+
+        addSourceComments(target, commentsBefore, closingComments);
 
         if (Settings.Validator is not null)
         {
@@ -344,11 +365,37 @@ public class BaseFhirXmlDeserializer
         return result;
     }
 
-    private static XHtml readXhtml(XmlReader reader)
+    private static XHtml readXhtml(XmlReader reader, PocoDeserializerState state)
     {
         var xhtml = reader.ReadOuterXml();
-        reader.MoveToContent();
+        reader.MoveToContentCapturingComments(state);
         return new XHtml(xhtml);
+    }
+
+    /// <summary>
+    /// Annotates the comments found around <paramref name="target"/> in the source data onto it, merging
+    /// them into the annotation when one is already present.
+    /// </summary>
+    /// <remarks>Only used when <see cref="DeserializerSettings.RetainComments"/> is on - without it there
+    /// are no comments to annotate, since none are collected.</remarks>
+    private static void addSourceComments(Base? target, string[]? before = null, string[]? closing = null, string[]? documentEnd = null)
+    {
+        if (target is null || (before is null && closing is null && documentEnd is null)) return;
+
+        var comments = target.Annotation<SourceComments>();
+
+        if (comments is null)
+        {
+            comments = new SourceComments();
+            target.AddAnnotation(comments);
+        }
+
+        if (before is not null) comments.CommentsBefore = combine(comments.CommentsBefore, before);
+        if (closing is not null) comments.ClosingComments = combine(comments.ClosingComments, closing);
+        if (documentEnd is not null) comments.DocumentEndComments = combine(comments.DocumentEndComments, documentEnd);
+
+        static string[] combine(string[]? existing, string[] added) =>
+            existing is not { Length: > 0 } ? added : [.. existing, .. added];
     }
 
     private static void addToList(IList target, object oneOrMoreThings)
@@ -377,10 +424,16 @@ public class BaseFhirXmlDeserializer
                 state.Errors.Add(ERR.INCORRECT_XHTML_NAMESPACE(reader, state.Path.GetInstancePath()));
             }
 
-            var xhtml = readXhtml(reader);
+            // Take the comments preceding the xhtml before reading on: readXhtml() moves past the div,
+            // and the comments it collects while doing so belong to whatever comes after it.
+            var commentsBefore = state.TakePendingComments();
+
+            var xhtml = readXhtml(reader, state);
             if (Settings.AnnotateLineInfo)
                 xhtml.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
-            
+
+            addSourceComments(xhtml, commentsBefore);
+
             return [xhtml];
         }
 
@@ -411,6 +464,11 @@ public class BaseFhirXmlDeserializer
                 var containedResource = DeserializeResourceInternal(reader, state);
                 if(containedResource is not null) result.Add(containedResource);
             }
+
+            // Comments between the resource and the closing tag of its container would otherwise leak into
+            // the element following the container, so treat them as closing the resource itself.
+            if (state.TakePendingComments() is { } trailing && result.Count > 0)
+                addSourceComments(result[^1], closing: trailing);
         }
 
         switch (result.Count)

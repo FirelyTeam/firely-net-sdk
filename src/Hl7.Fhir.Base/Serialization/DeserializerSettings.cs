@@ -109,6 +109,27 @@ public record DeserializerSettings
     public bool AnnotateLineInfo { get; init; } = false;
 
     /// <summary>
+    /// Retain the comments found in the source data as <see cref="SourceComments"/> annotations on the parsed
+    /// POCOs, so <see cref="BaseFhirXmlSerializer"/> can write them out again.
+    /// </summary>
+    /// <remarks>
+    /// <para>This setting is only used by the Xml deserializers - FHIR Json has no comments.</para>
+    /// <para>Comments are annotated on the POCO for the element they precede (<see cref="SourceComments.CommentsBefore"/>),
+    /// on the POCO of the element they are the last content of (<see cref="SourceComments.ClosingComments"/>), and,
+    /// for comments trailing the root element, on the root POCO (<see cref="SourceComments.DocumentEndComments"/>).</para>
+    /// <para>Since this adds an annotation to every element that is preceded or closed by a comment, it costs
+    /// memory, which is why it is off by default.</para>
+    /// <para>When you pass in your own <see cref="System.Xml.XmlReader"/>, this setting can only do its work if
+    /// that reader reports comments: a reader created with <c>XmlReaderSettings.IgnoreComments</c> (which is what
+    /// <see cref="SerializationUtil.WrapXmlReader"/> and friends do by default) filters them out before the
+    /// deserializer can see them. The overloads that take a string handle this for you.</para>
+    /// <para>Two caveats when roundtripping: comments between a resource container (e.g. <c>contained</c>) and the
+    /// resource element within it are written back out before the container, and comments are lost when serializing
+    /// with a summary filter, since the subsetted clone that is made for it does not carry annotations.</para>
+    /// </remarks>
+    public bool RetainComments { get; init; } = false;
+
+    /// <summary>
     /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
     /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
     /// default. Set this property to any other value than <see cref="None{T}"/>

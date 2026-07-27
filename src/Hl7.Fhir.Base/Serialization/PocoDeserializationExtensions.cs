@@ -42,7 +42,7 @@ public static class PocoDeserializationExtensions
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
     public static Resource DeserializeResource(this BaseFhirXmlDeserializer deserializer, string xml)
     {
-        using var xmlReader = SerializationUtil.XmlReaderFromXmlText(xml);
+        using var xmlReader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: !deserializer.Settings.RetainComments);
         return deserializer.DeserializeResource(xmlReader);
     }
 
@@ -59,7 +59,7 @@ public static class PocoDeserializationExtensions
 
     public static Base DeserializeElement(this BaseFhirXmlDeserializer deserializer, Type targetType, string xml)
     {
-        using var reader = SerializationUtil.XmlReaderFromXmlText(xml);
+        using var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: !deserializer.Settings.RetainComments);
         return deserializer.DeserializeElement(targetType, reader);
     }
 
@@ -85,7 +85,7 @@ public static class PocoDeserializationExtensions
     public static T Deserialize<T>(this BaseFhirXmlDeserializer deserializer, string xml) where T : Base
 
     {
-        using var reader = SerializationUtil.XmlReaderFromXmlText(xml);
+        using var reader = SerializationUtil.XmlReaderFromXmlText(xml, ignoreComments: !deserializer.Settings.RetainComments);
         return Deserialize<T>(deserializer, reader);
     }
 
@@ -103,7 +103,7 @@ public static class PocoDeserializationExtensions
         [NotNullWhen(true)] out Resource? instance,
         out IEnumerable<CodedException> issues)
     {
-        using var xmlReader = SerializationUtil.XmlReaderFromXmlText(data);
+        using var xmlReader = SerializationUtil.XmlReaderFromXmlText(data, ignoreComments: !deserializer.Settings.RetainComments);
         return deserializer.TryDeserializeResource(xmlReader, out instance, out issues);
     }
 
