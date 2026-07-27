@@ -45,7 +45,7 @@ internal static class XmlReaderExtensions
             while (reader.ShouldSkipNodeType(state))
             {
                 if (reader.NodeType == XmlNodeType.Comment)
-                    state.AddComment(reader.Value);
+                    state.Comments?.Add(reader.Value);
 
                 reader.Skip();
             }
@@ -55,12 +55,14 @@ internal static class XmlReaderExtensions
     }
 
     /// <summary>
-    /// Moves the reader to the next content node, like <see cref="XmlReader.MoveToContent"/> does, but collects
-    /// the comments encountered on the way into <paramref name="state"/> instead of silently skipping them.
+    /// Moves the reader to the next content node, exactly like <see cref="XmlReader.MoveToContent"/> does.
     /// </summary>
-    internal static void MoveToContentCapturingComments(this XmlReader reader, PocoDeserializerState state)
+    /// <remarks>When <see cref="PocoDeserializerState.Comments"/> is set (see <see cref="DeserializerSettings.RetainComments"/>),
+    /// also collects the comments encountered on the way, which <see cref="XmlReader.MoveToContent"/> would
+    /// otherwise skip over unreported.</remarks>
+    internal static void MoveToContent(this XmlReader reader, PocoDeserializerState state)
     {
-        if (!state.RetainComments)
+        if (state.Comments is not { } comments)
         {
             reader.MoveToContent();
             return;
@@ -73,13 +75,12 @@ internal static class XmlReaderExtensions
             return;
         }
 
-        // These are the node types MoveToContent() considers content and stops at. Since it skips the
-        // comments in between without reporting them, we have to walk to the next content node ourselves.
+        // These are the node types MoveToContent() considers content and stops at.
         while (!reader.EOF && reader.NodeType is not (XmlNodeType.Element or XmlNodeType.EndElement
                    or XmlNodeType.Text or XmlNodeType.CDATA or XmlNodeType.EntityReference or XmlNodeType.EndEntity))
         {
             if (reader.NodeType == XmlNodeType.Comment)
-                state.AddComment(reader.Value);
+                comments.Add(reader.Value);
 
             if (!reader.Read()) break;
         }
