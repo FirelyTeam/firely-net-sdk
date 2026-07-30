@@ -19,8 +19,8 @@ namespace Hl7.Fhir.Serialization;
 /// </summary>
 /// <remarks>A <see cref="PocoDeserializerState"/> only has one of these when <see cref="DeserializerSettings.RetainComments"/>
 /// is set, so every call site that touches it does so through <c>state.Comments?.…</c> and is a no-op otherwise.
-/// Every comment added here must be taken by exactly one caller (see <see cref="Take"/>) - one that
-/// is never taken leaks forward and ends up annotated on whichever element happens to take next.</remarks>
+/// Every comment added here must be consumed by exactly one caller (see <see cref="Consume"/>) - one that
+/// is never consumed leaks forward and ends up annotated on whichever element happens to consume next.</remarks>
 internal sealed class SourceCommentCollector
 {
     private List<string>? _pending;
@@ -31,7 +31,7 @@ internal sealed class SourceCommentCollector
     /// Returns the comments buffered since the previous call and clears the buffer, or <c>null</c> when
     /// no comments were encountered.
     /// </summary>
-    public string[]? Take()
+    public string[]? Consume()
     {
         if (_pending is not { Count: > 0 }) return null;
 
