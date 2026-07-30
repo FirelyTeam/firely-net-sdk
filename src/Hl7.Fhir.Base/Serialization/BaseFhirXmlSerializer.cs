@@ -51,7 +51,13 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         if (filter is not null)
             instance = SerializationUtil.MakeSubsettedClone(instance);
 
+        // Comments around the root element are not written by the loop over the members (there is no
+        // parent element to write them into), so they are handled here.
+        var rootComments = instance.Annotation<SourceComments>();
+
         writer.WriteStartDocument();
+
+        writeComments(rootComments?.CommentsBefore, writer);
 
         // Wrap the instance with a named element if either a root name is given,
         // or we are serializing a datatype (=a subtree).
@@ -63,6 +69,12 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         serializeInternal(instance, writer, filter);
 
         if (rootName is not null) writer.WriteEndElement();
+
+        // Only write these once the root element is actually closed - for a datatype without a root name
+        // the wrapping element above is left open for WriteEndDocument() to close.
+        if (rootName is not null || instance is Resource)
+            writeComments(rootComments?.DocumentEndComments, writer);
+
         writer.WriteEndDocument();
     }
 
@@ -138,6 +150,24 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
             filter?.LeaveMember(mKey, serializeValue, propertyMapping);
         }
+
+        // Comments that were the last content of this element in the source data. Written after the children,
+        // so they end up just before the closing tag written by our caller.
+        writeComments(element.Annotation<SourceComments>()?.ClosingComments, writer);
+    }
+
+    /// <summary>
+    /// Writes the comments retained from the source data (see <see cref="DeserializerSettings.RetainComments"/>).
+    /// </summary>
+    /// <remarks>May only be called when the writer is not writing the attributes of a start tag: a comment
+    /// cannot be written into a start tag. Since a comment is only ever annotated onto an element that was
+    /// itself serialized as an element, that is guaranteed by writing them at the element branches only.</remarks>
+    private static void writeComments(string[]? comments, XmlWriter writer)
+    {
+        if (comments is null) return;
+
+        foreach (var comment in comments)
+            writer.WriteComment(comment);
     }
 
     private static string addSuffixToElementName(string elementName, object? elementValue)
@@ -163,9 +193,11 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             case null:
                 break;  // In error situations there may be a null in a list, just don't serialize it.
             case XHtml xhtml:
+                writeComments(xhtml.Annotation<SourceComments>()?.CommentsBefore, writer);
                 writer.WriteRaw(xhtml.Value ?? "");
                 break;
             case Base complex:
+                writeComments(complex.Annotation<SourceComments>()?.CommentsBefore, writer);
                 writer.WriteStartElement(elementName, XmlNs.FHIR);
                 serializeInternal(complex, writer, filter);
                 writer.WriteEndElement();

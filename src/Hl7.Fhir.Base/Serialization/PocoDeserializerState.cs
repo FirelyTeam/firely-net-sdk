@@ -18,6 +18,13 @@ internal class PocoDeserializerState
 
     public PathPart Path { get; internal set; } = new RootPathPart();
 
+    /// <summary>
+    /// Collects the comments encountered while advancing the reader, or <c>null</c> when
+    /// <see cref="DeserializerSettings.RetainComments"/> is off, so every use of it (<c>state.Comments?.…</c>)
+    /// is a no-op in the default case.
+    /// </summary>
+    public SourceCommentCollector? Comments { get; init; }
+
     private readonly Stack<BaseFhirJsonDeserializer.ObjectParsingState> objectContext = new();
 
     public void EnterObjectContext() =>

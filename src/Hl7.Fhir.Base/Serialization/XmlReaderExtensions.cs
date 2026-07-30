@@ -44,12 +44,48 @@ internal static class XmlReaderExtensions
         {
             while (reader.ShouldSkipNodeType(state))
             {
+                if (reader.NodeType == XmlNodeType.Comment)
+                    state.Comments?.Add(reader.Value);
+
                 reader.Skip();
             }
             return true;
         }
         return false;
     }
+
+    /// <summary>
+    /// Moves the reader to the next content node, exactly like <see cref="XmlReader.MoveToContent"/> does.
+    /// </summary>
+    /// <remarks>When <see cref="PocoDeserializerState.Comments"/> is set (see <see cref="DeserializerSettings.RetainComments"/>),
+    /// also collects the comments encountered on the way, which <see cref="XmlReader.MoveToContent"/> would
+    /// otherwise skip over unreported.</remarks>
+    internal static void MoveToContent(this XmlReader reader, PocoDeserializerState state)
+    {
+        if (state.Comments is not { } comments)
+        {
+            reader.MoveToContent();
+            return;
+        }
+
+        // Like MoveToContent(), move back to the owning element when positioned on an attribute.
+        if (reader.NodeType == XmlNodeType.Attribute)
+        {
+            reader.MoveToElement();
+            return;
+        }
+
+        // These are the node types MoveToContent() considers content and stops at.
+        while (!reader.EOF && reader.NodeType is not (XmlNodeType.Element or XmlNodeType.EndElement
+                   or XmlNodeType.Text or XmlNodeType.CDATA or XmlNodeType.EntityReference or XmlNodeType.EndEntity))
+        {
+            if (reader.NodeType == XmlNodeType.Comment)
+                comments.Add(reader.Value);
+
+            if (!reader.Read()) break;
+        }
+    }
+
     internal static bool ShouldSkipNodeType(this XmlReader reader, PocoDeserializerState state)
     {
         var nodeType = reader.NodeType;
