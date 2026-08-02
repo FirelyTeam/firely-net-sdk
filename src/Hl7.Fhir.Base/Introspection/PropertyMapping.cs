@@ -196,8 +196,16 @@ public class PropertyMapping : IElementDefinitionSummary
     {
         get
         {
-            LazyInitializer.EnsureInitialized(ref _fhirTypeMappings, buildFhirTypeMappings);
-            return _fhirTypeMappings!;
+            // GetInstantiableType() reads this for every element with an abstract property type
+            // while parsing, so this avoids LazyInitializer.EnsureInitialized() and the delegate it
+            // allocates per access; see the note on ClassMapping.PropertyMappingsInternal.
+            return Volatile.Read(ref _fhirTypeMappings) ?? create();
+
+            ClassMapping[] create()
+            {
+                var created = buildFhirTypeMappings();
+                return Interlocked.CompareExchange(ref _fhirTypeMappings, created, null) ?? created;
+            }
         }
     }
 
