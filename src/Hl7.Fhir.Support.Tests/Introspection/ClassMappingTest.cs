@@ -233,8 +233,8 @@ namespace Hl7.Fhir.Tests.Introspection
             twoValues.HasPrimitiveValueMember.Should().BeTrue();
 
             // Repeatedly, not just on the first (uncached) read.
-            twoValues.Invoking(m => m.PrimitiveValueProperty).Should().Throw<InvalidOperationException>();
-            twoValues.Invoking(m => m.PrimitiveValueProperty).Should().Throw<InvalidOperationException>();
+twoValues.Invoking(m => m.PrimitiveValueProperty).Should().Throw<InvalidOperationException>().WithMessage("*more than one element*");
+twoValues.Invoking(m => m.PrimitiveValueProperty).Should().Throw<InvalidOperationException>().WithMessage("*more than one element*");
         }
 
         [TestMethod]
