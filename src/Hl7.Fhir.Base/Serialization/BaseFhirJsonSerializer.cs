@@ -274,20 +274,28 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
     private void deferSerializeForFilter(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
     {
-        var buffer = new ArrayBufferWriter<byte>();
-        using (var defer = new Utf8JsonWriter(buffer, writer.Options))
+        // When a filter is active it may remove all of the primitive's id/extension data. In that
+        // case we must not emit a "_elementName" property at all. To find out whether anything
+        // remains after filtering, serialize into a throwaway buffer first and only continue when
+        // it produced more than an empty object.
+        if (filter is not null)
         {
-            serializeInternal(value, defer, filter);
+            var buffer = new ArrayBufferWriter<byte>();
+            using (var defer = new Utf8JsonWriter(buffer))
+            {
+                serializeInternal(value, defer, filter);
+            }
+
+            // brackets only ("{}"), so either the object was empty, or we filtered everything out
+            const int emptyObjectLength = 2;
+            if (buffer.WrittenCount <= emptyObjectLength) return;
         }
 
-        // brackets only, so either object was empty, or we filtered everything out
-        const int expectedLength = 3;
-        if (buffer.WrittenCount < expectedLength) return;
-        
-        // Write a property with '_elementName'
+        // Write a property with '_elementName'. We serialize directly into the target writer (rather
+        // than splicing in pre-rendered bytes) so that pretty-printing indents the content at the
+        // writer's current depth. See https://github.com/FirelyTeam/firely-net-sdk/issues/3565
         writer.WritePropertyName("_" + elementName);
-        // write the deferred data
-        writer.WriteRawValue(buffer.WrittenSpan, skipInputValidation: true);
+        serializeInternal(value, writer, filter);
     }
 
     /// <summary>

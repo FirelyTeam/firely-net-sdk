@@ -1018,9 +1018,9 @@
       "resourceType": "Patient",
       "active": false,
       "_active": {
-  "url": "http://example.com",
-  "id": "duped"
-},
+        "url": "http://example.com",
+        "id": "duped"
+      },
       "name": [
         {
           "family": "Doe"
@@ -1039,13 +1039,13 @@
       "resourceType": "Patient",
       "test": false,
       "_test": {
-  "id": "duped",
-  "extension": [
-    {
-      "url": "http://example.com"
-    }
-  ]
-},
+        "id": "duped",
+        "extension": [
+          {
+            "url": "http://example.com"
+          }
+        ]
+      },
       "id": "pat1"
     },
     {
@@ -1188,8 +1188,8 @@
       "address": [
         {
           "_use": {
-  "incorrect": "should have been a simple string"
-},
+            "incorrect": "should have been a simple string"
+          },
           "line": [
             "2222 Home Street",
             null
@@ -1255,41 +1255,41 @@
   ],
   "gender": "male",
   "_gender": {
-  "extension": [
-    {
-      "url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
-      "valueCode": "metrosexual"
-    },
-    {
-      "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
-      "valueCode": 28
-    },
-    {
-      "url": "http://example.org/StructureDefinition/extension-without-type",
-      "valueUnknownType_Patient.gender.extension[2].value": 28
-    },
-    {
-      "url": "http://example.org/StructureDefinition/extension-with-unknown-type",
-      "valueSuperDecimal": 28
-    },
-    {
-      "url": "http://example.org/StructureDefinition/extension-with-unknown-cplx-type",
-      "valueSuperCrap": {
-        "temperature": 38.9,
-        "unit": "celcius"
+    "extension": [
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
+        "valueCode": "metrosexual"
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
+        "valueCode": 28
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-without-type",
+        "valueUnknownType_Patient.gender.extension[2].value": 28
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-unknown-type",
+        "valueSuperDecimal": 28
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-unknown-cplx-type",
+        "valueSuperCrap": {
+          "temperature": 38.9,
+          "unit": "celcius"
+        }
       }
-    }
-  ]
-},
+    ]
+  },
   "birthDate": "1974-12-25",
   "_birthDate": {
-  "extension": [
-    {
-      "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
-      "valueDateTime": "1974-12-25T14:35:45-05:00"
-    }
-  ]
-},
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+        "valueDateTime": "1974-12-25T14:35:45-05:00"
+      }
+    ]
+  },
   "deceasedBoolean": "false",
   "multipleBirthInteger": 3.14,
   "photo": [
@@ -1327,25 +1327,25 @@
       },
       "preferred": true,
       "_preferred": {
-  "extension": [
-    {
-      "url": "http://example.org/StructureDefinition/language-preference",
-      "valueCode": "in-writing"
-    }
-  ]
-}
+        "extension": [
+          {
+            "url": "http://example.org/StructureDefinition/language-preference",
+            "valueCode": "in-writing"
+          }
+        ]
+      }
     },
     {
       "language": {},
       "preferred": true,
       "_preferred": {
-  "extension": [
-    {
-      "url": "http://example.org/StructureDefinition/language-preference",
-      "valueCode": "oral"
-    }
-  ]
-}
+        "extension": [
+          {
+            "url": "http://example.org/StructureDefinition/language-preference",
+            "valueCode": "oral"
+          }
+        ]
+      }
     }
   ],
   "managingOrganization": {

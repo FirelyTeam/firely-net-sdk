@@ -56,6 +56,50 @@ namespace Hl7.Fhir.Support.Poco.Tests
             Assert.IsGreaterThan(compactWS * 2, prettyWS);
         }
 
+        /// <summary>
+        /// Regression test: when pretty-printing, the underscore-prefixed sibling object that carries
+        /// a primitive's id/extension (e.g. _family) must be indented at the same depth as its key,
+        /// not at depth 0. See https://github.com/FirelyTeam/firely-net-sdk/issues/3565
+        /// </summary>
+        [TestMethod]
+        public void PrettyPrintsPrimitiveElementSiblingWithCorrectIndentation()
+        {
+            var patient = new Patient
+            {
+                Id = "example",
+                Name = { new HumanName { Family = "Family", Given = new[] { "Given" } } },
+            };
+
+            patient.Name[0].FamilyElement.Extension.Add(
+                new Extension
+                {
+                    Url = "http://hl7.org/fhir/StructureDefinition/humanname-own-prefix",
+                    Value = new FhirString("VV"),
+                });
+
+            var options = new JsonSerializerOptions().ForFhir().Pretty();
+            var pretty = JsonSerializer.Serialize(patient, options);
+
+            var lines = pretty.Replace("\r\n", "\n").Split('\n');
+
+            // Find the "_family" property line and verify its content is indented one level deeper.
+            var familyKeyLine = lines.Single(l => l.TrimStart().StartsWith("\"_family\":"));
+            var keyIndent = familyKeyLine.Length - familyKeyLine.TrimStart().Length;
+
+            var familyIndex = System.Array.IndexOf(lines, familyKeyLine);
+
+            // The line right after "_family": { holds "extension": which must be indented deeper.
+            var extensionLine = lines[familyIndex + 1];
+            var extensionIndent = extensionLine.Length - extensionLine.TrimStart().Length;
+
+            extensionLine.TrimStart().Should().StartWith("\"extension\":");
+            extensionIndent.Should().BeGreaterThan(keyIndent,
+                "the '_family' object's contents must be indented deeper than the '_family' key itself");
+
+            // Sanity check: the whole document is still valid JSON.
+            using var doc = JsonDocument.Parse(pretty);
+        }
+
         [TestMethod]
         public void SerializesInvalidData()
         {
