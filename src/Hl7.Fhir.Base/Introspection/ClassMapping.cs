@@ -187,6 +187,7 @@ public class ClassMapping(
     // This list is created lazily. This not only improves initial startup time of
     // applications but also ensures circular references between types will not cause loops.
     private PropertyMappingCollection? _mappings;
+    private readonly object _mappingsLock = new();
 
     // Note: this member - like the other lazily initialized members below, and the equivalent
     // members in PropertyMapping and PropertyMappingCollection - deliberately does not use
@@ -197,11 +198,21 @@ public class ClassMapping(
     // cached by the compiler in a static field, so the LazyInitializer calls elsewhere in this
     // assembly cost nothing per access and are left alone.)
     //
-    // The pattern used instead has the same semantics as LazyInitializer for reference types: the
-    // factory may run more than once when threads race, but only a single instance is ever
-    // published and every caller receives that one instance. The Volatile.Read on the fast path
-    // provides the same acquire semantics, so a caller that observes the field also observes the
-    // fully constructed object on weakly ordered architectures.
+    // On the warm path all of these members are a single Volatile.Read, whose acquire semantics
+    // guarantee that a caller observing the field also observes the fully constructed object on
+    // weakly ordered architectures. The cold paths differ:
+    //
+    // This member builds the mutable collection that callers may manipulate through
+    // PropertyMappings, and it runs the (possibly user-supplied) property mapper to do so. Racing
+    // threads must therefore not each run the mapper and build their own copy - the lock, taken
+    // only until the field is first published, makes initialization run exactly once.
+    //
+    // The other lazy members (CreateInstance/CreateList below, and the equivalents in
+    // PropertyMapping and PropertyMappingCollection) have idempotent factories producing values
+    // that are never mutated afterwards, so they keep LazyInitializer's lock-free semantics
+    // instead: when threads race, the factory may run more than once, but only a single result is
+    // ever published (via Interlocked.CompareExchange) and every caller receives that one
+    // instance - a duplicate run is unobservable there.
     private PropertyMappingCollection PropertyMappingsInternal
     {
         get
@@ -210,12 +221,18 @@ public class ClassMapping(
 
             PropertyMappingCollection createCollection()
             {
-                var properties = propertyMapper(this).ToList();
-                if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
-                    throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
+                lock (_mappingsLock)
+                {
+                    if (_mappings is { } existing) return existing;
 
-                var created = new PropertyMappingCollection(properties);
-                return Interlocked.CompareExchange(ref _mappings, created, null) ?? created;
+                    var properties = propertyMapper(this).ToList();
+                    if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
+                        throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
+
+                    var created = new PropertyMappingCollection(properties);
+                    Volatile.Write(ref _mappings, created);
+                    return created;
+                }
             }
         }
     }

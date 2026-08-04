@@ -313,6 +313,33 @@ twoValues.Invoking(m => m.PrimitiveValueProperty).Should().Throw<InvalidOperatio
             lists.Should().OnlyHaveUniqueItems();
             lists.Should().AllSatisfy(l => l.Count.Should().Be(0));
         }
+
+        [TestMethod]
+        public void PropertyMapperRunsExactlyOnceUnderConcurrentFirstAccess()
+        {
+            // The property mapper may be user-supplied and builds the mutable PropertyMappings
+            // collection, so racing threads must not each run it and build their own copy: the
+            // first access initializes it exactly once and all threads see that single result.
+            const int threads = 64;
+            var mapperRuns = 0;
+
+            var mapping = new ClassMapping(ModelInspector.Base, "test", typeof(FhirBoolean), _ =>
+            {
+                System.Threading.Interlocked.Increment(ref mapperRuns);
+                // Keep the factory busy for a while so racing threads pile up on the
+                // still-uninitialized field instead of hitting the warm path.
+                System.Threading.Thread.Sleep(50);
+                return [];
+            });
+
+            var collections = new ICollection<PropertyMapping>[threads];
+            var result = Parallel.For(0, threads, new ParallelOptions { MaxDegreeOfParallelism = threads },
+                i => collections[i] = mapping.PropertyMappings);
+
+            result.IsCompleted.Should().BeTrue();
+            mapperRuns.Should().Be(1);
+            collections.Should().AllSatisfy(c => c.Should().BeSameAs(collections[0]));
+        }
     }
 
 
