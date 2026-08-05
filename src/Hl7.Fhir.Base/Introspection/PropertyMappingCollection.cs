@@ -47,6 +47,7 @@ internal class PropertyMappingCollection : ICollection<PropertyMapping>
     {
         _byOrder = null;
         _choice = null;
+        _valueElements = null;
     }
 
     /// <summary>
@@ -74,8 +75,12 @@ internal class PropertyMappingCollection : ICollection<PropertyMapping>
     public bool Remove(PropertyMapping item)
     {
         if (!_byName.TryRemove(item.Name, out _)) return false;
-        _byOrder?.Remove(item);
-        _choice?.Remove(item);
+
+        // Note: removing `item` from the cached lists is not enough - since the name dictionary is
+        // case-insensitive, the mapping just evicted may be a *different* instance that happens to
+        // share `item`'s name, which would leave that evicted mapping behind in the caches. Drop
+        // the caches instead, so they are rebuilt from the name dictionary on the next read.
+        clearCaches();
 
         return true;
     }
@@ -90,19 +95,50 @@ internal class PropertyMappingCollection : ICollection<PropertyMapping>
     public IReadOnlyDictionary<string, PropertyMapping> ByName => _byName;
     private readonly ConcurrentDictionary<string, PropertyMapping> _byName = new(StringComparer.OrdinalIgnoreCase);
 
+    // The lazily computed lists below only call LazyInitializer.EnsureInitialized() when the field
+    // is still null, so that reading them on the warm path allocates nothing; see the note on
+    // ClassMapping.PropertyMappingsInternal for the reasoning. All three are dropped by
+    // clearCaches() when the collection changes.
+
     /// <summary>
     /// List of the properties, in the order of appearance.
     /// </summary>
-    public IReadOnlyList<PropertyMapping> ByOrder => LazyInitializer.EnsureInitialized(ref _byOrder,
-        () => ByName.Values.OrderBy(pm => pm.Order).ToList())!;
+    public IReadOnlyList<PropertyMapping> ByOrder =>
+        _byOrder ?? LazyInitializer.EnsureInitialized(ref _byOrder,
+            () => ByName.Values.OrderBy(pm => pm.Order).ToList())!;
+
     private List<PropertyMapping>? _byOrder;
 
     /// <summary>
     /// The list of properties that represent choice elements.
     /// </summary>
-    public IReadOnlyList<PropertyMapping> ChoiceProperties => LazyInitializer.EnsureInitialized(ref _choice,
-        () => ByName.Values.Where(pm => pm.Choice == ChoiceType.DatatypeChoice).ToList())!;
+    public IReadOnlyList<PropertyMapping> ChoiceProperties =>
+        _choice ?? LazyInitializer.EnsureInitialized(ref _choice,
+            () => ByName.Values.Where(pm => pm.Choice == ChoiceType.DatatypeChoice).ToList())!;
+
     private List<PropertyMapping>? _choice;
+
+    /// <summary>
+    /// The property that represents the value of a FHIR primitive, or <c>null</c> when this
+    /// collection has no such property.
+    /// </summary>
+    /// <remarks>Determining which properties are value elements requires a scan of the collection,
+    /// and this is read for every element encountered during (de)serialization, so the scan is done
+    /// once and its (near-always empty or single-entry) result cached. Picking the single value
+    /// element out of that cached result is what still happens per read - including the throw when
+    /// a malformed mapping declares more than one value element.</remarks>
+    public PropertyMapping? PrimitiveValueProperty => valueElements.SingleOrDefault();
+
+    /// <summary>
+    /// Whether this collection contains a property that represents the value of a FHIR primitive.
+    /// </summary>
+    public bool HasPrimitiveValueMember => valueElements.Count > 0;
+
+    private List<PropertyMapping> valueElements =>
+        _valueElements ?? LazyInitializer.EnsureInitialized(ref _valueElements,
+            () => ByName.Values.Where(pm => pm.RepresentsValueElement).ToList())!;
+
+    private List<PropertyMapping>? _valueElements;
 
     IEnumerator<PropertyMapping> IEnumerable<PropertyMapping>.GetEnumerator() => _byName.Values.GetEnumerator();
 

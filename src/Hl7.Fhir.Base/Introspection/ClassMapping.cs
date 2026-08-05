@@ -187,22 +187,35 @@ public class ClassMapping(
     // This list is created lazily. This not only improves initial startup time of
     // applications but also ensures circular references between types will not cause loops.
     private PropertyMappingCollection? _mappings;
+    private object? _mappingsLock;
 
-    private PropertyMappingCollection PropertyMappingsInternal
+    // Note on the `_field ?? LazyInitializer.EnsureInitialized(...)` shape of this member, the
+    // other lazily initialized members below and the equivalents in PropertyMapping and
+    // PropertyMappingCollection: calling EnsureInitialized unconditionally would allocate its
+    // factory delegate on *every* access, including the warm path where the field has long been
+    // initialized, and these members are read per element on the (de)serialization path. The
+    // null-coalescing read short-circuits that: once the field is initialized, an access is an
+    // ordinary read that allocates nothing, and the factory delegate is only created on the
+    // once-only cold path. The ordinary read is enough because the runtime guarantees that
+    // object reference stores are release stores and that data-dependent reads are ordered, so a
+    // thread observing the field non-null also observes the fully initialized object; see
+    // https://github.com/dotnet/runtime/blob/main/docs/design/specs/Memory-model.md.
+    //
+    // This member uses the EnsureInitialized overload with a syncLock, so that the (possibly
+    // user-supplied) property mapper building this mutable collection runs exactly once. The other
+    // lazy members have idempotent factories whose results are never mutated afterwards, so they
+    // use the lock-free overload, where racing factories may run concurrently but only a single
+    // result is ever published and handed out.
+    private PropertyMappingCollection PropertyMappingsInternal =>
+        _mappings ?? LazyInitializer.EnsureInitialized(ref _mappings, ref _mappingsLock, createPropertyMappings)!;
+
+    private PropertyMappingCollection createPropertyMappings()
     {
-        get
-        {
-            return LazyInitializer.EnsureInitialized(ref _mappings, createCollection)!;
+        var properties = propertyMapper(this).ToList();
+        if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
+            throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
 
-            PropertyMappingCollection createCollection()
-            {
-                var properties = propertyMapper(this).ToList();
-                if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
-                    throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
-
-                return new PropertyMappingCollection(properties);
-            }
-        }
+        return new PropertyMappingCollection(properties);
     }
 
     /// <summary>
@@ -215,7 +228,7 @@ public class ClassMapping(
     /// property will also be present in the PropertyMappings collection. If this class has
     /// no such property, it is null.
     /// </summary>
-    public PropertyMapping? PrimitiveValueProperty => PropertyMappings.SingleOrDefault(pm => pm.RepresentsValueElement);
+    public PropertyMapping? PrimitiveValueProperty => PropertyMappingsInternal.PrimitiveValueProperty;
 
     /// <summary>
     /// This indicates that this class is representing the Patient data (and implements <see cref="IPatient"/>).
@@ -225,7 +238,7 @@ public class ClassMapping(
     /// <summary>
     /// Whether the reflected type has a member that represent a primitive value.
     /// </summary>
-    public bool HasPrimitiveValueMember => PropertyMappings.Any(pm => pm.RepresentsValueElement);
+    public bool HasPrimitiveValueMember => PropertyMappingsInternal.HasPrimitiveValueMember;
 
     /// <summary>
     /// Returns the mapping for an element of this class by its name.
@@ -358,7 +371,7 @@ public class ClassMapping(
     /// <remarks>If not set, the default constructor for the <see cref="NativeType"/> will be used.</remarks>
     public Base CreateInstance()
     {
-        var factory = LazyInitializer.EnsureInitialized(ref _factory, NativeType.BuildFactoryMethod)!;
+        var factory = _factory ?? LazyInitializer.EnsureInitialized(ref _factory, NativeType.BuildFactoryMethod)!;
         var newInstance = factory();
         if (newInstance is IDynamicType idt) idt.DynamicTypeName = Name;
         return (Base)newInstance;
@@ -372,7 +385,7 @@ public class ClassMapping(
     /// <remarks>If not set, the default List constructor for the <see cref="NativeType"/> will be used.</remarks>
     public IList CreateList()
     {
-        var factory = LazyInitializer.EnsureInitialized(ref _listFactory, NativeType.BuildListFactoryMethod)!;
+        var factory = _listFactory ?? LazyInitializer.EnsureInitialized(ref _listFactory, NativeType.BuildListFactoryMethod)!;
         return factory();
     }
 
