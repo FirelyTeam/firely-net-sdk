@@ -91,7 +91,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         if (element is null)
         {
             // empty objects in arrays may occur in error situations.
-            writer.Value.WriteNullValue();
+            writer.PrepareContent().WriteNullValue();
             return;
         }
 
@@ -199,7 +199,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         foreach (var value in values)
         {
             if (value?.JsonValue is not null)
-                SerializePrimitiveValue(value, writer.Value);
+                SerializePrimitiveValue(value, writer.PrepareContent());
             else
                 writer.WriteNullPlaceholder();
         }
@@ -235,7 +235,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         {
             // Write a property with 'elementName'
             writer.WritePropertyName(elementName);
-            SerializePrimitiveValue(value, writer.Value);
+            SerializePrimitiveValue(value, writer.PrepareContent());
         }
 
         // A primitive without id/extensions has nothing to put in '_elementName', so don't descend into it.

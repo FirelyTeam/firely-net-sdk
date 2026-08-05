@@ -60,13 +60,12 @@ internal sealed class PruningXmlWriter(XmlWriter writer)
     /// Hands out the underlying writer, ready to accept an attribute or value: any postponed start elements
     /// are written first, since we now know they are not empty.
     /// </summary>
-    public XmlWriter Value
+    /// <remarks>Deliberately a method rather than a property: getting it changes the state of this writer,
+    /// and a property with that side effect would fire when a debugger evaluates it.</remarks>
+    public XmlWriter PrepareContent()
     {
-        get
-        {
-            commit();
-            return writer;
-        }
+        commit();
+        return writer;
     }
 
     /// <inheritdoc cref="XmlWriter.WriteStartDocument()"/>
@@ -88,7 +87,7 @@ internal sealed class PruningXmlWriter(XmlWriter writer)
     /// <summary>
     /// Writes a comment. Since this is content, any postponed start elements are written first.
     /// </summary>
-    public void WriteComment(string comment) => Value.WriteComment(comment);
+    public void WriteComment(string comment) => PrepareContent().WriteComment(comment);
 
     /// <summary>
     /// Postpones writing a start element until it gets content.
@@ -122,7 +121,7 @@ internal sealed class PruningXmlWriter(XmlWriter writer)
     {
         if (string.IsNullOrEmpty(data)) return;
 
-        Value.WriteRaw(data);
+        PrepareContent().WriteRaw(data);
     }
 
     /// <summary>

@@ -67,13 +67,12 @@ internal sealed class PruningJsonWriter(Utf8JsonWriter writer)
     /// Hands out the underlying writer, ready to accept a value: any postponed opening tokens are written
     /// first, since we now know the structures they open are not empty.
     /// </summary>
-    public Utf8JsonWriter Value
+    /// <remarks>Deliberately a method rather than a property: getting it changes the state of this writer,
+    /// and a property with that side effect would fire when a debugger evaluates it.</remarks>
+    public Utf8JsonWriter PrepareContent()
     {
-        get
-        {
-            commit();
-            return writer;
-        }
+        commit();
+        return writer;
     }
 
     /// <summary>
@@ -127,13 +126,13 @@ internal sealed class PruningJsonWriter(Utf8JsonWriter writer)
     /// Writes a property with a string value. Since this is content, any postponed opening tokens are
     /// written first.
     /// </summary>
-    public void WriteString(string propertyName, string? value) => Value.WriteString(propertyName, value);
+    public void WriteString(string propertyName, string? value) => PrepareContent().WriteString(propertyName, value);
 
     /// <summary>
     /// Writes a property name. Since a name is only ever written when a value follows, this counts as
     /// content and any postponed opening tokens are written first.
     /// </summary>
-    public void WritePropertyName(string propertyName) => Value.WritePropertyName(propertyName);
+    public void WritePropertyName(string propertyName) => PrepareContent().WritePropertyName(propertyName);
 
     /// <summary>
     /// Handles <see cref="WriteEndObject"/>/<see cref="WriteEndArray"/> for a structure that is still

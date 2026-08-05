@@ -2,9 +2,11 @@ using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Support.Poco.Tests
 {
@@ -294,6 +296,90 @@ namespace Hl7.Fhir.Support.Poco.Tests
             XML.SerializeToString(patient).Should().NotContain("<contained");
             JSON.SerializeToString(patient).Should()
                 .Be("""{"resourceType":"Patient","contained":[{"resourceType":"Patient"}]}""");
+        }
+
+        /// <summary>
+        /// The same pruning applies when it is a filter that empties an element out - the Xml counterpart
+        /// of the filtered Json cases above.
+        /// </summary>
+        [TestMethod]
+        public void OmitsXmlElementsMadeEmptyByFilter()
+        {
+            var patient = new Patient
+            {
+                MaritalStatus = new CodeableConcept("http://example.org", "married"),
+                Contact = [new Patient.ContactComponent { Name = new HumanName { Family = "Doe" } }]
+            };
+
+            static SerializationFilter filter() => new TopLevelFilter(
+                new ElementMetadataFilter { IncludeNames = ["maritalStatus", "contact"] },
+                new ElementMetadataFilter { IncludeNames = ["not-present"] });
+
+            XML.SerializeToString(patient, filterFactory: filter)
+                .Should().NotContain("<maritalStatus").And.NotContain("<contact");
+        }
+
+        /// <summary>
+        /// In Xml a primitive's value and id become attributes, and an attribute is content: the element
+        /// carrying it must be written, even when that attribute is all it has.
+        /// </summary>
+        [TestMethod]
+        public void KeepsXmlElementsWithOnlyAttributes()
+        {
+            var patient = new Patient
+            {
+                ActiveElement = new FhirBoolean(true),
+                BirthDateElement = new Date { ElementId = "date-id" }    // no value, just an id
+            };
+
+            var root = XDocument.Parse(XML.SerializeToString(patient)).Root!;
+
+            root.Element(XName.Get("active", XmlNs.FHIR))!.Attribute("value")!.Value.Should().Be("true");
+            root.Element(XName.Get("birthDate", XmlNs.FHIR))!.Attribute("id")!.Value.Should().Be("date-id");
+        }
+
+        /// <summary>
+        /// A retained source comment counts as content: an element holding nothing but its closing comment
+        /// is written rather than pruned, since dropping a comment the caller asked us to retain would be
+        /// worse than reproducing an element the source data had in that shape to begin with. A comment
+        /// that <i>preceded</i> a pruned element is not lost either - it stays behind in the parent.
+        /// </summary>
+        [TestMethod]
+        public void RetainedCommentsCountAsContent()
+        {
+            var withClosing = new Patient.ContactComponent();
+            withClosing.AddAnnotation(new SourceComments { ClosingComments = ["kept"] });
+            XML.SerializeToString(new Patient { Contact = [withClosing] })
+                .Should().Contain("<contact><!--kept--></contact>");
+
+            var withPreceding = new Patient.ContactComponent();
+            withPreceding.AddAnnotation(new SourceComments { CommentsBefore = ["orphaned"] });
+            XML.SerializeToString(new Patient { Contact = [withPreceding] })
+                .Should().NotContain("<contact").And.Contain("<!--orphaned-->");
+        }
+
+        /// <summary>
+        /// When the filter empties out every entry of a '_elementName' array, that array holds nothing but
+        /// placeholders and is omitted - while the 'elementName' array keeps the placeholders it needs to
+        /// position its surviving values.
+        /// </summary>
+        [TestMethod]
+        public void OmitsPrimitiveMetadataArrayWhenFilterEmptiesEveryEntry()
+        {
+            var name = new HumanName
+            {
+                GivenElement =
+                [
+                    new FhirString { ElementId = "first" },
+                    new FhirString("middle"),
+                    new FhirString { ElementId = "last" }
+                ]
+            };
+
+            static SerializationFilter filter() => new ElementMetadataFilter { IncludeNames = ["id"], Invert = true };
+
+            JSON.SerializeToString(name, filterFactory: filter)
+                .Should().Be("""{"given":[null,"middle",null]}""");
         }
     }
 }

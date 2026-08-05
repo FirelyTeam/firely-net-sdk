@@ -212,7 +212,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
                 writer.WriteEndElement();
                 break;
             default:
-                SerializePrimitiveValue(elementName, value, writer.Value);
+                SerializePrimitiveValue(elementName, value, writer.PrepareContent());
                 break;
         }
     }
