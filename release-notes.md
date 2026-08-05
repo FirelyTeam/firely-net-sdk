@@ -1,11 +1,11 @@
 ## Intro:
 
-This release includes a behavioral change in parsing alongside a minor bug fix. Please read the notes below carefully before upgrading.
+This release adds opt-in retention of XML comments in the POCO-based parser. There are no breaking changes.
 
-**POCO / type system**
-- The SDK now detects incorrectly cased element and resource type names. Two new error codes are introduced: `PVAL131` (`WRONG_CASED_ELEMENT`) and `PVAL132` (`WRONG_CASED_RESOURCE_TYPE`).
+**Serialization**
+- The POCO-based XML parser can now retain the comments found in the source document. Set `DeserializerSettings.RetainComments` to `true` (the default remains `false`) and comments are attached to the parsed POCOs as `SourceComments` annotations, so that they survive a parse/serialize round-trip. See issue [#3561](https://github.com/FirelyTeam/firely-net-sdk/issues/3561).
 
-  > **Breaking change:** Parsers running in strict mode will now report errors when receiving data with incorrectly cased element or resource type names. Data that was previously silently corrected during parsing will now cause parse errors instead. Make sure your data sources use the correct casing as defined by the FHIR specification. All non-strict modes (BackwardsCompatible, Recoverable, NoOverflow, and the default) continue to bind leniently, preserving the behaviour from previous SDK versions. The exact handling of wrong-cased names in lenient modes is subject to change in future major versions of the SDK.
+  > **Behavioural note:** the XML serializer now writes any `SourceComments` annotation it encounters. Previously only POCOs produced by the legacy parser carried such annotations, so in practice nothing was written for POCOs coming from the new parser. If your code adds `SourceComments` annotations itself, those comments will now show up in serialized output.
 
-**Other fixes**
-- Fixed redundant null-checks and initialization logic in bundle link handling.
+**Dependencies**
+- Updated Fhir.Metrics, Microsoft.SourceLink.GitHub, MSTest.TestFramework and Verify.MSTest to their latest versions. NSubstitute was updated to 6.0.0 (test-only, not part of the shipped packages).
