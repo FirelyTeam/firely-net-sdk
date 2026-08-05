@@ -187,54 +187,35 @@ public class ClassMapping(
     // This list is created lazily. This not only improves initial startup time of
     // applications but also ensures circular references between types will not cause loops.
     private PropertyMappingCollection? _mappings;
-    private readonly object _mappingsLock = new();
+    private object? _mappingsLock;
 
-    // Note: this member - like the other lazily initialized members below, and the equivalent
-    // members in PropertyMapping and PropertyMappingCollection - deliberately does not use
-    // LazyInitializer.EnsureInitialized(). Passing that a factory allocates a delegate on *every*
-    // access, including the warm path where the value has long been initialized, and these members
-    // are read per element on the (de)serialization path. (This only applies to factories that
-    // capture state or are instance method groups: a non-capturing lambda such as () => [] is
-    // cached by the compiler in a static field, so the LazyInitializer calls elsewhere in this
-    // assembly cost nothing per access and are left alone.)
+    // Note on the `_field ?? LazyInitializer.EnsureInitialized(...)` shape of this member, the
+    // other lazily initialized members below and the equivalents in PropertyMapping and
+    // PropertyMappingCollection: calling EnsureInitialized unconditionally would allocate its
+    // factory delegate on *every* access, including the warm path where the field has long been
+    // initialized, and these members are read per element on the (de)serialization path. The
+    // null-coalescing read short-circuits that: once the field is initialized, an access is an
+    // ordinary read that allocates nothing, and the factory delegate is only created on the
+    // once-only cold path. The ordinary read is enough because the runtime guarantees that
+    // object reference stores are release stores and that data-dependent reads are ordered, so a
+    // thread observing the field non-null also observes the fully initialized object; see
+    // https://github.com/dotnet/runtime/blob/main/docs/design/specs/Memory-model.md.
     //
-    // On the warm path all of these members are a single Volatile.Read, whose acquire semantics
-    // guarantee that a caller observing the field also observes the fully constructed object on
-    // weakly ordered architectures. The cold paths differ:
-    //
-    // This member builds the mutable collection that callers may manipulate through
-    // PropertyMappings, and it runs the (possibly user-supplied) property mapper to do so. Racing
-    // threads must therefore not each run the mapper and build their own copy - the lock, taken
-    // only until the field is first published, makes initialization run exactly once.
-    //
-    // The other lazy members (CreateInstance/CreateList below, and the equivalents in
-    // PropertyMapping and PropertyMappingCollection) have idempotent factories producing values
-    // that are never mutated afterwards, so they keep LazyInitializer's lock-free semantics
-    // instead: when threads race, the factory may run more than once, but only a single result is
-    // ever published (via Interlocked.CompareExchange) and every caller receives that one
-    // instance - a duplicate run is unobservable there.
-    private PropertyMappingCollection PropertyMappingsInternal
+    // This member uses the EnsureInitialized overload with a syncLock, so that the (possibly
+    // user-supplied) property mapper building this mutable collection runs exactly once. The other
+    // lazy members have idempotent factories whose results are never mutated afterwards, so they
+    // use the lock-free overload, where racing factories may run concurrently but only a single
+    // result is ever published and handed out.
+    private PropertyMappingCollection PropertyMappingsInternal =>
+        _mappings ?? LazyInitializer.EnsureInitialized(ref _mappings, ref _mappingsLock, createPropertyMappings)!;
+
+    private PropertyMappingCollection createPropertyMappings()
     {
-        get
-        {
-            return Volatile.Read(ref _mappings) ?? createCollection();
+        var properties = propertyMapper(this).ToList();
+        if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
+            throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
 
-            PropertyMappingCollection createCollection()
-            {
-                lock (_mappingsLock)
-                {
-                    if (_mappings is { } existing) return existing;
-
-                    var properties = propertyMapper(this).ToList();
-                    if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
-                        throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
-
-                    var created = new PropertyMappingCollection(properties);
-                    Volatile.Write(ref _mappings, created);
-                    return created;
-                }
-            }
-        }
+        return new PropertyMappingCollection(properties);
     }
 
     /// <summary>
@@ -390,16 +371,10 @@ public class ClassMapping(
     /// <remarks>If not set, the default constructor for the <see cref="NativeType"/> will be used.</remarks>
     public Base CreateInstance()
     {
-        var factory = Volatile.Read(ref _factory) ?? createFactory();
+        var factory = _factory ?? LazyInitializer.EnsureInitialized(ref _factory, NativeType.BuildFactoryMethod)!;
         var newInstance = factory();
         if (newInstance is IDynamicType idt) idt.DynamicTypeName = Name;
         return (Base)newInstance;
-
-        Func<object> createFactory()
-        {
-            var created = NativeType.BuildFactoryMethod();
-            return Interlocked.CompareExchange(ref _factory, created, null) ?? created;
-        }
     }
 
     private Func<object>? _factory;
@@ -410,14 +385,8 @@ public class ClassMapping(
     /// <remarks>If not set, the default List constructor for the <see cref="NativeType"/> will be used.</remarks>
     public IList CreateList()
     {
-        var factory = Volatile.Read(ref _listFactory) ?? createFactory();
+        var factory = _listFactory ?? LazyInitializer.EnsureInitialized(ref _listFactory, NativeType.BuildListFactoryMethod)!;
         return factory();
-
-        Func<IList> createFactory()
-        {
-            var created = NativeType.BuildListFactoryMethod();
-            return Interlocked.CompareExchange(ref _listFactory, created, null) ?? created;
-        }
     }
 
     private Func<IList>? _listFactory;

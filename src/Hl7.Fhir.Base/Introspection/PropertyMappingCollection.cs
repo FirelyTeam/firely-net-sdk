@@ -95,37 +95,27 @@ internal class PropertyMappingCollection : ICollection<PropertyMapping>
     public IReadOnlyDictionary<string, PropertyMapping> ByName => _byName;
     private readonly ConcurrentDictionary<string, PropertyMapping> _byName = new(StringComparer.OrdinalIgnoreCase);
 
-    // The lazily computed lists below avoid LazyInitializer.EnsureInitialized() so that reading them
-    // allocates nothing; see the note on ClassMapping.PropertyMappingsInternal for the reasoning and
-    // for why this keeps LazyInitializer's semantics. All three are dropped by clearCaches() when the
-    // collection changes.
+    // The lazily computed lists below only call LazyInitializer.EnsureInitialized() when the field
+    // is still null, so that reading them on the warm path allocates nothing; see the note on
+    // ClassMapping.PropertyMappingsInternal for the reasoning. All three are dropped by
+    // clearCaches() when the collection changes.
 
     /// <summary>
     /// List of the properties, in the order of appearance.
     /// </summary>
-    public IReadOnlyList<PropertyMapping> ByOrder
-    {
-        get
-        {
-            return Volatile.Read(ref _byOrder) ?? create();
+    public IReadOnlyList<PropertyMapping> ByOrder =>
+        _byOrder ?? LazyInitializer.EnsureInitialized(ref _byOrder,
+            () => ByName.Values.OrderBy(pm => pm.Order).ToList())!;
 
-            List<PropertyMapping> create() => publish(ref _byOrder, ByName.Values.OrderBy(pm => pm.Order).ToList());
-        }
-    }
     private List<PropertyMapping>? _byOrder;
 
     /// <summary>
     /// The list of properties that represent choice elements.
     /// </summary>
-    public IReadOnlyList<PropertyMapping> ChoiceProperties
-    {
-        get
-        {
-            return Volatile.Read(ref _choice) ?? create();
+    public IReadOnlyList<PropertyMapping> ChoiceProperties =>
+        _choice ?? LazyInitializer.EnsureInitialized(ref _choice,
+            () => ByName.Values.Where(pm => pm.Choice == ChoiceType.DatatypeChoice).ToList())!;
 
-            List<PropertyMapping> create() => publish(ref _choice, ByName.Values.Where(pm => pm.Choice == ChoiceType.DatatypeChoice).ToList());
-        }
-    }
     private List<PropertyMapping>? _choice;
 
     /// <summary>
@@ -144,19 +134,11 @@ internal class PropertyMappingCollection : ICollection<PropertyMapping>
     /// </summary>
     public bool HasPrimitiveValueMember => valueElements.Count > 0;
 
-    private List<PropertyMapping> valueElements
-    {
-        get
-        {
-            return Volatile.Read(ref _valueElements) ?? create();
+    private List<PropertyMapping> valueElements =>
+        _valueElements ?? LazyInitializer.EnsureInitialized(ref _valueElements,
+            () => ByName.Values.Where(pm => pm.RepresentsValueElement).ToList())!;
 
-            List<PropertyMapping> create() => publish(ref _valueElements, ByName.Values.Where(pm => pm.RepresentsValueElement).ToList());
-        }
-    }
     private List<PropertyMapping>? _valueElements;
-
-    private static T publish<T>(ref T? location, T created) where T : class =>
-        Interlocked.CompareExchange(ref location, created, null) ?? created;
 
     IEnumerator<PropertyMapping> IEnumerable<PropertyMapping>.GetEnumerator() => _byName.Values.GetEnumerator();
 
