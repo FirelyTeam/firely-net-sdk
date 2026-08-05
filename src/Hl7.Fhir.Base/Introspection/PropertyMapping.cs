@@ -192,14 +192,12 @@ public class PropertyMapping : IElementDefinitionSummary
     /// <see cref="FhirType"/> it can distinguish between custom types that share the
     /// same (dynamic) .NET type. For mappings created by reflection, the list is resolved
     /// lazily from <see cref="FhirType"/>.</remarks>
-    public IReadOnlyList<ClassMapping> FhirTypeMappings
-    {
-        get
-        {
-            LazyInitializer.EnsureInitialized(ref _fhirTypeMappings, buildFhirTypeMappings);
-            return _fhirTypeMappings!;
-        }
-    }
+    public IReadOnlyList<ClassMapping> FhirTypeMappings =>
+        // GetInstantiableType() reads this for every element with an abstract property type while
+        // parsing, so LazyInitializer.EnsureInitialized() - and the factory delegate it allocates
+        // per call - is only reached when the field is still null; see the note on
+        // ClassMapping.PropertyMappingsInternal.
+        _fhirTypeMappings ?? LazyInitializer.EnsureInitialized(ref _fhirTypeMappings, buildFhirTypeMappings)!;
 
     private ClassMapping[]? _fhirTypeMappings;
 
