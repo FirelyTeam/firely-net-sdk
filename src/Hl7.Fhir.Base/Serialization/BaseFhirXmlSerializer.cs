@@ -59,19 +59,27 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
         writeComments(rootComments?.CommentsBefore, writer);
 
+        var deferredWriter = new DeferredXmlWriter(writer);
+
         // Wrap the instance with a named element if either a root name is given,
         // or we are serializing a datatype (=a subtree).
         if (rootName is not null)
-            writer.WriteStartElement(rootName, XmlNs.FHIR);
-        else if(instance is not Resource)
-            writer.WriteStartElement(instance.TypeName, XmlNs.FHIR);
+        {
+            using var root = deferredWriter.BeginElement(rootName, XmlNs.FHIR, required: true);
+            serializeInternal(instance, deferredWriter, filter);
+        }
+        else if (instance is Resource)
+        {
+            serializeInternal(instance, deferredWriter, filter, required: true);
+        }
+        else
+        {
+            using var root = deferredWriter.BeginElement(instance.TypeName, XmlNs.FHIR, required: true);
+            serializeInternal(instance, deferredWriter, filter);
+        }
 
-        serializeInternal(instance, writer, filter);
-
-        if (rootName is not null) writer.WriteEndElement();
-
-        // Only write these once the root element is actually closed - for a datatype without a root name
-        // the wrapping element above is left open for WriteEndDocument() to close.
+        // Document-end comments belong after the root element and are only defined for resources
+        // and explicitly named subtree documents.
         if (rootName is not null || instance is Resource)
             writeComments(rootComments?.DocumentEndComments, writer);
 
@@ -80,27 +88,36 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
     private void serializeInternal(
         Base element,
-        XmlWriter writer,
-        SerializationFilter? filter)
+        DeferredXmlWriter writer,
+        SerializationFilter? filter,
+        bool required = false)
     {
-        if (element is Resource r)
-            writer.WriteStartElement(r.TypeName, XmlNs.FHIR);
-
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
         if (Inspector.FindOrImportClassMapping(element) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
 
+        if (element is Resource r)
+        {
+            using var resource = writer.BeginElement(r.TypeName, XmlNs.FHIR, required);
+            serializeObject(element, writer, filter, mapping);
+        }
+        else
+        {
+            serializeObject(element, writer, filter, mapping);
+        }
+    }
+
+    private void serializeObject(Base element, DeferredXmlWriter writer, SerializationFilter? filter, ClassMapping mapping)
+    {
         filter?.EnterObject(element, mapping);
 
         serializeElement(element, writer, filter, mapping);
 
         filter?.LeaveObject(element, mapping);
-
-        if (element is Resource) writer.WriteEndElement();
     }
 
-    private void serializeElement(Base element, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
+    private void serializeElement(Base element, DeferredXmlWriter writer, SerializationFilter? filter, ClassMapping mapping)
     {
         static int attributeSorter(PropertyMapping? mapping, Base? value)
         {
@@ -153,7 +170,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
         // Comments that were the last content of this element in the source data. Written after the children,
         // so they end up just before the closing tag written by our caller.
-        writeComments(element.Annotation<SourceComments>()?.ClosingComments, writer);
+        writer.WriteClosingComments(element.Annotation<SourceComments>()?.ClosingComments);
     }
 
     /// <summary>
@@ -183,29 +200,28 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
     }
 
 
-    private void serializeMemberValue(string elementName, object? value, XmlWriter writer, SerializationFilter? filter)
+    private void serializeMemberValue(string elementName, object? value, DeferredXmlWriter writer, SerializationFilter? filter)
     {
         try
         {
-
-        switch (value)
-        {
-            case null:
-                break;  // In error situations there may be a null in a list, just don't serialize it.
-            case XHtml xhtml:
-                writeComments(xhtml.Annotation<SourceComments>()?.CommentsBefore, writer);
-                writer.WriteRaw(xhtml.Value ?? "");
-                break;
-            case Base complex:
-                writeComments(complex.Annotation<SourceComments>()?.CommentsBefore, writer);
-                writer.WriteStartElement(elementName, XmlNs.FHIR);
-                serializeInternal(complex, writer, filter);
-                writer.WriteEndElement();
-                break;
-            default:
-                SerializePrimitiveValue(elementName, value, writer);
-                break;
-        }
+            switch (value)
+            {
+                case null:
+                    break;  // In error situations there may be a null in a list, just don't serialize it.
+                case XHtml xhtml:
+                    writer.WriteRaw(xhtml.Value ?? "", xhtml.Annotation<SourceComments>()?.CommentsBefore);
+                    break;
+                case Base complex:
+                    using (writer.BeginElement(elementName, XmlNs.FHIR,
+                               commentsBefore: complex.Annotation<SourceComments>()?.CommentsBefore))
+                    {
+                        serializeInternal(complex, writer, filter);
+                    }
+                    break;
+                default:
+                    SerializePrimitiveValue(elementName, value, writer.PrepareAttribute());
+                    break;
+            }
         }
         catch (Exception e)
         {

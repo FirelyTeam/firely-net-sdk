@@ -7,7 +7,6 @@ using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Support.Poco.Tests
@@ -49,8 +48,63 @@ namespace Hl7.Fhir.Support.Poco.Tests
             Patient p = new() { Contact = new() { new Patient.ContactComponent() } };
             xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(w => serializer.Serialize(p, w)));
             var contactArray = xdoc.Root.Elements(XName.Get("contact", XmlNs.FHIR));
-            contactArray.Count().Should().Be(1);
-            contactArray.First().Elements().Should().BeEmpty();
+            contactArray.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void OmitsComplexValuesMadeEmptyByFilter()
+        {
+            Patient patient = new()
+            {
+                MaritalStatus = new CodeableConcept("http://example.org", "married"),
+                Contact = [new Patient.ContactComponent { Name = new HumanName { Family = "Doe" } }]
+            };
+
+            static SerializationFilter filter() => new TopLevelFilter(
+                new ElementMetadataFilter { IncludeNames = ["maritalStatus", "contact"] },
+                new ElementMetadataFilter { IncludeNames = ["not-present"] });
+
+            var actual = new BaseFhirXmlSerializer(ModelInfo.ModelInspector)
+                .SerializeToString(patient, filterFactory: filter);
+            var root = XDocument.Parse(actual).Root!;
+
+            root.Elements(XName.Get("maritalStatus", XmlNs.FHIR)).Should().BeEmpty();
+            root.Elements(XName.Get("contact", XmlNs.FHIR)).Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void KeepsPrimitiveElementsWithXmlContent()
+        {
+            Patient patient = new()
+            {
+                ActiveElement = new FhirBoolean(true),
+                BirthDateElement = new Date { ElementId = "date-id" }
+            };
+
+            var actual = new BaseFhirXmlSerializer(ModelInfo.ModelInspector).SerializeToString(patient);
+            var root = XDocument.Parse(actual).Root!;
+
+            root.Element(XName.Get("active", XmlNs.FHIR))?.Attribute("value")?.Value.Should().Be("true");
+            root.Element(XName.Get("birthDate", XmlNs.FHIR))?.Attribute("id")?.Value.Should().Be("date-id");
+        }
+
+        [TestMethod]
+        public void CommentsDoNotMaterializeAnEmptyElement()
+        {
+            Patient.ContactComponent contact = new();
+            contact.AddAnnotation(new SourceComments
+            {
+                CommentsBefore = ["before empty contact"],
+                ClosingComments = ["closing empty contact"]
+            });
+
+            Patient patient = new() { Active = true, Contact = [contact] };
+
+            var actual = new BaseFhirXmlSerializer(ModelInfo.ModelInspector).SerializeToString(patient);
+            var root = XDocument.Parse(actual, LoadOptions.PreserveWhitespace).Root!;
+
+            root.Elements(XName.Get("contact", XmlNs.FHIR)).Should().BeEmpty();
+            actual.Should().NotContain("empty contact");
         }
 
         [TestMethod]
