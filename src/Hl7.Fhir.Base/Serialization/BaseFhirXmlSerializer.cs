@@ -55,41 +55,49 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         // parent element to write them into), so they are handled here.
         var rootComments = instance.Annotation<SourceComments>();
 
-        writer.WriteStartDocument();
+        // Elements that turn out to be empty must not be written at all, but we only know that after we have
+        // walked their members. The PruningXmlWriter postpones the start tags for us, so the serializer below
+        // can simply write, and never has to take an empty element back.
+        // The root element is exempt: XmlWriter.WriteEndDocument() throws on a document without one.
+        var pruningWriter = new PruningXmlWriter(writer);
 
-        writeComments(rootComments?.CommentsBefore, writer);
+        pruningWriter.WriteStartDocument();
+
+        writeComments(rootComments?.CommentsBefore, pruningWriter);
 
         // Wrap the instance with a named element if either a root name is given,
         // or we are serializing a datatype (=a subtree).
         if (rootName is not null)
-            writer.WriteStartElement(rootName, XmlNs.FHIR);
+            pruningWriter.WriteStartElement(rootName, XmlNs.FHIR, PruningXmlWriter.OnEmpty.Keep);
         else if(instance is not Resource)
-            writer.WriteStartElement(instance.TypeName, XmlNs.FHIR);
+            pruningWriter.WriteStartElement(instance.TypeName, XmlNs.FHIR, PruningXmlWriter.OnEmpty.Keep);
 
-        serializeInternal(instance, writer, filter);
+        serializeInternal(instance, pruningWriter, filter, PruningXmlWriter.OnEmpty.Keep);
 
-        if (rootName is not null) writer.WriteEndElement();
+        if (rootName is not null) pruningWriter.WriteEndElement();
 
         // Only write these once the root element is actually closed - for a datatype without a root name
         // the wrapping element above is left open for WriteEndDocument() to close.
         if (rootName is not null || instance is Resource)
-            writeComments(rootComments?.DocumentEndComments, writer);
+            writeComments(rootComments?.DocumentEndComments, pruningWriter);
 
-        writer.WriteEndDocument();
+        pruningWriter.WriteEndDocument();
     }
 
     private void serializeInternal(
         Base element,
-        XmlWriter writer,
-        SerializationFilter? filter)
+        PruningXmlWriter writer,
+        SerializationFilter? filter,
+        PruningXmlWriter.OnEmpty onEmpty = PruningXmlWriter.OnEmpty.Omit)
     {
-        if (element is Resource r)
-            writer.WriteStartElement(r.TypeName, XmlNs.FHIR);
-
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
+        // Resolved before any output is written, so a failure does not leave the writer in a broken state.
         if (Inspector.FindOrImportClassMapping(element) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
+
+        if (element is Resource r)
+            writer.WriteStartElement(r.TypeName, XmlNs.FHIR, onEmpty);
 
         filter?.EnterObject(element, mapping);
 
@@ -100,7 +108,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         if (element is Resource) writer.WriteEndElement();
     }
 
-    private void serializeElement(Base element, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
+    private void serializeElement(Base element, PruningXmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
     {
         static int attributeSorter(PropertyMapping? mapping, Base? value)
         {
@@ -161,8 +169,12 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>May only be called when the writer is not writing the attributes of a start tag: a comment
     /// cannot be written into a start tag. Since a comment is only ever annotated onto an element that was
-    /// itself serialized as an element, that is guaranteed by writing them at the element branches only.</remarks>
-    private static void writeComments(string[]? comments, XmlWriter writer)
+    /// itself serialized as an element, that is guaranteed by writing them at the element branches only.
+    ///
+    /// Note that a comment counts as content, so an element that holds nothing but a retained comment is
+    /// written rather than pruned. Dropping a comment the caller asked us to retain would be worse than
+    /// emitting an element that the source data had in that shape to begin with.</remarks>
+    private static void writeComments(string[]? comments, PruningXmlWriter writer)
     {
         if (comments is null) return;
 
@@ -183,18 +195,15 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
     }
 
 
-    private void serializeMemberValue(string elementName, object? value, XmlWriter writer, SerializationFilter? filter)
+    private void serializeMemberValue(string elementName, object? value, PruningXmlWriter writer, SerializationFilter? filter)
     {
-        try
-        {
-
         switch (value)
         {
             case null:
                 break;  // In error situations there may be a null in a list, just don't serialize it.
             case XHtml xhtml:
                 writeComments(xhtml.Annotation<SourceComments>()?.CommentsBefore, writer);
-                writer.WriteRaw(xhtml.Value ?? "");
+                writer.WriteRaw(xhtml.Value);
                 break;
             case Base complex:
                 writeComments(complex.Annotation<SourceComments>()?.CommentsBefore, writer);
@@ -203,14 +212,8 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
                 writer.WriteEndElement();
                 break;
             default:
-                SerializePrimitiveValue(elementName, value, writer);
+                SerializePrimitiveValue(elementName, value, writer.PrepareContent());
                 break;
-        }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
         }
     }
 

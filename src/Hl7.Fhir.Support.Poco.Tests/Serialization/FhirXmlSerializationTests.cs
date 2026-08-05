@@ -46,11 +46,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(w => serializer.Serialize(b, w)));
             Assert.AreEqual("treu", xdoc.Root.Attribute(XName.Get("value")).Value);
 
+            // An empty component has no content, so the element is omitted entirely instead of
+            // being serialized as an empty <contact/>, which the FHIR spec does not allow.
             Patient p = new() { Contact = new() { new Patient.ContactComponent() } };
             xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(w => serializer.Serialize(p, w)));
-            var contactArray = xdoc.Root.Elements(XName.Get("contact", XmlNs.FHIR));
-            contactArray.Count().Should().Be(1);
-            contactArray.First().Elements().Should().BeEmpty();
+            xdoc.Root.Elements(XName.Get("contact", XmlNs.FHIR)).Should().BeEmpty();
         }
 
         [TestMethod]
