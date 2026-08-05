@@ -103,7 +103,10 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         writer.WriteStartObject(propertyName, onEmpty);
 
-        if (element is Resource r and not DynamicResource { DynamicTypeName: null })
+        // A dynamic resource without a type name of its own falls back to "DynamicResource", which is what we
+        // want to write: it is the type the instance actually has, and it matches what the Xml serializer has
+        // always used as the element name for one.
+        if (element is Resource r)
             writer.WriteString("resourceType", r.TypeName);
 
         filter?.EnterObject(element, mapping);

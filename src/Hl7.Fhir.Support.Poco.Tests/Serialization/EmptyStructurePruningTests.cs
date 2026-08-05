@@ -20,11 +20,16 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private static readonly BaseFhirXmlSerializer XML = new(ModelInfo.ModelInspector);
 
         /// <summary>
-        /// Serializes indented, with the newlines the writer picked normalised to "\n" so the expected values
-        /// below can be written as plain raw string literals.
+        /// Serializes indented and compares against the expected value, ignoring newline style on both sides.
         /// </summary>
-        private static string serializePretty(Base instance) =>
-            JSON.SerializeToString(instance, pretty: true).Replace("\r\n", "\n");
+        /// <remarks>Neither side is reliably "\n" or "\r\n": the writer uses <see cref="Environment.NewLine"/>,
+        /// and the raw string literals below carry whatever the checkout gave this file - which for a ".cs
+        /// text" file under core.autocrlf differs between a developer machine and the build agent.</remarks>
+        private static void shouldSerializeIndentedAs(Base instance, string expected) =>
+            normalizeNewlines(JSON.SerializeToString(instance, pretty: true))
+                .Should().Be(normalizeNewlines(expected));
+
+        private static string normalizeNewlines(string value) => value.Replace("\r\n", "\n");
 
         [TestMethod]
         public void OmitsEmptyComplexMember()
@@ -71,7 +76,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 .Be("""{"resourceType":"Patient","active":true,"birthDate":"1974-12-25"}""");
 
             // Same in pretty-printed form, where a stray separator or indent would show up too.
-            serializePretty(patient).Should().Be(
+            shouldSerializeIndentedAs(patient,
                 """
                 {
                   "resourceType": "Patient",
@@ -127,7 +132,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 ]
             };
 
-            serializePretty(patient).Should().Be(
+            shouldSerializeIndentedAs(patient,
                 """
                 {
                   "resourceType": "Patient",
@@ -250,13 +255,15 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         /// <summary>
-        /// A resource always writes 'resourceType' in Json, so it is never empty - except for a dynamic
-        /// resource that has no type name to write, which must not be given one.
+        /// A resource always writes 'resourceType' in Json, so it is never empty - including a dynamic
+        /// resource without a type name of its own, which falls back to "DynamicResource" just as the Xml
+        /// serializer has always done for its element name.
         /// </summary>
         [TestMethod]
-        public void DoesNotInventAResourceTypeForAnUnnamedDynamicResource()
+        public void AlwaysWritesResourceTypeIncludingForAnUnnamedDynamicResource()
         {
-            JSON.SerializeToString(new DynamicResource()).Should().NotContain("resourceType");
+            JSON.SerializeToString(new DynamicResource()).Should().Be("""{"resourceType":"DynamicResource"}""");
+            XML.SerializeToString(new DynamicResource()).Should().Contain("<DynamicResource");
 
             JSON.SerializeToString(new DynamicResource { DynamicTypeName = "Patient" })
                 .Should().Be("""{"resourceType":"Patient"}""");
