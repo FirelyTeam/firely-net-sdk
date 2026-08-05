@@ -15,6 +15,7 @@
 		</Content>
 		<Content Include="Serialization/snapshots/*.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		</Content>
 	</ItemGroup>
 
