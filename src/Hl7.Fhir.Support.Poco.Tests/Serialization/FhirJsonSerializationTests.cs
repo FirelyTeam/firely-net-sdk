@@ -70,9 +70,108 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             Patient p = new() { Contact = [new Patient.ContactComponent()] };
             jdoc = JsonDocument.Parse(JsonSerializer.Serialize(p, options));
-            var contactArray = jdoc.RootElement.GetProperty("contact");
-            contactArray.GetArrayLength().Should().Be(1);
-            contactArray[0].EnumerateObject().Should().BeEmpty();
+            jdoc.RootElement.TryGetProperty("contact", out _).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void OmitsEmptyComplexValuesAndPreservesPrettyIndentation()
+        {
+            Patient patient = new()
+            {
+                Contact =
+                [
+                    new Patient.ContactComponent(),
+                    new Patient.ContactComponent { Name = new HumanName { Family = "Doe" } }
+                ]
+            };
+
+            var actual = JsonSerializer.Serialize(patient, new JsonSerializerOptions().ForFhir().Pretty());
+
+            actual.ReplaceLineEndings("\n").Should().Be("{\n" +
+                                                         "  \"resourceType\": \"Patient\",\n" +
+                                                         "  \"contact\": [\n" +
+                                                         "    {\n" +
+                                                         "      \"name\": {\n" +
+                                                         "        \"family\": \"Doe\"\n" +
+                                                         "      }\n" +
+                                                         "    }\n" +
+                                                         "  ]\n" +
+                                                         "}");
+        }
+
+        [TestMethod]
+        public void PrettyPrintsPrimitiveMetadataAtDestinationDepth()
+        {
+            Patient patient = new()
+            {
+                ActiveElement = new FhirBoolean(true) { ElementId = "flag" }
+            };
+
+            var actual = JsonSerializer.Serialize(patient, new JsonSerializerOptions().ForFhir().Pretty());
+
+            actual.ReplaceLineEndings("\n").Should().Be("{\n" +
+                                                         "  \"resourceType\": \"Patient\",\n" +
+                                                         "  \"active\": true,\n" +
+                                                         "  \"_active\": {\n" +
+                                                         "    \"id\": \"flag\"\n" +
+                                                         "  }\n" +
+                                                         "}");
+        }
+
+        [TestMethod]
+        public void OmitsComplexValuesMadeEmptyByFilter()
+        {
+            Patient patient = new()
+            {
+                MaritalStatus = new CodeableConcept("http://example.org", "married"),
+                Contact = [new Patient.ContactComponent { Name = new HumanName { Family = "Doe" } }]
+            };
+
+            static SerializationFilter filter() => new TopLevelFilter(
+                new ElementMetadataFilter { IncludeNames = ["maritalStatus", "contact"] },
+                new ElementMetadataFilter { IncludeNames = ["not-present"] });
+
+            var options = new JsonSerializerOptions().ForFhir(
+                new FhirJsonConverterOptions { SummaryFilterFactory = filter });
+            var actual = JsonSerializer.Serialize(patient, options);
+
+            actual.Should().Be("{\"resourceType\":\"Patient\"}");
+        }
+
+        [TestMethod]
+        public void OmitsFilteredPrimitiveMetadataArrayAndKeepsValueAlignment()
+        {
+            Patient patient = new()
+            {
+                Name =
+                [
+                    new HumanName
+                    {
+                        GivenElement =
+                        [
+                            new FhirString { ElementId = "first" },
+                            new FhirString("middle"),
+                            new FhirString { ElementId = "last" }
+                        ]
+                    }
+                ]
+            };
+
+            static SerializationFilter filter() => new ElementMetadataFilter
+            {
+                IncludeNames = ["id"],
+                Invert = true
+            };
+
+            var options = new JsonSerializerOptions().ForFhir(
+                new FhirJsonConverterOptions { SummaryFilterFactory = filter });
+            using var document = JsonDocument.Parse(JsonSerializer.Serialize(patient, options));
+            var name = document.RootElement.GetProperty("name")[0];
+
+            name.GetProperty("given").EnumerateArray()
+                .Select(item => item.ValueKind == JsonValueKind.Null ? null : item.GetString())
+                .Should().Equal(null, "middle", null);
+            name.TryGetProperty("_given", out _).Should().BeFalse();
         }
 
         /// <summary>

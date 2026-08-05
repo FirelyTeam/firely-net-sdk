@@ -83,7 +83,7 @@
     "unit": "bpm"
   },
   "_active": {
-  "value": true
-}
+    "value": true
+  }
 }
 }

@@ -47,18 +47,19 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         if (filter is not null)
             instance = SerializationUtil.MakeSubsettedClone(instance);
 
+        var deferredWriter = new DeferredJsonWriter(writer);
+
         // This handles an edge-case where we are asked to serialize just a primitive value.
         // For compatibility with SDK5 logic, we emit object with pseudo-property 'value' and value of the fhir primitive.
         // Issue for context: https://github.com/FirelyTeam/firely-net-sdk/issues/3286
         if (instance is not PrimitiveType val)
         {
-            serializeInternal(instance, writer, filter);
+            serializeInternal(instance, deferredWriter, filter, required: true);
         }
         else
         {
-            writer.WriteStartObject();
-            serializeFhirPrimitive("value", val, writer, filter);
-            writer.WriteEndObject();
+            using var root = deferredWriter.BeginObject(required: true);
+            serializeFhirPrimitive("value", val, deferredWriter, filter);
         }
     }
 
@@ -69,8 +70,11 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// with just the value, and one with the id/extensions.</remarks>
     private void serializeInternal(
         Base? element,
-        Utf8JsonWriter writer,
-        SerializationFilter? filter)
+        DeferredJsonWriter writer,
+        SerializationFilter? filter,
+        string? containerPropertyName = null,
+        bool required = false,
+        bool writeNullIfEmpty = false)
     {
         if (element is null)
         {
@@ -79,15 +83,15 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             return;
         }
 
-        writer.WriteStartObject();
-
-        if (element is Resource r and not DynamicResource { DynamicTypeName: null })
-            writer.WriteString("resourceType", r.TypeName);
-
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
         if (Inspector.FindOrImportClassMapping(element) is not {} mapping)
             throw new InvalidOperationException($"Encountered type {element.GetType()}, which is a support POCO for FHIR, but does not " +
                                                 $"have sufficient metadata to be used by the serializer.");
+
+        using var objectScope = writer.BeginObject(containerPropertyName, required, writeNullIfEmpty);
+
+        if (element is Resource r and not DynamicResource { DynamicTypeName: null })
+            writer.WriteString("resourceType", r.TypeName);
 
         filter?.EnterObject(element, mapping);
 
@@ -116,19 +120,15 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
                     {
-                        writer.WritePropertyName(propertyName);
-                        writer.WriteStartArray();
+                        using var arrayScope = writer.BeginArray(propertyName);
 
                         foreach (var child in children)
                             serializeInternal(child, writer, filter);
-
-                        writer.WriteEndArray();
                         break;
                     }
                 case Base b:
                     {
-                        writer.WritePropertyName(propertyName);
-                        serializeInternal(b, writer, filter);
+                        serializeInternal(b, writer, filter, propertyName);
                         break;
                     }
                 default:
@@ -139,7 +139,6 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         }
 
         filter?.LeaveObject(element, mapping);
-        writer.WriteEndObject();
     }
 
     private static string addSuffixToElementName(string elementName, object elementValue)
@@ -163,81 +162,41 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     private void serializeFhirPrimitiveList(
         string elementName,
         IReadOnlyList<PrimitiveType?> values,
-        Utf8JsonWriter writer,
+        DeferredJsonWriter writer,
         SerializationFilter? filter)
     {
-        if(values is null) throw new ArgumentNullException(nameof(values));
+        if (values is null) throw new ArgumentNullException(nameof(values));
 
         // Don't serialize empty collections.
         if (values.Count == 0) return;
 
-        // We should not write a "elementName" property until we encounter an actual
-        // value. If we do, we should "catch up", by creating the property starting
-        // with a json array that contains 'null' for each of the elements we encountered
-        // until now that did not have a value id/extensions.
-        bool wroteStartArray = false;
-        int numNullsMissed = 0;
-
-        foreach (var value in values)
+        // Nulls that precede the first actual value are deferred. This lets us omit the property
+        // when every item lacks a value while preserving positional alignment once one is found.
+        using (writer.BeginArray(elementName))
         {
-            if (value?.JsonValue is not null)
-            {
-                if (!wroteStartArray)
+            foreach (var value in values)
+                if (value?.JsonValue is not null)
                 {
-                    wroteStartArray = true;
-                    writeStartArray(elementName, numNullsMissed, writer);
+                    SerializePrimitiveValue(value, writer.PrepareArrayValue());
                 }
-
-                SerializePrimitiveValue(value, writer);
-            }
-            else
-            {
-                if (wroteStartArray)
-                    writer.WriteNullValue();
                 else
-                    numNullsMissed += 1;
-            }
+                {
+                    writer.DeferNullValue();
+                }
         }
 
-        if (wroteStartArray) writer.WriteEndArray();
-
-        // We should not write a "_elementName" property until we encounter an actual
-        // id/extension. If we do, we should "catch up", by creating the property starting
-        // with a json array that contains 'null' for each of the elements we encountered
-        // until now that did not have id/extensions etc.
-        wroteStartArray = false;
-        numNullsMissed = 0;
-
-        foreach (var value in values)
+        // Empty metadata objects become deferred null placeholders. If a later object survives
+        // filtering, the placeholders are emitted before it; if none survive, the array is omitted.
+        using (writer.BeginArray("_" + elementName))
         {
-            if (value?.EnumerateElements().Any() == true)
+            foreach (var value in values)
             {
-                if (!wroteStartArray)
-                {
-                    wroteStartArray = true;
-                    writeStartArray("_" + elementName, numNullsMissed, writer);
-                }
-
-                serializeInternal(value, writer, filter);
-            }
-            else
-            {
-                if (wroteStartArray)
-                    writer.WriteNullValue();
+                if (value is not null && value.EnumerateElements().Any())
+                    serializeInternal(value, writer, filter, writeNullIfEmpty: true);
                 else
-                    numNullsMissed += 1;
+                    writer.DeferNullValue();
             }
         }
-
-        if (wroteStartArray) writer.WriteEndArray();
-    }
-
-    private static void writeStartArray(string propName, int numNulls, Utf8JsonWriter writer)
-    {
-        writer.WriteStartArray(propName);
-
-        for (int i = 0; i < numNulls; i++)
-            writer.WriteNullValue();
     }
 
 
@@ -246,20 +205,18 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>FHIR primitives are handled separately here since they may require
     /// serialization into two Json properties called "elementName" and "_elementName".</remarks>
-    private void serializeFhirPrimitive(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
+    private void serializeFhirPrimitive(string elementName, PrimitiveType value, DeferredJsonWriter writer, SerializationFilter? filter)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
         if (value.JsonValue is not null)
         {
-            // Write a property with 'elementName'
-            writer.WritePropertyName(elementName);
-            SerializePrimitiveValue(value, writer);
+            SerializePrimitiveValue(value, writer.PreparePropertyValue(elementName));
         }
 
         if (!value.EnumerateElements().Any()) return;
-        
-        deferSerializeForFilter(elementName, value, writer, filter);
+
+        serializeInternal(value, writer, filter, "_" + elementName);
     }
     
     private static void tryWriteBase64(Utf8JsonWriter writer, string text)
@@ -270,24 +227,6 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             writer.WriteBase64StringValue(pool.Memory.Span[..written]);
         else
             writer.WriteStringValue(text);
-    }
-
-    private void deferSerializeForFilter(string elementName, PrimitiveType value, Utf8JsonWriter writer, SerializationFilter? filter)
-    {
-        var buffer = new ArrayBufferWriter<byte>();
-        using (var defer = new Utf8JsonWriter(buffer, writer.Options))
-        {
-            serializeInternal(value, defer, filter);
-        }
-
-        // brackets only, so either object was empty, or we filtered everything out
-        const int expectedLength = 3;
-        if (buffer.WrittenCount < expectedLength) return;
-        
-        // Write a property with '_elementName'
-        writer.WritePropertyName("_" + elementName);
-        // write the deferred data
-        writer.WriteRawValue(buffer.WrittenSpan, skipInputValidation: true);
     }
 
     /// <summary>
