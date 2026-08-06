@@ -335,6 +335,12 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         _classMappings.ByName.GetValueOrDefault(fhirTypeName);
 
     /// <summary>
+    /// Allocation-free lookup (on .NET 10+) overload of <see cref="FindClassMapping(string)"/>.
+    /// </summary>
+    public ClassMapping? FindClassMapping(ReadOnlySpan<char> fhirTypeName) =>
+        _classMappings.FindByName(fhirTypeName);
+
+    /// <summary>
     /// Retrieves an already imported <see cref="ClassMapping" /> for the type of the given instance.
     /// </summary>
     /// <remarks>For dynamic types, the instance's <see cref="IDynamicType.DynamicTypeName"/> is used

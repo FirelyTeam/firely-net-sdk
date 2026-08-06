@@ -100,6 +100,20 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
     private readonly ConcurrentDictionary<string, ClassMapping> _byName = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
+    /// Allocation-free lookup (on .NET 10+) equivalent of <c>ByName.GetValueOrDefault(name)</c>.
+    /// </summary>
+    public ClassMapping? FindByName(ReadOnlySpan<char> name)
+    {
+#if NET10_0_OR_GREATER
+        return _byName.GetAlternateLookup<ReadOnlySpan<char>>().TryGetValue(name, out var value) ? value : null;
+#else
+        // Slow fallback for the older TFMs: this collection is large (all model types), so a
+        // linear scan would be worse than simply materializing the key.
+        return _byName.GetValueOrDefault(name.ToString());
+#endif
+    }
+
+    /// <summary>
     /// List of the class mappings, keyed by canonical.
     /// </summary>
     public IReadOnlyDictionary<string, ClassMapping> ByCanonical => _byCanonical;

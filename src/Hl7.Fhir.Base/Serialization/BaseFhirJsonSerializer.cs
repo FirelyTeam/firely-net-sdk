@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Buffers;
 using System.Buffers.Text;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -29,6 +30,23 @@ namespace Hl7.Fhir.Serialization;
 /// </remarks>
 public class BaseFhirJsonSerializer(ModelInspector inspector)
 {
+    private static readonly JsonEncodedText RESOURCE_TYPE_PROPERTY_NAME = JsonEncodedText.Encode("resourceType"u8);
+    private static readonly JsonEncodedText VALUE_PROPERTY_NAME = JsonEncodedText.Encode("value"u8);
+
+    // FHIR element names form a small closed set, so pre-encoding them (UTF-8 + escaping) once
+    // and reusing the result on every write is considerably cheaper than having Utf8JsonWriter
+    // encode the name on each call. Names of dynamic properties end up in these caches too,
+    // but they are bounded by the model(s) in use.
+    private static readonly ConcurrentDictionary<string, JsonEncodedText> _encodedNames = new();
+    private static readonly ConcurrentDictionary<string, JsonEncodedText> _encodedUnderscoreNames = new();
+    private static readonly ConcurrentDictionary<(string name, string type), string> _suffixedNames = new();
+
+    private static JsonEncodedText encodedName(string elementName) =>
+        _encodedNames.GetOrAdd(elementName, static n => JsonEncodedText.Encode(n));
+
+    private static JsonEncodedText encodedUnderscoreName(string elementName) =>
+        _encodedUnderscoreNames.GetOrAdd(elementName, static n => JsonEncodedText.Encode("_" + n));
+
     /// <summary>
     /// The <see cref="ModelInspector"/> to be used for serialization metadata.
     /// </summary>
@@ -64,7 +82,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         else
         {
             pruningWriter.WriteStartObject(onEmpty: PruningJsonWriter.OnEmpty.Keep);
-            serializeFhirPrimitive("value", val, pruningWriter, filter);
+            serializeFhirPrimitive(VALUE_PROPERTY_NAME, encodedUnderscoreName("value"), val, pruningWriter, filter);
             pruningWriter.WriteEndObject();
         }
     }
@@ -83,7 +101,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// <param name="onEmpty">What the writer should do when the element produces no output at all.</param>
     private void serializeInternal(
         Base? element,
-        string? propertyName,
+        JsonEncodedText? propertyName,
         PruningJsonWriter writer,
         SerializationFilter? filter,
         PruningJsonWriter.OnEmpty onEmpty = PruningJsonWriter.OnEmpty.Omit)
@@ -107,7 +125,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         // want to write: it is the type the instance actually has, and it matches what the Xml serializer has
         // always used as the element name for one.
         if (element is Resource r)
-            writer.WriteString("resourceType", r.TypeName);
+            writer.WriteString(RESOURCE_TYPE_PROPERTY_NAME, r.TypeName);
 
         filter?.EnterObject(element, mapping);
 
@@ -129,14 +147,15 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             switch (member.Value)
             {
                 case PrimitiveType pt:
-                    serializeFhirPrimitive(memberPropertyName, pt, writer, filter);
+                    serializeFhirPrimitive(encodedName(memberPropertyName), encodedUnderscoreName(memberPropertyName),
+                        pt, writer, filter);
                     break;
                 case IReadOnlyList<PrimitiveType?> pts:
                     serializeFhirPrimitiveList(memberPropertyName, pts, writer, filter);
                     break;
                 case IReadOnlyList<Base?> children:   // Not List<Base>, since that is an invariant type.
                     {
-                        writer.WriteStartArray(memberPropertyName);
+                        writer.WriteStartArray(encodedName(memberPropertyName));
 
                         foreach (var child in children)
                             serializeInternal(child, null, writer, filter);
@@ -146,7 +165,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     }
                 case Base b:
                     {
-                        serializeInternal(b, memberPropertyName, writer, filter);
+                        serializeInternal(b, encodedName(memberPropertyName), writer, filter);
                         break;
                     }
                 default:
@@ -169,7 +188,10 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             _ => null
         };
 
-        return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName[1..];
+        return typeName is null
+            ? elementName
+            : _suffixedNames.GetOrAdd((elementName, typeName),
+                static key => key.name + char.ToUpperInvariant(key.type[0]) + key.type[1..]);
     }
 
     /// <summary>
@@ -194,7 +216,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         // rather than being left out. Neither array should be written at all, however, if none of the
         // entries has content - which is what the writer's placeholders take care of: it only writes them
         // once the array turns out to hold something.
-        writer.WriteStartArray(elementName);
+        writer.WriteStartArray(encodedName(elementName));
 
         foreach (var value in values)
         {
@@ -206,7 +228,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         writer.WriteEndArray();
 
-        writer.WriteStartArray("_" + elementName);
+        writer.WriteStartArray(encodedUnderscoreName(elementName));
 
         foreach (var value in values)
         {
@@ -227,7 +249,18 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>FHIR primitives are handled separately here since they may require
     /// serialization into two Json properties called "elementName" and "_elementName".</remarks>
-    private void serializeFhirPrimitive(string elementName, PrimitiveType value, PruningJsonWriter writer, SerializationFilter? filter)
+    /// <param name="elementName">The pre-encoded name of the property carrying the value.</param>
+    /// <param name="underscoreElementName">The pre-encoded '_elementName' property name carrying the
+    /// id/extensions. Passed in alongside, since it cannot be derived from an already-encoded name.</param>
+    /// <param name="value">The primitive to serialize.</param>
+    /// <param name="writer">The writer to serialize into.</param>
+    /// <param name="filter">An optional filter determining which members to serialize.</param>
+    private void serializeFhirPrimitive(
+        JsonEncodedText elementName,
+        JsonEncodedText underscoreElementName,
+        PrimitiveType value,
+        PruningJsonWriter writer,
+        SerializationFilter? filter)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
@@ -245,9 +278,8 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         // Write a property with '_elementName' for the id/extensions - which the writer leaves out
         // altogether when the filter turns out to have removed all of them.
-        serializeInternal(value, "_" + elementName, writer, filter);
+        serializeInternal(value, underscoreElementName, writer, filter);
     }
-
     private static void tryWriteBase64(Utf8JsonWriter writer, string text)
     {
         var maxSize = Base64.GetMaxDecodedFromUtf8Length(text.Length);
@@ -282,7 +314,8 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     {
         // due to System.Text.Json limitations described in https://github.com/FirelyTeam/firely-net-sdk/issues/3501
         // Base64 strings need to be < 125MB, but the overload accepting byte array does not carry such limitation
-        // Accessing the Value property might result in CodedValidationException, so we need to 
+        // Accessing the Value property might result in CodedValidationException, so we need to
+        // pattern-match on the raw JsonValue instead of reading the parsed Value.
         if (value is Base64Binary { JsonValue: string { Length: > 0 } text })
             tryWriteBase64(writer, text);
         else
@@ -294,7 +327,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// </summary>
     /// <remarks>
     /// To allow for future additions to the POCOs the list of primitives supported here
-    /// is larger than the set used by the current POCOs. Note that <c>DateTimeOffset</c>c> and
+    /// is larger than the set used by the current POCOs. Note that <c>DateTimeOffset</c> and
     /// <c>byte[]</c> are considered to be "primitive" values here (used as the value in
     /// <see cref="Instant"/> and <see cref="Base64Binary"/>).
     ///

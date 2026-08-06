@@ -55,7 +55,10 @@ internal sealed class PruningJsonWriter(Utf8JsonWriter writer)
 
     private enum PendingKind { Object, Array, Null }
 
-    private readonly record struct Pending(PendingKind Kind, string? PropertyName, OnEmpty OnEmpty);
+    /// <remarks>Property names are carried as <see cref="JsonEncodedText"/> rather than <c>string</c>: FHIR
+    /// element names come from a small closed set, so the serializer encodes each one (UTF-8 + escaping) only
+    /// once and hands the result to this writer, which passes it on to the underlying writer unchanged.</remarks>
+    private readonly record struct Pending(PendingKind Kind, JsonEncodedText? PropertyName, OnEmpty OnEmpty);
 
     /// <summary>
     /// The tokens written so far that the underlying writer has not seen yet, in document order. Contains
@@ -78,13 +81,13 @@ internal sealed class PruningJsonWriter(Utf8JsonWriter writer)
     /// <summary>
     /// Postpones writing an object, and the property name it belongs to (if any), until it gets content.
     /// </summary>
-    public void WriteStartObject(string? propertyName = null, OnEmpty onEmpty = OnEmpty.Omit) =>
+    public void WriteStartObject(JsonEncodedText? propertyName = null, OnEmpty onEmpty = OnEmpty.Omit) =>
         _pending.Add(new Pending(PendingKind.Object, propertyName, onEmpty));
 
     /// <summary>
     /// Postpones writing an array, and the property name it belongs to (if any), until it gets content.
     /// </summary>
-    public void WriteStartArray(string? propertyName = null, OnEmpty onEmpty = OnEmpty.Omit) =>
+    public void WriteStartArray(JsonEncodedText? propertyName = null, OnEmpty onEmpty = OnEmpty.Omit) =>
         _pending.Add(new Pending(PendingKind.Array, propertyName, onEmpty));
 
     /// <summary>
@@ -126,13 +129,13 @@ internal sealed class PruningJsonWriter(Utf8JsonWriter writer)
     /// Writes a property with a string value. Since this is content, any postponed opening tokens are
     /// written first.
     /// </summary>
-    public void WriteString(string propertyName, string? value) => PrepareContent().WriteString(propertyName, value);
+    public void WriteString(JsonEncodedText propertyName, string? value) => PrepareContent().WriteString(propertyName, value);
 
     /// <summary>
     /// Writes a property name. Since a name is only ever written when a value follows, this counts as
     /// content and any postponed opening tokens are written first.
     /// </summary>
-    public void WritePropertyName(string propertyName) => PrepareContent().WritePropertyName(propertyName);
+    public void WritePropertyName(JsonEncodedText propertyName) => PrepareContent().WritePropertyName(propertyName);
 
     /// <summary>
     /// Handles <see cref="WriteEndObject"/>/<see cref="WriteEndArray"/> for a structure that is still
@@ -177,14 +180,14 @@ internal sealed class PruningJsonWriter(Utf8JsonWriter writer)
         {
             switch (kind)
             {
-                case PendingKind.Object when propertyName is not null:
-                    writer.WriteStartObject(propertyName);
+                case PendingKind.Object when propertyName is { } objectName:
+                    writer.WriteStartObject(objectName);
                     break;
                 case PendingKind.Object:
                     writer.WriteStartObject();
                     break;
-                case PendingKind.Array when propertyName is not null:
-                    writer.WriteStartArray(propertyName);
+                case PendingKind.Array when propertyName is { } arrayName:
+                    writer.WriteStartArray(arrayName);
                     break;
                 case PendingKind.Array:
                     writer.WriteStartArray();
