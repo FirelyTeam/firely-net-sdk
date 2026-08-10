@@ -188,7 +188,7 @@ public class BaseFhirJsonDeserializer
         // postponed until after all properties have been seen (e.g. Instance and Property validations for
         // primitive properties, since they may be composed from two properties `name` and `_name` in json
         // and should only be validated when both have been processed, even if megabytes apart in the json file).
-        state.GetObjectContext().RunDelayedValidation();
+        runDelayedValidations(state);
         state.LeaveObjectContext();
 
         // read past object, unless this is the last EndObject in the top-level Deserialize call
@@ -279,10 +279,7 @@ public class BaseFhirJsonDeserializer
     {
         if (Settings.Validator is null) return;
 
-        var elementName = metadata.PropertyMapping.Name;
-        var runDelayed = metadata.ValueMapping.IsFhirPrimitive;
-
-        var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath,
+        var context = new PocoValidationContext(target, _inspector, state.Path.PathProducer,
                 line, pos, Settings.NarrativeValidation)
         {
             MemberName = metadata.PropertyMapping.NativeProperty?.Name
@@ -290,55 +287,106 @@ public class BaseFhirJsonDeserializer
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,
         // when we have had a chance to see both the `name` and `_name` properties.
-        if (runDelayed)
-            state.GetObjectContext().ScheduleDelayedValidation(elementName, runPropertyValidation);
+        if (metadata.ValueMapping.IsFhirPrimitive)
+            state.GetObjectContext().ScheduleDelayedValidation(metadata.PropertyMapping.Name,
+                DelayedValidation.ForProperty(serializedName, propertyValue, metadata.PropertyMapping, context));
         else
-            runPropertyValidation();
-
-        return;
-
-        void runPropertyValidation()
-        {
-            var c = context;
-            state.Errors.Add(Settings.Validator.ValidateProperty(serializedName, propertyValue, metadata.PropertyMapping,
-                c));
-        }
+            runPropertyValidation(serializedName, propertyValue, metadata.PropertyMapping, context, state);
     }
+
+    private void runPropertyValidation(string serializedName, object? propertyValue, PropertyMapping propertyMapping,
+        PocoValidationContext context, PocoDeserializerState state) =>
+        state.Errors.Add(Settings.Validator!.ValidateProperty(serializedName, propertyValue, propertyMapping, context));
 
     private void doObjectValidation(Base poco, ClassMapping classMapping, PocoDeserializerState state, long line, long pos, string? memberName = null)
     {
         if(Settings.Validator is null) return;
 
-        var runDelayed = classMapping.IsFhirPrimitive;
-
         var context =
-            new PocoValidationContext(poco, _inspector, state.Path.GetInstancePath, line, pos, Settings.NarrativeValidation)
+            new PocoValidationContext(poco, _inspector, state.Path.PathProducer, line, pos, Settings.NarrativeValidation)
             {
                 MemberName = memberName
             };
 
         // If this is a FHIR primitive (or underscore property), we will need to delay validation,
         // when we have had a chance to see both the `name` and `_name` properties.
-        if (runDelayed)
-            state.GetObjectContext().ScheduleDelayedValidation(poco, runObjectValidation);
+        if (classMapping.IsFhirPrimitive)
+            state.GetObjectContext().ScheduleDelayedValidation(poco, DelayedValidation.ForObject(poco, classMapping, context));
         else
-            runObjectValidation();
+            runObjectValidation(poco, classMapping, context, state);
+    }
 
-        return;
+    private void runObjectValidation(Base poco, ClassMapping classMapping, PocoValidationContext context, PocoDeserializerState state)
+    {
+        var nErrorCount = state.Errors.Count;
 
-        void runObjectValidation()
+        state.Errors.Add(Settings.Validator!.ValidateObject(poco, classMapping, context));
+
+        // If we have been parsing a resource, annotate any new validation errors that were encountered (if endaled).
+        if (classMapping.IsResource && Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
         {
-            var nErrorCount = state.Errors.Count;
-
-            state.Errors.Add(Settings.Validator.ValidateObject(poco, classMapping, context));
-
-            // If we have been parsing a resource, annotate any new validation errors that were encountered (if endaled).
-            if (classMapping.IsResource && Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
-            {
-                List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
-                poco.SetAnnotation(resourceErrs);
-            }
+            List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
+            poco.SetAnnotation(resourceErrs);
         }
+    }
+
+    /// <summary>
+    /// A validation that has been scheduled to run once the enclosing object has been deserialized
+    /// completely (see <see cref="ObjectParsingState.ScheduleDelayedValidation"/>).
+    /// </summary>
+    /// <remarks>This is a struct, and the validations are dispatched by <see cref="Run"/> rather than by a
+    /// delegate, so that scheduling one costs nothing: FHIR primitives - which is what delayed validation is
+    /// for - make up the bulk of the elements of a resource, and every one of them would otherwise allocate a
+    /// closure plus a delegate for a validation that (nearly) always succeeds.</remarks>
+    internal readonly struct DelayedValidation
+    {
+        private readonly bool _isObjectValidation;
+        private readonly PocoValidationContext _context;
+
+        // Used for object validation only.
+        private readonly Base? _instance;
+        private readonly ClassMapping? _classMapping;
+
+        // Used for property validation only.
+        private readonly string? _serializedName;
+        private readonly object? _propertyValue;
+        private readonly PropertyMapping? _propertyMapping;
+
+        private DelayedValidation(bool isObjectValidation, PocoValidationContext context, Base? instance,
+            ClassMapping? classMapping, string? serializedName, object? propertyValue, PropertyMapping? propertyMapping)
+        {
+            _isObjectValidation = isObjectValidation;
+            _context = context;
+            _instance = instance;
+            _classMapping = classMapping;
+            _serializedName = serializedName;
+            _propertyValue = propertyValue;
+            _propertyMapping = propertyMapping;
+        }
+
+        public static DelayedValidation ForProperty(string serializedName, object? propertyValue,
+            PropertyMapping propertyMapping, PocoValidationContext context) =>
+            new(false, context, null, null, serializedName, propertyValue, propertyMapping);
+
+        public static DelayedValidation ForObject(Base instance, ClassMapping classMapping, PocoValidationContext context) =>
+            new(true, context, instance, classMapping, null, null, null);
+
+        public void Run(BaseFhirJsonDeserializer deserializer, PocoDeserializerState state)
+        {
+            if (_isObjectValidation)
+                deserializer.runObjectValidation(_instance!, _classMapping!, _context, state);
+            else
+                deserializer.runPropertyValidation(_serializedName!, _propertyValue, _propertyMapping!, _context, state);
+        }
+    }
+
+    /// <summary>
+    /// Runs the validations that were postponed until all properties of the current object have been seen.
+    /// </summary>
+    private void runDelayedValidations(PocoDeserializerState state)
+    {
+        foreach (var validation in state.GetObjectContext().DelayedValidations)
+            validation.Run(this, state);
     }
 
     private void deserializeListInto(IList existingList, ref Utf8JsonReader reader, string propertyName, PropertyValueMapping metadata,
@@ -543,23 +591,34 @@ public class BaseFhirJsonDeserializer
 
     internal class ObjectParsingState
     {
-        private readonly Dictionary<object, Action> _validations = new();
+        private Dictionary<object, DelayedValidation>? _validations;
         private readonly HashSet<string> _propertiesEncountered = [];
-        public Dictionary<string, PropertyMapping> LocalPropertyMappings = new();
+
+        // Mappings fabricated on the fly for elements that are not part of the class being parsed.
+        // Created lazily, since a well-formed resource has none of these.
+        private Dictionary<string, PropertyMapping>? _localPropertyMappings;
 
         public bool HitProperty(string propertyName) => !_propertiesEncountered.Add(propertyName);
 
-        public void ScheduleDelayedValidation(object key, Action validation)
+        public PropertyMapping? FindLocalPropertyMapping(string propertyName) =>
+            _localPropertyMappings?.GetValueOrDefault(propertyName);
+
+        public void AddLocalPropertyMapping(string propertyName, PropertyMapping mapping) =>
+            (_localPropertyMappings ??= new Dictionary<string, PropertyMapping>()).Add(propertyName, mapping);
+
+        public void ScheduleDelayedValidation(object key, DelayedValidation validation)
         {
+            _validations ??= new Dictionary<object, DelayedValidation>();
+
             // Add or overwrite the entry for the given key.
             _validations.Remove(key);
             _validations[key] = validation;
         }
 
-        public void RunDelayedValidation()
-        {
-            foreach (var validation in _validations.Values) validation();
-        }
+        public Dictionary<object, DelayedValidation>.ValueCollection DelayedValidations =>
+            _validations?.Values ?? EMPTY_VALIDATIONS.Values;
+
+        private static readonly Dictionary<object, DelayedValidation> EMPTY_VALIDATIONS = new();
     }
 
     /// <summary>
@@ -749,7 +808,7 @@ public class BaseFhirJsonDeserializer
         // separate "value" property in Json. If it does, treat it like an unknown property.
         bool isUnexpectedValueProperty = parentMapping.IsFhirPrimitive && propNameWithoutUnderscore == "value";
 
-        var localMapping = state.GetObjectContext().LocalPropertyMappings.GetValueOrDefault(propNameWithoutUnderscore);
+        var localMapping = state.GetObjectContext().FindLocalPropertyMapping(propNameWithoutUnderscore);
         PropertyMapping? definedMapping = null;
 
         if (localMapping is null && !isUnexpectedValueProperty
@@ -770,9 +829,6 @@ public class BaseFhirJsonDeserializer
             ?? definedMapping
             ?? getUnknownPropMapping(ref reader, startsWithUnderscore);
 
-        // Simulate us moving into the element, so we get an error at the right location
-        state.EnterElement(propertyMapping.Name);
-
         var propertyValueMapping = propertyMapping.Choice switch
         {
             // A custom type mapping is used directly: resolving it via the .NET type (below) would
@@ -787,9 +843,12 @@ public class BaseFhirJsonDeserializer
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported.")
         };
 
-        state.ExitElement();
-
         return new PropertyValueMapping(propertyMapping, propertyValueMapping);
+
+        // The path of the element we are resolving the mapping for. We have not actually moved into the
+        // element yet (the caller does that), so this simulates that move - only when a diagnostic below
+        // needs it, which keeps a path part per element out of the happy path.
+        string elementPath() => state.Path.EnterElement(propertyMapping.Name).GetInstancePath();
 
         ClassMapping getChoiceClassMapping(ref Utf8JsonReader r)
         {
@@ -809,7 +868,7 @@ public class BaseFhirJsonDeserializer
             }
             else
             {
-                var path = state.Path.GetInstancePath();
+                var path = elementPath();
                 state.Errors.Add(ERR.CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref r, path, propNameWithoutUnderscore));
 
                 var guessedDynamicType = getUnknownPropMapping(ref r, startsWithUnderscore).ImplementingType;
@@ -836,7 +895,7 @@ public class BaseFhirJsonDeserializer
                     new PropertyMapping(parentMapping, propNameWithoutUnderscore, getCustomMappingTypeForToken(r.TokenType))
             };
 
-            state.GetObjectContext().LocalPropertyMappings.Add(propNameWithoutUnderscore, customPropertyMapping);
+            state.GetObjectContext().AddLocalPropertyMapping(propNameWithoutUnderscore, customPropertyMapping);
 
             return customPropertyMapping;
 

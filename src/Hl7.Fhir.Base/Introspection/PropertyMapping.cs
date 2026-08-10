@@ -290,6 +290,24 @@ public class PropertyMapping : IElementDefinitionSummary
     /// </summary>
     public ValidatingFhirModelAttribute[] ValidationAttributes { get; init; } = [];
 
+    /// <summary>
+    /// The <see cref="CardinalityAttribute"/> declared on this element when it has a minimum cardinality
+    /// higher than 0, as a (single-entry) list of attributes to validate; an empty list otherwise.
+    /// </summary>
+    /// <remarks>Validating an object means checking, for every one of its elements, whether a mandatory
+    /// element is missing - so this scan of <see cref="ValidationAttributes"/> would otherwise be done
+    /// per element per validated instance. Since <see cref="ValidationAttributes"/> is init-only, the
+    /// outcome is stable and computed only once. See the note on
+    /// <see cref="ClassMapping.PropertyMappingsInternal"/> for the lazy initialization idiom used here.</remarks>
+    internal ValidatingFhirModelAttribute[] MandatoryCardinality =>
+        _mandatoryCardinality ?? LazyInitializer.EnsureInitialized(ref _mandatoryCardinality, computeMandatoryCardinality)!;
+
+    private ValidatingFhirModelAttribute[]? _mandatoryCardinality;
+
+    private ValidatingFhirModelAttribute[] computeMandatoryCardinality() =>
+        ValidationAttributes.OfType<CardinalityAttribute>().SingleOrDefault() is { Min: > 0 } cardinality
+            ? [cardinality]
+            : [];
 
     /// <summary>
     /// For a bound element, this is the name of the binding.

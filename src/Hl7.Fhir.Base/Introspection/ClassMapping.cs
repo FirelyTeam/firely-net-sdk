@@ -224,6 +224,12 @@ public class ClassMapping(
     public ICollection<PropertyMapping> PropertyMappings => PropertyMappingsInternal;
 
     /// <summary>
+    /// The elements of this class that have a minimum cardinality higher than 0, and for which the
+    /// validator therefore needs to check whether they are present on a validated instance.
+    /// </summary>
+    internal IReadOnlyList<PropertyMapping> MandatoryElements => PropertyMappingsInternal.MandatoryElements;
+
+    /// <summary>
     /// Holds a reference to a property that represents the value of a FHIR Primitive. This
     /// property will also be present in the PropertyMappings collection. If this class has
     /// no such property, it is null.

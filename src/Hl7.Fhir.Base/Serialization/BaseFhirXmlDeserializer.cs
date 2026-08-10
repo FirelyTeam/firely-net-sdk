@@ -264,7 +264,7 @@ public class BaseFhirXmlDeserializer
             var context = new PocoValidationContext(
                 target,
                 _inspector,
-                state.Path.GetInstancePath,
+                state.Path.PathProducer,
                 lineNumber, position,
                 Settings.NarrativeValidation);
 
@@ -327,7 +327,7 @@ public class BaseFhirXmlDeserializer
             var context = new PocoValidationContext(
                 target,
                 _inspector,
-                state.Path.GetInstancePath,
+                state.Path.PathProducer,
                 lineNumber, position,
                 Settings.NarrativeValidation)
             {
@@ -589,7 +589,7 @@ public class BaseFhirXmlDeserializer
                 var context = new PocoValidationContext(
                     targetElement,
                     _inspector,
-                    state.Path.GetInstancePath,
+                    state.Path.PathProducer,
                     lineNumber, position,
                     Settings.NarrativeValidation);
                 state.Errors.Add(Settings.Validator.ValidateObject(targetElement, targetElementMapping, context));
@@ -597,7 +597,7 @@ public class BaseFhirXmlDeserializer
                 context = new PocoValidationContext(
                     target,
                     _inspector,
-                    state.Path.GetInstancePath,
+                    state.Path.PathProducer,
                     lineNumber, position,
                     Settings.NarrativeValidation)
                 {
