@@ -146,7 +146,10 @@ internal class PropertyMappingCollection : ICollection<PropertyMapping>
     /// </summary>
     /// <remarks>Validating an instance means verifying that none of its mandatory elements is missing.
     /// Only a handful of the elements of a type are mandatory, but the whole collection would have to be
-    /// scanned - per validated instance - to find out which, so the outcome of that scan is cached here.</remarks>
+    /// scanned - per validated instance - to find out which, so the outcome of that scan is cached here.
+    /// Whether an element is mandatory is fixed when its mapping is built (see
+    /// <see cref="PropertyMapping.ValidationAttributes"/>), so this cache only needs to be invalidated
+    /// when the collection itself changes, which <see cref="clearCaches"/> does.</remarks>
     public IReadOnlyList<PropertyMapping> MandatoryElements =>
         _mandatoryElements ?? LazyInitializer.EnsureInitialized(ref _mandatoryElements,
             () => ByName.Values.Where(pm => pm.MandatoryCardinality.Length > 0).ToList())!;

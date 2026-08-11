@@ -12,6 +12,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -239,6 +240,74 @@ namespace Hl7.Fhir.Tests.Introspection
                 .Which.DynamicTypeName.Should().Be("MyCustomDatatype",
                     "a non-choice element of a custom type should keep the custom type identity when parsed");
         }
+
+        [TestMethod]
+        public void MandatoryElementsAreDerivedFromTheAttributesTheMappingWasBuiltWith()
+        {
+            var inspector = CustomTestModel.Create();
+            var resource = inspector.FindClassMapping("MyCustomResource")!;
+
+            // "identifier" is the only element of the custom resource declared with a minimum cardinality,
+            // so it is the only one the validator needs to check the presence of.
+            resource.MandatoryElements.Select(pm => pm.Name).Should().Equal("identifier");
+            var identifier = resource.FindMappedElementByName("identifier")!;
+            identifier.MandatoryCardinality.Should().BeEquivalentTo(identifier.ValidationAttributes);
+
+            var withoutIdentifier = (DynamicResource)resource.CreateInstance();
+            withoutIdentifier.SetValue("value", new FhirString("something"));
+            validate(withoutIdentifier, resource, inspector).Should().ContainSingle()
+                .Which.Should().Be(CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+
+            validate(CustomTestModel.CreateValidInstance(inspector), resource, inspector).Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void MandatoryElementMetadataIsASnapshotOfTheMappingsAttributes()
+        {
+            // The metadata on a mapping is derived from its validation attributes when the mapping is
+            // constructed - IsMandatoryElement has always worked that way, and MandatoryElements/
+            // MandatoryCardinality do too. Mutating an attribute after handing it to a mapping is
+            // therefore not supported, and not observed by the validator: this test pins that contract.
+            var inspector = CustomTestModel.Create();
+            var stringMapping = inspector.FindClassMapping("string")!;
+            var cardinality = new CardinalityAttribute { Min = 0, Max = 1 };
+
+            var resource = new ClassMapping(inspector, "MyMutableResource", typeof(DynamicResource), r =>
+            [
+                new PropertyMapping(r, "identifier", typeof(FhirString), [stringMapping])
+                {
+                    Order = 10,
+                    ValidationAttributes = [cardinality]
+                },
+                new PropertyMapping(r, "note", typeof(FhirString), [stringMapping]) { Order = 20 }
+            ])
+            {
+                Canonical = "http://example.org/fhir/StructureDefinition/MyMutableResource"
+            };
+            inspector.ClassMappings.Add(resource);
+
+            var identifier = resource.FindMappedElementByName("identifier")!;
+            identifier.MandatoryCardinality.Should().BeEmpty();
+
+            cardinality.Min = 1;
+
+            identifier.MandatoryCardinality.Should().BeEmpty();
+            identifier.IsMandatoryElement.Should().BeFalse();
+            resource.MandatoryElements.Should().BeEmpty();
+
+            var withoutIdentifier = (DynamicResource)resource.CreateInstance();
+            withoutIdentifier.SetValue("note", new FhirString("something"));
+            validate(withoutIdentifier, resource, inspector).Should()
+                .NotContain(CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE,
+                    "'identifier' was not mandatory when the mapping was built");
+        }
+
+        private static IReadOnlyList<string> validate(Base instance, ClassMapping mapping, ModelInspector inspector) =>
+            FhirAttributeValidator.Default
+                .ValidateObject(instance, mapping,
+                    new PocoValidationContext(instance, inspector, () => "", 0, 0, NarrativeValidationKind.FhirXhtml))
+                .Select(e => e.ErrorCode)
+                .ToList();
 
         [TestMethod]
         public void TypedElementOnCustomPocoExposesCustomTypes()
