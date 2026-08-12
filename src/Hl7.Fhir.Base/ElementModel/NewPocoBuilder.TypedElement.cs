@@ -3,6 +3,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using System;
 using ET = Hl7.Fhir.ElementModel.Types;
 
@@ -135,17 +136,53 @@ internal partial class NewPocoBuilder
     }
 
     /// <summary>
+    /// Determines whether the type described by this summary is a primitive: in FHIR, those are the types
+    /// with a "value" child, which is represented as an attribute in Xml.
+    /// </summary>
+    private static bool isPrimitiveType(IStructureDefinitionSummary summary)
+    {
+        foreach (var element in summary.GetElements())
+        {
+            if (element.ElementName == "value" && element.Representation == XmlRepresentation.XmlAttr)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// In FHIR, primitive types are the only types whose name starts with a lowercase letter, so this is
+    /// used as a heuristic to recognize them when we have no definition to go on. Note that types can also
+    /// be identified by their canonical url (as is the case for logical models), which would incorrectly
+    /// trip this heuristic - those are excluded here.
+    /// </summary>
+    private static bool isPrimitiveTypeName(string typeName) =>
+        char.IsLower(typeName[0]) && !new Canonical(typeName).IsAbsolute;
+
+    /// <summary>
     /// Determine the "best" dynamic type based on the actual contents of the ITypedElement.
     /// </summary>
     private ClassMapping determineBestDynamicMappingForElement(ITypedElement node)
     {
-        if (node.Value is not null || (node.InstanceType is { } it && char.IsLower(it[0])))
+        if (node.Value is not null)
             return DetermineBestPrimitiveMapping();
 
-        if (node.Annotation<IResourceTypeSupplier>()?.ResourceType is not null || node.Definition?.IsResource is true)
-            return ClassMapping.DynamicResource;
+        // When the definition tells us the type of this element, use it to decide primitive versus complex -
+        // that beats guessing based on the shape of the type's name (which is all we can do below).
+        if (node.Definition?.Type is [IStructureDefinitionSummary summary])
+            return isPrimitiveType(summary)
+                ? DetermineBestPrimitiveMapping()
+                : isResource(summary.IsResource) ? ClassMapping.DynamicResource : ClassMapping.DynamicDataType;
 
-        return ClassMapping.DynamicDataType;
+        if (node.InstanceType is { } it && isPrimitiveTypeName(it))
+            return DetermineBestPrimitiveMapping();
+
+        return isResource(false) ? ClassMapping.DynamicResource : ClassMapping.DynamicDataType;
+
+        bool isResource(bool typeIsResource) =>
+            typeIsResource
+            || node.Annotation<IResourceTypeSupplier>()?.ResourceType is not null
+            || node.Definition?.IsResource is true;
 
         ClassMapping DetermineBestPrimitiveMapping()
         {
