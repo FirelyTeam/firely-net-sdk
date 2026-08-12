@@ -128,13 +128,6 @@ public class FhirAttributeValidator : IPocoValidator
         addRange(ref errors, instance.ValidateInvariants(context));
 
         return errors ?? (IReadOnlyCollection<CodedValidationException>)[];
-
-        static void addRange(ref List<CodedValidationException>? target, IReadOnlyCollection<CodedValidationException> source)
-        {
-            if (source.Count == 0) return;
-
-            (target ??= []).AddRange(source);
-        }
     }
 
     /// <remarks>Runs on every property and every object encountered while deserializing, where the
@@ -148,14 +141,21 @@ public class FhirAttributeValidator : IPocoValidator
         List<CodedValidationException>? errors = null;
 
         foreach (var attribute in attributes)
-        {
-            var result = attribute.Validate(candidateValue, validationContext);
-            if (result.Count == 0) continue;
-
-            (errors ??= new List<CodedValidationException>(result.Count)).AddRange(result);
-        }
+            addRange(ref errors, attribute.Validate(candidateValue, validationContext));
 
         return errors ?? (IReadOnlyCollection<CodedValidationException>)[];
+    }
+
+    /// <summary>
+    /// Appends <paramref name="source"/> to <paramref name="target"/>, creating the list on first use.
+    /// </summary>
+    /// <remarks>Validation of a property or object usually yields nothing, so the list collecting the
+    /// errors is only allocated once there is actually something to collect.</remarks>
+    private static void addRange(ref List<CodedValidationException>? target, IReadOnlyCollection<CodedValidationException> source)
+    {
+        if (source.Count == 0) return;
+
+        (target ??= new List<CodedValidationException>(source.Count)).AddRange(source);
     }
 
     /// <summary>
