@@ -139,15 +139,34 @@ internal partial class NewPocoBuilder
     /// Determines whether the type described by this summary is a primitive: in FHIR, those are the types
     /// with a "value" child, which is represented as an attribute in Xml.
     /// </summary>
+    /// <remarks>
+    /// Note that the SDK's own summaries deliberately hide that "value" child: both
+    /// <c>StructureDefinitionComplexTypeSerializationInfo.getElements()</c> and <see cref="ClassMapping"/>
+    /// filter the primitive value constraint out of <c>GetElements()</c>. So the presence of a "value"
+    /// attribute proves a type is primitive, but its absence does not prove the opposite - hence the
+    /// additional signals below.
+    /// </remarks>
     private static bool isPrimitiveType(IStructureDefinitionSummary summary)
     {
+        // A mapping for a POCO knows outright whether it has a value pseudo-property.
+        if (summary is ClassMapping cm)
+            return cm.PrimitiveValueProperty is not null;
+
+        var hasComplexChildren = false;
+
         foreach (var element in summary.GetElements())
         {
             if (element.ElementName == "value" && element.Representation == XmlRepresentation.XmlAttr)
                 return true;
+
+            // A primitive can only have the children it inherits from Element, so anything else means
+            // we are definitely looking at a complex type.
+            hasComplexChildren |= element.ElementName is not ("id" or "extension");
         }
 
-        return false;
+        // The elements told us nothing conclusive (e.g. a custom primitive with a filtered-out value
+        // constraint and no value present in the instance), so fall back to the naming heuristic.
+        return !hasComplexChildren && isPrimitiveTypeName(summary.TypeName);
     }
 
     /// <summary>

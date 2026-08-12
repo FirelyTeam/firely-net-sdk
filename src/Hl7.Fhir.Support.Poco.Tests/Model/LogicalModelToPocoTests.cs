@@ -66,6 +66,43 @@ public class LogicalModelToPocoTests
             compiler.Compile(expression)(root, ctx).Select(node => ((ITypedElement)node).Value).ToList();
     }
 
+    /// <summary>
+    /// Covers how a type without a value in the instance is classified as primitive or complex, based on
+    /// what its definition tells us. Note that the SDK's real summary providers filter the primitive
+    /// "value" constraint out of <c>GetElements()</c>, so a value child proves a type is a primitive, but
+    /// its absence does not prove the opposite.
+    /// </summary>
+    [TestMethod]
+    // A value attribute in the definition is conclusive, whatever the type is called.
+    [DataRow("myCode", "value@attr", true, DisplayName = "value attribute, primitive-looking name")]
+    [DataRow("MyCode", "value@attr", true, DisplayName = "value attribute, complex-looking name")]
+    // Without it, only the children a primitive is allowed to have leave the naming heuristic to decide.
+    [DataRow("myCode", "extension", true, DisplayName = "no value attribute, primitive-looking name")]
+    [DataRow("myCode", "id,extension", true, DisplayName = "no value attribute, only inherited children")]
+    [DataRow("MyCode", "extension", false, DisplayName = "no value attribute, complex-looking name")]
+    // A child a primitive cannot have means complex, even when the name suggests otherwise.
+    [DataRow("myCode", "extension,hook", false, DisplayName = "child element beyond those of a primitive")]
+    // Logical models are identified by canonical url, which is never a primitive type name.
+    [DataRow(CANONICAL, "extension", false, DisplayName = "type identified by canonical url")]
+    public void ClassifiesValueLessTypeAsPrimitiveOrComplex(string typeName, string children, bool expectPrimitive)
+    {
+        // Extension-only (so: value-less) instances of a primitive are legal, and this is the only content
+        // all the type definitions under test have in common.
+        var sourceNode = FhirJsonNode.Parse(
+            """{ "extension": { "url": "http://example.org/ext", "valueString": "absent" } }""", typeName);
+        var elements = children.Split(',')
+            .Select(name => name.EndsWith("@attr")
+                ? new ElementSummary("value", "System.String", XmlRepresentation.XmlAttr)
+                : new ElementSummary(name, name == "extension" ? "Extension" : "string"))
+            .ToArray<IElementDefinitionSummary>();
+        var provider = new SingleTypeSummaryProvider(new ComplexSummary(typeName, elements));
+
+        var root = sourceNode.ToTypedElement(provider, typeName).ToPocoNode();
+
+        root.Poco.Should().BeOfType(expectPrimitive ? typeof(DynamicPrimitive) : typeof(DynamicDataType));
+        root.Poco.TypeName.Should().Be(typeName);
+    }
+
     private static PocoNode buildRoot(string typeName)
     {
         var sourceNode = FhirJsonNode.Parse("""{ "hook": "order-sign" }""", "SpikeRoot");
@@ -81,6 +118,15 @@ public class LogicalModelToPocoTests
             canonical == rootTypeName ? new ComplexSummary(rootTypeName, new ElementSummary("hook", "string")) :
             canonical == "string" ? new ComplexSummary("string", new ElementSummary("value", "System.String", XmlRepresentation.XmlAttr)) :
             null;
+    }
+
+    /// <summary>
+    /// A provider that knows a single hand-built type.
+    /// </summary>
+    private class SingleTypeSummaryProvider(ComplexSummary summary) : IStructureDefinitionSummaryProvider
+    {
+        public IStructureDefinitionSummary Provide(string canonical) =>
+            canonical == summary.TypeName ? summary : null;
     }
 
     private class ComplexSummary(string typeName, params IElementDefinitionSummary[] elements) : IStructureDefinitionSummary
