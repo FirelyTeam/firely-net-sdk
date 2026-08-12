@@ -334,10 +334,17 @@ public class BaseFhirJsonDeserializer
     /// A validation that has been scheduled to run once the enclosing object has been deserialized
     /// completely (see <see cref="ObjectParsingState.ScheduleDelayedValidation"/>).
     /// </summary>
-    /// <remarks>This is a struct, and the validations are dispatched by <see cref="Run"/> rather than by a
-    /// delegate, so that scheduling one costs nothing: FHIR primitives - which is what delayed validation is
-    /// for - make up the bulk of the elements of a resource, and every one of them would otherwise allocate a
-    /// closure plus a delegate for a validation that (nearly) always succeeds.</remarks>
+    /// <remarks><para>The captured data is held in this struct and dispatched by <see cref="Run"/>, rather
+    /// than captured in a delegate. Capturing it would put the arguments of <c>doPropertyValidation</c> and
+    /// <c>doObjectValidation</c> into a display class, and the compiler allocates that on entry to those
+    /// methods - before the check whether there is a validator at all - so every property and every object of
+    /// every parse would pay for one, including parses that have validation switched off entirely. Measured on
+    /// the Patient StructureDefinition of <c>ValidatingDeserializationBenchmarks</c>, that is what dominates:
+    /// 1,240 KB to 979 KB (-21%) with the validator off.</para>
+    /// <para>On the validating path the gain is small (2,654 KB to 2,609 KB, -1.7%): this struct is stored
+    /// inline in the scheduling dictionary, so its larger entries offset most of what the display class and
+    /// the delegate cost. Keeping the delayed and the immediate route symmetrical is the other reason to
+    /// dispatch this way.</para></remarks>
     internal readonly struct DelayedValidation
     {
         private readonly bool _isObjectValidation;
