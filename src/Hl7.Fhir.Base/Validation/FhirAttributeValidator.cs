@@ -91,50 +91,72 @@ public class FhirAttributeValidator : IPocoValidator
    /// <inheritdoc />
     public virtual IReadOnlyCollection<CodedValidationException> ValidateObject(Base instance, ClassMapping classMapping, PocoValidationContext context)
     {
-        var errors = new List<CodedValidationException>();
+        // Validating an object is done for every object encountered while deserializing, and the
+        // common case is that it produces no errors at all - so the list collecting them is only
+        // created once there is something to collect.
+        List<CodedValidationException>? errors = null;
 
         // If we encounter a dynamic resource that is not backed by a custom mapping registered
         // with the inspector, we'll report that we have encountered an unknown resource type.
         if (instance is DynamicResource dr
             && !BaseFhirJsonDeserializer.IsUnnamedResourceMapping(classMapping)
             && !isRegisteredCustomMapping(classMapping, context))
-            errors.Add(CodedValidationException.UNKNOWN_RESOURCE_TYPE(context, dr.DynamicTypeName ?? "(unnamed)"));
+            (errors ??= []).Add(CodedValidationException.UNKNOWN_RESOURCE_TYPE(context, dr.DynamicTypeName ?? "(unnamed)"));
 
         // Make sure we detect missing values - go over all members that have cardinality constraints
         // and invoke those if there is no value (if there was a value, ValidateProperty will have been
-        // called on it while deserializing the member).
-        foreach (var propMapping in classMapping!.PropertyMappings)
+        // called on it while deserializing the member). Which members those are is a property of the
+        // class, so it is determined once (see ClassMapping.MandatoryElements) instead of per instance.
+        foreach (var propMapping in classMapping!.MandatoryElements)
         {
-            var cardinality = propMapping.ValidationAttributes.OfType<CardinalityAttribute>().SingleOrDefault();
-            if (cardinality is not null && cardinality.Min > 0)
+            var propValue = instance.TryGetValue(propMapping.Name, out var val) ? val : null;
+
+            if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
             {
-                var propValue = instance.TryGetValue(propMapping.Name, out var val) ? val : null;
+                // Add the name of the property to the path, so we can display the correct name of the element,
+                // even if it does not really contain any values.
+                var nestedContext = context with { PathProducer = () => $"{context.PathProducer()}.{propMapping.Name}", MemberName = propMapping.NativeProperty?.Name };
 
-                if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
-                {
-                    // Add the name of the property to the path, so we can display the correct name of the element,
-                    // even if it does not really contain any values.
-                    var nestedContext = context with { PathProducer = () => $"{context.PathProducer()}.{propMapping.Name}", MemberName = propMapping.NativeProperty?.Name };
-
-                    errors.AddRange(runAttributeValidation(propValue, [cardinality], nestedContext));
-                }
+                addRange(ref errors, runAttributeValidation(propValue, propMapping.MandatoryCardinality, nestedContext));
             }
         }
 
         // Validate the attributes on this instance itself
-        errors.AddRange(runAttributeValidation(instance, classMapping.ValidationAttributes, context));
+        addRange(ref errors, runAttributeValidation(instance, classMapping.ValidationAttributes, context));
 
         // Now, run the object-level validation
-        errors.AddRange(instance.ValidateInvariants(context));
+        addRange(ref errors, instance.ValidateInvariants(context));
 
-        return errors;
+        return errors ?? (IReadOnlyCollection<CodedValidationException>)[];
     }
 
+    /// <remarks>Runs on every property and every object encountered while deserializing, where the
+    /// common case is a handful of attributes that all pass, so this avoids allocating anything at all
+    /// (no enumerators, no result collection) unless a validation actually fails.</remarks>
     private static IReadOnlyCollection<CodedValidationException> runAttributeValidation(
         object? candidateValue,
         ValidatingFhirModelAttribute[] attributes,
-        PocoValidationContext validationContext) =>
-        attributes.SelectMany(vfma => vfma.Validate(candidateValue, validationContext)).ToArray();
+        PocoValidationContext validationContext)
+    {
+        List<CodedValidationException>? errors = null;
+
+        foreach (var attribute in attributes)
+            addRange(ref errors, attribute.Validate(candidateValue, validationContext));
+
+        return errors ?? (IReadOnlyCollection<CodedValidationException>)[];
+    }
+
+    /// <summary>
+    /// Appends <paramref name="source"/> to <paramref name="target"/>, creating the list on first use.
+    /// </summary>
+    /// <remarks>Validation of a property or object usually yields nothing, so the list collecting the
+    /// errors is only allocated once there is actually something to collect.</remarks>
+    private static void addRange(ref List<CodedValidationException>? target, IReadOnlyCollection<CodedValidationException> source)
+    {
+        if (source.Count == 0) return;
+
+        (target ??= new List<CodedValidationException>(source.Count)).AddRange(source);
+    }
 
     /// <summary>
     /// Whether this is an ad-hoc mapping, created on the fly (e.g. by the deserializer) for a

@@ -288,8 +288,38 @@ public class PropertyMapping : IElementDefinitionSummary
     /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
     /// on this property.
     /// </summary>
-    public ValidatingFhirModelAttribute[] ValidationAttributes { get; init; } = [];
+    /// <remarks>Like the other metadata on a mapping, these attributes are a snapshot: the derived
+    /// <see cref="IsMandatoryElement"/> and <see cref="MandatoryCardinality"/> are determined when the
+    /// mapping is constructed, so mutating an attribute afterwards - e.g. setting
+    /// <see cref="CardinalityAttribute.Min"/> on an attribute that was handed to a mapping, or replacing
+    /// an entry of the array - is not picked up. Build a mapping with the attributes it should have.</remarks>
+    public ValidatingFhirModelAttribute[] ValidationAttributes
+    {
+        get => _validationAttributes;
+        init
+        {
+            _validationAttributes = value;
 
+            // Validating an object means checking, for every one of its elements, whether a mandatory
+            // element is missing - so this scan would otherwise be done per element per validated
+            // instance. It is done here instead, at the same moment IsMandatoryElement is derived from
+            // the very same attribute (see TryCreate).
+            _mandatoryCardinality = value.OfType<CardinalityAttribute>().SingleOrDefault() is { Min: > 0 } cardinality
+                ? [cardinality]
+                : [];
+        }
+    }
+
+    private ValidatingFhirModelAttribute[] _validationAttributes = [];
+
+    /// <summary>
+    /// The <see cref="CardinalityAttribute"/> declared on this element when it has a minimum cardinality
+    /// higher than 0, as a (single-entry) list of attributes to validate; an empty list otherwise.
+    /// </summary>
+    /// <remarks>Determined when <see cref="ValidationAttributes"/> is set - see the remarks there.</remarks>
+    internal ValidatingFhirModelAttribute[] MandatoryCardinality => _mandatoryCardinality;
+
+    private ValidatingFhirModelAttribute[] _mandatoryCardinality = [];
 
     /// <summary>
     /// For a bound element, this is the name of the binding.
