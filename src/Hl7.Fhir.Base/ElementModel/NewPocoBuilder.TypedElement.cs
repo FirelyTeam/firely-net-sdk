@@ -191,17 +191,16 @@ internal partial class NewPocoBuilder
         if (node.Definition?.Type is [IStructureDefinitionSummary summary])
             return isPrimitiveType(summary)
                 ? DetermineBestPrimitiveMapping()
-                : isResource(summary.IsResource) ? ClassMapping.DynamicResource : ClassMapping.DynamicDataType;
+                : summary.IsResource || isResource(node) ? ClassMapping.DynamicResource : ClassMapping.DynamicDataType;
 
         if (node.InstanceType is { } it && isPrimitiveTypeName(it))
             return DetermineBestPrimitiveMapping();
 
-        return isResource(false) ? ClassMapping.DynamicResource : ClassMapping.DynamicDataType;
+        return isResource(node) ? ClassMapping.DynamicResource : ClassMapping.DynamicDataType;
 
-        bool isResource(bool typeIsResource) =>
-            typeIsResource
-            || node.Annotation<IResourceTypeSupplier>()?.ResourceType is not null
-            || node.Definition?.IsResource is true;
+        static bool isResource(ITypedElement node) =>
+            node.Definition?.IsResource is true
+            || node.Annotation<IResourceTypeSupplier>()?.ResourceType is not null;
 
         ClassMapping DetermineBestPrimitiveMapping()
         {
