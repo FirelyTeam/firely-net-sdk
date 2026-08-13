@@ -279,7 +279,7 @@ public class BaseFhirJsonDeserializer
     {
         if (Settings.Validator is null) return;
 
-        var context = new PocoValidationContext(target, _inspector, state.Path.PathProducer,
+        var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath,
                 line, pos, Settings.NarrativeValidation)
         {
             MemberName = metadata.PropertyMapping.NativeProperty?.Name
@@ -303,7 +303,7 @@ public class BaseFhirJsonDeserializer
         if(Settings.Validator is null) return;
 
         var context =
-            new PocoValidationContext(poco, _inspector, state.Path.PathProducer, line, pos, Settings.NarrativeValidation)
+            new PocoValidationContext(poco, _inspector, state.Path.GetInstancePath, line, pos, Settings.NarrativeValidation)
             {
                 MemberName = memberName
             };
