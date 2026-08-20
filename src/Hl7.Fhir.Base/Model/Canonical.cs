@@ -50,7 +50,7 @@ public partial class Canonical
     /// Constructs a Canonical based on a given <see cref="Uri"/>.
     /// </summary>
     /// <param name="uri"></param>
-    public Canonical(Uri uri) : this(uri.OriginalString)
+    public Canonical(Uri? uri) : this(uri?.OriginalString)
     {
         // nothing
     }

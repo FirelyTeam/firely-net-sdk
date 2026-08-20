@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class FhirUrl
 {
-    public FhirUrl(Uri uri)
+    public FhirUrl(Uri? uri)
     {
-        Value = uri.OriginalString;
+        Value = uri?.OriginalString;
     }
 
     /// <summary>

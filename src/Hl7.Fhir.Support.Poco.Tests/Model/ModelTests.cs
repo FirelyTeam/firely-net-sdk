@@ -52,6 +52,16 @@ public class ModelTests
         Assert.AreEqual("http://nhi.health.nz", identifier.System);
     }
 
+    [TestMethod]
+    public void ConstructUriDatatypesFromNullUri()
+    {
+        Uri uri = null;
+
+        Assert.IsNull(new FhirUri(uri).Value);
+        Assert.IsNull(new FhirUrl(uri).Value);
+        Assert.IsNull(new Canonical(uri).Value);
+    }
+
 
     [TestMethod]
     public void TestBundleLinkEncoding()
