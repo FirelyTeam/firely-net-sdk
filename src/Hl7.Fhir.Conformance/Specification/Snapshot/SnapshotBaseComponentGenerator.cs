@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // already reported the unresolved base as a warning.
                 if (sd is null
                     && kind == StructureDefinition.StructureDefinitionKind.Logical
-                    && baseProfileUrl == BASE_TYPE_CANONICAL)
+                    && isBaseTypeCanonical(baseProfileUrl))
                 {
                     return;
                 }

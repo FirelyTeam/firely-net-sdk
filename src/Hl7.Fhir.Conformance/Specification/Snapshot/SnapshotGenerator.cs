@@ -312,6 +312,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         private const string BASE_TYPE_CANONICAL = "http://hl7.org/fhir/StructureDefinition/Base";
 
+        /// <summary>
+        /// Determines whether <paramref name="canonical"/> refers to the FHIR <c>Base</c> type,
+        /// ignoring an optional <c>|version</c> suffix.
+        /// </summary>
+        private static bool isBaseTypeCanonical(string canonical)
+            => canonical is not null && new Canonical(canonical).Uri == BASE_TYPE_CANONICAL;
+
         /// <inheritdoc cref="getBaseDefinition(StructureDefinition)"/>
         /// <returns>
         /// The resolved parent of <paramref name="structure"/> and, if resolution failed, the canonical
@@ -384,7 +391,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // to logical models, and only to Base itself. Any other unresolvable base definition,
                     // and any unresolvable base definition of a non-logical structure, remains fatal.
                     if (structure.Kind == StructureDefinition.StructureDefinitionKind.Logical
-                        && unresolvedCanonical == BASE_TYPE_CANONICAL)
+                        && isBaseTypeCanonical(unresolvedCanonical))
                     {
                         addIssueBaseTypeUnresolved(structure, unresolvedCanonical);
                     }
