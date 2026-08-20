@@ -91,17 +91,21 @@ namespace Hl7.Fhir.Specification.Snapshot
             var baseStartBM = snapNav.Bookmark();
             var diffStartBM = diffNav.Bookmark();
 
-            snapNav.MoveToFirstChild();
+            // The base element may have no children at all, e.g. a nested anonymous element in a logical
+            // model that has neither a type code nor a contentReference to expand from. In that case
+            // snapNav remains positioned on the *parent* element and every child in the differential
+            // introduces a new element.
+            var snapHasChildren = snapNav.MoveToFirstChild();
             diffNav.MoveToFirstChild();
 
-            var choiceNames = listChoiceElements(snapNav);
+            var choiceNames = snapHasChildren ? listChoiceElements(snapNav) : new List<string>();
             var result = new List<MatchInfo>();
 
             try
             {
                 do
                 {
-                    var match = matchBase(snapNav, diffNav, choiceNames);
+                    var match = snapHasChildren && matchBase(snapNav, diffNav, choiceNames);
                     if (match)
                     {
                         result.AddRange(constructMatch(snapNav, diffNav));
@@ -111,7 +115,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // No matching base element; this is a new element (core resource definitions)
                         // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
                         // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
-                        result.Add(constructNew(snapNav, diffNav));
+                        result.Add(constructNew(snapNav, diffNav, snapHasChildren));
                     }
                 }
                 while (diffNav.MoveToNext());
@@ -490,14 +494,16 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
-        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, bool snapIsOnChild = true)
         {
             // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
             // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
             // Return reference to *parent* element as BaseBookmark!
             // Exception: when snapNav = {} | {Resource} e.g. Resource & Element
+            // Exception: when the base element has no children at all, snapNav is already positioned
+            // on the parent element and must not be moved up another level.
             var bm = snapNav.Bookmark();
-            if (!string.IsNullOrEmpty(snapNav.ParentPath))
+            if (snapIsOnChild && !string.IsNullOrEmpty(snapNav.ParentPath))
             {
                 snapNav.MoveToParent();
             }

@@ -386,6 +386,24 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
+        // #3576 A logical model is allowed to derive directly from the FHIR Base type - there is no more
+        // specific ancestor in the FHIR type hierarchy for data that is neither a Resource nor a DataType.
+        // However, Base is only published as a resolvable StructureDefinition since R5, even though HL7
+        // tooling stamps this same version-independent canonical url regardless of the target release.
+        // The real Base definition is empty (an abstract root element without any children), so we can
+        // safely terminate the derivation chain there instead of failing.
+        public static readonly Issue PROFILE_BASE_TYPE_UNRESOLVED = Issue.Create(10017, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+
+        internal OperationOutcome.IssueComponent addIssueBaseTypeUnresolved(StructureDefinition sd, string canonical)
+            => addIssue(
+                PROFILE_BASE_TYPE_UNRESOLVED,
+                $"The base definition '{canonical}' of logical model '{sd.Url}' could not be resolved in this FHIR release. " +
+                $"Treating Base as the terminal (empty) root of the derivation chain; the generated snapshot only contains " +
+                $"the content of the logical model itself.",
+                sd.Url,
+                canonical
+            );
+
         // [WMR 20190902] #1090 SnapshotGenerator should support logical models
         // StructureDefinition.type (1...1) is empty or missing
         // However for logical models we only need root element name, can parse from first element constraint
