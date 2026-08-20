@@ -41,9 +41,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class FhirUri : ICoded
 {
-    public FhirUri(Uri uri)
+    public FhirUri(Uri? uri)
     {
-        Value = uri.OriginalString;
+        Value = uri?.OriginalString;
     }
 
     /// <summary>
