@@ -32,6 +32,12 @@ public class FhirXmlDeserializer(DeserializerSettings? settings = null)
     public static readonly FhirXmlDeserializer STRICT = new(new DeserializerSettings().UsingMode(DeserializationMode.Strict));
 
     /// <summary>
+    /// A parser that ignores recoverable errors, but still reports errors that would cause data to end up
+    /// in overflow, so a successfully parsed POCO is guaranteed not to have overflow.
+    /// </summary>
+    public static readonly FhirXmlDeserializer NOOVERFLOW = new(new DeserializerSettings().UsingMode(DeserializationMode.NoOverflow));
+
+    /// <summary>
     /// A parsers that only checks the FHIR XML syntax rules, but no content rules.
     /// </summary>
     public static readonly FhirXmlDeserializer SYNTAXONLY = new(new DeserializerSettings().UsingMode(DeserializationMode.SyntaxOnly));

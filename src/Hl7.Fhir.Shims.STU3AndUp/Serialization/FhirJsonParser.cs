@@ -25,6 +25,9 @@ public class FhirJsonDeserializer(DeserializerSettings? settings = null)
     /// <inheritdoc cref="FhirXmlDeserializer.STRICT" />
     public static readonly FhirJsonDeserializer STRICT = new(new DeserializerSettings().UsingMode(DeserializationMode.Strict));
 
+    /// <inheritdoc cref="FhirXmlDeserializer.NOOVERFLOW" />
+    public static readonly FhirJsonDeserializer NOOVERFLOW = new(new DeserializerSettings().UsingMode(DeserializationMode.NoOverflow));
+
     /// <summary>
     /// A parsers that only checks the FHIR Json syntax rules, but no content rules.
     /// </summary>
