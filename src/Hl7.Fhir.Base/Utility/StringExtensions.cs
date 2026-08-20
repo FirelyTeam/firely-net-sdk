@@ -138,18 +138,19 @@ namespace Hl7.Fhir.Utility
         /// <param name="text"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
+        /// <remarks>An empty <paramref name="prefix"/> only matches an empty <paramref name="text"/>.
+        /// The "match everything" behaviour for a missing prefix lives on the <c>string</c> overload,
+        /// which treats a <c>null</c> prefix as "no filter".</remarks>
         public static bool MatchesPrefix(this ReadOnlySpan<char> text, ReadOnlySpan<char> prefix)
         {
             ReadOnlySpan<char> asterix = "*".AsSpan();
             bool wildcard = prefix.EndsWith(asterix); //used for value[x] elements
             if (wildcard) prefix = prefix.TrimEnd(asterix);
 
-            bool found = text.StartsWith(prefix);
-            if (!found) return false;
+            if (!text.StartsWith(prefix)) return false;
 
-            bool full = text.Length == prefix.Length;
-
-            return (prefix == null) || full || (wildcard && found);
+            // A wildcard prefix matches any longer text, otherwise the strings must be the same length.
+            return text.Length == prefix.Length || wildcard;
         }
 
         /// <summary>
@@ -158,11 +159,12 @@ namespace Hl7.Fhir.Utility
         /// is done, otherwise the full strings are compared.
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="prefix"></param>
+        /// <param name="prefix">When <c>null</c>, acts as "no filter" and matches any <paramref name="text"/>.</param>
         /// <returns></returns>
         public static bool MatchesPrefix(this string text, string prefix)
         {
-            return text.AsSpan().MatchesPrefix(prefix.AsSpan());
+            // A null prefix means "no filter": callers like DomNode.Children(name = null) rely on this.
+            return prefix is null || text.AsSpan().MatchesPrefix(prefix.AsSpan());
         }
 
         public static string EnsureEndsWith(this string original, string toEndWith)
