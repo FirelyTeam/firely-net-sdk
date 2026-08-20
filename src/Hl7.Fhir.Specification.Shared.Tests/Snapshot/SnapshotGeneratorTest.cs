@@ -9108,6 +9108,355 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+        // #3576 SnapshotGenerator silently dropped the children of a logical model element that has
+        // neither a type code nor a contentReference ("named elements" style logical models, as used by
+        // e.g. the CDS Hooks logical models). The whole nested subtree disappeared from the snapshot,
+        // which made validation against such a profile vacuously succeed.
+
+        private static ElementDefinition logicalElement(string path, string typeCode = null, int? min = null, string max = null)
+        {
+            var result = new ElementDefinition(path);
+            if (min is not null) { result.Min = min; }
+            if (max is not null) { result.Max = max; }
+            if (typeCode is not null)
+            {
+                result.Type = new List<ElementDefinition.TypeRefComponent>
+                {
+                    new() { Code = typeCode }
+                };
+            }
+            return result;
+        }
+
+        private static StructureDefinition createLogicalModel(string name, string baseDefinition, params ElementDefinition[] elements)
+            => new()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/" + name,
+                Name = name,
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Logical,
+                Abstract = false,
+                Derivation = StructureDefinition.TypeDerivationRule.Specialization,
+                Type = "http://example.org/fhir/StructureDefinition/" + name,
+                BaseDefinition = baseDefinition,
+                Differential = new StructureDefinition.DifferentialComponent { Element = elements.ToList() }
+            };
+
+        [TestMethod]
+        public async Tasks.Task TestLogicalModelWithAnonymousNestedElements()
+        {
+            // A logical model in the style of the CDS Hooks models: nested anonymous elements
+            // ("context", "context.draftOrders") that have no type code at all; their content is
+            // defined inline by the differential.
+            var model = createLogicalModel("CdsHookRequest", ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element),
+                logicalElement("CdsHookRequest"),
+                logicalElement("CdsHookRequest.hook", "string", 1, "1"),
+                logicalElement("CdsHookRequest.hookInstance", "string", 1, "1"),
+                logicalElement("CdsHookRequest.context", min: 1, max: "1"),
+                logicalElement("CdsHookRequest.context.patientId", "string", 1, "1"),
+                logicalElement("CdsHookRequest.context.userId", "string", 0, "1"),
+                logicalElement("CdsHookRequest.context.draftOrders", min: 0, max: "1"),
+                logicalElement("CdsHookRequest.context.draftOrders.resourceType", "string", 1, "1")
+            );
+
+            var (_, expanded) = await generateSnapshotAndCompare(model);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var elems = expanded.Snapshot.Element;
+            var paths = elems.Select(e => e.Path).ToList();
+
+            // Elements inherited from the base definition (Element), rebased onto the model root
+            Assert.AreEqual("CdsHookRequest", paths[0]);
+            CollectionAssert.Contains(paths, "CdsHookRequest.id");
+            CollectionAssert.Contains(paths, "CdsHookRequest.extension");
+
+            // Elements introduced by the differential, including the anonymous nested subtrees.
+            // Before the fix, everything below "CdsHookRequest.context" was silently dropped.
+            CollectionAssert.Contains(paths, "CdsHookRequest.hook");
+            CollectionAssert.Contains(paths, "CdsHookRequest.hookInstance");
+            CollectionAssert.Contains(paths, "CdsHookRequest.context");
+            CollectionAssert.Contains(paths, "CdsHookRequest.context.patientId");
+            CollectionAssert.Contains(paths, "CdsHookRequest.context.userId");
+            CollectionAssert.Contains(paths, "CdsHookRequest.context.draftOrders");
+            CollectionAssert.Contains(paths, "CdsHookRequest.context.draftOrders.resourceType");
+
+            // The nested elements are properly merged, not just copied
+            var patientId = elems.Single(e => e.Path == "CdsHookRequest.context.patientId");
+            Assert.AreEqual(1, patientId.Min);
+            Assert.AreEqual("1", patientId.Max);
+            Assert.AreEqual("string", patientId.Type.Single().Code);
+
+            // Verify sdf-8b: "All snapshot elements must have a base definition"
+            foreach (var elem in elems)
+            {
+                Assert.IsNotNull(elem.Base, $"Element '{elem.Path}' has no base component.");
+                Assert.IsNotNull(elem.Base.Path);
+            }
+
+            // The snapshot must be a proper tree, i.e. every non-root element must have a parent
+            foreach (var path in paths.Skip(1))
+            {
+                var parentPath = ElementDefinitionNavigator.GetParentPath(path);
+                CollectionAssert.Contains(paths, parentPath, $"Element '{path}' has no parent in the snapshot.");
+            }
+        }
+
+        [TestMethod]
+        public async Tasks.Task TestLogicalModelDerivedFromLogicalModel()
+        {
+            // A logical model constraining another logical model; verify that inherited elements are
+            // merged (not duplicated) and that overrides are applied.
+            var baseModel = createLogicalModel("BaseModel", ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element),
+                logicalElement("BaseModel"),
+                logicalElement("BaseModel.name", "string", 0, "1"),
+                logicalElement("BaseModel.optional", "string", 0, "*"),
+                logicalElement("BaseModel.nested", min: 0, max: "1"),
+                logicalElement("BaseModel.nested.inner", "string", 0, "1")
+            );
+
+            var derived = new StructureDefinition
+            {
+                Url = "http://example.org/fhir/StructureDefinition/DerivedModel",
+                Name = "DerivedModel",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Logical,
+                Abstract = false,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Type = baseModel.Type,
+                BaseDefinition = baseModel.Url,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>
+                    {
+                        // Override an inherited element...
+                        logicalElement("BaseModel.optional", min: 1, max: "1"),
+                        // ...and an inherited element inside an anonymous nested element
+                        logicalElement("BaseModel.nested.inner", min: 1, max: "1")
+                    }
+                }
+            };
+
+            var resolver = new CachedResolver(new MultiResolver(new InMemoryResourceResolver(baseModel), _testResolver));
+            _generator = new SnapshotGenerator(resolver, _settings);
+            await _generator.UpdateAsync(derived);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsTrue(derived.HasSnapshot);
+            var elems = derived.Snapshot.Element;
+
+            // Inherited, unconstrained
+            var name = elems.Single(e => e.Path == "BaseModel.name");
+            Assert.AreEqual(0, name.Min);
+            Assert.AreEqual("1", name.Max);
+
+            // Inherited and overridden
+            var optional = elems.Single(e => e.Path == "BaseModel.optional");
+            Assert.AreEqual(1, optional.Min);
+            Assert.AreEqual("1", optional.Max);
+            // ... but the base cardinality is still the one from the base model
+            Assert.AreEqual("*", optional.Base.Max);
+
+            // Inherited from an anonymous nested element, and overridden
+            var inner = elems.Single(e => e.Path == "BaseModel.nested.inner");
+            Assert.AreEqual(1, inner.Min);
+            Assert.AreEqual("1", inner.Max);
+            Assert.AreEqual("string", inner.Type.Single().Code);
+        }
+
+        // #3576 Regression test: the snapshot of a logical model with an anonymous nested element
+        // must not be empty, and must not lose the nested subtree.
+        [TestMethod]
+        public async Tasks.Task TestLogicalModelSnapshotIsNotEmpty()
+        {
+            var model = createLogicalModel("MinimalModel", ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element),
+                logicalElement("MinimalModel"),
+                logicalElement("MinimalModel.wrapper", min: 1, max: "1"),
+                logicalElement("MinimalModel.wrapper.leaf", "string", 1, "1")
+            );
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            await _generator.UpdateAsync(model);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsTrue(model.HasSnapshot, "Expected a non-empty snapshot for a kind=logical StructureDefinition.");
+            Assert.IsTrue(model.Snapshot.Element.Count > 0);
+
+            var leaf = model.Snapshot.Element.SingleOrDefault(e => e.Path == "MinimalModel.wrapper.leaf");
+            Assert.IsNotNull(leaf, "The child of the untyped element 'MinimalModel.wrapper' was dropped from the snapshot.");
+            Assert.AreEqual(1, leaf.Min);
+            Assert.AreEqual("1", leaf.Max);
+        }
+
+        // #3576 kind=logical StructureDefinitions are allowed to derive directly from the FHIR Base type,
+        // but Base is only published as a resolvable StructureDefinition since R5 - R4/R4B never shipped
+        // one, even though HL7 tooling stamps the same version-independent canonical url regardless of the
+        // target release (e.g. CDSHooksElement in hl7.fhir.uv.tools.r4). Since the real Base definition is
+        // empty, the snapshot generator terminates the derivation chain there with a warning, rather than
+        // failing and producing an empty snapshot.
+
+        private const string BaseTypeCanonical = "http://hl7.org/fhir/StructureDefinition/Base";
+
+        /// <summary>
+        /// Wraps another resolver, but refuses to resolve a fixed set of canonicals. Used to simulate the
+        /// R4/R4B situation - where Base is simply not published - in every FHIR release under test.
+        /// Note that in R5, Base is a real (and needed) part of the core type hierarchy: Element derives
+        /// from it. So the models used with this resolver must not depend on any core type.
+        /// </summary>
+        private sealed class BlockingResolver(IAsyncResourceResolver inner, params string[] blocked) : IAsyncResourceResolver
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri)
+                => blocked.Contains(uri) ? Tasks.Task.FromResult<Resource>(null) : inner.ResolveByCanonicalUriAsync(uri);
+
+            public Tasks.Task<Resource> ResolveByUriAsync(string uri)
+                => blocked.Contains(uri) ? Tasks.Task.FromResult<Resource>(null) : inner.ResolveByUriAsync(uri);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        /// <summary>A resolver that resolves the core types, but not <c>Base</c>.</summary>
+        private IAsyncResourceResolver resolverWithoutBaseType(params StructureDefinition[] extra)
+            => new CachedResolver(new BlockingResolver(
+                new MultiResolver(new InMemoryResourceResolver(extra), _testResolver), BaseTypeCanonical));
+
+        [TestMethod]
+        public async Tasks.Task TestLogicalModelWithUnresolvableBaseType()
+        {
+            // Note: only anonymous (untyped) elements, so that nothing needs the core type hierarchy -
+            // see the remark on BlockingResolver
+            var model = createLogicalModel("CdsHooksElement", BaseTypeCanonical,
+                logicalElement("CdsHooksElement"),
+                logicalElement("CdsHooksElement.hook", min: 1, max: "1"),
+                logicalElement("CdsHooksElement.context", min: 1, max: "1"),
+                logicalElement("CdsHooksElement.context.patientId", min: 1, max: "1")
+            );
+
+            // Note: Base is deliberately *not* resolvable through this resolver
+            _generator = new SnapshotGenerator(resolverWithoutBaseType(), _settings);
+            await _generator.UpdateAsync(model);
+            dumpOutcome(_generator.Outcome);
+
+            // Generation must succeed, with the model's own differential content
+            Assert.IsTrue(model.HasSnapshot, "Expected a snapshot, even though Base could not be resolved.");
+            var paths = model.Snapshot.Element.Select(e => e.Path).ToList();
+            CollectionAssert.AreEqual(
+                new[] { "CdsHooksElement", "CdsHooksElement.hook", "CdsHooksElement.context", "CdsHooksElement.context.patientId" },
+                paths);
+
+            var hook = model.Snapshot.Element.Single(e => e.Path == "CdsHooksElement.hook");
+            Assert.AreEqual(1, hook.Min);
+            Assert.AreEqual("1", hook.Max);
+
+            // ... and report the unresolved base as a warning, not an error
+            Assert.IsNotNull(_generator.Outcome);
+            var issue = _generator.Outcome.Issue.Single();
+            Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, issue.Severity);
+            Assert.AreEqual(SnapshotGenerator.PROFILE_BASE_TYPE_UNRESOLVED.Code.ToString(), issue.Details.Coding[0].Code);
+            StringAssert.Contains(issue.Details.Text, BaseTypeCanonical);
+            StringAssert.Contains(issue.Details.Text, model.Url);
+            Assert.IsFalse(_generator.Outcome.Issue.Any(i => i.Severity == OperationOutcome.IssueSeverity.Error));
+        }
+
+        [TestMethod]
+        public async Tasks.Task TestLogicalModelDerivedFromModelWithUnresolvableBaseType()
+        {
+            // The normal shape of the CDS Hooks models: they derive from CDSHooksElement, which in turn
+            // derives from the unresolvable Base. Verify that the recursive expansion of the parent also
+            // succeeds, and that the child inherits the parent's elements.
+            var parent = createLogicalModel("CdsHooksElement", BaseTypeCanonical,
+                logicalElement("CdsHooksElement"),
+                logicalElement("CdsHooksElement.hook", min: 1, max: "1")
+            );
+
+            var child = new StructureDefinition
+            {
+                Url = "http://example.org/fhir/StructureDefinition/CdsHooksRequest",
+                Name = "CdsHooksRequest",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Logical,
+                Abstract = false,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Type = parent.Type,
+                BaseDefinition = parent.Url,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>
+                    {
+                        logicalElement("CdsHooksElement.hookInstance", min: 1, max: "1")
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(resolverWithoutBaseType(parent), _settings);
+            await _generator.UpdateAsync(child);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsTrue(child.HasSnapshot);
+            var paths = child.Snapshot.Element.Select(e => e.Path).ToList();
+            CollectionAssert.Contains(paths, "CdsHooksElement.hook");         // inherited from the parent
+            CollectionAssert.Contains(paths, "CdsHooksElement.hookInstance"); // introduced by the child
+
+            Assert.IsFalse(_generator.Outcome?.Issue.Any(i => i.Severity == OperationOutcome.IssueSeverity.Error) == true);
+        }
+
+        // #3576 Regression test: the special case above is narrowly scoped to (kind=logical AND Base).
+        // Any other unresolvable base definition must keep failing exactly as it did before.
+        [TestMethod]
+        public async Tasks.Task TestLogicalModelWithOtherUnresolvableBaseTypeStillFails()
+        {
+            var model = createLogicalModel("SomeModel", "http://example.org/fhir/StructureDefinition/DoesNotExist",
+                logicalElement("SomeModel"),
+                logicalElement("SomeModel.name", "string", 1, "1")
+            );
+
+            _generator = new SnapshotGenerator(resolverWithoutBaseType(), _settings);
+            await _generator.UpdateAsync(model);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsFalse(model.HasSnapshot, "An unresolvable base definition other than Base must remain fatal.");
+            Assert.IsNotNull(_generator.Outcome);
+            Assert.IsTrue(_generator.Outcome.Issue.Any(i =>
+                i.Severity == OperationOutcome.IssueSeverity.Error &&
+                i.Details.Coding[0].Code == Issue.UNAVAILABLE_REFERENCED_PROFILE.Code.ToString()));
+        }
+
+        [TestMethod]
+        public async Tasks.Task TestNonLogicalModelWithUnresolvableBaseTypeStillFails()
+        {
+            // Same unresolvable Base, but on a complex-type: the special case must not apply here
+            var complexType = new StructureDefinition
+            {
+                Url = "http://example.org/fhir/StructureDefinition/MyComplexType",
+                Name = "MyComplexType",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Abstract = false,
+                Derivation = StructureDefinition.TypeDerivationRule.Specialization,
+                Type = "MyComplexType",
+                BaseDefinition = BaseTypeCanonical,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>
+                    {
+                        logicalElement("MyComplexType"),
+                        logicalElement("MyComplexType.name", "string", 1, "1")
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(resolverWithoutBaseType(), _settings);
+            await _generator.UpdateAsync(complexType);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsFalse(complexType.HasSnapshot, "The Base special case must only apply to kind=logical.");
+            Assert.IsNotNull(_generator.Outcome);
+            Assert.IsTrue(_generator.Outcome.Issue.Any(i =>
+                i.Severity == OperationOutcome.IssueSeverity.Error &&
+                i.Details.Coding[0].Code == Issue.UNAVAILABLE_REFERENCED_PROFILE.Code.ToString()));
+        }
+
         // #1123 SnapshotGenerator - ElementDefinition.base is empty for children of contentreference
 
         [TestMethod]

@@ -303,16 +303,43 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="structure">the StructureDefinition to get the base from</param>
         /// <returns>The parent of <paramref name="structure"/>, skipping the interface classes</returns>
         internal async Tasks.Task<StructureDefinition> getBaseDefinition(StructureDefinition structure)
-        {
-            if (structure?.BaseDefinition is null) return null;
+            => (await resolveBaseDefinition(structure).ConfigureAwait(false)).baseStructure;
 
-            structure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition);
-            while (structure?.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
+        /// <summary>
+        /// The canonical url of the FHIR <c>Base</c> type. Note that <c>Base</c> is only published as a
+        /// resolvable <see cref="StructureDefinition"/> since R5, even though HL7 tooling stamps this
+        /// version-independent canonical url regardless of the targeted FHIR release.
+        /// </summary>
+        private const string BASE_TYPE_CANONICAL = "http://hl7.org/fhir/StructureDefinition/Base";
+
+        /// <summary>
+        /// Determines whether <paramref name="canonical"/> refers to the FHIR <c>Base</c> type,
+        /// ignoring an optional <c>|version</c> suffix.
+        /// </summary>
+        private static bool isBaseTypeCanonical(string canonical)
+            => canonical is not null && new Canonical(canonical).Uri == BASE_TYPE_CANONICAL;
+
+        /// <inheritdoc cref="getBaseDefinition(StructureDefinition)"/>
+        /// <returns>
+        /// The resolved parent of <paramref name="structure"/> and, if resolution failed, the canonical
+        /// url that could not be resolved. Note that this is not necessarily
+        /// <see cref="StructureDefinition.BaseDefinition"/> itself, as interface classes are skipped.
+        /// </returns>
+        private async Tasks.Task<(StructureDefinition baseStructure, string unresolvedCanonical)> resolveBaseDefinition(StructureDefinition structure)
+        {
+            var canonical = structure?.BaseDefinition;
+            if (canonical is null) return (null, null);
+
+            var result = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
+            while (result?.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
             {
-                structure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition);
+                canonical = result.BaseDefinition;
+                if (canonical is null) return (null, null);
+
+                result = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
             }
 
-            return structure;
+            return (result, result is null ? canonical : null);
         }
 
         ///// <inheritdoc cref="MergeElementDefinitionAsync(ElementDefinition, ElementDefinition, bool)" />
@@ -348,19 +375,39 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             ElementDefinitionNavigator nav;
+            StructureDefinition baseStructure = null;
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.BaseDefinition != null)
             {
-                var baseStructure = await getBaseDefinition(structure);
+                var (resolvedBase, unresolvedCanonical) = await resolveBaseDefinition(structure).ConfigureAwait(false);
 
                 // [WMR 20161208] Handle unresolved base profile
-                if (baseStructure == null)
+                if (resolvedBase == null)
                 {
-                    addIssueProfileNotFound(structure.BaseDefinition);
-                    // Fatal error...
-                    return null;
+                    // #3576 A logical model may derive directly from Base, which is only published as a
+                    // resolvable StructureDefinition since R5. As the real Base definition is empty (an
+                    // abstract root element without any children), terminating the derivation chain here
+                    // is functionally identical to resolving it. Note the narrow scope: this only applies
+                    // to logical models, and only to Base itself. Any other unresolvable base definition,
+                    // and any unresolvable base definition of a non-logical structure, remains fatal.
+                    if (structure.Kind == StructureDefinition.StructureDefinitionKind.Logical
+                        && isBaseTypeCanonical(unresolvedCanonical))
+                    {
+                        addIssueBaseTypeUnresolved(structure, unresolvedCanonical);
+                    }
+                    else
+                    {
+                        addIssueProfileNotFound(structure.BaseDefinition);
+                        // Fatal error...
+                        return null;
+                    }
                 }
 
+                baseStructure = resolvedBase;
+            }
+
+            if (baseStructure != null)
+            {
                 var baseDefinitionUrl = baseStructure.BaseDefinitionElement;
                 // [WMR 20161208] Handle missing differential
                 var location = differential.Element.Count > 0 ? differential.Element[0].Path : null;
@@ -468,7 +515,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
                 // [WMR 20170424] Inherit existing base components, generate if missing
-                await ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false).ConfigureAwait(false);
+                await ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false, structure.Kind).ConfigureAwait(false);
 
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
@@ -488,7 +535,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             else
             {
-                // No base; input is a core resource or datatype definition
+                // No base; input is a core resource or datatype definition, or a logical model whose
+                // derivation chain terminates at the (unresolvable before R5) Base type - see #3576 above.
                 var snapshot = new StructureDefinition.SnapshotComponent();
                 nav = new ElementDefinitionNavigator(snapshot.Element, structure);
             }
@@ -645,6 +693,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Element has neither a name reference or a type...?
                 if (!nav.Current.IsRootElement())
                 {
+                    // Logical models may define nested anonymous ("named") elements that have neither a
+                    // type code nor a contentReference; their children are defined inline by the differential
+                    // (optionally described by the type-specifier extension). There is nothing to expand from
+                    // a base type here, but the differential children are still valid constraints.
+                    // Report success without children, so the caller merges them as new elements
+                    // instead of silently discarding the whole subtree.
+                    if (nav.StructureDefinition?.Kind == StructureDefinition.StructureDefinitionKind.Logical)
+                    {
+                        return true;
+                    }
+
                     addIssueNoTypeOrNameReference(defn);
                     return false;
                 }

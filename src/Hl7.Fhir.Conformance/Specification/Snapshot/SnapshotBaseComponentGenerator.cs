@@ -24,18 +24,30 @@ namespace Hl7.Fhir.Specification.Snapshot
     partial class SnapshotGenerator
     {
         private Tasks.Task ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false) =>
-            ensureBaseComponents(structureDef.Snapshot.Element, structureDef.BaseDefinition, force);
+            ensureBaseComponents(structureDef.Snapshot.Element, structureDef.BaseDefinition, force, structureDef.Kind);
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.BaseDefinition"/> property.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        private async Tasks.Task ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
+        /// <param name="kind">The <see cref="StructureDefinition.Kind"/> of the structure that owns <paramref name="elements"/>, if known.</param>
+        private async Tasks.Task ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false, StructureDefinition.StructureDefinitionKind? kind = null)
         {
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
             {
                 var sd = await AsyncResolver.FindStructureDefinitionAsync(baseProfileUrl).ConfigureAwait(false);
+
+                // #3576 A logical model may derive directly from Base, which is only resolvable since R5.
+                // There is nothing to inherit from the (empty) Base definition, so silently skip; generate()
+                // already reported the unresolved base as a warning.
+                if (sd is null
+                    && kind == StructureDefinition.StructureDefinitionKind.Logical
+                    && isBaseTypeCanonical(baseProfileUrl))
+                {
+                    return;
+                }
+
                 if (await ensureSnapshot(sd, baseProfileUrl).ConfigureAwait(false))
                 {
                     var baseNav = new ElementDefinitionNavigator(sd);
