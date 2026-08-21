@@ -7,8 +7,13 @@ its base definition. It is written as the foundation for a future reimplementati
 Java reference implementation (`hapifhir/org.hl7.fhir.core`) — agree, disagree, and go beyond the published
 FHIR specification.
 
-**Reference semantics: FHIR R5**, with R4/R4B deltas noted explicitly per chapter. The SDK's legacy STU3
-fork is out of scope.
+**Reference semantics: FHIR R5**, with R4/R4B deltas noted explicitly per chapter. In addition, the **R6 CI
+build** (build.fhir.org) is tracked as a forward-looking source: it captures the community's current
+thinking since R5, it is where several of our documented gaps are already being addressed, and it is the
+verification target for every spec-change proposal in [chapter 15](15-spec-rfcs.md) — timely, since FHIR R6
+normative is being wrapped up. Chapters carry "R6-build note" sections where the build diverges from R5;
+each is stamped with the build version it was checked against (the CI build changes daily). The SDK's
+legacy STU3 fork is out of scope.
 
 **Two audiences.** The FHIR spec deliberately describes the *shape* of differentials and snapshots, not the
 generation algorithm — a good separation this document preserves. The algorithm chapters (1–12) serve
@@ -60,7 +65,11 @@ the FHIR R6 normative wrap-up.
 ## Sources
 
 - FHIR R5/R4 spec pages: profiling, conformance-rules, elementdefinition(+definitions), structuredefinition,
-  extensibility (local copies + extracts in the project materials directory, not committed).
+  extensibility, defining-extensions (local copies + extracts in the project materials directory, not
+  committed).
+- FHIR R6 CI build (build.fhir.org): the same pages, snapshotted as **v6.0.0-ballot4** (build generated
+  2026-08-18, fetched 2026-08-21) — R6 findings in this document refer to that snapshot unless stated
+  otherwise.
 - .NET: `src/Hl7.Fhir.Conformance/Specification/Snapshot/` (+ `Hl7.Fhir.Shims.Base` infrastructure).
 - Java: `org.hl7.fhir.r5/.../conformance/profile/` (ProfileUtilities, ProfilePathProcessor,
   SnapshotGenerationPreProcessor) and its manifest-driven test driver.
