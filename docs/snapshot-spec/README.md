@@ -75,7 +75,9 @@ the FHIR R6 normative wrap-up.
   SnapshotGenerationPreProcessor) and its manifest-driven test driver.
 - Shared test cases: `FHIR/fhir-test-cases` `r5|r4b/snapshot-generation` (166 R5 manifest tests; 64 vendored
   in this repo under `src/Hl7.Fhir.Specification.Shared.Tests/TestData/snapshot-test/Type Slicing/`).
-- History: GitHub issues (this repo), chat.fhir.org #conformance, jira.hl7.org.
+- History: GitHub issues (this repo), chat.fhir.org (#conformance is the primary venue; #implementers also
+  carries relevant threads — too large to scan, but both are covered by full-text search across all public
+  streams via the Zulip API), jira.hl7.org.
 - Prior art: [FHIR-13402](https://jira.hl7.org/browse/FHIR-13402) "Clarify snapshot generation rules"
   (2017, closed 2023 *Not Persuasive* — HL7 acknowledges the rules are undocumented and that any future
   write-up would live in Confluence rather than the spec), and Chris Grenz's
