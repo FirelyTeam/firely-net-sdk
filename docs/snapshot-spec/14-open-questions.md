@@ -77,3 +77,32 @@ the same convention for the same properties?
   R5 elementdefinition/profiling pages. It is pure tooling convention; origin and Java behavior pending
   (Phase 3), then this likely graduates to an RFC (document or drop the convention).
 - **Status:** open — spec side answered; Java side pending.
+
+## OQ-011 — What must a generator enforce?
+The .NET merger is diff-wins for nearly every property — including every rule the spec marks as frozen or
+one-directional: `isModifier`/`isSummary`/`defaultValue[x]`/`meaningWhenMissing`/`representation` (†-rules),
+`mustSupport` `true`→`false`, silent loosening of `binding.strength` against the §5.1.0.21 lattice. The
+*only* most-restrictive enforcement is `min`/`max` — and there an illegally loosening differential is
+**silently ignored** instead of reported (`ElementDefnMerger.cs:666,696`). Is a generator expected to
+enforce, report, or ignore illegal differentials? Enforcement asymmetries like .NET's produce snapshots
+whose provenance can't be reconstructed. (Related: RFC-012 — a normative generator contract would answer
+this.)
+- **Status:** open (Phase 2 packet 1, 2026-08-24).
+
+## OQ-012 — Partial overlay of fixed[x]/pattern[x] values
+.NET merges a differential `fixed[x]`/`pattern[x]` (and `defaultValue[x]`, `minValue[x]`/`maxValue[x]`) by
+*top-level property overlay* when the diff value's type equals or derives from the base value's type
+(`mergeComplexAttribute`, `ElementDefnMerger.cs:760-793`): non-null diff properties win, everything else is
+inherited from the base value. A base `patternCodeableConcept` with `text` + `coding` merged with a diff
+supplying only `coding` yields a pattern combining diff `coding` with base `text` — a value **neither
+profile stated**. Should a differential fixed/pattern replace the inherited value wholesale? Does Java
+overlay or replace? (Spec is silent — ch5 "compatibility with an inherited base fixed/pattern is unstated".)
+- **Status:** open (Phase 2 packet 1, 2026-08-24).
+
+## OQ-013 — Meaning of merging ElementDefinition.modifierExtension
+.NET merges `modifierExtension` between base and differential elements like ordinary extensions, matched by
+url (`ElementDefnMerger.cs:57-59`), with the question preserved in code: "Q: What does this mean? How should
+consumers handle these?" — a modifier extension *inherited into* a snapshot element changes the meaning of a
+definition the deriving author may never have seen. Is inheriting modifier extensions into snapshots even
+sanctioned?
+- **Status:** open (Phase 2 packet 1, 2026-08-24).

@@ -17,8 +17,10 @@ status/resolution.
 - **Evidence:** issue #827; `ElementDefnMerger.cs:222` (`mergeElementTypes`).
 - **.NET:** a differential `type` list *replaces* the inherited list (derived profiles can remove inherited
   types); surviving types are then item-merged by type code so base extensions on `type.code` (the
-  json/xml/rdf "compiler magic") are preserved. Within a type, `profile`/`targetProfile` merge as lists,
-  `aggregation` replaces wholesale.
+  json/xml/rdf "compiler magic") are preserved. Within a type, `profile`/`targetProfile` lists **replace
+  wholesale** when the diff has any (`mergeCanonicals`, `ElementDefnMerger.cs:387` — explicit R4-era
+  decision: differentials may remove profiles; corrected 2026-08-24, Phase 2 deep-read), `aggregation`
+  replaces wholesale.
 - **Java:** TBD (Phase 3).
 - **Spec basis:** TBD — believed silent on list-merge semantics.
 - **Status:** seeded.
@@ -93,3 +95,15 @@ status/resolution.
   `setAutoFixSliceNames(true)`.
 - Any harness comparison must account for this flag; raw `ProfileUtilities` default may differ from CLI
   behavior. **Status:** seeded (harness design note).
+
+## DEV-017 — Mapping matched on identity+map vs R5 replace-by-identity (ch5)
+- **Evidence:** `ElementDefnMerger.cs:193,918` (`matchMappings`) — Phase 2 deep-read 2026-08-24.
+- **.NET:** diff mappings match inherited ones on the **(identity, map) pair**; a diff mapping restating an
+  inherited `identity` with a different `map` is *appended*, yielding two mappings with the same identity
+  (also violating eld-27, a warning).
+- **Java:** TBD (Phase 3).
+- **Spec basis:** R5 profiling §5.1.0.9 (new in R5): "providing a new mapping with the same identity … means
+  that the new mapping replaces a mapping with the same identity in the element being profiled" — .NET does
+  not implement the R5 rule (which is correct-for-R4, where mappings were additive-only; .NET runs the same
+  merger for all versions).
+- **Status:** seeded (spec-noncompliance under R5; compare Java in Phase 3).

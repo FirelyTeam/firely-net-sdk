@@ -76,18 +76,24 @@ three — but the missing rows are still missing).
 The ∆ (additive) footnote covers only `constraint`/`condition`/`mapping`; nothing states whether a
 differential's `code`, `alias`, `example`, `type.profile`, `type.targetProfile` lists replace or extend the
 base's. Every generator has had to invent this (and .NET/Java may disagree — see deviation register).
-Propose: one sentence per property class in #interpretation. **Status:** draft — final wording depends on
-Phase 3 comparison.
+Propose: one sentence per property class in #interpretation. .NET's answers (Phase 2, ch5 table):
+`code`/`alias`/`condition`/`example`/`valueAlternatives` union; `type` list replaces;
+`type.profile`/`type.targetProfile`/`type.aggregation` replace wholesale; `mapping` unions on identity+map
+(DEV-017). **Status:** draft — final wording depends on Phase 3 comparison.
 
 ### RFC-009 — eld-14 vs additive constraints: restating an inherited constraint key
 Inherited constraints "do not replace" and differential constraints add — but constraints "must be unique by
 key" (eld-14). Behavior when a differential restates an inherited key is unspecified (error? merge?
-duplicate?). **Status:** draft.
+duplicate?). .NET's answer (Phase 2): overlay-merge onto the inherited constraint, matched on `key` —
+no duplicate, no error (`ElementDefnMerger.cs:487`). **Status:** draft.
 
 ### RFC-010 — binding merge granularity unstated
 Whether a differential `binding` replaces the base binding wholesale, merges per sub-element
 (strength/valueSet/description), only tightens strength, and whether `additional` bindings append — none of
 it is stated on the ElementDefinition page.
+.NET's answer (Phase 2): per-sub-element overlay — strength/description replace (lattice not enforced),
+valueSet overlays, `additional` unions by full value; binding dropped entirely when no bindable type remains
+(`ElementDefnMerger.cs:358,186`).
 **Status:** draft — R6 build makes partial progress: new profiling section "Additional Bindings" says
 additional bindings are constrainable only via a matching `key` (new `binding.additional.key` element,
 eld-31), and keyless base additionalBindings cannot be constrained. Main-binding merge granularity remains
