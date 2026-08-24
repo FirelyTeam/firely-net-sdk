@@ -126,10 +126,10 @@ What should a generator do with an *illegal differential*? .NET's matcher answer
   min/max loosening is silently ignored (OQ-011);
 - preprocessing (packet 3): an element without a path, or a root element that is not first, →
   **throws** (`DifferentialTreeConstructor.cs:62-78`); out-of-order differentials → debug-build-only
-  warnings, silently degrading in matching; an illegal root `sliceName` → **silently repaired** with an
-  issue (`SnapshotGenerator.cs:604-618`).
-One taxonomy — throw / drop-with-issue / silent repair / silent accept — chosen different ways per error
-class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
+  warnings, silently degrading in matching; an illegal root `sliceName` → **repaired with an issue**
+  (`SnapshotGenerator.cs:604-618`).
+One taxonomy — throw / drop-with-issue / repair-with-issue / silent repair / silent accept — chosen
+different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
 - **Status:** open (Phase 2 packets 2–3, 2026-08-24).
 
 ## OQ-015 — The generator mutates its input differential

@@ -115,8 +115,10 @@ The working snapshot is a **deep copy of the base's snapshot** (`:428`). Then, p
 
 `Rebase` rewrites **paths only** (root becomes the new path, descendants re-prefixed segment-wise —
 `ProfileNavigationExtensions.cs:35-53`). The spec's unstated companions of the rename (ch3 spec gap 2) are
-handled separately: element **ids** are never inherited — force-regenerated when `GenerateElementIds` is set
-(`:510-514`, with the `Questionnaire.item.item` caveat behind [OQ-009](14-open-questions.md#oq-009--element-id-stability));
+handled separately: when `GenerateElementIds` is set, element **ids** are force-regenerated, never inherited
+from the base (`:510-514`, with the `Questionnaire.item.item` caveat behind
+[OQ-009](14-open-questions.md#oq-009--element-id-stability)); with the setting off, the deep copy keeps the
+base's ids;
 **`base` components** are inherited when present, generated when missing (`ensureBaseComponents`, `:518`,
 ch10). Finally the copied base snapshot is scrubbed of non-inheritable extensions (changed-by-diff markers)
 and internal annotations (`:523-524`).
@@ -134,9 +136,10 @@ Used when only a profile's *root* is needed (notably type-profile expansion, `ge
 2. root of an existing (trusted) snapshot (`:2405-2410`);
 3. root of a *partially generated* snapshot higher up the recursion stack (`:2412-2421`);
 4. recursive resolution: resolve the base's root the same way, deep-copy it, rebase its path to the
-   differential root's path, merge the differential root on top (`mergeElementId: true`, `:2496-2502`), and
-   stamp `constraint.source` (`:2461`). A core type (no base) takes its root directly from the differential
-   (`:2446-2464`).
+   differential root's path, and merge the differential root on top (`mergeElementId: true`, `:2496-2502`) —
+   which also stamps `constraint.source`, though only when the diff root declares constraints (ch5). A core
+   type (no base) takes its root directly from the differential and stamps `constraint.source` explicitly
+   (`:2446-2464`, `:2461`).
 
 Notable asymmetry: an SD **without any differential is rejected here** (issue "profile has no differential",
 `:2391-2396` — the in-code TODO acknowledges it should return the base root) even though full generation
