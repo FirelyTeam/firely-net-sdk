@@ -15,6 +15,9 @@ A non-repeating element (`0..1`) is typed with a profiled datatype whose *root* 
 differential doesn't constrain `max`. Which cardinality does the snapshot element get?
 - .NET today: the type profile's root wins → the element silently *becomes repeating*
   (`ElementDefnMerger.cs:689-695`, documented as unresolved).
+- Packet 4: the entry point is the root-only type-profile merge — a bare `type.profile` reference merges the
+  external root's constraints (incl. cardinality) onto the element even when the diff has no children
+  (`SnapshotGenerator.cs:1464-1476`, ch7).
 - Related: the general priority question OQ-002.
 - **Status:** open.
 
@@ -24,6 +27,14 @@ property, who wins? `SnapshotGenerator.cs:999-1003` records "Ewout: not defined 
 cases exist for both options" — .NET gives type profiles priority over base; merge order is: expand external
 type profile → merge base snapshot constraints on top → merge differential on top (`SnapshotGenerator.cs:1383`).
 Does Java use the same order? What *should* the order be?
+- Packet 4 (mechanism): "type beats base" is not a per-property policy but an artifact of merging the
+  external profile's rebased **snapshot** onto the working element *as if it were a differential*
+  (`mergeElement(snap, typeNav)`, `SnapshotGenerator.cs:1400-1413`) — a snapshot has a value for nearly
+  every property, so it overrides wherever it differs. The in-code ISSUE at `:1405-1411` acknowledges a
+  concrete wrongness: when the *base profile* had already constrained the type's children, the external type
+  snapshot re-applies original type values over the base's overrides
+  ("{Address Snap + Diff + Address Snap (WRONG!) + MyAddress Diff}"). So .NET's answer is not even
+  consistently "type wins" — it degrades with derivation depth. Ch7.
 - **Status:** open.
 
 ## OQ-003 — Slicing non-repeating elements
@@ -127,7 +138,14 @@ What should a generator do with an *illegal differential*? .NET's matcher answer
 - preprocessing (packet 3): an element without a path, or a root element that is not first, →
   **throws** (`DifferentialTreeConstructor.cs:62-78`); out-of-order differentials → debug-build-only
   warnings, silently degrading in matching; an illegal root `sliceName` → **repaired with an issue**
-  (`SnapshotGenerator.cs:604-618`).
+  (`SnapshotGenerator.cs:604-618`);
+- type-profile expansion (packet 4, ch7): several distinct type profiles on one element → external merge
+  **silently skipped**, no issue (`SnapshotGenerator.cs:1243-1249`); unresolvable or type-incompatible
+  external profile → **issue + continue** without merge (`:1306-1322`); external profile whose snapshot
+  cannot be ensured → issue (from `ensureSnapshot`) + the element's **children silently dropped**
+  (`:1329-1332` → `:1079-1082`); complex-reference jump failure → issue + children dropped (`:1364-1368`,
+  though see DEV-018: the path throws before reaching that); cyclic `baseDefinition` chain in the
+  compatibility walk → **throws** (`:2559-2564`).
 One taxonomy — throw / drop-with-issue / repair-with-issue / silent repair / silent accept — chosen
 different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
 - **Status:** open (Phase 2 packets 2–3, 2026-08-24).
@@ -154,3 +172,18 @@ merges into a referencing element. The in-code TODO ("Handle empty diff (=> retu
 profile)") shows the authors consider this a gap, not a design decision. What is the sanctioned meaning —
 and does Java accept differential-less SDs in both roles?
 - **Status:** open (Phase 2 packet 3, 2026-08-24).
+
+## OQ-017 — Starting expansion below the root: extension vs fragment syntax
+R5 documents the `elementdefinition-profile-element` extension (on `type.profile`) nominating an element
+**id** in the target SD as "an instruction to a validator to apply the profile starting at the nominated
+element" [profiling §5.1.0.16] — for a generator, the rebase point (ch7 spec baseline). .NET's generator
+**never reads that extension** (no occurrence anywhere in generator code, verified 2026-08-24); its only
+below-root mechanism is the older `url#name` **fragment** syntax (`ProfileReference`), and the expansion
+path for *that* appears broken (DEV-018 — bare-name jump throws; id-vs-name mismatch). Questions:
+- Must a generator support the extension, the fragment syntax, or both? Is the fragment syntax sanctioned
+  at all in `type.profile` (canonical fragments normally address contained resources)?
+- Does the fragment name an element **id** or a **slice name**? (.NET's call sites disagree:
+  `SnapshotGenerator.cs:1364` jumps by element id (via `JumpToNameReference`), while the no-expansion path
+  compares the fragment to the **sliceName**, `:1480-1485`.)
+- Does Java's generator honor the extension (it originated there), the fragment, or both?
+- **Status:** open (Phase 2 packet 4, 2026-08-24).

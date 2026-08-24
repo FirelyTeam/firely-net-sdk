@@ -26,7 +26,7 @@ the FHIR R6 normative wrap-up.
 | Phase | Content | Status |
 |---|---|---|
 | 1 | Chapter skeleton + spec-derived baseline (what hl7.org actually says) | **done** (2026-08-21; R5 v5.0.0 baseline + R4 v4.0.1 deltas; R6-build v6.0.0-ballot4 deltas folded in where noted) |
-| 2 | .NET implementation semantics, with code citations | **in progress** (2026-08-24 — packet 1: ch5 property-merge table from `ElementDefnMerger.cs`, +DEV-017, OQ-011..013; packet 2: ch4 matching from `ElementMatcher.cs`, +OQ-014/015, OQ-006 corrected, DEV-008 enriched; packet 3: ch2 preprocessing + ch3 base resolution, +OQ-016) |
+| 2 | .NET implementation semantics, with code citations | **in progress** (2026-08-24 — packet 1: ch5 property-merge table from `ElementDefnMerger.cs`, +DEV-017, OQ-011..013; packet 2: ch4 matching from `ElementMatcher.cs`, +OQ-014/015, OQ-006 corrected, DEV-008 enriched; packet 3: ch2 preprocessing + ch3 base resolution, +OQ-016; packet 4: ch7 type-profile & extension expansion from `mergeTypeProfiles`/`expandElement`, +DEV-018/019, +OQ-017, OQ-001/002/014 enriched) |
 | 3 | Java implementation semantics + deviation register | seeded |
 | 4 | Empirical cross-check (shared test cases, Java-oracle harness) | pending |
 | 5 | Adjudication of deviations (Zulip/JIRA/WGM); spec RFCs | seeded (ch15) |

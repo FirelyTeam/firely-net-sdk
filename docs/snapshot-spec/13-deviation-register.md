@@ -112,3 +112,34 @@ status/resolution.
   not implement the R5 rule (which is correct-for-R4, where mappings were additive-only; .NET runs the same
   merger for all versions).
 - **Status:** seeded (spec-noncompliance under R5; compare Java in Phase 3).
+
+## DEV-018 — Complex type-profile references (`url#element`): expansion path broken (ch7)
+- **Evidence:** `SnapshotGenerator.cs:1364` + `Navigation/ElementDefinitionNavigator.cs:281-303` — Phase 2
+  deep-read 2026-08-24 (code-read only, no repro yet).
+- **.NET:** the generator parses `type.profile` fragments (`ProfileReference`) and has a dedicated expansion
+  path for a complex reference *with diff child constraints*, but the jump to the named element passes the
+  **bare** fragment name to `JumpToNameReference`, which (a) parses it with `ProfileReference` again,
+  classifies it as an (unknown) absolute canonical, and **throws `NotSupportedException`**; and (b) even for
+  the `#name` form matches against the full element **id** (`Extension.extension:code`), which a short
+  fragment name (`code`) never equals. So a differential that both uses `url#element` and constrains
+  children under that element should crash the generator. The sibling *no-children* path works by design
+  (nothing merged; sliceName-vs-fragment check only, `SnapshotGenerator.cs:1417-1486`), which is why the
+  common patient-nationality-style profiles survive.
+- **Suspected regression:** the id-matching + absolute-url guard in `JumpToNameReference` matches the
+  absolute-contentReference work (#3177 era); the bare-name call site is 2016-era (WMR). The frozen STU3
+  fork's variant (`Canonical`-based) silently no-matches instead of throwing — same outcome (issue
+  `PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF` + subtree dropped), different failure mode.
+- **Java:** TBD (Phase 3) — presumably honors `elementdefinition-profile-element` instead (OQ-017).
+- **Status:** suspected — needs an empirical repro in Phase 4 (candidate inputs among the 102
+  never-integrated upstream tests); file a GitHub issue once confirmed.
+
+## DEV-019 — `modifierExtension.url` never gets the fixedUri backfill (ch7)
+- **Evidence:** `SnapshotGenerator.cs:1743-1746` — Phase 2 deep-read 2026-08-24.
+- **.NET:** `fixExtensionUrl` only fires for elements whose path name is (case-insensitively) `extension`;
+  `modifierExtension` never matches, so the `url.fixedUri` backfill never runs for modifier extensions.
+  Narrow observable gap: in the normal full-expansion path the `url` child is copied from the extension
+  definition's snapshot *with its fixed value already set* (the definition's own generation fixed it at root
+  `Extension`, which does match), so the backfill only matters when that inheritance fails — unresolved
+  extension profile, no child expansion, or an extension-definition snapshot lacking the fixed url.
+- **Java:** TBD (Phase 3).
+- **Status:** suspected (narrow; verify against Java + construct repro in Phase 4).
