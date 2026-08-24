@@ -1,6 +1,7 @@
 # 2. Differential preprocessing
 
-> Status: **spec baseline filled** (Phase 1, R5 v5.0.0 + R4 v4.0.1 deltas). Implementation sections pending (Phases 2–3).
+> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 3,
+> 2026-08-24: `DifferentialTreeConstructor.cs` deep-read). Java section pending (Phase 3).
 
 ## Scope
 What must happen to a differential before merging: validity requirements on differentials (paths, order,
@@ -74,8 +75,56 @@ slice (`Patient.deceased[x]` with sliceName `deceasedBoolean`) — see the R4 de
   path + type slice is the R5 form. A dual-version generator must accept renamed paths in R4 differentials
   and match them to the base `[x]` element (see ch4, [RFC-013](15-spec-rfcs.md#rfc-013--sanction-or-prohibit-renamed-choice-type-paths-in-snapshots)).
 
-## .NET behavior (Phase 2)
-*(pending — `DifferentialTreeConstructor.cs`, `DifferentialComponent.MakeTree()`)*
+## .NET behavior (Phase 2, deep-read 2026-08-24)
+
+### Tree reconstruction (`DifferentialTreeConstructor.MakeTree`, `DifferentialTreeConstructor.cs:43`)
+
+A single forward pass over the differential's element list, indexed, comparing each element's path with its
+predecessor's. Four cases: root path → must be at index 0, else **throws** ("Differential has multiple
+roots", `:69-78`); sibling of the previous element or direct child of it → nothing to do; a path whose
+parent is an ancestor-or-self of the previous element → nothing to do (going back *up* the hierarchy;
+assumed to be a slice — an unnamed one only rates a debug-build warning, `:113`); anything else → a missing
+parent, so a **stand-in parent** is inserted (`new ElementDefinition { Path = parentPath }` — no id, no
+slicing, no constraints; the class doc promises stand-ins "should not have any influence on the final
+snapshot form", `:20-26`) and the pass re-examines the same index until the chain to an already-seen
+ancestor is complete. An element with a missing/empty path **throws** (`:62-65`). Both throws are more rows
+for [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors)'s error-taxonomy
+question.
+
+Two properties worth pinning:
+
+- **Ordering is assumed, never verified.** The algorithm relies on the spec's document-order rule
+  [structuredefinition §5.4.6]; an out-of-order differential is neither detected nor normalized (duplicate
+  sibling constraints get a debug-build-only warning, `:84`). Misordered input flows into matching, where it
+  silently degrades (ch4).
+- **The result list is new, but the *elements* are shared** with the caller's differential — deliberately
+  not cloned since 2019 to avoid copying internal annotations (`:48-51`). Consequently later generator
+  mutations of differential elements (generated type-slice names, ch4/[OQ-015](14-open-questions.md#oq-015--the-generator-mutates-its-input-differential);
+  the root sliceName fix below) reach the caller's StructureDefinition — except where the mutated element is
+  a generator-owned stand-in.
+
+### Other preprocessing steps (in `SnapshotGenerator.generate`)
+
+- **Missing differential** is synthesized as an empty one before anything else (`SnapshotGenerator.cs:362-369`),
+  so a differential-less SD generates snapshot = rebased base snapshot + generator fill obligations. (But
+  see [OQ-016](14-open-questions.md#oq-016--what-does-a-differential-less-structuredefinition-mean) — root
+  resolution for *type profiles* refuses the same input.)
+- **Root sliceName repair** (`FIX_SLICENAMES_ON_ROOT_ELEMENTS`, active): a differential root element
+  carrying a `sliceName` (illegal, sdf-23; the core R4 `SimpleQuantity` fixture famously did this) has it
+  cleared, with an issue emitted unless the SD *is* core SimpleQuantity (`SnapshotGenerator.cs:556-559,
+  604-618`). When the root came from the caller's differential this mutates the caller's SD; same theme as
+  the runtime fixture patches (DEV-010).
+- **No normalization of R4-era renamed choice paths** happens in preprocessing — renamed paths are handled
+  during matching (ch4) and normalized to type-slice form in the snapshot (`NORMALIZE_RENAMED_TYPESLICE`,
+  ch5/ch6).
 
 ## Java behavior (Phase 3)
 *(pending — `SnapshotGenerationPreProcessor.java`)*
+
+## Open questions
+- [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors) preprocessing throws
+  on malformed differentials.
+- [OQ-015](14-open-questions.md#oq-015--the-generator-mutates-its-input-differential) shared element
+  instances make generator repairs visible to the caller.
+- [OQ-016](14-open-questions.md#oq-016--what-does-a-differential-less-structuredefinition-mean)
+  differential-less StructureDefinitions.

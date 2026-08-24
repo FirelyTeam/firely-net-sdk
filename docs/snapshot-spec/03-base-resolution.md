@@ -1,6 +1,8 @@
 # 3. Base resolution, rebasing and the root element
 
-> Status: **spec baseline filled** (Phase 1, R5 v5.0.0 + R4 v4.0.1 deltas). Implementation sections pending (Phases 2–3).
+> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 3,
+> 2026-08-24: `SnapshotGenerator.generate`/`ensureSnapshot`/`getSnapshotRootElement` deep-read). Java
+> section pending (Phase 3).
 
 ## Scope
 Resolving `baseDefinition` (and generating *its* snapshot on demand), deep-copying the base snapshot as the
@@ -78,8 +80,76 @@ differential is silent. See ch10 for `base` semantics.
   not.
 - sdf-27 (baseDefinition ⇒ derivation) is new in R5.
 
-## .NET behavior (Phase 2)
-*(pending — `SnapshotGenerator.generate()` :356-566, `getSnapshotRootElement` :2386)*
+## .NET behavior (Phase 2, deep-read 2026-08-24)
+
+All citations `SnapshotGenerator.cs` unless noted.
+
+### Resolving the base (`resolveBaseDefinition`, `:328-343`; `generate`, `:356-542`)
+
+A constraint SD without `baseDefinition` **throws** (`:372-375`). The base canonical is resolved through the
+configured `IAsyncResourceResolver`; any resolved SD carrying the `structuredefinition-interface` extension
+(the R5-preview `CanonicalResource`/`MetadataResource` "interface classes") is **skipped**: resolution walks
+on to *its* base until a non-interface SD is found (`:334-340`; interface semantics in ch9). An unresolvable
+base is fatal (issue + abort, `:398-403`) with one carve-out (#3576): a **logical model** deriving from the
+`Base` canonical — unresolvable before R5 because `Base` wasn't published as a StructureDefinition — gets a
+non-fatal issue and proceeds base-less, which is functionally identical since Base is an empty abstract root
+(`:385-397`, `BASE_TYPE_CANONICAL` `:313`).
+
+### On-demand snapshot generation of the base (`ensureSnapshot`, `:2306-2356`)
+
+If the resolved base lacks a snapshot (or has a foreign one under `ForceRegenerateSnapshots`), the generator
+recurses into `generate` for the base — gated by `GenerateSnapshotForExternalProfiles`; with that setting
+off, a snapshot-less base is a fatal issue. A snapshot produced this way is annotated
+`createdBySnapshotGenerator` to prevent repeated regeneration (`:2338`). Recursion/cycle detection wraps the
+expansion via the recursion stack (`OnBeforeExpandTypeProfile`, ch11).
+
+### The merge start-point: deep copy + rebase
+
+The working snapshot is a **deep copy of the base's snapshot** (`:428`). Then, per derivation kind:
+
+- **Constraints:** no rebasing — paths already match the type.
+- **Specializations:** `Rebase(structure.Type)` (`:478-497`); a missing `type` throws.
+- **Logical models:** rebased onto the last segment of `structure.Type` (a full url is allowed); missing
+  `type` → issue, root name parsed from the first differential element instead; still undeterminable →
+  throw (`:441-476`).
+
+`Rebase` rewrites **paths only** (root becomes the new path, descendants re-prefixed segment-wise —
+`ProfileNavigationExtensions.cs:35-53`). The spec's unstated companions of the rename (ch3 spec gap 2) are
+handled separately: element **ids** are never inherited — force-regenerated when `GenerateElementIds` is set
+(`:510-514`, with the `Questionnaire.item.item` caveat behind [OQ-009](14-open-questions.md#oq-009--element-id-stability));
+**`base` components** are inherited when present, generated when missing (`ensureBaseComponents`, `:518`,
+ch10). Finally the copied base snapshot is scrubbed of non-inheritable extensions (changed-by-diff markers)
+and internal annotations (`:523-524`).
+
+A missing differential was already replaced by an empty one (`:362-369`, ch2), so "snapshot = rebased base
+snapshot + generator fill" is .NET's de-facto answer to spec gap 3 — for full generation, but *not* for root
+resolution, see below.
+
+### Root element resolution (`getSnapshotRootElement`, `:2386-2502`)
+
+Used when only a profile's *root* is needed (notably type-profile expansion, `getBaseElementForTypeRef`
+`:2373`). A four-step cascade:
+
+1. cached root-element annotation on the SD (`CACHE_ROOT_ELEMDEF`, `:2398-2402`);
+2. root of an existing (trusted) snapshot (`:2405-2410`);
+3. root of a *partially generated* snapshot higher up the recursion stack (`:2412-2421`);
+4. recursive resolution: resolve the base's root the same way, deep-copy it, rebase its path to the
+   differential root's path, merge the differential root on top (`mergeElementId: true`, `:2496-2502`), and
+   stamp `constraint.source` (`:2461`). A core type (no base) takes its root directly from the differential
+   (`:2446-2464`).
+
+Notable asymmetry: an SD **without any differential is rejected here** (issue "profile has no differential",
+`:2391-2396` — the in-code TODO acknowledges it should return the base root) even though full generation
+accepts the same SD via the synthesized empty differential. Observable consequence: a differential-less SD
+can be fully snapshotted, but cannot serve as a type profile whose root must be merged —
+[OQ-016](14-open-questions.md#oq-016--what-does-a-differential-less-structuredefinition-mean). The
+base-chain walk here also has **no cycle detection** (in-code TODO `:2469-2473`; the main recursion stack
+does not cover this path — ch11).
 
 ## Java behavior (Phase 3)
 *(pending)*
+
+## Open questions
+- [OQ-009](14-open-questions.md#oq-009--element-id-stability) element id regeneration vs inheritance.
+- [OQ-016](14-open-questions.md#oq-016--what-does-a-differential-less-structuredefinition-mean)
+  differential-less StructureDefinitions.

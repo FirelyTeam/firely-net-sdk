@@ -123,10 +123,14 @@ What should a generator do with an *illegal differential*? .NET's matcher answer
 - an unmatched differential path (illegal in a constraint profile per [elementdefinition #path]) →
   **silently** added as a New element (`createNewElement` emits no issue, `SnapshotGenerator.cs:887`);
 - non-choice type widening isn't checked at all (ch5: `mergeElementTypes` replaces the list wholesale);
-  min/max loosening is silently ignored (OQ-011).
-One taxonomy — throw / drop-with-issue / silent repair / silent accept — chosen four different ways. The
-matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
-- **Status:** open (Phase 2 packet 2, 2026-08-24).
+  min/max loosening is silently ignored (OQ-011);
+- preprocessing (packet 3): an element without a path, or a root element that is not first, →
+  **throws** (`DifferentialTreeConstructor.cs:62-78`); out-of-order differentials → debug-build-only
+  warnings, silently degrading in matching; an illegal root `sliceName` → **silently repaired** with an
+  issue (`SnapshotGenerator.cs:604-618`).
+One taxonomy — throw / drop-with-issue / silent repair / silent accept — chosen different ways per error
+class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
+- **Status:** open (Phase 2 packets 2–3, 2026-08-24).
 
 ## OQ-015 — The generator mutates its input differential
 With `GENERATE_MISSING_TYPE_SLICE_NAMES` active, a type-slice constraint lacking a `sliceName` gets one
@@ -134,4 +138,19 @@ generated and written **into the caller's differential component**, not just the
 (`ElementMatcher.cs:13-14,318-334`; the in-code comment asks "Q: Are we allowed to update the diff
 itself...?"). Is a generator permitted to repair/normalize the differential it was handed? Related:
 Java's CLI oracle runs with `autoFixSliceNames(true)` (DEV-016) — same repair, but behind a flag.
+- Packet 3 addition: the mechanism is structural — `MakeTree` returns a new *list* but shares the element
+  *instances* with the caller's differential (`DifferentialTreeConstructor.cs:48-51`), so any generator
+  repair (type-slice names, root-sliceName clearing at `SnapshotGenerator.cs:604-618`) lands in the caller's
+  StructureDefinition, except when the touched element is a generator-synthesized stand-in parent.
 - **Status:** open (Phase 2 packet 2, 2026-08-24).
+
+## OQ-016 — What does a differential-less StructureDefinition mean?
+The spec never states whether a StructureDefinition without a differential means "snapshot = base snapshot"
+(ch3 spec gap 3). .NET itself answers twice, differently: full generation synthesizes an empty differential
+and proceeds — snapshot = rebased base snapshot + generator fill (`SnapshotGenerator.cs:362-369`); but root
+resolution for *type profiles* rejects the same SD with an issue ("profile has no differential",
+`SnapshotGenerator.cs:2391-2396`), so a differential-less SD cannot be used as a type profile whose root
+merges into a referencing element. The in-code TODO ("Handle empty diff (=> return root element of base
+profile)") shows the authors consider this a gap, not a design decision. What is the sanctioned meaning —
+and does Java accept differential-less SDs in both roles?
+- **Status:** open (Phase 2 packet 3, 2026-08-24).
