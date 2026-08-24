@@ -48,7 +48,12 @@ status/resolution.
 - **Evidence:** issue #1256; test `[Ignore]`d. **Status:** seeded.
 
 ## DEV-008 — Extension header slicing element (ch6)
-- **Evidence:** issue #2466; `ElementMatcher.cs:651`.
+- **Evidence:** issue #2466; `ElementMatcher.cs:651-652`.
+- **.NET** (Phase 2, 2026-08-24): named slices normally get a slice base with the `slicing` component
+  removed and `min` reset to 0 (`initSliceBase`, `ElementMatcher.cs:545-560`) — but for *extension header*
+  elements the slicing component is deliberately **kept** on the slice base (`initSliceBase(snapNav,
+  false)`), so the synthesized/inherited extension slicing entry survives into the snapshot.
+- **Java:** TBD (Phase 3). **Spec basis:** none found for either the slicing-removal or the min-reset rule.
 - **Status:** seeded.
 
 ## DEV-009 — contentReference expansion details (ch8)

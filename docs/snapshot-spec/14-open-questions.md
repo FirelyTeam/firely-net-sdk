@@ -47,8 +47,13 @@ slice to a closed slicing, or reorder for openAtEnd)? .NET does not (file-header
 
 ## OQ-006 — sliceIsConstraining
 What must a generator do with `sliceIsConstraining` when matching a derived profile's slices to base slices?
-.NET ignores it (`ElementMatcher.cs:602` TODO).
-- **Status:** open.
+- Phase 2 correction (2026-08-24): the Phase-1 claim ".NET ignores it (`ElementMatcher.cs:602` TODO)" was
+  **wrong** — `:600-623` is dead `#if false` code. Live code in `matchSlice` (`ElementMatcher.cs:816-838`)
+  **enforces** it: a non-null value disagreeing with the actual name match → `MatchAction.Invalid`, issue
+  emitted, element discarded; absent → STU3 fallback (match ⇒ constrain, no match ⇒ new slice).
+- Remaining question: does Java enforce it the same way, and is *discard-with-issue* the sanctioned
+  response (vs error, vs proceeding)? Feeds [OQ-014](#oq-014--inconsistent-error-taxonomy-for-author-errors).
+- **Status:** open — .NET side answered.
 
 ## OQ-007 — Global StructureDefinition.mapping
 Should the profile-level `mapping` declarations of base/type profiles be merged into the derived
@@ -107,3 +112,26 @@ consumers handle these?" — a modifier extension *inherited into* a snapshot el
 definition the deriving author may never have seen. Is inheriting modifier extensions into snapshots even
 sanctioned?
 - **Status:** open (Phase 2 packet 1, 2026-08-24).
+
+## OQ-014 — Inconsistent error taxonomy for author errors
+What should a generator do with an *illegal differential*? .NET's matcher answers differently per error:
+- illegal choice-type **widening** → throws `InvalidOperation` (`ElementMatcher.cs:406-409`) — contradicting
+  the in-code policy that the generator "should never throw" and leave correctness to the validator
+  (`ElementMatcher.cs:158-164`);
+- slice-name / `sliceIsConstraining` conflicts, unnamed slices under unsupported discriminators → element
+  **discarded** with an issue (`MatchAction.Invalid`, `SnapshotGenerator.cs:841-843`);
+- an unmatched differential path (illegal in a constraint profile per [elementdefinition #path]) →
+  **silently** added as a New element (`createNewElement` emits no issue, `SnapshotGenerator.cs:887`);
+- non-choice type widening isn't checked at all (ch5: `mergeElementTypes` replaces the list wholesale);
+  min/max loosening is silently ignored (OQ-011).
+One taxonomy — throw / drop-with-issue / silent repair / silent accept — chosen four different ways. The
+matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
+- **Status:** open (Phase 2 packet 2, 2026-08-24).
+
+## OQ-015 — The generator mutates its input differential
+With `GENERATE_MISSING_TYPE_SLICE_NAMES` active, a type-slice constraint lacking a `sliceName` gets one
+generated and written **into the caller's differential component**, not just the snapshot
+(`ElementMatcher.cs:13-14,318-334`; the in-code comment asks "Q: Are we allowed to update the diff
+itself...?"). Is a generator permitted to repair/normalize the differential it was handed? Related:
+Java's CLI oracle runs with `autoFixSliceNames(true)` (DEV-016) — same repair, but behind a flag.
+- **Status:** open (Phase 2 packet 2, 2026-08-24).
