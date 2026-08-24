@@ -80,7 +80,8 @@ the same convention for the same properties?
 
 ## OQ-011 — What must a generator enforce?
 The .NET merger is diff-wins for nearly every property — including every rule the spec marks as frozen or
-one-directional: `isModifier`/`isSummary`/`defaultValue[x]`/`meaningWhenMissing`/`representation` (†-rules),
+one-directional: `isModifier`/`isSummary`/`defaultValue[x]`/`meaningWhenMissing` (†-rules), `representation`
+(frozen per elementdefinition-definitions prose — the interpretation table has no row for it, RFC-007),
 `mustSupport` `true`→`false`, silent loosening of `binding.strength` against the §5.1.0.21 lattice. The
 *only* most-restrictive enforcement is `min`/`max` — and there an illegally loosening differential is
 **silently ignored** instead of reported (`ElementDefnMerger.cs:666,696`). Is a generator expected to

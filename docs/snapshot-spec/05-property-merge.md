@@ -175,8 +175,10 @@ call-site arguments modulate behavior:
 - **`baseUrl`** — canonical of the SD whose constraints are being merged in; used only to stamp
   `constraint.source` (see below).
 
-Every property actually changed raises the `OnConstraint` callback, which decorates the result with the
-"constrained-by-diff" extension when `SnapshotGeneratorSettings.MarkChanges` is set (ch12).
+Every property actually changed raises the `OnConstraint` callback (`SnapshotGenerator.cs:2171-2175`), which
+decorates the result with the "constrained-by-diff" extension and/or annotation when
+`SnapshotGeneratorSettings.GenerateExtensionsOnConstraints` / `GenerateAnnotationsOnConstraints` are set
+(ch12).
 
 ### The five generic merge primitives
 
