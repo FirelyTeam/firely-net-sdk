@@ -182,8 +182,9 @@ below-root mechanism is the older `url#name` **fragment** syntax (`ProfileRefere
 path for *that* appears broken (DEV-018 — bare-name jump throws; id-vs-name mismatch). Questions:
 - Must a generator support the extension, the fragment syntax, or both? Is the fragment syntax sanctioned
   at all in `type.profile` (canonical fragments normally address contained resources)?
-- Does the fragment name an element **id** or a **slice name**? (.NET's call sites disagree:
-  `SnapshotGenerator.cs:1364` jumps by element id (via `JumpToNameReference`), while the no-expansion path
-  compares the fragment to the **sliceName**, `:1480-1485`.)
+- Does the fragment name an element **id** or a **slice name**? (.NET itself is torn: the expansion path
+  passes the bare fragment name into an id-matching jump — the DEV-018 mismatch
+  (`SnapshotGenerator.cs:1364`) — while the no-expansion path compares the fragment to the **sliceName**,
+  `:1480-1485`.)
 - Does Java's generator honor the extension (it originated there), the fragment, or both?
 - **Status:** open (Phase 2 packet 4, 2026-08-24).
