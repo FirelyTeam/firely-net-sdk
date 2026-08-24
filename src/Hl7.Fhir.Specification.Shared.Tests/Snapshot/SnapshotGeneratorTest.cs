@@ -4263,6 +4263,104 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
         }
 
+        // [EK 20260824] #3583: A differential element with a complex type profile reference ("canonicalUrl#elementName")
+        // that also has child constraints in the differential (so mustExpandElement() is true) must correctly
+        // expand the referenced fragment ("elementName" = the sliceName of a sub-extension) and merge the child
+        // constraints on top of it. Previously this crashed with NotSupportedException, because mergeTypeProfiles
+        // used JumpToNameReference (the ContentReference/id-based lookup mechanism) instead of a SliceName lookup.
+        // Note: fixture t13 (Type Slicing) uses the same "...patient-nationality#code" reference WITHOUT child
+        // constraints, so mustExpandElement() is false there and it never hit the broken path.
+        [TestMethod]
+        public async Tasks.Task TestComplexTypeProfileReferenceWithChildConstraints()
+        {
+            var sdPatient = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyNationalityPatient",
+                Url = "http://example.org/fhir/StructureDefinition/MyNationalityPatient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.extension")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                                {
+                                    new ElementDefinition.DiscriminatorComponent()
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "url" }
+                                },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+                        new ElementDefinition("Patient.extension")
+                        {
+                            SliceName = "nationality",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = new string[] { "http://hl7.org/fhir/StructureDefinition/patient-nationality" }
+                                }
+                            }
+                        },
+                        new ElementDefinition("Patient.extension.extension")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                                {
+                                    new ElementDefinition.DiscriminatorComponent()
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "url" }
+                                },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+                        new ElementDefinition("Patient.extension.extension")
+                        {
+                            SliceName = "code",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    // Complex type profile reference including an element name fragment
+                                    Profile = new string[] { "http://hl7.org/fhir/StructureDefinition/patient-nationality#code" }
+                                }
+                            }
+                        },
+                        // Child constraint below the element carrying the complex profile reference,
+                        // so mustExpandElement() returns true and mergeTypeProfiles tries to expand the fragment
+                        new ElementDefinition("Patient.extension.extension.value[x]")
+                        {
+                            Short = "The nationality code"
+                        }
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            await _generator.UpdateAsync(sdPatient);
+
+            Assert.IsTrue(sdPatient.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+            Assert.IsNull(_generator.Outcome);
+
+            sdPatient.Snapshot.Element.Dump();
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(sdPatient);
+            Assert.IsTrue(nav.JumpToFirst("Patient.extension.extension"));
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel("code"));
+            // The child constraint from the differential (Short on value[x]) must be merged
+            // into the expanded fragment of the external extension, not just silently dropped
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.AreEqual("The nationality code", nav.Current.Short);
+        }
+
         // [WMR 20170306] Verify that the snapshot generator determines and merges the correct base element for slices
         // * Slice entry is based on associated element in base profile with same path (and name)
         //   Slice entry inherits constraints from base element; can only further constrain
