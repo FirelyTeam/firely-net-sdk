@@ -20,7 +20,7 @@
 	<!-- Main Dependencies (all frameworks) -->
 	<ItemGroup>
 		<PackageVersion Include="Fhir.Metrics" Version="1.4.0" />
-		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.301" />
+		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.400" />
 		<PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageVersion Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
