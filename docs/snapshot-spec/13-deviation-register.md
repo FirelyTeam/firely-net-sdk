@@ -31,22 +31,33 @@ status/resolution.
 - **Java:** TBD.
 - **Status:** seeded.
 
-## DEV-003 — obs-1-2: shared-suite divergence (ch TBD)
+## DEV-003 — obs-1-2: shared-suite divergence (ch4)
 - **Evidence:** issue #1252; manifest test `obs-1-2` `[Ignore]`d in `SnapshotGeneratorManifestTests.cs`.
-- **Status:** seeded — analyze in Phase 4 (re-run, diff against Java oracle).
+- **Status:** **settled as agreement-on-outcome** (Phase 4 packet 3, 2026-08-26): both sides THROW for
+  the same author error (profiling a type already profiled out of the choice). Residual divergence is
+  error taxonomy only — Java's author-facing `DefinitionException` ("invalid constrained type Quantity
+  from CodeableConcept") vs .NET's `InvalidOperationException` "**Internal error** in snapshot generator
+  (ElementMatcher.constructChoiceTypeMatch)" (OQ-014 row). Details: fail-test extract 2026-08-26.
 
 ## DEV-004 — obs-2 / obs-2a / obs-2b: shared-suite divergence
 - **Evidence:** issue #1253; tests `[Ignore]`d. **Status:** seeded — obs-2b analyzed as DEV-020
   (Phase 4, 2026-08-26); obs-2/obs-2a expected to be the same mechanism (verify from sweep output).
 
-## DEV-005 — obs-2-3 / obs-3: shared-suite divergence
-- **Evidence:** issue #1254; tests `[Ignore]`d. **Status:** seeded.
+## DEV-005 — obs-2-3 / obs-3: shared-suite divergence (ch4)
+- **Evidence:** issue #1254; tests `[Ignore]`d.
+- **Status:** **settled as agreement-on-outcome** (Phase 4 packet 3, 2026-08-26): both tests THROW on
+  both sides for the same reason (type not among the base's remaining/any choice types) — same taxonomy
+  split as DEV-003. Details: fail-test extract 2026-08-26.
 
 ## DEV-006 — obs-4: shared-suite divergence
 - **Evidence:** issue #1255; test `[Ignore]`d. **Status:** seeded.
 
-## DEV-007 — obs-5: shared-suite divergence
-- **Evidence:** issue #1256; test `[Ignore]`d. **Status:** seeded.
+## DEV-007 — obs-5: shared-suite divergence (ch6)
+- **Evidence:** issue #1256; test `[Ignore]`d.
+- **Status:** **confirmed** (Phase 4 packet 3, 2026-08-26): Java THROWS ("more than one type slice …
+  but one of them (valueCodeableConcept) has min = 1, so the other slices cannot exist"); .NET emits
+  the arithmetic contradiction as written (`value[x]` 0..1 with a 1..1 and a 0..1 slice) — §5.1.0.14
+  slice-cardinality sums are unchecked in .NET (ch6). Part of the DEV-028 validation-gap catalogue.
 
 ## DEV-008 — Extension header slicing element (ch6)
 - **Evidence:** issue #2466; `ElementMatcher.cs:651-652`.
@@ -85,7 +96,12 @@ status/resolution.
 
 ## DEV-014 — t37, t43 pass with "FAILS!" annotations
 - **Evidence:** enabled tests carrying `// FAILS! TODO` / `// FAILS - FIXED` comments documenting divergence
-  from Java-produced expected output. **Status:** seeded.
+  from Java-produced expected output.
+- **Status:** **split** (Phase 4 packet 3, 2026-08-26): **t37** = agreement-on-outcome — both sides throw
+  on the path typo (`MedicationRequiest…`), via different detectors (Java sort-count check vs .NET
+  "Differential has multiple roots", `DifferentialTreeConstructor.cs:69-78`). **t43a** = genuine
+  divergence — Java enforces the type-slice naming convention ("Slice name must be 'valueQuantity' but is
+  'Quantity'"), .NET accepts any author-supplied slice name (also t29a; DEV-028 group c).
 
 ## DEV-015 — 102 upstream manifest tests never integrated (coverage gap)
 - **Evidence:** upstream `fhir-test-cases/r5/snapshot-generation/manifest.xml` has 166 test ids vs 64
@@ -187,6 +203,23 @@ status/resolution.
   "regardless of what the differential says" (overstated relative to obs-2's kept `open`); slice-min
   arithmetic cf. PPP L802-810; `type:$this` stamping cf. `checkToSeeIfSlicingExists` PPP:955-987.
   Exact trigger conditions to be pinned in Phase 3 packet J-a.
+- **Scope extension (packet 3 min-mining, 2026-08-26)** — the "entry min rewrite" is a family of three
+  Java mechanisms, all absent from .NET (26 sweep hits total):
+  - **C1 — type-slicing entry min raise** (the obs-2b behavior above): fresh instances `obs-4`,
+    `zib-BodyHeight`, `t29`, `t34a` (sparse form: diff writes only `Extension.valueCode min=1`; both
+    engines build the identical `value[x]:valueCode` slice, only the entry min diverges). Code:
+    `ProfilePathProcessor.java:609-617` (`if (diffMatches.get(i).getMin() > 0) … setMin(1)`).
+  - **C2 — auto-added entry min := sum of slice mins** (20 hits): `ProfileUtilities.java:983-1005`
+    raises a repeating sliced element's entry min to the sum of the slice mins — but **only when the
+    entry carries `SNAPSHOT_auto_added_slicing`** (an explicit authored intro gets a warning instead).
+    Extension slicing entries are always auto-added (all `.extension`/`.modifierExtension` hits, sums
+    of mandatory sub-extension mins, e.g. j=2/j=4 on complex-extension entries); `au-med-k` gets there
+    by re-slicing without restating the intro, which stamps the entry auto-added
+    (`ProfilePathProcessor.java:343-345`) even though the base authored one.
+  - **C3 — `xtension.value[x]` min hack** (1 hit, telus-oo): Java zeroes an unstated slice min *except*
+    when the sliced path ends in `xtension.value[x]` (`ProfilePathProcessor.java:801-805`, in-code
+    comment "hack work around for problems with snapshots in official releases") — so an extension's
+    `value[x]:valueString` slice keeps min=1 where .NET's pristine-clone rule resets it to 0.
 - **Spec basis:** the published text favors .NET on the type list — R4 *and* R5 choice-constraint rules
   state "type specific entries **do not restrict allowed types**" and "the original element SHALL always
   be represented in a snapshot" — yet Java/golden collapse the list, and forcing `closed` against an
@@ -201,4 +234,272 @@ status/resolution.
   outcomes differ materially. This is the headline exhibit for the slicing-entry WGM question
   (OQ-020; connects to OQ-018 on implicit type constraints and to the slice-`Base.min` question).
 - **Status:** confirmed (both behaviors reproduced 2026-08-26; spec question open → OQ-020).
+
+## DEV-021 — New elements seeded from the datatype's snapshot root: .NET enriches, Java doesn't (ch7)
+- **Evidence:** Phase-4 sweep 2026-08-26 (versions: .NET = Hl7.Fhir.R5 6.2.1 | Java engine = 6.10.2
+  (d06577dbc5c6) | golden = fhir-test-cases 1.7.67 | core = hl7.fhir.r5.core 5.0.0);
+  mechanism = `createNewElement` (`SnapshotGenerator.cs:887-964`, ch7): a diff-only new element's
+  initial snapshot element **is a deep copy of its type's snapshot root** (via
+  `getBaseElementForElementType` → `getSnapshotRootElement`), after which the diff is merged onto it —
+  every root property the diff doesn't override survives (comment, alias, binding incl. its extensions,
+  and the datatype's own invariants, whose `constraint.source` is back-filled with the type canonical,
+  `:988-994`, DEV-002). The code that *would* strip the type's invariants from new elements
+  (`removeNewTypeConstraint`, `:966-986`) is dead code — never called (ch7).
+- **Sweep footprint:** the four biggest "unexplained" report classes are this one mechanism:
+  `comment` .NET-only enrichment (2410), `alias` (740, partly DEV-022), binding extensions (~770),
+  and the entire TYPE-CONSTRAINT class (3099 — datatype invariants like `ident-1`, `cpt-2` stamped on
+  resource elements with `source` = the datatype url). Java/golden carry none of these.
+- **Verified exemplar (cascade included):** ILCorePractitioner — its differential never mentions
+  `Practitioner.gender`, yet .NET's snapshot has `comment` = "Note that FHIR strings SHALL NOT exceed
+  1,048,576 (1024*1024) characters in size" on it (310 occurrences of that one string across the sweep).
+  That text is the root comment of **`string`** — and the shipped root of `code` (gender's type) has *no*
+  comment in either core source (verified in both the Java-side core tgz and .NET's `specification.zip`,
+  2026-08-26). So the value cascades: the harness (mirroring `SnapshotGeneratorManifestTests`) sets
+  `ForceRegenerateSnapshots=true`, .NET regenerates `code` (root inherits `string`'s comment,
+  inherit-if-absent, ch5), regenerates core `Practitioner` (whose diff-only `gender` is seeded from the
+  regenerated `code` root), and the profile inherits the enriched base element verbatim.
+- **Scope:** observable whenever .NET generates a specialization/new element — always for profiles whose
+  base chain contains snapshot-less SDs, and for *everything* under `ForceRegenerateSnapshots`. Direct
+  corollary: **.NET regeneration of the core package does not reproduce the published core snapshots**
+  (which are Java-produced); Java's new-element construction evidently copies a curated property subset
+  from the type root, not the whole element (exact Java mechanism: Phase 3, `createBaseDefinition` or
+  equivalent).
+- **Spec basis:** none — the spec never says what a specialization's snapshot element inherits from its
+  type declaration. sdf-3/8b only oblige definition/min/max/base to be present.
+- **Status:** confirmed (.NET mechanism traced + sweep-quantified; Java-side code pending Phase 3).
+
+## DEV-022 — Property/extension fidelity when copying elements from external structures (ch7/ch12)
+- **Evidence:** Phase-4 sweep 2026-08-26 (same version stamp as DEV-021).
+- **.NET:** `copyChildren`/element copies from a datatype or extension snapshot are **verbatim deep
+  copies** minus generator annotations and the fixed 17-URL non-inheritable-extensions blocklist
+  (ch12, OQ-019). Everything else survives: `alias`, `comment`, `mapping`, and *tooling* extensions.
+- **Java:** copies a visibly **filtered** element. Two verified exhibits (ca-patient / ILCorePractitioner):
+  1. `Identifier.type.binding` in the shipped core carries three extensions (`tools/…/binding-definition`,
+     `elementdefinition-bindingName`, `elementdefinition-isCommonBinding`); after child expansion Java
+     keeps only `bindingName` — .NET keeps them all (report classes `binding.extension.*`, ~770).
+  2. A sliced `Patient.extension` header: Java emits a reduced synthesized entry (no `alias`, `comment`,
+     `mapping` — although the published base `Patient.extension` *has* all three), while .NET merges into
+     the full inherited base element. Java evidently rebuilds extension-slicing entries from a minimal
+     template rather than copying the base element (relates to DEV-008 and the EXT-SLICING-STAMP noise
+     class; Java's `EXT_SNAPSHOT_BEHAVIOR` + four static URL policy lists from the Phase-3 orientation
+     are the presumed mechanism — deep-read pending).
+- **Spec basis:** none for either policy; OQ-019 asks the question. The Java data point (tooling
+  extensions like `binding-definition` filtered on copy) is now recorded there.
+- **Status:** confirmed empirically (both outputs); Java-side code citations pending Phase 3.
+
+## DEV-023 — contentReference in a constraint profile's snapshot: form and survival (ch8)
+- **Evidence:** Phase-4 sweep 2026-08-26 (same version stamp), report class `contentReference` (78, both
+  sides present) + ELEMENT-SET/type side effects.
+- **Flavor 1 — absolute vs local form (the bulk, ~50 listed):** on elements copied into a constraint
+  profile's snapshot, Java rewrites **every** contentReference to absolute form
+  (`http://hl7.org/fhir/StructureDefinition/Observation#Observation.referenceRange`), .NET leaves the
+  base's local form (`#Observation.referenceRange`) unless the element sits inside a subtree the
+  generator itself merged — .NET's `ensureAbsoluteContentReferences` (`SnapshotGenerator.cs:1113-1152`,
+  ch8) only runs over *merged children*, Java's rewrite (updateURLs territory, PU:2135/2179) is global.
+  Exemplars: `Observation.component.referenceRange`, `ExplanationOfBenefit.addItem.*` (eob tests).
+- **Flavor 2 — survival after child expansion:** when a diff constrains *children* of a referencing
+  element, .NET **drops** the contentReference and restores the target's `type` (#3177, ch8 step 4);
+  Java **keeps** the contentReference on the expanded element (and does not restore `type`). Exemplar:
+  `Composition.section:parentSliceA.section:sliceA` (java = reference kept, .NET = null + type
+  restored). This is also a driver of the 435 ".NET-only type entries" and part of the ELEMENT-SET class
+  (Java-only expanded children carrying `ele-1`, see the element-set extract).
+- **Spec basis:** ch8 spec-gap list — the spec never says whether the reference survives expansion
+  (feeds OQ-004) nor when local form must become absolute (eld-5 is silent on both).
+- **Status:** confirmed empirically; Java-side code citation pending Phase 3.
+
+> Entries DEV-024 – DEV-031 come from Phase 4 packet 3 (sweep mining, 2026-08-26). Common version stamp:
+> .NET = Hl7.Fhir.R5 6.2.1 | Java engine = 6.10.2 (d06577dbc5c6) | golden = fhir-test-cases 1.7.67 |
+> core = hl7.fhir.r5.core 5.0.0. Evidence details: `extracts/element-set-2026-08-26.md` and
+> `extracts/failtests-2026-08-26.md` in the project materials directory.
+
+## DEV-024 — .NET drops reslice subtrees entirely — silent constraint loss (ch6)
+- **Evidence:** ELEMENT-SET mining (138 java-only elements): tests `reslicing-profile` (26),
+  `slicing-profile-child` (26), `slice23` (86).
+- **Reproducing input:** `reslicing-profile-input` (base AuditEvent) slices `AuditEvent.agent.extension`
+  by `url` + `value.system`, declares slice `altid`, then **reslices** `altid/npi` and `altid/ssn` with
+  explicit constraints (`altid/npi.value[x].system min=1 patternUri=…us-npi`, etc.).
+- **Java/golden:** both reslices emitted, extension fully expanded, `value[x]` expanded as Identifier
+  (13 elements each).
+- **.NET:** output contains only `AuditEvent.agent.extension` and `…extension:altid` — the reslice
+  elements **and the differential's own constraints on them (`min`, `patternUri`) are silently lost**.
+  No issue, no warning. `slice23` adds the propagation variant: reslices declared on the *unsliced*
+  `agent.extension` also materialize (Java/golden) under the named `agent:user`/`agent:userorg` slices;
+  .NET emits none of them.
+- **Mechanism (.NET side, ch6):** reslicing support is `'/'-in-slice-name only` — the matcher's reslice
+  handling never re-enters the base slice group to merge reslice children (exact drop point to be traced;
+  ch6 documents `findSliceAddPosition`'s reslice-group placement as the only reslice-aware code).
+- **Consequences:** the strongest data-loss deviation found so far — authored cardinality and pattern
+  constraints vanish from the snapshot with no diagnostic. Downstream validators validate against a
+  snapshot that misses author constraints. Candidate GitHub issue (data loss, not just validation gap).
+- **Status:** confirmed empirically; .NET code trace + Java comparison pending (Phase 3 J-a has the
+  anchors).
+
+## DEV-025 — Materialization depth of unconstrained content: Java normalizes more than .NET (ch7/ch8/ch11)
+- **Evidence:** ELEMENT-SET mining, three flavors totalling 210 java-only elements:
+  1. **contentReference slicing entries re-expanded** (144: t21 70, comp-deep/nested 24+24,
+     reslicing-profile-parent 12, t29/params-nested-slices 7+7): when a contentReference element is
+     sliced, Java expands the target's full child set under the **unsliced slicing entry** as well;
+     .NET expands only under the named slices. 128/144 of these children carry `ele-1` — this is the
+     mechanical source of the "~191×5 java-only constraint.*" property diffs from the packet-2 report.
+     comp-deep shows it repeating per recursion level (ch11 angle).
+  2. **Slicing-entry child constraints materialized into named slices** (52: org2a/org2b 16+16,
+     on-questionnaire 20): a diff constraining children of the *entry* only — Java copies the modified
+     entry children into each named slice (`identifier:NPI.{id,use,type,…}`); .NET leaves the slices as
+     bare entry elements.
+  3. **Complex-extension nested-slice inlining** (14: pat-xver-extension): Java inlines the extension
+     definition's full nested slice structure (`species`/`breed`/`genderStatus` each with
+     `{id,extension,url,value[x]}`); .NET emits only the diff-mentioned slice, childless.
+- **Java mechanism for flavor 2, located** (min/mustSupport mining, 2026-08-26):
+  `SnapshotGenerationPreProcessor.java` (invoked from `ProfileUtilities.java:825`) collects
+  "sliceStuff" — the differential elements between a slicing entry and its first named slice — and
+  pre-merges it into **each named slice's differential** (`processSlices` → `mergeElements` → `merge`,
+  ~:688-810, :993-1075): fill-if-absent for min/max/mustSupport/fixed/pattern/type/binding, *append*
+  for constraint and example; elements missing from a slice are **injected** (id rewritten, marked
+  `SNAPSHOT_PREPROCESS_INJECTED` — a chunk of the java-only ELEMENT-SET elements). Extension slicing is
+  excluded as a slicer, but entry-level extension slices ride along as sliceStuff (t22 `validDate`).
+- **Property-level shadow:** this one mechanism also accounts for **101 of the 131** `min`/`mustSupport`
+  NEW diffs in the sweep (M1 groups: sd-comp-hist 45, t22 27, on-questionnaire 21+, ILCorePractitioner 4
+  — see the min/mustSupport extract). Notably, the same mining found **zero** genuine per-property
+  merge-semantics differences for min/mustSupport (bucket B empty): every .NET value is simply the base
+  source's value, every Java extra traces to a mechanism.
+- **Common root:** .NET's expansion-depth policy — *expand only where the differential constrains*
+  (ch11 §1) — versus Java's normalization, which also materializes inherited/propagated content the diff
+  never touched. Both snapshots may be *semantically* equivalent under "slicing-entry constraints apply
+  to all slices" reasoning, but consumers that read snapshots literally (most do — that is the point of
+  a snapshot) see different element sets. → new [OQ-021](14-open-questions.md#oq-021--how-much-must-a-snapshot-materialize).
+- **Java bug candidate found in passing (M1q, code-inferred — needs minimized repro):**
+  `elementsMatch` (`SnapshotGenerationPreProcessor.java:812-822`) compares only leaf path + leaf
+  sliceName, ignoring ancestor slice names — on-questionnaire shows other extension slices' `value[x]`
+  mustSupport contaminating `itemControl.value[x]` (authored nowhere). Phase-3 J-a verification target.
+- **Status:** confirmed empirically; Java preprocessor citations from targeted code reading 2026-08-26
+  (full deep-read = Phase 3 J-a/J-c).
+
+## DEV-026 — Renamed-choice constraints: .NET anchors on a synthesized type slice, Java on bare `value[x]` (ch6/ch7)
+- **Evidence:** ELEMENT-SET mining G4 (89 elements, both sides: t16 20n+18j, t31 25n+24j, sushi1/2).
+- **Reproducing input:** t16 — diff constrains children under a **renamed choice**
+  (`…extension:latitude.valueDecimal.extension:Geolocation-latitude-rendered`).
+- **Behavior:** both engines express all authored constraints; they disagree on element **identity**:
+  .NET materializes an explicit slice `…latitude.value[x]:valueDecimal` and hangs the subtree there
+  (keeping bare `value[x]` too); Java/golden hangs the subtree **directly under bare `value[x]`**
+  (no type slice synthesized). Golden blesses Java.
+- **Spec basis:** R5 requires the *differential* to use `[x]`+type-slice form for choice constraints
+  (ch1/ch6 baseline; the R4→R5 reversal) — but says nothing about which snapshot representation a
+  generator must produce when the diff uses the (legacy) renamed form. Enriches OQ-018 (which so far
+  covered the implicit type-constraint half of the same normalization split).
+- **Status:** confirmed empirically (identity-level divergence; constraint content equal).
+
+## DEV-027 — Malformed differentials produce silently corrupt .NET snapshots (ch2)
+- **Evidence:** fail-test mining — the two "corrupt output" rows.
+- **t23a (out-of-order differential):** diff lists `contact:males.gender` before `contact:males.telecom`
+  (behind the base cursor). Java: ERROR "No match found … check that the path and definitions are legal
+  in the differential (including order)". .NET: **no diagnostic at all**; `males.gender` merged in place,
+  but `males.telecom` appended as a **second `Patient.contact:males.telecom` element** (duplicate
+  element id) after `males.period`, carrying a **fabricated `base` component** with the diff's own
+  `min=1` as `base.min`. Mechanism: ordering is assumed, never verified (ch2 `:96-98`); the forward-only
+  matcher never moves the base cursor backwards (ch4 `:94-107`).
+- **obs-unit (`..` in path):** single diff element `Observation...unit` with `fixedString="%"`. Java:
+  throws "Invalid path … name portion missing ('..')". .NET: one *warning* ("Element Observation. has
+  neither a type nor a nameReference"), then emits a **phantom element** `Observation.` (empty-segment
+  stand-in parent, ch2 `:80-90`) and **silently drops the author's `fixedString`** — the constraint
+  appears nowhere in the output.
+- **Consequences:** these two go beyond DEV-028's missing-validation catalogue: the output is *wrong*,
+  not merely unvalidated (duplicate ids violate the element-id algorithm's uniqueness guarantee, ch10;
+  fabricated `base.min` corrupts sdf-8b data; a dropped constraint is data loss). Candidate GitHub
+  issues. Prime OQ-014 exhibit for "generators must reject, repair, or propagate — but never corrupt".
+- **Status:** confirmed empirically (both inputs in fhir-test-cases; .NET outputs in `harness/out/`).
+
+## DEV-028 — Author-error detection catalogue: Java validates, .NET emits as written (ch2–ch6, ch9, ch12)
+- **Evidence:** fail-test mining over all 21 `fail="true"` tests: Java satisfies the fail expectation on
+  21/21; .NET on 8/21 — it **silently generates on 13/21**. Beyond DEV-027's corrupt outputs, the silent
+  cases group into distinct absent checks (per-test dossiers in the fail-test extract):
+
+  | group | tests | Java check | .NET behavior |
+  |---|---|---|---|
+  | (c) type-slice naming convention | t29a, t43a | "Slice name must be 'valueQuantity'" throw | any author name accepted (eld-16 never validated, ch6) |
+  | (d) fixed/pattern type compatibility | obs-badfixed, obs-badpattern | ERROR "fixed value has type 'uri' which is not valid" | `fixedUri`/`patternUri` merged as written next to the untouched 13-type list (ch5) |
+  | (e) type/targetProfile derivation | ihe2, mi-use-distinct, (ihe1) | "cannot constrain to type Reference from base types Resource" / "target profile … not a valid constraint" | wholesale type/targetProfile replace, no derivation walk (ch5 `:279`); `isValidTypeProfile` runs only for expanded `type.profile` values and **against the replaced type**, never `targetProfile` (proven by ihe2's empty log) |
+  | (f) root-element invariants (sdf-15a/20) | ext-recursion-1, ext-ccuk | "Type on first differential element!" / "slicing at the root … is illegal" | root `type` and root `slicing` pass through unexamined (only root `sliceName` is repaired, ch2) |
+  | (g) slicing a non-repeating element | simplifier-1 | DefinitionException "Attempt to a slice an element that does not repeat" | check exists but compiled out (`REJECT_SLICE_NONREPEATING_ELEMENT`, issue 10003 unreachable, ch12) |
+  | (h) mustSupport direction | obs-ms-bad | ERROR "Illegal constraint [must-support = false] when [must-support = true]" | true→false replaced as written (ch5 `:251`) |
+  | (i) SD.type vs base type coherence | t29b | "Base & Derived profiles have different types" | never checked; surfaces indirectly as an unresolvable contentReference (issue 10002) |
+  | (j) slice-cardinality arithmetic | obs-5 | see DEV-007 | see DEV-007 |
+
+- **.NET's stated policy** is "the generator should never throw — correctness belongs to the validator"
+  (ch4 `:158-164`), so these are gaps *by design*; but the fail-test corpus shows Java treating the same
+  inputs as generator-fatal, and the golden files bless that. Which checks belong in a *generator* is
+  exactly OQ-014's question — this entry is its evidence table.
+- **Caveat rows:** sushi3's apparent agreement is **harness-induced** (`ForceRegenerateSnapshots=true`
+  discards the dep's shipped snapshot and dies on its unresolvable base before reaching the duplicate-id
+  input; default-settings .NET untested). t15a agrees in substance (unknown extension detected) but not
+  severity (6 issues + generated output vs hard throw).
+- **Status:** confirmed empirically (13 reproducing inputs, all in fhir-test-cases).
+
+## DEV-029 — Recursion crossover: each side rejects recursive structures the other accepts (ch11)
+- **Evidence:** fail-test mining §3 (ext-recursion-1 vs ext-recursion-2 / logical-goo).
+- **ext-recursion-1** (fail test — golden expects rejection): extension whose differential **root**
+  carries `type=Extension, profile=<its own url>`. Java rejects structurally ("Type on first
+  differential element!"). .NET **silently accepts**: root types are never validated (sdf-15a, DEV-028
+  group f) nor expanded, so the cycle is never entered — output is an ordinary 5-element Extension
+  snapshot with the self-reference merged onto the root.
+- **ext-recursion-2** (gen test — golden expects success): a *slice* typed with its own profile url.
+  Java generates (one warning; the slice has no diff children, so it never expands into the profile).
+  .NET **throws** `NotSupportedException: Recursive profile dependency detected` — the type-profile
+  merge eagerly ensures the external profile's snapshot (`GenerateSnapshotForExternalProfiles`) and
+  re-enters a url already on the `SnapshotRecursionStack` (ch11 §2).
+- **logical-goo** (gen test): input SD has **url == baseDefinition** (both `…/Boo`), and the register
+  supplies a *different* SD with that same canonical (snapshot included). Java resolves the base to the
+  registered Boo and uses its shipped snapshot. .NET throws the same `NotSupportedException`: the
+  recursion guard is keyed **purely by canonical URI**, so url==base-url is a hard failure regardless of
+  which SD the resolver would return.
+- **Settings caveat:** both .NET *throws* are conditional on the harness config
+  (`ForceRegenerateSnapshots` + `GenerateSnapshotForExternalProfiles`); default-settings behavior is
+  unverified — one targeted re-run needed before the WGM brief. The ext-recursion-1 asymmetry (Java
+  rejects, .NET accepts) is settings-independent.
+- **Status:** confirmed under harness settings; default-settings re-run pending.
+
+## DEV-030 — Cross-version bases: .NET rebuilds against R5 core, leaving R5/R4 hybrids (ch3)
+- **Evidence:** ELEMENT-SET mining G7/G9. `sd-nested-ext` (base chain `sdc-questionnaire`, fhirVersion
+  4.0.1): .NET output contains R5-only elements (`Questionnaire.versionAlgorithm[x]`, `copyrightLabel`,
+  `item.answerConstraint`, `item.disabledDisplay`) — it re-expanded the base against the **R5 core**
+  Questionnaire; Java/golden preserves the R4 shape. `mr-type-support` (base R4
+  us-core-medicationrequest): .NET keeps the stale R4 `MedicationRequest.reported[x]` **alongside** the
+  R5 `reported`; Java emits only `reported`.
+- **Interpretation:** partly an artifact of running R4-based IGs through the R5-only .NET SDK (a real
+  .NET deployment would use the R4 SDK; Java serves all versions from one codebase via conversion) — but
+  the *hybrid* outputs (R4 and R5 shapes mixed in one snapshot) are .NET merge products, not just version
+  skew.
+- **Related repro case (min/mustSupport mining, bucket A):** in the same `mr-type-support` test,
+  `MedicationRequest.reported` loses the *base profile's* `mustSupport=true` and its
+  `elementdefinition-type-must-support` type extension on the .NET side (which shows core R5's explicit
+  `mustSupport=false` — the element looks rebuilt from core rather than from the registered profile
+  base). Two-hop ambiguity (base regeneration vs derived merge of a re-typed choice) — needs a targeted
+  .NET repro (test description: "Duplicating must-support extensions on type").
+- **Status:** version-artifact (suspected) — revisit when documenting cross-version policy (ch3).
+
+## DEV-032 — Java-only merge inputs: additionalBase and obligation profiles (ch3)
+- **Evidence:** Phase-3 orientation (Java-only surfaces) + Phase-4 sweep empirical confirmation
+  (2026-08-26, same version stamp).
+- **additionalBase:** `structuredefinition-additionalBase` makes Java's preprocessor merge a *second*
+  base profile's differential into the one being generated
+  (`SnapshotGenerationPreProcessor.process:137-152`, `mergeElementsFromAdditionalBase`). Sweep proof:
+  `multi-profile` — `Patient.extension:pronouns` exists only in Java/golden (ELEMENT-SET G3c) and
+  `Patient.gender mustSupport=true` comes from the additional base (min/MS mining M2). .NET ignores the
+  extension entirely.
+- **Obligation inheritance:** SDs carrying `inherit-obligations` make Java merge obligation-profile
+  elements and set `mustSupport=true` where any obligation element has it
+  (`ProfileUtilities.java:2544-2552`). Sweep proof: `profile-patient-op3` — `Patient.birthDate`/
+  `Patient.deceased[x]` MS java-only (min/MS mining M3). .NET has no obligation semantics (ch9 notes the
+  same for imposeProfile/interfaces).
+- **Spec basis:** both extensions are defined in the extensions pack with generator-affecting semantics
+  the core spec never mentions; whether a conformant generator *must* honor them is undecided (WGM
+  adjacency: the mi-use-* interface family, DEV-015/DEV-028).
+- **Status:** confirmed empirically (Java side); .NET side = verified absence.
+
+## DEV-031 — Logical-model child placement drops a path segment (cdshooks) (ch9)
+- **Evidence:** ELEMENT-SET mining G8 — `cdshooks-services`: diff has
+  `CDSHooksServices.services.prefetch.key`/`.value`; Java/golden keeps them at
+  `services.prefetch.key`/`.value`, .NET emits `services.key`/`services.value` — the `prefetch` segment
+  dropped from both id and path.
+- **Status:** suspected .NET path-rebasing bug for children of a logical-model element — **untraced**
+  (no chapter mechanism explains it; nearest ch9). Trace queued.
 

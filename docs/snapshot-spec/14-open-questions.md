@@ -176,7 +176,19 @@ What should a generator do with an *illegal differential*? .NET's matcher answer
   (`SnapshotBaseComponentGenerator.cs:123-124`, ch10), leaving sdf-8b unmet without an issue.
 One taxonomy — throw / drop-with-issue / repair-with-issue / silent repair / silent accept — chosen
 different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
-- **Status:** open (Phase 2 packets 2–3, 2026-08-24).
+- **Phase-4 aggregate exhibit (packet 3, 2026-08-26):** across the suite's 21 `fail="true"` tests, Java
+  satisfies the fail expectation on **21/21**, .NET on **8/21** — it silently generates on 13, and on two
+  of those the output is *corrupt*, not merely unvalidated (duplicate element id + fabricated `base.min`
+  on an out-of-order diff; phantom element + silently dropped `fixedString` on a `..` path) —
+  [DEV-027](13-deviation-register.md#dev-027--malformed-differentials-produce-silently-corrupt-net-snapshots-ch2).
+  The nine absent checks are catalogued in
+  [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12).
+  Taxonomy-quality data point: where both sides *do* throw for the same author error (obs-1-2/obs-2-3/
+  obs-3/t37), Java's exception names the offending and allowed types while .NET reports "**Internal
+  error** in snapshot generator" (`InvalidOperationException`). The WGM question sharpens to: which
+  author errors is a generator *required* to detect, and is "reject, repair, or propagate — but never
+  corrupt" an acceptable floor?
+- **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26).
 
 ## OQ-015 — The generator mutates its input differential
 With `GENERATE_MISSING_TYPE_SLICE_NAMES` active, a type-slice constraint lacking a `sliceName` gets one
@@ -237,6 +249,15 @@ behavior wrong; prime WGM material since it decides what a bare type slice means
   *entry's* type list to the sliced types (its version of an implicit constraint, applied to the
   entry rather than the slice), .NET keeps the full choice list on entry *and* (per this OQ) on a
   type-less slice.
+- Phase 4 packet 3 (2026-08-26): the normalization split has a second, *identity-level* half —
+  when a diff constrains **children under a renamed choice** (t16/t31), .NET synthesizes an explicit
+  `value[x]:valueDecimal` type slice and hangs the subtree there, while Java/golden anchors the subtree
+  directly on bare `value[x]` with no slice at all
+  ([DEV-026](13-deviation-register.md#dev-026--renamed-choice-constraints-net-anchors-on-a-synthesized-type-slice-java-on-bare-valuex-ch6ch7)).
+  So the full question is: given a renamed-form constraint, must a generator (a) synthesize a type
+  slice (.NET), (b) fold constraints onto the unrenamed element (Java), and in either case (c) does an
+  implicit type constraint apply? Golden blesses (b) — the representation the R5 text arguably
+  *removed*.
 - **Status:** open (Phase 2 packet 5, 2026-08-26; empirical data 2026-08-26).
 
 ## OQ-019 — Which extensions are non-inheritable?
@@ -251,7 +272,13 @@ be *complete*)? Which extensions? Does Java maintain an equivalent list, and do 
 the `elementdefinition-suppress` mechanism, OQ-008, is the *author-controlled* variant of the same
 concern; this is generator-hardcoded.) Candidate RFC: the spec (or extensions pack) should mark extensions
 as inheritable/non-inheritable.
-- **Status:** open (Phase 2 packet 6, 2026-08-26).
+- **Phase-4 data point (2026-08-26, DEV-022):** the lists demonstrably do *not* agree. When copying
+  datatype children into a snapshot, Java also filters **tooling** extensions .NET keeps — e.g. shipped
+  `Identifier.type.binding` carries `tools/…/binding-definition`, `elementdefinition-bindingName` and
+  `elementdefinition-isCommonBinding`; after expansion Java keeps only `bindingName`, .NET all three
+  (~770 property diffs in the sweep). Java's presumed mechanism: the `EXT_SNAPSHOT_BEHAVIOR` policy +
+  four static URL lists found in the Phase-3 orientation (deep-read pending).
+- **Status:** open (Phase 2 packet 6, 2026-08-26; Java data point added Phase 4 packet 3).
 
 ## OQ-020 — What may a generator do to the slicing entry of a type slicing?
 The headline Phase-4 finding (DEV-020, test `obs-2b`): given an author-written slicing entry on a choice
@@ -271,3 +298,31 @@ and no description), is normalize-and-repair (Java) or propagate-as-written (.NE
 (Feeds OQ-014's error-taxonomy theme; connects to OQ-018 — Java's type-list collapse on the *entry* is the
 mirror image of .NET's implicit constraint on the renamed *slice*.)
 - **Status:** open (Phase 4 packet 2, 2026-08-26) — prime WGM material, demo-able with obs-2b.
+
+## OQ-021 — How much must a snapshot materialize?
+The spec says a snapshot contains "all the elements" but never defines the element *set* — and the two
+implementations disagree on ~450 elements across 23 tests
+([DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11)).
+.NET's policy is minimal: materialize exactly the base's elements plus whatever subtrees the differential
+constrains (ch11 §1). Java materializes more: the full child set of a sliced contentReference's *entry*
+element (t21, comp-deep), slicing-entry child constraints copied into every named slice (org2a), and a
+complex extension's complete nested slice structure even where the diff mentions one slice (pat-xver).
+Both positions are defensible — the entry's constraints logically apply to the slices whether or not they
+are physically copied — but consumers read snapshots *literally*: a renderer or code generator sees
+different element sets, and cardinality/`ele-1`/binding data present in one snapshot is absent from the
+other. Questions: (a) is there a normative minimum element set (is a slice missing its materialized
+children still "a snapshot")? (b) when entry constraints are copied into slices, which properties copy —
+and is that copy *required* so validators need no entry-fallback logic? (c) for recursive structures
+(contentReference, extension-of-self), how deep must materialization go — per recursion level the diff
+reaches (both engines), plus the entry level (Java only)? Related: sdf-3/8b define per-element fill
+obligations but no set-level rule; §5.1.0.10 (R5 propagation text) touches (c) without answering it.
+- **Sharpened by the min/mustSupport mining (2026-08-26):** for (b) Java's answer is concrete — the
+  preprocessor merges entry-children into every named slice with **fill-if-absent for
+  min/max/mustSupport/fixed/pattern/type/binding and append for constraint/example**
+  (`SnapshotGenerationPreProcessor`, DEV-025) — and this single mechanism accounts for **77% of all
+  min/mustSupport divergences** in the sweep (101/131). The R5 text offers only "slices must be
+  consistent with" the entry (profiling, slicing rules) — it neither mandates nor forbids the copy-down.
+  The practical WGM question: *do slices inherit the slicing entry's children constraints, and must the
+  snapshot materialize that inheritance?* Java says copy-down; .NET says nothing at all.
+- **Status:** open (Phase 4 packet 3, 2026-08-26) — WGM material; demo-able with org2a (52-element gap),
+  sd-comp-hist (45 property diffs), and t21.

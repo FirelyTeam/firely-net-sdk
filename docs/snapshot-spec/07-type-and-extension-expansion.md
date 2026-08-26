@@ -257,6 +257,15 @@ constraint applied during slicing (`applyImplicitChoiceTypeConstraint`, `:2022-2
 ## Java behavior (Phase 3)
 *(pending)*
 
+## Deviations
+- [DEV-021](13-deviation-register.md#dev-021--new-elements-seeded-from-the-datatypes-snapshot-root-net-enriches-java-doesnt-ch7) —
+  Phase-4 sweep: `createNewElement`'s seed-from-type-root design makes .NET enrich new elements with
+  datatype root properties (comment/alias/binding extensions/invariants); Java/golden don't. Explains
+  the four biggest sweep classes (~7,000 property diffs) incl. all of TYPE-CONSTRAINT.
+- [DEV-022](13-deviation-register.md#dev-022--propertyextension-fidelity-when-copying-elements-from-external-structures-ch7ch12) —
+  Phase-4 sweep: .NET's child copies are verbatim (minus the 17-URL blocklist); Java filters tooling
+  extensions and synthesizes reduced extension-header entries.
+
 ## Open questions
 - [OQ-001](14-open-questions.md#oq-001--the-cardinality-diamond-problem) cardinality diamond (root-only merge).
 - [OQ-002](14-open-questions.md#oq-002--priority-type-profile-constraints-vs-base-constraints) merge priority.

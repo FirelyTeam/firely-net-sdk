@@ -110,3 +110,11 @@ interface-conformance semantics — the upstream `mi-use-*` tests are among the 
 
 ## Java behavior (Phase 3)
 *(pending)*
+
+## Deviations
+- [DEV-031](13-deviation-register.md#dev-031--logical-model-child-placement-drops-a-path-segment-cdshooks-ch9) —
+  Phase-4 sweep, untraced: cdshooks-services diff children `services.prefetch.key`/`.value` emitted by
+  .NET as `services.key`/`services.value` (the `prefetch` segment dropped).
+- Phase-4 open trace: `xt-logical` — .NET cannot resolve the EHDS logical-model base chain
+  (`EHDSDataSet` unresolvable → generation fails) where Java resolves it from the same universe;
+  harness-health vs real ch9 resolution gap to be determined (element-set extract §G5).

@@ -119,7 +119,33 @@ Two properties worth pinning:
   ch5/ch6).
 
 ## Java behavior (Phase 3)
-*(pending — `SnapshotGenerationPreProcessor.java`)*
+*(deep-read pending — `SnapshotGenerationPreProcessor.java`; first empirically-grounded findings from
+Phase 4 packet 3, 2026-08-26:)*
+
+- **Slice-content propagation** (the preprocessor's headline job, located via min/mustSupport mining):
+  before generation, Java collects "sliceStuff" — the differential elements between a slicing entry and
+  its first named slice — and merges it into **each named slice's differential** (`processSlices` →
+  `mergeElements` → `merge`, ~:688-810, :993-1075; invoked from `ProfileUtilities.java:825`).
+  Fill-if-absent for min/max/mustSupport/fixed/pattern/type/binding, *append* for constraint/example;
+  missing elements are injected with rewritten ids (`SNAPSHOT_PREPROCESS_INJECTED`). Extension slicing
+  is excluded as a slicer; entry-level extension slices ride along as sliceStuff. .NET has no
+  counterpart mechanism — see
+  [DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11)
+  and [OQ-021](14-open-questions.md#oq-021--how-much-must-a-snapshot-materialize).
+- **additionalBase merging** (`process:137-152`): a second base's differential merged in
+  ([DEV-032](13-deviation-register.md#dev-032--java-only-merge-inputs-additionalbase-and-obligation-profiles-ch3)).
+- **Suspected defect:** `elementsMatch` (:812-822) matches on leaf path + leaf sliceName only, ignoring
+  ancestor slices — cross-slice constraint contamination observed (on-questionnaire, DEV-025's M1q
+  note); Phase-3 verification target.
+
+## Deviations
+- [DEV-027](13-deviation-register.md#dev-027--malformed-differentials-produce-silently-corrupt-net-snapshots-ch2) —
+  Phase-4 fail-test evidence: an out-of-order differential (t23a) and a `..` path (obs-unit) pass through
+  preprocessing and yield silently corrupt .NET snapshots (duplicate element id + fabricated `base.min`;
+  phantom element + dropped constraint) where Java rejects both.
+- [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12) —
+  the full author-error detection catalogue (root type/slicing invariants group (f) is preprocessing
+  territory).
 
 ## Open questions
 - [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors) preprocessing throws

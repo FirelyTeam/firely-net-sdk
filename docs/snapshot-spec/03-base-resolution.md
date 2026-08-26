@@ -152,6 +152,17 @@ does not cover this path — ch11).
 ## Java behavior (Phase 3)
 *(pending)*
 
+## Deviations
+- [DEV-030](13-deviation-register.md#dev-030--cross-version-bases-net-rebuilds-against-r5-core-leaving-r5r4-hybrids-ch3) —
+  Phase-4 sweep: R4-based base chains re-expanded against R5 core (R5-only elements injected; stale R4
+  `reported[x]` kept beside R5 `reported`). Suspected version-artifact of running R4 IGs through the
+  R5-only SDK; the hybrid outputs are .NET merge products.
+- [DEV-032](13-deviation-register.md#dev-032--java-only-merge-inputs-additionalbase-and-obligation-profiles-ch3) —
+  Java-only merge inputs confirmed empirically: `structuredefinition-additionalBase` (multi-profile) and
+  `inherit-obligations` obligation profiles (profile-patient-op3); .NET ignores both.
+- Fail-test evidence for this chapter: SD.type vs base-type coherence never checked (t29b), DEV-028
+  group (i).
+
 ## Open questions
 - [OQ-009](14-open-questions.md#oq-009--element-id-stability) element id regeneration vs inheritance.
 - [OQ-016](14-open-questions.md#oq-016--what-does-a-differential-less-structuredefinition-mean)

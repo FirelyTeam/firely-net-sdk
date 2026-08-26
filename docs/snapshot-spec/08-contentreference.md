@@ -114,6 +114,9 @@ Specializations keep local references.
 
 ## Deviations
 - [DEV-009](13-deviation-register.md#dev-009--contentreference-expansion-details-ch8).
+- [DEV-023](13-deviation-register.md#dev-023--contentreference-in-a-constraint-profiles-snapshot-form-and-survival-ch8) —
+  Phase-4 sweep: Java absolutizes *all* contentReferences in constraint profiles (.NET only inside merged
+  subtrees), and Java keeps the reference on child-expanded elements where .NET drops it and restores `type`.
 
 ## Open questions
 - [OQ-004](14-open-questions.md#oq-004--contentreference--constraining-children).

@@ -250,6 +250,20 @@ reslices into the slice sequence — matching the id algorithm's `slice/reslice`
 
 ## Deviations
 - [DEV-008](13-deviation-register.md#dev-008--extension-header-slicing-element-ch6) extension header slicing.
+- [DEV-020](13-deviation-register.md#dev-020--type-slicing-entry-normalization-java-rewrites-the-sliced-element-net-merges-it-as-written-ch6)
+  type-slicing entry normalization (obs-2 family).
+- [DEV-024](13-deviation-register.md#dev-024--net-drops-reslice-subtrees-entirely--silent-constraint-loss-ch6) —
+  Phase-4 sweep: **.NET drops reslice subtrees entirely**, including the differential's own constraints
+  on them (reslicing-profile, slice23) — silent data loss, strongest register item of the sweep.
+- [DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11) —
+  Java materializes slicing-entry child constraints into every named slice (org2a/on-questionnaire);
+  .NET leaves slices bare (→ OQ-021).
+- [DEV-026](13-deviation-register.md#dev-026--renamed-choice-constraints-net-anchors-on-a-synthesized-type-slice-java-on-bare-valuex-ch6ch7) —
+  renamed-choice constraints: .NET synthesizes a `value[x]:valueTYPE` slice, Java anchors on bare
+  `value[x]` (t16/t31).
+- [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12)
+  groups (c) slice-name conventions, (g) non-repeating-element slicing, (j) slice-cardinality arithmetic
+  (= DEV-007).
 
 ## Open questions
 - [OQ-003](14-open-questions.md#oq-003--slicing-non-repeating-elements) slicing non-repeating elements

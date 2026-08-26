@@ -314,8 +314,20 @@ url. After the merge, the whole binding is **removed** if no remaining type is b
 ## Java behavior (Phase 3)
 *(pending — `ProfileUtilities.updateFromDefinition()` and friends)*
 
+**Empirical verification (Phase 4 packet 3, 2026-08-26):** the full-sweep min/mustSupport mining found
+**zero** per-property merge-semantics divergences for `min` and `mustSupport` (all 131 diffs traced to
+Java-side *mechanisms* — slice-content propagation, entry-min arithmetic, additionalBase, obligations —
+never to the merge routine itself; bucket B empty by evidence). Where a slice-child differential exists,
+both engines merge it identically. One passing observation for this chapter's Java table: in Java's
+preprocessor propagation pathway, `example` **appends** rather than replaces (entry-child example placed
+ahead of the slice's authored one — ILCorePractitioner). Fail-test evidence for this chapter's absent
+checks (fixed/pattern type-compat, type/targetProfile derivation, mustSupport direction): DEV-028
+groups (d), (e), (h).
+
 ## Deviations
 - [DEV-001](13-deviation-register.md#dev-001--type-list-replace-vs-merge-ch5) type list semantics.
+- [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12)
+  groups (d)/(e)/(h) — merge-time validation Java performs and .NET doesn't.
 - [DEV-002](13-deviation-register.md#dev-002--constraintsource-population-ch5) constraint.source.
 - [DEV-017](13-deviation-register.md#dev-017--mapping-matched-on-identitymap-vs-r5-replace-by-identity-ch5)
   mapping keyed on identity+map vs R5 replace-by-identity.
