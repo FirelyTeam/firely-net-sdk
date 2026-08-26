@@ -339,9 +339,11 @@ status/resolution.
   1. **contentReference slicing entries re-expanded** (144: t21 70, comp-deep/nested 24+24,
      reslicing-profile-parent 12, t29/params-nested-slices 7+7): when a contentReference element is
      sliced, Java expands the target's full child set under the **unsliced slicing entry** as well;
-     .NET expands only under the named slices. 128/144 of these children carry `ele-1` — this is the
-     mechanical source of the "~191×5 java-only constraint.*" property diffs from the packet-2 report.
-     comp-deep shows it repeating per recursion level (ch11 angle).
+     .NET expands only under the named slices. 128/144 of these children carry `ele-1` (the 16 without
+     are exactly `.id`/`.resource` children). Note: packet 2's "~191×5 java-only constraint.*" estimate
+     was **not** reproduced by cref children alone — it likely mixed classes (the java-only element
+     populations G1/G2/G3 plus the G4 identity split are the shadow behind it; see the element-set
+     extract §4). comp-deep shows the re-expansion repeating per recursion level (ch11 angle).
   2. **Slicing-entry child constraints materialized into named slices** (52: org2a/org2b 16+16,
      on-questionnaire 20): a diff constraining children of the *entry* only — Java copies the modified
      entry children into each named slice (`identifier:NPI.{id,use,type,…}`); .NET leaves the slices as
