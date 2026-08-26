@@ -40,8 +40,13 @@ Does Java use the same order? What *should* the order be?
 ## OQ-003 — Slicing non-repeating elements
 May a profile slice an element with `max = 1` (outside the choice-type case)? .NET has a disabled reject
 (`REJECT_SLICE_NONREPEATING_ELEMENT`, `SnapshotGenerator.cs:1794-1796`) with the disagreement preserved
-inline (Ewout: no reason to reject; Vadim: may break code generators).
-- **Status:** open.
+inline (Ewout: no reason to reject, e.g. a derived profile can limit a sliced base element's cardinality to
+0..1; Vadim: may break code generators).
+- Packet 5 (2026-08-26): confirmed the reject is the *only* sliceability check that ever existed — with it
+  compiled out, `startSlice` slices any element without issue (ch6). Remaining question is what the spec
+  intends ("Slicing is only allowed when … on the first repetition of an element" [profiling §5.1.0.13]
+  presupposes repetition without stating a rule for `max = 1`) and what Java does.
+- **Status:** open — .NET side answered.
 
 ## OQ-004 — contentReference + constraining children
 After dereferencing a `contentReference` to constrain its children, which value-domain properties of the
@@ -54,7 +59,14 @@ only.
 Should the *generator* enforce or validate `closed`/`openAtEnd` (e.g., reject a differential that appends a
 slice to a closed slicing, or reorder for openAtEnd)? .NET does not (file-header TODO,
 `SnapshotGenerator.cs:20-23`).
-- **Status:** open.
+- Packet 5 (2026-08-26): verified exhaustively — `slicing.rules` and `slicing.ordered` are **never read**
+  anywhere in the generator/matcher/merger; the only writes are the two synthesized entries' defaults
+  (`SnapshotGenerator.cs:1968-1969,2163-2164`). So the whole §5.1.0.17 constraint lattice (open→closed,
+  ordered false→true, derived slicing SHALL repeat base discriminators) is unenforced, along with §5.1.0.14
+  slice-cardinality sums and the `@default`-requires-closed precondition (`@default` is unknown to the
+  generator, ch6). Extends the OQ: does the *generator* have any obligation here, or is this all
+  validator territory?
+- **Status:** open — .NET side answered.
 
 ## OQ-006 — sliceIsConstraining
 What must a generator do with `sliceIsConstraining` when matching a derived profile's slices to base slices?
@@ -145,7 +157,11 @@ What should a generator do with an *illegal differential*? .NET's matcher answer
   cannot be ensured → issue (from `ensureSnapshot`) + the element's **children silently dropped**
   (`:1329-1332` → `:1079-1082`); complex-reference jump failure → issue + children dropped (`:1364-1368`,
   though see DEV-018: the path throws before reaching that); cyclic `baseDefinition` chain in the
-  compatibility walk → **throws** (`:2559-2564`).
+  compatibility walk → **throws** (`:2559-2564`);
+- slicing (packet 5, ch6): an explicit slicing entry on an *extension* element is merged shallowly
+  (`mergeElementDefinition`, `SnapshotGenerator.cs:1855-1866`) — any children the differential put on that
+  entry are **silently dropped**, no issue; internal slice-insertion failures in `addSliceBase` **throw**
+  (`:2057-2079`).
 One taxonomy — throw / drop-with-issue / repair-with-issue / silent repair / silent accept — chosen
 different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
 - **Status:** open (Phase 2 packets 2–3, 2026-08-24).
@@ -188,3 +204,18 @@ path for *that* appears broken (DEV-018 — bare-name jump throws; id-vs-name mi
   `:1480-1485`.)
 - Does Java's generator honor the extension (it originated there), the fragment, or both?
 - **Status:** open (Phase 2 packet 4, 2026-08-24).
+
+## OQ-018 — Implicit type constraint only for the renamed form
+Does a type slice *imply* a type constraint, or must the constraint be stated? The two syntactic forms mean
+the same thing — R4's renamed path (`valueString`) and R5's `value[x]` + `sliceName` — but .NET treats them
+differently when the slice states **no explicit `type`**:
+- renamed form: the type is parsed from the rename and the slice's type list is reduced to that single type
+  (`applyImplicitChoiceTypeConstraint`, `SnapshotGenerator.cs:2022-2049`, gated on `isRenamed` at `:1981`;
+  added for issue #1074);
+- R5 form: no implicit constraint — the slice inherits the base's **full choice list**, so
+  `value[x]:valueString` without a `type` is a "string slice" whose snapshot still allows every type.
+Code-derived (all vendored R5-form tests state explicit types); verify empirically in the Phase-4 harness,
+and check Java. Spec side: R5 [elementdefinition #typesx] says a type-specific element "constrains the use
+of a particular type" — arguably that *is* an implied type constraint, which would make the R5-form
+behavior wrong; prime WGM material since it decides what a bare type slice means.
+- **Status:** open (Phase 2 packet 5, 2026-08-26).
