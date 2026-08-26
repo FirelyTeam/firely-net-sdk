@@ -1361,7 +1361,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                             }
                             else
                             {
-                                if (!typeNav.JumpToNameReference(profileRef.ElementName))
+                                // [EK 20260824] #3583: The "elementName" fragment of a complex type profile reference
+                                // ("canonicalUrl#elementName") identifies a named slice within the referenced
+                                // extension's own Extension.extension slicing - not a local nameReference/contentReference.
+                                // So locate the child extension slice by SliceName, instead of by ElementId
+                                // (JumpToNameReference is for the unrelated ContentReference mechanism and cannot be reused here).
+                                if (!typeNav.MoveToFirstChild() // position on the (rebased) root element of the referenced extension
+                                    || !typeNav.MoveToChild("extension")
+                                    || !(StringComparer.Ordinal.Equals(typeNav.Current.SliceName, profileRef.ElementName)
+                                         || typeNav.MoveToNextSliceAtAnyLevel(profileRef.ElementName)))
                                 {
                                     addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
                                     return false;
