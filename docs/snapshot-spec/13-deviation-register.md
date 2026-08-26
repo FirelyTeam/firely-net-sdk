@@ -330,9 +330,10 @@ status/resolution.
   ch6 documents `findSliceAddPosition`'s reslice-group placement as the only reslice-aware code).
 - **Consequences:** the strongest data-loss deviation found so far — authored cardinality and pattern
   constraints vanish from the snapshot with no diagnostic. Downstream validators validate against a
-  snapshot that misses author constraints. Candidate GitHub issue (data loss, not just validation gap).
-- **Status:** confirmed empirically; .NET code trace + Java comparison pending (Phase 3 J-a has the
-  anchors).
+  snapshot that misses author constraints.
+- **Status:** confirmed empirically; **filed as
+  [#3589](https://github.com/FirelyTeam/firely-net-sdk/issues/3589)** (2026-08-26). .NET code trace +
+  Java comparison pending (Phase 3 J-a has the anchors).
 
 ## DEV-025 — Materialization depth of unconstrained content: Java normalizes more than .NET (ch7/ch8/ch11)
 - **Evidence:** ELEMENT-SET mining, three flavors totalling 210 java-only elements:
@@ -406,9 +407,11 @@ status/resolution.
   appears nowhere in the output.
 - **Consequences:** these two go beyond DEV-028's missing-validation catalogue: the output is *wrong*,
   not merely unvalidated (duplicate ids violate the element-id algorithm's uniqueness guarantee, ch10;
-  fabricated `base.min` corrupts sdf-8b data; a dropped constraint is data loss). Candidate GitHub
-  issues. Prime OQ-014 exhibit for "generators must reject, repair, or propagate — but never corrupt".
-- **Status:** confirmed empirically (both inputs in fhir-test-cases; .NET outputs in `harness/out/`).
+  fabricated `base.min` corrupts sdf-8b data; a dropped constraint is data loss). Prime OQ-014 exhibit
+  for "generators must reject, repair, or propagate — but never corrupt".
+- **Status:** confirmed empirically (both inputs in fhir-test-cases; .NET outputs in `harness/out/`);
+  **filed as [#3590](https://github.com/FirelyTeam/firely-net-sdk/issues/3590)** (t23a) **and
+  [#3591](https://github.com/FirelyTeam/firely-net-sdk/issues/3591)** (obs-unit), 2026-08-26.
 
 ## DEV-028 — Author-error detection catalogue: Java validates, .NET emits as written (ch2–ch6, ch9, ch12)
 - **Evidence:** fail-test mining over all 21 `fail="true"` tests: Java satisfies the fail expectation on
