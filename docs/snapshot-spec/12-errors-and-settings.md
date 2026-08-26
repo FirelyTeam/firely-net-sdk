@@ -114,8 +114,9 @@ Generator-specific issues (type `Issue.Create(code, severity, type)`) plus share
 | — | `Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF` | — | element with neither type nor contentReference (non-logical, ch9 exempts logical) |
 
 Code-archaeology notes: codes **10012 and 10014 are each assigned twice** (`:91/:319`, `:348/:410`) —
-consumers filtering by code conflate unrelated conditions; 10000/10001/10005/10011 are retired/disabled
-(dead code); 10011 (`INVALID_SLICENAME_ON_SPECIALIZATION`) sits behind the never-defined
+consumers filtering by code conflate unrelated conditions (filed as
+[#3587](https://github.com/FirelyTeam/firely-net-sdk/issues/3587)); 10000/10001/10005/10011 are
+retired/disabled (dead code); 10011 (`INVALID_SLICENAME_ON_SPECIALIZATION`) sits behind the never-defined
 `FIX_SLICENAMES_ON_SPECIALIZATIONS`.
 
 ### Throw catalogue
@@ -166,7 +167,9 @@ copying type-profile children (`:1578`). This is metadata-inheritance policy the
 without it, every derived profile's snapshot would claim its base's maturity/WG/normative status
 ([OQ-019](14-open-questions.md#oq-019--which-extensions-are-non-inheritable)). Note the generator's own
 marker extension uses the canonical `http://hl7.org/fhir/StructureDefinition/constrainedByDifferentialExtension`
-— an hl7.org url that **is not a registered HL7 extension** (a Firely-invented url in HL7's namespace).
+— an hl7.org url that **is not a registered HL7 extension** (a Firely-invented url in HL7's namespace;
+HTTP 404 verified 2026-08-26, filed as
+[#3588](https://github.com/FirelyTeam/firely-net-sdk/issues/3588)).
 Ephemeral bookkeeping uses in-memory annotations instead (`SnapshotGeneratorAnnotations.cs`):
 `CreatedBySnapshotGenerator` (idempotence gates, ch10/ch11), `ConstrainedByDiff`, `AppendedText` (the "..."
 convention, OQ-010), and the internal snapshot-root cache (ch11); all generator annotations are removed
