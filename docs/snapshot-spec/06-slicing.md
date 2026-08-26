@@ -131,7 +131,11 @@ covers generation.
 
 Every slice match carries a **slice base**: a recursive clone of the unmerged base element with the
 `slicing` component removed and `min` reset to 0 (`initSliceBase`, ch4). All new slices in a group
-regenerate from that pristine clone, not from the merged slicing entry.
+regenerate from that pristine clone, not from the merged slicing entry. The `min` reset is *permitted* by
+§5.1.0.14 (an individual slice min may be 0, below the entry's min — "the only situation where this is
+allowed"), but the spec never says 0 is the right **default** for a slice that states no `min` — inheriting
+the entry's min would be equally consistent with the text. .NET chose 0 (rationale in code: a required
+slice entry must still allow optional named slices); Java comparison pending (Phase 3).
 
 ### Opening a slice group (`startSlice`, `:1787`)
 
