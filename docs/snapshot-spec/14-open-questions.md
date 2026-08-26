@@ -95,7 +95,14 @@ Are element ids in a generated snapshot always regenerated from path+sliceName, 
 base or differential survive? .NET force-regenerates (`ElementIdGenerator.Update(..., force: true)`) and had
 to disable a "correct-looking" clear because it broke `Questionnaire.item.item`
 (`SnapshotGenerator.cs:430-438`).
-- **Status:** open.
+- Packet 6 (2026-08-26, ch10): .NET side fully answered — with default settings ids are **always
+  canonical**: base ids never inherited, custom differential ids merged (`:1052`) and then deliberately
+  overwritten by force-regeneration (`:1063-1066`: "Ignore user-specified element id's in the
+  differential"). Author ids survive only with `GenerateElementIds = false` (which disables generation
+  entirely). Remaining question: is that sanctioned? The spec says ids "may be used as the target of
+  external references" — regeneration breaks author-chosen ids external references may rely on; does Java
+  preserve them?
+- **Status:** open — .NET side answered.
 
 ## OQ-010 — The "..." append convention
 .NET supports prefixing `definition`/`comment`/`requirements` text with `"..."` in a differential to mean
@@ -161,7 +168,12 @@ What should a generator do with an *illegal differential*? .NET's matcher answer
 - slicing (packet 5, ch6): an explicit slicing entry on an *extension* element is merged shallowly
   (`mergeElementDefinition`, `SnapshotGenerator.cs:1855-1866`) — any children the differential put on that
   entry are **silently dropped**, no issue; internal slice-insertion failures in `addSliceBase` **throw**
-  (`:2057-2079`).
+  (`:2057-2079`);
+- structure-level (packet 6, ch12): SD without `url`, constraint SD without `baseDefinition`, missing
+  `type` on a non-logical SD → **throw** (`SnapshotGenerator.cs:171-174,372-375,490-493`); the same missing
+  `type` on a *logical* SD → **warning + repair** (root parsed from first diff element, ch9); an element
+  with no Base match anywhere up the base chain → **silently no Base component**
+  (`SnapshotBaseComponentGenerator.cs:123-124`, ch10), leaving sdf-8b unmet without an issue.
 One taxonomy — throw / drop-with-issue / repair-with-issue / silent repair / silent accept — chosen
 different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--what-must-a-generator-enforce).
 - **Status:** open (Phase 2 packets 2–3, 2026-08-24).
@@ -219,3 +231,17 @@ and check Java. Spec side: R5 [elementdefinition #typesx] says a type-specific e
 of a particular type" — arguably that *is* an implied type constraint, which would make the R5-form
 behavior wrong; prime WGM material since it decides what a bare type slice means.
 - **Status:** open (Phase 2 packet 5, 2026-08-26).
+
+## OQ-019 — Which extensions are non-inheritable?
+A derived profile's snapshot inherits everything from the base — including metadata extensions that are
+plainly *about the base*, not the derivation: maturity level (`structuredefinition-fmm`),
+`-standards-status`, `-normative-version`, `-wg`, `-interface`, `resource-approvalDate`, etc. .NET strips a
+**hard-coded blocklist of 17 core extension urls** from all inherited snapshot content
+(`SnapshotGeneratorExtensions.cs:137-156`, applied at `SnapshotGenerator.cs:523,1578`; ch12) — without it,
+every derived snapshot would claim its base's maturity/WG/normative status. The spec never mentions
+extension-inheritance policy anywhere. Questions: is stripping sanctioned at all (snapshots are supposed to
+be *complete*)? Which extensions? Does Java maintain an equivalent list, and do the lists agree? (Related:
+the `elementdefinition-suppress` mechanism, OQ-008, is the *author-controlled* variant of the same
+concern; this is generator-hardcoded.) Candidate RFC: the spec (or extensions pack) should mark extensions
+as inheritable/non-inheritable.
+- **Status:** open (Phase 2 packet 6, 2026-08-26).

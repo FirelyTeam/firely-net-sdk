@@ -1,6 +1,7 @@
 # 10. Element ids & the Base component
 
-> Status: **spec baseline filled** (Phase 1, R5 v5.0.0 + R4 v4.0.1 deltas). Implementation sections pending (Phases 2–3).
+> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 6,
+> 2026-08-26: `ElementIdGenerator`/`SnapshotBaseComponentGenerator` deep-read). Java section pending (Phase 3).
 
 ## Scope
 Two derived bookkeeping structures the generator must produce: element ids and `ElementDefinition.base`.
@@ -72,12 +73,85 @@ resolves the intent (snapshot obligation, generator fills it). See
   with the type-slice id. The grammar itself did not change.
 - `base` definition: identical (typo fix only); sdf-8b unchanged.
 
-## .NET behavior (Phase 2)
-*(pending — `ElementIdGenerator.cs` (force-regeneration), `SnapshotBaseComponentGenerator.cs`,
-`TestSliceBase_*` test group)*
+## .NET behavior (Phase 2, deep-read 2026-08-26)
+
+### Element ids (`ElementIdGenerator.cs`, `Hl7.Fhir.Shims.Base`)
+
+The generator implements the spec algorithm directly: an id is dot-joined segments, one per path token,
+each `elementName[:sliceName]` (`ElementIdSegment.ToString`, `ElementIdGenerator.cs:107-112`); reslice
+names occupy a single segment (`/` is just part of the sliceName). One subtlety makes the two derived
+structures interdependent: for a segment, the element name is taken from **`Base.path`** whenever that is a
+choice (`[x]`) path (`ElementIdSegment(ElementDefinition)`, `:87-95`) — this is what produces
+`value[x]:valueString` ids even for a renamed element, and it means **correct ids require Base components
+to exist first**. `Update(nav, force, onlyChildren)` regenerates recursively; with `force = false` existing
+ids are kept, but the *parent* prefix is always recomputed canonically (`:199-207` — "cannot rely on
+nav.Current.ElementId as it may represent a custom id value"), so children of a custom-id parent still get
+fully canonical ids (`Patient.identifier:ssn.system`, not `PatientSsnId.system`) — exactly the behavior the
+file-header TODO (`:22-32`) asks for.
+
+**Pipeline policy: ids are always regenerated, never inherited or preserved** (default settings):
+
+- Base-profile ids are never inherited: after cloning the base snapshot, `Update(force: true)` runs before
+  merging (`SnapshotGenerator.cs:505-514`). The in-code rationale for regenerating *immediately* (rather
+  than clearing and regenerating at the end — the disabled `Clear` at `:430-438`) is that id-based back
+  references must resolve *during* generation: expanding `Questionnaire.item.item` jumps to the id of the
+  already-processed `Questionnaire.item` (see ch8).
+- After every merge step the ids are force-regenerated again (`:1066`, `:956`, `:1600`, `:1633`, `:1864`).
+- A custom element id in the differential **is merged and then immediately overwritten**: the merge at
+  `:1052` passes `mergeElementId: true` (ch5 `mergeId`), but the force-regeneration at `:1066` wipes the
+  result. This is deliberate — the comment (`:1063-1065`) reads "R4: Always re-generate Element Ids
+  according to standardized format … Ignore user-specified element id's in the differential", and the
+  commented-out alternative at `:1061` (preserve diff-specified ids) was abandoned. Author-supplied ids
+  survive only with `GenerateElementIds = false`, which also disables all generation. That answers
+  [OQ-009](14-open-questions.md#oq-009--element-id-stability)'s .NET side: canonical regeneration, always.
+
+### Base components (`SnapshotBaseComponentGenerator.cs`)
+
+`ElementDefinition.Base` is produced by `EnsureBaseComponent(elem, baseElem, force)` (`:136-181`):
+
+- **Root elements**: Base always references self (`path`/`min`/`max` copied from the element itself,
+  `:141-149`) — the R4+ rule.
+- **Other elements**: if the matched base element has a Base, it is **inherited** (deep-copied); otherwise
+  a new Base is seeded from the base element's own path/min/max (`:159-176`). Base therefore propagates
+  transitively toward the original definition. For elements the current profile *introduces*, the Base is
+  self-created at creation time: `createNewElement` seeds it from the diff's own min/max (ch7), and a new
+  named slice **deep-copies the sliced element's Base** along with the rest of the slice-base clone (ch4
+  `initSliceBase` clones the subtree; only the element's *own* `min` is reset to 0, the Base component is
+  untouched). This answers spec gap 2 mechanically: an element first introduced by an intermediate profile
+  gets a Base pointing at that intermediate's *element path and diff cardinality*, which then propagates
+  unchanged into deeper derivations.
+- **Slices (spec gap 3), code-derived**: by the clone mechanism above, a named slice's Base carries the
+  *sliced element's original* path and cardinality (e.g. `Patient.identifier` slice `bsn`: `Base.min = 0`,
+  `Base.max = *`) — not the slice's own constrained values and not `min = 0` by decree. Note the comment at
+  `SnapshotGenerator.cs:2004-2007` ("Named slices should get base with Min = 0") *appears* to contradict
+  this; we read it as describing the `OnPrepareElement` event's base-element argument (the slice-base clone,
+  whose element-`min` *is* 0), not `ElementDefinition.Base`. The test helper `assertBaseDefs` only checks
+  `Base.path` compatibility, never `Base.min/max` (`SnapshotGeneratorTest.cs:2548`), and the
+  `TestSliceBase_*` group asserts event annotations, explicitly "[disregarding] ElementDefinition.Base"
+  (`:4380-4382`) — so the actual output value is unpinned by tests. **Verify in the Phase-4 harness** (also
+  against Java).
+- **Regeneration gate**: a Base created by the generator is marked with an in-memory
+  `CreatedBySnapshotGenerator` annotation; `EnsureBaseComponent` regenerates only when forced, absent, or
+  *not* generator-created (`:150`). Consequence: an author-supplied Base component in input **survives**
+  (it is never generator-created), while generator output is idempotently refreshable. The file-header
+  comment "Behavior is controlled by `_settings.NormalizeElementBase`" (`:22`) is stale — no such setting
+  exists (the 6 real settings are in ch12).
+
+`ensureBaseComponents` (`:34-125`) walks the generated snapshot against the base snapshot in parallel,
+matching by last path segment or renamed-choice correspondence; on a mismatch it **drills down** to the
+base's own base profile (resolving + ensuring snapshots as needed, `:107-120`) so elements inherited from
+higher up the chain still find their original. An element that matches nowhere up the chain silently gets
+**no Base component** (fall-through at `:123-124`) — no issue is emitted, leaving the sdf-8b obligation
+unmet for that element. Children inlined from type profiles or contentReference targets inherit the type
+profile's Base components via `copyChildren` → `EnsureBaseComponent(typeElem, false)`
+(`SnapshotGenerator.cs:1581-1583`, #1123). Sequencing in `generate()`: ids first (`:513`), then Base
+components (`:518`) — on the *base* clone, before merge; external profiles get theirs in `ensureSnapshot`
+(`:2348`).
 
 ## Java behavior (Phase 3)
 *(pending — `setIds`, base-component logic in `ProfileUtilities`)*
 
 ## Open questions
-- [OQ-009](14-open-questions.md#oq-009--element-id-stability) id stability.
+- [OQ-009](14-open-questions.md#oq-009--element-id-stability) id stability (.NET side answered 2026-08-26 —
+  always regenerated canonically; author ids discarded by design).
+- Slice `Base.min/max` output value — code-derived only, unpinned by tests; Phase-4 harness item (see above).
