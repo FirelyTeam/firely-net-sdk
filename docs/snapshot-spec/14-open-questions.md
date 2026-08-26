@@ -230,7 +230,14 @@ Code-derived (all vendored R5-form tests state explicit types); verify empirical
 and check Java. Spec side: R5 [elementdefinition #typesx] says a type-specific element "constrains the use
 of a particular type" — arguably that *is* an implied type constraint, which would make the R5-form
 behavior wrong; prime WGM material since it decides what a bare type slice means.
-- **Status:** open (Phase 2 packet 5, 2026-08-26).
+- Phase 4 packet 2 (2026-08-26, harness): **renamed-form data point** — `ts-case2` (renamed type
+  slice) comes out *structurally identical* on both sides (ids/min/max/types/sliceNames all agree;
+  only per-property noise), so for the renamed form .NET and Java implicitly agree. The **R5-form
+  entry element** is where they explode apart — see DEV-020/OQ-020 (obs-2b): Java collapses the
+  *entry's* type list to the sliced types (its version of an implicit constraint, applied to the
+  entry rather than the slice), .NET keeps the full choice list on entry *and* (per this OQ) on a
+  type-less slice.
+- **Status:** open (Phase 2 packet 5, 2026-08-26; empirical data 2026-08-26).
 
 ## OQ-019 — Which extensions are non-inheritable?
 A derived profile's snapshot inherits everything from the base — including metadata extensions that are
@@ -245,3 +252,22 @@ the `elementdefinition-suppress` mechanism, OQ-008, is the *author-controlled* v
 concern; this is generator-hardcoded.) Candidate RFC: the spec (or extensions pack) should mark extensions
 as inheritable/non-inheritable.
 - **Status:** open (Phase 2 packet 6, 2026-08-26).
+
+## OQ-020 — What may a generator do to the slicing entry of a type slicing?
+The headline Phase-4 finding (DEV-020, test `obs-2b`): given an author-written slicing entry on a choice
+element (`rules=open`, no discriminator) plus one type slice with `min=1`, the two implementations produce
+materially different sliced elements — Java **rewrites** the entry (injects `type:$this`, forces `closed`
+against the explicit `open` ["type slicing is always CLOSED regardless of what the differential says",
+`ProfilePathProcessor` L597/L1587], collapses the type list to the union of the slices' types, raises `min`
+to the slice-min sum), while .NET **merges it as written** (open, no discriminator, full inherited choice
+list, min 0). Golden files bless the Java behavior; the published spec text supports .NET on the type list
+("type specific entries do not restrict allowed types") and is silent-to-contradictory on the rest
+(§5.1.0.14 slice-min arithmetic is validation guidance, not a generator instruction — the
+permission-vs-default distinction; no rule allows overriding an explicit `rules` value).
+Decision needed, per property of the slicing entry: is the generator *required*, *permitted*, or
+*forbidden* to (a) synthesize/complete the discriminator, (b) rewrite `rules`, (c) restrict the type list,
+(d) recompute `min`? Sub-question: if the differential's slicing violates the shape rules (no discriminator
+and no description), is normalize-and-repair (Java) or propagate-as-written (.NET) the sanctioned response?
+(Feeds OQ-014's error-taxonomy theme; connects to OQ-018 — Java's type-list collapse on the *entry* is the
+mirror image of .NET's implicit constraint on the renamed *slice*.)
+- **Status:** open (Phase 4 packet 2, 2026-08-26) — prime WGM material, demo-able with obs-2b.

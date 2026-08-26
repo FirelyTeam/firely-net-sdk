@@ -36,7 +36,8 @@ status/resolution.
 - **Status:** seeded — analyze in Phase 4 (re-run, diff against Java oracle).
 
 ## DEV-004 — obs-2 / obs-2a / obs-2b: shared-suite divergence
-- **Evidence:** issue #1253; tests `[Ignore]`d. **Status:** seeded.
+- **Evidence:** issue #1253; tests `[Ignore]`d. **Status:** seeded — obs-2b analyzed as DEV-020
+  (Phase 4, 2026-08-26); obs-2/obs-2a expected to be the same mechanism (verify from sweep output).
 
 ## DEV-005 — obs-2-3 / obs-3: shared-suite divergence
 - **Evidence:** issue #1254; tests `[Ignore]`d. **Status:** seeded.
@@ -130,8 +131,12 @@ status/resolution.
   fork's variant (`Canonical`-based) silently no-matches instead of throwing — same outcome (issue
   `PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF` + subtree dropped), different failure mode.
 - **Java:** TBD (Phase 3) — presumably honors `elementdefinition-profile-element` instead (OQ-017).
-- **Status:** suspected — needs an empirical repro in Phase 4 (candidate inputs among the 102
-  never-integrated upstream tests); file a GitHub issue once confirmed.
+- **Status:** **confirmed and fixed** (2026-08-24): reproduced empirically, filed as
+  [#3583](https://github.com/FirelyTeam/firely-net-sdk/issues/3583), fixed on branch
+  `claude/elegant-leakey-7d15e9` (fragment resolved via SliceName lookup instead of
+  `JumpToNameReference`; regression test in `SnapshotGeneratorTest.cs`). The fix is NOT in the
+  6.2.1 NuGet the Phase-4 harness pins, so harness runs still reproduce the throw. The STU3 shim
+  package (`Hl7.Fhir.STU3` `SnapshotGenerator.cs:1170`) has the identical bug, left unfixed.
 
 ## DEV-019 — `modifierExtension.url` never gets the fixedUri backfill (ch7)
 - **Evidence:** `SnapshotGenerator.cs:1743-1746` — Phase 2 deep-read 2026-08-24.
@@ -143,3 +148,57 @@ status/resolution.
   extension profile, no child expansion, or an extension-definition snapshot lacking the fixed url.
 - **Java:** TBD (Phase 3).
 - **Status:** suspected (narrow; verify against Java + construct repro in Phase 4).
+
+## DEV-020 — Type-slicing entry normalization: Java rewrites the sliced element, .NET merges it as written (ch6)
+- **Evidence:** Phase-4 harness, 2026-08-26 — test `obs-2b` ("open type slicing + min on slice"),
+  Java oracle EQUAL vs golden, so the golden file *is* current Java behavior.
+  Versions: .NET = Hl7.Fhir.R5 6.2.1 | Java engine = 6.10.2 (d06577dbc5c6) | golden = fhir-test-cases 1.7.67.
+- **Reproducing input:** `obs-2b-input.xml` — differential on `Observation.value[x]` (base 0..1,
+  13-type choice) with an explicit slicing entry stating only `rules="open"` (no discriminator,
+  no description), plus one slice `valueCodeableConcept` with `min=1`, `type=CodeableConcept`,
+  and a required binding.
+- **Snapshot slicing entry** (`Observation.value[x]`), four properties diverge:
+
+  | property | .NET 6.2.1 | Java 6.10.2 / golden |
+  |---|---|---|
+  | `slicing.discriminator` | none (as written) | **`type:$this` injected** |
+  | `slicing.rules` | `open` (as written) | **`closed`** — overrides the differential's explicit `open` |
+  | `type` | full 13-type choice list | **collapsed to `[CodeableConcept]`** (the union of the slices' types) |
+  | `min` | 0 (inherited from base) | **1** (raised to the sum of the slice minimums) |
+
+  The slice element itself (`value[x]:valueCodeableConcept`) is identical on both sides
+  (min=1, max=1, CodeableConcept, binding).
+- **.NET:** the explicit slicing entry is matched and merged like any other element — inherit-if-absent
+  per property. Nothing is synthesized or normalized; the author's `open` and the base's `min`/type
+  list survive verbatim (ch6: `startSlice` merges an explicit entry; discriminator synthesis only
+  happens for entries .NET *invents*, `SnapshotGenerator.cs:1968-1969,2163-2164`).
+- **Java:** type slicing on a choice element is normalized **conditionally** — the obs-2 family
+  (identical entry `rules=open`, varying constraints) maps the gradient in the golden files:
+
+  | test | differential delta | golden entry outcome |
+  |---|---|---|
+  | obs-2 | slice = type CC only | 13 types kept, `open` kept, only `type:$this` injected |
+  | obs-2a | *entry itself* also constrains `type` to CC | types [CC] (authored), rules forced **closed** |
+  | obs-2b | slice = type CC + **min=1** (+binding) | types **collapsed** to [CC], **closed**, min **0→1** |
+
+  So the discriminator is always injected; `closed` is forced once the entry's effective type set
+  equals the sliced types; and a slice `min=1` triggers both the type collapse and the entry-min
+  raise. `ProfilePathProcessor` L597/L1587 carry the comment that type slicing is always CLOSED
+  "regardless of what the differential says" (overstated relative to obs-2's kept `open`); slice-min
+  arithmetic cf. PPP L802-810; `type:$this` stamping cf. `checkToSeeIfSlicingExists` PPP:955-987.
+  Exact trigger conditions to be pinned in Phase 3 packet J-a.
+- **Spec basis:** the published text favors .NET on the type list — R4 *and* R5 choice-constraint rules
+  state "type specific entries **do not restrict allowed types**" and "the original element SHALL always
+  be represented in a snapshot" — yet Java/golden collapse the list, and forcing `closed` against an
+  explicit `open` has no spec basis at all. On `min`, §5.1.0.14 gives slice-cardinality *validation*
+  arithmetic ("the sum of the minimum cardinalities of the slices SHOULD be ≤ m", with its known
+  bullet-3/bullet-5 contradiction) but never instructs a generator to rewrite the entry's declared
+  cardinality (the permission-vs-default distinction, ch6). Input-validity wrinkle: the differential's
+  slicing has neither discriminator nor description (violates the slicing shape rules), so Java can be
+  read as *repairing* invalid input while .NET *propagates* it.
+- **Consequences:** downstream tools reading the .NET snapshot see an open 13-type element with min 0;
+  reading the Java snapshot they see a mandatory single-type element under closed slicing. Validation
+  outcomes differ materially. This is the headline exhibit for the slicing-entry WGM question
+  (OQ-020; connects to OQ-018 on implicit type constraints and to the slice-`Base.min` question).
+- **Status:** confirmed (both behaviors reproduced 2026-08-26; spec question open → OQ-020).
+
