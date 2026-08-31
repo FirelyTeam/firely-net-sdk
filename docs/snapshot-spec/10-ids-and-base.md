@@ -128,8 +128,11 @@ file-header TODO (`:22-32`) asks for.
   whose element-`min` *is* 0), not `ElementDefinition.Base`. The test helper `assertBaseDefs` only checks
   `Base.path` compatibility, never `Base.min/max` (`SnapshotGeneratorTest.cs:2548`), and the
   `TestSliceBase_*` group asserts event annotations, explicitly "[disregarding] ElementDefinition.Base"
-  (`:4380-4382`) — so the actual output value is unpinned by tests. **Verify in the Phase-4 harness** (also
-  against Java).
+  (`:4380-4382`) — so the actual output value is unpinned by tests. **Java side verified (packet J-a,
+  2026-08-31): agreement** — `updateFromBase` (`ProfileUtilities.java:2004-2020`) copies `base.path/min/max`
+  verbatim from the sliced element's Base for the entry and every slice row alike; only the slice's *own*
+  min is zeroed (ch6). A .NET-vs-golden spot check in the Phase-4 harness remains worthwhile but the
+  inter-engine question is settled.
 - **Regeneration gate**: a Base created by the generator is marked with an in-memory
   `CreatedBySnapshotGenerator` annotation; `EnsureBaseComponent` regenerates only when forced, absent, or
   *not* generator-created (`:150`). Consequence: an author-supplied Base component in input **survives**
@@ -154,4 +157,5 @@ components (`:518`) — on the *base* clone, before merge; external profiles get
 ## Open questions
 - [OQ-009](14-open-questions.md#oq-009--element-id-stability) id stability (.NET side answered 2026-08-26 —
   always regenerated canonically; author ids discarded by design).
-- Slice `Base.min/max` output value — code-derived only, unpinned by tests; Phase-4 harness item (see above).
+- Slice `Base.min/max` output value — Java agrees (packet J-a, see above); remaining item is only a
+  .NET-vs-golden spot check.

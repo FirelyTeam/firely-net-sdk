@@ -46,7 +46,13 @@ inline (Ewout: no reason to reject, e.g. a derived profile can limit a sliced ba
   compiled out, `startSlice` slices any element without issue (ch6). Remaining question is what the spec
   intends ("Slicing is only allowed when … on the first repetition of an element" [profiling §5.1.0.13]
   presupposes repetition without stating a rule for `max = 1`) and what Java does.
-- **Status:** open — .NET side answered.
+- **Java side answered (packet J-a, 2026-08-31):** Java **rejects** slicing a non-repeating element
+  (`Attempt to a slice an element that does not repeat…`, `ProfilePathProcessor.java:309-312`) — with two
+  carve-outs that mirror both sides of the .NET in-code debate: the intro itself capped to `max=1` ("the
+  sum total of your slices is limited to 1" — exactly Ewout's derived-profile-limits-to-0..1 case) or type
+  slicing. So the engines disagree only on the *unexcused* case, and Java's carve-outs suggest the WGM
+  question should be "which exceptions, not whether".
+- **Status:** open — both implementation sides answered.
 
 ## OQ-004 — contentReference + constraining children
 After dereferencing a `contentReference` to constrain its children, which value-domain properties of the
@@ -66,7 +72,17 @@ slice to a closed slicing, or reorder for openAtEnd)? .NET does not (file-header
   slice-cardinality sums and the `@default`-requires-closed precondition (`@default` is unknown to the
   generator, ch6). Extends the OQ: does the *generator* have any obligation here, or is this all
   validator territory?
-- **Status:** open — .NET side answered.
+- **Java side answered (packet J-a, 2026-08-31):** Java enforces a *partial* lattice, but only when the
+  differential restates the slicing entry over a sliced base (ch6): `ordered` may not change in either
+  direction (stricter than §5.1.0.17's false→true allowance!), base discriminators must be an
+  order-sensitive prefix of the diff's, and `ruleMatches` allows anything over OPEN but also tolerates
+  **CLOSED→OPENATEND — a loosening §5.1.0.17 does not sanction**; the rules check is skipped entirely for
+  choice elements. Appending a slice to a closed base slicing throws — except on `[x]` paths. Slice-min
+  sums ARE checked post-generation (`PU:976-1036`) but the outcome depends on provenance: auto-added
+  entries get silently rewritten, authored ones get a message that is an ERROR only `forPublication`.
+  `@default` and openAtEnd *ordering* are unenforced in both engines. So neither engine implements
+  §5.1.0.17 as written — Java approximates it with deviations in both directions.
+- **Status:** open — both implementation sides answered.
 
 ## OQ-006 — sliceIsConstraining
 What must a generator do with `sliceIsConstraining` when matching a derived profile's slices to base slices?
@@ -258,7 +274,14 @@ behavior wrong; prime WGM material since it decides what a bare type slice means
   slice (.NET), (b) fold constraints onto the unrenamed element (Java), and in either case (c) does an
   implicit type constraint apply? Golden blesses (b) — the representation the R5 text arguably
   *removed*.
-- **Status:** open (Phase 2 packet 5, 2026-08-26; empirical data 2026-08-26).
+- **Java side answered (packet J-a, 2026-08-31):** for (c), Java applies the implicit constraint in
+  **both** syntactic forms — type-slice recognition infers the type from the path suffix *or the sliceName
+  suffix* when the slice states no `type`, and stamps the inferred code onto the slice's differential
+  (`diffsConstrainTypes` `PU:1806-1849`, `PPP:571-572`); canonical `<stem><Type>` slice names are enforced
+  (auto-set when missing, error when wrong unless `autoFixSliceNames`). So a bare R5-form `value[x]:valueString`
+  slice IS a single-type string slice in Java, while .NET leaves it the full choice list — the .NET R5-form
+  behavior is now the outlier on (c).
+- **Status:** open (spec question) — both implementation sides answered.
 
 ## OQ-019 — Which extensions are non-inheritable?
 A derived profile's snapshot inherits everything from the base — including metadata extensions that are
@@ -297,7 +320,16 @@ Decision needed, per property of the slicing entry: is the generator *required*,
 and no description), is normalize-and-repair (Java) or propagate-as-written (.NET) the sanctioned response?
 (Feeds OQ-014's error-taxonomy theme; connects to OQ-018 — Java's type-list collapse on the *entry* is the
 mirror image of .NET's implicit constraint on the renamed *slice*.)
-- **Status:** open (Phase 4 packet 2, 2026-08-26) — prime WGM material, demo-able with obs-2b.
+- **Mechanism pinned (packet J-a, 2026-08-31):** the Java behavior is *rebuild-CLOSED-then-reopen-if-
+  uncovered*, not conditional normalization — see DEV-020's pinned trigger conditions (the "always closed"
+  comment is contradicted by the reopen at `PPP:646-667`; the entry-min raise is to literal 1; the type
+  collapse rides on a `min>0` slice's `fixedType`). Adds a fifth per-property decision: (e) is the
+  asymmetry between unsliced-base (reopen exists) and sliced-base (`PPP:1584-1588`, no reopen — stays
+  CLOSED) type slicing intended? Also relevant: the community already decided *slicer properties do not
+  copy into slices* (`APPLY_PROPERTIES_FROM_SLICER=false`, `PPP:42-58`, Zulip #IG-creation) — the one
+  adjudicated data point on what a generator may do around the entry.
+- **Status:** open (Phase 4 packet 2, 2026-08-26; mechanism pinned 2026-08-31) — prime WGM material,
+  demo-able with obs-2b.
 
 ## OQ-021 — How much must a snapshot materialize?
 The spec says a snapshot contains "all the elements" but never defines the element *set* — and the two
@@ -316,13 +348,19 @@ and is that copy *required* so validators need no entry-fallback logic? (c) for 
 (contentReference, extension-of-self), how deep must materialization go — per recursion level the diff
 reaches (both engines), plus the entry level (Java only)? Related: sdf-3/8b define per-element fill
 obligations but no set-level rule; §5.1.0.10 (R5 propagation text) touches (c) without answering it.
-- **Sharpened by the min/mustSupport mining (2026-08-26):** for (b) Java's answer is concrete — the
-  preprocessor merges entry-children into every named slice with **fill-if-absent for
-  min/max/mustSupport/fixed/pattern/type/binding and append for constraint/example**
-  (`SnapshotGenerationPreProcessor`, DEV-025) — and this single mechanism accounts for **77% of all
+- **Sharpened by the min/mustSupport mining (2026-08-26; corrected J-a 2026-08-31):** for (b) Java's
+  answer is concrete — the preprocessor merges entry-children into every named slice with **strict
+  fill-if-absent for all 27 handled properties** (lists only when empty — no append; `mapping`/`condition`
+  never propagate on a match, though *injected* elements keep them: a match-vs-inject asymmetry;
+  `SnapshotGenerationPreProcessor`, DEV-025) — and this single mechanism accounts for **77% of all
   min/mustSupport divergences** in the sweep (101/131). The R5 text offers only "slices must be
   consistent with" the entry (profiling, slicing rules) — it neither mandates nor forbids the copy-down.
   The practical WGM question: *do slices inherit the slicing entry's children constraints, and must the
-  snapshot materialize that inheritance?* Java says copy-down; .NET says nothing at all.
+  snapshot materialize that inheritance?* Java says copy-down; .NET says nothing at all. Cautions for the
+  WGM framing (J-a): the copy-down mechanism is demonstrably buggy
+  ([DEV-033](13-deviation-register.md#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6)
+  — the golden files bless contaminated output), and it sits in tension with the community's own
+  `APPLY_PROPERTIES_FROM_SLICER=false` decision that slicer *properties* do NOT copy into slices (ch6) —
+  entry children copy down, entry properties don't.
 - **Status:** open (Phase 4 packet 3, 2026-08-26) — WGM material; demo-able with org2a (52-element gap),
   sd-comp-hist (45 property diffs), and t21.

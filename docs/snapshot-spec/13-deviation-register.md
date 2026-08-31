@@ -180,7 +180,7 @@ status/resolution.
   | `slicing.discriminator` | none (as written) | **`type:$this` injected** |
   | `slicing.rules` | `open` (as written) | **`closed`** — overrides the differential's explicit `open` |
   | `type` | full 13-type choice list | **collapsed to `[CodeableConcept]`** (the union of the slices' types) |
-  | `min` | 0 (inherited from base) | **1** (raised to the sum of the slice minimums) |
+  | `min` | 0 (inherited from base) | **1** (literal 1 whenever a slice states `min>0` — not a sum, `PPP:615`) |
 
   The slice element itself (`value[x]:valueCodeableConcept`) is identical on both sides
   (min=1, max=1, CodeableConcept, binding).
@@ -197,12 +197,20 @@ status/resolution.
   | obs-2a | *entry itself* also constrains `type` to CC | types [CC] (authored), rules forced **closed** |
   | obs-2b | slice = type CC + **min=1** (+binding) | types **collapsed** to [CC], **closed**, min **0→1** |
 
-  So the discriminator is always injected; `closed` is forced once the entry's effective type set
-  equals the sliced types; and a slice `min=1` triggers both the type collapse and the entry-min
-  raise. `ProfilePathProcessor` L597/L1587 carry the comment that type slicing is always CLOSED
-  "regardless of what the differential says" (overstated relative to obs-2's kept `open`); slice-min
-  arithmetic cf. PPP L802-810; `type:$this` stamping cf. `checkToSeeIfSlicingExists` PPP:955-987.
-  Exact trigger conditions to be pinned in Phase 3 packet J-a.
+  **Trigger conditions pinned (Phase 3 packet J-a, 2026-08-31; code @ b06c7ee):** the entry's slicing is
+  **rebuilt unconditionally** as `type:$this`/CLOSED/unordered after the entry is processed
+  (`PPP:595-598` — the "always closed" comment), then a coverage check (`PPP:646-667`) flips it back to
+  **OPEN iff any type still allowed on the entry has no matching type slice** — that reopen is what keeps
+  obs-2 `open` (12 of 13 types unsliced) and what the comment overstates. A slice with `min>0` must be the
+  *last* diff match (else throw) and raises the entry min **to literal 1** (`PPP:611-616`) while latching
+  `fixedType`, which strips all other types from the entry (`PPP:638-645`) — after which nothing is
+  unsliced, so obs-2b stays CLOSED; obs-2a gets there directly (entry authored down to CC). Exception
+  branch: base path containing `xtension.value` + shortcut form deletes unsliced types instead of
+  reopening (`PPP:657-663`). NOTE: the sliced-base variant (`PPP:1584-1588`) has **no reopen logic** —
+  type slicing over an already-sliced base stays CLOSED unconditionally. Slice-min arithmetic
+  cf. `PPP:801-810`; `type:$this` stamping for slices landing on an unsliced `[x]` element
+  cf. `checkToSeeIfSlicingExists` `PPP:955-987` (also CLOSED, no reopen). Full detail: ch6 Java section +
+  `java-ch06-simplepath-slicing-2026-08-31.md`.
 - **Scope extension (packet 3 min-mining, 2026-08-26)** — the "entry min rewrite" is a family of three
   Java mechanisms, all absent from .NET (26 sweep hits total):
   - **C1 — type-slicing entry min raise** (the obs-2b behavior above): fresh instances `obs-4`,
@@ -214,8 +222,11 @@ status/resolution.
     entry carries `SNAPSHOT_auto_added_slicing`** (an explicit authored intro gets a warning instead).
     Extension slicing entries are always auto-added (all `.extension`/`.modifierExtension` hits, sums
     of mandatory sub-extension mins, e.g. j=2/j=4 on complex-extension entries); `au-med-k` gets there
-    by re-slicing without restating the intro, which stamps the entry auto-added
-    (`ProfilePathProcessor.java:343-345`) even though the base authored one.
+    by re-slicing without restating the intro, which stamps the *copied base slicer* auto-added
+    (`ProfilePathProcessor.java:1250` — J-a citation correction: `:343-345` is the *simple-path*
+    extension-entry stamping, reachable only for `.extension`/`.modifierExtension` bases) even though the
+    base authored the entry. Gate mechanics pinned J-a: flush-based counter sweep `PU:976-1036`,
+    `Base.max != "1"` proxy guard, never-flushed tail groups, ERROR only `forPublication` (ch6).
   - **C3 — `xtension.value[x]` min hack** (1 hit, telus-oo): Java zeroes an unstated slice min *except*
     when the sliced path ends in `xtension.value[x]` (`ProfilePathProcessor.java:801-805`, in-code
     comment "hack work around for problems with snapshots in official releases") — so an extension's
@@ -356,10 +367,16 @@ status/resolution.
   `SnapshotGenerationPreProcessor.java` (invoked from `ProfileUtilities.java:825`) collects
   "sliceStuff" — the differential elements between a slicing entry and its first named slice — and
   pre-merges it into **each named slice's differential** (`processSlices` → `mergeElements` → `merge`,
-  ~:688-810, :993-1075): fill-if-absent for min/max/mustSupport/fixed/pattern/type/binding, *append*
-  for constraint and example; elements missing from a slice are **injected** (id rewritten, marked
-  `SNAPSHOT_PREPROCESS_INJECTED` — a chunk of the java-only ELEMENT-SET elements). Extension slicing is
-  excluded as a slicer, but entry-level extension slices ride along as sliceStuff (t22 `validDate`).
+  `:688-810`, `:993-1075`): **strict fill-if-absent for all 27 handled properties** — J-a correction: list
+  properties (constraint, example, code, alias, type, valueAlternatives) are copied only when the target
+  list is *empty*, there is NO append/union semantics; `mapping` and `condition` never propagate on a
+  match; `merge` uses no `.copy()`, so matched elements across slices *share object instances* with the
+  sliceStuff originals. Elements missing from a slice are **injected** as full copies (id rewritten, marked
+  `SNAPSHOT_PREPROCESS_INJECTED`, mapping kept — a match-vs-inject asymmetry) — a chunk of the java-only
+  ELEMENT-SET elements. Extension slicing is excluded as a slicer only when explicitly
+  `open`/`ordered=false`/single `value:url` on an element named `extension` (the `"modiferExtension"` typo
+  excludes modifierExtension; omitted `ordered` disqualifies); entry-level extension slices ride along as
+  sliceStuff (t22 `validDate`). Full property table: `java-preprocessor-slicestuff-2026-08-31.md` §3 + ch6.
 - **Property-level shadow:** this one mechanism also accounts for **101 of the 131** `min`/`mustSupport`
   NEW diffs in the sweep (M1 groups: sd-comp-hist 45, t22 27, on-questionnaire 21+, ILCorePractitioner 4
   — see the min/mustSupport extract). Notably, the same mining found **zero** genuine per-property
@@ -370,12 +387,9 @@ status/resolution.
   never touched. Both snapshots may be *semantically* equivalent under "slicing-entry constraints apply
   to all slices" reasoning, but consumers that read snapshots literally (most do — that is the point of
   a snapshot) see different element sets. → new [OQ-021](14-open-questions.md#oq-021--how-much-must-a-snapshot-materialize).
-- **Java bug candidate found in passing (M1q, code-inferred — needs minimized repro):**
-  `elementsMatch` (`SnapshotGenerationPreProcessor.java:812-822`) compares only leaf path + leaf
-  sliceName, ignoring ancestor slice names — on-questionnaire shows other extension slices' `value[x]`
-  mustSupport contaminating `itemControl.value[x]` (authored nowhere). Phase-3 J-a verification target.
-- **Status:** confirmed empirically; Java preprocessor citations from targeted code reading 2026-08-26
-  (full deep-read = Phase 3 J-a/J-c).
+- **Java bug candidate found in passing (M1q):** confirmed and graduated to its own entry —
+  [DEV-033](#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6).
+- **Status:** confirmed empirically; Java preprocessor deep-read done (Phase 3 packet J-a, 2026-08-31).
 
 ## DEV-026 — Renamed-choice constraints: .NET anchors on a synthesized type slice, Java on bare `value[x]` (ch6/ch7)
 - **Evidence:** ELEMENT-SET mining G4 (89 elements, both sides: t16 20n+18j, t31 25n+24j, sushi1/2).
@@ -507,4 +521,36 @@ status/resolution.
   dropped from both id and path.
 - **Status:** suspected .NET path-rebasing bug for children of a logical-model element — **untraced**
   (no chapter mechanism explains it; nearest ch9). Trace queued.
+
+## DEV-033 — Java preprocessor cross-slice contamination + silent constraint loss (ch6)
+- **Evidence:** Phase-3 packet J-a (2026-08-31): code analysis @ b06c7ee + empirical confirmation in the
+  `on-questionnaire` golden file (fhir-test-cases @ 9f495e8; expected-file generator version unpinned —
+  commit-pair caveat). Formerly the DEV-025 "M1q" candidate; now **confirmed**. A Java-only bug — .NET has
+  no propagation mechanism at all, so it exhibits neither effect.
+- **Mechanism:** the preprocessor merges sliceStuff into each named slice by scanning the slice's *entire
+  descendant range* with a match key of only **(path modulo `[x]`, sliceName-or-null)**
+  (`elementsMatch`/`pathsMatch`, `SnapshotGenerationPreProcessor.java:812-845`) — element ids and
+  inner-slice ancestry are never consulted. Extension-slice `value[x]` children (same path, no sliceName)
+  are therefore indistinguishable across sibling extension slices.
+- **Dual effect:** (1) *contamination* — sliceStuff authored for extension slice E1's `value[x]` fill-if-
+  absent-merges into a **different** extension slice E2's `value[x]` inside the named slice; (2) *silent
+  loss* — having "matched", the sliceStuff element is marked handled and is **not injected**, so the
+  constraints the author wrote for E1's value never reach the named slice at all.
+- **Minimal trigger shape:** outer non-extension slicing on `R.x` whose sliceStuff contains an (exempt)
+  extension slicing + extension slice `E1` + a sliceName-less `R.x.extension.value[x]` row (e.g.
+  `mustSupport=true`); a named slice `R.x:S1` containing a *different* extension slice `E2` with its own
+  sliceName-less `value[x]` row. Result: E2's `value[x]` gains E1's `mustSupport` (and any other absent
+  property from the 27-property fill list); E1's constraints are never materialized under S1.
+- **on-questionnaire exhibits:** `item:group.extension:itemControl.value[x]` gains `mustSupport=true`
+  authored nowhere (input has only a binding) *without* the sliceStuff's ontario mappings (`merge` lacks
+  `mapping` — the fingerprint of the merge path); the group/question slices contain **no**
+  `extension:renderStyle/enableWhenExpression/hidden.value[x]` rows (spuriously handled → never injected);
+  the `display` slice — whose range has no `value[x]` at that path — got all three **injected** correctly,
+  mappings included. The match-vs-inject asymmetry pins the mechanism.
+- **Consequences:** authored conformance data (mustSupport, bindings, cardinalities) appears on the wrong
+  elements of golden snapshots and disappears from the right ones — the golden files bless the bug.
+  Candidate upstream report (Grahame Grieve / org.hl7.fhir.core); WGM-relevant as a caution against
+  treating golden files as normative for the propagation mechanism (OQ-021).
+- **Status:** confirmed (code + golden exhibit); minimized standalone repro not yet built (trigger shape
+  documented above; on-questionnaire serves as the demo input meanwhile). Not yet reported upstream.
 

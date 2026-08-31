@@ -1,7 +1,8 @@
 # 6. Slicing
 
-> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 5,
-> 2026-08-26: `startSlice`/`addSlice`/`findSliceAddPosition` deep-read). Java section pending (Phase 3).
+> Status: **spec baseline + .NET + Java behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2
+> packet 5, 2026-08-26: `startSlice`/`addSlice`/`findSliceAddPosition` deep-read; Phase 3 packet J-a,
+> 2026-08-31: `ProfilePathProcessor` slicing paths + `SnapshotGenerationPreProcessor` propagation deep-read).
 
 ## Scope
 Everything slicing: the slicing entry (discriminators, `ordered`, `rules`), named slices, type slices,
@@ -135,7 +136,8 @@ regenerate from that pristine clone, not from the merged slicing entry. The `min
 §5.1.0.14 (an individual slice min may be 0, below the entry's min — "the only situation where this is
 allowed"), but the spec never says 0 is the right **default** for a slice that states no `min` — inheriting
 the entry's min would be equally consistent with the text. .NET chose 0 (rationale in code: a required
-slice entry must still allow optional named slices); Java comparison pending (Phase 3).
+slice entry must still allow optional named slices); Java mostly agrees but carves out exceptions
+(CLOSED-single-slice inherits the entry min, the `xtension.value[x]` hack — see the Java section).
 
 ### Opening a slice group (`startSlice`, `:1787`)
 
@@ -241,12 +243,216 @@ reslices into the slice sequence — matching the id algorithm's `slice/reslice`
   `value:url` — and `@type`/`@profile`).
 - **Slice cardinality arithmetic** (§5.1.0.14 sums) is not checked.
 - **`@default`** does not occur anywhere in the generator — the reserved name is an ordinary slice name;
-  `rules = closed` being its precondition is likewise unchecked. (Java comparison pending, Phase 3.)
+  `rules = closed` being its precondition is likewise unchecked. (Java agrees — verified absence, packet J-a.)
 - **`position` and `exists` discriminators** (R5) have no generator-side support or checks — irrelevant for
   named-slice generation, unsupported for unnamed-slice matching (ch4: `Invalid`).
 
-## Java behavior (Phase 3)
-*(pending — `ProfilePathProcessor` slicing paths, `BaseTypeSlice`, `TypeSlice`)*
+## Java behavior (Phase 3 packet J-a, deep-read 2026-08-31)
+
+Read at clone commit `b06c7ee`; line-verified. Full detail in the three extract files
+(`java-ch06-simplepath-slicing-`, `java-ch06-slicedbase-and-PU-helpers-`,
+`java-preprocessor-slicestuff-2026-08-31.md`, materials directory). `PPP` = `ProfilePathProcessor.java`,
+`PU` = `ProfileUtilities.java`, `PRE` = `SnapshotGenerationPreProcessor.java`. Commit-pair caveat: sweep
+oracle was 6.10.2 @ d06577dbc5c6.
+
+Architecture: Java handles slicing in **two layers**. A preprocessor first *rewrites the differential*
+(propagating slicing-entry trailing content into every named slice); the path processor then generates the
+snapshot per path scope, with separate code paths for "base not sliced" (`processSimplePathDefault`,
+`...WhereDiffsConstrainTypes`) and "base already sliced" (`processPathWithSlicedBase*`). Unlike .NET there
+is no separate matcher/planner: matching and generation interleave in one recursive walk.
+
+### Slice trailing-content propagation (the preprocessor — no .NET counterpart)
+
+`PRE.processSlices` (`:688-741`, invoked unconditionally on a clone of every differential, `PU:824-825`)
+partitions the diff into `SliceInfo` records: everything between a slicing entry and its first named slice
+is **sliceStuff** — "stuff for all slices" — and is merged into each named slice's diff range
+(`mergeElements` `:743-810`, `merge` `:993-1075`) before generation begins. This is the mechanism behind
+[DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11)
+flavor 2 (77% of the sweep's min/mustSupport diffs). Precise semantics:
+
+- **Property merge is strict fill-if-absent for all 27 handled properties** (`base.hasX() && !focus.hasX()`;
+  list properties are `addAll`ed only when the target list is *empty* — no union/append semantics anywhere,
+  correcting the packet-3 "append for constraint/example" estimate). **`mapping` and `condition` never
+  propagate** on a match. `merge` uses **no `.copy()`**: matched elements in different slices end up
+  *sharing object instances* (Binding/TypeRefComponent/Constraint) with the sliceStuff originals.
+- **Match-vs-inject asymmetry:** a sliceStuff element that matches nothing in a slice's range is *injected*
+  as a **full copy** (id rewritten by string-replacing the slicer id with the slice id `PRE:799`, marked
+  `SNAPSHOT_PREPROCESS_INJECTED`) — so injected elements keep `mapping` etc. while matched ones only
+  receive the 27-property fill.
+- **Extension slicing is exempt** (never forms a SliceInfo) only when literally named `extension` with
+  `rules=open`, exactly one `value:url` discriminator **and an explicit `ordered=false`** (`PRE:1077-1086`):
+  the `"modiferExtension"` typo (`:1078`) means modifierExtension slicings never qualify, and omitting
+  `ordered` (the common case) also disqualifies — such slicings get propagation treatment.
+- **Bail-out blast radius:** one non-extension slicing entry inside one slicing's trailing region (with
+  named slices present) logs `UNSUPPORTED_SLICING_COMPLEXITY` and returns from `processSlices` entirely
+  (`PRE:713-723`) — abandoning propagation for *every* slicing in the differential and skipping the final
+  `markExtensions` pass. A warning, not an error; generation proceeds unpreprocessed.
+- **Cross-slice contamination bug (confirmed):** matching is by `(path modulo [x], sliceName-or-null)` only
+  (`elementsMatch` `PRE:812-822`) over the slice's *entire descendant range* — element ids and inner-slice
+  ancestry are never consulted. Extension-slice `value[x]` children (same path, no sliceName) are therefore
+  indistinguishable: sliceStuff content authored for extension slice E1's `value[x]` merges into a
+  *different* extension slice E2's `value[x]` inside the named slice, and — having "matched" — is never
+  injected where it was intended, silently dropping the authored constraints. Both effects are visible in
+  the `on-questionnaire` golden file. → new
+  [DEV-033](13-deviation-register.md#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6).
+
+### Introducing slicing on an unsliced base (`processSimplePathDefault`, `PPP:307-448`)
+
+- **Sliceability IS checked** (contrast .NET, OQ-003): slicing a non-repeating element throws
+  `Attempt to a slice an element that does not repeat…` — unless the intro itself is capped to `max=1`
+  ("the sum total of your slices is limited to 1", exactly Ewout's use case in the .NET debate) or it is
+  type slicing (`PPP:309-312`; `unbounded` = max present and neither "0" nor "1", `PU:2517`).
+- **A missing slicing entry is an error** for non-extension elements (`DIFFERENTIAL_DOES_NOT_HAVE_A_SLICE`,
+  `PPP:313-314`). For `.extension`/`.modifierExtension` the standard entry is fabricated —
+  `makeExtensionSlicing()` = `value:url`/unordered/open (`PU:2408-2414`), same convention as .NET — and the
+  row is stamped `SNAPSHOT_auto_added_slicing` (`PPP:343-345`), which later flips the min-sum gate from
+  "report" to "silently fix" (below).
+- An authored entry is accepted "at face value"; later diff rows that *restate* slicing are compared
+  (`slicingMatches`): mismatch → ERROR `ATTEMPT_TO_CHANGE_SLICING`, agreement → INFORMATION with a broken
+  message (2 args for 4 placeholders, `PPP:355-357`). Neither throws.
+- Each named slice then re-processes the same base scope, carrying the slicer row both as slicing context
+  (drives the min-reset rules) and as `slicerElement` (drives the max-cap).
+
+### Type slicing on an unsliced base (`...WhereDiffsConstrainTypes`, `PPP:493-672`) — the DEV-020 mechanism
+
+Recognition (`diffsConstrainTypes`, `PU:1806-1849`): all diff matches on a `[x]` path whose tails extend
+the choice stem; the type of each slice is taken from its single `type`, else **inferred from the path
+suffix or the sliceName suffix** — so Java applies the implicit type constraint in *both* syntactic forms:
+a type slice with no stated `type` gets the inferred code added to its differential
+(`PPP:571-572`), where .NET only constrains the renamed form
+([OQ-018](14-open-questions.md#oq-018--implicit-type-constraint-only-for-the-renamed-form) Java side answered).
+Slice names are enforced to the canonical `<stem><Type>` form — auto-set when absent, error when wrong
+unless `autoFixSliceNames` (which validator_cli sets to true).
+
+Steps that produce the [DEV-020](13-deviation-register.md#dev-020--type-slicing-entry-normalization-java-rewrites-the-sliced-element-net-merges-it-as-written-ch6)
+gradient, now fully pinned:
+
+1. Without an authored intro ("shortcut"), a synthetic entry is inserted into the **live differential**
+   (removed afterwards): *typed* (types = the sliced types) on R3 and — because `newSlicingProcessing`
+   defaults to false — effectively also on R4+; the intended R4+ behavior is *untyped* (`PPP:504-529`, with
+   a Zulip link in the comment). Shape checks reject `ordered=true`, >1 discriminator, non-`type`/`$this`
+   discriminators (`PPP:542-557`).
+2. After processing the entry, its slicing is **rebuilt unconditionally** as `type:$this`/CLOSED/unordered —
+   discarding whatever the differential said (`PPP:595-598`, comment: "type slicing is always closed; the
+   differential might call it open, but that just means it's not constraining the slices it doesn't
+   mention").
+3. A slice with `min>0` must be the **last** diff match (else throw `INVALID_SLICING…`); when legal the
+   entry's min is raised **to literal 1** (not the slice's min, not a sum — `PPP:611-616`) and the slice's
+   type is latched as `fixedType`, which then **removes all other types from the entry** (`PPP:638-645`).
+4. Coverage check (`PPP:646-667`): if any type still allowed on the entry has no matching type slice, the
+   slicing is flipped back to **OPEN** — the "always closed" comment is overstated. Exception: when the
+   base path contains `xtension.value` *and* the shortcut form was used, the unsliced types are instead
+   **deleted from the entry** and it stays CLOSED (`PPP:657-663`).
+
+So: obs-2 (slice states type only) → rebuild CLOSED, 12 types unsliced → reopened OPEN, 13 types kept;
+obs-2a (entry itself constrained to CC) → nothing unsliced → stays CLOSED; obs-2b (slice min=1) → entry
+min := 1, fixedType collapses the type list → nothing unsliced → CLOSED. Exactly the golden gradient.
+Quirk: after each slice recursion, `typeList.size() > start + 1` (i.e. ≥ 3 rows) resets the slice's min
+to 0 (`PPP:630-632`) — an apparent off-by-one, quoted verbatim in the extract.
+
+### Named slices: min reset, max cap, and the disabled slicer inheritance
+
+- **Slice min** (`PPP:801-810`, only when the diff slice states no `min`): under non-CLOSED slicing (and
+  when the base row is not itself a slice — protects reslices) min is reset to **0** — *except* paths
+  ending `xtension.value[x]` ("hack work around for problems with snapshots in official releases": published
+  extension snapshots have value[x] slices whose min was never reset). Under CLOSED slicing min resets to 0
+  only with **≥ 2 named slices** ("they share the min cardinality between them"); a *single* slice under
+  CLOSED **inherits the entry's min**. .NET unconditionally resets to 0 via the pristine slice base (ch4) —
+  the two agree only in the plain open-slicing case.
+- **Slice max** is silently **capped to the slicer's max** when it exceeds it (`PPP:816-818`) — .NET has no
+  such cap (the diamond problem, ch5).
+- **`APPLY_PROPERTIES_FROM_SLICER = false`** (`PPP:42-58`): a fix making slices inherit the slicer's
+  properties (the profiling text "It also contains the unconstrained definition of the element that is
+  sliced" read as inheritance) exists but is disabled — "the community decided not to apply this fix in
+  practice, and to change(/clarify) the text above" (Zulip: #IG-creation, "Slices not inheriting preferred
+  bindings from root"). Both engines therefore regenerate slices from the *unmerged base element*, by
+  different mechanisms (.NET: pristine slice-base clone; Java: `currentBase.copy()`). Direct OQ-001/OQ-020
+  material: the community already adjudicated *entry-properties-do-not-copy-down* once — yet the
+  preprocessor copies entry *children* down (DEV-025), a tension worth a WGM question.
+- **`checkToSeeIfSlicingExists`** (`PPP:955-987`): a named slice arriving with no slicer row in the result
+  gets one injected — `value:url`/OPEN for `.extension` paths, `type:$this`/CLOSED for named+typed slices
+  landing on an unsliced `[x]` element — and any *other* path gets **no slicer and no diagnostic** (silent
+  third outcome; sdf-28 violated without comment).
+
+### Merging onto an already-sliced base (`processPathWithSlicedBaseDefault`, `PPP:1225-1482`)
+
+The in-code contract (`PPP:1202-1207`): definition order must be maintained regardless of `ordered`; slice
+names must match; new slices append at the end; "corallory [sic]: you can't re-slice existing slices. is
+that ok?" (partially stale — see reslicing below).
+
+- **Slicing-compatibility checks** run only when the diff *restates* the slicing entry (`PPP:1229-1239`):
+  `ordered` may not change in either direction (`orderMatches`, `PU:2372`); the base's discriminator list
+  must be an order-sensitive *prefix* of the diff's — appending discriminators is allowed, dropping or
+  reordering is not (`discriminatorMatches`, `PU:2376-2389`); `ruleMatches` (`PU:2392-2395`) allows
+  anything over base OPEN, only OPENATEND over base OPENATEND, and CLOSED **or OPENATEND** over base CLOSED
+  (the last a nominal *loosening* that is tolerated). The rules check is **skipped entirely for choice
+  elements** (`!currentBase.isChoice()`, `PPP:1238`). All three throw `DefinitionException` on mismatch.
+  This is the §5.1.0.17 lattice, approximately — where .NET checks nothing (OQ-005).
+- **The diff's slicing merges onto the base's** via `updateFromSlicing` (`PU:2351-2370`): `ordered` and
+  `rules` overwrite when stated (this is how open→closed lands), discriminators union-append keyed by
+  (type,path), never removed; `slicing.description` is not merged.
+- **Base slices are matched strictly in order by sliceName** (`PPP:1321`); a matched slice's scope recurses
+  with `trimDifferential := closed`; an unmatched base slice is copied through (slicing component stripped,
+  children raw-copied). A diff slice whose name matches a base slice *later* than the current position
+  falls to the append stage and throws `Named items are out of order in the slice`.
+- **Closed enforcement:** remaining diff slices against a CLOSED base slicing throw `The base snapshot marks
+  a slicing as closed, but the differential tries to extend it…` — **except when the sliced path ends in
+  `[x]`** ("we're going to constrain a slice that actually implicitly exists", `PPP:1364-1369`).
+- **New slices** are cloned from the base *slicer*, get **own min := 0** ("we're in a slice, so it's only a
+  mandatory if it's explicitly marked so", `PPP:1390`) before the diff merges, and — uniquely on this path —
+  pick up min/max from the root element of their **single** type profile (mandatory profile root raises the
+  slice min, non-repeating profile root caps max, `PPP:1398-1417`); *multiple* type profiles on a new slice
+  throw a hard `Error("Not handled: multiple profiles at …")` (`PPP:1419`).
+- **Reslicing:** a diff slice id with `/` in its tail re-targets the template to the already-emitted derived
+  parent slice (looked up by regenerated id, `PPP:1377-1384`) — one level only ("this is wrong if there's
+  more than one reslice (todo: one thing at a time)"). Note the diff dive-straight-in case: when diff[0] is
+  a named slice with no slicing entry, the *copied base slicer* is stamped `SNAPSHOT_auto_added_slicing`
+  (`PPP:1250`) — even though the base's entry was authored — with min-sum consequences below.
+- **Diff silent about a sliced element** (`PPP:1657-1721`): with inner diff matches the walk continues under
+  the slicer; otherwise slicer + children + all named slices are bulk-raw-copied.
+
+### Type slicing over an already-sliced base (`PPP:1494-1655`)
+
+Same synthetic-slicer/version machinery and shape/name checks as the simple path; the emitted entry is again
+forced `type:$this`/CLOSED/unordered (`PPP:1584-1588`) — but **this path has no reopen logic**: the
+coverage check of `PPP:646-667` has no counterpart here, so a type slicing over a *sliced* base stays
+CLOSED unconditionally (asymmetry with the unsliced-base path). Base type-slice ranges are collected by
+`findBaseSlices` (keyed by each base slice's **first** type code) and matched by exact type-code equality;
+diff slices matching a base slice merge into its range, unmatched ones generate from the slicer scope.
+**Unhandled base slices are replayed against a fake empty differential** (`PPP:1635-1650`) — re-emitted
+through the normal merge machinery rather than dropped, so the forced CLOSED never prunes base content.
+Robustness: an empty `baseSlices` list crashes with `IndexOutOfBoundsException` at `PPP:1652`.
+
+### The slicing-entry min-sum gate (`PU:976-1036`)
+
+A post-generation sweep over the finished snapshot counts each slice group's min/max sums (counter flushed
+when a shallower-or-equal-depth foreign path appears; groups extending to the snapshot's last element are
+**never checked**). On flush, gated by `Base.max != "1"` (a proxy for "not type slicing" — comment and code
+diverge): if the slice mins sum above the entry's min, then **if the entry is flagged
+`SNAPSHOT_auto_added_slicing` its min is silently overwritten with the sum** (`PU:998-999`); otherwise a
+message is raised — ERROR only `forPublication`, else INFORMATION, always `ignorableError`. Max-sum
+overflow is always INFORMATION; a min-sum > max-sum yields a WARNING whose text prints the wrong values
+(entry min/max instead of the sums). Net effect: **whether the differential restates the slicing entry
+decides between silent repair and a report** — the DEV-020 C2 mechanism, now with corrected citations
+(`PPP:343-345` extension entries, `PPP:1250` sliced-base dive-in; the old `au-med-k` attribution to
+`:343-345` was wrong).
+
+### The Base component of slices — agreement with .NET
+
+`updateFromBase` (`PU:2004-2020`) copies `base.path/min/max` **verbatim from the sliced element's Base
+component** for the entry and every slice row alike — `Base.min` is never reset to 0 (only the slice's *own*
+min is zeroed). This matches .NET's deep-copy-without-reset (ch10), settling the slice-`Base.min` question
+as **inter-engine agreement**; what neither engine has is spec text saying which is right (sdf-8b silence).
+
+### What Java does *not* do (verified absences, this scope)
+
+- `@default` slices: the reserved name appears nowhere in the generator — same as .NET (agreement).
+- `position`/`exists` discriminators: no generator-side support (the preprocessor's additional-base
+  machinery throws "Not supported yet" on them; the main path never interprets them).
+- eld-16 slice-name grammar: not validated (reslice `/` convention interpreted, rest uninspected) — but
+  unlike .NET, wrong *type-slice* names are errors and missing ones are synthesized.
+- `openAtEnd`: accepted through the rules lattice, never enforced as an ordering constraint — matching
+  .NET's non-enforcement (agreement in outcome, not in checking).
 
 ## Deviations
 - [DEV-008](13-deviation-register.md#dev-008--extension-header-slicing-element-ch6) extension header slicing.
@@ -264,12 +470,15 @@ reslices into the slice sequence — matching the id algorithm's `slice/reslice`
 - [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12)
   groups (c) slice-name conventions, (g) non-repeating-element slicing, (j) slice-cardinality arithmetic
   (= DEV-007).
+- [DEV-033](13-deviation-register.md#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6) —
+  Java preprocessor bug (confirmed packet J-a): sliceStuff matching by (path, sliceName) only contaminates
+  foreign extension-slice `value[x]` children and silently drops the intended constraints (on-questionnaire).
 
 ## Open questions
 - [OQ-003](14-open-questions.md#oq-003--slicing-non-repeating-elements) slicing non-repeating elements
-  (.NET side answered 2026-08-26 — accepted without issue).
+  (both sides answered — .NET accepts without issue; Java errors unless capped-to-1 or type slicing).
 - [OQ-005](14-open-questions.md#oq-005--enforcing-slicingrules--closed--openatend) enforcing closed/openAtEnd
-  (.NET side answered 2026-08-26 — rules/ordered never read).
+  (both sides answered — .NET never reads rules/ordered; Java enforces a partial lattice).
 - [OQ-006](14-open-questions.md#oq-006--sliceisconstraining) sliceIsConstraining.
 - [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors) error taxonomy — new
   row: explicit extension slicing-entry children silently dropped.
