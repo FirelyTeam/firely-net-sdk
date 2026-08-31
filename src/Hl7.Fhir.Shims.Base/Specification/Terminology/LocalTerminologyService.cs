@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -193,8 +194,14 @@ public class LocalTerminologyService : BaseTerminologyService
         if (cc.Coding.Count == 1)
             return await validateCodeVs(vs, cc.Coding.Single(), abstractAllowed).ConfigureAwait(false);
 
-        // Else, look for one succesful match in any of the codes in the CodeableConcept
-        var callResults = await T.Task.WhenAll(cc.Coding.Select(coding => validateCodeVs(vs, coding, abstractAllowed))).ConfigureAwait(false);
+        // Else, look for one succesful match in any of the codes in the CodeableConcept.
+        // These are run sequentially (rather than in parallel) since the caller-supplied resolver
+        // used to resolve the codings is not guaranteed to be safe for concurrent use.
+        var callResults = new List<ValidateCodeResult>();
+        foreach (var coding in cc.Coding)
+        {
+            callResults.Add(await validateCodeVs(vs, coding, abstractAllowed).ConfigureAwait(false));
+        }
         var successResult = callResults.FirstOrDefault(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
 
         if (successResult is not null)

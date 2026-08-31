@@ -6,6 +6,8 @@ using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
+using System.Linq;
+using System.Threading;
 using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -192,6 +194,147 @@ namespace Hl7.Fhir.Specification.Tests
 
             var ex = await expandAction.Should().ThrowAsync<FhirOperationException>();
             ex.Which.Status.Should().Be((System.Net.HttpStatusCode)422);
+        }
+
+        // Regression test for https://github.com/FirelyTeam/firely-net-sdk/issues/3582:
+        // validating a multi-coding CodeableConcept used to fan out with Task.WhenAll, so a
+        // non-thread-safe caller-supplied resolver (e.g. a scoped EF Core DbContext) could see
+        // overlapping calls from a single logical validate-code operation.
+        [TestMethod]
+        public async Task ValidateCodeVsDoesNotCallResolverConcurrentlyForMultiCodingCodeableConcept()
+        {
+            var resolver = new ConcurrencyTrackingResolver();
+            var service = new LocalTerminologyService(resolver);
+
+            var valueSet = new ValueSet
+            {
+                Url = "http://fire.ly/ValueSet/empty-vs",
+                Expansion = new ValueSet.ExpansionComponent()
+            };
+
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding("http://fire.ly/CodeSystem/a", "code-a"));
+            cc.Coding.Add(new Coding("http://fire.ly/CodeSystem/b", "code-b"));
+            cc.Coding.Add(new Coding("http://fire.ly/CodeSystem/c", "code-c"));
+
+            var parameters = new ValidateCodeParameters()
+                .WithValueSet(url: valueSet.Url, valueSet: valueSet)
+                .WithCodeableConcept(cc);
+
+            await service.ValueSetValidateCode(parameters);
+
+            resolver.MaxObservedConcurrency.Should().Be(1);
+        }
+
+        private class ConcurrencyTrackingResolver : IAsyncResourceResolver
+        {
+            private int _active;
+
+            public int MaxObservedConcurrency { get; private set; }
+
+            public System.Threading.Tasks.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+
+            public System.Threading.Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
+
+            public async System.Threading.Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+            {
+                var current = Interlocked.Increment(ref _active);
+                MaxObservedConcurrency = Math.Max(MaxObservedConcurrency, current);
+                try
+                {
+                    // Mimics a non-thread-safe resolver (e.g. a scoped EF Core DbContext): if this
+                    // method were ever re-entered concurrently, MaxObservedConcurrency would exceed 1.
+                    await System.Threading.Tasks.Task.Delay(20).ConfigureAwait(false);
+                    return ResolverException.NotFound();
+                }
+                finally
+                {
+                    Interlocked.Decrement(ref _active);
+                }
+            }
+        }
+
+        // Regression test for https://github.com/FirelyTeam/firely-net-sdk/issues/3582:
+        // expanding a "grouping" value set (compose.include[].valueSet listing 2+ canonicals) used to
+        // fan out with Task.WhenAll in ValueSetExpander.processValueSetGroup, so a non-thread-safe
+        // caller-supplied resolver could see overlapping calls from a single logical expand operation.
+        [TestMethod]
+        public async Task Expand_GroupingValueSet_DoesNotCallResolverConcurrently()
+        {
+            var vsA = new ValueSet
+            {
+                Url = "http://fire.ly/ValueSet/vs-a",
+                Expansion = new ValueSet.ExpansionComponent
+                {
+                    Contains = new System.Collections.Generic.List<ValueSet.ContainsComponent>
+                    {
+                        new() { System = "http://fire.ly/CodeSystem/x", Code = "1" }
+                    }
+                }
+            };
+            var vsB = new ValueSet
+            {
+                Url = "http://fire.ly/ValueSet/vs-b",
+                Expansion = new ValueSet.ExpansionComponent
+                {
+                    Contains = new System.Collections.Generic.List<ValueSet.ContainsComponent>
+                    {
+                        new() { System = "http://fire.ly/CodeSystem/x", Code = "1" }
+                    }
+                }
+            };
+
+            var groupingVs = new ValueSet
+            {
+                Url = "http://fire.ly/ValueSet/grouping-vs",
+                Compose = new ValueSet.ComposeComponent
+                {
+                    Include = new System.Collections.Generic.List<ValueSet.ConceptSetComponent>
+                    {
+                        new() { ValueSet = new[] { vsA.Url, vsB.Url } }
+                    }
+                }
+            };
+
+            var resolver = new ConcurrencyTrackingCanonicalResolver(vsA, vsB);
+            var service = new LocalTerminologyService(resolver);
+
+            var parameters = new ExpandParameters().WithValueSet(valueSet: groupingVs);
+            await service.Expand(parameters);
+
+            resolver.MaxObservedConcurrency.Should().Be(1);
+        }
+
+        private class ConcurrencyTrackingCanonicalResolver : IAsyncResourceResolver
+        {
+            private readonly System.Collections.Generic.Dictionary<string, Resource> _resources;
+            private int _active;
+
+            public int MaxObservedConcurrency { get; private set; }
+
+            public ConcurrencyTrackingCanonicalResolver(params ValueSet[] valueSets) =>
+                _resources = valueSets.ToDictionary(vs => vs.Url, vs => (Resource)vs);
+
+            public System.Threading.Tasks.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+
+            public System.Threading.Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => throw new NotImplementedException();
+
+            public async System.Threading.Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+            {
+                var current = Interlocked.Increment(ref _active);
+                MaxObservedConcurrency = Math.Max(MaxObservedConcurrency, current);
+                try
+                {
+                    // Mimics a non-thread-safe resolver: if this method were ever re-entered
+                    // concurrently, MaxObservedConcurrency would exceed 1.
+                    await System.Threading.Tasks.Task.Delay(20).ConfigureAwait(false);
+                    return _resources.TryGetValue(uri, out var resource) ? resource : ResolverException.NotFound();
+                }
+                finally
+                {
+                    Interlocked.Decrement(ref _active);
+                }
+            }
         }
     }
 }
