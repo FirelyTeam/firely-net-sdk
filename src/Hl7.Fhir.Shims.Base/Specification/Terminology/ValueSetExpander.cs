@@ -155,10 +155,15 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 // > valueSet(s) only: Codes are 'selected' for inclusion if they are in all the referenced value sets
                 // "all the referenced sets" means we need to calculate the intersection of the expanded valuesets.
-                var expanded = await Tasks.Task.WhenAll(
-                    conceptSet.ValueSet!.Where(vs => vs is not null)
-                        .Select(vs => expandValueSetAndFilterOnSystem(vs!))).ConfigureAwait(false);
-                var concepts = expanded.Length == 1 ? expanded.Single() : expanded.Aggregate((l, r) => l.Intersect(r, _systemAndCodeComparer));
+                // These are expanded sequentially (rather than in parallel) since the caller-supplied
+                // ValueSetSource used to resolve them is not guaranteed to be safe for concurrent use, and
+                // the recursive expansion below shares the (non-thread-safe) inclusionChain across calls.
+                var expanded = new List<IEnumerable<ValueSet.ContainsComponent>>();
+                foreach (var vs in conceptSet.ValueSet!.Where(vs => vs is not null))
+                {
+                    expanded.Add(await expandValueSetAndFilterOnSystem(vs!).ConfigureAwait(false));
+                }
+                var concepts = expanded.Count == 1 ? expanded.Single() : expanded.Aggregate((l, r) => l.Intersect(r, _systemAndCodeComparer));
 
                 addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet!)}' would result in an expansion larger than the maximum expansion size.");
 
