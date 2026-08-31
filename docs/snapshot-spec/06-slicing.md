@@ -328,10 +328,12 @@ Steps that produce the [DEV-020](13-deviation-register.md#dev-020--type-slicing-
 gradient, now fully pinned:
 
 1. Without an authored intro ("shortcut"), a synthetic entry is inserted into the **live differential**
-   (removed afterwards): *typed* (types = the sliced types) on R3 and — because `newSlicingProcessing`
-   defaults to false — effectively also on R4+; the intended R4+ behavior is *untyped* (`PPP:504-529`, with
-   a Zulip link in the comment). Shape checks reject `ordered=true`, >1 discriminator, non-`type`/`$this`
-   discriminators (`PPP:542-557`).
+   (removed afterwards): *typed* (types = the sliced types) on R3, *untyped* on R4+ — but only when the
+   caller opts into `newSlicingProcessing` (`PPP:504-529`, with a Zulip link in the comment). The library
+   default is **false** (plain API callers get the old typed branch even on R5), while the HL7 test driver
+   turns it on per test with default *true* (`SnapShotGenerationTests.java:130,597` — only `dk1` opts out
+   in the R5 manifest), so **the golden files and the sweep oracle reflect the untyped branch**. Shape
+   checks reject `ordered=true`, >1 discriminator, non-`type`/`$this` discriminators (`PPP:542-557`).
 2. After processing the entry, its slicing is **rebuilt unconditionally** as `type:$this`/CLOSED/unordered —
    discarding whatever the differential said (`PPP:595-598`, comment: "type slicing is always closed; the
    differential might call it open, but that just means it's not constraining the slices it doesn't
