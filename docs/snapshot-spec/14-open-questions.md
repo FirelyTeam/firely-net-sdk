@@ -310,8 +310,9 @@ different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--wh
   same classes: unresolvable/incompatible profile = issue + continue, several profiles = silent skip
   (`SnapshotGenerator.cs:1243-1249`) where Java throws an `Error` in one path and picks the core type in the
   others (`PPP:914`).
-- **Java census (J-e, 2026-09-01; ch12 Java section):** `grep "throw new"` over the three generator files:
-  `DefinitionException` 70, `FHIRException` 68, **`java.lang.Error` 37** — the `Error`s reachable from author
+- **Java census (J-e, 2026-09-01; ch12 Java section):** live `throw new` sites over the three generator files
+  (comment lines excluded): `DefinitionException` 67, `FHIRException` 68, **`java.lang.Error` 30** — the
+  `Error`s reachable from author
   input include a slicing entry with children on a base that already has children (`PPP:382`, "please report
   issue to grahame@fhir.org"), two type profiles on a new slice (`PPP:1419`), a root `type` (`PU:883`/`1322`),
   a path outside the type (`PU:1021`), choice-group anomalies (`PU:1353` `"huh?"`, `PU:1362`). `Error`s bypass
@@ -540,8 +541,8 @@ obligations but no set-level rule; §5.1.0.10 (R5 propagation text) touches (c) 
   named in `type.profile`, or is the snapshot complete when it records the reference?
 - **The one non-diff-driven expansion in Java (J-e, 2026-09-01):** apart from the preprocessor copy-down,
   Java's walk expands children only where the differential has rows — except the slicing-entry inline dump
-  (`PPP:403-419`), which materializes a contentReference target's children under a sliced entry without diff
-  rows (DEV-025 flavor 1, comp-deep/t21). That is the only place either engine materializes structure the
+  (`PPP:402-419`), which materializes a contentReference target's children under a sliced entry precisely
+  when the entry has no diff child rows (DEV-025 flavor 1, comp-deep/t21). That is the only place either engine materializes structure the
   differential never mentions, and it exists for a mechanical reason (the slices need a base to be walked
   against), not a policy one.
 - **Status:** open (Phase 4 packet 3, 2026-08-26; type-profile dimension 2026-09-01) — WGM material; demo-able

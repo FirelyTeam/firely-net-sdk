@@ -118,8 +118,8 @@ Java has **three** behaviors for a referencing element, chosen by which walk pat
 | Walk path | Reference | `type` | Children |
 |---|---|---|---|
 | step-in when the diff constrains children and the base has none (one-match `PPP:858-896`, empty-match `PPP:1118-1156`) → `replaceFromContentReference` (`PU:1870-1874`) | **nulled** | **replaced by the target's types** | the target's subtree becomes the base for the diff rows (redirector stack) — same as .NET step 4 |
-| new/constrained slice under an already-sliced base (`PPP:1477-1479`) | **kept** | **cleared** | none — the slice path steps in only for typed elements (`PPP:1422`) |
-| slicing entry with inner diff rows on a base without children (`PPP:403-419`) | kept on the entry | (empty) | the target's children are **copied inline** under the entry from the base snapshot (`resolveContentReference` walks backwards to the nearest same-path non-slice element; paths rewritten by string replace; `updateFromBase` per row) — **no diff rows needed** |
+| the **last-emitted element** of a sliced-base path — the last new slice, or the entry when there are none (`PPP:1477-1479`; `outcome` is reassigned per new slice at `PPP:1385`) | **kept** | **cleared** | a typed new slice has already stepped in via `PPP:1422-1469` before the clear, so it *has* children; sibling slices emitted earlier keep their types |
+| the diff slices a contentReference element, the entry has **no** inner diff rows, and the base has no children (`PPP:402-419`, the `else` of the `hasInnerDiffMatches` test) | kept on the entry | (empty) | the target's children are **copied inline** under the entry from the base snapshot (`resolveContentReference` walks backwards to the nearest same-path non-slice element; paths rewritten by string replace; `updateFromBase` per row) — fires precisely **because** there are no diff rows |
 
 So DEV-023's flavor 2 (Java keeps the reference on child-expanded *slices*) and DEV-009's .NET-like
 null-and-retype are both Java — on different paths. The third row is the mechanism behind DEV-025 flavor 1

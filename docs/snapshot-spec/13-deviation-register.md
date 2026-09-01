@@ -380,7 +380,8 @@ status/resolution.
   every `#`-local contentReference in the whole snapshot (and the caller's differential) is prefixed with
   `http://hl7.org/fhir/StructureDefinition/<type>` — hard-coded core namespace, the SD url only for logical
   models (`PU:4367-4373`); not `updateURLs`. Flavor 2 = the sliced-base path `PPP:1477-1479` (reference kept,
-  `type` cleared) — whereas Java's two step-in paths (`PPP:858-896`, `1118-1156`) do exactly what .NET does
+  `type` cleared) — applied to the **last-emitted element** of that path only (`outcome` is reassigned per new
+  slice at `PPP:1385`), so sibling slices can even differ from each other — whereas Java's two step-in paths (`PPP:858-896`, `1118-1156`) do exactly what .NET does
   (null + type restored, `replaceFromContentReference` `PU:1870-1874`). So the survival difference is
   path-dependent inside Java, not a policy.
 - **Status:** confirmed empirically; Java code-pinned (both flavors).
@@ -457,10 +458,10 @@ status/resolution.
 - **Java bug candidate found in passing (M1q):** confirmed and graduated to its own entry —
   [DEV-033](#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6).
 - **Flavor 1 mechanism (J-e, 2026-09-01):** the sliced-contentReference re-expansion (comp-deep/t21) is the
-  slicing-entry inline dump `PPP:403-419`: when a slicing entry has inner diff rows and the base has no
-  children under it, the contentReference target's children are copied under the entry from the base
-  snapshot **without any diff rows requiring them** — the one exception to Java's otherwise diff-driven
-  expansion policy (ch11 §1).
+  slicing-entry inline dump `PPP:402-419`: when the diff slices a contentReference element whose entry has
+  **no** inner diff rows and the base has no children under it, the target's children are copied under the
+  entry from the base snapshot — structure no diff row asked for, the one exception to Java's otherwise
+  diff-driven expansion policy (ch11 §1).
 - **Status:** confirmed empirically; Java preprocessor deep-read done (Phase 3 packet J-a, 2026-08-31);
   flavor-1 mechanism pinned (J-e).
 

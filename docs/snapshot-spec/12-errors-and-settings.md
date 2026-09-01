@@ -200,8 +200,8 @@ flips the slice-min-sum severity INFORMATION → ERROR (`PU:1003`). Locations ar
 
 ### Throw census
 
-`grep "throw new"` over PU/PPP/PRE: `DefinitionException` 37 + 31 + 2, `FHIRException` 23 + 25 + 20, and
-**`java.lang.Error` 17 + 9 + 11**. Author-reachable `Error`s: slicing entry with children on a base that has
+`grep "throw new"` over PU/PPP/PRE, comment lines excluded: `DefinitionException` 34 + 31 + 2 = 67,
+`FHIRException` 23 + 25 + 20 = 68, and **`java.lang.Error` 15 + 4 + 11 = 30**. Author-reachable `Error`s: slicing entry with children on a base that has
 children (`PPP:382`, "please report issue to grahame@fhir.org"), two profiles on a new slice (`PPP:1419`),
 `type` on the first snapshot/differential element (`PU:883`, `1322`), element path not under the type name
 (`PU:1021`), choice-group duplicate child names (`PU:1353`, `"huh?"`) and two mandatory members (`PU:1362`),

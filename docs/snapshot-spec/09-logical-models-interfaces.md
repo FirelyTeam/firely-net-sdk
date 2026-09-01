@@ -134,7 +134,8 @@ Citations `PU`/`PPP` @ `b06c7ee`; detail in the materials extract `java-ch08-12-
   each non-sliced, non-prohibited element, every invariant whose FHIRPath is a parenthesised union of child
   names compared to the constant `1` (`= 1` mandatory group, `<= 1` optional group; `readChoices`/
   `processConstraint`, `PU:4820-4870`) defines a choice group; if exactly one member has `min = 1`, every other
-  member is set `max = 0` and its **subtree removed** from the snapshot; two mandatory members → `throw new
+  member is set `max = 0` (the member row stays) and all its **descendants are removed** from the snapshot;
+  two mandatory members → `throw new
   Error`; duplicate child names → `throw new Error("huh?")`. A logical-model/xml-choice-group idiom with no
   spec basis and no .NET counterpart.
 - **Interfaces**: nothing in the profile package, the context package or the rest of `conformance/` reads

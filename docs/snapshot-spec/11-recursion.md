@@ -117,9 +117,10 @@ Citations `PU`/`PPP` @ `b06c7ee`; detail in the materials extract `java-ch08-12-
 Java's answers to the four spec gaps:
 
 1. **Expansion-depth policy: the same diff-driven rule as .NET** — children are stepped into only where the
-   differential has child rows (`PPP:828-829`, `1077`, `1422-1424`, `1658`) — **plus one exception**: a
-   slicing entry with inner diff rows on a base without children gets the contentReference target's children
-   materialized inline without diff rows (`PPP:403-419`, ch8; DEV-025 flavor 1). No per-element override hook.
+   differential has child rows (`PPP:828-829`, `1077`, `1422-1424`, `1658`) — **plus one exception**: when the
+   diff slices a contentReference element and the entry has **no** inner diff rows on a base without
+   children, the target's children are materialized inline under the entry (`PPP:402-419`, ch8; DEV-025
+   flavor 1) — the one place structure appears that no diff row asked for. No per-element override hook.
 2. **Cycle detection: one stack, one flag.** `snapshotStack` (instance list of **derived** urls) is checked and
    pushed per `generateSnapshot` (`PU:774-778`, throw `Circular snapshot references detected … (stack = …)`),
    popped in `finally` (`PU:1089`); the SD object itself is flagged `generatingSnapshot` for the duration
@@ -129,7 +130,7 @@ Java's answers to the four spec gaps:
    base), `PU:2080` and `PU:2638` (xver synthesis), `PPP:710` (xver template), `PPP:730` (snapshot-less type
    profile). Any `Exception` → the half-built snapshot is **nulled** (`PU:1078-1084`; a `java.lang.Error` is
    not caught there, so those paths do leave a partial snapshot behind — ch12). Unguarded: the `findProfile`
-   base-chain walks in `isMatchingType`/`isCompatibleType`/`typeMatchesAncestor`/`checkTypeParameters`
+   base-chain walks in `isMatchingType`/`isCompatibleType`/`checkTypeParameters`/`checkTypeDerivation`
    (`PU:1665`, `1477`, `1175`, `3280`) loop forever on a cyclic `baseDefinition` chain (cf. .NET's unguarded
    root cascade).
 3. **On-demand generation is unconditional** (no settings gate): snapshot-less bases and type profiles are
