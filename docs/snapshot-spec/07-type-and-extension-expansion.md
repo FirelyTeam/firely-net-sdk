@@ -289,7 +289,7 @@ Bad/Invalid/Unknown status → `FHIRException`, Valid → synthesized SD + re-en
 - **The template is used only when the base element's type is `Extension` or `Resource`** (`PPP:763-772`).
   For a Resource the template's min/max are reset to the base's ("temporary work around"). For every other
   type — Address, Quantity, Identifier profiles — the template stays null and the plain base row is used.
-- The template is then filled from the base row **fill-if-absent** for 27 properties (`fillOutFromBase`,
+- The template is then filled from the base row **fill-if-absent** for 24 properties (`fillOutFromBase`,
   `PU:1886-1945`: sliceName, label, code, definition, short, comment, requirements, alias, min, max, fixed,
   pattern, example, min/maxValue, maxLength, mustSupport, isSummary, isModifier(+reason), mustHaveValue,
   binding, constraint by key, extension by url), so an extension definition's root wins over the base's
@@ -331,7 +331,8 @@ profile[0])` → xver (Valid only, re-entrant generation) → `fetchTypeDefiniti
 failures are only `log.debug`/`log.warn`ed. Rules shared by the paths:
 
 - **Base children win.** The one-match path steps into the type only when the base snapshot has no children
-  at this element (`!baseWalksInto`, `PPP:829`; same test at `PPP:1080`, `1423`, `1672`). If a parent profile
+  at this element (`!baseWalksInto`, `PPP:829`, also `1423`; the same base-has-children test as
+  `baseHasChildren` at `PPP:1080`, `1672`). If a parent profile
   already expanded `Patient.address` (because it constrained `address.city`), Java walks the base children and
   **never opens the type profile's snapshot** — the profile url stays on `type.profile` for the validator.
   This is the inverse of .NET's "type beats base" (OQ-002).

@@ -189,13 +189,17 @@ Java does **not** deep-copy the base snapshot as a whole. The walk (`ProfilePath
 differential** — and emits fresh copies row by row (`currentBase.copy()` + `updateURLs` + `updateFromBase` per
 row, ch4/ch10). Consequences relative to .NET's copy-then-merge:
 
-- **Constraints**: no rebasing; paths are remapped only during step-ins (`fixedPathDest`).
-- **Specializations**: `cloneSnapshot(baseSnapshot, baseType, derivedType)` (`PU:1493-1508`) copies every base
-  row rewriting **both `id` and `path`** by `replaceFirst(baseType, derivedType)` — a first-occurrence string
-  replace on the type *name* (safe because the type name is always the first segment). .NET's `Rebase`
-  rewrites paths only and regenerates ids separately (OQ-009).
-- **Logical models**: no rebase at all — Java requires the differential's root path to be the type name
-  (`checkDifferential`, ch2) rather than renaming the base.
+- Rebasing is keyed on **`derivation`, not `kind`** (`PU:828-832`): **constraint** SDs get no rebase (paths are
+  remapped only during step-ins, `fixedPathDest`); **specializations — logical models included** (every
+  logical-model test in the shared suite is a specialization) — go through `cloneSnapshot(baseSnapshot,
+  base.getTypeName(), derived.getTypeName())` (`PU:1493-1508`), which copies every base row rewriting **both
+  `id` and `path`** by `replaceFirst(baseTypeName, derivedTypeName)` — a first-occurrence string replace on the
+  type *name* (safe because the name is always the first segment). `getTypeName()` returns the url **tail**
+  for a logical model whose `type` is an absolute url (`StructureDefinition.java:5347-5350`), so
+  `…/EHDSDocument` → `…/EHDSImagingReport` rebases `EHDSDocument.x` to `EHDSImagingReport.x` — the same
+  last-segment rule .NET applies. .NET's `Rebase` rewrites paths only and regenerates ids separately (OQ-009).
+  `checkDifferential` (ch2) is handed the same `derived.getTypeName()`, so the differential's root must already
+  carry the derived name — consistent with the rebase, not an alternative to it.
 - Ids are always regenerated afterwards (`setIds`, `PU:886`, ch10); `base` components are inherited/derived
   per row (`updateFromBase`, ch10) and, for specializations, any element still lacking one gets a
   self-referential `base` (`PU:969-975`, sdf-8b fill).

@@ -780,8 +780,9 @@ status/resolution.
 
 ## DEV-038 — Type-profile scope: .NET merges any type profile; Java only Extension/Resource roots, and only when the base has no children (ch7)
 - **Evidence:** .NET `SnapshotGenerator.cs:1208-1503` (`mergeTypeProfiles`, Phase 2 packet 4); Java
-  `PPP:674-787` (template selection), `PPP:763` (Extension/Resource gate), `PPP:829`/`1080`/`1423`/`1672`
-  (`!baseWalksInto` gates), `PU:2643-2648` (datatype profiles discarded in the doc override) — J-d
+  `PPP:674-787` (template selection), `PPP:763` (Extension/Resource gate), the base-has-children gates
+  (`!baseWalksInto` `PPP:829`/`1423`, `baseHasChildren` `PPP:1080`/`1672`), `PU:2643-2648` (datatype
+  profiles discarded in the doc override) — J-d
   2026-09-01.
 - **.NET:** a single type profile that differs from the base's implied profile is always merged — the whole
   rebased snapshot when the diff has children (type beats base, OQ-002), the profile **root** alone when it

@@ -47,7 +47,8 @@ Does Java use the same order? What *should* the order be?
   ("{Address Snap + Diff + Address Snap (WRONG!) + MyAddress Diff}"). So .NET's answer is not even
   consistently "type wins" — it degrades with derivation depth. Ch7.
 - **Java side (J-d, 2026-09-01): base wins.** Java opens a type profile's snapshot for children only when the
-  base snapshot has **no children** at that element (`!baseWalksInto`, `PPP:829`/`1080`/`1423`/`1672`); if a
+  base snapshot has **no children** at that element (`!baseWalksInto` `PPP:829`/`1423`, `baseHasChildren`
+  `PPP:1080`/`1672`); if a
   parent profile already expanded the element, the walk continues over the base children and the type
   profile's child constraints are never merged — the profile is left to the validator via `type.profile`. When
   the profile snapshot *is* opened, its children become the base rows for the diff's child constraints

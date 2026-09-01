@@ -145,3 +145,14 @@ footnote glyphs in the reworked interpretation table, stale example numbering, t
 changes-list claiming an `open` code the rendered enum lacks, and others. These target the R6 ballot, so
 they are the most time-sensitive entries in this register.
 **Status:** draft — verify each is still present in the current build immediately before filing.
+
+### RFC-015 — `Extension.url` fixed-value convention in snapshots
+extensibility §2.1.5.0.1 states the url rule for *instances* only; nothing says whether a generated snapshot
+carries `Extension.url.fixedUri` (vs `pattern`, vs nothing), what value nested complex-extension parts fix
+(relative name vs absolute `url#part`), or whether a derived extension profile keeps its *base* extension's
+url as the fixed value. The two implementations differ: .NET synthesizes the fixed url when absent, Java only
+inherits an authored one, and Java's golden files bless fixed-less extension snapshots
+([DEV-037](13-deviation-register.md#dev-037--extensionurl-fixeduri-net-synthesizes-java-inherits-only-ch7)).
+Proposal: one sentence in the profiling/extensibility pages stating whether a generator MAY/SHALL fix
+`Extension.url`, with what value, and the nested-part convention. **Status:** stub (J-d, 2026-09-01) — write
+up before the WGM brief; check the R6 build's defining-extensions page first (context notes were reworked).
