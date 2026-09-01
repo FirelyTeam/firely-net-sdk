@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR 20181211] R4: NEW
 
         // Constraining named slice w/o matching slice in base profile
-        public static readonly Issue PROFILE_ELEMENTDEF_SLICENAME_NOMATCH = Issue.Create(10012, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue PROFILE_ELEMENTDEF_SLICENAME_NOMATCH = Issue.Create(10018, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         internal static OperationOutcome.IssueComponent CreateIssueSliceNameNoMatch(ElementDefinition elementDef)
         {
             var sliceName = elementDef.SliceName;
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR 20190902] #1090 SnapshotGenerator should support logical models
         // StructureDefinition.type (1...1) is empty or missing
         // However for logical models we only need root element name, can parse from first element constraint
-        public static readonly Issue PROFILE_STRUCTURE_TYPE_MISSING = Issue.Create(10014, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Required);
+        public static readonly Issue PROFILE_STRUCTURE_TYPE_MISSING = Issue.Create(10019, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Required);
 
         internal OperationOutcome.IssueComponent addIssueStructureTypeMissing(StructureDefinition sd)
         {
