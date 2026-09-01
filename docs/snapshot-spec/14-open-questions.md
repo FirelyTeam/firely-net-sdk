@@ -19,7 +19,18 @@ differential doesn't constrain `max`. Which cardinality does the snapshot elemen
   external root's constraints (incl. cardinality) onto the element even when the diff has no children
   (`SnapshotGenerator.cs:1464-1476`, ch7).
 - Related: the general priority question OQ-002.
-- **Status:** open.
+- **Java side (J-d, 2026-09-01):** the diamond **cannot arise for datatype profiles** — a datatype profile's
+  root is never merged (the base row is the template, `PPP:775-778`; the doc-override discards non-Extension/
+  Resource profiles, `PU:2643-2648`), so the element keeps the base's `0..1` and the profile root's `0..*` is
+  invisible in the snapshot (the validator sees it through `type.profile`). For **extensions** the profile root
+  *is* the template (`PPP:763-772`), so an extension definition's root `max` flows into the slice unless the
+  diff states one, then capped to the slicer's max (`PPP:816-818`); its root `min` is overwritten to 0 for open
+  slicings (`PPP:801-805`). New slices under an already-sliced base get the R5 root-cardinality rule applied
+  one-directionally: `min` raised / `max` lowered toward the profile root, never loosened (`PPP:1398-1420`). So
+  where .NET's answer is "type root wins, even loosening", Java's is "datatypes: base wins; extensions: root
+  wins unless the slicing is open; sliced base: tighten only" —
+  [DEV-038](13-deviation-register.md#dev-038--type-profile-scope-net-merges-any-type-profile-java-only-extensionresource-roots-and-only-when-the-base-has-no-children-ch7).
+- **Status:** open (Java side 2026-09-01).
 
 ## OQ-002 — Priority: type-profile constraints vs base constraints
 When an element's type carries a profile, and both the base element and that type profile constrain the same
@@ -35,7 +46,19 @@ Does Java use the same order? What *should* the order be?
   snapshot re-applies original type values over the base's overrides
   ("{Address Snap + Diff + Address Snap (WRONG!) + MyAddress Diff}"). So .NET's answer is not even
   consistently "type wins" — it degrades with derivation depth. Ch7.
-- **Status:** open.
+- **Java side (J-d, 2026-09-01): base wins.** Java opens a type profile's snapshot for children only when the
+  base snapshot has **no children** at that element (`!baseWalksInto`, `PPP:829`/`1080`/`1423`/`1672`); if a
+  parent profile already expanded the element, the walk continues over the base children and the type
+  profile's child constraints are never merged — the profile is left to the validator via `type.profile`. When
+  the profile snapshot *is* opened, its children become the base rows for the diff's child constraints
+  (diff > profile), and the profile root is merged only for Extension/Resource types (OQ-001). So the two
+  engines answer the question **oppositely** (.NET: type > base; Java: base > type, profile consulted only to
+  fill a void), and Java's answer has the merit of never producing the "WRONG!" re-application .NET documents —
+  at the cost of dropping the profile's constraints from the snapshot entirely
+  ([DEV-038](13-deviation-register.md#dev-038--type-profile-scope-net-merges-any-type-profile-java-only-extensionresource-roots-and-only-when-the-base-has-no-children-ch7)).
+  WGM framing: is a snapshot required to *close over* type profiles at all, or is `type.profile` a validator
+  instruction (cf. OQ-021)?
+- **Status:** open (Java side 2026-09-01).
 
 ## OQ-003 — Slicing non-repeating elements
 May a profile slice an element with `max = 1` (outside the choice-type case)? .NET has a disabled reject
@@ -258,6 +281,24 @@ different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--wh
   `sliceIsConstraining` ignored (OQ-006). Java has **no silent-New and no repair-with-issue** classes for
   constraint profiles; .NET has no throw class for path grammar. Neither implementation's taxonomy is
   derivable from the spec.
+- **Java rows, type expansion + base resolution (J-d, 2026-09-01; ch7/ch3 Java sections):** **throw**:
+  type profile incompatible with the element type (`Validation_VAL_Profile_WrongType2`, `PPP:716`); walking
+  into an unsliced multi-type element (`_has_children__and_multiple_types…`) — but only in three of five
+  code paths, the two commonest silently expand against `Element` (JI-17); no type and no contentReference on a
+  walked-into element; unresolvable type SD; xver url with Bad/Invalid/Unknown status (`FHIRException`);
+  `check-profile-version` mismatch (`FHIRException`); constraint SD whose `type` differs from its base's;
+  missing `type`/`derivation`; **two `type.profile`s on a new slice under a sliced base → `java.lang.Error`
+  "Not handled: multiple profiles"** (`PPP:1418-1420`) and a type on the first snapshot element → `java.lang.Error`
+  (`PU:882-883`) — the spec's legal disjunction and a structural check both surface as JVM `Error`s, not
+  exceptions; **ERROR message, continue**: profile/type inconsistency found by the final sweep (`PU:1067-1071`);
+  **WARNING**: unknown profile in the final sweep; **log only** (`log.warn`/`log.debug`/`log.info`): unresolvable
+  type profile at merge time under the default `allowUnknownProfile = ALL_TYPES`, failed `getProfileForDataType`
+  lookup, profile-element reference into a mid-generation profile ("consult Grahame Grieve", `PPP:745`);
+  **silent**: unresolvable datatype profile in the doc override (`msg=false`, `PU:2647`), stripped `#fragment`
+  (`PU:4100-4102`), inherit-obligations target with a different `baseDefinition` (`PU:1210`). Contrast .NET's
+  same classes: unresolvable/incompatible profile = issue + continue, several profiles = silent skip
+  (`SnapshotGenerator.cs:1243-1249`) where Java throws an `Error` in one path and picks the core type in the
+  others (`PPP:914`).
 - **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26; Java rows 2026-09-01).
 
 ## OQ-015 — The generator mutates its input differential
@@ -296,7 +337,14 @@ and does Java accept differential-less SDs in both roles?
   (`PPP:170`), so every base row is copied with the fill obligations: snapshot = base copy. Same answer as
   .NET's main path. Java's behavior in the *type-profile-root* role (.NET's refusing path) is ch7 material
   for packet J-d.
-- **Status:** open (Phase 2 packet 3, 2026-08-24; Java main path 2026-09-01).
+- **Java side, type-profile-root role (J-d, 2026-09-01):** also accepted. Java has no root-resolution
+  cascade — a type profile's root is simply its snapshot's first element (`PPP:754`), and a snapshot-less
+  profile is generated on demand first (`PPP:725-731`), which for a differential-less SD is the base copy
+  above. No "has no differential" check exists anywhere in the Java path. So Java answers the question
+  consistently in both roles ("snapshot = base"), .NET only in one — the .NET refusal is an implementation gap
+  (its own TODO says so), not a defensible reading of the spec. The remaining open point is purely
+  spec-side: should the spec *say* that a differential-less SD is legal and means "no constraints"?
+- **Status:** open, spec-side only (Phase 2 packet 3, 2026-08-24; Java both roles 2026-09-01).
 
 ## OQ-017 — Starting expansion below the root: extension vs fragment syntax
 R5 documents the `elementdefinition-profile-element` extension (on `type.profile`) nominating an element
@@ -312,7 +360,20 @@ path for *that* appears broken (DEV-018 — bare-name jump throws; id-vs-name mi
   (`SnapshotGenerator.cs:1364`) — while the no-expansion path compares the fragment to the **sliceName**,
   `:1480-1485`.)
 - Does Java's generator honor the extension (it originated there), the fragment, or both?
-- **Status:** open (Phase 2 packet 4, 2026-08-24).
+- **Java side (J-d, 2026-09-01): the extension, by element id, partially; the fragment not at all.**
+  `elementdefinition-profile-element` drives template selection (`PPP:734-749`: the element with that **id**
+  in the profile snapshot becomes the merge template — for Extension/Resource-typed bases), the type
+  compatibility check (`PPP:715` → `PU:1650-1662`: the nominated element's types must intersect the diff types)
+  and the final type sweep (`PU:1058-1066`); it is **not** used for the children walk-in, which opens the
+  profile at its root (`PU:2673` in-code todo: "should we change down the profile_element if there's one?").
+  The `url#fragment` form is **silently stripped** by `findProfile` (`PU:4100-4102`) and never read. So the
+  two engines implement **disjoint** syntaxes: .NET fragment-only (id-vs-name confusion, DEV-018), Java
+  extension-only (id-based, root-only expansion). The spec documents only the extension (R5 §5.1.0.16), which
+  settles the syntax question in Java's favour; what remains open is the **generator obligation**: must the
+  snapshot expand the profiled element's *children* from the nominated sub-tree (neither engine does today),
+  or is "apply the profile starting at the nominated element" a validator-only instruction? No shared test
+  covers either syntax — a test would settle the expected snapshot shape.
+- **Status:** open, narrowed to generator obligation (Phase 2 packet 4, 2026-08-24; Java side 2026-09-01).
 
 ## OQ-018 — Implicit type constraint only for the renamed form
 Does a type slice *imply* a type constraint, or must the constraint be stated? The two syntactic forms mean
@@ -431,5 +492,13 @@ obligations but no set-level rule; §5.1.0.10 (R5 propagation text) touches (c) 
   — the golden files bless contaminated output), and it sits in tension with the community's own
   `APPLY_PROPERTIES_FROM_SLICER=false` decision that slicer *properties* do NOT copy into slices (ch6) —
   entry children copy down, entry properties don't.
-- **Status:** open (Phase 4 packet 3, 2026-08-26) — WGM material; demo-able with org2a (52-element gap),
-  sd-comp-hist (45 property diffs), and t21.
+- **Type profiles as a materialization dimension (J-d, 2026-09-01):** the same question applies to
+  `type.profile`. .NET *closes over* type profiles (root and children merged into the snapshot, ch7); Java
+  does so only for Extension/Resource roots and only opens a profile's children where the base has none,
+  otherwise leaving `type.profile` as an instruction to the validator
+  ([DEV-038](13-deviation-register.md#dev-038--type-profile-scope-net-merges-any-type-profile-java-only-extensionresource-roots-and-only-when-the-base-has-no-children-ch7)).
+  So Java materializes *more* for slicing-entry children and *less* for type profiles — neither engine has a
+  single materialization principle. Question (d): must a snapshot incorporate the constraints of the profiles
+  named in `type.profile`, or is the snapshot complete when it records the reference?
+- **Status:** open (Phase 4 packet 3, 2026-08-26; type-profile dimension 2026-09-01) — WGM material; demo-able
+  with org2a (52-element gap), sd-comp-hist (45 property diffs), and t21.

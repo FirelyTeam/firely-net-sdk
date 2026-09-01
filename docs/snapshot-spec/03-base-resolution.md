@@ -1,8 +1,8 @@
 # 3. Base resolution, rebasing and the root element
 
-> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 3,
-> 2026-08-24: `SnapshotGenerator.generate`/`ensureSnapshot`/`getSnapshotRootElement` deep-read). Java
-> section pending (Phase 3).
+> Status: **spec baseline + .NET + Java behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 3,
+> 2026-08-24: `SnapshotGenerator.generate`/`ensureSnapshot`/`getSnapshotRootElement` deep-read; Phase 3 packet
+> J-d, 2026-09-01: `generateSnapshot` preamble/epilogue, `cloneSnapshot`, `findProfile`, `makeBaseDefinition`).
 
 ## Scope
 Resolving `baseDefinition` (and generating *its* snapshot on demand), deep-copying the base snapshot as the
@@ -149,8 +149,105 @@ can be fully snapshotted, but cannot serve as a type profile whose root must be 
 base-chain walk here also has **no cycle detection** (in-code TODO `:2469-2473`; the main recursion stack
 does not cover this path — ch11).
 
-## Java behavior (Phase 3)
-*(pending)*
+## Java behavior (Phase 3, deep-read 2026-09-01)
+
+Citations `PU` = `ProfileUtilities.java` @ `b06c7ee` (master `4f52ba6` is shifted +1 line from `PU:222`
+onward). Detail in the materials extract `java-ch07-type-expansion-and-ch03-base-resolution-2026-09-01.md` §F.
+
+### Entry checks (`generateSnapshot`, `PU:740-776`)
+
+Java's API takes the **already-resolved base** as a parameter (`generateSnapshot(base, derived, url, webUrl,
+profileName)`): resolving `baseDefinition` is the caller's job (test driver / validator / IG publisher), not
+the generator's. All failures are `DefinitionException`s:
+
+- null base or derived; either side `isGeneratingSnapshot()` → `FHIRException` "Attempt to use a snapshot on
+  profile {0} as {1} before it is generated" (`checkNotGenerating`, `PU:1694-1698`).
+- **`type` is mandatory on both SDs** (`Base profile {0} has no type` / `Derived profile {0} has no type`) — no
+  logical-model repair (contrast .NET's parse-from-differential warning path, ch9); missing `derivation` →
+  throw.
+- **Constraint profiles must have `base.type == derived.type`** (`PU:759-760`, "Base & Derived profiles have
+  different types ({0} = {1} vs {2} = {3})") — the check .NET lacks (`t29b`, DEV-028 (i)). Specializations exempt.
+- **On-demand base generation is unconditional** (`PU:762-768`): a snapshot-less base has *its* base resolved
+  via `findProfile` (null → "Unable to find base {0} for {1}"), `checkNotGenerating`, and is generated
+  recursively — no `GenerateSnapshotForExternalProfiles`-style gate, no `createdBy` annotation (the SD's own
+  `generatedSnapshot` flag is set instead, `PU:1094`).
+- `fixTypeOfResourceId(base)` (`PU:1290-1307`): for RESOURCE kinds at R4+, every element with
+  `base.path == "Resource.id"` gets type `http://hl7.org/fhirpath/System.String` + `fhir-type = id` — written
+  into the **base SD's snapshot and differential**, i.e. the generator mutates the context's base artifact.
+- Type parameters (`http://hl7.org/fhir/tools/StructureDefinition/type-parameter` on the base,
+  `checkTypeParameters` `PU:1159-1180`): the derived SD must declare a parameter whose type descends from the
+  base's, else throw — a Java-only surface (R6 generic-type tooling) with no .NET counterpart.
+- **Cycle guard**: `snapshotStack.contains(derived.url)` → "Circular snapshot references detected; cannot
+  generate snapshot (stack = …)" (`PU:774-776`), keyed by canonical url like .NET's; pushed/popped around the
+  whole generation, and on *any* exception the half-built snapshot is **nulled** (`PU:1078-1084`) — no partial
+  output ever escapes (ch11, J-e).
+
+### The merge start-point
+
+Java does **not** deep-copy the base snapshot as a whole. The walk (`ProfilePathProcessor.processPaths`,
+`PPP:155-183`) reads the base snapshot in place — base cursor 0, diff cursor 0, diff limit **`-1` for an empty
+differential** — and emits fresh copies row by row (`currentBase.copy()` + `updateURLs` + `updateFromBase` per
+row, ch4/ch10). Consequences relative to .NET's copy-then-merge:
+
+- **Constraints**: no rebasing; paths are remapped only during step-ins (`fixedPathDest`).
+- **Specializations**: `cloneSnapshot(baseSnapshot, baseType, derivedType)` (`PU:1493-1508`) copies every base
+  row rewriting **both `id` and `path`** by `replaceFirst(baseType, derivedType)` — a first-occurrence string
+  replace on the type *name* (safe because the type name is always the first segment). .NET's `Rebase`
+  rewrites paths only and regenerates ids separately (OQ-009).
+- **Logical models**: no rebase at all — Java requires the differential's root path to be the type name
+  (`checkDifferential`, ch2) rather than renaming the base.
+- Ids are always regenerated afterwards (`setIds`, `PU:886`, ch10); `base` components are inherited/derived
+  per row (`updateFromBase`, ch10) and, for specializations, any element still lacking one gets a
+  self-referential `base` (`PU:969-975`, sdf-8b fill).
+- SD-level extensions of the base are copied to the derived SD per the extension definition's
+  `snapshot-behavior` policy (`copyInheritedExtensions`, `PU:1228-1253`: `ignore` / `add` / `overwrite` /
+  default add-if-absent; markdown values get relative-url processing) — the SD-level twin of the element-level
+  extension policy machine (ch5, DEV-034); .NET has no SD-level inheritance.
+- A `snapshot-base-version` extension recording `base.version` is stamped on the generated snapshot component
+  (`PU:1091-1093`) — provenance .NET does not record.
+
+### Missing differential
+
+A differential-less SD walks with diff limit `-1`: every base row is copied with the fill obligations —
+snapshot = base copy (same answer as .NET's main path, OQ-016). As a **type profile** the same SD is also
+accepted: the template is its snapshot root (`PPP:754`), generated on demand if absent (`PPP:725-731`), with no
+"has no differential" refusal — so Java answers OQ-016 consistently in both roles where .NET refuses the second.
+
+### Root resolution for type profiles
+
+Java has no `getSnapshotRootElement` cascade: a type profile's root is always its snapshot's first element
+(`PPP:754`, `PU:2654`), generated on demand if the snapshot is missing (`PPP:725-731`) and, for a profile still
+mid-generation, read from the partially built snapshot **only if its first element is already populated**
+(`PPP:719-724`, throw otherwise). Where .NET caches roots (`CACHE_ROOT_ELEMDEF`), Java relies on the
+`isGeneratingSnapshot` flag + this first-element rule.
+
+### Resolving canonicals (`findProfile`, `PU:4095-4145`)
+
+The central resolver strips any `#fragment` **silently** (so a legacy `url#element` type profile resolves to
+the whole SD, ch7/OQ-017), splits `url|version`, then applies three expansion `Parameters`:
+`default-profile-version` (used only when the reference has no version), `force-profile-version` (always
+overrides), `check-profile-version` (mismatch → `FHIRException` "Profile resolves to … which does not match
+required profile version …"). References originating from a **core** package drop their source-package pin
+("switch the extension pack in", `PU:4141-4143`). Used for bases, obligation profiles and most type-profile
+lookups — but the PPP template selection (`PPP:698`, `726`), the sliced-base min/max pick-up (`PPP:1406`) and the
+extension-policy lookup (`PU:1256`) call the context directly, so version handling is **inconsistent within
+one generation**. .NET has no version-parameter concept; `|version` passes to the resolver unparsed.
+
+### `Base` and interfaces
+
+- Pre-R5 contexts lacking a `Base` StructureDefinition get one synthesized (`makeBaseDefinition`,
+  `PU:4777-4808`: abstract COMPLEXTYPE, root `Base 0..*` in snapshot and differential) — Java's answer to the
+  problem .NET solves with the #3576 issue-and-proceed carve-out.
+- **No interface skip**: nothing in PU/PPP/PRE reads `structuredefinition-interface` (grep: only
+  `getAbstract()`/LOGICAL in `checkTypeDerivation`, `PU:3276`). Java's generator walks whatever base the caller
+  hands it; whether interface SDs are hidden by the context loader is outside the profile package (ch9, J-e).
+
+### Relative urls (`updateURLs`, `PU:2135-2176`)
+
+Every emitted row has `#local` `binding.valueSet`, `type.profile`, `type.targetProfile` prefixed with the
+profile url (nb `PU:2143`/`2147` concatenate the *list*'s `toString()` rather than the element value — latent,
+`#`-relative profiles are essentially unused) and markdown fields rewritten against the web url — a
+publishing concern the .NET generator does not have.
 
 ## Deviations
 - [DEV-030](13-deviation-register.md#dev-030--cross-version-bases-net-rebuilds-against-r5-core-leaving-r5r4-hybrids-ch3) —

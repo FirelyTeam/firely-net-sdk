@@ -191,7 +191,13 @@ status/resolution.
   absolute-contentReference work (#3177 era); the bare-name call site is 2016-era (WMR). The frozen STU3
   fork's variant (`Canonical`-based) silently no-matches instead of throwing — same outcome (issue
   `PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF` + subtree dropped), different failure mode.
-- **Java:** TBD (Phase 3) — presumably honors `elementdefinition-profile-element` instead (OQ-017).
+- **Java (J-d, 2026-09-01):** the `#fragment` is **silently stripped** by the central resolver (`findProfile`,
+  `PU:4100-4102`) and never read anywhere else — a `url#element` type profile resolves to the whole SD, and
+  the element is expanded from that SD's root as if no fragment were given (no error, no sub-tree rebase).
+  Java's below-root mechanism is `elementdefinition-profile-element`, honored by element **id** for template
+  selection, type compatibility and the final type sweep (`PPP:734-749`, `PPP:715`, `PU:1058-1066`) — but not
+  for the children walk-in, which always opens the profile at its root (`PU:2673` todo). Neither mechanism
+  is covered by a shared test. So the two implementations support **disjoint** syntaxes (OQ-017).
 - **Status:** **confirmed and fixed** (2026-08-24): reproduced empirically, filed as
   [#3583](https://github.com/FirelyTeam/firely-net-sdk/issues/3583), fixed on branch
   `claude/elegant-leakey-7d15e9` (fragment resolved via SliceName lookup instead of
@@ -207,8 +213,10 @@ status/resolution.
   definition's snapshot *with its fixed value already set* (the definition's own generation fixed it at root
   `Extension`, which does match), so the backfill only matters when that inheritance fails — unresolved
   extension profile, no child expansion, or an extension-definition snapshot lacking the fixed url.
-- **Java:** TBD (Phase 3).
-- **Status:** suspected (narrow; verify against Java + construct repro in Phase 4).
+- **Java (J-d, 2026-09-01):** n/a — Java has **no** `Extension.url` backfill for *any* extension element (see
+  [DEV-037](#dev-037--extensionurl-fixeduri-net-synthesizes-java-inherits-only-ch7)); `modifierExtension` is
+  therefore not a special case on the Java side.
+- **Status:** confirmed as a .NET-internal asymmetry, **subsumed by DEV-037** for the cross-implementation view.
 
 ## DEV-020 — Type-slicing entry normalization: Java rewrites the sliced element, .NET merges it as written (ch6)
 - **Evidence:** Phase-4 harness, 2026-08-26 — test `obs-2b` ("open type slicing + min on slice"),
@@ -568,7 +576,20 @@ status/resolution.
 - **Spec basis:** both extensions are defined in the extensions pack with generator-affecting semantics
   the core spec never mentions; whether a conformant generator *must* honor them is undecided (WGM
   adjacency: the mi-use-* interface family, DEV-015/DEV-028).
-- **Status:** confirmed empirically (Java side); .NET side = verified absence.
+- **Obligation mechanism pinned (J-d, 2026-09-01):** `findInheritedObligationProfiles` (`PU:1205-1215`) accepts
+  an `inherit-obligations` target only if it is flagged `obligation-profile` **and shares the derived SD's
+  `baseDefinition`** (version stripped) — otherwise silently ignored; the list is instance state on
+  `ProfileUtilities`, never cleared. The `mustSupport`/additional-binding fold (`updateFromObligationProfiles`,
+  `PU:2529-2582`) runs **only on the copy-through path** for elements the differential does not mention
+  (`PPP:1068`, sole caller); diff-touched elements get only the obligation *extensions* re-added
+  (`PU:2608-2614`) and the additional-binding fold with the inverted guard (JI-13, hapifhir#2593). So a
+  differential row that merely edits `short` on an obligated element **loses the obligation's mustSupport**
+  — an asymmetry `profile-patient-op3` cannot exhibit (its diff touches `active`/`maritalStatus`; the
+  obligation MS sits on `birthDate`/`deceased[x]`). Held upstream as JI-18 (design question or bug).
+  `imposeProfile` is read by the generator only inside the *targetProfile* derivation check
+  (`sdConformsToTargets`, `PU:3333`) — no snapshot-shaping effect (PRE:607 "we ignore impose and compliesWith
+  - for now?").
+- **Status:** confirmed empirically (Java side); .NET side = verified absence; Java mechanism code-pinned.
 
 ## DEV-031 — Logical-model child placement drops a path segment (cdshooks) (ch9)
 - **Evidence:** ELEMENT-SET mining G8 — `cdshooks-services`: diff has
@@ -730,4 +751,63 @@ status/resolution.
 - **Status:** confirmed (code-derived both sides; no shared test carries the property — verify with a
   targeted harness case if it becomes WGM material). Answers [OQ-006](14-open-questions.md#oq-006--sliceisconstraining)'s
   Java half; the remaining question is whether a *generator* has any obligation here.
+
+## DEV-037 — `Extension.url` fixedUri: .NET synthesizes, Java inherits only (ch7)
+- **Evidence:** .NET `SnapshotGenerator.cs:1743-1785` (`fixExtensionUrl`, Phase 2); Java grep `setFixed(` over
+  PU/PPP/PRE @ `b06c7ee` — the only fixed-url write is the legacy xver template synthesizer
+  (`makeExtensionForVersionedURL`, `PU:4715`), no `.url` path test exists in the generation walk; test
+  evidence `fhir-test-cases r5/snapshot-generation`: `ext-recursion-2` input **and expected** carry zero
+  `fixedUri`; `ext-sort-issue`'s one expected `fixedUri` is inherited from its base extension's snapshot
+  (`extension-Communication.topic`), value = the **base's** url.
+- **.NET:** after every element's child merge, an `extension`-named element whose `url` child has no
+  `fixed[x]` gets `fixedUri` = the SD canonical (extension definition root) or the type-profile url / slice
+  name (profile extension slice; nested complex-extension children get the relative name) — the spec's
+  *instance* url rule turned into a snapshot convention by the generator (ch7 spec gap 3). Never for
+  `modifierExtension` (DEV-019).
+- **Java:** never writes a fixed url. Extension definitions carry `Extension.url.fixedUri` only if their
+  **differential** states it (which FSH/IG-publisher authoring does); constraint profiles inherit whatever the
+  extension definition's snapshot has. An extension definition authored without the fixed url produces a
+  snapshot without one, and Java's own golden files bless that (`ext-recursion-2-expected.xml`).
+- **Consequence:** the same extension definition snapshotted by the two engines differs on `Extension.url`
+  whenever the author omitted `fixedUri` — .NET adds a conformance-affecting fixed value (validation of
+  instances against the snapshot changes), Java does not. Where both inherit an existing fixed url they agree,
+  including the case where a derived extension profile keeps its *base* extension's url as the fixed value
+  (`ext-sort-issue`) — arguably wrong for both.
+- **Spec basis:** none — extensibility §2.1.5.0.1 states the url rule for *instances*; nothing requires or
+  describes `fixedUri` in snapshots (ch7 spec baseline). RFC candidate: state whether a generator MAY/SHALL fix
+  `Extension.url` and to what value for nested complex-extension parts.
+- **Status:** confirmed (code + golden evidence both sides). WGM material: which side is right?
+
+## DEV-038 — Type-profile scope: .NET merges any type profile; Java only Extension/Resource roots, and only when the base has no children (ch7)
+- **Evidence:** .NET `SnapshotGenerator.cs:1208-1503` (`mergeTypeProfiles`, Phase 2 packet 4); Java
+  `PPP:674-787` (template selection), `PPP:763` (Extension/Resource gate), `PPP:829`/`1080`/`1423`/`1672`
+  (`!baseWalksInto` gates), `PU:2643-2648` (datatype profiles discarded in the doc override) — J-d
+  2026-09-01.
+- **.NET:** a single type profile that differs from the base's implied profile is always merged — the whole
+  rebased snapshot when the diff has children (type beats base, OQ-002), the profile **root** alone when it
+  does not (OQ-001 diamond) — for **any** type (Address, Quantity, Extension, Resource alike).
+- **Java:** three narrower mechanisms. (1) The profile **root** becomes the merge template only when the base
+  element's type is `Extension` or `Resource` (`PPP:763-772`; Resource roots lose their constraints and take
+  the base's min/max); for datatype profiles the base row is used unchanged — the profile root's cardinality,
+  invariants and binding are **never merged**, only its url recorded on `type.profile`. (2) The profile's
+  descriptive properties (definition/short/comment/requirements/alias/mapping) override the element only for
+  Extension/RESOURCE/LOGICAL profiles (`PU:2650-2671`), explicitly not for datatypes ("we sometimes want the
+  details from the profile to override the inherited attributes, and sometimes not"). (3) Children are taken
+  from the profile's snapshot **only if the base snapshot has no children at that element**; when a parent
+  profile already expanded the element, Java walks the base children and the type profile's child constraints
+  are ignored — **base beats type profile**, the inverse of .NET. Separate special case: a new slice under an
+  already-sliced base picks up the profile root's `min`/`max` (`PPP:1398-1420`; two profiles → `java.lang.Error`).
+- **Observable consequence:** for `Patient.address` typed `MyAddress` (root `1..1`, `line 1..*`, `city`
+  invariant) with a diff that constrains `address.line`: .NET emits an `address` element carrying MyAddress's
+  root cardinality/invariants and MyAddress's children (over the base's); Java emits the base `address` row
+  (+ `type.profile`) and, if the base had no `address` children, MyAddress's children, else the base children
+  — MyAddress's constraints reach the snapshot in neither the root nor (in the second case) the children.
+  Explains part of the DEV-021/DEV-025 materialization gradient and is the mechanism behind OQ-001/OQ-002's
+  Java rows.
+- **Spec basis:** the spec orders nothing here (ch7 spec gaps 1, 4; OQ-002) and states only the R5
+  root-cardinality rule (structuredefinition §5.4.6.1), which Java honors partially (sliced-base pick-up +
+  extension templates) and .NET honors as a side effect of the root merge (incl. the OQ-001 loosening).
+- **Status:** confirmed (code-derived both sides; empirical exhibit still to be picked from the sweep —
+  candidates: any test with a datatype `type.profile` and child constraints). Prime WGM material alongside
+  OQ-001/OQ-002/OQ-021.
 
