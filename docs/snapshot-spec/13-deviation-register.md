@@ -21,15 +21,36 @@ status/resolution.
   wholesale** when the diff has any (`mergeCanonicals`, `ElementDefnMerger.cs:387` — explicit R4-era
   decision: differentials may remove profiles; corrected 2026-08-24, Phase 2 deep-read), `aggregation`
   replaces wholesale.
-- **Java:** TBD (Phase 3).
-- **Spec basis:** TBD — believed silent on list-merge semantics.
-- **Status:** seeded.
+- **Java:** **agrees on the headline** — the diff type list replaces the inherited list wholesale
+  (`ProfileUtilities.java:3053-3080` @ b06c7ee, J-b deep-read 2026-09-01). Differences in the details:
+  Java first *validates* each diff type against the base (`checkTypeDerivation` PU:3262 — unknown code →
+  DefinitionException throw; targetProfile not tracing to a base targetProfile → ERROR message,
+  specialization exempt; .NET validates nothing), then takes the diff item **verbatim** except for a
+  whitelisted copy-down from the matched base type (`type-must-support` if new, `pattern` + obligation
+  extensions always, PU:3292-3293) — so Java does NOT preserve general base extensions on `type.code`
+  (the json/xml/rdf compiler magic .NET keeps; on core-shipped snapshots those are already present in the
+  base snapshot element, masking the difference).
+- **Spec basis:** silent on list-merge semantics ([RFC-008](15-spec-rfcs.md)); "profile may restrict the
+  types of a choice element" [profiling §5.1.0.9] supports replace-with-subset.
+- **Status:** settled as agreement-on-outcome for the list semantics (both replace); residual delta =
+  validation + extension fidelity (folded into DEV-028 group (e) and DEV-022 respectively).
 
 ## DEV-002 — Constraint.source population (ch5)
-- **Evidence:** issue #1052; `ElementDefnMerger.cs:484,507,514`, `SnapshotGenerator.cs:2460`.
-- **.NET:** initializes `constraint.source` from the differential's base URL when absent.
-- **Java:** TBD.
-- **Status:** seeded.
+- **Evidence:** issue #1052; `ElementDefnMerger.cs:484,507,514`, `SnapshotGenerator.cs:2460`;
+  `ProfileUtilities.java:3084-3098` @ b06c7ee (J-b deep-read 2026-09-01).
+- **.NET:** *after* the constraint merge, stamps `source` on **every** constraint still lacking one — using
+  the url of the SD whose constraints are being merged (main path: the **derived** profile's url) — and only
+  when the diff declares ≥1 constraint on that element. Inherited base constraints that were never stamped
+  thereby get attributed to the *derived* profile.
+- **Java:** *before* appending diff constraints, stamps `source` on inherited constraints lacking one — with
+  the **base SD's** url (`srcSD` at the PPP call sites = the base structure definition) — unconditionally
+  (also marks them `SNAPSHOT_IS_DERIVED`). Diff-added constraints are **never stamped** (left as authored).
+- **Net:** opposite attribution for unstamped inherited constraints (base url vs derived url), and Java
+  leaves new constraints unattributed where .NET stamps them. Java's attribution matches the spec's
+  "reference to the original source of the constraint, for traceability".
+- **Spec basis:** `constraint.source` definition [elementdefinition-definitions]; no stamping algorithm given.
+- **Status:** confirmed both sides (code-derived; corpus rarely exposes it because core snapshots ship
+  pre-stamped).
 
 ## DEV-003 — obs-1-2: shared-suite divergence (ch4)
 - **Evidence:** issue #1252; manifest test `obs-1-2` `[Ignore]`d in `SnapshotGeneratorManifestTests.cs`.
@@ -123,12 +144,22 @@ status/resolution.
 - **.NET:** diff mappings match inherited ones on the **(identity, map) pair**; a diff mapping restating an
   inherited `identity` with a different `map` is *appended*, yielding two mappings with the same identity
   (also violating eld-27, a warning).
-- **Java:** TBD (Phase 3).
+- **Java:** `MappingAssistant` (J-b deep-read 2026-09-01 @ b06c7ee). Element-level: diff mappings first,
+  inherited appended unless matched; match = identity + map both equal. **R4 and earlier: identical to
+  .NET** (identity+map union — both keep two same-identity mappings). **R5+: same identity, different map
+  triggers a merge mode** — default APPEND **comma-appends** the inherited map text into the diff mapping
+  (one mapping per identity, eld-27 satisfied, but neither R5 replace-by-identity nor R4 additive:
+  a text-level hybrid); DUPLICATE/IGNORE/OVERWRITE configurable (MA:233-262). So the divergence is
+  **R5+-only**, and *neither* engine implements the R5 replace rule as written. Java additionally
+  reconciles/renames/prunes SD-level `StructureDefinition.mapping` declarations and honors an
+  SD-level `suppressed` extension + suppressed-uri list (.NET: none of that; setting-gated per-item
+  `elementdefinition-suppress` instead) — see ch5 Java section.
 - **Spec basis:** R5 profiling §5.1.0.9 (new in R5): "providing a new mapping with the same identity … means
   that the new mapping replaces a mapping with the same identity in the element being profiled" — .NET does
   not implement the R5 rule (which is correct-for-R4, where mappings were additive-only; .NET runs the same
   merger for all versions).
-- **Status:** seeded (spec-noncompliance under R5; compare Java in Phase 3).
+- **Status:** confirmed both sides — R5+-only divergence; both engines noncompliant with the R5 replace-by-
+  identity rule (WGM/RFC material: which of the three behaviors should the spec bless?).
 
 ## DEV-018 — Complex type-profile references (`url#element`): expansion path broken (ch7)
 - **Evidence:** `SnapshotGenerator.cs:1364` + `Navigation/ElementDefinitionNavigator.cs:281-303` — Phase 2
@@ -503,7 +534,11 @@ status/resolution.
   (`SnapshotGenerationPreProcessor.process:137-152`, `mergeElementsFromAdditionalBase`). Sweep proof:
   `multi-profile` — `Patient.extension:pronouns` exists only in Java/golden (ELEMENT-SET G3c) and
   `Patient.gender mustSupport=true` comes from the additional base (min/MS mining M2). .NET ignores the
-  extension entirely.
+  extension entirely. The merge table itself (differential × differential, `mergeElementDefinitions`
+  PRE:399-531) is documented in ch5's Java section (J-b, 2026-09-01): profile-wins fill-if-absent for
+  descriptive props, nominal intersection for bounds (with min/maxLength picking the *looser* value —
+  likely inverted), type intersection, binding×binding unimplemented (`throw new Error("not done yet")`),
+  fail-fast throws on conflicts.
 - **Obligation inheritance:** SDs carrying `inherit-obligations` make Java merge obligation-profile
   elements and set `mustSupport=true` where any obligation element has it
   (`ProfileUtilities.java:2544-2552`). Sweep proof: `profile-patient-op3` — `Patient.birthDate`/
@@ -553,4 +588,50 @@ status/resolution.
   treating golden files as normative for the propagation mechanism (OQ-021).
 - **Status:** confirmed (code + golden exhibit); minimized standalone repro not yet built (trigger shape
   documented above; on-questionnaire serves as the demo input meanwhile). Not yet reported upstream.
+
+## DEV-034 — Per-property merge divergence catalogue: .NET `ElementDefnMerger` vs Java `updateFromDefinition` (ch5)
+- **Evidence:** Phase 2 packet 1 (.NET, 2026-08-24) × Phase 3 packet J-b (Java @ b06c7ee, 2026-09-01);
+  full side-by-side in ch5. All items code-derived; the Phase-4 sweep saw **zero** of them (the corpus's
+  differentials stay on the agreeing paths — min/MS mining 2026-08-26 verified the common cases clean),
+  so each needs a targeted probe if empirical confirmation is wanted.
+- **(a) Frozen-by-omission set (Java) vs merge (NET):** Java's routine simply has no code for `code`,
+  `representation`, `orderMeaning`, `meaningWhenMissing`, `defaultValue[x]`, `sliceIsConstraining` — a diff
+  supplying them is **silently dropped** (deliberate for the †-frozen trio per PU:2906 comment; collateral
+  for `code`, which §5.1.0.8 says is add/removable). .NET merges all of them (replace/union/overlay).
+- **(b) Illegal min/max:** Java = diff wins + ERROR message (loosening min exempt for slices); .NET =
+  most-restrictive, loosening **silently ignored** → different snapshots from the same illegal input
+  (Java's has the loosened value). Related enforcement asymmetry: mustSupport/mustHaveValue true→false =
+  Java ERROR (suppressed for slices via `fromSlicer`), .NET silent replace.
+- **(c) isSummary:** Java **`throw new Error`** on any change when the base has a value — generation
+  aborts (PU:3039-3048; the only hard-throw property rule in either engine). .NET silently replaces.
+- **(d) isModifier / isModifierReason:** Java frozen (diff silently ignored) except on
+  `extension`/`modifierExtension` elements (`checkExtensionDoco` gate); .NET replaces everywhere.
+- **(e) Restated constraint key:** Java **drops** a diff constraint whose key already exists in the base
+  (PU:3093; "constraints are cumulative. there is no replacing"); .NET overlay-merges it onto the
+  inherited one. RFC-009's two live answers.
+- **(f) Binding:** Java rebuilds (base copy → extensions cleared [`COPY_BINDING_EXTENSIONS=false`] →
+  diff's extensions/strength/valueSet/description in; inherited **description dropped** unless restated;
+  required-strength row + expansion-based value-set subset check enforced with ERRORs); .NET overlays
+  (keeps base description/extensions, enforces nothing). Both delete non-bindable-type bindings, from
+  independently maintained bindable-type lists.
+- **(g) fixed[x]/pattern[x]:** Java wholesale replace + post-merge `checkTypeOk` type-vs-value check;
+  .NET partial overlay for same/derived types (OQ-012), no type check.
+- **(h) example:** union key = label+value (Java) vs label alone (NET); suppress extension always-on with
+  `"$all"` wildcard (Java) vs `RespectSuppressExtension` setting (NET).
+- **(i) ED extensions:** Java runs a 4-list policy machine (non-inherited purge / inherit-unless-redeclared /
+  diff-ignored / override-in-place, PU:232-302, PU:3199-3217) and **appends duplicates** for unlisted urls
+  present on both sides; .NET does a uniform union-by-url overlay. (The two engines' non-inheritable
+  blocklists also differ — OQ-019.)
+- **(j) label `"..."` append:** Java attempts the append convention on `label` but with swapped operands
+  (`mergeStrings` PU:3156-3157: result = diff text with marker kept + CRLF + base text minus 3 chars) —
+  broken; .NET doesn't support append on label at all. (definition/comment/requirements append is
+  byte-identical in both, OQ-010.)
+- **(k) Profile-root override:** for extension slices / single-type-profile elements Java replaces dest
+  descriptive text (definition/short/comment/requirements/alias/mapping) from the referenced profile's
+  root *before* merging the diff (PU:2619-2688, incl. the `checkExtensionDoco` wipe); .NET's counterpart
+  is the ch7 root-merge of the type profile as a full element — different mechanism, overlapping effect.
+- **Spec basis:** the interpretation-table footnotes (†/‡/∆) and §5.1.0.8 — the spec states obligations
+  but no merge algorithm, and neither engine implements the † rules the same way (OQ-011).
+- **Status:** confirmed (code-derived, both sides read). WGM feed: (c)+(b) are the sharpest "what must a
+  generator enforce" exhibits; (e) feeds RFC-009; (f) feeds RFC-010.
 

@@ -79,13 +79,20 @@ base's. Every generator has had to invent this (and .NET/Java may disagree — s
 Propose: one sentence per property class in #interpretation. .NET's answers (Phase 2, ch5 table):
 `code`/`alias`/`condition`/`example`/`valueAlternatives` union; `type` list replaces;
 `type.profile`/`type.targetProfile`/`type.aggregation` replace wholesale; `mapping` unions on identity+map
-(DEV-017). **Status:** draft — final wording depends on Phase 3 comparison.
+(DEV-017). Java's answers (Phase 3 J-b): `alias`/`condition`/`valueAlternatives` union (agrees);
+`example` unions on label+value; `type` list replaces (agrees); **`code` is never merged at all**
+(frozen-by-omission — DEV-034(a)); `mapping` comma-appends per identity on R5+ (DEV-017). Agreement on the
+big shapes (union for descriptive lists, replace for `type`), divergence on keys and on `code` — wording can
+now be finalized from the two-implementation comparison. **Status:** draft — both implementations surveyed.
 
 ### RFC-009 — eld-14 vs additive constraints: restating an inherited constraint key
 Inherited constraints "do not replace" and differential constraints add — but constraints "must be unique by
 key" (eld-14). Behavior when a differential restates an inherited key is unspecified (error? merge?
 duplicate?). .NET's answer (Phase 2): overlay-merge onto the inherited constraint, matched on `key` —
-no duplicate, no error (`ElementDefnMerger.cs:487`). **Status:** draft.
+no duplicate, no error (`ElementDefnMerger.cs:487`). Java's answer (Phase 3 J-b): the restated diff
+constraint is **silently dropped** — the inherited one survives untouched (`ProfileUtilities.java:3093`,
+"constraints are cumulative. there is no replacing"). Two incompatible live answers (DEV-034(e)) — the RFC
+should pick one. **Status:** draft — both implementations surveyed.
 
 ### RFC-010 — binding merge granularity unstated
 Whether a differential `binding` replaces the base binding wholesale, merges per sub-element
@@ -94,6 +101,11 @@ it is stated on the ElementDefinition page.
 .NET's answer (Phase 2): per-sub-element overlay — strength/description replace (lattice not enforced),
 valueSet overlays, `additional` unions by full value; binding dropped entirely when no bindable type remains
 (`ElementDefnMerger.cs:358,186`).
+Java's answer (Phase 3 J-b): rebuild-with-sub-element-overlay — strength/valueSet diff-wins, but inherited
+`description` and binding extensions are **dropped** unless the diff restates them; the `required` lattice
+row is enforced (ERROR), including an expansion-based value-set subset check; `additional` merged by
+(valueSet, purpose) (`ProfileUtilities.java:3001-3027`; DEV-034(f)). So both merge per sub-element — the RFC
+can state that as common practice — but they disagree on inherited-description survival and enforcement.
 **Status:** draft — R6 build makes partial progress: new profiling section "Additional Bindings" says
 additional bindings are constrainable only via a matching `key` (new `binding.additional.key` element,
 eld-31), and keyless base additionalBindings cannot be constrained. Main-binding merge granularity remains

@@ -1,7 +1,8 @@
 # 5. Per-property merge semantics
 
-> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 1,
-> 2026-08-24: `ElementDefnMerger.cs` deep-read). Java section pending (Phase 3).
+> Status: **spec baseline + .NET + Java behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2
+> packet 1, 2026-08-24: `ElementDefnMerger.cs` deep-read; Phase 3 packet J-b, 2026-09-01:
+> `ProfileUtilities.updateFromDefinition` + `MappingAssistant` + preprocessor additional-base merge deep-read).
 
 ## Scope
 The heart of the algorithm: for each `ElementDefinition` property, what happens when the differential
@@ -311,8 +312,143 @@ url. After the merge, the whole binding is **removed** if no remaining type is b
   enforces *most-restrictive* rather than diff-wins are `min`/`max` — and there an illegally loosening
   differential is silently ignored rather than reported ([OQ-011](14-open-questions.md#oq-011--what-must-a-generator-enforce)).
 
-## Java behavior (Phase 3)
-*(pending — `ProfileUtilities.updateFromDefinition()` and friends)*
+## Java behavior (Phase 3 packet J-b, deep-read 2026-09-01)
+
+All citations against clone commit `b06c7ee`; full working notes in the materials extract
+`java-ch05-merge-updateFromDefinition-2026-09-01.md`. Abbreviations: PU = `ProfileUtilities.java`,
+PPP = `ProfilePathProcessor.java`, PRE = `SnapshotGenerationPreProcessor.java`, MA = `MappingAssistant.java`.
+
+Java's counterpart of `ElementDefnMerger.merge()` is **`ProfileUtilities.updateFromDefinition(dest, source, …)`**
+(PU:2585-3128). Naming trap: inside, `base` = `dest` (the working snapshot element, already seeded by
+`updateFromBase`) and `derived` = `source` (the differential element). Unlike .NET, the **differential is
+mutated too**: diff properties that deep-equal the base are stamped with `SNAPSHOT_DERIVATION_EQUALS` user
+data (rendering aid; the diff is a clone, PU:824, with user data migrated back). Call sites: PPP:373 (simple
+path), PPP:813 (slice content, `fromSlicer=true` — relaxes the mustSupport/mustHaveValue direction checks),
+PPP:1246 (slicing entry), PPP:1396 (reslice template), PU:849 (specialization leftovers).
+
+Two parameters .NET has no analog for:
+
+- **`trimDifferential`** — intent: delete equal-valued diff properties from the differential instead of
+  marking them. It is hard-`false` at every call site (PPP:139/176) **except PPP:1246, which passes the
+  closed-slicing flag** (`base.slicing.rules == CLOSED`) into it — reads like parameter abuse; net effect on
+  the *snapshot* is nil (trim branches only touch the diff clone, and only when values already match), so the
+  parameter is near-dead within snapshot generation. Its branches carry a copy-paste asymmetry (comment/label/
+  requirements write `base.setX(derived.getX().copy())` where the others write `derived.setX(null)`,
+  PU:2716/2725/2734) — harmless for the same reason.
+- **`fromSlicer`** — `true` only when merging slice content under a slicer (PPP:675/813); suppresses the
+  "illegal constraint mustSupport=false / mustHaveValue=false when base says true" errors for slices.
+
+### Before the property loop (PU:2586-2688)
+
+- **Extension-doco wipe** (`checkExtensionDoco`, PU:1948-1961, task 3970): when dest is `Extension` root /
+  `*.extension` / `*.modifierExtension`, its definitional text is *discarded before merging* (definition = "An
+  Extension", short = "Extension", comment/requirements null, alias/mapping cleared). The returned flag later
+  gates isModifier merging (below).
+- **Obligation profiles** (Java-only surface, [DEV-032](13-deviation-register.md)): same-id elements from
+  registered obligation profiles contribute obligation extensions (PU:2608-2614), mustSupport aggregation
+  (PU:2859-2870) and additional bindings (PU:2936-2954 — where the guard is inverted: `hasAdditional` instead
+  of `!hasAdditional` at PU:2949, so obligation-profile additional bindings are only copied when already
+  present; upstream-issue candidate).
+- **Profile-root override** (PU:2619-2688): for a named slice with a single `type.profile` (or a source whose
+  first type carries one, with xver fallback for cross-version extension urls), and the resolved profile is an
+  Extension or a resource/logical: the **profile root's** definition (relative-url-rewritten), short
+  (unconditionally), comment, requirements, binding.description replace dest's, and dest's alias + mapping
+  lists are cleared and replaced by the profile root's — the referenced profile's text beats the base *before*
+  the diff applies. Unresolvable profiles: warn, then throw unless `allowUnknownProfile` permits (PU:2672-2688).
+- ED-level **extensions** merge via `updateExtensionsFromDefinition` (PU:3199-3217) — see table row and OQ-019.
+
+### Per-property table (Java column)
+
+Pattern per property: `if (diff.hasX) { if (!deepEqual) apply; else mark DERIVATION_EQUALS }`. As in .NET, an
+absent diff property never removes anything and an equal diff is a no-op — but several properties .NET merges
+are **absent from the Java routine entirely** and get silently dropped from the differential (verified by
+regex sweep of PU:2585-3128): `code`, `representation`, `orderMeaning`, `meaningWhenMissing`,
+`defaultValue[x]`, `sliceIsConstraining`, `contentReference` (frozen there too, ch8). For
+isModifier/defaultValue/meaningWhenMissing this is deliberate frozen-rule enforcement (comment PU:2906); for
+`code` it contradicts the §5.1.0.8 add/remove license. (Code-derived; no shared test supplies these in a diff —
+carried-forward empirical check.)
+
+| Property | Java behavior | Cite |
+|---|---|---|
+| `sliceName` | replace | PU:2690 |
+| `short` | replace | PU:2694 |
+| `definition`, `comment`, `requirements` | replace; `"..."` append via `mergeMarkdown` (identical convention to .NET: base + CRLF + diff minus marker, `Utilities.appendDerivedTextToBase`); extension-only diff doesn't wipe text; requirements then stripped from root elements (sdf-9) | PU:2703-2742, 3134 |
+| `label` | replace; `"..."` append via `mergeStrings` — **operands swapped**: result = diff text (marker kept) + CRLF + base text minus first 3 chars. Broken; .NET has no label append at all | PU:2721, 3152-3168 |
+| `alias` | union (string value) | PU:2744 |
+| `min` | **diff wins**, even when loosening — loosening non-slice diff also raises an ERROR message. Contrast .NET: most-restrictive, loosening silently ignored → *different snapshots on illegal input* | PU:2757-2766 |
+| `max` | **diff wins**; ERROR message when larger than base (`*`-aware, PU:3380) | PU:2768-2777 |
+| `fixed[x]` / `pattern[x]` | **wholesale replace** (no .NET-style partial overlay — the Java answer to [OQ-012](14-open-questions.md#oq-012--partial-overlay-of-fixedxpatternx-values)); post-merge `checkTypeOk` errors when the value's type isn't among the element's types | PU:2779-2796, 3121-3126, 3342 |
+| `example` | union keyed on **label + value** (both must match; .NET keys label only); `elementdefinition-suppress` honored **always** (no setting), incl. label `"$all"` = drop all inherited examples | PU:2798-2827 |
+| `maxLength`, `minValue[x]`, `maxValue[x]` | replace, no narrowing check (= .NET) | PU:2829-2854 |
+| `condition` | union (id value) (= .NET) | PU:3099 |
+| `mustSupport` | aggregated with obligation profiles (any true wins); **ERROR on true→false** unless `fromSlicer`; diff still wins | PU:2859-2880 |
+| `mustHaveValue` | replace; ERROR on true→false unless `fromSlicer` | PU:2882 |
+| `valueAlternatives` | union (canonical value) (= .NET) | PU:2893 |
+| `isModifier`/`isModifierReason` | **frozen — diff silently ignored — except on extension elements** (the `checkExtensionDoco` gate); modifier extensions get a boilerplate reason auto-filled. Contrast .NET: replace | PU:2906-2927 |
+| `binding` | rebuild + enforcement, see below | PU:2929-3037 |
+| `isSummary` | change with a base value present → **`throw new Error` — generation aborts** (hardest enforcement anywhere in either engine; .NET silently replaces) | PU:3039-3048 |
+| `type` | wholesale replace (= .NET direction, [DEV-001](13-deviation-register.md#dev-001--type-list-replace-vs-merge-ch5) agreement) after per-type `checkTypeDerivation`: unknown code vs base → **DefinitionException**; targetProfiles must trace to a base targetProfile (via base-chain or imposeProfile; specialization exempt) else ERROR. Matched base type's `type-must-support` (if new) + `pattern`/obligation extensions copied down; otherwise the diff item is taken verbatim (inherited per-code profiles NOT preserved) | PU:3053-3080, 3262-3315 |
+| `mapping` | `MappingAssistant.merge()`, see below | PU:3082, MA |
+| `constraint` | inherited constraints stamped `source` = **base SD url** (when absent) *before* the diff is appended; diff constraints appended **only when the key is new — a restated inherited key is silently dropped** (in-code: "constraints are cumulative. there is no replacing"). The Java answer to [RFC-009](15-spec-rfcs.md#rfc-009--eld-14-vs-additive-constraints-restating-an-inherited-constraint-key); three-way contrast with .NET in [DEV-002](13-deviation-register.md#dev-002--constraintsource-population-ch5) | PU:3084-3098 |
+| `extension` (on the ED itself) | policy-list machine (PU:232-302): 15-url non-inherited purge list, 5-url inherit-unless-redeclared list, ~14-url diff-ignored list, ~20-url override-in-place list; **any other url present on both sides is appended as a duplicate**. Contrast .NET: uniform union-by-url overlay | PU:3199-3217 |
+
+### Binding (PU:2929-3037)
+
+When the diff (or an obligation profile) has a binding and it differs from the base's:
+
+- **Enforcement** (the only §5.1.0.21 lattice row either engine enforces): base strength `required` + diff
+  strength weaker → ERROR message. Both `required` with valueSets → full terminology **subset check**: expand
+  both (WARNINGs when unresolvable/unexpandable/too big), then every derived code is validated against the
+  base VS; failures → ERROR "not a subset" (PU:2960-2999). Other strength changes pass silently.
+- **Merge = rebuild**, not overlay: `nb = base.binding.copy()`; extensions **cleared**
+  (`COPY_BINDING_EXTENSIONS = false`, PU:428) and replaced by the diff's; **description reset to null** and
+  taken from the diff only if present — an inherited `binding.description` is *dropped* whenever a diff
+  constrains the binding without restating it; strength/valueSet: diff wins else inherited. `additional`
+  merged by (valueSet, purpose, diff-has-no-usage) via `mergeAdditionalBinding` (PU:3219: usage union,
+  shortDoco/documentation replace; the `any` flag is a self-assignment no-op — upstream candidate).
+- Diff with no binding: base binding kept, minus non-inherited extensions (PU:3032-3036).
+- Post-merge (both paths): binding **deleted** when no remaining type is bindable (task 8477) — Java's
+  bindable = hardcoded {Coding, CodeableConcept, Quantity, uri, string, code, CodeableReference} +
+  `binding-style`/`type-characteristics can-bind` extensions (PU:3362-3377); .NET's = `ICoded` types. Same
+  rule, independently maintained type lists ([RFC-010](15-spec-rfcs.md#rfc-010--binding-merge-granularity-unstated)
+  data point; the "two lists" theme of OQ-019/DEV-022).
+
+### Mapping — `MappingAssistant` ([DEV-017](13-deviation-register.md#dev-017--mapping-matched-on-identitymap-vs-r5-replace-by-identity-ch5) enrichment)
+
+One instance per generation (PU:837), configured by `mappingMergeMode` (default **APPEND**) and a
+`suppressedMappings` uri list — surfaces .NET doesn't have. Three jobs:
+
+1. **SD-level reconciliation** (MA:45-96): base SD `StructureDefinition.mapping` declarations are folded into
+   the derived SD's (match by URI first, else identity+name); identity collisions are renamed with numeric
+   suffixes and recorded in a `renames` table. (.NET never touches SD-level mappings.)
+2. **Element-level merge** (MA:173-213, called PU:3082): result = diff mappings first, then inherited ones
+   appended unless matched. Match = identity + map-text equal. **On R5+ only**, same identity with different
+   map text triggers the merge mode: APPEND (default) **comma-appends** the inherited map text into the diff
+   mapping — one mapping per identity; DUPLICATE keeps both; IGNORE/OVERWRITE pick one. **On R4 and earlier
+   the fallthrough keeps both items — exactly .NET's identity+map union**, so DEV-017 is an R5+-only
+   divergence. Suppression via the `suppressed` extension on SD-level declarations (always on) — vs .NET's
+   setting-gated per-item `elementdefinition-suppress`. Caveat: the `renames` table is applied to the *diff's*
+   mappings rather than the inherited ones (MA:175-177) — looks inverted; parked as a needs-verification
+   upstream candidate.
+3. **Post-generation pruning** (`update()`, MA:150-170): SD-level mapping declarations not referenced by any
+   snapshot element (and not declared by the derived SD itself) are removed; map texts trimmed.
+
+### The preprocessor's additional-base merge table (PRE:399-531)
+
+When a profile declares `EXT_ADDITIONAL_BASE` extensions (Java-only, DEV-032), each additional base's
+*differential* is recursively preprocessed and merged into the profile's differential before path processing —
+a third merge table (differential × differential, both constraint sets on one type), distinct from both this
+chapter's base×diff table and the slice-propagation fill-if-absent table
+([DEV-025](13-deviation-register.md), [OQ-021](14-open-questions.md)). Semantics: profile side wins
+fill-if-absent for descriptive properties and flags (`chooseProp`, no conflict detection); cardinality/value
+bounds nominally intersect — but **min takes the *lower*** (looser; arguably inverted, PRE:421) and
+**maxLength the larger** (looser, PRE:466) while max/minValue/maxValue correctly take the stricter;
+`alias`/`code`/`example`/`constraint`/`mapping` union; `valueAlternatives` and `type` **intersect** (type by
+working code, with a specialization-aware single-profile merge and a joint-profile search; empty intersection
+throws); fixed×fixed must be equal (throw), fixed×pattern checked for compatibility, **pattern×pattern hits an
+operand bug** (passes the `getFixed()` values, PRE:450); **binding×binding = `throw new Error("not done
+yet")`**. Incompatibilities throw `FHIRException` — this pathway is fail-fast where the main merge is
+warn-and-continue.
 
 **Empirical verification (Phase 4 packet 3, 2026-08-26):** the full-sweep min/mustSupport mining found
 **zero** per-property merge-semantics divergences for `min` and `mustSupport` (all 131 diffs traced to
@@ -325,12 +461,16 @@ checks (fixed/pattern type-compat, type/targetProfile derivation, mustSupport di
 groups (d), (e), (h).
 
 ## Deviations
+- [DEV-034](13-deviation-register.md#dev-034--per-property-merge-divergence-catalogue-net-elementdefnmerger-vs-java-updatefromdefinition-ch5)
+  **per-property merge divergence catalogue** — the consolidated .NET↔Java delta list for this chapter
+  (frozen-by-omission set, isSummary abort, isModifier gate, restated-constraint-key drop, binding rebuild,
+  extension policy lists, example key, label append, min/max illegal-input outputs).
 - [DEV-001](13-deviation-register.md#dev-001--type-list-replace-vs-merge-ch5) type list semantics.
 - [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12)
   groups (d)/(e)/(h) — merge-time validation Java performs and .NET doesn't.
 - [DEV-002](13-deviation-register.md#dev-002--constraintsource-population-ch5) constraint.source.
 - [DEV-017](13-deviation-register.md#dev-017--mapping-matched-on-identitymap-vs-r5-replace-by-identity-ch5)
-  mapping keyed on identity+map vs R5 replace-by-identity.
+  mapping keyed on identity+map vs R5 replace-by-identity (R5+-only divergence, see Java section).
 
 ## Open questions
 - [OQ-001](14-open-questions.md#oq-001--the-cardinality-diamond-problem) cardinality diamond problem.

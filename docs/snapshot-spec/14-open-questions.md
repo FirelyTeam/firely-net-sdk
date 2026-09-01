@@ -127,7 +127,12 @@ the same convention for the same properties?
 - Phase 1 finding (2026-08-21): **verified absent from the spec** — the convention appears nowhere on the
   R5 elementdefinition/profiling pages. It is pure tooling convention; origin and Java behavior pending
   (Phase 3), then this likely graduates to an RFC (document or drop the convention).
-- **Status:** open — spec side answered; Java side pending.
+- **Java side answered (J-b, 2026-09-01):** Java implements the identical convention for
+  `definition`/`comment`/`requirements` (`Utilities.appendDerivedTextToBase` = base + CRLF + diff minus the
+  3-char marker — byte-identical to .NET, `mergeMarkdown` PU:3134); Java *additionally* attempts it on
+  `label` but with swapped operands (broken — DEV-034(j)). Both engines agree the convention exists and how
+  it composes; the spec still doesn't. Graduation to an RFC now justified (both-implementation precedent).
+- **Status:** open for the spec question only — both implementation sides answered.
 
 ## OQ-011 — What must a generator enforce?
 The .NET merger is diff-wins for nearly every property — including every rule the spec marks as frozen or
@@ -139,7 +144,16 @@ one-directional: `isModifier`/`isSummary`/`defaultValue[x]`/`meaningWhenMissing`
 enforce, report, or ignore illegal differentials? Enforcement asymmetries like .NET's produce snapshots
 whose provenance can't be reconstructed. (Related: RFC-012 — a normative generator contract would answer
 this.)
-- **Status:** open (Phase 2 packet 1, 2026-08-24).
+- **Java data point (J-b, 2026-09-01):** Java answers the question with a *third* posture — **warn-and-take**:
+  illegal min/max/mustSupport/mustHaveValue diffs raise an ERROR `ValidationMessage` but the illegal value
+  still lands in the snapshot (PU:2757-2892); the frozen rules are enforced by **silent omission** (isModifier
+  outside extensions, defaultValue/meaningWhenMissing/representation never merged); `isSummary` alone is
+  enforced by **hard throw** (generation aborts, PU:3042); binding gets the required-strength row plus an
+  expansion-based subset check (ERRORs); type derivation is checked (throw/ERROR). So the two engines
+  disagree not just on *what* to enforce but on *how* — silent-keep-base (.NET min/max) vs warn-take-diff
+  (Java) vs silent-drop-diff (Java frozen props) vs abort (Java isSummary) — four postures, DEV-034(b)/(c).
+  Prime WGM exhibit for the generator-contract question.
+- **Status:** open (Phase 2 packet 1, 2026-08-24; Java side documented J-b 2026-09-01).
 
 ## OQ-012 — Partial overlay of fixed[x]/pattern[x] values
 .NET merges a differential `fixed[x]`/`pattern[x]` (and `defaultValue[x]`, `minValue[x]`/`maxValue[x]`) by
@@ -149,7 +163,13 @@ inherited from the base value. A base `patternCodeableConcept` with `text` + `co
 supplying only `coding` yields a pattern combining diff `coding` with base `text` — a value **neither
 profile stated**. Should a differential fixed/pattern replace the inherited value wholesale? Does Java
 overlay or replace? (Spec is silent — ch5 "compatibility with an inherited base fixed/pattern is unstated".)
-- **Status:** open (Phase 2 packet 1, 2026-08-24).
+- **Java side answered (J-b, 2026-09-01):** Java **replaces wholesale** — `base.setFixed(derived.getFixed()
+  .copy())`, no overlay of any kind (PU:2779-2796) — and then validates the value's type against the
+  element's post-merge type list (`checkTypeOk` PU:3121-3126, ERROR message). So .NET's partial overlay is
+  the outlier; .NET can synthesize values neither profile stated, Java cannot. (Java's *additional-base*
+  pathway does have a recursive fixed-vs-pattern compatibility merge, PRE:431-453 — a different mechanism
+  for a different input.) DEV-034(g).
+- **Status:** open for the spec question; both implementation sides answered (2026-09-01).
 
 ## OQ-013 — Meaning of merging ElementDefinition.modifierExtension
 .NET merges `modifierExtension` between base and differential elements like ordinary extensions, matched by
@@ -157,7 +177,11 @@ url (`ElementDefnMerger.cs:57-59`), with the question preserved in code: "Q: Wha
 consumers handle these?" — a modifier extension *inherited into* a snapshot element changes the meaning of a
 definition the deriving author may never have seen. Is inheriting modifier extensions into snapshots even
 sanctioned?
-- **Status:** open (Phase 2 packet 1, 2026-08-24).
+- **Java data point (J-b, 2026-09-01):** Java never merges ED-level `modifierExtension` at all —
+  `updateFromDefinition` + `updateExtensionsFromDefinition` handle only `extension` (verified: zero
+  `ModifierExtension` references in PU:2585-3217). A diff-supplied modifier extension on an
+  ElementDefinition is silently dropped; whatever the base clone carried stays.
+- **Status:** open (Phase 2 packet 1, 2026-08-24; Java side verified J-b 2026-09-01).
 
 ## OQ-014 — Inconsistent error taxonomy for author errors
 What should a generator do with an *illegal differential*? .NET's matcher answers differently per error:
