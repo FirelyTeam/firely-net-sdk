@@ -1,7 +1,8 @@
 # 4. Element matching
 
-> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 2,
-> 2026-08-24: `ElementMatcher.cs` deep-read). Java section pending (Phase 3).
+> Status: **spec baseline + .NET + Java behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2
+> packet 2, 2026-08-24: `ElementMatcher.cs` deep-read; Phase 3 packet J-c, 2026-09-01: `getDiffMatches` +
+> `ProfilePathProcessor` dispatch deep-read).
 
 ## Scope
 Pairing each differential element with its base-snapshot counterpart, one tree level at a time: exact path
@@ -175,17 +176,128 @@ When a diff constrains the type list on a *sliced* choice element's slice intro,
 types no longer appear are matched with action `Remove` and deleted from the snapshot in a second pass —
 the matcher-level counterpart of ch5's type-list replace semantics (DEV-001).
 
-## Java behavior (Phase 3)
-*(pending — `ProfilePathProcessor.java`)*
+## Java behavior (Phase 3 packet J-c, deep-read 2026-09-01)
+
+Code: `ProfileUtilities.java` (PU) `getDiffMatches` `:2444-2489`, `hasInnerDiffMatches` `:2420-2442`,
+scope helpers `:2491-2515`, `:2339-2349`; `ProfilePathProcessor.java` (PPP) main loop `:191-235` and
+dispatch `:283-305`, `:1196-1223`, `:1723-1736`; unmatched-row handling PU `:842-867`, `:908-948`. All at
+commit `b06c7ee`. Full detail with verbatim code in the materials extract
+`java-ch04-matching-and-ch02-preprocessing-2026-09-01.md`; what each branch then *does* is ch6/ch7 material.
+
+### Inverted walk: Java walks the base and queries the differential
+
+Where .NET iterates the differential's children and looks each up in the base (forward-only cursor), Java
+iterates the **base snapshot** rows in scope and, for each, asks the differential what it says
+(`getDiffMatches(differential, currentBasePath, diffCursor, diffLimit, …)`, PPP:204). The query scans the
+**entire remaining diff scope** `[diffCursor, diffLimit]` (inclusive) and returns *every* row whose path has
+the same depth and matches segment-by-segment (PU:2449-2457) — so a slicing entry and all its slices are
+collected in one list regardless of adjacency, and the dispatch below decides what the *set* means. Every
+base row in scope is visited exactly once; diff rows are consumed only when a base row pulls them in.
+Cursor discipline is admittedly loose: a July-2025 patch advances `diffCursor` by `diffMatches.size()`
+whenever a branch consumed matches without moving it (PPP:216-229, comment: "some of the code paths above
+don't… pretty difficult… Since this *works*, I'm going with this"), and a self-check of the invariant is
+commented out (`checkDiffAssignedAndCursor`, PPP:246-263).
+
+### Path matching rules (`getDiffMatches` + `isSameBase`, PU:2444-2489)
+
+Per segment: string equality, or `isSameBase` — either side ends in `[x]` and the other **starts with its
+stem** (PU:2487-2489). Consequences, contrasted with .NET's leaf-only prefix test:
+
+| rule | Java | .NET |
+|---|---|---|
+| renamed diff row vs `[x]` base (`valueQuantity` ↔ `value[x]`) | matches; the bare stem `value` matches too; suffix not validated as a type | matches when strictly longer than the stem (`ElementDefinitionNavigationFunctions.cs:94`); suffix not validated |
+| `[x]` diff row vs **renamed base** (R4-style base snapshot) | **matches** (`isSameBase` is symmetric) | **no match** → New + warning (`constructNew`, `:517-535`) — code-derived deviation, no shared test |
+| where the tolerance applies | every path segment, including ancestors | leaf segment only |
+| duplicate unnamed rows of one path | both returned; dispatch throws `DIFFERENTIAL_DOES_NOT_HAVE_A_SLICE` unless extension (PPP:313-314) | `Invalid` — dropped with issue |
+
+A commented-out block (PU:2465-2473) once warned `"unknown element '…' (or it is out of order) … (looking
+for '…')"`; it was disabled because it misfired on inherited elements, with the note "Might be better done
+when we're sorting the profile?" — Java has **no in-walk ordering diagnostic** (see ch2 for
+`sortDifferential`, the tooling-side answer).
+
+`hasInnerDiffMatches` (PU:2420-2442) answers "does the diff say anything *below* this base row?" — a child
+path, or (for `[x]` rows) any row extending the stem. Its notorious fall-through arm ("not sure why we get
+here, but returning false … makes a bunch of tests fail", PU:2438) is simply the `i == start` case where
+the window begins at the row itself: skip it, look at what follows. `allowSlices=false` (PPP:377, :1260)
+makes a same-path named-slice row terminate the search (rows after it belong to the slice, not the entry);
+`allowSlices=true` (PPP:1077, :1658) looks past such rows.
+
+### The dispatch (Java's action space) and its .NET analogue
+
+Unsliced base (`processSimplePath`, PPP:283-305), tested in order:
+
+| `diffMatches` | Java branch | ≈ .NET action |
+|---|---|---|
+| empty | copy the base row; if `hasInnerDiffMatches` recurse into base children, or step into the type when the base has none (PPP:1061-1130) | base child not in diff → copied; .NET's stand-in parent (ch2) yields the same outcome |
+| exactly one, and `oneMatchingElementInDifferential` (PPP:1723-1736): not a renamed row of a `[x]` base (`isImplicitSlicing`), no `slicing` component, not a *named extension slice* | plain **merge** (`processSimplePathWithOneMatchingElementInDifferential`, `updateFromDefinition` at PPP:813) — cursor **jumps** to just after the matched row (PPP:827) | `Merge` |
+| `diffsConstrainTypes` (PU:1806-1849; the `size < 2` guard is commented out, so one renamed/typed row suffices) | type slicing (ch6, DEV-020) | `constructChoiceTypeMatch` |
+| otherwise | the diff **slices** the base (`processSimplePathDefault`, PPP:307-448): throws for a non-repeating base unless sliced-to-one/type slicing (PPP:309-312) and for a missing slicing entry on a non-extension (PPP:313-314); extension without entry → synthesized `value:url` entry + `SNAPSHOT_auto_added_slicing` (PPP:343-345); each remaining row is then processed as a slice over the same base scope (PPP:430-444) | `Slice` (incl. .NET's implicit extension entry), then `Add` per slice |
+
+Sliced base (`processPathWithSlicedBase`, PPP:1196-1223): empty → copy entry and all slices;
+`diffsConstrainTypes` → type slicing over slices (ch6); otherwise `processPathWithSlicedBaseDefault`
+(PPP:1225-1482) — slicing-component compatibility throws (PPP:1229-1240), entry merge, then a **lockstep
+slice walk** (PPP:1311-1362): base slices in base order, each compared only with the diff row at `diffpos`
+by **sliceName equality**; match → recurse into the slice, `diffpos++`; no match → base slice copied
+unchanged. Leftover diff rows (PPP:1364-1396): base slicing `closed` → throw (unless `[x]` path); a leftover
+whose name equals *any* base slice → throw `NAMED_ITEMS_ARE_OUT_OF_ORDER_IN_THE_SLICE`; else a **new slice**
+(template = entry, or the parent slice for `a/b` reslices), `min=0`, merged. So existing slices must appear
+in base order and new slices last (the in-code rules at PPP:1203-1207); .NET's forward-only slice cursor
+turns an out-of-order existing name into an `Add` instead (code-derived, `matchSlice` `:804-853`).
+
+`sliceIsConstraining` is **never read** anywhere in the Java generator package (grep of PU/PPP/PRE at
+`b06c7ee`: zero hits) — Java matches slices by name alone; .NET enforces the flag
+([DEV-036](13-deviation-register.md#dev-036--sliceisconstraining-net-enforces-java-ignores-ch4),
+[OQ-006](14-open-questions.md#oq-006--sliceisconstraining) Java side answered).
+
+### What happens to a differential row nothing matched — the constraint/specialization split
+
+Java has **no `New` action inside the walk.** A diff row that no base row pulled in is left unmarked
+(`SNAPSHOT_GENERATED_IN_SNAPSHOT` absent), and its fate depends on the derivation:
+
+- **Specialization** (PU:842-867, second pass): the row is looked up by exact path among the snapshot's
+  trailing rows (`getElementInCurrentContext`, PU:1189-1199); found → merged; not found → **appended** after
+  the parent's last child (`findLastChildForParent`, PU:1099-1109 — throws an "internal code error" if the
+  parent is absent), and if the diff walks into it with a single type, the type's children are inherited
+  (`addInheritedElementsForSpecialization`; multiple types → throw, PU:856-861).
+- **Constraint** (every derivation, PU:908-948): each unmarked row is an **orphan** — an ERROR per row
+  ("No match found for `<id>` in the generated snapshot: check that the path and definitions are legal in
+  the differential (including order)", PU:925) plus one profile-level ERROR (PU:935-947); the row is
+  **dropped** from the snapshot. Errors are messages unless `wantThrowExceptions` (default false; then
+  `DefinitionException`, PU:1221-1226).
+
+This is the spec's split implemented literally — constraint SDs may not introduce paths [elementdefinition
+#path]; specializations list "elements from the baseDefinition … before new elements" [structuredefinition
+§5.4.6] — where .NET's universal, issue-less `New` (`createNewElement`, `SnapshotGenerator.cs:887`) applies
+neither half. Out-of-order siblings surface the same way: the one-match cursor jump (PPP:827) skips every
+row between the cursor and the match for good, so in t23a `males.telecom` (later in the diff, earlier in
+the base) is matched and `males.gender` becomes the orphan Java reports — the mechanism behind
+[DEV-027](13-deviation-register.md#dev-027--malformed-differentials-produce-silently-corrupt-net-snapshots-ch2)'s
+Java side. Whole picture:
+[DEV-035](13-deviation-register.md#dev-035--unmatched-and-out-of-order-differential-rows-java-drops-with-error-or-appends-by-derivation-net-silently-creates-new-elements-ch4).
+
+### Removed type slices — inverse trigger
+
+.NET's `Remove` deletes base *type slices* whose types the diff's slicing entry no longer lists. Java's
+post-walk sweep (PU:869-881) does the inverse: on a multi-type row, each *type* whose type slice
+(`findTypeSlice`, PU:1131-1139) is **prohibited** (`max=0`) is removed from the type list. Same intent
+(keep slices and type list consistent), opposite direction of inference; neither is spec text.
 
 ## Deviations
 - [DEV-008](13-deviation-register.md#dev-008--extension-header-slicing-element-ch6) extension header keeps
   its slicing component on the slice base.
+- [DEV-027](13-deviation-register.md#dev-027--malformed-differentials-produce-silently-corrupt-net-snapshots-ch2)
+  out-of-order differential: Java orphan ERROR (cursor-jump mechanism above) vs .NET corrupt output.
+- [DEV-035](13-deviation-register.md#dev-035--unmatched-and-out-of-order-differential-rows-java-drops-with-error-or-appends-by-derivation-net-silently-creates-new-elements-ch4)
+  unmatched rows: Java drops + ERROR (constraint) / appends (specialization) vs .NET silent `New`; includes
+  the `[x]`-vs-renamed-base matching asymmetry and the out-of-order-existing-slice behavior.
+- [DEV-036](13-deviation-register.md#dev-036--sliceisconstraining-net-enforces-java-ignores-ch4)
+  `sliceIsConstraining`: .NET enforces, Java never reads it.
 
 ## Open questions
 - [OQ-006](14-open-questions.md#oq-006--sliceisconstraining) sliceIsConstraining in matching (.NET side
-  answered 2026-08-24 — enforced, not ignored).
+  answered 2026-08-24 — enforced; Java side answered 2026-09-01 — ignored).
 - [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors) inconsistent error
-  taxonomy: throw vs discard-with-issue vs silent New.
+  taxonomy: throw vs discard-with-issue vs silent New — Java rows added 2026-09-01 (orphan drop+ERROR,
+  matcher throws).
 - [OQ-015](14-open-questions.md#oq-015--the-generator-mutates-its-input-differential) generator mutates the
-  input differential (generated type-slice names).
+  input differential (generated type-slice names) — Java side answered 2026-09-01 (works on a clone, ch2).

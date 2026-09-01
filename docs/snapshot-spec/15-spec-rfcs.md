@@ -122,6 +122,15 @@ Not the algorithm — but the spec could state the generator's *contract*: what 
 contain relative to base + differential (e.g., the "omission ≠ removal" rule of profiling §5.1.0.9
 generalized; the sdf-3/8b fill obligations; ordering per §5.4.6). Revives the spirit of FHIR-13402 in
 shape-only form, suitable for R6. **Status:** draft — depends on adjudication outcomes.
+- Data point (J-c, 2026-09-01): the two implementations already disagree on the *contract* for a
+  differential row that names no base element in a constraint profile — the spec forbids such rows
+  [elementdefinition #path] but says nothing about what a snapshot must contain when one is present. Java
+  drops it and reports an error; .NET materializes it as a new element without a diagnostic
+  ([DEV-035](13-deviation-register.md#dev-035--unmatched-and-out-of-order-differential-rows-java-drops-with-error-or-appends-by-derivation-net-silently-creates-new-elements-ch4)).
+  A one-line contract ("a snapshot SHALL NOT contain elements not present in the base for derivation
+  = constraint; generators SHALL report such differential elements") would settle it. Likewise the
+  §5.4.6 ordering rule has no stated consequence for violations — the same two implementations
+  respectively drop-and-report and silently duplicate (DEV-027).
 
 ### RFC-013 — sanction (or prohibit) renamed choice-type paths in snapshots
 The spec says type-specific elements are slices of `[x]` and "the original element SHALL always be

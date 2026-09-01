@@ -102,6 +102,14 @@ status/resolution.
   order, `valueSetReference`→`valueSet`, inserting missing `value[x]` type-slice intros).
 - Each patch documents a point where we considered the Java-produced fixture wrong → one deviation each,
   to be split out after Phase 3 analysis. **Status:** seeded.
+- **`Fix_t23` explained (J-c, 2026-09-01):** the manifest marks t23 `sort="true"`, i.e. the Java driver runs
+  `sortDifferential` before generating (the fixture deliberately lists `Patient.contact.gender` before
+  `Patient.contact.telecom`; t23a is the *same* differential without the sort flag and is a `fail` test).
+  The .NET driver deserializes `sort` (`SnapshotGeneratorManifestTests.cs:916-917`) but never acts on it;
+  `Fix_t23` (`:236-252`) hand-swaps the two rows in the checked-in file instead. So this patch is not a
+  disagreement with the fixture — it is a manual substitute for a Java-side preprocessing step .NET lacks
+  (ch2 Java section; DEV-035). Of the 28 `sort="true"` R5 tests only t23 needed it, so every other sorted
+  fixture happens to be in base order already.
 
 ## DEV-011 — Runtime-patched manifest rules (`FixManifest`)
 - **Evidence:** `SnapshotGeneratorManifestTests.cs:684` — rewrites FHIRPath rules for `t13`, `t15`, `t16`,
@@ -109,7 +117,13 @@ status/resolution.
 
 ## DEV-012 — t26: input equals expected
 - **Evidence:** `[Ignore]` note "input==expected" on `t26`. Determine what the test intends upstream.
-- **Status:** seeded.
+- **Resolution (J-c, 2026-09-01):** t26 is a **sort-only** manifest test (`sort="true"`, no `gen`): the Java
+  driver runs `sortDifferential` and deep-compares the *differential* with the expected file (driver
+  `:544-556`). Its input is already in base order (identical path sequences in `t26-input.xml` and
+  `t26-expected.xml`), so input == expected is the correct outcome — the test asserts that sorting a
+  polymorphic-reference differential is a no-op. Not a deviation; .NET has nothing to run here because it
+  has no `sortDifferential` (ch2). Keep `[Ignore]` or drop the test.
+- **Status:** settled (not a deviation).
 
 ## DEV-013 — t14 under R5: manifest/spec version mismatch
 - **Evidence:** `#if R5` ignore: "manifest.xml is not representing R5 5.0.0-snapshot3".
@@ -445,11 +459,18 @@ status/resolution.
   element id) after `males.period`, carrying a **fabricated `base` component** with the diff's own
   `min=1` as `base.min`. Mechanism: ordering is assumed, never verified (ch2 `:96-98`); the forward-only
   matcher never moves the base cursor backwards (ch4 `:94-107`).
+  **Java mechanism (J-c, 2026-09-01):** Java also has no ordering check; its base-driven walk queries the
+  remaining diff scope per base row and, on a single match, **jumps** the diff cursor to just past the
+  matched row (`PPP:827`). The base reaches `telecom` first, finds the later `telecom` row, and skips
+  `gender` for good; `gender` is then an **orphan** reported by the post-walk verification (`PU:908-948`)
+  and dropped — never a duplicate. **t23 is the identical differential** with `sort="true"`, so the driver's
+  `sortDifferential` repairs it before generation and it passes (ch2 Java section; DEV-035).
 - **obs-unit (`..` in path):** single diff element `Observation...unit` with `fixedString="%"`. Java:
-  throws "Invalid path … name portion missing ('..')". .NET: one *warning* ("Element Observation. has
-  neither a type nor a nameReference"), then emits a **phantom element** `Observation.` (empty-segment
-  stand-in parent, ch2 `:80-90`) and **silently drops the author's `fixedString`** — the constraint
-  appears nowhere in the output.
+  throws "Invalid path … name portion missing ('..')" (`checkDifferential`, `PU:1436-1437` — the
+  per-segment grammar check of ch2's Java section; .NET has no path validation at all). .NET: one *warning*
+  ("Element Observation. has neither a type nor a nameReference"), then emits a **phantom element**
+  `Observation.` (empty-segment stand-in parent, ch2 `:80-90`) and **silently drops the author's
+  `fixedString`** — the constraint appears nowhere in the output.
 - **Consequences:** these two go beyond DEV-028's missing-validation catalogue: the output is *wrong*,
   not merely unvalidated (duplicate ids violate the element-id algorithm's uniqueness guarantee, ch10;
   fabricated `base.min` corrupts sdf-8b data; a dropped constraint is data loss). Prime OQ-014 exhibit
@@ -643,4 +664,67 @@ status/resolution.
   [#2593](https://github.com/hapifhir/org.hl7.fhir.core/issues/2593); the additional-binding `any` no-op =
   [#2590](https://github.com/hapifhir/org.hl7.fhir.core/issues/2590); the additional-base pattern operand
   bug = [#2591](https://github.com/hapifhir/org.hl7.fhir.core/issues/2591).
+
+## DEV-035 — Unmatched and out-of-order differential rows: Java drops with ERROR or appends by derivation, .NET silently creates New elements (ch4)
+- **Evidence:** Phase 3 packet J-c deep-read 2026-09-01 — `ProfilePathProcessor.java:191-235, 827, 1311-1396`,
+  `ProfileUtilities.java:842-867, 908-948, 1221-1226, 2444-2489, 3815-3869` @ `b06c7ee`;
+  `ElementMatcher.cs:134, 517-535, 804-853`, `SnapshotGenerator.cs:887`; fail test t23a; the t23/t23a
+  fixture pair; `SnapshotGeneratorManifestTests.cs:236-252, 916-917`.
+- **The architectural difference:** .NET walks the differential's children and looks each up in the base
+  (forward-only cursor); a child with no base sibling is a **`New` element, no issue**, for every derivation
+  (`createNewElement`). Java walks the **base** and queries the remaining differential scope per base row
+  (`getDiffMatches`); a differential row no base row pulled in is left unmarked, and then:
+  - **specialization:** a second pass (`PU:842-867`) merges it onto an existing snapshot row by exact path or
+    **appends** it after its parent's last child (inheriting the type's children when the diff walks into it;
+    several types → throw);
+  - **constraint (and everything else):** the row is an **orphan** — ERROR "No match found for `<id>` in the
+    generated snapshot: check that the path and definitions are legal in the differential (including order)"
+    per row plus one profile-level ERROR (`PU:908-948`), and the row is **dropped** (a `DefinitionException`
+    instead when `setThrowException(true)`, `PU:1221-1226`).
+  This is the spec's own split — constraint SDs may not introduce paths [elementdefinition #path]; only
+  specializations have "new elements" [structuredefinition §5.4.6] — implemented literally on the Java side
+  and not at all on the .NET side.
+- **Ordering falls out of the same mechanism.** Neither side validates order (Java's in-walk warning is
+  commented out, `PU:2465-2473`). In .NET a misordered sibling is behind the base cursor → `New` (t23a:
+  duplicate `Patient.contact:males.telecom` with a fabricated `base.min`, DEV-027). In Java the one-match
+  branch **jumps** the diff cursor to just past the matched row (`PPP:827`), so rows skipped over become
+  orphans → ERROR + drop (t23a: `males.gender`). Java's *normalization* channel is outside the generator:
+  `sortDifferential` (`PU:3815-3869`), which the shared-suite driver runs on every `sort="true"` test and every
+  base in a chain — **t23 is t23a's exact differential with the flag set**, and passes. .NET has no sorting;
+  its driver ignores the `sort` attribute and `Fix_t23` hand-swaps the fixture rows (DEV-010).
+- **Two further matcher asymmetries (code-derived, no shared test):**
+  - a differential row naming the `[x]` element when the *base* snapshot has a **renamed** choice element
+    (R4-style base): Java matches (`isSameBase` is symmetric, `PU:2487-2489`), .NET does not — New + warning
+    (`constructNew`, `ElementMatcher.cs:517-535`);
+  - an *existing* slice name appearing out of base order, or a new slice placed before an existing one: Java
+    throws `NAMED_ITEMS_ARE_OUT_OF_ORDER_IN_THE_SLICE` (`PPP:1373-1375`, lockstep slice walk); .NET's
+    forward-only slice cursor sees a no-match → `Add` (a second slice with an existing name).
+  - unnamed duplicate rows of one path with no slicing entry (non-extension): Java throws
+    `DIFFERENTIAL_DOES_NOT_HAVE_A_SLICE` (`PPP:313-314`); .NET drops with an issue (`Invalid`).
+- **Spec basis:** [elementdefinition #path] (constraints cannot define new paths), [structuredefinition
+  §5.4.6] (ordering; new elements only for specializations) — both are shape rules with **no stated
+  consequence for violations** (RFC-012 data point).
+- **Status:** confirmed (code-derived both sides; t23a is the empirical exhibit). WGM/OQ-014 material: the
+  two engines have chosen opposite ends of "reject vs propagate" for the same author error, and only one of
+  them produces a diagnostic.
+
+## DEV-036 — `sliceIsConstraining`: .NET enforces, Java ignores (ch4)
+- **Evidence:** `ElementMatcher.cs:816-838` (`matchSlice`); grep for `sliceIsConstraining` (case-insensitive)
+  over `ProfileUtilities.java`, `ProfilePathProcessor.java`, `SnapshotGenerationPreProcessor.java` @
+  `b06c7ee`: **zero occurrences**.
+- **.NET:** when a named diff slice carries `sliceIsConstraining`, the flag must agree with the actual
+  name match: `true` with no matching base slice → `Invalid` + "no match" issue; `false` with a matching base
+  slice → `Invalid` + "conflict" issue; the element is **discarded**. Absent → match ⇒ constrain, no match ⇒
+  new slice.
+- **Java:** slices are matched to base slices by **name equality alone** (lockstep walk `PPP:1311-1362`);
+  unmatched names become new slices (`PPP:1370-1396`). The flag is never read, so both .NET `Invalid` cases
+  proceed silently in Java: `true`+no-match → a new slice, `false`+match → a constraint on the inherited
+  slice. The flag survives in the output only as an ordinary copied property.
+- **Spec basis:** `sliceIsConstraining` (Trial Use): "If set to true, an ancestor profile SHALL have a
+  slicing definition with this name. If set to false, no ancestor profile is permitted to have a slicing
+  definition with this name" [elementdefinition-definitions] — a SHALL on the *profile author*, with no
+  statement about generator behavior; the instance validator side is out of this document's scope.
+- **Status:** confirmed (code-derived both sides; no shared test carries the property — verify with a
+  targeted harness case if it becomes WGM material). Answers [OQ-006](14-open-questions.md#oq-006--sliceisconstraining)'s
+  Java half; the remaining question is whether a *generator* has any obligation here.
 

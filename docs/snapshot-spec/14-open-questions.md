@@ -90,9 +90,19 @@ What must a generator do with `sliceIsConstraining` when matching a derived prof
   **wrong** — `:600-623` is dead `#if false` code. Live code in `matchSlice` (`ElementMatcher.cs:816-838`)
   **enforces** it: a non-null value disagreeing with the actual name match → `MatchAction.Invalid`, issue
   emitted, element discarded; absent → STU3 fallback (match ⇒ constrain, no match ⇒ new slice).
-- Remaining question: does Java enforce it the same way, and is *discard-with-issue* the sanctioned
-  response (vs error, vs proceeding)? Feeds [OQ-014](#oq-014--inconsistent-error-taxonomy-for-author-errors).
-- **Status:** open — .NET side answered.
+- **Java side answered (J-c, 2026-09-01): Java never reads the property.** The string `sliceIsConstraining`
+  does not occur anywhere in the generator package (`ProfileUtilities`/`ProfilePathProcessor`/
+  `SnapshotGenerationPreProcessor` at `b06c7ee`); slices are matched to base slices by **name equality
+  alone** in a lockstep walk (`PPP:1311-1362`), and a diff slice whose name matches no base slice is simply a
+  new slice (`PPP:1370-1396`) — exactly .NET's *absent-flag* fallback, applied unconditionally. So `true`
+  without a base match is silently a new slice in Java (an `Invalid` + drop in .NET), and `false` with a
+  base match is silently a constraint in Java (`Invalid` + drop in .NET). Register entry:
+  [DEV-036](13-deviation-register.md#dev-036--sliceisconstraining-net-enforces-java-ignores-ch4).
+- Remaining question for the spec side: the property is Trial Use and its definition text ("If set to true,
+  an ancestor profile SHALL have a slicing definition with this name") reads like a validation rule — is a
+  *generator* expected to enforce it (and how: reject vs proceed), or is it a validator/renderer hint only?
+  Feeds [OQ-014](#oq-014--inconsistent-error-taxonomy-for-author-errors).
+- **Status:** open — both implementation sides answered (they disagree).
 
 ## OQ-007 — Global StructureDefinition.mapping
 Should the profile-level `mapping` declarations of base/type profiles be merged into the derived
@@ -224,11 +234,29 @@ different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--wh
   The nine absent checks are catalogued in
   [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12).
   Taxonomy-quality data point: where both sides *do* throw for the same author error (obs-1-2/obs-2-3/
-  obs-3/t37), Java's exception names the offending and allowed types while .NET reports "**Internal
-  error** in snapshot generator" (`InvalidOperationException`). The WGM question sharpens to: which
-  author errors is a generator *required* to detect, and is "reject, repair, or propagate — but never
-  corrupt" an acceptable floor?
-- **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26).
+  obs-3), Java's exception names the offending and allowed types while .NET reports "**Internal
+  error** in snapshot generator" (`InvalidOperationException`). (Correction 2026-09-01: t37 does *not*
+  belong in that clause — its Java failure is the driver's *sort* step, "Sort failed: counts differ; at
+  least one of the paths in the differential is illegal", which names nothing; only without the sort step
+  would `checkDifferential` throw the path-naming "must start with MedicationRequest" error.) The WGM
+  question sharpens to: which author errors is a generator *required* to detect, and is "reject, repair,
+  or propagate — but never corrupt" an acceptable floor?
+- **Java rows (J-c, 2026-09-01; ch2/ch4 Java sections):** Java's taxonomy is narrower but not uniform
+  either — **throw** (`FHIRException`/`DefinitionException`/`java.lang.Error`): every path-grammar failure
+  (`checkDifferential`, `PU:1413-1461`), root `type` on a non-logical SD (`PU:1322`, a `java.lang.Error`),
+  slicing a non-repeating element, slicing without an entry on a non-extension (`PPP:309-314`), existing
+  slices out of order or a new slice before an existing one (`NAMED_ITEMS_ARE_OUT_OF_ORDER_IN_THE_SLICE`,
+  `PPP:1373-1375`), extending a `closed` slicing (`PPP:1364-1369`), unexpandable sparse parents
+  (`PPP:1094-1117`), plus two internal-state throws that leak as author-facing errors ("This situation is
+  not yet handled … please report issue to grahame@fhir.org", `PPP:382`; "Unable to find parent path …
+  (internal code error)", `PU:1103`); **ERROR message, row dropped** (a throw only when
+  `setThrowException(true)`): every differential row nothing matched — out-of-order siblings included
+  (`PU:908-948`); **silent**: ordering violations whose row still gets matched later; unknown paths in
+  `sortDifferential` sort to the front with the error recorded only in debug mode (`PU:3916-3918`);
+  `sliceIsConstraining` ignored (OQ-006). Java has **no silent-New and no repair-with-issue** classes for
+  constraint profiles; .NET has no throw class for path grammar. Neither implementation's taxonomy is
+  derivable from the spec.
+- **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26; Java rows 2026-09-01).
 
 ## OQ-015 — The generator mutates its input differential
 With `GENERATE_MISSING_TYPE_SLICE_NAMES` active, a type-slice constraint lacking a `sliceName` gets one
@@ -240,7 +268,17 @@ Java's CLI oracle runs with `autoFixSliceNames(true)` (DEV-016) — same repair,
   *instances* with the caller's differential (`DifferentialTreeConstructor.cs:48-51`), so any generator
   repair (type-slice names, root-sliceName clearing at `SnapshotGenerator.cs:604-618`) lands in the caller's
   StructureDefinition, except when the touched element is a generator-synthesized stand-in parent.
-- **Status:** open (Phase 2 packet 2, 2026-08-24).
+- **Java side (J-c, 2026-09-01): Java clones the differential first** (`cloneDiff`, `PU:1483-1491` —
+  in-code rationale: "we're sometimes going to hack the differential while processing it") and does all
+  preprocessor injection/merging, slice-name generation and cursor bookkeeping on the clone. Write-back to
+  the caller's rows is limited to derivation-tracking user data (`PU:913-920`) and one **opt-in** repair:
+  clearing a root `type` that equals the base type (`wantFixDifferentialFirstElementType`, default
+  false, `PU:1319-1320`). Two things still reach the caller's SD from *outside* the generator in the test
+  driver: `setIds(source)` before generation (driver `:548`/`:600`) and the CLI's `autoFixSliceNames`
+  (DEV-016). So the two implementations answer the question oppositely by default: .NET repairs in place,
+  Java isolates and reports (orphans are ERRORs, ch4) — and Java's own opt-in flag shows the maintainers
+  consider *repairing the input* a legitimate, if non-default, generator behavior.
+- **Status:** open (Phase 2 packet 2, 2026-08-24; Java side 2026-09-01).
 
 ## OQ-016 — What does a differential-less StructureDefinition mean?
 The spec never states whether a StructureDefinition without a differential means "snapshot = base snapshot"

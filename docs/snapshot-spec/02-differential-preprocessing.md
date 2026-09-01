@@ -1,7 +1,9 @@
 # 2. Differential preprocessing
 
-> Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 3,
-> 2026-08-24: `DifferentialTreeConstructor.cs` deep-read). Java section pending (Phase 3).
+> Status: **spec baseline + .NET + Java behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2
+> packet 3, 2026-08-24: `DifferentialTreeConstructor.cs` deep-read; Phase 3 packet J-c, 2026-09-01:
+> `checkDifferential`/`cloneDiff`/`sortDifferential`/`closeDifferential`/`cleanUpDifferential` deep-read;
+> slice-stuff propagation and additional-base merging were read in J-a/J-b).
 
 ## Scope
 What must happen to a differential before merging: validity requirements on differentials (paths, order,
@@ -118,39 +120,148 @@ Two properties worth pinning:
   during matching (ch4) and normalized to type-slice form in the snapshot (`NORMALIZE_RENAMED_TYPESLICE`,
   ch5/ch6).
 
-## Java behavior (Phase 3)
-*(deep-read pending — `SnapshotGenerationPreProcessor.java`; first empirically-grounded findings from
-Phase 4 packet 3, 2026-08-26:)*
+## Java behavior (Phase 3; J-c deep-read 2026-09-01, slice propagation J-a 2026-08-31)
 
-- **Slice-content propagation** (the preprocessor's headline job, located via min/mustSupport mining):
-  before generation, Java collects "sliceStuff" — the differential elements between a slicing entry and
-  its first named slice — and merges it into **each named slice's differential** (`processSlices` →
-  `mergeElements` → `merge`, ~:688-810, :993-1075; invoked from `ProfileUtilities.java:825`).
-  Fill-if-absent for min/max/mustSupport/fixed/pattern/type/binding, *append* for constraint/example;
-  missing elements are injected with rewritten ids (`SNAPSHOT_PREPROCESS_INJECTED`). Extension slicing
-  is excluded as a slicer; entry-level extension slices ride along as sliceStuff. .NET has no
-  counterpart mechanism — see
-  [DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11)
-  and [OQ-021](14-open-questions.md#oq-021--how-much-must-a-snapshot-materialize).
-- **additionalBase merging** (`process:137-152`): a second base's differential merged in
-  ([DEV-032](13-deviation-register.md#dev-032--java-only-merge-inputs-additionalbase-and-obligation-profiles-ch3)).
-- **Suspected defect:** `elementsMatch` (:812-822) matches on leaf path + leaf sliceName only, ignoring
-  ancestor slices — cross-slice constraint contamination observed (on-questionnaire, DEV-025's M1q
-  note); Phase-3 verification target.
+Code: `ProfileUtilities.java` (PU) `generateSnapshot` preamble `:770-839`, `checkDifferential` `:1413-1461`,
+`checkDifferentialBaseType` `:1317-1330`, `cloneDiff` `:1483-1491`, `sortDifferential` `:3815-3869` (+ holder/
+comparer `:3672-3812`, `:3888-4039`), `closeDifferential` `:3424-3508`, `cleanUpDifferential` `:4570-4645`;
+`ProfilePathProcessor.java` (PPP) `:1061-1130`. Commit `b06c7ee`. Verbatim detail in the materials extract
+`java-ch04-matching-and-ch02-preprocessing-2026-09-01.md`.
+
+### Order of operations in `generateSnapshot` (PU:770-839)
+
+1. circular-reference check on the snapshot stack → throw (PU:774-776; ch11);
+2. **path validation** of the caller's differential rows (`checkDifferential`, PU:791);
+3. **root-type check** (`checkDifferentialBaseType`, PU:792);
+4. inherited SD-level extensions + obligation profiles collected (PU:808-810);
+5. bookkeeping user data cleared on the original rows (PU:820-821);
+6. **the differential is cloned** (`cloneDiff`, PU:824) — "we're sometimes going to hack the differential
+   while processing it";
+7. the **preprocessor** runs on the clone (`SnapshotGenerationPreProcessor.process`, PU:825);
+8. for specializations the base snapshot is cloned with ids re-rooted to the derived type (PU:828-832);
+9. the walk (`ProfilePathProcessor.processPaths`, PU:839; ch4).
+
+### Path validation (`checkDifferential`, PU:1413-1461) — no .NET counterpart
+
+Every row, all failures `FHIRException` throws: missing `path` element or value; path must equal the SD
+`type` or start with `type + "."` (the sdf-8a check — this is what rejects t37's `MedicationRequiest…` typo
+when the driver does not sort first; note the "may equal the type" allowance is applied to every row because
+the `first` flag is never cleared, PU:1414); per segment: empty (obs-unit's `..`), >64 characters, Unicode
+whitespace, any of `, : ; ' " / | ? ! @ # $ % ^ & * ( ) { }`, any character outside `' '..'z'`, and `[`/`]`
+anywhere except as a trailing `[x]`. .NET validates none of this (DEV-027 obs-unit; DEV-028 group (f)).
+
+### Root type (`checkDifferentialBaseType`, PU:1317-1325) — sdf-15a
+
+A root row with `type` → `throw new Error(TYPE_ON_FIRST_DIFFERENTIAL_ELEMENT)` unless the SD is LOGICAL.
+An opt-in repair (`wantFixDifferentialFirstElementType`, **default false**, PU:444/497) instead **clears the
+type on the caller's original row** when it equals the base's type (PU:1319-1320) — the one write to the
+caller's differential that happens *before* cloning. .NET: never checked (DEV-028 f).
+
+### Caller isolation (`cloneDiff`, PU:1483-1491) — OQ-015 Java side
+
+Each row is `copy()`d into a fresh differential; each clone points back via `SNAPSHOT_diff_source`. All
+in-generation mutation — preprocessor injections and merges, generated slice names, cursor bookkeeping —
+lands on clones. Written back to the originals: only `SNAPSHOT_DERIVATION_EQUALS`/`_POINTER` user data
+(PU:913-920), the bookkeeping clear (PU:820-821), and the opt-in root-type clear above. Two caveats:
+`Base.setCopyUserData(true)` is switched on for the whole run so clones carry user data (PU:779-780), and
+the *test driver* runs `setIds(source, false)` on the original before generation (driver `:548`, `:600`) —
+Java differentials may acquire ids outside `generateSnapshot` (ch10). Contrast .NET's deliberate sharing of
+element instances with the caller (`DifferentialTreeConstructor.cs:48-51`).
+
+### No tree reconstruction — sparse parents are handled inside the walk
+
+Java never builds a differential tree and never inserts stand-in rows (the preprocessor injects rows only
+for slice propagation, below). A base row the diff does not mention but whose *children* it does is handled
+by the empty-match branch of the walk (PPP:1061-1130): the base row is copied, and `hasInnerDiffMatches`
+(PU:2420-2442, ch4) decides whether to recurse — into the base's own children when it has them
+(PPP:1080-1092), otherwise by "implicitly stepping into" the row's type (PPP:1093-1130; ch7) — throwing when
+that is impossible: no type and no contentReference (`_HAS_NO_CHILDREN__AND_NO_TYPES_IN_PROFILE_`,
+PPP:1094-1096), or several non-Reference types with non-extension child rows
+(`_HAS_CHILDREN__AND_MULTIPLE_TYPES__IN_PROFILE_`, PPP:1098-1117). Outcome-equivalent to .NET's stand-in
+parent (an empty stand-in merged over the base copy is a no-op merge) and the same "expand only where the
+diff constrains children" policy (ch7/ch11); the difference is that .NET turns an unexpandable sparse chain
+into stand-ins plus a `New` leaf (DEV-027 obs-unit, DEV-035), where Java throws.
+
+### Slice-content propagation (the preprocessor's headline job — J-a deep-read, ch6)
+
+Before the walk, the preprocessor collects the differential rows between a slicing entry and its first
+named slice ("sliceStuff") and merges them into **each named slice's differential** with strict
+fill-if-absent semantics, injecting missing rows (`SNAPSHOT_PREPROCESS_INJECTED`, exempt from orphan
+reporting PU:913-914). .NET has no counterpart. Detail and the confirmed contamination defect:
+[DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11),
+[DEV-033](13-deviation-register.md#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6)
+(the `elementsMatch` leaf-only matching suspected in Phase 4 is **confirmed** — golden files bless it; filed
+upstream as hapifhir#2584), [OQ-021](14-open-questions.md#oq-021--how-much-must-a-snapshot-materialize).
+The preprocessor also merges **additionalBase** differentials
+([DEV-032](13-deviation-register.md#dev-032--java-only-merge-inputs-additionalbase-and-obligation-profiles-ch3), ch5 table).
+
+### Ordering: no in-generation normalization or diagnostic; `sortDifferential` is tooling
+
+Inside `generateSnapshot` Java neither sorts nor warns about order (the in-walk warning is commented out,
+PU:2465-2473: "Might be better done when we're sorting the profile?"). An out-of-order row is detected only
+if it ends up **unmatched** (cursor-jump mechanism, ch4) — then it is dropped with an ERROR (PU:925, "…check
+that the path and definitions are legal in the differential (including order)"); a misordered row that still
+finds its base row later is accepted silently.
+
+`sortDifferential(base, diff, name, errors, errorIfChanges)` (PU:3815-3869) is a **public utility, never
+called by `generateSnapshot`** — but the shared test suite's driver applies it before generation to every
+`sort="true"` test (28 of 166 R5 manifest tests) and to **every base in a derivation chain** (driver
+`:610`, `:699`), and the harness oracle replicates that. So the golden files describe *sorted-differential*
+behavior. Mechanics: rows are placed in a holder tree with **placeholders** for a missing root and for
+skipped intermediate levels (PU:3831-3840, :3892-3899); siblings are sorted by the index of their
+counterpart in the base snapshot (`ElementDefinitionComparer.find`, PU:3755-3797 — `[x]`-tolerant both
+ways, follows `contentReference`), child scopes by the snapshot of the child's type via `getComparer`
+(PU:3930-4002: profile-typed `Resource`, extension SDs, renamed `[x]` children, Reference-only unions;
+mixed polymorphic children with content → throw); `Collections.sort` is stable, so a slicing entry and its
+slices keep their authored relative order; placeholders are dropped on write-back (PU:4033-4039). Quirks:
+a path not found in the base gets index 0 (sorts to the *front*) and the recorded error surfaces **only in
+debug mode** (PU:3916-3918); a row outside the root prefix ends the top-level loop, so it and everything
+after it are dropped → "Sort failed: counts differ; at least one of the paths in the differential is
+illegal" (PU:3867-3868) — which is how t37 actually fails in Java (the sort step, not `checkDifferential`).
+
+Evidence: **t23 and t23a are the same differential** (`males.gender` listed before `males.telecom`); t23 is
+`sort="true"` and passes, t23a is not and yields the orphan ERROR
+([DEV-027](13-deviation-register.md#dev-027--malformed-differentials-produce-silently-corrupt-net-snapshots-ch2)).
+.NET has no sorting at all: the vendored driver deserializes the `sort` attribute but never reads it
+(`SnapshotGeneratorManifestTests.cs:916-917`), and `Fix_t23` (`:236-252`) **hand-swaps** the two rows in the
+checked-in fixture instead (DEV-010); t26 (sort-only, already in order) is correctly `[Ignore]`d as
+"input==expected" (DEV-012 settled).
+
+### Two more public utilities, outside generation (no callers in the checked-out cone)
+
+- **`closeDifferential(base, derived)`** (PU:3424-3438): for every base row that is an immediate child of
+  the root (except `.id`) and is not mentioned in the differential, appends `{path, max="0"}`; recurses only
+  into *sliced* base rows the differential mentions (`closeChildren`, PU:3440-3460), matching by path alone
+  (slice names ignored); then sorts, discarding sort errors. Tooling for "closed" profiles (prohibit
+  everything not mentioned); deeper unmentioned content under unsliced parents is not closed.
+- **`cleanUpDifferential(sd)`** (PU:4570-4619): legacy repair for differentials that repeat a path without
+  a slicing entry — inserts an `open` entry before the first occurrence, names the rows `slice-N` (or from
+  `SNAPSHOT_slice_name` user data, which nothing in the cone sets), and picks a **hard-coded discriminator
+  by path** (`determineSlicing`, PU:4622-4645): `.extension`→`value:url`, `DiagnosticReport.result`→
+  `value:reference.code`, `Observation.related`→`value:target.reference.code` (STU3 element),
+  `Bundle.entry`→`value:resource.@profile` (DSTU2 syntax); anything else → `Error("No slicing for …")`.
+  DSTU2-conversion era. Java's *in-generation* counterpart to .NET's implicit extension slicing entry is
+  not this but `makeExtensionSlicing` (PPP:343-345) and `checkToSeeIfSlicingExists` (PPP:955-987) — ch6.
 
 ## Deviations
 - [DEV-027](13-deviation-register.md#dev-027--malformed-differentials-produce-silently-corrupt-net-snapshots-ch2) —
   Phase-4 fail-test evidence: an out-of-order differential (t23a) and a `..` path (obs-unit) pass through
   preprocessing and yield silently corrupt .NET snapshots (duplicate element id + fabricated `base.min`;
-  phantom element + dropped constraint) where Java rejects both.
+  phantom element + dropped constraint) where Java rejects both — Java mechanisms pinned 2026-09-01
+  (orphan ERROR via the matching cursor jump; `checkDifferential` empty-segment throw).
 - [DEV-028](13-deviation-register.md#dev-028--author-error-detection-catalogue-java-validates-net-emits-as-written-ch2ch6-ch9-ch12) —
   the full author-error detection catalogue (root type/slicing invariants group (f) is preprocessing
-  territory).
+  territory; `checkDifferential`'s path grammar is Java-only).
+- [DEV-035](13-deviation-register.md#dev-035--unmatched-and-out-of-order-differential-rows-java-drops-with-error-or-appends-by-derivation-net-silently-creates-new-elements-ch4) —
+  ordering/unmatched-row handling incl. `sortDifferential` as Java's tooling-side normalization channel vs
+  .NET's hand-patched fixture.
+- [DEV-010](13-deviation-register.md#dev-010--runtime-patched-hl7-fixtures-fixinput) — `Fix_t23` is a manual
+  stand-in for `sortDifferential`; [DEV-012](13-deviation-register.md#dev-012--t26-input-equals-expected) settled.
 
 ## Open questions
 - [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors) preprocessing throws
-  on malformed differentials.
+  on malformed differentials (both sides now catalogued).
 - [OQ-015](14-open-questions.md#oq-015--the-generator-mutates-its-input-differential) shared element
-  instances make generator repairs visible to the caller.
+  instances make generator repairs visible to the caller (.NET); Java clones (answered 2026-09-01).
 - [OQ-016](14-open-questions.md#oq-016--what-does-a-differential-less-structuredefinition-mean)
   differential-less StructureDefinitions.
