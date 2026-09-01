@@ -218,7 +218,9 @@ when we're sorting the profile?" — Java has **no in-walk ordering diagnostic**
 `hasInnerDiffMatches` (PU:2420-2442) answers "does the diff say anything *below* this base row?" — a child
 path, or (for `[x]` rows) any row extending the stem. Its notorious fall-through arm ("not sure why we get
 here, but returning false … makes a bunch of tests fail", PU:2438) is simply the `i == start` case where
-the window begins at the row itself: skip it, look at what follows. `allowSlices=false` (PPP:377, :1260)
+the window begins at the row itself: skip it, look at what follows. (For a `[x]` path the row itself would
+already pass the stem test at PU:2431 — a latent spurious "inner match" that is never reached because every
+dispatch routes `[x]` paths with matches to type slicing first.) `allowSlices=false` (PPP:377, :1260)
 makes a same-path named-slice row terminate the search (rows after it belong to the slice, not the entry);
 `allowSlices=true` (PPP:1077, :1658) looks past such rows.
 

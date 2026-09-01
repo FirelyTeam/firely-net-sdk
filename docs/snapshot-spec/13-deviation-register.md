@@ -719,7 +719,10 @@ status/resolution.
 - **Java:** slices are matched to base slices by **name equality alone** (lockstep walk `PPP:1311-1362`);
   unmatched names become new slices (`PPP:1370-1396`). The flag is never read, so both .NET `Invalid` cases
   proceed silently in Java: `true`+no-match → a new slice, `false`+match → a constraint on the inherited
-  slice. The flag survives in the output only as an ordinary copied property.
+  slice. And because `updateFromDefinition` never copies `sliceIsConstraining` from the differential
+  (frozen-by-omission set, [DEV-034](#dev-034--per-property-merge-divergence-catalogue-net-elementdefnmerger-vs-java-updatefromdefinition-ch5)
+  (a)) while a new slice is templated from the base row (`PPP:1379-1385`), an authored value is also
+  **dropped from Java's snapshot output** — not merely ignored during matching.
 - **Spec basis:** `sliceIsConstraining` (Trial Use): "If set to true, an ancestor profile SHALL have a
   slicing definition with this name. If set to false, no ancestor profile is permitted to have a slicing
   definition with this name" [elementdefinition-definitions] — a SHALL on the *profile author*, with no

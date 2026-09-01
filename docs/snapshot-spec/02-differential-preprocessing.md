@@ -174,13 +174,21 @@ Java never builds a differential tree and never inserts stand-in rows (the prepr
 for slice propagation, below). A base row the diff does not mention but whose *children* it does is handled
 by the empty-match branch of the walk (PPP:1061-1130): the base row is copied, and `hasInnerDiffMatches`
 (PU:2420-2442, ch4) decides whether to recurse — into the base's own children when it has them
-(PPP:1080-1092), otherwise by "implicitly stepping into" the row's type (PPP:1093-1130; ch7) — throwing when
-that is impossible: no type and no contentReference (`_HAS_NO_CHILDREN__AND_NO_TYPES_IN_PROFILE_`,
-PPP:1094-1096), or several non-Reference types with non-extension child rows
-(`_HAS_CHILDREN__AND_MULTIPLE_TYPES__IN_PROFILE_`, PPP:1098-1117). Outcome-equivalent to .NET's stand-in
-parent (an empty stand-in merged over the base copy is a no-op merge) and the same "expand only where the
-diff constrains children" policy (ch7/ch11); the difference is that .NET turns an unexpandable sparse chain
-into stand-ins plus a `New` leaf (DEV-027 obs-unit, DEV-035), where Java throws.
+(PPP:1080-1092), otherwise by "implicitly stepping into" the row's type (PPP:1093-1190; ch7) — throwing when
+the row has neither type nor contentReference (`_HAS_NO_CHILDREN__AND_NO_TYPES_IN_PROFILE_`, PPP:1094-1096).
+The adjacent "children under a multi-type element" throw (`_HAS_CHILDREN__AND_MULTIPLE_TYPES__IN_PROFILE_`,
+PPP:1115-1117) is **dead code at this site**: its guard loops over `diffMatches`, which is empty in this
+branch (and holds one row at the other site, PPP:846-851, where the `!= get(0)` test can never pass); a
+multi-type sparse parent is instead processed against **Element's** snapshot (PPP:1158), so its
+non-extension children end up as orphans (ch4) rather than a targeted error. Outcome-equivalent to .NET's
+stand-in parent otherwise (an empty stand-in merged over the base copy is a no-op merge) and the same
+"expand only where the diff constrains children" policy (ch7/ch11); the difference is that .NET turns an
+unexpandable sparse chain into stand-ins plus a `New` leaf (DEV-027 obs-unit, DEV-035), where Java throws
+(no type) or orphans (multi-type).
+
+A **differential-less SD** (OQ-016, code-derived): zero rows to validate, root-type check skipped, and the
+walk's diff limit is `-1` (PPP:170) so no base row ever finds a match — snapshot = base copy with the fill
+obligations, the same answer as .NET's synthesized empty differential on its main path.
 
 ### Slice-content propagation (the preprocessor's headline job — J-a deep-read, ch6)
 

@@ -246,8 +246,10 @@ different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--wh
   (`checkDifferential`, `PU:1413-1461`), root `type` on a non-logical SD (`PU:1322`, a `java.lang.Error`),
   slicing a non-repeating element, slicing without an entry on a non-extension (`PPP:309-314`), existing
   slices out of order or a new slice before an existing one (`NAMED_ITEMS_ARE_OUT_OF_ORDER_IN_THE_SLICE`,
-  `PPP:1373-1375`), extending a `closed` slicing (`PPP:1364-1369`), unexpandable sparse parents
-  (`PPP:1094-1117`), plus two internal-state throws that leak as author-facing errors ("This situation is
+  `PPP:1373-1375`), extending a `closed` slicing (`PPP:1364-1369`), a sparse parent with neither type nor
+  contentReference (`PPP:1094-1096`; the neighbouring multi-type throw at `PPP:1115-1117` is dead code — its
+  guard iterates an empty list — so a multi-type sparse parent silently expands against `Element` and its
+  children orphan instead), plus two internal-state throws that leak as author-facing errors ("This situation is
   not yet handled … please report issue to grahame@fhir.org", `PPP:382`; "Unable to find parent path …
   (internal code error)", `PU:1103`); **ERROR message, row dropped** (a throw only when
   `setThrowException(true)`): every differential row nothing matched — out-of-order siblings included
@@ -289,7 +291,12 @@ resolution for *type profiles* rejects the same SD with an issue ("profile has n
 merges into a referencing element. The in-code TODO ("Handle empty diff (=> return root element of base
 profile)") shows the authors consider this a gap, not a design decision. What is the sanctioned meaning —
 and does Java accept differential-less SDs in both roles?
-- **Status:** open (Phase 2 packet 3, 2026-08-24).
+- **Java side, main path (J-c, 2026-09-01; code-derived, not run):** accepted — `checkDifferential` sees no
+  rows, the root-type check is skipped (`hasDifferential()` false), and the walk's diff limit is `-1`
+  (`PPP:170`), so every base row is copied with the fill obligations: snapshot = base copy. Same answer as
+  .NET's main path. Java's behavior in the *type-profile-root* role (.NET's refusing path) is ch7 material
+  for packet J-d.
+- **Status:** open (Phase 2 packet 3, 2026-08-24; Java main path 2026-09-01).
 
 ## OQ-017 — Starting expansion below the root: extension vs fragment syntax
 R5 documents the `elementdefinition-profile-element` extension (on `type.profile`) nominating an element
