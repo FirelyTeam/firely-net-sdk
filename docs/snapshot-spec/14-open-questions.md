@@ -83,7 +83,10 @@ After dereferencing a `contentReference` to constrain its children, which value-
 referenced element meaningfully apply (`fixed`/`pattern`/`defaultValue`/`example`/`minValue`/`maxValue`/
 `maxLength`/`binding`)? See DEV-009 / issue #3177 — .NET currently copies none, with reasoning in comments
 only.
-- **Status:** open.
+- **Java side (J-e, 2026-09-01):** copies none either — `replaceFromContentReference` (`PU:1870-1874`) moves
+  only `type`. Agreement by omission; the question is purely spec-side (should eld-5's prohibition be
+  restated as "these properties are undefined after dereferencing"?).
+- **Status:** open, spec-side only (Java side 2026-09-01).
 
 ## OQ-005 — Enforcing slicing.rules = closed / openAtEnd
 Should the *generator* enforce or validate `closed`/`openAtEnd` (e.g., reject a differential that appends a
@@ -152,7 +155,14 @@ to disable a "correct-looking" clear because it broke `Questionnaire.item.item`
   entirely). Remaining question: is that sanctioned? The spec says ids "may be used as the target of
   external references" — regeneration breaks author-chosen ids external references may rely on; does Java
   preserve them?
-- **Status:** open — .NET side answered.
+- **Java side (J-e, 2026-09-01): no — agreement.** `setIds(derived, false)` (`PU:886`) regenerates every id
+  from path + enclosing slice names at the end of generation (`generateIds`, `PU:4310-4364`), overwriting
+  author ids without a message — and, because `checkFirst` is false, it rewrites the **caller's differential
+  ids too**. Both engines thus treat ids as derived data; the only inter-engine difference is cosmetic
+  (Java maps `_` → `-` in id segments, `fixChars` `PU:4375`; .NET keeps the path characters). The remaining
+  question is spec-side: is discarding author ids sanctioned given ids "may be used as the target of external
+  references"?
+- **Status:** open, spec-side only — both implementations answered (regenerate).
 
 ## OQ-010 — The "..." append convention
 .NET supports prefixing `definition`/`comment`/`requirements` text with `"..."` in a differential to mean
@@ -300,6 +310,15 @@ different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--wh
   same classes: unresolvable/incompatible profile = issue + continue, several profiles = silent skip
   (`SnapshotGenerator.cs:1243-1249`) where Java throws an `Error` in one path and picks the core type in the
   others (`PPP:914`).
+- **Java census (J-e, 2026-09-01; ch12 Java section):** `grep "throw new"` over the three generator files:
+  `DefinitionException` 70, `FHIRException` 68, **`java.lang.Error` 37** — the `Error`s reachable from author
+  input include a slicing entry with children on a base that already has children (`PPP:382`, "please report
+  issue to grahame@fhir.org"), two type profiles on a new slice (`PPP:1419`), a root `type` (`PU:883`/`1322`),
+  a path outside the type (`PU:1021`), choice-group anomalies (`PU:1353` `"huh?"`, `PU:1362`). `Error`s bypass
+  the `catch (Exception)` that nulls the half-built snapshot (`PU:1078-1084`). Message-mode gate: ERRORs throw
+  only with `wantThrowExceptions`; two messages bypass even that (`PPP:351/355`). So Java's taxonomy has a
+  fourth class .NET lacks — **JVM `Error` for author input** — and its report-vs-throw split is a constructor
+  argument (`messages == null`), not a policy.
 - **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26; Java rows 2026-09-01).
 
 ## OQ-015 — The generator mutates its input differential
@@ -322,7 +341,14 @@ Java's CLI oracle runs with `autoFixSliceNames(true)` (DEV-016) — same repair,
   (DEV-016). So the two implementations answer the question oppositely by default: .NET repairs in place,
   Java isolates and reports (orphans are ERRORs, ch4) — and Java's own opt-in flag shows the maintainers
   consider *repairing the input* a legitimate, if non-default, generator behavior.
-- **Status:** open (Phase 2 packet 2, 2026-08-24; Java side 2026-09-01).
+- **Correction (J-e, 2026-09-01):** Java's write-back is **not** limited to user data. `generateSnapshot`
+  ends with `setIds(derived, false)` (`PU:886`), and with `checkFirst = false` that regenerates the ids of
+  the caller's **original differential** (the walk used a clone) and absolutizes its local contentReferences
+  (`PU:4257-4260`, `4359-4363`). So Java also normalizes the input differential — ids and reference form —
+  just not its constraint content. The test driver's own pre-generation `setIds` hides this in the shared
+  suite. Both engines mutate the input; they differ in *what* (.NET: slice names, root sliceName; Java: ids,
+  contentReference form, opt-in root type).
+- **Status:** open (Phase 2 packet 2, 2026-08-24; Java side 2026-09-01, corrected J-e).
 
 ## OQ-016 — What does a differential-less StructureDefinition mean?
 The spec never states whether a StructureDefinition without a differential means "snapshot = base snapshot"
@@ -432,7 +458,18 @@ as inheritable/non-inheritable.
   `elementdefinition-isCommonBinding`; after expansion Java keeps only `bindingName`, .NET all three
   (~770 property diffs in the sweep). Java's presumed mechanism: the `EXT_SNAPSHOT_BEHAVIOR` policy +
   four static URL lists found in the Phase-3 orientation (deep-read pending).
-- **Status:** open (Phase 2 packet 6, 2026-08-26; Java data point added Phase 4 packet 3).
+- **List comparison (J-e, 2026-09-01; ch12 Java section):** Java's `NON_INHERITED_ED_URLS` (`PU:232-249`,
+  15 urls; applied by `checkExtensions` on the copy-through path `PPP:1066`, at SD level `PU:1230`, and in
+  specialization inheritance `PU:1276`) vs .NET's 18-entry blocklist (`SnapshotGeneratorExtensions.cs:137-156`):
+  **agree on 8** (isCommonBinding, fmm, standards-status, category, security-category, wg, normative-version,
+  summary); **Java-only 7** (tools/binding-definition, tools/no-binding — the sweep's ~770 diffs —,
+  implements, explicit-type-name, obligation-profile core+tools, standards-status-reason); **.NET-only 9**
+  (fmm-no-warnings, hierarchy, **interface**, applicable-version, codegen-super, replaces,
+  resource-approvalDate/-effectivePeriod/-lastReviewDate) plus .NET's own marker. Java additionally has
+  three *other* policy lists (non-overriding / overriding / default-inherited) and a per-extension
+  `snapshot-behavior` declaration — i.e. Java already treats inheritance policy as **extension metadata**,
+  which is what the candidate RFC would standardize. Neither list is documented anywhere.
+- **Status:** open (Phase 2 packet 6, 2026-08-26; Java data point Phase 4 packet 3; list diff 2026-09-01).
 
 ## OQ-020 — What may a generator do to the slicing entry of a type slicing?
 The headline Phase-4 finding (DEV-020, test `obs-2b`): given an author-written slicing entry on a choice
@@ -501,5 +538,11 @@ obligations but no set-level rule; §5.1.0.10 (R5 propagation text) touches (c) 
   So Java materializes *more* for slicing-entry children and *less* for type profiles — neither engine has a
   single materialization principle. Question (d): must a snapshot incorporate the constraints of the profiles
   named in `type.profile`, or is the snapshot complete when it records the reference?
+- **The one non-diff-driven expansion in Java (J-e, 2026-09-01):** apart from the preprocessor copy-down,
+  Java's walk expands children only where the differential has rows — except the slicing-entry inline dump
+  (`PPP:403-419`), which materializes a contentReference target's children under a sliced entry without diff
+  rows (DEV-025 flavor 1, comp-deep/t21). That is the only place either engine materializes structure the
+  differential never mentions, and it exists for a mechanical reason (the slices need a base to be walked
+  against), not a policy one.
 - **Status:** open (Phase 4 packet 3, 2026-08-26; type-profile dimension 2026-09-01) — WGM material; demo-able
   with org2a (52-element gap), sd-comp-hist (45 property diffs), and t21.

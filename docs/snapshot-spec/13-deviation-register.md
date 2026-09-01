@@ -94,7 +94,12 @@ status/resolution.
 - **.NET:** on constraining children of a content-referenced element, nulls `contentReference` and copies the
   referenced element's children; deliberately does *not* copy `defaultValue`/`fixed`/`pattern`/`example`/
   `minValue`/`maxValue`/`maxLength`/`binding` (reasoning left in code comments, dated 2025).
-- **Java:** TBD. **Spec basis:** TBD. **Status:** seeded.
+- **Java (J-e, 2026-09-01):** on the two step-in paths Java does the same — `replaceFromContentReference`
+  (`PU:1870-1874`) nulls the reference and copies **only** the target's `type`; none of the eld-5 properties
+  come across. But on the sliced-base path (`PPP:1477-1479`) the reference is *kept* and the type cleared, and
+  the slicing-entry inline dump (`PPP:403-419`) keeps the reference while materializing the children — see
+  DEV-023. **Spec basis:** none (ch8 spec gaps 1–2). **Status:** step-in behavior = agreement; the
+  reference-survival question is DEV-023's.
 
 ## DEV-010 — Runtime-patched HL7 fixtures (`FixInput`)
 - **Evidence:** `SnapshotGeneratorManifestTests.cs:134` — `Fix_t4a`, `Fix_t13`, `Fix_t15`, `Fix_t16`,
@@ -151,7 +156,9 @@ status/resolution.
 - **Evidence:** `ValidationEngine.java:1010` — the validator CLI runs `ProfileUtilities` with
   `setAutoFixSliceNames(true)`.
 - Any harness comparison must account for this flag; raw `ProfileUtilities` default may differ from CLI
-  behavior. **Status:** seeded (harness design note).
+  behavior. **J-e (2026-09-01):** the flag has exactly one site, `PPP:565` (type-slice row without a
+  `sliceName` → name generated instead of the error); the shared-test driver leaves it **false**. **Status:**
+  pinned (harness design note).
 
 ## DEV-017 — Mapping matched on identity+map vs R5 replace-by-identity (ch5)
 - **Evidence:** `ElementDefnMerger.cs:193,918` (`matchMappings`) — Phase 2 deep-read 2026-08-24.
@@ -369,7 +376,14 @@ status/resolution.
   (Java-only expanded children carrying `ele-1`, see the element-set extract).
 - **Spec basis:** ch8 spec-gap list — the spec never says whether the reference survives expansion
   (feeds OQ-004) nor when local form must become absolute (eld-5 is silent on both).
-- **Status:** confirmed empirically; Java-side code citation pending Phase 3.
+- **Java mechanisms (J-e, 2026-09-01):** flavor 1 = `generateIdForElement` (`PU:4359-4363`): at `setIds` time
+  every `#`-local contentReference in the whole snapshot (and the caller's differential) is prefixed with
+  `http://hl7.org/fhir/StructureDefinition/<type>` — hard-coded core namespace, the SD url only for logical
+  models (`PU:4367-4373`); not `updateURLs`. Flavor 2 = the sliced-base path `PPP:1477-1479` (reference kept,
+  `type` cleared) — whereas Java's two step-in paths (`PPP:858-896`, `1118-1156`) do exactly what .NET does
+  (null + type restored, `replaceFromContentReference` `PU:1870-1874`). So the survival difference is
+  path-dependent inside Java, not a policy.
+- **Status:** confirmed empirically; Java code-pinned (both flavors).
 
 > Entries DEV-024 – DEV-031 come from Phase 4 packet 3 (sweep mining, 2026-08-26). Common version stamp:
 > .NET = Hl7.Fhir.R5 6.2.1 | Java engine = 6.10.2 (d06577dbc5c6) | golden = fhir-test-cases 1.7.67 |
@@ -442,7 +456,13 @@ status/resolution.
   a snapshot) see different element sets. → new [OQ-021](14-open-questions.md#oq-021--how-much-must-a-snapshot-materialize).
 - **Java bug candidate found in passing (M1q):** confirmed and graduated to its own entry —
   [DEV-033](#dev-033--java-preprocessor-cross-slice-contamination--silent-constraint-loss-ch6).
-- **Status:** confirmed empirically; Java preprocessor deep-read done (Phase 3 packet J-a, 2026-08-31).
+- **Flavor 1 mechanism (J-e, 2026-09-01):** the sliced-contentReference re-expansion (comp-deep/t21) is the
+  slicing-entry inline dump `PPP:403-419`: when a slicing entry has inner diff rows and the base has no
+  children under it, the contentReference target's children are copied under the entry from the base
+  snapshot **without any diff rows requiring them** — the one exception to Java's otherwise diff-driven
+  expansion policy (ch11 §1).
+- **Status:** confirmed empirically; Java preprocessor deep-read done (Phase 3 packet J-a, 2026-08-31);
+  flavor-1 mechanism pinned (J-e).
 
 ## DEV-026 — Renamed-choice constraints: .NET anchors on a synthesized type slice, Java on bare `value[x]` (ch6/ch7)
 - **Evidence:** ELEMENT-SET mining G4 (89 elements, both sides: t16 20n+18j, t31 25n+24j, sushi1/2).
@@ -534,7 +554,15 @@ status/resolution.
   (`ForceRegenerateSnapshots` + `GenerateSnapshotForExternalProfiles`); default-settings behavior is
   unverified — one targeted re-run needed before the WGM brief. The ext-recursion-1 asymmetry (Java
   rejects, .NET accepts) is settings-independent.
-- **Status:** confirmed under harness settings; default-settings re-run pending.
+- **Java mechanisms pinned (J-e, 2026-09-01):** ext-recursion-2 passes through the *in-progress profile*
+  rule — a type profile currently being generated skips the type-compatibility check and contributes only
+  its already-built first element (`PPP:714-724`); the slice has no diff children, so nothing steps in.
+  logical-goo passes because Java's cycle guard (`snapshotStack`, `PU:774-778`) holds **derived** urls only
+  and the base arrives as a caller-supplied object with a snapshot — url == baseDefinition-url is never
+  tested. ext-recursion-1 is rejected by `checkDifferentialBaseType` (`PU:1322`, a `java.lang.Error`) before
+  any recursion.
+- **Status:** confirmed under harness settings; Java mechanisms code-pinned; .NET default-settings re-run
+  pending.
 
 ## DEV-030 — Cross-version bases: .NET rebuilds against R5 core, leaving R5/R4 hybrids (ch3)
 - **Evidence:** ELEMENT-SET mining G7/G9. `sd-nested-ext` (base chain `sdc-questionnaire`, fhirVersion

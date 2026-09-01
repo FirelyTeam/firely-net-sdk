@@ -1,7 +1,7 @@
 # 8. contentReference handling
 
 > Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 6,
-> 2026-08-26: `expandElement` contentReference branch deep-read). Java section pending (Phase 3).
+> 2026-08-26: `expandElement` contentReference branch deep-read; Phase 3 packet J-e, 2026-09-01: Java sweep).
 
 ## Scope
 Elements defined by reference to another element (`Questionnaire.item.item` being the canonical case):
@@ -109,8 +109,39 @@ absolute `url#path` form against the profile's base *type* canonical — require
 inlines elements whose references point at the core structure rather than the profile itself.
 Specializations keep local references.
 
-## Java behavior (Phase 3)
-*(pending)*
+## Java behavior (Phase 3 sweep, 2026-09-01)
+
+Citations `PU`/`PPP` @ `b06c7ee`; detail in the materials extract `java-ch08-12-sweep-2026-09-01.md`.
+
+Java has **three** behaviors for a referencing element, chosen by which walk path meets it:
+
+| Walk path | Reference | `type` | Children |
+|---|---|---|---|
+| step-in when the diff constrains children and the base has none (one-match `PPP:858-896`, empty-match `PPP:1118-1156`) → `replaceFromContentReference` (`PU:1870-1874`) | **nulled** | **replaced by the target's types** | the target's subtree becomes the base for the diff rows (redirector stack) — same as .NET step 4 |
+| new/constrained slice under an already-sliced base (`PPP:1477-1479`) | **kept** | **cleared** | none — the slice path steps in only for typed elements (`PPP:1422`) |
+| slicing entry with inner diff rows on a base without children (`PPP:403-419`) | kept on the entry | (empty) | the target's children are **copied inline** under the entry from the base snapshot (`resolveContentReference` walks backwards to the nearest same-path non-slice element; paths rewritten by string replace; `updateFromBase` per row) — **no diff rows needed** |
+
+So DEV-023's flavor 2 (Java keeps the reference on child-expanded *slices*) and DEV-009's .NET-like
+null-and-retype are both Java — on different paths. The third row is the mechanism behind DEV-025 flavor 1
+(comp-deep/t21: Java materializes the sliced entry's children where .NET expands only the named slices).
+
+- **Target resolution** (`getElementById`, `PU:3524-3541`): `#id` → the element with that **id** in the base
+  snapshot being walked (a *profile* when the base is a profile); `url#id` with a foreign url → `findProfile`
+  + that SD's snapshot; not found → throw `Unable to resolve reference to {0}`. Because `setIds` absolutizes
+  every local reference at the end of each generation (next bullet), profile-on-profile chains carry absolute
+  core urls and Java — like .NET's `getCoreType` — dereferences into the **core** definition. Only a base whose
+  references are still local resolves within the base itself. **R5 §5.1.0.10 propagation is implemented by
+  neither engine**: both expand the referencing element from the core target and merge only the diff rows
+  placed under it.
+- **Absolute form** (DEV-023 flavor 1): `generateIdForElement` (`PU:4359-4363`) prefixes every `#`-local
+  contentReference with `http://hl7.org/fhir/StructureDefinition/<type>` (the SD's own url for logical models,
+  `PU:4367-4373`) — over the **whole snapshot and the caller's differential** (`setIds(derived, false)`,
+  `PU:886`), not just merged children. The core base url is hard-coded: a constraint profile on a non-core
+  specialization gets a wrong target (needs-verification, JI-20).
+- **eld-5 properties**: `replaceFromContentReference` copies only `type`; fixed/pattern/binding/defaultValue/
+  example/minValue/maxValue/maxLength never come across — agreement with .NET by omission (OQ-004).
+- The `contentReference` helpers outside the walk (`getChildMap` `PU:513-560`; sort's `find()` with its
+  `MAX_RECURSION_LIMIT = 10`, `PU:3786`) serve renderers/validators/sorting, not generation.
 
 ## Deviations
 - [DEV-009](13-deviation-register.md#dev-009--contentreference-expansion-details-ch8).

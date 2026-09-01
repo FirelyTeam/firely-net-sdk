@@ -1,7 +1,7 @@
 # 10. Element ids & the Base component
 
 > Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 6,
-> 2026-08-26: `ElementIdGenerator`/`SnapshotBaseComponentGenerator` deep-read). Java section pending (Phase 3).
+> 2026-08-26: `ElementIdGenerator`/`SnapshotBaseComponentGenerator` deep-read; Phase 3 packet J-e, 2026-09-01: Java sweep).
 
 ## Scope
 Two derived bookkeeping structures the generator must produce: element ids and `ElementDefinition.base`.
@@ -151,8 +151,43 @@ profile's Base components via `copyChildren` → `EnsureBaseComponent(typeElem, 
 components (`:518`) — on the *base* clone, before merge; external profiles get theirs in `ensureSnapshot`
 (`:2348`).
 
-## Java behavior (Phase 3)
-*(pending — `setIds`, base-component logic in `ProfileUtilities`)*
+## Java behavior (Phase 3 sweep, 2026-09-01)
+
+Citations `PU`/`PPP` @ `b06c7ee`; detail in the materials extract `java-ch08-12-sweep-2026-09-01.md`.
+
+### Element ids (`setIds` / `generateIds`, `PU:4256-4364`)
+
+- **Always regenerated, wholesale, at the end** (`setIds(derived, false)`, `PU:886`): every id in the snapshot
+  is overwritten; author-supplied ids are discarded without a message. With `checkFirst = false` the same
+  call also regenerates the ids of the **caller's original differential** (the walk worked on a clone;
+  `PU:4257-4260`) — an input mutation (OQ-015 correction). OQ-009's Java side: **agreement** with .NET —
+  canonical regeneration, author ids never survive.
+- **Algorithm**: path segments joined by `.`; each non-root segment gets `fixChars` (`_` → `-`, `PU:4375-4377`
+  — the path itself is untouched, so an underscore element name yields an id that is not path-derived; no
+  shared test has one) plus `:sliceName` for every path prefix that is currently a named slice (`SliceList`,
+  `PU:4278-4308`: the nearest enclosing slice per prefix, cleared when a shallower-or-equal path appears;
+  reslice `/` is simply part of the name). **No `[x]` normalization from `Base.path`**: the walk already emitted
+  normalized `[x]` paths (renamed diff paths are collapsed at `PPP:830-842`), so Java's ids never depend on
+  `Base` where .NET's do. A duplicate generated id is an **ERROR message** (`SAME_ID_ON_MULTIPLE_ELEMENTS`), a
+  pathless element a throw. A `replacedIds` map is filled for a "second pass — fix up any broken path based
+  id references" that is an empty comment (`PU:4322-4323`) — dead bookkeeping.
+- The same pass **absolutizes local contentReferences** (`PU:4359-4363`, ch8).
+
+### Base components
+
+- `updateFromBase` (`PU:2004-2020`, J-a): every emitted row gets `base` copied verbatim from the base row's
+  `base` when present, else seeded from the base row's own path/min/max; rows emitted during type-snapshot
+  step-ins therefore carry the **type's** Base (agreement with .NET's `copyChildren`, #1123), and slice rows
+  the sliced element's Base (settled J-a). Per-row provenance goes to user data (`SNAPSHOT_BASE_MODEL` =
+  source SD url, `SNAPSHOT_BASE_PATH`).
+- **Specializations**: any row still lacking `base` after the walk gets a self-referential one
+  (`PU:969-975`) — the sdf-8b fill. Constraint profiles rely on the base snapshot having Base everywhere; a
+  base row without `base` propagates as "seeded from the base row" — Java never leaves a row without Base
+  where the base row exists, but has no drill-down to the *original* definition (.NET's
+  `ensureBaseComponents` walks up the base chain; Java trusts the immediate base's `base` values).
+- **Root**: not special-cased — the root's Base is whatever the base snapshot's root says (copied verbatim);
+  .NET forces root Base = self. For core-rooted chains both give `Patient`→`Patient`; for a specialization
+  the Java root Base is filled by `PU:969-975` only if the cloned base root lacked one.
 
 ## Open questions
 - [OQ-009](14-open-questions.md#oq-009--element-id-stability) id stability (.NET side answered 2026-08-26 —

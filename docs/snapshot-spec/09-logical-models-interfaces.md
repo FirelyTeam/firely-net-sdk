@@ -1,7 +1,7 @@
 # 9. Logical models & interfaces
 
 > Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 6,
-> 2026-08-26: logical-model branches in `generate()`/`expandElement`). Java section pending (Phase 3).
+> 2026-08-26: logical-model branches in `generate()`/`expandElement`; Phase 3 packet J-e, 2026-09-01: Java sweep).
 
 ## Scope
 Snapshot generation for `kind = logical`: root path derivation from `type`, bases other than FHIR
@@ -108,8 +108,49 @@ into derived snapshots. There is **no support** for `imposeProfile`/`compliesWit
 interface-conformance semantics — the upstream `mi-use-*` tests are among the 102 never integrated
 (ch1/ch13 context; Java comparison in Phase 3 will define the gap).
 
-## Java behavior (Phase 3)
-*(pending)*
+## Java behavior (Phase 3 sweep, 2026-09-01)
+
+Citations `PU`/`PPP` @ `b06c7ee`; detail in the materials extract `java-ch08-12-sweep-2026-09-01.md`.
+
+- **No carve-outs for missing metadata**: `type` and `derivation` are mandatory on every SD (`PU:750-758`,
+  throw) — no parse-from-differential repair; an absolute-url `type` is reduced to its tail by
+  `getTypeName()` for LOGICAL kinds, which drives both the differential path check and the specialization
+  rebase (ch3). A `type` on the root element is allowed only for LOGICAL kinds (`PU:882-883` snapshot side,
+  `PU:1318-1323` differential side).
+- **Logical types in the walk**: a child typed with a logical model passes the step-in gate via
+  `isBaseResource` ("types non-empty and none is `Resource`", `PU:1700-1709`, gate `PPP:828`), not
+  `isDataType` (COMPLEXTYPE + specialization only); `isMatchingType`'s url-equals-code branch (`PU:1650`) is the
+  logical-model type check. The type SD is fetched by working code like any datatype.
+- **New elements in specializations** (`PU:842-867`, after the walk): differential rows the walk did not consume
+  are merged onto a same-path element if one exists in the current context, else copied and **inserted after
+  the last child of their parent**; a row whose next diff row is a child either throws ("Unsupported scenario:
+  specialization walks into multiple types") or gets the type's snapshot children copied under it
+  (`addInheritedElementsForSpecialization`, `PU:1263-1283`: path string-replace, type root constraints appended,
+  non-inherited extensions added if absent). Constraint profiles never reach this code (their orphans are
+  ERRORs, ch4/DEV-035). .NET's counterpart is `createNewElement` + inline children (ch7).
+- **No sdf-3 synthesis** either: `PU:969-975` fills only a missing `base` from the element's own path/min/max.
+  Code-derived agreement with .NET — R4 logical models get no definition/min/max from either generator.
+- **Choice-group pruning — Java-only** (`checkGroupConstraints`, `PU:1333-1405`, right after the walk): for
+  each non-sliced, non-prohibited element, every invariant whose FHIRPath is a parenthesised union of child
+  names compared to the constant `1` (`= 1` mandatory group, `<= 1` optional group; `readChoices`/
+  `processConstraint`, `PU:4820-4870`) defines a choice group; if exactly one member has `min = 1`, every other
+  member is set `max = 0` and its **subtree removed** from the snapshot; two mandatory members → `throw new
+  Error`; duplicate child names → `throw new Error("huh?")`. A logical-model/xml-choice-group idiom with no
+  spec basis and no .NET counterpart.
+- **Interfaces**: nothing in the profile package, the context package or the rest of `conformance/` reads
+  `structuredefinition-interface` (only the constant is defined). Java does not skip interface bases (ch3);
+  the nearest analogue is `checkTypeDerivation` treating **abstract or LOGICAL** base types as walkable
+  ancestors for type-derivation checks (`PU:3276`).
+- **imposeProfile / compliesWithProfile**: read only inside the *targetProfile* derivation check
+  (`sdConformsToTargets`, `PU:3333`: a derived target may satisfy the base's target through an imposed
+  profile); PRE:607 "we ignore impose and compliesWith - for now?". `mi-use-imposed` passes in Java because
+  the imposed profile satisfies that check — nothing is merged from it. `mi-use-distinct` fails on the same
+  check (DEV-028 (e)).
+- `populateLogicalSnapshot` (`PU:4546-4567`) is a separate utility (diff root + base children + diff children
+  re-rooted by string prefix) with no caller in the generator cone — a publisher-side fallback, not part of
+  `generateSnapshot`. Type parameters (`checkTypeParameters`, ch3) are the other Java-only logical-model surface.
+- DEV-031 (cdshooks segment drop) has no Java-side counterpart mechanism: logical-model children go through
+  the ordinary path remap (`fixedPathDest`, `PU:2051-2071`); the .NET trace is still open.
 
 ## Deviations
 - [DEV-031](13-deviation-register.md#dev-031--logical-model-child-placement-drops-a-path-segment-cdshooks-ch9) —

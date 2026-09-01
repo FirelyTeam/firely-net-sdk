@@ -1,7 +1,7 @@
 # 11. Recursion & circularity
 
 > Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 6,
-> 2026-08-26: `SnapshotRecursionStack` + expansion-policy deep-read). Java section pending (Phase 3).
+> 2026-08-26: `SnapshotRecursionStack` + expansion-policy deep-read; Phase 3 packet J-e, 2026-09-01: Java sweep).
 
 ## Scope
 Recursion is inherent: generating a snapshot requires the base's snapshot, type-profile expansion requires
@@ -111,8 +111,43 @@ The stack also makes the generator **non-reentrant**: `OnStartRecursion` throws 
 has not finished (`SnapshotRecursionStack.cs:43-50`), so one `SnapshotGenerator` instance can run only one
 generation at a time (see ch12).
 
-## Java behavior (Phase 3)
-*(pending)*
+## Java behavior (Phase 3 sweep, 2026-09-01)
+
+Citations `PU`/`PPP` @ `b06c7ee`; detail in the materials extract `java-ch08-12-sweep-2026-09-01.md`.
+Java's answers to the four spec gaps:
+
+1. **Expansion-depth policy: the same diff-driven rule as .NET** — children are stepped into only where the
+   differential has child rows (`PPP:828-829`, `1077`, `1422-1424`, `1658`) — **plus one exception**: a
+   slicing entry with inner diff rows on a base without children gets the contentReference target's children
+   materialized inline without diff rows (`PPP:403-419`, ch8; DEV-025 flavor 1). No per-element override hook.
+2. **Cycle detection: one stack, one flag.** `snapshotStack` (instance list of **derived** urls) is checked and
+   pushed per `generateSnapshot` (`PU:774-778`, throw `Circular snapshot references detected … (stack = …)`),
+   popped in `finally` (`PU:1089`); the SD object itself is flagged `generatingSnapshot` for the duration
+   (`PU:777`, cleared `1083`/`1088`), which `checkNotGenerating` (`PU:1694-1698`, `FHIRException` "Attempt to use
+   a snapshot on profile {0} as {1} before it is generated") and the template selection (`PPP:714/719/744`)
+   consult. Five re-entry sites, all synchronous on the same instance: `PU:767` (base of a snapshot-less
+   base), `PU:2080` and `PU:2638` (xver synthesis), `PPP:710` (xver template), `PPP:730` (snapshot-less type
+   profile). Any `Exception` → the half-built snapshot is **nulled** (`PU:1078-1084`; a `java.lang.Error` is
+   not caught there, so those paths do leave a partial snapshot behind — ch12). Unguarded: the `findProfile`
+   base-chain walks in `isMatchingType`/`isCompatibleType`/`typeMatchesAncestor`/`checkTypeParameters`
+   (`PU:1665`, `1477`, `1175`, `3280`) loop forever on a cyclic `baseDefinition` chain (cf. .NET's unguarded
+   root cascade).
+3. **On-demand generation is unconditional** (no settings gate): snapshot-less bases and type profiles are
+   generated recursively at the sites above; idempotence via the SD's `generatedSnapshot` flag/`hasSnapshot()`
+   rather than an annotation.
+4. **Legitimate self-re-entry: the first-element rule.** A type profile that is *currently being generated*
+   is accepted without the type-compatibility check, and only its already-built **first element** may be
+   used as the template (`PPP:714-724`, throw if empty) — Java's equivalent of .NET's root-only channel,
+   without caching. This is exactly what lets `ext-recursion-2` (a slice typed with its own url) generate:
+   the self-reference is met mid-generation, the root exists, and the slice has no diff children so no
+   step-in follows. `logical-goo` passes because the caller hands `generateSnapshot` the base as an
+   *object* with a snapshot — the stack holds only derived urls, so url == baseDefinition-url is never
+   checked. `ext-recursion-1` (self-type on the root) is rejected structurally by `checkDifferentialBaseType`
+   (`PU:1322`) before any recursion. Together these pin DEV-029's Java mechanisms.
+
+**Statefulness**: `snapshotStack`, `messages`, `obligationProfiles`, `childMapCache`, `xver`, `defWebRoot`
+are per-instance; the `generatingSnapshot` flag lives on the shared SD object, visible to every
+`ProfileUtilities` sharing the context. No overlapping-call detection; not thread-safe.
 
 ## Deviations
 - [DEV-029](13-deviation-register.md#dev-029--recursion-crossover-each-side-rejects-recursive-structures-the-other-accepts-ch11) —

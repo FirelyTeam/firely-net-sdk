@@ -1,7 +1,7 @@
 # 12. Error handling & configuration
 
 > Status: **spec baseline + .NET behavior filled** (Phase 1: R5 v5.0.0 + R4 v4.0.1 deltas; Phase 2 packet 6,
-> 2026-08-26: issue catalog, settings, events deep-read). Java section pending (Phase 3).
+> 2026-08-26: issue catalog, settings, events deep-read; Phase 3 packet J-e, 2026-09-01: Java sweep).
 
 ## Scope
 The generator's error philosophy (report-and-continue vs throw), the catalogue of error/warning conditions,
@@ -180,6 +180,83 @@ from inherited content before reuse (`:524`).
 One generation at a time per instance: the recursion stack throws on overlapping calls (ch11). The
 `Outcome` property is likewise per-instance shared state.
 
-## Java behavior (Phase 3)
-*(pending — exceptions vs messages list, `setAutoFixSliceNames`, `setThrowException`, ProfileUtilities
-flags inventory; see [DEV-016](13-deviation-register.md#dev-016--java-oracle-caveat-autofixslicenames))*
+## Java behavior (Phase 3 sweep, 2026-09-01)
+
+Citations `PU`/`PPP`/`PRE` @ `b06c7ee`; detail in the materials extract `java-ch08-12-sweep-2026-09-01.md`.
+
+### Outcome model
+
+`ProfileUtilities` is constructed with an **injected `List<ValidationMessage>`** (`PU:456-491`); passing
+`null` switches the instance to **throw mode** (`wantThrowExceptions`, toggled by `setThrowException` /
+`setMessages`, `PU:4729`, `4990-4994`): every ERROR-severity message becomes a `DefinitionException` at
+`addMessage` (`PU:1221-1226`). The shared-test driver runs in message mode (`setThrowException(false)`).
+Two messages bypass the gate (`ATTEMPT_TO_CHANGE_SLICING`, `PPP:351/355`, added straight to the list) and
+never throw. Messages are tagged `Source.ProfileValidator` (23 sites) or `Source.InstanceValidator` (5) with
+no evident rule; severities in the cone: 17 ERROR, 10 WARNING, 3 INFORMATION; three ERRORs are
+`setIgnorableError(true)` (slice-min-sum, slice-without-slicing, duplicate slice name); `forPublication`
+flips the slice-min-sum severity INFORMATION → ERROR (`PU:1003`). Locations are index strings
+(`StructureDefinition.snapshot.element[i]`) or paths. Messages are also attached to the SD as user data
+(`SNAPSHOT_GENERATED_MESSAGES`) and the SD is flagged `generatedSnapshot` (`PU:1094-1096`).
+
+### Throw census
+
+`grep "throw new"` over PU/PPP/PRE: `DefinitionException` 37 + 31 + 2, `FHIRException` 23 + 25 + 20, and
+**`java.lang.Error` 17 + 9 + 11**. Author-reachable `Error`s: slicing entry with children on a base that has
+children (`PPP:382`, "please report issue to grahame@fhir.org"), two profiles on a new slice (`PPP:1419`),
+`type` on the first snapshot/differential element (`PU:883`, `1322`), element path not under the type name
+(`PU:1021`), choice-group duplicate child names (`PU:1353`, `"huh?"`) and two mandatory members (`PU:1362`),
+unresolved contentReference in `getTypeForElement` (`PU:1616`), the preprocessor's "not done yet" cases
+(ch5). Because only `Exception` is caught at `PU:1078`, an `Error` **skips the snapshot-nulling** cleanup and
+leaves a half-built snapshot on the SD (the `finally` still resets the flag and stack). Java has no
+report-and-continue class for these — [OQ-014](14-open-questions.md#oq-014--inconsistent-error-taxonomy-for-author-errors).
+
+### Settings inventory
+
+Instance fields (`PU:428-454` + setters), none of which the spec knows about:
+
+| Setting | Default | Effect |
+|---|---|---|
+| `newSlicingProcessing` | false (driver: **true**) | R4+ type-slicing synthetic slicer untyped vs typed (`PPP:504/1504`, ch6) |
+| `autoFixSliceNames` | false (validator CLI: **true**, DEV-016) | generate a missing type-slice name instead of erroring — a single site, `PPP:565` |
+| `allowUnknownProfile` | `ALL_TYPES` (comment says `NONE`, hapifhir#2597) | throw vs warn on unresolvable type/extension profiles (ch7) |
+| `wantFixDifferentialFirstElementType` | false | clear a root `type` equal to the base's instead of throwing (`PU:1319`, OQ-015) |
+| `mappingMergeMode` | `APPEND` | R5+ mapping merge (ch5, DEV-017) |
+| `suppressedMappings` | empty | mapping identities dropped (ch5) |
+| `forPublication` | false | severity flip above |
+| `wantThrowExceptions` | derived from `messages == null` | throw mode |
+| `parameters` | context expansion parameters | `default/force/check-profile-version` in `findProfile` (ch3) |
+| `debug` | false | extra logging; surfaces `sortDifferential` errors (`PU:3916`, JI-16) |
+| `masterSourceFileNames` / `localFileNames` / `defWebRoot` | — | markdown relative-link rewriting (`updateURLs`, ch3) |
+| `xver` | null until `makeXVer()`/`setXver` | cross-version extension synthesis (ch7, JI-19) |
+| `terminologyServiceOptions`, `pkp`, `fpe` | — | binding/link rendering knowledge; FHIRPath engine for choice groups (ch9) |
+
+Statics: `suppressIgnorableExceptions` (two sites — `PPP:680` Reference type-constraint check, `PU:3312`
+illegal type derivation — turn throws into silence), `COPY_BINDING_EXTENSIONS = false`, `DONT_DO_THIS = false`,
+`APPLY_PROPERTIES_FROM_SLICER = false` (PPP, ch6), `XVerExtensionManagerFactory.newLoader = false`. **No
+events or callbacks**; `ProfileKnowledgeProvider` is the only injection point and serves rendering. Contrast
+.NET: six flags, four events, one shared `OperationOutcome`.
+
+### Extension policy — four lists plus a per-extension policy
+
+Java's inheritance policy is spread over four static url lists (`PU:232-302`) and one extension-defined
+policy: `NON_INHERITED_ED_URLS` (15 urls stripped from inherited content — but only on the **copy-through
+path**, `checkExtensions` at `PPP:1066`, and at SD level `PU:1230` / specialization inheritance `PU:1276`),
+`DEFAULT_INHERITED_ED_URLS` (5 questionnaire-* + mimeType), `NON_OVERRIDING_ED_URLS` (15 json/xml-naming,
+type-specifier, xml-choice-group, translatable, defaulttype — ignored when found in differentials),
+`OVERRIDING_ED_URLS` (21 questionnaire-*/maxSize/minLength/allowedUnits/… — replace the ancestor's; ch5
+DEV-034), and the per-extension-SD `snapshot-behavior` extension (`ignore`/`add`/`overwrite`/defer,
+`PU:1255-1261`, ch3). Against .NET's single 18-entry blocklist the **non-inheritable sets differ**: common —
+isCommonBinding, fmm, standards-status, category, security-category, wg, normative-version, summary; Java-only
+— tools/binding-definition, tools/no-binding, implements, explicit-type-name, obligation-profile (core +
+tools), standards-status-reason; .NET-only — fmm-no-warnings, hierarchy, **interface**, applicable-version,
+codegen-super, replaces, resource-approvalDate/-effectivePeriod/-lastReviewDate, plus .NET's own marker
+([OQ-019](14-open-questions.md#oq-019--which-extensions-are-non-inheritable)). Java has no persisted
+"constrained by differential" marker; provenance is user data (`SNAPSHOT_GENERATED_IN_SNAPSHOT`,
+`SNAPSHOT_DERIVATION_POINTER/EQUALS/DIFF`, `SNAPSHOT_BASE_MODEL/PATH`, `SNAPSHOT_IS_DERIVED`,
+`SNAPSHOT_auto_added_slicing`) plus the persisted `snapshot-base-version` extension (`PU:1091-1093`).
+
+### Concurrency
+
+Per-instance mutable state (`snapshotStack`, `messages`, `obligationProfiles` — never cleared between calls —,
+`childMapCache`) and a `generatingSnapshot` flag on the shared SD object; no overlapping-call guard (ch11).
+A hard-coded Nictiz-url debug probe survives in production (`debugCheck`, `PPP:1488-1492`).
