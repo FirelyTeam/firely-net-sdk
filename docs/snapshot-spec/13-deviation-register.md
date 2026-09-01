@@ -587,7 +587,10 @@ status/resolution.
   Candidate upstream report (Grahame Grieve / org.hl7.fhir.core); WGM-relevant as a caution against
   treating golden files as normative for the propagation mechanism (OQ-021).
 - **Status:** confirmed (code + golden exhibit); minimized standalone repro not yet built (trigger shape
-  documented above; on-questionnaire serves as the demo input meanwhile). Not yet reported upstream.
+  documented above; on-questionnaire serves as the demo input meanwhile). **Reported upstream 2026-09-01
+  as [hapifhir/org.hl7.fhir.core#2584](https://github.com/hapifhir/org.hl7.fhir.core/issues/2584)**
+  (with ten more Java snapshot-generation bugs, #2585–#2594 — see the upstream-issues file in the
+  project materials).
 
 ## DEV-034 — Per-property merge divergence catalogue: .NET `ElementDefnMerger` vs Java `updateFromDefinition` (ch5)
 - **Evidence:** Phase 2 packet 1 (.NET, 2026-08-24) × Phase 3 packet J-b (Java @ b06c7ee, 2026-09-01);
@@ -633,5 +636,11 @@ status/resolution.
 - **Spec basis:** the interpretation-table footnotes (†/‡/∆) and §5.1.0.8 — the spec states obligations
   but no merge algorithm, and neither engine implements the † rules the same way (OQ-011).
 - **Status:** confirmed (code-derived, both sides read). WGM feed: (c)+(b) are the sharpest "what must a
-  generator enforce" exhibits; (e) feeds RFC-009; (f) feeds RFC-010.
+  generator enforce" exhibits; (e) feeds RFC-009; (f) feeds RFC-010. The outright Java-side *bugs* in this
+  catalogue were reported upstream 2026-09-01: (j) label append =
+  [org.hl7.fhir.core#2592](https://github.com/hapifhir/org.hl7.fhir.core/issues/2592); the obligation
+  additional-binding inverted guard (under (f)/DEV-032) =
+  [#2593](https://github.com/hapifhir/org.hl7.fhir.core/issues/2593); the additional-binding `any` no-op =
+  [#2590](https://github.com/hapifhir/org.hl7.fhir.core/issues/2590); the additional-base pattern operand
+  bug = [#2591](https://github.com/hapifhir/org.hl7.fhir.core/issues/2591).
 
