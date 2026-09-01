@@ -319,7 +319,8 @@ Extension → throw unless `ALL_TYPES`; other types → throw only if `NONE`; pr
 exempt ("todo: should we change down the profile_element if there's one?", `PU:2673`). **Effective default:
 nothing throws** — the field default is `ALL_TYPES` (`PU:448`) although the enum comment calls `NONE` "the
 default" (`PU:223`; the shared-test driver also defaults to `ALL_TYPES` and only `t15a` sets `allow="none"`).
-Filed upstream as a doc/default mismatch (JI-11).
+Filed upstream as a doc/default mismatch
+([hapifhir/org.hl7.fhir.core#2597](https://github.com/hapifhir/org.hl7.fhir.core/issues/2597)).
 
 ### 3. Walking into children — the profile's snapshot is used only when the base has none
 
@@ -343,7 +344,8 @@ failures are only `log.debug`/`log.warn`ed. Rules shared by the paths:
   most common sites — one-match `PPP:846-851` and empty-match `PPP:1097-1116` — where the `nonExtension` flag is
   computed over a `diffMatches` list that has at most one element. There the multi-type parent silently
   expands against `Element` and its non-extension child rows orphan as "No match found …" ERRORs (ch4). Filed
-  upstream (JI-17, all four sites).
+  upstream with all four sites
+  ([hapifhir/org.hl7.fhir.core#2596](https://github.com/hapifhir/org.hl7.fhir.core/issues/2596)).
 - **Renamed choice** in the one-match path: base `value[x]` + diff `valueString` narrows the type list to the
   suffix type before stepping in (`PPP:830-842`, ch6/OQ-018).
 - Other throws on this path: no type and no contentReference → `{0} has no children ({1}) and no types in
