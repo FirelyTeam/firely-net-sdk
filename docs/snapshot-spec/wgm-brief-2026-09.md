@@ -119,14 +119,19 @@ effect of the root merge (including the loosening direction the rule does not sa
 - (B) A snapshot SHALL NOT merge type profiles: `type.profile` is a validator instruction; the snapshot
   reflects base + differential only (Java's datatype behavior, generalized).
 - (C) Java's actual hybrid (Extension/Resource roots merged, datatypes not, children only into a void) — the
-  golden files encode this, but no principle explains it.
-- Sub-decision for the cardinality diamond — **already decided, confirm only:** a type root's cardinality is a
-  bound the referencing element must respect, never a value to merge or loosen (FHIR-19756/36738, below).
+  golden files encode this. The root half has a stated principle ("the features of the type remain on the
+  type"; the override "wasn't intended to work for types" — Grahame, below); the *children gate* has none and
+  was never discussed.
+- Sub-decision for the cardinality diamond — **decided in resolution text, confirm only:** a type root's
+  cardinality is a bound the referencing element must respect (FHIR-19756 resolution; FHIR-36738 "Root
+  elements" section). That the generator "should not pull the root element's cardinality into the snapshot"
+  is a *comment* on 19756 (Chris Grenz's WGM note), not resolution text — the room may weigh it differently.
   What is new: FHIR-48664 (2025) lets a datatype-profile root carry a *binding* and asks both generators to
   "account for this change" — under (B) that binding never reaches the snapshot; under (A) it does. That is
   the sharpest live form of this question.
-- **Recommendation:** (A) with a one-directional cardinality rule (tighten only), or (B) — but a decision.
-  (C) is not implementable from a principle. Ask for a shared test case either way.
+- **Recommendation:** (A) restricted to the profile's *children and non-cardinality root properties*
+  (cardinality stays a bound per FHIR-19756 — never merged, never loosened), or (B) — but a decision. (C)'s
+  children gate is not implementable from a principle. Ask for a shared test case either way.
 
 **Decisions on record (JIRA).** The cardinality half is decided: [FHIR-19756](https://jira.hl7.org/browse/FHIR-19756)
 (2018, Persuasive 5-0-0): "the cardinality on a type places constraints on references to that type" —
@@ -319,9 +324,10 @@ golden files need re-blessing after the `min := 1` (not sum) and sliced-base asy
 **Decisions on record (JIRA) — (c) and (d) are decided against the Java behavior.**
 [FHIR-12259](https://jira.hl7.org/browse/FHIR-12259) (2016, Persuasive 14-0-18) adopted Chris Grenz's rules:
 the `[x]` element "must remain in the profile snapshot as-is" and a type-specific path "shall not be
-interpreted as constraining allowed types"; FHIR-8969 (2015) adds that a slicing entry may carry any constraint
-except what makes slicing nonsensical, "e.g. constraining to a single type for a type slice". So the entry
-type-list collapse is unsanctioned. [FHIR-31054](https://jira.hl7.org/browse/FHIR-31054) (2021, 30-0-0,
+interpreted as constraining allowed types" (resolution text); FHIR-8969 (2015) resolution lets a slicing entry
+carry any constraint allowed when "merely profiling the element", and Lloyd's *comment* on it names the
+exception "constraining to a single type for a type slice" as nonsensical. So the entry type-list collapse is
+unsanctioned by resolution text, with the sharpest wording comment-sourced. [FHIR-31054](https://jira.hl7.org/browse/FHIR-31054) (2021, 30-0-0,
 Firely-reported): the slice-min sum "SHOULD be less than or equal to m" — "Will add a warning to the
 validator" — a validator SHOULD, not a generator recompute; so the entry-min raise is unsanctioned. (b):
 FHIR-3623/17821 let only the *author* tighten open→closed; nothing lets a generator rewrite an explicit
@@ -389,11 +395,13 @@ bare-`value[x]` representation the golden files bless (RFC-013).
 **Decision needed.** (a) Does `value[x]:valueString` without `type` constrain the type? (b) Given a renamed-form
 differential, must a generator synthesize a type slice (.NET), fold onto the unrenamed element (Java), or
 reject? (c) Is the `<stem><Type>` slice-name convention normative (eld-16 territory)?
-**Recommendation:** (a) yes — one sentence in elementdefinition.html; (b) follow Grahame's 2019 rule
-below: if the element is single-typed once the constraint applies (t16: the base `value[x]` is already
-`decimal`-only; t31: the diff states the type), constraints hang on bare `value[x]` and no slice is synthesized;
-only when several types remain does the R5 form require a type slice — write that down; (c) SHOULD, validated
-by the generator with a message, not a repair.
+**Recommendation:** (a) yes — one sentence in elementdefinition.html; (b) the record cuts both ways —
+Grahame's 2019 single-type rule (below) supports the bare-`value[x]` fold when the element is single-typed
+(t16: the base `value[x]` is already `decimal`-only; t31: the diff states the type), while FHIR-15900 (2018,
+below) says a differential id must reappear in the snapshot, which supports synthesizing the slice when the
+differential used the renamed id. Our preference: fold when single-typed (no synthesized slice), synthesize
+only when several types remain — but the committee must pick, and say which id the snapshot carries; (c)
+SHOULD, validated by the generator with a message, not a repair.
 
 **Decisions on record (JIRA).** [FHIR-12259](https://jira.hl7.org/browse/FHIR-12259) (2016): choice elements
 are implicitly type-sliced with ids `Patient.deceased[x]:deceasedBoolean`; constraints on a named type slice
@@ -486,7 +494,11 @@ generator". Java's report-vs-throw split is a constructor argument (`messages ==
 - **Recommendation:** (a) yes; (b) required: path grammar, new paths in constraint profiles, ordering, min/max
   loosening, †-frozen changes — everything checkable from base + differential alone; (c) take the *base*
   value **and** emit an error (never silently either way). Also: state that a generator SHALL NOT emit
-  duplicate element ids or fabricate `base` (sdf-8b integrity).
+  duplicate element ids or fabricate `base` (sdf-8b integrity). Note what this asks: every HL7 enforcement
+  decision on record has placed the check in the *validator* as a warning (JIRA paragraph below) — (b) asks
+  the committee to assign the generator a detection duty for the first time, on the argument that these
+  checks need only base + differential and that the validator cannot detect what the generator has already
+  silently normalized away.
 
 **Decisions on record (JIRA) — every enforcement decision lands in the validator, as a warning.** FHIR-7800/
 7802 (2015): illegal cardinality / binding-strength loosening was being published in snapshots — tooling
@@ -663,11 +675,14 @@ the children walk-in, which opens the profile at its root (`PU:2673` todo: "shou
 profile_element if there's one?"). The `#fragment` form is **silently stripped** by `findProfile`
 (`PU:4100-4102`). Disjoint syntaxes; no shared test covers either.
 
-**Decision needed.** (a) The extension is the sanctioned syntax (spec says so) — confirm that `url#fragment` in
-`type.profile` is *not* (fragments address contained resources). (b) Generator obligation: must the snapshot
-expand the profiled element's children from the nominated sub-tree (neither does today), or is this
-validator-only? (c) A shared test would settle the expected snapshot shape.
-**Recommendation:** (a) yes; (b) if Q1 answers (A), then yes, from the nominated element.
+**Decision needed.** (a) Both forms are HL7-sanctioned and both name an element **id** (FHIR-13973 for the
+fragment, FHIR-49079 for the extension — see below): is the `url#id` fragment now *superseded* by the extension
+(so generators may reject or warn on it), or must both be supported? Either way the fragment names an id, not a
+slice name. (b) Generator obligation: must the snapshot expand the profiled element's children from the
+nominated sub-tree (neither does today), or is this validator-only? (c) A shared test would settle the expected
+snapshot shape.
+**Recommendation:** (a) declare the extension canonical and the fragment deprecated-but-accepted (by id), since
+the fragment was never documented (FHIR-13386); (b) if Q1 answers (A), then yes, from the nominated element.
 
 **Decisions on record (JIRA) — both syntaxes are sanctioned, and both address an element id.**
 [FHIR-13973](https://jira.hl7.org/browse/FHIR-13973) (2017, 11-0-0) blessed the fragment form as "(as yet
