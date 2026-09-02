@@ -3,7 +3,8 @@
 Questions the published spec does not answer (or answers ambiguously), harvested from code archaeology, the
 deviation register, and spec reading. Each will be swept against Zulip/JIRA history before being asked anew.
 The subset that remains open by **2026-09-14** is frozen into the **WGM question brief** for the in-person
-session at the HL7 WGM (~2026-09-21).
+session at the HL7 WGM (~2026-09-21) — draft v1: [wgm-brief-2026-09.md](wgm-brief-2026-09.md) (2026-09-02;
+16 questions in three tiers; its Appendix B records the Zulip/JIRA prior-discussion sweep per question).
 
 **Status values:** `open` · `answer-found` (cite Zulip/JIRA/spec) · `settled` (decision recorded) ·
 `superseded`.
@@ -30,7 +31,22 @@ differential doesn't constrain `max`. Which cardinality does the snapshot elemen
   where .NET's answer is "type root wins, even loosening", Java's is "datatypes: base wins; extensions: root
   wins unless the slicing is open; sliced base: tighten only" —
   [DEV-038](13-deviation-register.md#dev-038--type-profile-scope-net-merges-any-type-profile-java-only-extensionresource-roots-and-only-when-the-base-has-no-children-ch7).
-- **Status:** open (Java side 2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02, `extracts/zulip-sweep-2026-09-02-a.md`): discussed-unresolved.**
+  #implementers "cardinality of root elements" (Dec 2018): Lloyd — the type root *bounds* the referencing
+  element (GF#19756, Grahame agrees); Chris Grenz — the generator should ignore root cardinality entirely (the
+  R4 table says "irrelevant"); Michel — .NET follows Lloyd's "constrain but not relax" semantics *but* overrides
+  without verifying, leaving verification to a validator step. All agree the root may never **loosen** the
+  element — the .NET loosening is a known-since-2018 gap. Grahame 2023 ("Broken snapshot generation"): datatype
+  roots are merged "because of extensions" — the origin of Java's Extension/Resource-only gate.
+- **JIRA (sweep 2026-09-02, `extracts/jira-sweep-2026-09-02.md`): answered for the cardinality half.**
+  FHIR-19756 (2018, 5-0-0): a type's root cardinality "places constraints on references to that type" —
+  referencing profiles "must fall within the cardinality bounds of the type"; Chris Grenz's WGM note: the
+  generator "should not pull the root element's cardinality into the snapshot". FHIR-36738 (2022): "Root
+  elements" section (0..1 root → referencing max ≤ 1). .NET's silent `0..1 → 0..*` is wrong twice over (merges,
+  loosens). But FHIR-48664 (2024–25, Applied) now allows a *binding* on a datatype-profile root and says "Will ask
+  the Java and Firely snapshot generator authors to account for this change" — neither engine has.
+- **Status:** answer-found (root cardinality is a bound, not merged; never loosen) with a live 2025 obligation
+  (FHIR-48664) unreconciled by either engine. WGM brief Q1.
 
 ## OQ-002 — Priority: type-profile constraints vs base constraints
 When an element's type carries a profile, and both the base element and that type profile constrain the same
@@ -59,7 +75,24 @@ Does Java use the same order? What *should* the order be?
   ([DEV-038](13-deviation-register.md#dev-038--type-profile-scope-net-merges-any-type-profile-java-only-extensionresource-roots-and-only-when-the-base-has-no-children-ch7)).
   WGM framing: is a snapshot required to *close over* type profiles at all, or is `type.profile` a validator
   instruction (cf. OQ-021)?
-- **Status:** open (Java side 2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved — and already slated for this WGM.**
+  #conformance "Snapshot Generation Question" (Nov 2024–May 2025): after code review Grahame decided the
+  type-profile descriptive override "wasn't intended to work for types" (element wins since Dec 2024; type-root
+  `alias`/`mapping` dropped since 6.4.4; Lloyd: "A type has no meaning of its own"); on the derived-host case
+  Grahame: "I don't actually know in that case". #conformance "Inheritance from parent profile or datatype
+  profile?" (Ward Weistra, Feb 2026): the question verbatim, with the FHIR-9791/13402/14400 history and the
+  PS-CA Java-vs-Simplifier divergence; Grahame: "a good subject for an evening meeting in Rotterdam". 2016
+  history: the FHIR-I consensus on GF#9791 (type profile wins for non-mergeable singletons) is what .NET
+  implemented and what Java abandoned in 2024; Grahame Oct 2016: inlining types is optional, "I object
+  strenuously to making it always required"; Michel: a snapshot without external-profile information "will be
+  incomplete and unreliable". Grahame/Lloyd Nov 2025 ("Where are the invariants on datatype roots?"): "the
+  features of the type remain on the type". DEV-038's children gate was discussed nowhere.
+- **JIRA (sweep 2026-09-02): discussed-unresolved.** FHIR-9791 (Ewout 2016, retracted): type-profile descriptive
+  props ignored except single-profile / new-slice cases — never landed; FHIR-13839 (retracted) Grahame's San Diego
+  2017 note: "snapshot generators should be sure to generate the snap shot completely"; FHIR-12179 (2016, 8-0-3):
+  the build snapshot should inherit "all applicable constraints from all applied base and type profiles". No ruling
+  on precedence; FHIR-48664 (2025) is a live obligation on both generators (datatype-root binding).
+- **Status:** open (Java side 2026-09-01; sweep 2026-09-02). WGM brief Q1.
 
 ## OQ-003 — Slicing non-repeating elements
 May a profile slice an element with `max = 1` (outside the choice-type case)? .NET has a disabled reject
@@ -76,7 +109,13 @@ inline (Ewout: no reason to reject, e.g. a derived profile can limit a sliced ba
   sum total of your slices is limited to 1" — exactly Ewout's derived-profile-limits-to-0..1 case) or type
   slicing. So the engines disagree only on the *unexcused* case, and Java's carve-outs suggest the WGM
   question should be "which exceptions, not whether".
-- **Status:** open — both implementation sides answered.
+- **Prior discussion (Zulip sweep 2026-09-02): answer-found — not allowed outside choice types.** FHIR-28619
+  "Allow slicing of a non-repeating element to define a choice" (Rob Hausam 2020) closed *Resolved – No
+  Change*; Grahame 2020 "I don't really see the use case"; Chris Moesel 2022/2023 "not a legal use of slicing"
+  ("Although Forge seems to allow it"); Grahame posted Java's live error in March 2026. Dissent on record: Lloyd
+  ("I am in favor of allowing"), Rob Hausam, Chris Grenz, Firely. Java's capped-to-1 carve-out is discussed
+  nowhere — the "which exceptions" question is fresh (IPS Allergy slices `code 1..1` by pattern, Lloyd 2021).
+- **Status:** answer-found (spec/WG position: not allowed); residual question = Java's carve-outs. WGM brief Q12.
 
 ## OQ-004 — contentReference + constraining children
 After dereferencing a `contentReference` to constrain its children, which value-domain properties of the
@@ -86,7 +125,13 @@ only.
 - **Java side (J-e, 2026-09-01):** copies none either — `replaceFromContentReference` (`PU:1870-1874`) moves
   only `type`. Agreement by omission; the question is purely spec-side (should eld-5's prohibition be
   restated as "these properties are undefined after dereferencing"?).
-- **Status:** open, spec-side only (Java side 2026-09-01).
+- **JIRA (sweep 2026-09-02): semantics answered.** FHIR-14958 (2018, 7-0-0): a contentReference "bring[s]
+  across all the rules … including bindings, invariants etc.", only in specializations, "cannot be changed and
+  always reference the non-constrained definition" (Michel's comment: resolving from the referencing profile
+  would recursively inherit — wrong). FHIR-39350 (2022): contentReference stays legal on non-backbone elements.
+  R6: FHIR-57266 (Applied) literal-path only; FHIR-57265 `contentReferenceProfile`. Whether eld-5's properties
+  are "undefined after dereferencing" is asked nowhere.
+- **Status:** open, spec-side only (Java side 2026-09-01; JIRA 2026-09-02). WGM brief Q7(d).
 
 ## OQ-005 — Enforcing slicing.rules = closed / openAtEnd
 Should the *generator* enforce or validate `closed`/`openAtEnd` (e.g., reject a differential that appends a
@@ -109,7 +154,23 @@ slice to a closed slicing, or reorder for openAtEnd)? .NET does not (file-header
   entries get silently rewritten, authored ones get a message that is an ERROR only `forPublication`.
   `@default` and openAtEnd *ordering* are unenforced in both engines. So neither engine implements
   §5.1.0.17 as written — Java approximates it with deviations in both directions.
-- **Status:** open — both implementation sides answered.
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved.** Grahame 2023 ("Slicing rules question"):
+  a derived profile may not loosen `openAtEnd`/`closed` — "correct" — stated nowhere in the spec. The only
+  generator-side debate is type slicing: #conformance "Type[x], Slices, open/closed" (2019–20) — Grahame's
+  model that a differential's `rules` is an interpretation hint (closed stays closed), restated by Ward,
+  objected to by Ewout and Chris Grenz, never resolved; Grahame 2024 "type slicing is always closed in practice"
+  vs Lloyd 2020 "It's wrong to auto-change 'open' slices to 'closed'". Lloyd 2017: the validator "doesn't
+  distinguish between openAtEnd and closed" (RFC-011). Note: .NET does *not* implement the interpretation-hint
+  model either — it reads `rules` nowhere.
+- **JIRA (sweep 2026-09-02): rules decided, generator obligation not.** FHIR-3623 (2014, origin of §5.1.0.17:
+  open→closed, unordered→ordered, discriminators may be added not removed); FHIR-17821 (2018 rewording;
+  openAtEnd→closed asked, not answered); FHIR-5581 (openAtEnd discouraged). Every enforcement decision points at
+  the **validator**: FHIR-31054 slice-min sum = SHOULD + validator warning; FHIR-17469 closed-slicing arithmetic
+  fixed in the validator; FHIR-7800 tooling "check and generate warnings"; FHIR-13461 (retracted → core#518)
+  openAtEnd misuse → build warnings. FHIR-31400 (2021, 20-0-4): eld-1 moved to snapshot so derived diffs may omit
+  discriminators — implies the generator carries base slicing forward. Java's CLOSED→OPENATEND tolerance and
+  no-ordered-change rule have no basis in any ticket.
+- **Status:** open — both implementation sides answered; sweeps 2026-09-02. WGM brief Q3/Q12.
 
 ## OQ-006 — sliceIsConstraining
 What must a generator do with `sliceIsConstraining` when matching a derived profile's slices to base slices?
@@ -129,19 +190,45 @@ What must a generator do with `sliceIsConstraining` when matching a derived prof
   an ancestor profile SHALL have a slicing definition with this name") reads like a validation rule — is a
   *generator* expected to enforce it (and how: reject vs proceed), or is it a validator/renderer hint only?
   Feeds [OQ-014](#oq-014--inconsistent-error-taxonomy-for-author-errors).
-- **Status:** open — both implementation sides answered (they disagree).
+- **Prior discussion (Zulip sweep 2026-09-02): not found** — the property occurs substantively once (Grahame
+  2022 list: "sliceName / sliceIsConstraining — can be changed by profiles"); generator semantics never discussed.
+- **JIRA (sweep 2026-09-02):** origin ticket FHIR-13545 (San Diego 2017, 5-0-0) — purpose "Allows detection of a
+  situation where an ancestor profile adds or removes slicing": detection = validation language; no generator
+  obligation stated. `sliceIsConstraining` itself: 0 JIRA hits.
+- **Status:** open — both implementation sides answered (they disagree); Zulip silent; JIRA origin only. WGM brief Q12.
 
 ## OQ-007 — Global StructureDefinition.mapping
 Should the profile-level `mapping` declarations of base/type profiles be merged into the derived
 StructureDefinition (so element-level `mapping.identity` references resolve)? .NET does not merge them
 (file-header TODO).
-- **Status:** open.
+- **Answer found (Zulip sweep 2026-09-02): yes — propagate at snapshot time.** #conformance "Inheritance of
+  StructureDefinition.mappings" (Aug 2024–May 2026): Lloyd "Mappings definitely inherit. They always have";
+  Grahame fixed the Java duplication 2024-08-23 and added suppress support on `StructureDefinition.mapping`;
+  Ward's summary "Snapshot generation should always propagate mapping definitions (SD.mapping)" confirmed by
+  Lloyd ("I believe that's the expectation, yes"); tests in fhir-test-cases PR #188 / `r5/snapshot-generation`.
+  Ward 2022: Forge had a *setting* for it. .NET's non-merge is the outlier — a .NET to-do, not a WGM item.
+- **Status:** answer-found (propagate); .NET implementation gap.
 
 ## OQ-008 — Verbosity of generated snapshots
 profiling.html states tools "generate complete verbose snapshots; they do not support suppressing mappings or
 constraints" — yet the `elementdefinition-suppress` extension exists and .NET honors it for mappings/examples
 (`RespectSuppressExtension`). What is the sanctioned behavior?
-- **Status:** open.
+- **Answer found (Zulip sweep 2026-09-02): suppress is sanctioned, as snapshot-time removal.** FHIR-I thread
+  #fhir/infrastructure-wg "Constraining out element properties in a differential" (2022, FHIR#20385): Lloyd
+  "This is definitely not about 'don't display', it's about 'remove entirely'"; Marten Smits objected ("Messing
+  with snapshot generation functionality is a terrible idea"), then conceded since authors opt in; Grahame:
+  the tooling IG is the place for such extensions. Java implements suppress on ED.mapping, SD.mapping and
+  examples incl. an undocumented `$all` wildcard — the golden `r5/snapshot-generation/address-no-examples`
+  deletes all inherited examples that way (Grahame 2026-05: "an instruction to delete all the existing
+  examples"; FHIR-56831 filed to document it). Loose end: Ward/Lloyd 2024 once described suppress as
+  render-time. The profiling.html "complete verbose snapshots" sentence is stale → RFC candidate.
+- **JIRA (sweep 2026-09-02): confirms.** FHIR-31406 (2021, 4-1-3) defines `elementdefinition-suppress`: "the
+  element property should be removed from the corresponding snapshot.element during snapshot generation";
+  FHIR-20385 (2019 → profiling.html 2023): profiles can remove code/comment/requirements/alias/example/mapping
+  "invalidated or made irrelevant by constraints"; FHIR-6125 (2015): a differential cannot remove them, a
+  directly-authored snapshot may. Tooling design (removeOnSnapshot / suppress / intrinsic) still open in
+  FHIR-40543 (reopened 2026-08).
+- **Status:** answer-found (snapshot-time deletion, golden-blessed + FHIR-31406); spec sentence to fix.
 
 ## OQ-009 — Element id stability
 Are element ids in a generated snapshot always regenerated from path+sliceName, or can/should ids from the
@@ -162,7 +249,18 @@ to disable a "correct-looking" clear because it broke `Questionnaire.item.item`
   (Java maps `_` → `-` in id segments, `fixChars` `PU:4375`; .NET keeps the path characters). The remaining
   question is spec-side: is discarding author ids sanctioned given ids "may be used as the target of external
   references"?
-- **Status:** open, spec-side only — both implementations answered (regenerate).
+- **Answer found (Zulip sweep 2026-09-02): ids are derived data.** Grahame 2019 ("Slicing a non-repeating
+  element"): "ids are derivative"; Michel: .NET generates ids "but does not use/depend on them" — elements are
+  identified by order, path and sliceName; Grahame: "Same as java". Forge adopted canonical auto-generated ids
+  in 2018 "after some discussion with FHIR core team"; Firely is removing `GenerateElementIds=false` (Ward
+  2024, after a 3.2.1 parent-id bug). Nobody has ever argued for preserving author ids; the "external
+  references" concern has no Zulip trace.
+- **JIRA (sweep 2026-09-02): confirms.** FHIR-9843 (2016): id = path + slice name, "must be present and distinct
+  within the profile"; FHIR-12182 (2016 WGM): derived, `pathpart:slicename/reslicename`; FHIR-20465 (2019): diff
+  and snapshot ids must agree; FHIR-14091 (2017, comment): "If the ids weren't correct, the publishing process
+  will 'fix' them. This is expected behavior."
+- **Status:** answer-found (regenerate; community consensus + JIRA). Only a one-sentence spec statement remains
+  (WGM brief Q11a).
 
 ## OQ-010 — The "..." append convention
 .NET supports prefixing `definition`/`comment`/`requirements` text with `"..."` in a differential to mean
@@ -176,7 +274,13 @@ the same convention for the same properties?
   3-char marker — byte-identical to .NET, `mergeMarkdown` PU:3134); Java *additionally* attempts it on
   `label` but with swapped operands (broken — DEV-034(j)). Both engines agree the convention exists and how
   it composes; the spec still doesn't. Graduation to an RFC now justified (both-implementation precedent).
-- **Status:** open for the spec question only — both implementation sides answered.
+- **Zulip sweep 2026-09-02: not found** (seven phrasings, incl. Java's method name) — the convention has never
+  been discussed publicly.
+- **JIRA (sweep 2026-09-02):** FHIR-8182 (2015, Not Persuasive 4-0-0) "A snapshot generator should resolve three
+  dots to include the base narrative" — HL7 acknowledged the convention as applying "to elements with a 'string'
+  data type in StructureDefinition" (broader than either engine's three properties) and declined to document it.
+- **Status:** open for the spec question only — both implementation sides answered; Zulip silent; JIRA declined
+  2015. WGM brief Q13.
 
 ## OQ-011 — What must a generator enforce?
 The .NET merger is diff-wins for nearly every property — including every rule the spec marks as frozen or
@@ -197,7 +301,27 @@ this.)
   disagree not just on *what* to enforce but on *how* — silent-keep-base (.NET min/max) vs warn-take-diff
   (Java) vs silent-drop-diff (Java frozen props) vs abort (Java isSummary) — four postures, DEV-034(b)/(c).
   Prime WGM exhibit for the generator-contract question.
-- **Status:** open (Phase 2 packet 1, 2026-08-24; Java side documented J-b 2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved.** Grahame's stated policy is .NET's
+  ("its task is to generate the snapshot, not validate the profile", 2022; "doesn't mean that the snapshot
+  generator should fail", 2024) while Java enforces in ≥7 attested places (DEV-028 note). Grahame's 2022
+  per-property mutability list (#conformance "default values for mustSupport in R4B/R5") is the nearest public
+  "what may change" table — min↑/max↓, type list reducible, fixed "introduce but not change", mustSupport
+  false→true only, binding "introduce or narrow", isModifier/isSummary/defaultValue/meaningWhenMissing/
+  representation "can't change" — it says what the rules are, not who enforces them. Drift: mustSupport
+  false-over-true was a hard `DefinitionException` in 2022, warn-and-take in 2026. Lloyd 2022: "Snapshot
+  generation is a 'process'. It doesn't get to be 'normative'" (vs Marten) — the RFC-012 disagreement is
+  already on record.
+- **JIRA (sweep 2026-09-02): discussed-unresolved; live vehicle = FHIR-31405.** Two attempts to specify merge
+  rules were Persuasive then reverted: FHIR-9079 (2016 11-0-0 "Ewout and Chris are going to merge their docu" →
+  2022 Not Persuasive: "test cases and reference implementations … will have to do") and FHIR-13402 (2018 9-0-0
+  → 2023 Not Persuasive). **FHIR-31405** "Clarify expected behavior of ElementDefinition properties in
+  differential" is *Waiting for Input* since 2021 — FHIR-I asked for Firely's/Chris Grenz's input, Ewout
+  documented .NET's rules 2023-07-12; post the WGM outcome there. Enforcement decided piecemeal, always as
+  tooling/validator *warnings*: FHIR-7800/7802 (2015, illegal min/max and binding loosening), FHIR-14272
+  (isSummary rule scoped to specializations), FHIR-37692 (eld-14 uniqueness "enforce … with the tooling"),
+  FHIR-38134 (meaning of mustSupport inherited). FHIR-20405 (2019): "snapshot generation just ignores the illegal
+  setting" (isModifier) — no ruling. No HL7 precedent for a generator throwing or repairing.
+- **Status:** open (Phase 2 packet 1, 2026-08-24; Java side J-b 2026-09-01; sweeps 2026-09-02). WGM brief Q5.
 
 ## OQ-012 — Partial overlay of fixed[x]/pattern[x] values
 .NET merges a differential `fixed[x]`/`pattern[x]` (and `defaultValue[x]`, `minValue[x]`/`maxValue[x]`) by
@@ -213,7 +337,18 @@ overlay or replace? (Spec is silent — ch5 "compatibility with an inherited bas
   the outlier; .NET can synthesize values neither profile stated, Java cannot. (Java's *additional-base*
   pathway does have a recursive fixed-vs-pattern compatibility merge, PRE:431-453 — a different mechanism
   for a different input.) DEV-034(g).
-- **Status:** open for the spec question; both implementation sides answered (2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved.** Grahame 2022 ("default values for
+  mustSupport in R4B/R5"): "fixed — profiles can introduce but not change" (pattern line garbled) — under that
+  rule a differential *altering* an inherited fixed value is illegal outright, making the overlay question moot
+  for `fixed[x]` and open only for `pattern[x]`. Grahame 2020 ("Array values in differentials"): the array
+  replace-vs-add rules exist "represented in the snap shot tests", with "an outstanding task to write this up".
+  Chris Moesel 2025: SUSHI assumes replace; behavior "is not always clearly defined". The partial overlay itself
+  was never discussed.
+- **JIRA (sweep 2026-09-02):** FHIR-31405 (open) asks exactly this — for upserts "define if the updates are
+  'sparse' or 'complete'" — and Ewout's 2023 comment documents the .NET overlay ("non-null subelements …
+  overwrite base, others are kept untouched"); no ruling. FHIR-3621 defines fixed/pattern instance semantics only.
+- **Status:** open for the spec question; both implementation sides answered (2026-09-01); sweeps 2026-09-02.
+  WGM brief Q13.
 
 ## OQ-013 — Meaning of merging ElementDefinition.modifierExtension
 .NET merges `modifierExtension` between base and differential elements like ordinary extensions, matched by
@@ -225,7 +360,12 @@ sanctioned?
   `updateFromDefinition` + `updateExtensionsFromDefinition` handle only `extension` (verified: zero
   `ModifierExtension` references in PU:2585-3217). A diff-supplied modifier extension on an
   ElementDefinition is silently dropped; whatever the base clone carried stays.
-- **Status:** open (Phase 2 packet 1, 2026-08-24; Java side verified J-b 2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved.** Grahame 2019 ("Modifier extension on
+  ElementDefinition?", asked by Michel): "we have no concrete examples" — the capability came with making
+  ED a BackboneElement; tooling need support it only "by specific request". Inheritance into snapshots never
+  discussed.
+- **Status:** open (Phase 2 packet 1, 2026-08-24; Java side verified J-b 2026-09-01; sweep 2026-09-02). Low
+  priority — WGM brief Q13 footnote.
 
 ## OQ-014 — Inconsistent error taxonomy for author errors
 What should a generator do with an *illegal differential*? .NET's matcher answers differently per error:
@@ -320,7 +460,23 @@ different ways per error class. The matcher-side sibling of [OQ-011](#oq-011--wh
   only with `wantThrowExceptions`; two messages bypass even that (`PPP:351/355`). So Java's taxonomy has a
   fourth class .NET lacks — **JVM `Error` for author input** — and its report-vs-throw split is a constructor
   argument (`messages == null`), not a policy.
-- **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26; Java rows 2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved.** The only explicit where-in-the-stack
+  debate is #conformance "Modifier Extension mismatch" (2022): Josh Mandel — the generator "should bail …
+  early and loud", "snapshots shouldn't define elements that can't exist"; Grahame — "not validate the
+  profile"; outcome: the check went to the validator. Java's named-slice-order throw is an admitted code
+  limitation (Grahame 2024, DEV-035); its slice-name throw was a deliberate repair→reject switch (2019, OQ-015).
+  "Reject, repair or propagate — but never corrupt" has never been stated as a principle (zero hits); a 2019
+  #committers thread ("Fix bug in IG generation") records a partial snapshot left in place after a failed
+  generation — the floor being violated by incompleteness. Independent reproduction: Gino Canessa 2026-09-01
+  (obs-badfixed/badpattern, obs-5, t23).
+- **JIRA (sweep 2026-09-02): every decision on record about an author error chooses a tooling/validator
+  warning** — FHIR-7800/7802, FHIR-31054, FHIR-13461 (intent), FHIR-17469; FHIR-13400 (2017): the sliceName-
+  without-slicing rule cannot be a FHIRPath invariant; FHIR-10033 (2016): differentials need not start at the
+  root ("all paths must equal type or start with type + '.'"); FHIR-12849 (2017): tooling stopped carrying root
+  sliceNames; Grahame on FHIR-50267: "too late to make this a SHALL … settle for a validation warning". No
+  ticket discusses generator throw/drop/repair classes or a never-corrupt floor.
+- **Status:** open (Phase 2 packets 2–3, 2026-08-24; Phase-4 evidence 2026-08-26; Java rows 2026-09-01; sweep
+  2026-09-02). WGM brief Q5.
 
 ## OQ-015 — The generator mutates its input differential
 With `GENERATE_MISSING_TYPE_SLICE_NAMES` active, a type-slice constraint lacking a `sliceName` gets one
@@ -349,7 +505,16 @@ Java's CLI oracle runs with `autoFixSliceNames(true)` (DEV-016) — same repair,
   just not its constraint content. The test driver's own pre-generation `setIds` hides this in the shared
   suite. Both engines mutate the input; they differ in *what* (.NET: slice names, root sliceName; Java: ids,
   contentReference form, opt-in root type).
-- **Status:** open (Phase 2 packet 2, 2026-08-24; Java side 2026-09-01, corrected J-e).
+- **Answer found (Zulip sweep 2026-09-02): the community decided "error, not repair" in July 2019.**
+  #conformance "Slicing a non-repeating element": Chris Grenz objected to Java rewriting a wrong type-slice
+  name in the snapshot while leaving the differential ("identifier inconsistencies between snapshot and
+  differential"); Lloyd: "My leaning is to raise an error if the differential slice name is wrong"; Grahame the
+  same day: "The generation now blows up if the slice names are wrong in the differential" (t29/t43 became fail
+  tests). Michel 2019: Forge auto-generates type-slice names and reverts custom ones. Both current defaults —
+  .NET's in-place `GENERATE_MISSING_TYPE_SLICE_NAMES` repair and the validator CLI's `autoFixSliceNames(true)`
+  — postdate and contradict that decision; neither was discussed on Zulip.
+- **Status:** answer-found (2019 decision: reject); residual = confirm it still stands and whether canonical-form
+  normalizations (ids, `[x]`, absolutization) are exempt. WGM brief Q11b.
 
 ## OQ-016 — What does a differential-less StructureDefinition mean?
 The spec never states whether a StructureDefinition without a differential means "snapshot = base snapshot"
@@ -372,7 +537,9 @@ and does Java accept differential-less SDs in both roles?
   consistently in both roles ("snapshot = base"), .NET only in one — the .NET refusal is an implementation gap
   (its own TODO says so), not a defensible reading of the spec. The remaining open point is purely
   spec-side: should the spec *say* that a differential-less SD is legal and means "no constraints"?
-- **Status:** open, spec-side only (Phase 2 packet 3, 2026-08-24; Java both roles 2026-09-01).
+- **Zulip sweep 2026-09-02: not found** — no thread asks what a differential-less constraint SD means.
+- **Status:** open, spec-side only (Phase 2 packet 3, 2026-08-24; Java both roles 2026-09-01; Zulip silent).
+  WGM brief Q10.
 
 ## OQ-017 — Starting expansion below the root: extension vs fragment syntax
 R5 documents the `elementdefinition-profile-element` extension (on `type.profile`) nominating an element
@@ -401,7 +568,24 @@ path for *that* appears broken (DEV-018 — bare-name jump throws; id-vs-name mi
   snapshot expand the profiled element's *children* from the nominated sub-tree (neither engine does today),
   or is "apply the profile starting at the nominated element" a validator-only instruction? No shared test
   covers either syntax — a test would settle the expected snapshot shape.
-- **Status:** open, narrowed to generator obligation (Phase 2 packet 4, 2026-08-24; Java side 2026-09-01).
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved; syntax question effectively answered.**
+  #IG-creation "Clarification on contentReference" (2021): Grahame's worked example (`Composition.section`
+  with `type.profile` = self + `profile-element = "Composition.section"` → "each section must have a section,
+  recursively"); semantics: the type must still match, "you base the decision on a different element", and
+  constraints on subpaths of the nominated element apply ("yes"); Ewout: "Quite elegant." #conformance
+  "profile-element Extension" (2021): Lloyd limits the intent to backbone elements (SUSHI followed). FHIR-39384
+  (2022, High): "Extension: profile-element doesn't work"; 2024–25 reports: works for sub-element slices, not
+  for slices on the nominated element itself. The `url#fragment` syntax has zero presence on Zulip.
+- **JIRA (sweep 2026-09-02): syntax + id semantics answered — BOTH forms sanctioned, both by element id.**
+  FHIR-13973 (2017, 11-0-0) blessed the fragment: `type.profile` may point into a SD "by appending a # and the id
+  of the element" ("as yet undocumented" functionality); FHIR-13386 (2017): "the feature is currently
+  undocumented. We need an example" — never delivered; FHIR-49079 (2025, 10-0-0): the extension "Provides the
+  snapshot.element.id of the element … to use as the starting point for validation". Consequences: .NET's
+  sliceName comparison of the fragment is wrong (it is an id); Java's silent `#fragment` strip drops a sanctioned
+  form. Generator obligation: only the retracted FHIR-13839 note ("generate the snap shot completely").
+- **Status:** syntax answer-found (both forms, by id); open on generator obligation (Phase 2 packet 4,
+  2026-08-24; Java side 2026-09-01; sweep
+  2026-09-02). WGM brief Q8.
 
 ## OQ-018 — Implicit type constraint only for the renamed form
 Does a type slice *imply* a type constraint, or must the constraint be stated? The two syntactic forms mean
@@ -439,7 +623,28 @@ behavior wrong; prime WGM material since it decides what a bare type slice means
   (auto-set when missing, error when wrong unless `autoFixSliceNames`). So a bare R5-form `value[x]:valueString`
   slice IS a single-type string slice in Java, while .NET leaves it the full choice list — the .NET R5-form
   behavior is now the outlier on (c).
-- **Status:** open (spec question) — both implementation sides answered.
+- **Prior discussion (Zulip sweep 2026-09-02): (c) answered in Java's favour; (a)/(b) rationale on record.**
+  #conformance "Slicing a non-repeating element" (2019, 154 msgs; FHIR-12259 → FHIR-33233): the *entry's* types
+  are never narrowed by a type slice (Lloyd: "a very clear outcome of our meeting"; Chris Moesel 2022: "slicing
+  *never* implicitly limits the allowed types"), but the *slice itself* is single-typed by definition (Chris
+  Grenz: "Type slices implicitly exist"; Grahame: the path "establishes the implicit type slice") — so a
+  type-less `value[x]:valueString` IS a string slice: Java correct, .NET's full-list slice the outlier. Canonical
+  slice names: Java switched from silent rewrite to throw on 2019-07-25 at Lloyd's request. For (a)/(b)
+  (DEV-026): Grahame 2019 "Either you have a single type, or you can only talk about element properties";
+  Michel 2017: a single-type constraint "does not introduce an actual slice entry" — and t16/t31 are both
+  single-typed at the constrained element, so the golden's fold is that rule; .NET's synthesized slice is the
+  outlier there too. Long id form required (Lloyd 2021, FHIR-33233); renaming tolerated in differentials only.
+- **JIRA (sweep 2026-09-02): answered.** FHIR-12259 (2016, Persuasive 14-0-18) adopted Chris Grenz's rules:
+  (1) the `[x]` element "must remain in the profile snapshot as-is"; (2) a type-specific path "shall not be
+  interpreted as constraining allowed types"; (3) choice elements are implicitly type-sliced, id
+  `Patient.deceased[x]:deceasedBoolean`; (4) constraints on a named type slice "apply only to instances of that
+  type"; (5) either path form legal. FHIR-6066/6093 (2015): constraining a sub-type "does not imply the other
+  sub-types are to be omitted" (origin of `base.path/min/max`); FHIR-10034: type need not be restated with the
+  shorthand; FHIR-15900 (2018): "an id in the differential that's not in the snapshot — that should not occur"
+  (against Java's bare-`value[x]` anchoring when the diff used the renamed id, DEV-026); FHIR-18264 (2018, Not
+  Persuasive): re-slicing a type slice "cannot occur" (Chris Grenz dissents).
+- **Status:** (c) answer-found (implicit constraint applies — item 4); (a)/(b) open with Java rationale, and
+  FHIR-15900 against the bare-`value[x]` fold. WGM brief Q4.
 
 ## OQ-019 — Which extensions are non-inheritable?
 A derived profile's snapshot inherits everything from the base — including metadata extensions that are
@@ -470,7 +675,25 @@ as inheritable/non-inheritable.
   three *other* policy lists (non-overriding / overriding / default-inherited) and a per-extension
   `snapshot-behavior` declaration — i.e. Java already treats inheritance policy as **extension metadata**,
   which is what the candidate RFC would standardize. Neither list is documented anywhere.
-- **Status:** open (Phase 2 packet 6, 2026-08-26; Java data point Phase 4 packet 3; list diff 2026-09-01).
+- **Answer found (Zulip sweep 2026-09-02): the candidate RFC already exists and is stalled.** #tooling "Forge
+  added extension explicit-type-name" (2020–2026): Ewout 2020 — "the author of the extension has to indicate
+  whether this extension propagates"; Grahame agreed ("an extension on the extension definition … a list in the
+  short term"); Ewout filed FHIR-28441 → resolved with `structuredefinition-inheritance-control` (extensions
+  pack) + `snapshot-behavior` (tools IG). Chris Moesel 2023 and 2026-08-19: "there wasn't a single extension
+  that actually used them"; Grahame 2026-08-18: "it's something we should do. I think that the snapshot generator
+  in the validator follows them". Ward 2025-12: .NET's list was copied from Java's (firely-net-sdk PR #2886).
+  Grahame posted his working per-context lists (SD/ED/Type/Binding) in Feb 2023 — a third list to reconcile;
+  `fhir-type` must propagate (Grahame 2025-12). 2016 origin: Michel on GF#9079 — Forge hard-codes FMM
+  non-inheritance, "it would definitely be an improvement if an extension definition … could express the rules".
+- **JIRA (sweep 2026-09-02): the decision, with the list.** FHIR-28441 (2020, Persuasive 11-0-0) defines
+  `snapshot-behavior` "that indicates what rules a snapshot generator must follow", 5 classes; Lloyd's comment
+  classifies ~45 extensions and his class-5 ("not propagated") list of 17 urls **is .NET's blocklist verbatim**
+  (Ward's "copied from Java" and this can both be true — the lists coincided in 2020); Java's current list omits
+  hierarchy/interface/codegen-super/replaces/resource-dates. The record conflicts on `explicit-type-name`
+  (class 4 "always propagate" in 28441 vs "should not inherit" in FHIR-27535's closing comments; Java follows
+  27535).
+- **Status:** answer-found (policy = extension metadata, decided 2020, unapplied). WGM item = get the metadata
+  applied to the core extensions (WGM brief Q9).
 
 ## OQ-020 — What may a generator do to the slicing entry of a type slicing?
 The headline Phase-4 finding (DEV-020, test `obs-2b`): given an author-written slicing entry on a choice
@@ -497,7 +720,22 @@ mirror image of .NET's implicit constraint on the renamed *slice*.)
   CLOSED) type slicing intended? Also relevant: the community already decided *slicer properties do not
   copy into slices* (`APPLY_PROPERTIES_FROM_SLICER=false`, `PPP:42-58`, Zulip #IG-creation) — the one
   adjudicated data point on what a generator may do around the entry.
-- **Status:** open (Phase 4 packet 2, 2026-08-26; mechanism pinned 2026-08-31) — prime WGM material,
+- **Prior discussion (Zulip sweep 2026-09-02, `extracts/zulip-sweep-2026-09-02-b.md` §Q1): discussed-unresolved.**
+  (a) permitted (Grahame 2019 "no. but it's allowed"; Redmond DevDays 2019: always emit the entry). (b) Java-
+  implementer decision, objected to each time (2019–20 Marten/Ward/Ewout/Chris Grenz; 2020-11 Lloyd
+  "methodologically wrong"; 2025 Chris Moesel, Henket); Grahame's rationale: "if it doesn't, every single
+  extension will allow any type"; his own 2020 concession "this is an issue in the snapshot generator" +
+  fhir-test-cases `acceaea7` = origin of the reopen branch; 2020 Java threw on authored `open` with "not a
+  stated constraint". (c) renamed-form collapse declared a bug 2022 (publication vs JUnit parameter split);
+  obs-2b collapse undiscussed. (d) undiscussed. (e) live exhibit July 2026 (#tooling, unresolved).
+- **JIRA (sweep 2026-09-02): (c) and (d) answered against Java; (a)/(b) not found.** (c) FHIR-12259 item 1 (entry
+  stays as-is) + FHIR-8969 (2015) comment: a slicing entry may carry any constraint except what makes slicing
+  nonsensical, "e.g. constraining to a single type for a type slice" → the collapse is unsanctioned. (d) FHIR-31054
+  (2021, 30-0-0): slice-min sum "SHOULD be ≤ m", "Will add a warning to the validator" → the entry-min raise is
+  unsanctioned. (a) FHIR-31400 only says a derived diff may *omit* the discriminator. (b) FHIR-3623/17821 let only
+  the author tighten open→closed. Grahame on FHIR-50267 favours validation warnings over normalization.
+- **Status:** open on (a)/(b), (c)/(d) answer-found against the Java rewrite (Phase 4 packet 2, 2026-08-26;
+  mechanism pinned 2026-08-31; sweeps 2026-09-02) — prime WGM material,
   demo-able with obs-2b.
 
 ## OQ-021 — How much must a snapshot materialize?
@@ -545,5 +783,28 @@ obligations but no set-level rule; §5.1.0.10 (R5 propagation text) touches (c) 
   when the entry has no diff child rows (DEV-025 flavor 1, comp-deep/t21). That is the only place either engine materializes structure the
   differential never mentions, and it exists for a mechanical reason (the slices need a base to be walked
   against), not a policy one.
-- **Status:** open (Phase 4 packet 3, 2026-08-26; type-profile dimension 2026-09-01) — WGM material; demo-able
-  with org2a (52-element gap), sd-comp-hist (45 property diffs), and t21.
+- **Prior discussion (Zulip sweep 2026-09-02): discussed-unresolved; (b) dated.** The Java copy-down is the
+  outcome of **FHIR-50391** (Apr 2025 #IG-creation "Slices not inheriting preferred bindings from root", 314
+  msgs; confirmed by Grahame in #conformance "Recent Snapshot generation changes.", Jun 2025, on US Core
+  Organization = org2a). Same thread: slicer *properties* do not propagate (`APPLY_PROPERTIES_FROM_SLICER`;
+  proposed note FHIR-50267: they apply "whether or not shown in the snapshot") — so children copy, properties
+  don't: one 2025 outcome, never stated as a principle; Lloyd still says (Dec 2025, Jun 2026) tools "can't"
+  propagate. Boundaries: inherited slices don't get a derived profile's allSlices changes (Grahame 2026-08,
+  "multiple inheritence"); slice `min` not inherited (Lloyd 2026-01, core#2282). (a) depth: Lloyd 2021 "the
+  depth equals that in the differential" (+ backbone exception); Grahame 2016 "either you reference a type, or
+  you inline the type" (all or nothing) — informal, never spec text. (c) recursion depth: not found. (d): Grahame/
+  Lloyd Nov 2025 — the snapshot "doesn't suck in the definition of all referenced data types". 2017 "Slicer vs
+  Slice" = the first run (Michel: Firely's deliberate no-three-way-merge; Lloyd: consumers "shouldn't have to
+  do any merging at all"; escalated to FHIR-I, no recorded outcome).
+- **JIRA (sweep 2026-09-02): the one on-record algorithm rule, ambiguous exactly here.** FHIR-50267 (2025,
+  8-0-1, *Resolved – change required*; text not in the R6 build captured 2026-08-18): slice base = same-named slice
+  in the parent snapshot, else the parent's slicing element; "constraints of the base (slicing) elements are *not*
+  included in the snapshots" of slices, yet apply; FHIR-50391 (Applied): they apply "whether or not they are
+  explicitly rendered" (and contradicts 50267 on mustSupport). Neither says whether "constraints" covers the
+  entry's *child rows* — Java's copy-down is either out of scope or a violation blessed by golden files. (a):
+  FHIR-8286 (Ewout 2015, 9-0-0) — the entry's "unconstrained definition includes the children, and update the
+  tooling to populate this" (sanctions the contentReference-entry inline dump); FHIR-8975: an unnamed constraint
+  in a derived profile is "merely adding to all slices". (c): R6 FHIR-57266. (d): FHIR-12179 + FHIR-13839 favour
+  complete snapshots closing over type profiles.
+- **Status:** open (Phase 4 packet 3, 2026-08-26; type-profile dimension 2026-09-01; sweeps 2026-09-02) — WGM
+  brief Q2; demo-able with org2a (52-element gap), sd-comp-hist (45 property diffs), and t21.

@@ -304,7 +304,26 @@ status/resolution.
   reading the Java snapshot they see a mandatory single-type element under closed slicing. Validation
   outcomes differ materially. This is the headline exhibit for the slicing-entry WGM question
   (OQ-020; connects to OQ-018 on implicit type constraints and to the slice-`Base.min` question).
-- **Status:** confirmed (both behaviors reproduced 2026-08-26; spec question open → OQ-020).
+- **Independent reproduction + prior discussion (2026-09-02):** Gino Canessa's comparison (2026-09-01, cases 3
+  and 4 at Java 4f52ba6 / .NET 4bd9dd8) reproduces the `type:$this` injection (obs-1) and the obs-4 collapse
+  (parent 1..1, single type, closed vs .NET 0..1, 13 types, open). Zulip: Grahame 2024 "type slicing is always
+  closed in practice" vs Lloyd 2020 "It's wrong to auto-change 'open' slices to 'closed'"; the 2019–20
+  #conformance thread "Type[x], Slices, open/closed" is the only debate of the generator's handling of `rules`
+  (Grahame: diff `rules` = interpretation hint; Ewout and Chris Grenz objected; unresolved) — see the WGM brief
+  Q3 and `extracts/zulip-sweep-2026-09-02-c.md` §2.
+- **Per-property record (cluster B sweep, `extracts/zulip-sweep-2026-09-02-b.md` §Q1):** (a) `type:$this`
+  injection is **permitted** (Grahame 2019-12 "no. but it's allowed"; Redmond DevDays 2019 decision to always
+  emit the entry, Michel 2019-08). (b) forcing `closed`: Nov 2020 #IG-creation "Validation issue with partial
+  type slicing" — Grahame: "this is an issue in the snapshot generator", kept because "if it doesn't, every
+  single extension will allow any type" (R4 extensions in STU3 shorthand); Lloyd "methodologically wrong";
+  fhir-test-cases `acceaea7` (2020-11-12) = probable origin of the rebuild-CLOSED-then-reopen mechanism; the
+  2020 Java throw "Type slicing with slicing.rules != closed" had "not a stated constraint" (Grahame). (c) the
+  *renamed-form* type-list collapse was declared a **bug** (Sept 2022 cholesterol snapshot; JUnit ran with a
+  different slice-processing parameter than publication — shipped core snapshots ≠ fhir-test-cases oracle); the
+  obs-2b `min>0` collapse never discussed. (d) entry-min raise never discussed. (e) sliced-base no-reopen: live
+  exhibit July 2026 (#tooling "Type choice elements issue in instances of derived profiles", unresolved).
+- **Status:** confirmed (both behaviors reproduced 2026-08-26; independently 2026-09-01; spec question open →
+  OQ-020 / WGM brief Q3).
 
 ## DEV-021 — New elements seeded from the datatype's snapshot root: .NET enriches, Java doesn't (ch7)
 - **Evidence:** Phase-4 sweep 2026-08-26 (versions: .NET = Hl7.Fhir.R5 6.2.1 | Java engine = 6.10.2
@@ -384,7 +403,16 @@ status/resolution.
   slice at `PPP:1385`), so sibling slices can even differ from each other — whereas Java's two step-in paths (`PPP:858-896`, `1118-1156`) do exactly what .NET does
   (null + type restored, `replaceFromContentReference` `PU:1870-1874`). So the survival difference is
   path-dependent inside Java, not a policy.
-- **Status:** confirmed empirically; Java code-pinned (both flavors).
+- **Flavor 1 adjudicated (Zulip sweep 2026-09-02):** Grahame Grieve, #conformance "STU3 Qustionnaire snapshot
+  generation" (2022): "the relative content references must be replaced with absolute content references when
+  a snapshot is generated" — Java's global absolutization is the stated rule; .NET's merged-children-only
+  rewrite is the deviation (the .NET *reader* side was fixed as firely-net-sdk #2039). Ewout asked then that
+  the ED.contentReference definition say so — it still doesn't (RFC candidate). Flavor 2 provenance: Ewout
+  2025-06-18 in #IG-creation "Clarification on contentReference" — "you EITHER have a contentReference or
+  children, but not both", announcing the .NET change (#3177); in that Consent case (Julian Sass) the Java
+  snapshot *lacked* the reference on an unexpanded `provision.provision` while .NET kept it — a field data point
+  to reconcile with the path analysis above.
+- **Status:** confirmed empirically; Java code-pinned (both flavors); flavor 1 = Java correct per Grahame 2022.
 
 > Entries DEV-024 – DEV-031 come from Phase 4 packet 3 (sweep mining, 2026-08-26). Common version stamp:
 > .NET = Hl7.Fhir.R5 6.2.1 | Java engine = 6.10.2 (d06577dbc5c6) | golden = fhir-test-cases 1.7.67 |
@@ -412,7 +440,10 @@ status/resolution.
   snapshot that misses author constraints.
 - **Status:** confirmed empirically; **filed as
   [#3589](https://github.com/FirelyTeam/firely-net-sdk/issues/3589)** (2026-08-26). .NET code trace +
-  Java comparison pending (Phase 3 J-a has the anchors).
+  Java comparison pending (Phase 3 J-a has the anchors). **Independently reproduced** by Gino Canessa
+  (2026-09-01, [comparison](https://ginoc.io/202609-snapshot/snapshot-generation-comparison.html) case 1:
+  86 vs 60 elements, "most consequential confirmed divergence") at Java master 4f52ba6 / .NET main 4bd9dd8
+  (v6.2.0-10) / fhir-test-cases 1.7.68 — not a pin artifact.
 
 ## DEV-025 — Materialization depth of unconstrained content: Java normalizes more than .NET (ch7/ch8/ch11)
 - **Evidence:** ELEMENT-SET mining, three flavors totalling 210 java-only elements:
@@ -462,8 +493,25 @@ status/resolution.
   **no** inner diff rows and the base has no children under it, the target's children are copied under the
   entry from the base snapshot — structure no diff row asked for, the one exception to Java's otherwise
   diff-driven expansion policy (ch11 §1).
+- **Provenance of flavor 2 (Zulip sweep 2026-09-02):** the copy-down is the implementation outcome of
+  **FHIR-50391** (Grahame Grieve's slicing clarification from the April 2025 #IG-creation thread "Slices not
+  inheriting preferred bindings from root", 314 messages) — confirmed by Grahame in #conformance "Recent
+  Snapshot generation changes." (2025-06-27) when Eric Haas noticed `Organization.identifier:NPI.id` etc.
+  appearing in US Core snapshots (= the org2a fixture). The same thread decided slicer *properties* do not
+  propagate (`APPLY_PROPERTIES_FROM_SLICER=false`; proposed spec note FHIR-50267: slicer constraints apply
+  "whether or not shown in the snapshot"). So the earlier "tension" reading is better stated as two halves of
+  one 2025 outcome — entry children materialize into slices, entry properties do not — never stated as one
+  principle (JIRA text of FHIR-50391 to be checked). Boundary: inherited slices do not receive a derived
+  profile's allSlices changes (Grahame 2026-08, "otherwise we'd have multiple inheritence").
+- **JIRA (sweep 2026-09-02):** FHIR-50267 (2025, Persuasive 8-0-1) — the only on-record snapshot-generation
+  algorithm rule: slice base = same-named slice in the parent snapshot, else the parent's slicing element;
+  "constraints of the base (slicing) elements are *not* included in the snapshots" of slices (they still apply);
+  FHIR-50391 (Applied): apply "whether or not they are explicitly rendered". Neither says whether the entry's
+  *child rows* count as its "constraints" — so flavor 2 is either outside the decision or a violation of it that
+  the golden files bless. Flavor 1 (entry children of a contentReference) is sanctioned by FHIR-8286 (Ewout,
+  2015): the entry's "unconstrained definition includes the children, and update the tooling to populate this".
 - **Status:** confirmed empirically; Java preprocessor deep-read done (Phase 3 packet J-a, 2026-08-31);
-  flavor-1 mechanism pinned (J-e).
+  flavor-1 mechanism pinned (J-e); flavor-2 provenance dated + JIRA framing (2026-09-02). WGM brief Q2.
 
 ## DEV-026 — Renamed-choice constraints: .NET anchors on a synthesized type slice, Java on bare `value[x]` (ch6/ch7)
 - **Evidence:** ELEMENT-SET mining G4 (89 elements, both sides: t16 20n+18j, t31 25n+24j, sushi1/2).
@@ -477,7 +525,23 @@ status/resolution.
   (ch1/ch6 baseline; the R4→R5 reversal) — but says nothing about which snapshot representation a
   generator must produce when the diff uses the (legacy) renamed form. Enriches OQ-018 (which so far
   covered the implicit type-constraint half of the same normalization split).
-- **Status:** confirmed empirically (identity-level divergence; constraint content equal).
+- **Prior discussion + fixture check (Zulip sweep 2026-09-02, `extracts/zulip-sweep-2026-09-02-b.md` §Q2):**
+  Java's rule is on record — Grahame 2019-07-25 (#conformance "Slicing a non-repeating element"): "Either you
+  have a single type, or you can only talk about element properties" (children under `[x]` presuppose a single
+  type). Fixture check: t16's base `…latitude.value[x]` is already `decimal`-only and t31's diff explicitly
+  states `type=string` on the renamed path — in both, the element is single-typed when its children are
+  constrained, so the golden's fold-onto-bare-`value[x]` is that rule applied. .NET's synthesized
+  `value[x]:valueDecimal` slice also contradicts Michel Rutten's own 2017 statement (#conformance "Element id
+  for constrained choice type elements") that a single-type constraint "is considered an 'implicit slice'" that
+  "does not introduce an actual slice entry" — the original .NET design. The R5-form-vs-renamed-form
+  *representation* choice as such was never discussed.
+- **JIRA (sweep 2026-09-02):** FHIR-12259 (2016) items 3/5 (implicit type slices with ids `value[x]:valueString`;
+  either path form legal) and FHIR-15900 (2018: differential `occurrenceDateTime` vs snapshot `occurrence[x]` —
+  "an id in the differential that's not in the snapshot — that should not occur") cut *against* the bare-`value[x]`
+  fold when the differential used the renamed id; the single-type rule (Grahame 2019) cuts for it. Both sides
+  now have a record.
+- **Status:** confirmed empirically (identity-level divergence; constraint content equal); Java rationale on
+  record — the .NET synthesized slice is the outlier. WGM brief Q4.
 
 ## DEV-027 — Malformed differentials produce silently corrupt .NET snapshots (ch2)
 - **Evidence:** fail-test mining — the two "corrupt output" rows.
@@ -506,7 +570,9 @@ status/resolution.
   for "generators must reject, repair, or propagate — but never corrupt".
 - **Status:** confirmed empirically (both inputs in fhir-test-cases; .NET outputs in `harness/out/`);
   **filed as [#3590](https://github.com/FirelyTeam/firely-net-sdk/issues/3590)** (t23a) **and
-  [#3591](https://github.com/FirelyTeam/firely-net-sdk/issues/3591)** (obs-unit), 2026-08-26.
+  [#3591](https://github.com/FirelyTeam/firely-net-sdk/issues/3591)** (obs-unit), 2026-08-26. The t23a
+  duplicate was independently reproduced by Gino Canessa (2026-09-01 comparison, case 2: 57 vs 56 elements,
+  two `Patient.contact:males.telecom` rows) on the unsorted `t23` input at .NET main 4bd9dd8.
 
 ## DEV-028 — Author-error detection catalogue: Java validates, .NET emits as written (ch2–ch6, ch9, ch12)
 - **Evidence:** fail-test mining over all 21 `fail="true"` tests: Java satisfies the fail expectation on
@@ -532,7 +598,18 @@ status/resolution.
   discards the dep's shipped snapshot and dies on its unresolvable base before reaching the duplicate-id
   input; default-settings .NET untested). t15a agrees in substance (unknown extension detected) but not
   severity (6 issues + generated output vs hard throw).
-- **Status:** confirmed empirically (13 reproducing inputs, all in fhir-test-cases).
+- **Prior discussion (Zulip sweep 2026-09-02, `extracts/zulip-sweep-2026-09-02-b.md` §Q3):** Grahame's *stated*
+  policy equals .NET's — 2022 (#conformance "Modifier Extension mismatch"): the generator's "task is to generate
+  the snapshot, not validate the profile" (the check went to the validator); 2024: an illegal type restatement
+  "doesn't mean that the snapshot generator should fail". Yet the Java throws in this table were added by
+  explicit decision: (c) slice names 2019-07 at Lloyd's request; (h) mustSupport was a hard `DefinitionException`
+  in validator 5.6.35 (2022-02) — now warn-and-take (J-b): **undocumented drift**; isSummary `java.lang.Error`
+  consistently 2021→2025 ("you can't change isSummary in a profile"); discriminator-equality-with-base throw
+  (2022-08) defended by Grahame against Chris Moesel's spec-text objection. Gino Canessa's 2026-09-01 comparison
+  independently reproduces (d) obs-badfixed/obs-badpattern (Java rejects, .NET generates with null Outcome) and
+  the obs-5 split.
+- **Status:** confirmed empirically (13 reproducing inputs, all in fhir-test-cases); policy-vs-practice
+  contradiction on record. WGM brief Q5.
 
 ## DEV-029 — Recursion crossover: each side rejects recursive structures the other accepts (ch11)
 - **Evidence:** fail-test mining §3 (ext-recursion-1 vs ext-recursion-2 / logical-goo).
@@ -754,6 +831,13 @@ status/resolution.
 - **Spec basis:** [elementdefinition #path] (constraints cannot define new paths), [structuredefinition
   §5.4.6] (ordering; new elements only for specializations) — both are shape rules with **no stated
   consequence for violations** (RFC-012 data point).
+- **Prior discussion (Zulip sweep 2026-09-02):** the `NAMED_ITEMS_ARE_OUT_OF_ORDER` throw is an admitted
+  implementation limitation, not a rule — Grahame 2024-07 (#implementers "ReSlicing Validation Error: Named
+  items are out of order"): "sushi is clearly not wrong here, against the spec" but "the existing java code
+  doesn't work that way" and rewriting it "isn't going to be fun". The orphan ERROR ("No match found … (including
+  order)") is how authors learn the ordering rule (2020); a 2021 user report (#implementers "Validation mismatch
+  .NET and Java") shows the asymmetry in the wild — profiles clean on Simplifier, Java aborting in the sort step.
+  No thread states that a generator must or must not sort.
 - **Status:** confirmed (code-derived both sides; t23a is the empirical exhibit). WGM/OQ-014 material: the
   two engines have chosen opposite ends of "reject vs propagate" for the same author error, and only one of
   them produces a diagnostic.
@@ -801,11 +885,24 @@ status/resolution.
   whenever the author omitted `fixedUri` — .NET adds a conformance-affecting fixed value (validation of
   instances against the snapshot changes), Java does not. Where both inherit an existing fixed url they agree,
   including the case where a derived extension profile keeps its *base* extension's url as the fixed value
-  (`ext-sort-issue`) — arguably wrong for both.
-- **Spec basis:** none — extensibility §2.1.5.0.1 states the url rule for *instances*; nothing requires or
-  describes `fixedUri` in snapshots (ch7 spec baseline). RFC candidate: state whether a generator MAY/SHALL fix
-  `Extension.url` and to what value for nested complex-extension parts.
-- **Status:** confirmed (code + golden evidence both sides). WGM material: which side is right?
+  (`ext-sort-issue`) — **correct for both** (correction 2026-09-02: the R6-build extensibility Notes add that a
+  derived profile on a complex extension "is not establishing the 'url' value"; the earlier "arguably wrong
+  for both" is retracted).
+- **Further evidence (RFC-015 research, 2026-09-02):** golden census over `r5/snapshot-generation`: a second
+  definition root left unfixed in input *and* expected (`au2`, nested parts fixed relative), plus eight
+  profile extension slices with `type.profile` set and no fixed url in the expected files (`ca-patient`
+  `…extension:myExtension.url`, `telus-oo`, …) — exactly the files where .NET would add a value. Core
+  extension pack hl7.fhir.uv.extensions 5.2.0: 632/632 definitions fix `Extension.url` to the canonical in
+  both differential and snapshot; 272/272 nested in-line parts fix a relative local name (270 = slice name,
+  2 another authored name; zero `patternUri`) — the fixed value is universally *expected*, but because it is
+  authored everywhere the pack is neutral between the two engines.
+- **Spec basis:** partial, non-normative — defining-extensions §2.1.5.1.4 ("Use of ElementDefinition in
+  Extension Definitions", R5 and R6-build identical) lists `Extension.url` as "Cardinality = 1...1 (fixed)",
+  "value = canonical URL (fixed)" as authoring guidance (no SHALL, silent on differential vs snapshot, on
+  `fixedUri` vs `pattern`, and on nested parts); extensibility §2.1.5.0.1 states the url rule for *instances*.
+  (Correction 2026-09-02 of the earlier "none".) Nothing says a generator may or must supply the value —
+  [RFC-015](15-spec-rfcs.md#rfc-015--extensionurl-fixed-value-convention-in-snapshots).
+- **Status:** confirmed (code + golden evidence both sides). WGM brief Q6: which side is right?
 
 ## DEV-038 — Type-profile scope: .NET merges any type profile; Java only Extension/Resource roots, and only when the base has no children (ch7)
 - **Evidence:** .NET `SnapshotGenerator.cs:1208-1503` (`mergeTypeProfiles`, Phase 2 packet 4); Java
@@ -837,7 +934,25 @@ status/resolution.
 - **Spec basis:** the spec orders nothing here (ch7 spec gaps 1, 4; OQ-002) and states only the R5
   root-cardinality rule (structuredefinition §5.4.6.1), which Java honors partially (sliced-base pick-up +
   extension templates) and .NET honors as a side effect of the root merge (incl. the OQ-001 loosening).
-- **Status:** confirmed (code-derived both sides; empirical exhibit still to be picked from the sweep —
-  candidates: any test with a datatype `type.profile` and child constraints). Prime WGM material alongside
-  OQ-001/OQ-002/OQ-021.
+- **Empirical exhibit (Zulip sweep 2026-09-02):** community MWE, #Simplifier.net "constraints missing in
+  derived type" + #shorthand "incomplete snapshots - missing constraints" (Volker Wegert, Oct–Nov 2025):
+  `MyAddress` = Address + invariant `demo-1`; `MyPatient` `address only MyAddress`; `MySecondPatient` derived.
+  SUSHI `--snapshot` (Java) → `Patient.address` carries only `ele-1`; Simplifier's regenerated (.NET) snapshot
+  carries `demo-1` too — the root-merge half of this entry, observed in the wild. Rationale on record for the
+  Java side: #conformance "Snapshot Generation Question" (Nov 2024–May 2025) — Grahame after code review: the
+  type-profile override "wasn't intended to work for types", element wins since Dec 2024, type-root
+  `alias`/`mapping` dropped since validator 6.4.4 (Lloyd: "a type has no meaning of its own"); on the
+  derived-host case Grahame: "I don't actually know in that case". The *children gate* (3) was discussed
+  nowhere. Separately agreed (Ewout ↔ Grahame, #conformance "Where are the invariants on datatype roots?",
+  2025): when walking into a *core* datatype neither engine copies the type's root invariants (only
+  `ele-1`/`ext-1` survive) — validators run the type's root constraints themselves.
+- **JIRA (sweep 2026-09-02):** FHIR-19756 (2018) — a type's root cardinality bounds the referencing element;
+  WGM note: the generator "should not pull the root element's cardinality into the snapshot" (against .NET's root
+  merge); FHIR-48664 (2025, Applied) — a datatype-profile root may now carry a *binding* and "Will ask the Java and
+  Firely snapshot generator authors to account for this change" — Java's gate (1) cannot surface it, .NET
+  surfaces it only via the merge 19756 forbids; neither engine reconciled. FHIR-12179 (2016) + FHIR-13839
+  (retracted) favour snapshots closing over type profiles.
+- **Status:** confirmed (code-derived both sides + community exhibit). WGM brief Q1, alongside
+  OQ-001/OQ-002/OQ-021; the question is already slated for an evening session at this WGM (Ward Weistra's
+  Feb 2026 thread).
 

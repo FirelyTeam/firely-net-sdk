@@ -52,9 +52,13 @@ one or more nested extensions and no value" (ext-1). Url rules:
 > URL. … In the case where an extension defines complex content, the identity of the parts of the
 > extension are local/relative to the reference to the extension definition."
 
-That is **instance** syntax; nothing on these pages requires a snapshot to carry `fixedUri` on
-`Extension.url` elements or says what the fixed value is for nested parts — pure tooling convention
-(spec gap, and .NET's `fixExtensionUrl` exists to implement it).
+That is **instance** syntax. The only definition-side statement is authoring *guidance* on the
+defining-extensions page (§2.1.5.1.4 "Use of ElementDefinition in Extension Definitions", identical in the
+R6 build): `Extension.url` "Cardinality = 1...1 (fixed)", "value = canonical URL (fixed)" — no SHALL, silent
+on differential vs snapshot, on `fixedUri` vs `pattern`, and on nested parts (correction 2026-09-02 of the
+earlier "pure tooling convention"; RFC-015). Nothing requires a *generator* to supply the value; .NET's
+`fixExtensionUrl` exists to do so. The R6 build adds that a derived profile on a complex extension "is not
+establishing the 'url' value" (extensibility Notes) — so an inherited base fixed url is correct.
 
 Profiling extensions = slicing the `extension` array by `url` (ch6). An extension definition "defines the
 extension element using the same details used to profile the structural elements" [profiling §5.1.0.18] —

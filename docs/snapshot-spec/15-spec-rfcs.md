@@ -113,7 +113,50 @@ unstated, and the binding-strength lattice was NOT updated for R6's new `descrip
 
 ### RFC-011 — `openAtEnd` transitions never addressed
 The slicing lattice covers open→closed and ordered false→true; `openAtEnd` is not covered by any
-tighten/loosen rule. **Status:** draft.
+tighten/loosen rule. JIRA history (sweep 2026-09-02): FHIR-3623 (2014) is the lattice's origin, FHIR-17821
+(2018) reworded it to the two bullets and the openAtEnd→closed question was asked on the ticket and not
+answered; FHIR-5581 only added the "discouraged" note; Lloyd 2017 (Zulip): the validator "doesn't distinguish
+between openAtEnd and closed". Java tolerates CLOSED→OPENATEND, which the lattice's spirit forbids (ch6).
+**Status:** draft — history verified, no prior decision.
+
+### RFC-016 — contentReference form in generated snapshots (local vs absolute)
+`ElementDefinition.contentReference` is defined as a local `#id` reference into the same structure; nothing
+says what form it takes once an element is copied into another structure's snapshot. Grahame Grieve ruled on
+Zulip in 2022 (#conformance "STU3 Qustionnaire snapshot generation") that "the relative content references must
+be replaced with absolute content references when a snapshot is generated", and Ewout asked then that the
+element definition say so — it still does not (R5 and R6 build unchanged). Java absolutizes globally at
+id-generation time with a hard-coded core namespace; .NET only inside merged subtrees (DEV-023 flavor 1).
+Proposal: one sentence in the `contentReference` definition and structuredefinition §5.4.6: "In a snapshot,
+contentReference SHALL be absolute (`<canonical of the structure the element was copied from>#<id>`)". Also
+state whether the reference survives on an element whose children were expanded (both engines' step-in paths
+replace it by the target's `type`; Ewout 2025: "you EITHER have a contentReference or children, but not both").
+**Status:** draft (2026-09-02) — Zulip ruling on record, spec text absent.
+
+### RFC-017 — "tools generate complete verbose snapshots" is stale
+profiling.html states that tools "generate complete verbose snapshots; they do not support suppressing
+mappings or constraints", yet FHIR-31406 (2021) defined `elementdefinition-suppress` so that "the element
+property should be removed from the corresponding snapshot.element during snapshot generation", FHIR-20385
+(applied 2023) lets profiles remove code/comment/requirements/alias/example/mapping made irrelevant, and the
+shared golden test `address-no-examples` deletes inherited examples via the (undocumented, FHIR-56831) `$all`
+label. Proposal: replace the sentence with a pointer to the suppress mechanism and the FHIR-20385 text; document
+`$all`. **Status:** draft (2026-09-02; OQ-008 answer-found).
+
+### RFC-018 — snapshot element ids are derived data
+Both generators regenerate every element id from path + slice names (OQ-009), the community has said so since
+2016 (FHIR-9843, FHIR-12182: id is derived; FHIR-14091: "the publishing process will 'fix' them. This is
+expected behavior"; Grahame 2019: "ids are derivative"), but elementdefinition.html still presents the id as an
+author-assigned identifier that "may be used as the target of external references". Proposal: state that
+snapshot (and differential) element ids are computed by the documented algorithm and that generators regenerate
+them; external references must use the computed form. **Status:** draft (2026-09-02).
+
+### RFC-019 — FHIR-50267 vs FHIR-50391 contradict each other on mustSupport across slices
+Resolved three days apart in April 2025 by the same work group: FHIR-50267 ("Slicing Snapshot Generation" text,
+*Resolved – change required*, not yet in the R6 build captured 2026-08-18) says a slicer `mustSupport` means
+"all slices are automatically mustSupport"; FHIR-50391 (*Applied*) says mustSupport "can not be assumed to
+apply to all slices … for legacy reasons". Whichever lands, the text should also say whether the slicing
+element's **child rows** (not only its own properties) are "constraints of the base (slicing) element" that are
+*not* included in slice snapshots — that is exactly where the two generators diverge (DEV-025, WGM brief Q2).
+**Status:** draft (2026-09-02) — raise before citing either ticket.
 
 ## Additions (c)
 
@@ -143,16 +186,36 @@ Eight fresh errata candidates found in the R6 CI build itself (v6.0.0-ballot4), 
 `R5-R6build-deltas.md` (materials dir): a ViewDefinition example contradicting its own SHALL, broken ♉
 footnote glyphs in the reworked interpretation table, stale example numbering, the `binding.additional.purpose`
 changes-list claiming an `open` code the rendered enum lacks, and others. These target the R6 ballot, so
-they are the most time-sensitive entries in this register.
+they are the most time-sensitive entries in this register. Added 2026-09-02 (RFC-015 research): R6-build
+`extensibility.html` Notes, the reworked relative-url bullet — a stray `'` after
+`.../StructureDefinition/Extension` inside the `<code>` element.
 **Status:** draft — verify each is still present in the current build immediately before filing.
 
 ### RFC-015 — `Extension.url` fixed-value convention in snapshots
-extensibility §2.1.5.0.1 states the url rule for *instances* only; nothing says whether a generated snapshot
-carries `Extension.url.fixedUri` (vs `pattern`, vs nothing), what value nested complex-extension parts fix
-(relative name vs absolute `url#part`), or whether a derived extension profile keeps its *base* extension's
-url as the fixed value. The two implementations differ: .NET synthesizes the fixed url when absent, Java only
-inherits an authored one, and Java's golden files bless fixed-less extension snapshots
-([DEV-037](13-deviation-register.md#dev-037--extensionurl-fixeduri-net-synthesizes-java-inherits-only-ch7)).
-Proposal: one sentence in the profiling/extensibility pages stating whether a generator MAY/SHALL fix
-`Extension.url`, with what value, and the nested-part convention. **Status:** stub (J-d, 2026-09-01) — write
-up before the WGM brief; check the R6 build's defining-extensions page first (context notes were reworked).
+defining-extensions §2.1.5.1.4 lists, as authoring *guidance*, that an extension definition's
+`Extension.url` has "value = canonical URL (fixed)"; extensibility §2.1.5.0.1 states the url rule for
+*instances* (absolute canonical, except in-line parts of complex extensions, which are relative). Neither
+says whether the fixed value lives in the differential or may be filled into the snapshot by a generator,
+which property carries it (`fixedUri` — tooling-settled, no spec text — vs `pattern[x]`), or what value a
+nested part's `Extension.extension:x.url` fixes. Two live behaviors: .NET (`fixExtensionUrl`) backfills
+a missing `fixedUri` — canonical on a definition root, type-profile url or else slice name on an
+extension slice; Java never writes one and only inherits an authored/base value, and its golden files
+bless unfixed definition roots (`ext-recursion-2`, `au2`) and unfixed profile slices (`ca-patient`,
+`telus-oo`, …) ([DEV-037](13-deviation-register.md#dev-037--extensionurl-fixeduri-net-synthesizes-java-inherits-only-ch7)).
+De-facto convention: hl7.fhir.uv.extensions 5.2.0 fixes `Extension.url` to the canonical in every
+differential and snapshot (632/632) and every nested in-line part to its local name (272/272 relative,
+zero `patternUri`; 270 of them equal the slice name, 2 use another authored local name) — so the fixed
+value is universally *expected*, but being authored it does not discriminate the two engines. The R6 build
+settles one sub-question: a derived profile on a complex extension "is not establishing the 'url' value"
+(extensibility Notes, new bullet), so a derived extension profile inheriting its base's `fixedUri`
+(`ext-sort-issue`) is correct for both engines.
+**Proposal** (defining-extensions §2.1.5.1.4, promote guidance to conformance language): "An extension
+definition SHALL fix `Extension.url` (as `fixedUri`) to its canonical URL; an in-line nested extension of
+a complex extension SHALL fix its `url` to its local name (normally the slice name); a nested extension
+defined by reference SHALL fix its `url` to the referenced extension's canonical URL. A snapshot generator
+MAY supply these fixed values when the differential omits them and SHALL NOT alter an inherited one."
+Option A (.NET) makes the MAY a SHALL; option B (Java) drops the MAY and leaves authoring tools
+responsible. Either way the snapshot contract becomes stated, and validation of instances against a
+snapshot no longer depends on which generator produced it. WGM brief Q6.
+**Status:** draft — verified against R6 build 6.0.0-ballot4 (page build 2026-08-18, checked 2026-09-02);
+research extract `rfc-015-extension-url-fixed-2026-09-02.md` (materials dir) has the census numbers.
