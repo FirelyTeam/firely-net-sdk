@@ -1,9 +1,9 @@
 # Snapshot generation — open questions for the HL7 WGM (September 2026)
 
-**Status: v2 (2026-09-03) — review/freeze pass over the 2026-09-02 draft (coherence, evidence tiers, executive
-summary); freeze target 2026-09-14.** Prepared by Ewout Kramer (Firely) from a reverse-engineering study of the two
-mainstream snapshot generators. This brief is self-contained: it can be read and used without the underlying
-document set.
+**Status: v3 — FROZEN 2026-09-03** (content complete after the v2 review pass; until the WGM only corrections
+Ewout requests after his own read-through go in — no new questions, no re-tiering). Prepared by Ewout Kramer
+(Firely) from a reverse-engineering study of the two mainstream snapshot generators. This brief is
+self-contained: it can be read and used without the underlying document set.
 
 ## Executive summary — what the evening session has to decide
 
@@ -36,9 +36,8 @@ slice is single-typed (Q4a; FHIR-12259 item 4); R6 contentReference semantics ar
 propagation (Q7a; FHIR-57266/57265); both below-root syntaxes address an element **id** (Q8a; FHIR-13973,
 FHIR-49079); inheritance policy is per-extension metadata with an adopted classification (Q9; FHIR-28441); ids
 are derived data (Q11a; FHIR-9843, FHIR-12182); slicing a non-repeating base element is only supported by type
-(Q12; FHIR-28619); an
-ED mapping with the same identity *replaces* the parent's (Q13; FHIR-34434 — neither engine does it) and
-`elementdefinition-suppress` deletes at snapshot time (Q13; FHIR-31406).
+(Q12; FHIR-28619); an ED mapping with the same identity *replaces* the parent's (Q13; FHIR-34434 — neither
+engine does it) and `elementdefinition-suppress` deletes at snapshot time (Q13; FHIR-31406).
 
 **If time permits:** Q10 (differential-less SDs — one sentence), Q12 (lattice / `sliceIsConstraining` as
 generator duties — decide together with Q5), Q13 merge-rule table (one direction per row), Q14 (Java-only merge
@@ -111,9 +110,10 @@ automatically; it is Ewout's material.
   resolution adopts wholesale (FHIR-12259 "Make change as proposed", FHIR-50267 "Do this"); the quotes tagged as
   comments (FHIR-8969 Lloyd, 14091 Lloyd, 19756 Chris Grenz, 50267 Lloyd + Grahame) were confirmed to be
   comments; FHIR-15900 turned out to be an *auto-approved* tooling ticket. The remaining ~65 tickets were read
-  once during the sweep. Zulip permalinks: ten verified in a browser on 2026-09-03 (Q1 ×2, Q3 ×2, Q4, Q5, Q7, Q9,
-  Q13, Ewout's thread) plus two on 2026-09-02 — both the `#narrow/stream/…` and `#narrow/channel/…` forms resolve
-  to the cited topic and message; the rest were taken from the API and are unverified.
+  once during the sweep. Zulip permalinks: 22 verified in a browser on 2026-09-02/03 (twenty on 09-03: Q1 ×5,
+  Q2 ×2, Q3 ×3, Q4 ×2, Q5, Q6, Q7, Q8, Q9, Q11, Q13, Ewout's thread; two on 09-02) — both the
+  `#narrow/stream/…` and `#narrow/channel/…` forms resolve to the cited topic and message; the remaining ~30 were
+  taken from the API and are unverified.
 - **Internal cross-references** (`OQ-nnn` = open question, `DEV-nnn` = deviation register entry, `RFC-nnn` =
   spec-change proposal) point into the Firely study document set; they are for our own bookkeeping and can
   be ignored during the session.
@@ -603,6 +603,10 @@ profess "don't validate"; both breach it, in different places.
 ---
 
 ## Tier 2 — spec clarifications (one sentence each would settle a divergence)
+
+*Q6–Q9 and Q11–Q13 carry live decisions or confirmations (see the executive summary); Q10 and Q14–Q16 are
+kept here in full for reference but are "if time permits" items — raise them only if the Tier 1 discussion
+finishes early.*
 
 ### Q6. `Extension.url` fixed value in snapshots
 *DEV-037, RFC-015*
