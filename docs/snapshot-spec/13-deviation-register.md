@@ -178,7 +178,11 @@ status/resolution.
 - **Spec basis:** R5 profiling §5.1.0.9 (new in R5): "providing a new mapping with the same identity … means
   that the new mapping replaces a mapping with the same identity in the element being profiled" — .NET does
   not implement the R5 rule (which is correct-for-R4, where mappings were additive-only; .NET runs the same
-  merger for all versions).
+  merger for all versions). The R5 sentence is the outcome of
+  [FHIR-34434](https://jira.hl7.org/browse/FHIR-34434) (2021, Persuasive with Modification 11-0-0; resolution
+  text verified via REST 2026-09-03): a profile mapping with the same identifier "*replaces* the mapping
+  element(s) in the parent with the same identifier" — an HL7 decision on record that **neither engine
+  implements** (WGM brief Q13).
 - **Status:** confirmed both sides — R5+-only divergence; both engines noncompliant with the R5 replace-by-
   identity rule (WGM/RFC material: which of the three behaviors should the spec bless?).
 
@@ -351,12 +355,14 @@ status/resolution.
 - **Scope:** observable whenever .NET generates a specialization/new element — always for profiles whose
   base chain contains snapshot-less SDs, and for *everything* under `ForceRegenerateSnapshots`. Direct
   corollary: **.NET regeneration of the core package does not reproduce the published core snapshots**
-  (which are Java-produced); Java's new-element construction evidently copies a curated property subset
-  from the type root, not the whole element (exact Java mechanism: Phase 3, `createBaseDefinition` or
-  equivalent).
+  (which are Java-produced); Java's new-element construction copies a curated subset, not the whole root
+  element — pinned in Phase 3 (J-e, ch9): the specialization path `addInheritedElementsForSpecialization`
+  (`PU:1263-1283` @ b06c7ee) copies the type's snapshot *children* (path string-replaced), appends the type
+  root's `constraint`s and adds policy-filtered extensions, but never the root's `comment`/`alias`/`binding`.
 - **Spec basis:** none — the spec never says what a specialization's snapshot element inherits from its
   type declaration. sdf-3/8b only oblige definition/min/max/base to be present.
-- **Status:** confirmed (.NET mechanism traced + sweep-quantified; Java-side code pending Phase 3).
+- **Status:** confirmed both sides (.NET mechanism traced + sweep-quantified 2026-08-26; Java mechanism
+  code-pinned 2026-09-01). WGM brief Q16.
 
 ## DEV-022 — Property/extension fidelity when copying elements from external structures (ch7/ch12)
 - **Evidence:** Phase-4 sweep 2026-08-26 (same version stamp as DEV-021).
@@ -681,7 +687,11 @@ status/resolution.
   same for imposeProfile/interfaces).
 - **Spec basis:** both extensions are defined in the extensions pack with generator-affecting semantics
   the core spec never mentions; whether a conformant generator *must* honor them is undecided (WGM
-  adjacency: the mi-use-* interface family, DEV-015/DEV-028).
+  adjacency: the mi-use-* interface family, DEV-015/DEV-028). The only community statement found on the
+  obligation half (Zulip sweep 2026-09-02): Lloyd McKenzie, 2024-11-20, #fhir/infrastructure-wg "Obligations"
+  ([near/483494571](https://chat.fhir.org/#narrow/stream/179280-fhir.2Finfrastructure-wg/topic/Obligations/near/483494571)):
+  it is "reasonable to propagate from the root to the individual elements" during snapshot generation, so the
+  snapshot shows where the rules apply — a further materialization dimension, never decided (WGM brief Q14).
 - **Obligation mechanism pinned (J-d, 2026-09-01):** `findInheritedObligationProfiles` (`PU:1205-1215`) accepts
   an `inherit-obligations` target only if it is flagged `obligation-profile` **and shares the derived SD's
   `baseDefinition`** (version stripped) — otherwise silently ignored; the list is instance state on

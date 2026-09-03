@@ -1,8 +1,55 @@
 # Snapshot generation — open questions for the HL7 WGM (September 2026)
 
-**Status: DRAFT v1 (2026-09-02; Zulip + JIRA prior-discussion sweeps folded in the same day) — freeze target
-2026-09-14.** Prepared by Ewout Kramer (Firely) from a reverse-engineering study of the two mainstream
-snapshot generators. This brief is self-contained: it can be read and used without the underlying document set.
+**Status: v2 (2026-09-03) — review/freeze pass over the 2026-09-02 draft (coherence, evidence tiers, executive
+summary); freeze target 2026-09-14.** Prepared by Ewout Kramer (Firely) from a reverse-engineering study of the two
+mainstream snapshot generators. This brief is self-contained: it can be read and used without the underlying
+document set.
+
+## Executive summary — what the evening session has to decide
+
+Two implementations generate different snapshots from the same profile because the spec defines the *shape*
+of a snapshot and not the algorithm. Everything below is either a **live decision** (no HL7 ruling exists and
+the engines disagree), a **confirmation** (a ruling exists in JIRA resolution text and at least one engine
+ignores it), or **if time permits**. Each live item lists our recommended answer and the input that demonstrates
+it; the numbered sections give the full evidence. Tier legend used throughout: *resolution* = HL7 vote on
+record; *comment* = discussion on a ticket; *Zulip* = a chat agreement, however senior the participants.
+
+**Live decisions (ten; ordered by architectural weight):**
+
+| # | decision | our recommended answer | demo |
+|---|---|---|---|
+| Q1 | Does a snapshot close over `type.profile` (merge the datatype profile's root + children), and who wins when base and type profile both constrain a property? Sharpest form: FHIR-48664 now allows a *binding* on a datatype-profile root — must it reach the snapshot? | Close over the profile's children and non-cardinality root properties, once, in the order base ≺ type profile ≺ differential; cardinality stays a *bound* (FHIR-19756). Or decide "never merge" — but decide. Ask for a shared test case. | MyAddress / `Patient.address` (code-derived) |
+| Q2(b) | Do a slicing entry's **child** rows copy down into every named slice (Java since 2025; FHIR-50267 says entry *properties* don't)? | No implicit copy-down; state one principle for properties and children; element set = base + differential-constrained subtrees, expanded one level below every touched element. | org2a, t21 |
+| Q3(b) | May a generator rewrite an authored `slicing.rules` (open → closed) on a type slicing? (c)/(d) — type-list collapse and min raise — are already ruled out in resolution text; confirm. | Forbidden; the snapshot must not contradict what the author wrote. (a) discriminator synthesis permitted. | obs-2b |
+| Q4(b) | Renamed-form differential (`Observation.valueString`): synthesize a type slice (.NET), fold onto bare `value[x]` (Java, golden), or reject — and which id does the snapshot carry? No decision-tier source on either side. | Fold when the element is single-typed; synthesize only when several types remain; state the id. (a) a type-less type slice *is* single-typed — one sentence. | ts-case2, t16, t31 |
+| Q5 | The generator contract: a normative floor ("never silently corrupt or silently drop"), which author errors a generator SHALL detect, and the posture for one-directional violations. Note: every HL7 enforcement decision so far placed the check in the *validator*. | Floor: yes. Required checks: path grammar, new paths in constraint profiles, ordering, min/max loosening, †-frozen changes. Posture: keep the base value **and** emit an error. No duplicate ids, no fabricated `base`. | t23a, obs-unit, the 21 fail tests |
+| Q6 | Is `Extension.url.fixedUri` part of the snapshot contract (generator supplies it) or an authoring obligation? | Promote §2.1.5.1.4 to conformance language: authors SHALL fix it; a generator MAY supply a missing value and SHALL NOT alter an inherited one (RFC-015). | ext-recursion-2, au2 |
+| Q7(b)(d) | After a generator expands a contentReference's children, does the reference survive on the element (Java sliced-base) or is it replaced by the target's `type` (.NET, Java step-in)? Are the eld-5 properties undefined after dereferencing? | Replaced by `type`; eld-5 properties undefined — one sentence each. (a) R6 literal-path direction is decided (FHIR-57266): confirm. (c) absolutization: confirm the 2022 Zulip rule and pick the canonical. | t21, comp-deep, eob tests |
+| Q8 | Both below-root syntaxes (`url#id` fragment, `profile-element` extension) are sanctioned, both by element id. Is the fragment superseded? Must the generator expand children from the nominated element? | Extension canonical, fragment deprecated-but-accepted (by id). Expand from the nominated element iff Q1 says "close over". Needs a shared test. | none — needs a test |
+| Q9 | Non-inheritable extensions: FHIR-28441 decided the mechanism *and* the 17-url list (Java omits nine). Who stamps the metadata on the extensions pack, and when? | Ask FHIR-I to stamp `structuredefinition-inheritance-control` on the pack in the next release, starting from the union of the Java/.NET/Grahame-2023 lists; interim: one agreed list. | ca-patient, ILCorePractitioner |
+| Q11(b) | Does the 2019 "error, not repair" agreement on wrong type-slice names still stand (both engines' defaults now repair silently)? | Reaffirm and write it down: repair only with a message; canonical-form normalizations (ids, `[x]` paths, absolutization) stay permitted. | t29a, t43a |
+
+**Confirm only (decided in JIRA resolution text; the room need only nod, then the engines fix):** a type root's
+cardinality is a *bound* on the referencing element, never merged or loosened (Q1 sub-decision; FHIR-19756,
+FHIR-36738); the `[x]` entry keeps its type list and its declared `min` (Q3 c/d; FHIR-12259, FHIR-31054); a type
+slice is single-typed (Q4a; FHIR-12259 item 4); R6 contentReference semantics are literal-path with opt-in
+propagation (Q7a; FHIR-57266/57265); both below-root syntaxes address an element **id** (Q8a; FHIR-13973,
+FHIR-49079); inheritance policy is per-extension metadata with an adopted classification (Q9; FHIR-28441); ids
+are derived data (Q11a); slicing a non-repeating base element is only supported by type (Q12; FHIR-28619); an
+ED mapping with the same identity *replaces* the parent's (Q13; FHIR-34434 — neither engine does it) and
+`elementdefinition-suppress` deletes at snapshot time (Q13; FHIR-31406).
+
+**If time permits:** Q10 (differential-less SDs — one sentence), Q12 (lattice / `sliceIsConstraining` as
+generator duties — decide together with Q5), Q13 merge-rule table (one direction per row), Q14 (Java-only merge
+inputs: additionalBase, obligations), Q15 (self-typed extension slices), Q16 (what a new element inherits from
+its type). Tier 3 holds design questions for the Java maintainers and the already-filed list — do not rehash.
+
+**After the session (where outcomes go):** Q5 and Q13 merge-rule outcomes → a comment by Ewout on
+[FHIR-31405](https://jira.hl7.org/browse/FHIR-31405) (open, FHIR-I is waiting for Firely's input there);
+Q1–Q3 outcomes → Ewout's live thread #conformance "Issue 13402 - Clarify snapshotting rules" (Appendix B);
+agreed spec sentences → the RFC list in our document set → Confluence, the home FHIR-13402 named for these rules;
+any new shared test cases → FHIR/fhir-test-cases `r5/snapshot-generation`. Nothing is posted from this brief
+automatically; it is Ewout's material.
 
 ## How to use this brief
 
@@ -55,6 +102,16 @@ snapshot generators. This brief is self-contained: it can be read and used witho
   `src/Hl7.Fhir.Conformance/Specification/Snapshot/` of `FirelyTeam/firely-net-sdk` (6.2.1).
   Spec: R5 pages `profiling.html`, `elementdefinition.html`, `structuredefinition.html`, `extensibility.html`
   under `https://hl7.org/fhir/R5/`; "R6 build" = build.fhir.org snapshot v6.0.0-ballot4 (2026-08-18).
+- **Evidence tiers and verification.** JIRA quotes are tagged by where they sit on the ticket: *resolution text*
+  (an HL7 vote on record — the "Resolution Description" field), a *comment* (discussion, however senior), or a
+  *retracted/auto-approved* ticket (no vote). Sixteen load-bearing tickets were re-read via the JIRA REST API on
+  2026-09-02/03 and every quote attributed to resolution text below was found verbatim in that field
+  (FHIR-3623, 8969, 12259, 13973, 14958, 19756, 28441, 28619, 31054, 34434, 48664, 49079, 50267 [description
+  adopted by "Do this"]); the quotes tagged as comments (FHIR-8969 Lloyd, 14091 Lloyd, 19756 Chris Grenz, 50267
+  Lloyd + Grahame) were confirmed to be comments; FHIR-15900 turned out to be an *auto-approved* tooling ticket.
+  The remaining ~65 tickets were read once during the sweep. Zulip permalinks: twelve verified in a browser on
+  2026-09-02/03 (both the `#narrow/stream/…` and `#narrow/channel/…` forms resolve to the cited topic and message:
+  Q1 ×2, Q3 ×2, Q4, Q5, Q7, Q9, Q13, Ewout's thread); the rest were taken from the API and are unverified.
 - **Internal cross-references** (`OQ-nnn` = open question, `DEV-nnn` = deviation register entry, `RFC-nnn` =
   spec-change proposal) point into the Firely study document set; they are for our own bookkeeping and can
   be ignored during the session.
@@ -206,9 +263,11 @@ extension definition's snapshot as the template (`PPP:763-772`).
   `mustSupport`/binding data lands on the wrong extension's `value[x]` and is silently lost from the right one
   (`on-questionnaire-expected.xml` exhibits both effects; filed as
   [org.hl7.fhir.core#2584](https://github.com/hapifhir/org.hl7.fhir.core/issues/2584)).
-- The community already decided that slicer **properties** do *not* copy into slices
+- The community decided in April 2025 that slicer **properties** do *not* copy into slices
   (`APPLY_PROPERTIES_FROM_SLICER = false`, `PPP:42-58`, Zulip #IG-creation "Slices not inheriting preferred
-  bindings from root") — yet entry **children** do. The two decisions sit in tension.
+  bindings from root", FHIR-50267) — while the same discussion's outcome (FHIR-50391) is what made entry
+  **children** copy. Two halves of one 2025 outcome, never stated as a single principle: a validator must
+  apply the entry's *properties* to every slice itself, but finds the entry's *children* pre-materialized.
 
 **Spec basis.** "all the elements" (structuredefinition); sdf-3/sdf-8b define per-element fill obligations
 (definition/min/max/base) but no set-level rule; profiling says slices "must be consistent with" the entry —
@@ -235,9 +294,10 @@ change required*; text not yet in the R6 build we captured) adds a "Slicing Snap
 slice in a derived profile has "essentially two 'base' elements"; its snapshot base is the **same-named slice
 in the parent profile's snapshot**, else the parent's slicing element; "constraints of the base (slicing)
 elements are *not* included in the snapshots" of the slices — yet they apply (a slicer binding "holds for all
-slices"; a slicer mustSupport means "all slices are automatically mustSupport"). Lloyd: "This isn't a change,
-it's documenting what the snapshot generation behavior has long been"; Grahame: "too late to make this a SHALL
-… settle for a validation warning". Three days earlier [FHIR-50391](https://jira.hl7.org/browse/FHIR-50391)
+slices"; a slicer mustSupport means "all slices are automatically mustSupport"). *Tiers:* the quoted rule is
+Lloyd's proposed text adopted verbatim by the resolution ("Do this"); Lloyd's "This isn't a change, it's
+documenting what the snapshot generation behavior has long been" and Grahame's "too late to make this a SHALL …
+settle for a validation warning" are both *comments* on the ticket, not resolution text. Three days earlier [FHIR-50391](https://jira.hl7.org/browse/FHIR-50391)
 (Grahame, *Applied*) said the opposite about mustSupport ("can not be assumed to apply to all slices … for
 legacy reasons") and lists which slicer constraints do bind all slices (max, type, fixed/pattern, min/maxValue,
 maxLength, constraints, required/extensible bindings, mustHaveValue, valueAlternatives). **Neither ticket says
@@ -395,13 +455,14 @@ bare-`value[x]` representation the golden files bless (RFC-013).
 **Decision needed.** (a) Does `value[x]:valueString` without `type` constrain the type? (b) Given a renamed-form
 differential, must a generator synthesize a type slice (.NET), fold onto the unrenamed element (Java), or
 reject? (c) Is the `<stem><Type>` slice-name convention normative (eld-16 territory)?
-**Recommendation:** (a) yes — one sentence in elementdefinition.html; (b) the record cuts both ways —
-Grahame's 2019 single-type rule (below) supports the bare-`value[x]` fold when the element is single-typed
-(t16: the base `value[x]` is already `decimal`-only; t31: the diff states the type), while FHIR-15900 (2018,
-below) says a differential id must reappear in the snapshot, which supports synthesizing the slice when the
-differential used the renamed id. Our preference: fold when single-typed (no synthesized slice), synthesize
-only when several types remain — but the committee must pick, and say which id the snapshot carries; (c)
-SHOULD, validated by the generator with a message, not a repair.
+**Recommendation:** (a) yes — one sentence in elementdefinition.html; (b) **no decision-tier source on either
+side** — Grahame's 2019 single-type rule (Zulip, below) supports the bare-`value[x]` fold when the element is
+single-typed (t16: the base `value[x]` is already `decimal`-only; t31: the diff states the type), while the
+"a differential id must reappear in the snapshot" principle comes only from the reporter's description on
+FHIR-15900 (2018, an *auto-approved* tooling ticket, no WG vote, below), which would support synthesizing the
+slice when the differential used the renamed id. Our proposal: fold when single-typed (no synthesized slice),
+synthesize only when several types remain — but the committee must pick, and say which id the snapshot
+carries; (c) SHOULD, validated by the generator with a message, not a repair.
 
 **Decisions on record (JIRA).** [FHIR-12259](https://jira.hl7.org/browse/FHIR-12259) (2016): choice elements
 are implicitly type-sliced with ids `Patient.deceased[x]:deceasedBoolean`; constraints on a named type slice
@@ -409,9 +470,10 @@ are implicitly type-sliced with ids `Patient.deceased[x]:deceasedBoolean`; const
 .NET's full-list R5-form slice is not); either path form is legal. FHIR-6066/6093 (2015): constraining a
 sub-type "does not imply the other sub-types are to be omitted"; renamed snapshot paths lose the choice
 identity (this is where `base.path/min/max` came from). [FHIR-15900](https://jira.hl7.org/browse/FHIR-15900)
-(2018): a differential `occurrenceDateTime` with a snapshot `occurrence[x]` — "an id in the differential
-that's not in the snapshot — that should not occur" — which cuts against Java's bare-`value[x]` anchoring
-for (b) when the differential used the renamed id. FHIR-10034: the type need not be restated with the
+(2018, resolution "Auto-approved" — a tooling fix, no WG vote): a differential `occurrenceDateTime` with a
+snapshot `occurrence[x]` — "an id in the differential that's not in the snapshot — that should not occur" is
+the *reporter's* description — which, for what it is worth, cuts against Java's bare-`value[x]` anchoring for
+(b) when the differential used the renamed id. FHIR-10034: the type need not be restated with the
 shorthand (eld-6/7 relaxed). FHIR-18264 (2018, Not Persuasive): re-slicing a type slice "cannot occur"
 (Chris Grenz dissents).
 
@@ -503,10 +565,10 @@ generator". Java's report-vs-throw split is a constructor argument (`messages ==
 **Decisions on record (JIRA) — every enforcement decision lands in the validator, as a warning.** FHIR-7800/
 7802 (2015): illegal cardinality / binding-strength loosening was being published in snapshots — tooling
 "fixed so that they check and generate warnings"; FHIR-17469 (2018): closed-slicing arithmetic fixed in the
-*validator*; FHIR-31054 (2021): slice-min sum → validator warning; FHIR-13461 (2017, retracted →
-org.hl7.fhir.core#518): openAtEnd misuse → build warnings; Grahame on FHIR-50267: "too late to make this a
-SHALL … settle for a validation warning"; FHIR-37692 (2022, 18-0-0): constraint keys unique per SD, enforced
-"with the tooling". There is **no HL7 precedent for a generator throwing or repairing** — Java's throw census
+*validator*; FHIR-31054 (2021, resolution text): slice-min sum → "Will add a warning to the validator";
+FHIR-13461 (2017, *retracted* → org.hl7.fhir.core#518, so discussion-tier only): openAtEnd misuse → build
+warnings; Grahame on FHIR-50267 (*comment*, not resolution): "too late to make this a SHALL … settle for a
+validation warning"; FHIR-37692 (2022, 18-0-0): constraint keys unique per SD, enforced "with the tooling". There is **no HL7 precedent for a generator throwing or repairing** — Java's throw census
 and .NET's silent-keep-base are both without a mandate. FHIR-20405 (2019): a reporter noted "snapshot
 generation just ignores the illegal setting in differential" (isModifier false over true) — no ruling.
 FHIR-31405 (open) is where an answer should be posted.
@@ -627,12 +689,13 @@ survive on the expanded element (Java sliced-base) or is it replaced by the targ
 step-in)? (c) Local vs absolute form in a constraint profile's snapshot: is absolutization required, and to
 which canonical (the core type's, or the base profile's)? (d) Are the eld-5 properties "undefined after
 dereferencing" (both engines copy none)?
-**Recommendation:** (a) R6 direction, documented as a version-specific behavior; (b) replaced by `type` (a
-snapshot element with both children and a reference is contradictory under eld-5); (c) **already answered**
-— Grahame 2022: "the relative content references must be replaced with absolute content references when a
-snapshot is generated" (Java's global rule; .NET's merged-children-only rewrite is the deviation, fixed for
-reading in firely-net-sdk #2039) — ask only *which* canonical for elements copied out of a base profile;
-(d) yes, state it.
+**Recommendation:** (a) R6 direction — decided in resolution text (FHIR-57266, Applied), so **confirm only**,
+and document it as a version-specific behavior; (b) replaced by `type` (a snapshot element with both children
+and a reference is contradictory under eld-5); (c) **answered on Zulip only, never in JIRA** — Grahame 2022:
+"the relative content references must be replaced with absolute content references when a snapshot is
+generated" (Java's global rule; .NET's merged-children-only rewrite is the deviation, fixed for reading in
+firely-net-sdk #2039) — ask the room to confirm, and ask *which* canonical for elements copied out of a base
+profile; (d) yes, state it.
 
 **Decisions on record (JIRA).** [FHIR-14958](https://jira.hl7.org/browse/FHIR-14958) (2018, 7-0-0): a
 contentReference "bring[s] across all the rules … including bindings, invariants etc.", only in
@@ -721,16 +784,19 @@ obligation-profile core+tools, standards-status-reason); **.NET-only 9** (fmm-no
 default-inherited) and a per-extension `snapshot-behavior` declaration — i.e. it already treats inheritance
 policy as **extension metadata**.
 
-**Decisions on record (JIRA).** [FHIR-28441](https://jira.hl7.org/browse/FHIR-28441) (Ewout, 2020,
-Persuasive 11-0-0) defines the `snapshot-behavior` extension "that indicates what rules a snapshot generator
-must follow", with five classes (add-to / override-subset / override-free / must-equal-propagate / **not
-propagated**), and Lloyd's comment classifies ~45 core extensions. His class-5 list of 17 urls **is .NET's
-blocklist verbatim** (fmm, fmm-no-warnings, hierarchy, interface, normative-version, applicable-version,
+**Decisions on record (JIRA) — mechanism *and* classification are resolution-tier.**
+[FHIR-28441](https://jira.hl7.org/browse/FHIR-28441) (Ewout, 2020, Persuasive 11-0-0) defines the
+`snapshot-behavior` extension "that indicates what rules a snapshot generator must follow", with five classes
+(add-to / override-subset / override-free / must-equal-propagate / **does not propagate**). The resolution
+text says "The rules will be those listed in the comment below" — so Lloyd's classification of ~45 core
+extensions is *incorporated by reference into the decision*, not an opinion. Its class-5 list of 17 urls **is
+.NET's blocklist verbatim** (fmm, fmm-no-warnings, hierarchy, interface, normative-version, applicable-version,
 category, codegen-super, security-category, standards-status, summary, wg, replaces,
-resource-approvalDate/-effectivePeriod/-lastReviewDate, isCommonBinding); Java's list omits five of them. The
-record conflicts on `explicit-type-name` (class 4 "always propagate" in 28441 vs "should not inherit" in the
-comments closing FHIR-27535 as its duplicate) — Java follows 27535. The policy is thus HL7-decided; what is
-missing is that no extension definition carries the metadata.
+resource-approvalDate/-effectivePeriod/-lastReviewDate, isCommonBinding); Java's list carries only 8 of the
+17 and **omits nine** (the nine ".NET-only" urls above) — a deviation from decision text, not from a
+preference. The record conflicts on `explicit-type-name`: class 4 "always propagate" in the 28441 decision
+vs "should not inherit" in the *comments* closing FHIR-27535 as its duplicate — Java follows the comment-tier
+source. What is missing is not a decision but uptake: no extension definition carries the metadata.
 
 **Prior discussion (Zulip) — this is decided but stalled.** Ewout proposed in 2020 that "the author of the
 extension has to indicate whether this extension propagates" (#tooling "Forge added extension
@@ -775,7 +841,8 @@ reslicename`; FHIR-20465 (2019) — differential and snapshot ids must agree ("t
 corrected"); FHIR-14091 (2017, comment): "If the ids weren't correct, the publishing process will 'fix' them.
 This is expected behavior." Nothing on repairing *constraint content* of the input.
 
-**Prior discussion (Zulip) — (a) is answered, (b) was decided the other way in 2019.** Ids: Grahame 2019
+**Prior discussion (Zulip) — (a) is answered, (b) was agreed the other way in 2019 (a Zulip agreement, evidenced
+by t29/t43 becoming fail tests — no JIRA resolution).** Ids: Grahame 2019
 "ids are derivative"; Michel: .NET generates ids "but does not use/depend on them", Grahame: "Same as java";
 Firely is removing the `GenerateElementIds=false` option (Ward 2024). Nobody has ever argued for preserving
 author ids. Slice-name repair: in July 2019 (#conformance "Slicing a non-repeating element") Chris Grenz
@@ -786,8 +853,8 @@ differential" (t29/t43 became fail tests). .NET's default in-place repair and Ja
 CLI flag both contradict that decision.
 
 **Decision needed.** Confirm (a) ids are derived data — one sentence in elementdefinition.html. For (b):
-does the 2019 "error, not repair" decision still stand, and if so should it be written down (and Java's CLI
-default `autoFixSliceNames=true` revisited)? Which normalizations *are* permitted silently (id
+does the 2019 "error, not repair" Zulip agreement still stand, and if so should it be written down (and Java's
+CLI default `autoFixSliceNames=true` revisited)? Which normalizations *are* permitted silently (id
 regeneration, `[x]` path normalization, contentReference absolutization)?
 **Recommendation:** (a) yes; (b) reaffirm 2019 — repair only with a message, never silently; canonical-form
 normalizations permitted.
@@ -827,8 +894,11 @@ Three rules the spec states about slicing, and whether the *generator* has any o
 **Decision needed.** For each: generator SHALL enforce / MAY enforce / validator-only. And for `sliceIsConstraining`:
 is it a generator input at all?
 **Recommendation:** generator SHALL check the lattice and `sliceIsConstraining` (both are decidable from base +
-differential) and report, never repair; slicing a `max=1` element is legal when the slice total is capped to 1
-or it is a type slicing (Java's carve-outs, made explicit).
+differential) and report, never repair — this is the same first-ever generator detection duty Q5(b) asks for,
+against the same validator-warning precedent noted there, so decide it once under Q5 and apply it here. On
+the non-repeating rule: ask the committee to sanction Java's two carve-outs explicitly (slice total capped to 1;
+type slicing) — note that the first goes *beyond* FHIR-28619's resolution, which covers a base `max=1` and
+only sanctions type slicing there; the derived-profile cap case has never been ruled on.
 
 ### Q13. Per-property merge semantics the spec should state (confirmations for RFCs)
 *OQ-010, OQ-012, OQ-013, DEV-034, RFC-008/009/010*
@@ -841,14 +911,13 @@ following. Each needs one sentence; we ask only for confirmation of a direction.
 | `"..."` prefix on `definition`/`comment`/`requirements` = append to inherited text | supported (byte-identical algorithm) | supported (same; also attempted on `label` but broken, filed #2592) | **document the convention** or deprecate it (OQ-010; never discussed on Zulip; FHIR-8182 (2015, Not Persuasive) acknowledged it as applying to "elements with a 'string' data type in StructureDefinition" — broader than either engine's three properties — and declined to document it) |
 | `fixed[x]`/`pattern[x]` when the base has one | partial *overlay* (diff properties win, rest inherited → a value neither profile stated) | wholesale replace + type check | Grahame 2022: "fixed — profiles can introduce but not change" (so a changed fixed value is illegal outright; pattern line garbled) — state it; if change is legal, replace wholesale (OQ-012) |
 | `elementdefinition-suppress` (remove inherited mappings/examples) vs "complete verbose snapshots" | honored behind a setting | always on, incl. `$all` wildcard and SD-level mappings | **answered**: FHIR-I 2022 agreed removal via tooling extension (Lloyd: "remove entirely"); golden `address-no-examples` blesses snapshot-time deletion (FHIR-56831 documents `$all`); the profiling.html sentence is stale (OQ-008) |
-| restated inherited `constraint.key` (eld-14 uniqueness vs ∆-additive) | overlay onto the inherited constraint | diff constraint **silently dropped** | pick one — proposal: replace by key, with message (RFC-009) |
+| restated inherited `constraint.key` (eld-14 uniqueness vs ∆-additive) | overlay onto the inherited constraint | diff constraint **silently dropped** | pick one — proposal: replace by key, with message (RFC-009); FHIR-37692 (2022, 18-0-0): keys "SHALL be … unique within a StructureDefinition", tooling-enforced — supports replace-by-key |
 | `binding` | per-sub-element overlay, lattice not enforced | rebuild; inherited `description` + binding extensions **dropped**; `required` lattice enforced with ERRORs | per-sub-element overlay, lattice enforced (RFC-010) |
 | `code` | union | never merged | union (§5.1.0.8 says add/removable) (RFC-008) |
 | `example` | union by label | union by label+value | state the key |
 | ED-level `modifierExtension` | merged by url like extensions | never merged | is inheriting a modifier extension into a snapshot element sanctioned at all? (OQ-013) |
 | `isModifier`/`isSummary`/`defaultValue`/`meaningWhenMissing`/`representation` (†-frozen) | diff wins | frozen by omission; `isSummary` aborts | frozen; violation = error (feeds Q5) |
 | `mapping` | union on identity+map | R5+: comma-append per identity (`MappingAssistant`); SD-level identity reconciliation Java-only | R5 text says replace-by-identity — decided in [FHIR-34434](https://jira.hl7.org/browse/FHIR-34434) (2021, 11-0-0): a differential mapping with the same identity "*replaces* the mapping element(s) in the parent"; **neither engine implements it** — confirm, then both fix |
-| restated `constraint.key` (eld-14) | overlay | drop | FHIR-37692 (2022): keys "SHALL be … unique within a StructureDefinition", tooling-enforced — supports "replace by key, with message" |
 
 **Answered (no question needed):** base profiles' **SD-level `mapping` declarations** propagate into the
 derived SD at snapshot time — Lloyd 2024: "Mappings definitely inherit. They always have"; Grahame fixed the
@@ -967,13 +1036,17 @@ nothing but `type`, `min`/`max` from the differential, and sdf-3 fill), so core 
 ## Appendix B — prior discussion found (Zulip / JIRA sweep)
 
 *Sweeps completed 2026-09-02: chat.fhir.org, all public streams, ~200 searches across three clusters, ~70
-threads read in full; jira.hl7.org, ~110 JQL queries, 83 tickets read in full. Verdict summary — **answered
-(no longer asked, only confirmed):** slicing a non-repeating element (Q12), SD-level mapping inheritance and
-suppress (Q13), id regeneration (Q11a), root cardinality as a bound (Q1 sub-decision), the entry type-list
-collapse and entry-min raise (Q3 c/d), the implicit type constraint (Q4a), both below-root syntaxes by id (Q8a),
-non-inheritable extensions as extension metadata (Q9), contentReference absolutization (Q7c). **Discussed,
-unresolved (the live questions):** Q1, Q2, Q3 a/b/e, Q4b, Q5, Q6, Q7 a/b/d, Q8b, Q10, Q11b, Q13 merge rules,
-Q14–Q16. **Never discussed anywhere:** differential-less SDs (Q10), the `"..."` convention beyond a 2015
+threads read in full; jira.hl7.org, ~110 JQL queries, 83 tickets read in full. Verdict summary — **answered in
+JIRA resolution text (no longer asked, only confirmed):** slicing a non-repeating element (Q12, FHIR-28619),
+ED-level mapping replace-by-identity and suppress (Q13, FHIR-34434/31406), id regeneration (Q11a), root
+cardinality as a bound (Q1 sub-decision, FHIR-19756/36738), the entry type-list collapse and entry-min raise
+(Q3 c/d, FHIR-12259/31054), the implicit type constraint (Q4a, FHIR-12259), both below-root syntaxes by id
+(Q8a, FHIR-13973/49079), non-inheritable extensions as extension metadata incl. the classification (Q9,
+FHIR-28441), the R6 contentReference direction (Q7a, FHIR-57266). **Answered on Zulip only (agreements, no JIRA
+resolution — confirm, but expect pushback):** contentReference absolutization (Q7c, Grahame 2022), discriminator
+synthesis on type slicings (Q3a, Redmond DevDays 2019 per Michel), slice-name error-not-repair (Q11b, July
+2019), SD-level mapping inheritance (Q13, Lloyd 2024). **Discussed, unresolved (the live questions):** Q1, Q2,
+Q3 b/e, Q4b, Q5, Q6, Q7 b/d, Q8b, Q10, Q13 merge rules, Q14–Q16. **Never discussed anywhere:** differential-less SDs (Q10), the `"..."` convention beyond a 2015
 decline (Q13), `sliceIsConstraining` generator semantics (Q12), DEV-038's children gate (Q1), contentReference
 recursion depth (Q7).*
 
