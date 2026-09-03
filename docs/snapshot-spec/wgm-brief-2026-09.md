@@ -1,7 +1,9 @@
 # Snapshot generation — open questions for the HL7 WGM (September 2026)
 
 **Status: v3 — FROZEN 2026-09-03** (content complete after the v2 review pass; until the WGM only corrections
-Ewout requests after his own read-through go in — no new questions, no re-tiering). Prepared by Ewout Kramer
+Ewout requests after his own read-through go in — no new questions, no re-tiering). *Post-freeze factual
+corrections, same day: Q15's settings caveat removed (default-settings re-run done), Tier 3 JI-14/18/19
+updated from "needs repro" to verified results and moved to the filed list (#2602–#2605).* Prepared by Ewout Kramer
 (Firely) from a reverse-engineering study of the two mainstream snapshot generators. This brief is
 self-contained: it can be read and used without the underlying document set.
 
@@ -959,9 +961,8 @@ never validated). `ext-recursion-2` (gen test): a *slice* typed with its own pro
 (the slice has no children, so the profile is never entered); .NET throws `Recursive profile dependency
 detected` because it eagerly ensures the external profile's snapshot. `logical-goo`: `url == baseDefinition`
 with a different SD registered under that canonical — Java uses the registered base; .NET throws (guard keyed
-purely by canonical). *Caveat: the .NET throws were observed under harness settings
-(`ForceRegenerateSnapshots` + `GenerateSnapshotForExternalProfiles`); default-settings behavior is
-unverified.* **Question:** is a self-typed extension slice (ext-recursion-2) legal, and what must a generator
+purely by canonical). Both .NET throws reproduce identically under the SDK's **default** settings
+(re-run 2026-09-03), so they are not a test-harness artifact. **Question:** is a self-typed extension slice (ext-recursion-2) legal, and what must a generator
 produce for it — the profile's own first element (Java's in-progress-profile rule, `PPP:714-724`) or a refusal?
 
 ### Q16. What does a specialization's new element inherit from its type?
@@ -991,16 +992,24 @@ nothing but `type`, `min`/`max` from the differential, and sdf-3 fill), so core 
   (`PU:3790-3795`) but copies it to the caller's `errors` list only when `debug` (`PU:3916-3918`); an unknown path
   gets base index 0 and is silently sorted to the front of its sibling group. Deliberate (the same rationale
   that disabled the out-of-order warning in `getDiffMatches`, `PU:2465-2473`)?
-- **JI-18 — obligation-profile mustSupport fold only for untouched elements.** `updateFromObligationProfiles`
-  (`PU:2529-2582`) has one caller — the empty-diff copy-through path (`PPP:1068`); a differential row that merely
-  changes `short` on an obligated element drops the inherited `mustSupport=true`. Intentional ("author took over
-  the element") or a bug?
-- **JI-19 — xver template selection is order-dependent.** `PPP:700` tests the raw `getXver()` field where other
-  sites use the lazy `makeXVer()`; a caller that never calls `setXver` gets the xver branch skipped for the *first*
-  xver-typed extension slice per `ProfileUtilities` instance. Do production callers (ValidationEngine, IG
-  Publisher) always call `setXver`?
-- **JI-14 — `MappingAssistant.merge()` renames applied to the diff's mappings, not the inherited ones**
-  (`MappingAssistant.java:173-177`) — looks inverted; needs a two-SD repro, but worth a question.
+- **JI-18 — a differential row on an obligated element crashes the generator (verified 2026-09-03, now a
+  bug report rather than a question).** `updateFromObligationProfiles` (`PU:2529-2582`) runs only on the
+  empty-diff copy-through path (`PPP:1068`); the diff-touched path re-adds obligation extensions with
+  `new Extension(EXT_OBLIGATION_CORE, ext.getValue().copy())` (`PU:2608-2612`) — but `obligation` is a
+  *complex* extension, so `getValue()` is null → `NullPointerException`. Repro: `profile-patient-op3` plus
+  one `Patient.birthDate` row carrying only a `short` (op2/op2a put an obligation on `birthDate`) →
+  validator 6.10.2 throws. Design question left: once the crash is fixed, should the fold also run for
+  diff-touched elements?
+- **JI-19 — xver template selection is order-dependent (verified 2026-09-03).** `PPP:700` tests the raw
+  `getXver()` field where other sites use the lazy `makeXVer()`. `ValidationEngine` (`snapshot` task and
+  three other sites) constructs `new ProfileUtilities(context, null, null).setAutoFixSliceNames(true)` and
+  never calls `setXver`, so validator_cli takes the non-xver template for the *first* xver-typed extension
+  slice per instance. IG Publisher not checked (outside the cone).
+- **JI-14 — `MappingAssistant` identity collision (verified 2026-09-03, two-SD repro):** base declares
+  `mapping.identity=m` (uri A), derived re-declares `m` (uri B). Output: the derived SD gets **two**
+  declarations with `identity=m` (the rename lands in `name`, `MA:75-76`), the inherited element mapping
+  keeps `m` (now resolving to B), and the *derived* element's mapping is rewritten to `m1` — an identity
+  declared nowhere (`merge(derived, base)` reversal, `PU:3082` / `MA:173-177`).
 - **Golden files as normative.** Given #2584 (copy-down contamination blessed by `on-questionnaire-expected`)
   and the `min := 1` (not sum) entry rewrite, would the maintainers accept a review pass over the
   `snapshot-generation` expected files once Q2/Q3 are decided?
@@ -1013,7 +1022,12 @@ nothing but `type`, `min`/`max` from the differential, and sdf-3 fill), so core 
   slicings), #2590 (`mergeAdditionalBinding` `any` no-op), #2591 (additional-base pattern×pattern operand bug),
   #2592 (`"..."` label append swapped operands), #2593 (obligation additional-binding inverted guard), #2594
   (message-arg mismatch + NPE risk, bundled), #2596 (dead multi-type guards — two of five walk paths silently
-  expand a multi-type element against `Element`), #2597 (`AllowUnknownProfile` doc vs default).
+  expand a multi-type element against `Element`), #2597 (`AllowUnknownProfile` doc vs default). **Filed
+  2026-09-03** (the former Tier 3 questions, now verified with repros): #2602 (obligation NPE on any
+  diff-touched obligated element — JI-18), #2603 (`MappingAssistant` identity-collision rename on the wrong
+  side and in `name` — JI-14), #2604 (xver template selection order-dependent; validator never calls
+  `setXver` — JI-19), #2605 (extension slicing entry without explicit `ordered=false` disables the whole
+  profile's slice pre-processing with a warning only); minimized DEV-033 repro attached to #2584.
 - **.NET (`FirelyTeam/firely-net-sdk`):** #3583 (complex `url#element` type-profile expansion — fixed),
   #3587 (duplicate issue codes 10012/10014), #3588 (fake hl7.org canonical for the constrained-by-diff marker
   extension), #3589 (**reslice subtrees dropped entirely — silent loss of authored min/pattern constraints**,

@@ -153,9 +153,9 @@ are per-instance; the `generatingSnapshot` flag lives on the shared SD object, v
 ## Deviations
 - [DEV-029](13-deviation-register.md#dev-029--recursion-crossover-each-side-rejects-recursive-structures-the-other-accepts-ch11) —
   Phase-4 recursion crossover: .NET silently accepts the self-typed-root extension Java rejects
-  (ext-recursion-1), and (under harness settings) hard-refuses the recursive structures Java generates
-  and golden blesses (ext-recursion-2, logical-goo — the URI-keyed guard makes url==baseDefinition-url a
-  hard failure). Default-settings .NET re-run pending.
+  (ext-recursion-1), and hard-refuses the recursive structures Java generates and golden blesses
+  (ext-recursion-2, logical-goo — the URI-keyed guard makes url==baseDefinition-url a hard failure).
+  Verified under both the harness settings and the SDK default settings (2026-09-03).
 - [DEV-025](13-deviation-register.md#dev-025--materialization-depth-of-unconstrained-content-java-normalizes-more-than-net-ch7ch8ch11)
   flavor 1 — Java re-expands sliced contentReference entries per recursion level the diff reaches
   (comp-deep); .NET expands only the named slices (→ OQ-021).

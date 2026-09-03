@@ -394,8 +394,11 @@ read. No shared test exercises the extension (grep over `fhir-test-cases r5/snap
   shape and synthesizes an extension SD on demand (base `Extension`, snapshot generated re-entrantly at
   `PPP:710`/`PU:2080`/`PU:2638`); consulted at template selection, `getProfileForDataType`, the doc override
   and the final sweep. `PPP:700` tests the raw field (`getXver()`) while the PU sites use the lazy
-  `makeXVer()` — for a caller that never calls `setXver` (only the test driver does) the template-selection
-  branch is skipped until a later lazy initialisation (order-dependent; needs-verification, JI-19). Shared
+  `makeXVer()` — for a caller that never calls `setXver` the template-selection branch is skipped until a
+  later lazy initialisation (order-dependent). Verified 2026-09-03: `ValidationEngine` constructs
+  `new ProfileUtilities(context, null, null).setAutoFixSliceNames(true)` at four sites (incl. the `snapshot`
+  task) and never calls `setXver`; only the JUnit driver does. Filed as
+  [hapifhir/org.hl7.fhir.core#2604](https://github.com/hapifhir/org.hl7.fhir.core/issues/2604). Shared
   tests: `pat-xver-extension`, `es-xver`. .NET resolves such urls like any canonical (the harness pre-loads
   the xver package for parity).
 - **Obligation profiles**: `findInheritedObligationProfiles` (`PU:1205-1215`) accepts an `inherit-obligations`
@@ -403,9 +406,12 @@ read. No shared test exercises the extension (grep over `fhir-test-cases r5/snap
   stripped); the list lives on the `ProfileUtilities` instance and is never cleared. The `mustSupport` /
   additional-binding fold (`updateFromObligationProfiles`, `PU:2529-2582`) runs **only on the copy-through path**
   (`PPP:1068`); elements the differential touches get only the obligation *extensions* re-added
-  (`PU:2608-2614`) plus the inverted additional-binding fold (JI-13). A diff row that merely edits `short` on an
-  obligated element therefore loses the obligation's `mustSupport` (asymmetry; `profile-patient-op3` cannot
-  show it — its diff touches other elements; JI-18 needs-verification). Refines
+  (`PU:2608-2614`) plus the inverted additional-binding fold (JI-13). Verified 2026-09-03: that re-add does
+  `ext.getValue().copy()` on the complex `obligation` extension → `NullPointerException` — a diff row that
+  merely edits `short` on an obligated element **crashes generation** (`profile-patient-op3` cannot show it —
+  its diff touches other elements; repro in the harness `repros/`; filed as
+  [hapifhir/org.hl7.fhir.core#2602](https://github.com/hapifhir/org.hl7.fhir.core/issues/2602)). Once fixed,
+  the mustSupport fold still runs only on the copy-through path (asymmetry, raised in the issue). Refines
   [DEV-032](13-deviation-register.md#dev-032--java-only-merge-inputs-additionalbase-and-obligation-profiles-ch3).
 
 ## Deviations

@@ -600,10 +600,13 @@ status/resolution.
   (ch4 `:158-164`), so these are gaps *by design*; but the fail-test corpus shows Java treating the same
   inputs as generator-fatal, and the golden files bless that. Which checks belong in a *generator* is
   exactly OQ-014's question — this entry is its evidence table.
-- **Caveat rows:** sushi3's apparent agreement is **harness-induced** (`ForceRegenerateSnapshots=true`
+- **Caveat rows:** sushi3's agreement under harness settings was **harness-induced** (`ForceRegenerateSnapshots=true`
   discards the dep's shipped snapshot and dies on its unresolvable base before reaching the duplicate-id
-  input; default-settings .NET untested). t15a agrees in substance (unknown extension detected) but not
-  severity (6 issues + generated output vs hard throw).
+  input). Re-run with SDK default settings (2026-09-03): .NET now reaches the input and reports the real
+  problem as an error ("Element Observation.component defines a slice without a name") plus the unresolved
+  genomics-reporting base — so the fail-agreement is genuine under defaults, at ERROR-message level (Java:
+  ERRORS as well). t15a agrees in substance (unknown extension detected) but not severity (6 issues +
+  generated output vs hard throw).
 - **Prior discussion (Zulip sweep 2026-09-02, `extracts/zulip-sweep-2026-09-02-b.md` §Q3):** Grahame's *stated*
   policy equals .NET's — 2022 (#conformance "Modifier Extension mismatch"): the generator's "task is to generate
   the snapshot, not validate the profile" (the check went to the validator); 2024: an illegal type restatement
@@ -634,10 +637,16 @@ status/resolution.
   registered Boo and uses its shipped snapshot. .NET throws the same `NotSupportedException`: the
   recursion guard is keyed **purely by canonical URI**, so url==base-url is a hard failure regardless of
   which SD the resolver would return.
-- **Settings caveat:** both .NET *throws* are conditional on the harness config
-  (`ForceRegenerateSnapshots` + `GenerateSnapshotForExternalProfiles`); default-settings behavior is
-  unverified — one targeted re-run needed before the WGM brief. The ext-recursion-1 asymmetry (Java
-  rejects, .NET accepts) is settings-independent.
+- **Settings caveat — RESOLVED 2026-09-03:** the two .NET throws were first observed under the harness
+  config (`ForceRegenerateSnapshots` + `GenerateSnapshotForExternalProfiles`). Re-run with the SDK
+  **default** `SnapshotGeneratorSettings` (6.2.1: `ForceRegenerateSnapshots=false`,
+  `GenerateSnapshotForExternalProfiles=true`; harness `--defaults`, with and without package parity):
+  ext-recursion-2 and logical-goo throw the **identical** `NotSupportedException: Recursive profile
+  dependency detected`; ext-recursion-1 is still silently accepted; sushi3 still ends in ERRORS (different
+  error text: "slice without a name" instead of the harness run's nested "Snapshot generation failed for
+  … genotype"). So all three DEV-029 behaviors are **settings-independent**. Outputs:
+  `harness/repros/out/dev029-defaults-{nopkgs,pkgs}/`; harness-settings originals preserved in
+  `harness/out-backup-harness-settings-2026-09-03/`.
 - **Java mechanisms pinned (J-e, 2026-09-01):** ext-recursion-2 passes through the *in-progress profile*
   rule — a type profile currently being generated skips the type-compatibility check and contributes only
   its already-built first element (`PPP:714-724`); the slice has no diff children, so nothing steps in.
@@ -645,8 +654,8 @@ status/resolution.
   and the base arrives as a caller-supplied object with a snapshot — url == baseDefinition-url is never
   tested. ext-recursion-1 is rejected by `checkDifferentialBaseType` (`PU:1322`, a `java.lang.Error`) before
   any recursion.
-- **Status:** confirmed under harness settings; Java mechanisms code-pinned; .NET default-settings re-run
-  pending.
+- **Status:** confirmed under harness settings **and** SDK default settings (2026-09-03); Java mechanisms
+  code-pinned. WGM brief Q15 (caveat removed).
 
 ## DEV-030 — Cross-version bases: .NET rebuilds against R5 core, leaving R5/R4 hybrids (ch3)
 - **Evidence:** ELEMENT-SET mining G7/G9. `sd-nested-ext` (base chain `sdc-questionnaire`, fhirVersion
@@ -701,7 +710,14 @@ status/resolution.
   (`PU:2608-2614`) and the additional-binding fold with the inverted guard (JI-13, hapifhir#2593). So a
   differential row that merely edits `short` on an obligated element **loses the obligation's mustSupport**
   — an asymmetry `profile-patient-op3` cannot exhibit (its diff touches `active`/`maritalStatus`; the
-  obligation MS sits on `birthDate`/`deceased[x]`). Held upstream as JI-18 (design question or bug).
+  obligation MS sits on `birthDate`/`deceased[x]`). **Verified 2026-09-03 — it is worse: a crash.** The
+  diff-touched path re-adds obligation extensions as `new Extension(EXT_OBLIGATION_CORE, ext.getValue().copy())`
+  (`PU:2608-2612`), but `obligation` is a complex extension, so `getValue()` is null → `NullPointerException`
+  in `updateFromDefinition` for **any** differential row on an element that carries an obligation in an
+  inherited obligation profile (repro: `profile-patient-op3` + one `Patient.birthDate` row with only a `short`;
+  `harness/repros/ji18b-op3-plus-row-input.xml`, validator 6.10.2). Filed as
+  [hapifhir/org.hl7.fhir.core#2602](https://github.com/hapifhir/org.hl7.fhir.core/issues/2602); the
+  fold-only-on-copy-through design question is stated in the issue.
   `imposeProfile` is read by the generator only inside the *targetProfile* derivation check
   (`sdConformsToTargets`, `PU:3333`) — no snapshot-shaping effect (PRE:607 "we ignore impose and compliesWith
   - for now?").
@@ -712,8 +728,28 @@ status/resolution.
   `CDSHooksServices.services.prefetch.key`/`.value`; Java/golden keeps them at
   `services.prefetch.key`/`.value`, .NET emits `services.key`/`services.value` — the `prefetch` segment
   dropped from both id and path.
-- **Status:** suspected .NET path-rebasing bug for children of a logical-model element — **untraced**
-  (no chapter mechanism explains it; nearest ch9). Trace queued.
+- **Minimized repro + trigger condition (2026-09-03, .NET 6.2.1 via the harness `DotNetRunner`, harness
+  settings):** `harness/repros/dev031-logical-base-input.xml` — a logical model on `Element` with one new
+  element `a` of **type `Base`** and two inline differential children `a.b`, `a.c`. .NET emits `Dev031Base.b`
+  and `Dev031Base.c` as children of the **root**, each with a correct `base.path` of `Dev031Base.a.b` /
+  `.a.c` — so the element is created with the right path (`createNewElement`, `Base.Path = newElement.Path`)
+  and then re-parented when the navigator rewrites `path` at insertion time (`InsertFirstChild`/`InsertAfter`
+  set `Path = <current>.Path + "." + name`). Variants: `a` typed **`Element`** → correct (`a.b`, `a.c`);
+  `a` typed `Base` + a trailing sibling `z` → still hoisted (position-independent); the same shape as a
+  **resource** specialization on `DomainResource` → still hoisted (not logical-model-specific).
+  **Condition: the new element's type resolves to a snapshot with no children** (`Base` is the only such core
+  type; `Element`/`BackboneElement` bring `id`/`extension` and behave). In that case `expandElementType` →
+  `copyChildren` copies nothing, `snap.HasChildren` stays false, and the subsequent `merge(snap, diff)` for
+  `a`'s children lands them one level up. The exact statement that leaves the navigator on the grandparent
+  was not pinned by code reading (`ElementMatcher.constructNew`'s no-children branch, `AppendChild`,
+  `ElementIdGenerator.Update` all restore their bookmarks on paper) — needs a debugger; region =
+  `SnapshotGenerator.createNewElement` → `mergeElement` → `expandElement`/`expandElementType` → `merge`,
+  `ElementNavigatorModificationExtensions.InsertFirstChild/InsertAfter`. cdshooks-services is exactly this
+  shape (`services.prefetch` typed `Base` with `prefetch.key`/`.value`).
+- **Java:** places the children correctly (golden `services.prefetch.key`); no Java issue.
+- **Status:** confirmed .NET bug with minimized repro; mechanism narrowed to the childless-type expansion
+  path, exact line pending a debugger session. Issue draft for `FirelyTeam/firely-net-sdk` in
+  `harness/repros/issue-dotnet-dev031-base-typed-children.md` (not filed yet — Ewout to decide).
 
 ## DEV-033 — Java preprocessor cross-slice contamination + silent constraint loss (ch6)
 - **Evidence:** Phase-3 packet J-a (2026-08-31): code analysis @ b06c7ee + empirical confirmation in the
@@ -744,11 +780,25 @@ status/resolution.
   elements of golden snapshots and disappears from the right ones — the golden files bless the bug.
   Candidate upstream report (Grahame Grieve / org.hl7.fhir.core); WGM-relevant as a caution against
   treating golden files as normative for the propagation mechanism (OQ-021).
-- **Status:** confirmed (code + golden exhibit); minimized standalone repro not yet built (trigger shape
-  documented above; on-questionnaire serves as the demo input meanwhile). **Reported upstream 2026-09-01
+- **Minimized standalone repro (built 2026-09-03, Java 6.10.2 via the harness `JavaRunner`):**
+  `harness/repros/dev033b-input.xml` — a Patient profile, 7 differential rows: `identifier` sliced by
+  `system`; sliceStuff = extension slice `e1` (data-absent-reason) + sliceName-less
+  `identifier.extension.value[x]` with `mustSupport=true`; named slice `identifier:S1` with extension slice
+  `e2` (rendered-value) + sliceName-less `value[x]` carrying only a `short`. Output
+  (`repros/out/dev033b.java.xml`): **`Patient.identifier:S1.extension:e2.value[x]` has `mustSupport=true`**
+  (authored nowhere near it — contamination) and the injected `Patient.identifier:S1.extension:e1` has **no
+  `value[x]` child at all** (e1's mustSupport never reaches S1 — silent loss). Both predicted effects, one
+  input, no packages beyond core + uv.extensions. Two shape gotchas found on the way: (a) an *explicit*
+  `identifier.extension` slicing entry inside the sliceStuff makes the preprocessor bail out for the whole
+  profile with only a warning ("nested slicing is not supported", `PRE:695-720`) unless it carries an
+  explicit `ordered=false` — `isExtensionSlicing` (`PRE:1077-1086`) returns false when `ordered` is absent
+  (variant A `dev033-input.xml` = no contamination because *nothing* propagates, #2589 territory; variant C
+  `dev033c-input.xml` with `ordered=false` = contamination again) → held upstream as JI-21; (b) the
+  exemption also only recognises `rules=open` + single `value:url` discriminator.
+- **Status:** confirmed (code + golden exhibit + minimized repro). **Reported upstream 2026-09-01
   as [hapifhir/org.hl7.fhir.core#2584](https://github.com/hapifhir/org.hl7.fhir.core/issues/2584)**
   (with ten more Java snapshot-generation bugs, #2585–#2594 — see the upstream-issues file in the
-  project materials).
+  project materials); the minimized repro is to be attached to #2584.
 
 ## DEV-034 — Per-property merge divergence catalogue: .NET `ElementDefnMerger` vs Java `updateFromDefinition` (ch5)
 - **Evidence:** Phase 2 packet 1 (.NET, 2026-08-24) × Phase 3 packet J-b (Java @ b06c7ee, 2026-09-01);
