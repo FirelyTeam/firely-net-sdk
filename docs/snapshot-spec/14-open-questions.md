@@ -640,11 +640,13 @@ behavior wrong; prime WGM material since it decides what a bare type slice means
   `Patient.deceased[x]:deceasedBoolean`; (4) constraints on a named type slice "apply only to instances of that
   type"; (5) either path form legal. FHIR-6066/6093 (2015): constraining a sub-type "does not imply the other
   sub-types are to be omitted" (origin of `base.path/min/max`); FHIR-10034: type need not be restated with the
-  shorthand; FHIR-15900 (2018): "an id in the differential that's not in the snapshot — that should not occur"
-  (against Java's bare-`value[x]` anchoring when the diff used the renamed id, DEV-026); FHIR-18264 (2018, Not
-  Persuasive): re-slicing a type slice "cannot occur" (Chris Grenz dissents).
-- **Status:** (c) answer-found (implicit constraint applies — item 4); (a)/(b) open with Java rationale, and
-  FHIR-15900 against the bare-`value[x]` fold. WGM brief Q4.
+  shorthand; FHIR-15900 (2018 — resolution "Auto-approved", a tooling fix with no WG vote; REST-verified
+  2026-09-03): the reporter's "an id in the differential that's not in the snapshot — that should not occur"
+  (against Java's bare-`value[x]` anchoring when the diff used the renamed id, DEV-026 — description-tier only);
+  FHIR-18264 (2018, Not Persuasive): re-slicing a type slice "cannot occur" (Chris Grenz dissents).
+- **Status:** (c) answer-found (implicit constraint applies — item 4, resolution "Make change as proposed" adopts
+  the description); (a)/(b) open — no decision-tier source on either side (Grahame 2019 Zulip single-type rule
+  vs the auto-approved FHIR-15900 description). WGM brief Q4.
 
 ## OQ-019 — Which extensions are non-inheritable?
 A derived profile's snapshot inherits everything from the base — including metadata extensions that are
@@ -686,10 +688,13 @@ as inheritable/non-inheritable.
   `fhir-type` must propagate (Grahame 2025-12). 2016 origin: Michel on GF#9079 — Forge hard-codes FMM
   non-inheritance, "it would definitely be an improvement if an extension definition … could express the rules".
 - **JIRA (sweep 2026-09-02): the decision, with the list.** FHIR-28441 (2020, Persuasive 11-0-0) defines
-  `snapshot-behavior` "that indicates what rules a snapshot generator must follow", 5 classes; Lloyd's comment
-  classifies ~45 extensions and his class-5 ("not propagated") list of 17 urls **is .NET's blocklist verbatim**
-  (Ward's "copied from Java" and this can both be true — the lists coincided in 2020); Java's current list omits
-  hierarchy/interface/codegen-super/replaces/resource-dates. The record conflicts on `explicit-type-name`
+  `snapshot-behavior` "that indicates what rules a snapshot generator must follow", 5 classes; the resolution text
+  says "The rules will be those listed in the comment below", so Lloyd's comment classifying ~45 extensions is
+  **incorporated by reference into the decision** (REST-verified 2026-09-03), and his class-5 ("does not
+  propagate") list of 17 urls **is .NET's blocklist verbatim** (Ward's "copied from Java" and this can both be
+  true — the lists coincided in 2020); Java's current list carries 8 of the 17 and omits **nine**
+  (fmm-no-warnings, hierarchy, interface, applicable-version, codegen-super, replaces, resource-approvalDate/
+  -effectivePeriod/-lastReviewDate). The record conflicts on `explicit-type-name`
   (class 4 "always propagate" in 28441 vs "should not inherit" in FHIR-27535's closing comments; Java follows
   27535).
 - **Status:** answer-found (policy = extension metadata, decided 2020, unapplied). WGM item = get the metadata

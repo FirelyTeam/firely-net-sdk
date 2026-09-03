@@ -26,7 +26,7 @@ record; *comment* = discussion on a ticket; *Zulip* = a chat agreement, however 
 | Q6 | Is `Extension.url.fixedUri` part of the snapshot contract (generator supplies it) or an authoring obligation? | Promote §2.1.5.1.4 to conformance language: authors SHALL fix it; a generator MAY supply a missing value and SHALL NOT alter an inherited one (RFC-015). | ext-recursion-2, au2 |
 | Q7(b)(d) | After a generator expands a contentReference's children, does the reference survive on the element (Java sliced-base) or is it replaced by the target's `type` (.NET, Java step-in)? Are the eld-5 properties undefined after dereferencing? | Replaced by `type`; eld-5 properties undefined — one sentence each. (a) R6 literal-path direction is decided (FHIR-57266): confirm. (c) absolutization: confirm the 2022 Zulip rule and pick the canonical. | t21, comp-deep, eob tests |
 | Q8 | Both below-root syntaxes (`url#id` fragment, `profile-element` extension) are sanctioned, both by element id. Is the fragment superseded? Must the generator expand children from the nominated element? | Extension canonical, fragment deprecated-but-accepted (by id). Expand from the nominated element iff Q1 says "close over". Needs a shared test. | none — needs a test |
-| Q9 | Non-inheritable extensions: FHIR-28441 decided the mechanism *and* the 17-url list (Java omits nine). Who stamps the metadata on the extensions pack, and when? | Ask FHIR-I to stamp `structuredefinition-inheritance-control` on the pack in the next release, starting from the union of the Java/.NET/Grahame-2023 lists; interim: one agreed list. | ca-patient, ILCorePractitioner |
+| Q9 | Non-inheritable extensions: FHIR-28441 decided the mechanism *and* the 17-url list (Java omits nine). Who stamps the metadata on the extensions pack, and when? | Ask FHIR-I to stamp `structuredefinition-inheritance-control` on the pack in the next release, starting from the 28441 classification (decision text) and using the Java/.NET/Grahame-2023 lists only for post-2020 extensions; interim: both engines adopt the 28441 class-5 list verbatim; rule on `explicit-type-name`. | ca-patient, ILCorePractitioner |
 | Q11(b) | Does the 2019 "error, not repair" agreement on wrong type-slice names still stand (both engines' defaults now repair silently)? | Reaffirm and write it down: repair only with a message; canonical-form normalizations (ids, `[x]` paths, absolutization) stay permitted. | t29a, t43a |
 
 **Confirm only (decided in JIRA resolution text; the room need only nod, then the engines fix):** a type root's
@@ -35,7 +35,8 @@ FHIR-36738); the `[x]` entry keeps its type list and its declared `min` (Q3 c/d;
 slice is single-typed (Q4a; FHIR-12259 item 4); R6 contentReference semantics are literal-path with opt-in
 propagation (Q7a; FHIR-57266/57265); both below-root syntaxes address an element **id** (Q8a; FHIR-13973,
 FHIR-49079); inheritance policy is per-extension metadata with an adopted classification (Q9; FHIR-28441); ids
-are derived data (Q11a); slicing a non-repeating base element is only supported by type (Q12; FHIR-28619); an
+are derived data (Q11a; FHIR-9843, FHIR-12182); slicing a non-repeating base element is only supported by type
+(Q12; FHIR-28619); an
 ED mapping with the same identity *replaces* the parent's (Q13; FHIR-34434 — neither engine does it) and
 `elementdefinition-suppress` deletes at snapshot time (Q13; FHIR-31406).
 
@@ -106,12 +107,13 @@ automatically; it is Ewout's material.
   (an HL7 vote on record — the "Resolution Description" field), a *comment* (discussion, however senior), or a
   *retracted/auto-approved* ticket (no vote). Sixteen load-bearing tickets were re-read via the JIRA REST API on
   2026-09-02/03 and every quote attributed to resolution text below was found verbatim in that field
-  (FHIR-3623, 8969, 12259, 13973, 14958, 19756, 28441, 28619, 31054, 34434, 48664, 49079, 50267 [description
-  adopted by "Do this"]); the quotes tagged as comments (FHIR-8969 Lloyd, 14091 Lloyd, 19756 Chris Grenz, 50267
-  Lloyd + Grahame) were confirmed to be comments; FHIR-15900 turned out to be an *auto-approved* tooling ticket.
-  The remaining ~65 tickets were read once during the sweep. Zulip permalinks: twelve verified in a browser on
-  2026-09-02/03 (both the `#narrow/stream/…` and `#narrow/channel/…` forms resolve to the cited topic and message:
-  Q1 ×2, Q3 ×2, Q4, Q5, Q7, Q9, Q13, Ewout's thread); the rest were taken from the API and are unverified.
+  (FHIR-3623, 8969, 13973, 14958, 19756, 28441, 28619, 31054, 34434, 48664, 49079) or in a description the
+  resolution adopts wholesale (FHIR-12259 "Make change as proposed", FHIR-50267 "Do this"); the quotes tagged as
+  comments (FHIR-8969 Lloyd, 14091 Lloyd, 19756 Chris Grenz, 50267 Lloyd + Grahame) were confirmed to be
+  comments; FHIR-15900 turned out to be an *auto-approved* tooling ticket. The remaining ~65 tickets were read
+  once during the sweep. Zulip permalinks: ten verified in a browser on 2026-09-03 (Q1 ×2, Q3 ×2, Q4, Q5, Q7, Q9,
+  Q13, Ewout's thread) plus two on 2026-09-02 — both the `#narrow/stream/…` and `#narrow/channel/…` forms resolve
+  to the cited topic and message; the rest were taken from the API and are unverified.
 - **Internal cross-references** (`OQ-nnn` = open question, `DEV-nnn` = deviation register entry, `RFC-nnn` =
   spec-change proposal) point into the Firely study document set; they are for our own bookkeeping and can
   be ignored during the session.
@@ -810,8 +812,12 @@ reconcile). Field reports keep arriving (CRMI `artifact-author` inherited, Aug 2
 
 **Decision needed.** Not whether — *who applies the existing metadata to the core extensions, and when*, so
 that both generators can retire their lists. Interim: agree one list (union of both minus tooling-only urls).
-**Recommendation:** ask FHIR-I to stamp `structuredefinition-inheritance-control` on the extensions pack
-(starting from the union of the Java, .NET and Grahame-2023 lists) in the next pack release.
+**Recommendation:** ask FHIR-I to stamp `structuredefinition-inheritance-control` on the extensions pack in
+the next pack release, **starting from the FHIR-28441 classification itself** (it is decision text — the 17
+class-5 urls are already decided), and using the Java, .NET and Grahame-2023 lists only to classify the
+extensions created after 2020 that 28441 could not cover. Interim, until the pack carries the metadata: both
+engines adopt the 28441 class-5 list verbatim (i.e. Java adds the nine it omits), and `explicit-type-name`
+gets an explicit ruling (28441 says propagate; the 27535 comments say not).
 
 ### Q10. What does a StructureDefinition without a differential mean?
 *OQ-016*
@@ -1042,8 +1048,9 @@ ED-level mapping replace-by-identity and suppress (Q13, FHIR-34434/31406), id re
 cardinality as a bound (Q1 sub-decision, FHIR-19756/36738), the entry type-list collapse and entry-min raise
 (Q3 c/d, FHIR-12259/31054), the implicit type constraint (Q4a, FHIR-12259), both below-root syntaxes by id
 (Q8a, FHIR-13973/49079), non-inheritable extensions as extension metadata incl. the classification (Q9,
-FHIR-28441), the R6 contentReference direction (Q7a, FHIR-57266). **Answered on Zulip only (agreements, no JIRA
-resolution — confirm, but expect pushback):** contentReference absolutization (Q7c, Grahame 2022), discriminator
+FHIR-28441), the R6 contentReference direction (Q7a, FHIR-57266). **Agreed on Zulip only (no HL7 ruling — so
+still listed as live in the executive summary; ask the room to confirm or reopen):** contentReference
+absolutization (Q7c, Grahame 2022), discriminator
 synthesis on type slicings (Q3a, Redmond DevDays 2019 per Michel), slice-name error-not-repair (Q11b, July
 2019), SD-level mapping inheritance (Q13, Lloyd 2024). **Discussed, unresolved (the live questions):** Q1, Q2,
 Q3 b/e, Q4b, Q5, Q6, Q7 b/d, Q8b, Q10, Q13 merge rules, Q14–Q16. **Never discussed anywhere:** differential-less SDs (Q10), the `"..."` convention beyond a 2015
