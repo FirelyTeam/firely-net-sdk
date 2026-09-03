@@ -737,8 +737,9 @@ status/resolution.
   set `Path = <current>.Path + "." + name`). Variants: `a` typed **`Element`** → correct (`a.b`, `a.c`);
   `a` typed `Base` + a trailing sibling `z` → still hoisted (position-independent); the same shape as a
   **resource** specialization on `DomainResource` → still hoisted (not logical-model-specific).
-  **Condition: the new element's type resolves to a snapshot with no children** (`Base` is the only such core
-  type; `Element`/`BackboneElement` bring `id`/`extension` and behave). In that case `expandElementType` →
+  **Condition: the new element's type resolves to a snapshot with no children** (`Base` is the only core type
+  we tried that has none; `Element`/`BackboneElement` bring `id`/`extension` and behave — not verified against
+  the full core type list). In that case `expandElementType` →
   `copyChildren` copies nothing, `snap.HasChildren` stays false, and the subsequent `merge(snap, diff)` for
   `a`'s children lands them one level up. The exact statement that leaves the navigator on the grandparent
   was not pinned by code reading (`ElementMatcher.constructNew`'s no-children branch, `AppendChild`,

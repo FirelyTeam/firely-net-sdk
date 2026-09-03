@@ -1000,16 +1000,9 @@ nothing but `type`, `min`/`max` from the differential, and sdf-3 fill), so core 
   one `Patient.birthDate` row carrying only a `short` (op2/op2a put an obligation on `birthDate`) →
   validator 6.10.2 throws. Design question left: once the crash is fixed, should the fold also run for
   diff-touched elements?
-- **JI-19 — xver template selection is order-dependent (verified 2026-09-03).** `PPP:700` tests the raw
-  `getXver()` field where other sites use the lazy `makeXVer()`. `ValidationEngine` (`snapshot` task and
-  three other sites) constructs `new ProfileUtilities(context, null, null).setAutoFixSliceNames(true)` and
-  never calls `setXver`, so validator_cli takes the non-xver template for the *first* xver-typed extension
-  slice per instance. IG Publisher not checked (outside the cone).
-- **JI-14 — `MappingAssistant` identity collision (verified 2026-09-03, two-SD repro):** base declares
-  `mapping.identity=m` (uri A), derived re-declares `m` (uri B). Output: the derived SD gets **two**
-  declarations with `identity=m` (the rename lands in `name`, `MA:75-76`), the inherited element mapping
-  keeps `m` (now resolving to B), and the *derived* element's mapping is rewritten to `m1` — an identity
-  declared nowhere (`merge(derived, base)` reversal, `PU:3082` / `MA:173-177`).
+- **JI-19 / JI-14 — no longer questions:** both verified 2026-09-03 and filed (#2604 xver template selection
+  order-dependent, validator never calls `setXver`; #2603 `MappingAssistant` identity-collision rename on the
+  wrong side and in `name`) — see the filed list below; nothing to ask.
 - **Golden files as normative.** Given #2584 (copy-down contamination blessed by `on-questionnaire-expected`)
   and the `min := 1` (not sum) entry rewrite, would the maintainers accept a review pass over the
   `snapshot-generation` expected files once Q2/Q3 are decided?
