@@ -1025,7 +1025,8 @@ nothing but `type`, `min`/`max` from the differential, and sdf-3 fill), so core 
   #3587 (duplicate issue codes 10012/10014), #3588 (fake hl7.org canonical for the constrained-by-diff marker
   extension), #3589 (**reslice subtrees dropped entirely — silent loss of authored min/pattern constraints**,
   `reslicing-profile`/`slice23`), #3590 (t23a duplicate element + fabricated `base.min`), #3591 (obs-unit
-  phantom element + dropped `fixedString`).
+  phantom element + dropped `fixedString`), #3597 (children of a `Base`-typed new element hoisted one level
+  up — cdshooks-services `services.prefetch.key`; filed 2026-09-03).
 
 ---
 

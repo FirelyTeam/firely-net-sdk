@@ -749,8 +749,9 @@ status/resolution.
   shape (`services.prefetch` typed `Base` with `prefetch.key`/`.value`).
 - **Java:** places the children correctly (golden `services.prefetch.key`); no Java issue.
 - **Status:** confirmed .NET bug with minimized repro; mechanism narrowed to the childless-type expansion
-  path, exact line pending a debugger session. Issue draft for `FirelyTeam/firely-net-sdk` in
-  `harness/repros/issue-dotnet-dev031-base-typed-children.md` (not filed yet — Ewout to decide).
+  path, exact line pending a debugger session. **Filed 2026-09-03 as
+  [FirelyTeam/firely-net-sdk#3597](https://github.com/FirelyTeam/firely-net-sdk/issues/3597)** (text in
+  `harness/repros/issue-dotnet-dev031-base-typed-children.md`).
 
 ## DEV-033 — Java preprocessor cross-slice contamination + silent constraint loss (ch6)
 - **Evidence:** Phase-3 packet J-a (2026-08-31): code analysis @ b06c7ee + empirical confirmation in the
