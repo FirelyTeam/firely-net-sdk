@@ -513,6 +513,21 @@ public partial class TransactionBuilder
     /// Add an entry to perform a FHIR operation on a certain endpoint of the server to the transaction/batch
     /// </summary>
     /// <param name="endpoint">The endpoint to perform the FHIR operation on</param>
+    /// <param name="resourceBody">Resource body to send as payload for the operation request</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
+    public TransactionBuilder EndpointOperation(RestUrl endpoint, Resource resourceBody, string? bundleEntryFullUrl = null)
+    {
+        var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Operation, bundleEntryFullUrl);
+        entry.Resource = resourceBody;
+        addEntry(entry, new RestUrl(endpoint));
+        return this;
+    }
+
+    /// <summary>
+    /// Add an entry to perform a FHIR operation on a certain endpoint of the server to the transaction/batch
+    /// </summary>
+    /// <param name="endpoint">The endpoint to perform the FHIR operation on</param>
     /// <param name="name">name of the operation to be performed</param>
     /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
     /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
@@ -523,6 +538,20 @@ public partial class TransactionBuilder
         var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
 
         return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
+    }
+
+    /// <summary>
+    /// Add an entry to perform a FHIR operation on a certain endpoint of the server to the transaction/batch
+    /// </summary>
+    /// <param name="endpoint">The endpoint to perform the FHIR operation on</param>
+    /// <param name="name">name of the operation to be performed</param>
+    /// <param name="resourceBody">Resource body to send as payload for the operation request</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
+    public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Resource resourceBody, string? bundleEntryFullUrl = null)
+    {
+        var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
+        return EndpointOperation(path, resourceBody, bundleEntryFullUrl);
     }
         
     /// <summary>
@@ -540,6 +569,19 @@ public partial class TransactionBuilder
     }
 
     /// <summary>
+    /// Add an entry to perform a FHIR operation on the root of the server to the transaction/batch
+    /// </summary>
+    /// <param name="name">name of the operation to be performed</param>
+    /// <param name="resourceBody">Resource body to send as payload for the operation request</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
+    public TransactionBuilder ServerOperation(string name, Resource resourceBody, string? bundleEntryFullUrl = null)
+    {
+        var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
+        return EndpointOperation(path, resourceBody, bundleEntryFullUrl);
+    }
+
+    /// <summary>
     /// Add an entry to perform a FHIR operation on a certain resource type to the transaction/batch
     /// </summary>
     /// <param name="resourceType">resource type on which the operation is to be performed</param>
@@ -552,6 +594,20 @@ public partial class TransactionBuilder
     {
         var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
         return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
+    }
+
+    /// <summary>
+    /// Add an entry to perform a FHIR operation on a certain resource type to the transaction/batch
+    /// </summary>
+    /// <param name="resourceType">resource type on which the operation is to be performed</param>
+    /// <param name="name">name of the operation to be performed</param>
+    /// <param name="resourceBody">Resource body to send as payload for the operation request</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
+    public TransactionBuilder TypeOperation(string resourceType, string name, Resource resourceBody, string? bundleEntryFullUrl = null)
+    {
+        var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
+        return EndpointOperation(path, resourceBody, bundleEntryFullUrl);
     }
 
     /// <summary>
@@ -572,6 +628,25 @@ public partial class TransactionBuilder
         path.AddPath(OPERATIONPREFIX + name);
 
         return EndpointOperation(path, parameters, useGet, bundleEntryFullUrl);
+    }
+
+    /// <summary>
+    /// Add an entry to perform a FHIR operation on a certain resource to the transaction/batch
+    /// </summary>
+    /// <param name="resourceType">resource type of the resource on which the operation is to be performed</param>
+    /// <param name="id">id of the resource</param>
+    /// <param name="vid">version id of the resource</param>
+    /// <param name="name">name of the operation to be performed</param>
+    /// <param name="resourceBody">Resource body to send as payload for the operation request</param>
+    /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
+    /// <returns></returns>
+    public TransactionBuilder ResourceOperation(string resourceType, string id, string? vid, string name, Resource resourceBody, string? bundleEntryFullUrl = null)
+    {
+        var path = newRestUrl().AddPath(resourceType, id);
+        if (vid != null) path.AddPath(HISTORY, vid);
+        path.AddPath(OPERATIONPREFIX + name);
+
+        return EndpointOperation(path, resourceBody, bundleEntryFullUrl);
     }
         
     public TransactionBuilder ProcessMessage(Bundle messageBundle, bool async = false, string? responseUrl = null, string? bundleEntryFullUrl = null)

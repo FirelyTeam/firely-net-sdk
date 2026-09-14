@@ -247,6 +247,66 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
+        public async Task TestOperationWithResourceBody()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$claim-submit")
+            };
+
+            var resourceBody = new Bundle { Id = "claim-bundle" };
+            HttpRequestMessage? request = null;
+
+            using var client = new SubstituteBuilder()
+                .Send(response, h => request = h)
+                .AsClient(baseUri: new Uri("http://example.com/fhir/"));
+
+            var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$claim-submit"), resourceBody) as Parameters;
+
+            request.Should().NotBeNull();
+            request!.RequestUri.Should().Be(new Uri("http://example.com/fhir/$claim-submit"));
+            request.Content.Should().NotBeNull();
+
+            var body = await request.Content!.ReadAsStringAsync();
+            body.Should().Contain("<Bundle");
+            body.Should().Contain("claim-bundle");
+            body.Should().NotContain("<Parameters");
+            parameters!.Parameter.FirstOrDefault()!.Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("connected");
+        }
+
+        [TestMethod]
+        public async Task TestTypeOperationWithResourceBody()
+        {
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/Bundle/$claim-submit")
+            };
+
+            var resourceBody = new Bundle { Id = "claim-bundle" };
+            HttpRequestMessage? request = null;
+
+            using var client = new SubstituteBuilder()
+                .Send(response, h => request = h)
+                .AsClient(baseUri: new Uri("http://example.com/fhir/"));
+
+            var parameters = await client.TypeOperationAsync<Bundle>("claim-submit", resourceBody) as Parameters;
+
+            request.Should().NotBeNull();
+            request!.RequestUri.Should().Be(new Uri("http://example.com/fhir/Bundle/$claim-submit"));
+            request.Content.Should().NotBeNull();
+
+            var body = await request.Content!.ReadAsStringAsync();
+            body.Should().Contain("<Bundle");
+            body.Should().Contain("claim-bundle");
+            body.Should().NotContain("<Parameters");
+            parameters!.Parameter.FirstOrDefault()!.Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("connected");
+        }
+
+        [TestMethod]
         public async Task TestProcessMessage()
         {
             var response = new HttpResponseMessage
