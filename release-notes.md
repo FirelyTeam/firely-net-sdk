@@ -10,5 +10,8 @@ This release adds opt-in retention of XML comments in the POCO-based parser. The
 **Performance**
 - Parsing allocates considerably less. Most of what a parse used to allocate was transient garbage produced by model validation - which runs on every element in every deserialization mode except `SyntaxOnly` and `Ostrich` - rather than the POCO graph it returns. Validation now allocates about half of what it did, and the validation outcomes are unchanged. Measured on a Patient StructureDefinition (88 KB): 5.1 MB allocated and 3.4 ms per parse, down to 2.5 MB and 1.8 ms. With the validator off, the same parse went from 1.4 MB to 1.0 MB.
 
+**Snapshot generation**
+- The `SnapshotGenerator` now reports a specific issue (`PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER`, code 10020) when a differential element is out of order, i.e. when it constrains a base element that precedes an element that was already matched. The spec requires `differential.element` and `snapshot.element` to follow the order of the base definition. Such elements could previously not be matched and were silently treated as new elements, which surfaced downstream as a confusing error. See issue [#3600](https://github.com/FirelyTeam/firely-net-sdk/issues/3600).
+
 **Dependencies**
 - Updated Fhir.Metrics, Microsoft.SourceLink.GitHub, MSTest.TestFramework and Verify.MSTest to their latest versions. NSubstitute was updated to 6.0.0 (test-only, not part of the shipped packages).

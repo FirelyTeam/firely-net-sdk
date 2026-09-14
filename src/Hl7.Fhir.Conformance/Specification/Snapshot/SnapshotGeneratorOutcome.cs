@@ -416,5 +416,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 sd.Name
             ));
         }
+
+        // #3600 The differential (and snapshot) elements must be ordered according to the order of the
+        // base definition. The snapshot generator matches the differential to the base by walking the base
+        // forward only, so an element that is positioned *before* an element that was already matched
+        // cannot be recognized as a constraint on the inherited element. Report this explicitly, instead
+        // of silently treating the element as a new (or invalid slice) element.
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER = Issue.Create(10020, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        internal static OperationOutcome.IssueComponent CreateIssueInvalidElementOrder(ElementDefinition elementDef)
+        {
+            var location = FormatLocation(elementDef);
+            return PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER.ToIssueComponent(
+                $"Element '{location}' is out of order. Elements must be ordered according to the order of the elements in the base definition.",
+                location
+            );
+        }
     }
 }

@@ -534,7 +534,37 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
             snapNav.ReturnToBookmark(bm);
+
+            // [EK 20260914] #3600 The base is matched forward-only, so a diff element that matches a base
+            // element *before* the current position is not a new element, but an out-of-order element.
+            if (match.Issue is null && snapIsOnChild && isPrecedingBaseElement(snapNav, diffName))
+            {
+                match.Issue = SnapshotGenerator.CreateIssueInvalidElementOrder(diffNav.Current);
+            }
+
             return match;
+        }
+
+        /// <summary>Determines if any preceding sibling of the current element in <paramref name="snapNav"/> matches the specified element name.</summary>
+        private static bool isPrecedingBaseElement(ElementDefinitionNavigator snapNav, string diffName)
+        {
+            var bm = snapNav.Bookmark();
+            try
+            {
+                while (snapNav.MoveToPrevious())
+                {
+                    if (SnapshotGenerator.IsEqualName(snapNav.PathName, diffName)
+                        || ElementDefinitionNavigator.IsRenamedChoiceTypeElement(snapNav.PathName, diffName))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            finally
+            {
+                snapNav.ReturnToBookmark(bm);
+            }
         }
 
         // [WMR 20170308] The snapshot generator initializes snapNav with base profile elements, then merges diff constraints on top of that.
