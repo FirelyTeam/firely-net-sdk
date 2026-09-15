@@ -8,6 +8,7 @@
 	<PropertyGroup>
 		<ContainsTests>true</ContainsTests>
 		<NoWarn>1591, SDK0001, SDK0002, MSTEST0001</NoWarn>
+		<Verify_SponsorshipLicenseIgnored>true</Verify_SponsorshipLicenseIgnored>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">

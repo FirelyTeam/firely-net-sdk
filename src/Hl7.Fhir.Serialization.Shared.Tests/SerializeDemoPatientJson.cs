@@ -68,15 +68,15 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var nav = await getJsonElement(json);
             var output = nav.ToJson();
-            Assert.DoesNotContain('\n', output[..20]);
+            Assert.DoesNotContain('\n', output.AsSpan(0, 20));
             var pretty = nav.ToJson(pretty: true);
-            Assert.Contains('\n', pretty[..20]);
+            Assert.Contains('\n', pretty.AsSpan(0, 20));
 
             var p = FhirJsonDeserializer.OSTRICH.Deserialize<Patient>(json);
             output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
-            Assert.DoesNotContain('\n', output[..20]);
+            Assert.DoesNotContain('\n', output.AsSpan(0, 20));
             pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);
-            Assert.Contains('\n', pretty[..20]);
+            Assert.Contains('\n', pretty.AsSpan(0, 20));
         }
     }
 }
