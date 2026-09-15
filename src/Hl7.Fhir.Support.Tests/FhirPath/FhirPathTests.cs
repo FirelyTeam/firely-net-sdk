@@ -90,6 +90,16 @@ namespace Hl7.Fhir.Support.Tests
         }
 
         [TestMethod]
+        public void HtmlChecksOnMultipleItemsReturnsEmpty()
+        {
+            var evaluator = _compiler.Compile("htmlChecks()");
+            var result = evaluator(
+                [PocoNode.ForPrimitive<FhirString>("<p>first</p>"), PocoNode.ForPrimitive<FhirString>("<p>second</p>")],
+                new FhirEvaluationContext());
+            result.Should().BeEmpty("htmlChecks() requires a singleton focus");
+        }
+
+        [TestMethod]
         [DynamicData(nameof(GetTypedElements))]
         public void NavigateWithChoiceTypes(ITypedElement typedElement, string method)
         {

@@ -49,6 +49,8 @@ namespace Hl7.Fhir.FhirPath
             // lets keep both to keep everyone happy.
             t.Add("htmlchecks", (PocoNode f) => f.HtmlChecks(), doNullProp: false);
             t.Add("htmlChecks", (PocoNode f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlchecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlChecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
@@ -95,6 +97,12 @@ namespace Hl7.Fhir.FhirPath
             PrimitiveNode { Value: string s } => XHtml.IsValidNarrativeXhtml($"<div xmlns=\"{XmlNs.XHTML}\">{s}</div>", out _, out _),
             _ => null
         };
+
+        public static bool? HtmlChecks(this IEnumerable<PocoNode> focus)
+        {
+            var single = focus.Take(2).ToArray();
+            return single.Length == 1 ? single[0].HtmlChecks() : null;
+        }
 
         public static IEnumerable<Base?> ToFhirValues(this IEnumerable<PocoNode> results)
         {
