@@ -60,6 +60,36 @@ namespace Hl7.Fhir.Support.Tests
         }
 
         [TestMethod]
+        [DataRow("Not empty", true, "plain text is valid content of a div")]
+        [DataRow("<p>Not empty</p>", true, "valid html content of a div")]
+        [DataRow(" ", false, "containing only whitespace")]
+        [DataRow("", false, "empty string")]
+        [DataRow("<p>unclosed", false, "not well-formed xml")]
+        [DataRow("<script>alert('x')</script>", false, "scripts are not allowed")]
+        public void HtmlChecksOnString(string html, bool expected, string because)
+        {
+            var evaluator = _compiler.Compile("htmlChecks()");
+            evaluator.Predicate(PocoNode.ForPrimitive<FhirString>(html), new FhirEvaluationContext()).Should().Be(expected, because);
+        }
+
+        [TestMethod]
+        public void HtmlChecksOnStringLiteral()
+        {
+            _compiler.Compile("'<p>Not empty</p>'.htmlChecks()")
+                .Predicate(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).Should().BeTrue();
+            _compiler.Compile("'<script>alert(1)</script>'.htmlChecks()")
+                .Predicate(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void HtmlChecksOnNonStringReturnsEmpty()
+        {
+            var evaluator = _compiler.Compile("htmlChecks()");
+            var result = evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
+            result.Should().BeEmpty("htmlChecks() returns empty on any other kind of element");
+        }
+
+        [TestMethod]
         [DynamicData(nameof(GetTypedElements))]
         public void NavigateWithChoiceTypes(ITypedElement typedElement, string method)
         {
