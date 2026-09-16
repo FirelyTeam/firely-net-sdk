@@ -98,10 +98,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var snapHasChildren = snapNav.MoveToFirstChild();
             diffNav.MoveToFirstChild();
 
-            var choiceNames = snapHasChildren ? listChoiceElements(snapNav) : new List<string>();
-            // [EK 20260914] #3600 Position of each base child element, used to detect diff elements that are out of base order.
-            var basePositions = snapHasChildren ? listBaseChildPositions(snapNav) : new Dictionary<string, int>();
-            var lastMatchedPosition = -1;
+            var baseNames = snapHasChildren ? listChildNames(snapNav) : new HashSet<string>(StringComparer.Ordinal);
+            var choiceNames = baseNames.Where(ElementDefinitionNavigator.IsChoiceTypeElement).ToList();
             var result = new List<MatchInfo>();
 
             try
@@ -111,10 +109,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var match = snapHasChildren && matchBase(snapNav, diffNav, choiceNames);
                     if (match)
                     {
-                        if (basePositions.TryGetValue(snapNav.PathName, out var position))
-                        {
-                            lastMatchedPosition = Math.Max(lastMatchedPosition, position);
-                        }
                         result.AddRange(constructMatch(snapNav, diffNav));
                     }
                     else
@@ -122,12 +116,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // No matching base element; this is a new element (core resource definitions)
                         // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
                         // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
-                        // [EK 20260914] #3600 The base is matched forward-only, so a diff element that matches a base
-                        // element *before* the last matched position is not a new element, but an out-of-order element.
-                        var isOutOfOrder = snapHasChildren
-                            && tryGetBasePosition(basePositions, choiceNames, diffNav.PathName, out var position)
-                            && position < lastMatchedPosition;
-                        result.Add(constructNew(snapNav, diffNav, snapHasChildren, isOutOfOrder));
+                        var newMatch = constructNew(snapNav, diffNav, snapHasChildren);
+
+                        // [EK 20260916] #3600 matchBase only scans forward from the current base position. So if the
+                        // unmatched diff element does name a child of the base, that child must *precede* the current
+                        // position: the diff element is not new, but out of order. Report this instead of silently
+                        // adding a new element (which surfaces downstream as a confusing error).
+                        if (newMatch.Issue is null && isBaseChildName(diffNav.PathName, baseNames, choiceNames))
+                        {
+                            newMatch.Issue = SnapshotGenerator.CreateIssueInvalidElementOrder(diffNav.Current);
+                        }
+                        result.Add(newMatch);
                     }
                 }
                 while (diffNav.MoveToNext());
@@ -506,7 +505,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
-        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, bool snapIsOnChild = true, bool isOutOfOrder = false)
+        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, bool snapIsOnChild = true)
         {
             // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
             // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
@@ -546,48 +545,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
             snapNav.ReturnToBookmark(bm);
-
-            if (match.Issue is null && isOutOfOrder)
-            {
-                match.Issue = SnapshotGenerator.CreateIssueInvalidElementOrder(diffNav.Current);
-            }
-
             return match;
         }
 
-        /// <summary>Returns the position of each (distinct) child element of the current element in <paramref name="nav"/>.</summary>
-        private static Dictionary<string, int> listBaseChildPositions(ElementDefinitionNavigator nav)
+        /// <summary>Determines if the specified differential element name refers to one of the base child element names, either directly or as a renamed choice type element (e.g. "valueString" for "value[x]").</summary>
+        private static bool isBaseChildName(string diffName, HashSet<string> baseNames, List<string> choiceNames)
         {
-            var bm = nav.Bookmark();
-            var result = new Dictionary<string, int>(StringComparer.Ordinal);
-            var position = 0;
-
-            do
-            {
-                // Slices share the same path name; the position of the first occurrence determines the order
-                if (!result.ContainsKey(nav.PathName))
-                {
-                    result.Add(nav.PathName, position);
-                }
-                position++;
-            }
-            while (nav.MoveToNext());
-
-            nav.ReturnToBookmark(bm);
-            return result;
-        }
-
-        /// <summary>Determine the position of the base element that matches the specified differential element name.</summary>
-        private static bool tryGetBasePosition(Dictionary<string, int> basePositions, List<string> choiceNames, string diffName, out int position)
-        {
-            if (basePositions.TryGetValue(diffName, out position))
-            {
-                return true;
-            }
-
-            // The diff may rename a choice type element, e.g. constrain "value[x]" to "valueString"
-            var matchingChoice = choiceNames.FirstOrDefault(choiceName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, diffName));
-            return !(matchingChoice is null) && basePositions.TryGetValue(matchingChoice, out position);
+            return baseNames.Contains(diffName)
+                || choiceNames.Any(choiceName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, diffName));
         }
 
         // [WMR 20170308] The snapshot generator initializes snapNav with base profile elements, then merges diff constraints on top of that.
@@ -1136,28 +1101,28 @@ namespace Hl7.Fhir.Specification.Snapshot
             return false;
         }
 
-        /// <summary>List names of all following choice type elements ('[x]').</summary>
-        private static List<string> listChoiceElements(ElementDefinitionNavigator nav)
+        /// <summary>List the (distinct) names of the current and all following sibling elements.</summary>
+        /// <remarks>
+        /// [EK 20260916] #3600 Generalized from listChoiceElements: the caller derives the choice type element names ('[x]')
+        /// from this set and also uses it to detect out-of-order differential elements.
+        /// </remarks>
+        private static HashSet<string> listChildNames(ElementDefinitionNavigator nav)
         {
             var bm = nav.Bookmark();
 
-            // [WMR 20190826] Use HashSet to remove duplicates
-            //var result = new List<string>();
+            // [WMR 20190826] Use HashSet to remove duplicates (e.g. slices share the same path name)
             var elemNames = new HashSet<string>(StringComparer.Ordinal);
 
             do
             {
-                if (!(nav.Current is null) && nav.Current.IsChoice())
+                if (!(nav.Current is null))
                 {
-                    //result.Add(nav.PathName);
                     elemNames.Add(nav.PathName);
                 }
             } while (nav.MoveToNext());
 
             nav.ReturnToBookmark(bm);
-
-            //return result;
-            return elemNames.ToList();
+            return elemNames;
         }
 
         /// <summary>Find name of child element that represent a rename of the specified choice type element name.</summary>
