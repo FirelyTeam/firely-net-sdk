@@ -684,14 +684,21 @@ public partial class BaseFhirClient : IDisposable
         return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet, ct);
     }
 
-    public virtual Task<Resource?> TypeOperationAsync<TResource>(string operationName, Resource resourceBody, CancellationToken? ct = null)
+    public virtual Task<Resource?> TypeOperationAsync<TResource>(string operationName, TResource resourceBody, CancellationToken? ct = null)
         where TResource : Resource
     {
         if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
         if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
-        var typeName = typeNameOrDie<TResource>();
 
-        return TypeOperationAsync(operationName, typeName, resourceBody, ct);
+        return TypeOperationAsync(operationName, (Resource)resourceBody, ct);
+    }
+
+    public virtual Task<Resource?> TypeOperationAsync(string operationName, Resource resourceBody, CancellationToken? ct = null)
+    {
+        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        return internalOperationAsync(operationName, resourceBody.TypeName, resourceBody: resourceBody, ct: ct);
     }
 
     public virtual Task<Resource?> TypeOperationAsync(string operationName, string typeName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
@@ -700,15 +707,6 @@ public partial class BaseFhirClient : IDisposable
         if (typeName == null) throw Error.ArgumentNull(nameof(typeName));
 
         return internalOperationAsync(operationName, typeName, parameters: parameters, useGet: useGet, ct: ct);
-    }
-
-    public virtual Task<Resource?> TypeOperationAsync(string operationName, string typeName, Resource resourceBody, CancellationToken? ct = null)
-    {
-        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
-        if (typeName == null) throw Error.ArgumentNull(nameof(typeName));
-        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
-
-        return internalOperationAsync(operationName, typeName, resourceBody: resourceBody, ct: ct);
     }
 
     public virtual Task<Resource?> InstanceOperationAsync(Uri location, string operationName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
@@ -805,7 +803,7 @@ public partial class BaseFhirClient : IDisposable
         else if (id == null)
             tx = resourceBody == null
                 ? new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters, useGet).ToBundle()
-                : new TransactionBuilder(Endpoint).TypeOperation(type, operationName, resourceBody).ToBundle();
+                : new TransactionBuilder(Endpoint).TypeOperation(operationName, resourceBody).ToBundle();
         else
             tx = resourceBody == null
                 ? new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle()

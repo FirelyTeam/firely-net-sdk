@@ -599,14 +599,13 @@ public partial class TransactionBuilder
     /// <summary>
     /// Add an entry to perform a FHIR operation on a certain resource type to the transaction/batch
     /// </summary>
-    /// <param name="resourceType">resource type on which the operation is to be performed</param>
     /// <param name="name">name of the operation to be performed</param>
     /// <param name="resourceBody">Resource body to send as payload for the operation request</param>
     /// <param name="bundleEntryFullUrl">Optional parameter to set the <c>fullUrl</c> of the <c>Bundle</c> entry.</param>
     /// <returns></returns>
-    public TransactionBuilder TypeOperation(string resourceType, string name, Resource resourceBody, string? bundleEntryFullUrl = null)
+    public TransactionBuilder TypeOperation(string name, Resource resourceBody, string? bundleEntryFullUrl = null)
     {
-        var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
+        var path = newRestUrl().AddPath(resourceBody.TypeName, OPERATIONPREFIX + name);
         return EndpointOperation(path, resourceBody, bundleEntryFullUrl);
     }
 
