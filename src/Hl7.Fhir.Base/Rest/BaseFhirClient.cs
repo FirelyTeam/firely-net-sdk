@@ -667,6 +667,14 @@ public partial class BaseFhirClient : IDisposable
         return internalOperationAsync(operationName, parameters: parameters, useGet: useGet, ct: ct);
     }
 
+    public virtual Task<Resource?> WholeSystemOperationAsync(string operationName, Resource resourceBody, CancellationToken? ct = null)
+    {
+        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        return internalOperationAsync(operationName, resourceBody: resourceBody, ct: ct);
+    }
+
     public virtual Task<Resource?> TypeOperationAsync<TResource>(string operationName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
         where TResource : Resource
     {
@@ -674,6 +682,23 @@ public partial class BaseFhirClient : IDisposable
         var typeName = typeNameOrDie<TResource>();
 
         return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet, ct);
+    }
+
+    public virtual Task<Resource?> TypeOperationAsync<TResource>(string operationName, TResource resourceBody, CancellationToken? ct = null)
+        where TResource : Resource
+    {
+        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        return TypeOperationAsync(operationName, (Resource)resourceBody, ct);
+    }
+
+    public virtual Task<Resource?> TypeOperationAsync(string operationName, Resource resourceBody, CancellationToken? ct = null)
+    {
+        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        return internalOperationAsync(operationName, resourceBody.TypeName, resourceBody: resourceBody, ct: ct);
     }
 
     public virtual Task<Resource?> TypeOperationAsync(string operationName, string typeName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
@@ -691,7 +716,18 @@ public partial class BaseFhirClient : IDisposable
 
         var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
 
-        return internalOperationAsync(operationName, id.ResourceType, id.Id, id.VersionId, parameters, useGet, ct);
+        return internalOperationAsync(operationName, id.ResourceType, id.Id, id.VersionId, parameters: parameters, useGet: useGet, ct: ct);
+    }
+
+    public virtual Task<Resource?> InstanceOperationAsync(Uri location, string operationName, Resource resourceBody, CancellationToken? ct = null)
+    {
+        if (location == null) throw Error.ArgumentNull(nameof(location));
+        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
+
+        return internalOperationAsync(operationName, id.ResourceType, id.Id, id.VersionId, resourceBody: resourceBody, ct: ct);
     }
 
     public virtual Task<Resource?> OperationAsync(Uri location, string operationName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
@@ -700,6 +736,18 @@ public partial class BaseFhirClient : IDisposable
         if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
 
         var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
+
+        //operation responses are expected to return 2xx codes.
+        return executeAsync<Resource>(tx, _200Responses.Value, ct);
+    }
+
+    public virtual Task<Resource?> OperationAsync(Uri location, string operationName, Resource resourceBody, CancellationToken? ct = null)
+    {
+        if (location == null) throw Error.ArgumentNull(nameof(location));
+        if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, resourceBody).ToBundle();
 
         //operation responses are expected to return 2xx codes.
         return executeAsync<Resource>(tx, _200Responses.Value, ct);
@@ -715,6 +763,17 @@ public partial class BaseFhirClient : IDisposable
         return executeAsync<Resource>(tx, _200Responses.Value, ct);
     }
 
+    public virtual Task<Resource?> OperationAsync(Uri operation, Resource resourceBody, CancellationToken? ct = null)
+    {
+        if (operation == null) throw Error.ArgumentNull(nameof(operation));
+        if (resourceBody == null) throw Error.ArgumentNull(nameof(resourceBody));
+
+        var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), resourceBody).ToBundle();
+
+        //operation responses are expected to return 2xx codes.
+        return executeAsync<Resource>(tx, _200Responses.Value, ct);
+    }
+
     public virtual Task<Bundle?> ProcessMessageAsync(Bundle bundle, bool async = false, string? responseUrl = null, CancellationToken? ct = null)
     {
         if (bundle == null) throw new ArgumentNullException(nameof(bundle));
@@ -725,7 +784,7 @@ public partial class BaseFhirClient : IDisposable
     }
 
     private Task<Resource?> internalOperationAsync(string operationName, string? type = null, string? id = null, string? vid = null,
-        Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
+        Parameters? parameters = null, Resource? resourceBody = null, bool useGet = false, CancellationToken? ct = null)
     {
         // Brian: Not sure why we would create this parameters object as empty.
         //        I would imagine that a null parameters object is different to an empty one?
@@ -733,16 +792,22 @@ public partial class BaseFhirClient : IDisposable
         // idempotent call....
         // MV: (related to issue #419): we only provide an empty parameter when we are not performing a GET operation. In r4 it will be allowed 
         //     to provide an empty body in POST operations. In that case the line of code can be deleted.
-        if (parameters == null && !useGet) parameters = new Parameters();
+        if (parameters == null && resourceBody == null && !useGet) parameters = new Parameters();
 
         Bundle tx;
 
         if (type == null)
-            tx = new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters, useGet).ToBundle();
+            tx = resourceBody == null
+                ? new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters, useGet).ToBundle()
+                : new TransactionBuilder(Endpoint).ServerOperation(operationName, resourceBody).ToBundle();
         else if (id == null)
-            tx = new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters, useGet).ToBundle();
+            tx = resourceBody == null
+                ? new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters, useGet).ToBundle()
+                : new TransactionBuilder(Endpoint).TypeOperation(operationName, resourceBody).ToBundle();
         else
-            tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
+            tx = resourceBody == null
+                ? new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle()
+                : new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, resourceBody).ToBundle();
 
         //operation responses are expected to return 2xx codes.
         return executeAsync<Resource>(tx, _200Responses.Value, ct);
