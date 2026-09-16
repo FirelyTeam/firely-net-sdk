@@ -98,7 +98,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var snapHasChildren = snapNav.MoveToFirstChild();
             diffNav.MoveToFirstChild();
 
-            var choiceNames = snapHasChildren ? listChoiceElements(snapNav) : new List<string>();
+            var baseNames = snapHasChildren ? listChildNames(snapNav) : new HashSet<string>(StringComparer.Ordinal);
+            var choiceNames = baseNames.Where(ElementDefinitionNavigator.IsChoiceTypeElement).ToList();
             var result = new List<MatchInfo>();
 
             try
@@ -115,7 +116,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // No matching base element; this is a new element (core resource definitions)
                         // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
                         // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
-                        result.Add(constructNew(snapNav, diffNav, snapHasChildren));
+                        var newMatch = constructNew(snapNav, diffNav, snapHasChildren);
+
+                        // [EK 20260916] #3600 matchBase only scans forward from the current base position. So if the
+                        // unmatched diff element does name a child of the base, that child must *precede* the current
+                        // position: the diff element is not new, but out of order. Report this instead of silently
+                        // adding a new element (which surfaces downstream as a confusing error).
+                        if (newMatch.Issue is null && isBaseChildName(diffNav.PathName, baseNames, choiceNames))
+                        {
+                            newMatch.Issue = SnapshotGenerator.CreateIssueInvalidElementOrder(diffNav.Current);
+                        }
+                        result.Add(newMatch);
                     }
                 }
                 while (diffNav.MoveToNext());
@@ -535,6 +546,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             snapNav.ReturnToBookmark(bm);
             return match;
+        }
+
+        /// <summary>Determines if the specified differential element name refers to one of the base child element names, either directly or as a renamed choice type element (e.g. "valueString" for "value[x]").</summary>
+        private static bool isBaseChildName(string diffName, HashSet<string> baseNames, List<string> choiceNames)
+        {
+            return baseNames.Contains(diffName)
+                || choiceNames.Any(choiceName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, diffName));
         }
 
         // [WMR 20170308] The snapshot generator initializes snapNav with base profile elements, then merges diff constraints on top of that.
@@ -1083,28 +1101,28 @@ namespace Hl7.Fhir.Specification.Snapshot
             return false;
         }
 
-        /// <summary>List names of all following choice type elements ('[x]').</summary>
-        private static List<string> listChoiceElements(ElementDefinitionNavigator nav)
+        /// <summary>List the (distinct) names of the current and all following sibling elements.</summary>
+        /// <remarks>
+        /// [EK 20260916] #3600 Generalized from listChoiceElements: the caller derives the choice type element names ('[x]')
+        /// from this set and also uses it to detect out-of-order differential elements.
+        /// </remarks>
+        private static HashSet<string> listChildNames(ElementDefinitionNavigator nav)
         {
             var bm = nav.Bookmark();
 
-            // [WMR 20190826] Use HashSet to remove duplicates
-            //var result = new List<string>();
+            // [WMR 20190826] Use HashSet to remove duplicates (e.g. slices share the same path name)
             var elemNames = new HashSet<string>(StringComparer.Ordinal);
 
             do
             {
-                if (!(nav.Current is null) && nav.Current.IsChoice())
+                if (!(nav.Current is null))
                 {
-                    //result.Add(nav.PathName);
                     elemNames.Add(nav.PathName);
                 }
             } while (nav.MoveToNext());
 
             nav.ReturnToBookmark(bm);
-
-            //return result;
-            return elemNames.ToList();
+            return elemNames;
         }
 
         /// <summary>Find name of child element that represent a rename of the specified choice type element name.</summary>

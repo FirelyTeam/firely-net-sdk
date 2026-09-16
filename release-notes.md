@@ -65,6 +65,9 @@ notes below.
   behaviour change - the comparison was correct - but it blocked building against `net10.0` under
   `TreatWarningsAsErrors`. See issue [#3580](https://github.com/FirelyTeam/firely-net-sdk/issues/3580).
 
+**Snapshot generation**
+- The `SnapshotGenerator` now reports a specific issue (`PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER`, code 10020) when a differential element is out of order, i.e. when it constrains a base element that precedes a base element already matched by an earlier differential element. The spec requires `differential.element` and `snapshot.element` to follow the order of the base definition. Such elements could previously not be matched and were silently treated as new elements, which surfaced downstream as a confusing error. See issue [#3600](https://github.com/FirelyTeam/firely-net-sdk/issues/3600).
+
 **Dependencies**
 - Updated Microsoft.SourceLink.GitHub to 10.0.400. NSubstitute (6.2.0) and Verify.MSTest (32.0.0)
   were updated too, but are test-only and not part of the shipped packages.

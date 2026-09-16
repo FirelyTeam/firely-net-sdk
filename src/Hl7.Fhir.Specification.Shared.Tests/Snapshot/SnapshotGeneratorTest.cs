@@ -3357,6 +3357,84 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.BaseDefinition);
         }
 
+        // [EK 20260914] #3600 A differential that is not ordered according to the base definition cannot be
+        // matched by the (forward-only) snapshot generator. Report a clear issue instead of silently treating
+        // the element as a new element (which surfaces downstream as a confusing error).
+        [TestMethod]
+        public async Tasks.Task TestOutOfOrderDifferentialElement()
+        {
+            // Location.mode precedes Location.type in the base definition, so this differential is out of order
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Location.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Location).Value,
+                Name = "MyOutOfOrderLocation",
+                Url = "http://example.org/fhir/StructureDefinition/MyOutOfOrderLocation",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Location"),
+                        new ElementDefinition("Location.type") { Min = 1 },
+                        new ElementDefinition("Location.mode") { Min = 1 }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryResourceResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var (_, expanded) = await generateSnapshotAndCompare(profile);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpOutcome(_generator.Outcome);
+            var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
+            Assert.HasCount(1, issues);
+            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER, null, "Location.mode");
+        }
+
+        // [EK 20260916] #3600 Same as above, but the out-of-order element is a renamed choice type element
+        // (valueString constrains value[x], which precedes Observation.method in the base definition).
+        [TestMethod]
+        public async Tasks.Task TestOutOfOrderRenamedChoiceElement()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation).Value,
+                Name = "MyOutOfOrderObservation",
+                Url = "http://example.org/fhir/StructureDefinition/MyOutOfOrderObservation",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.method") { Min = 1 },
+                        new ElementDefinition("Observation.valueString") { Type = new List<ElementDefinition.TypeRefComponent>() { new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() } } }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryResourceResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var (_, expanded) = await generateSnapshotAndCompare(profile);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpOutcome(_generator.Outcome);
+            var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
+            Assert.HasCount(1, issues);
+            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER, null, "Observation.valueString");
+        }
+
         private static StructureDefinition ObservationTypeResliceProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
