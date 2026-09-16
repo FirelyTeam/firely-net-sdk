@@ -99,6 +99,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             diffNav.MoveToFirstChild();
 
             var choiceNames = snapHasChildren ? listChoiceElements(snapNav) : new List<string>();
+            // [EK 20260914] #3600 Position of each base child element, used to detect diff elements that are out of base order.
+            var basePositions = snapHasChildren ? listBaseChildPositions(snapNav) : new Dictionary<string, int>();
+            var lastMatchedPosition = -1;
             var result = new List<MatchInfo>();
 
             try
@@ -108,6 +111,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var match = snapHasChildren && matchBase(snapNav, diffNav, choiceNames);
                     if (match)
                     {
+                        if (basePositions.TryGetValue(snapNav.PathName, out var position))
+                        {
+                            lastMatchedPosition = Math.Max(lastMatchedPosition, position);
+                        }
                         result.AddRange(constructMatch(snapNav, diffNav));
                     }
                     else
@@ -115,7 +122,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // No matching base element; this is a new element (core resource definitions)
                         // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
                         // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
-                        result.Add(constructNew(snapNav, diffNav, snapHasChildren));
+                        // [EK 20260914] #3600 The base is matched forward-only, so a diff element that matches a base
+                        // element *before* the last matched position is not a new element, but an out-of-order element.
+                        var isOutOfOrder = snapHasChildren
+                            && tryGetBasePosition(basePositions, choiceNames, diffNav.PathName, out var position)
+                            && position < lastMatchedPosition;
+                        result.Add(constructNew(snapNav, diffNav, snapHasChildren, isOutOfOrder));
                     }
                 }
                 while (diffNav.MoveToNext());
@@ -494,7 +506,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
-        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, bool snapIsOnChild = true)
+        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, bool snapIsOnChild = true, bool isOutOfOrder = false)
         {
             // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
             // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
@@ -535,9 +547,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             snapNav.ReturnToBookmark(bm);
 
-            // [EK 20260914] #3600 The base is matched forward-only, so a diff element that matches a base
-            // element *before* the current position is not a new element, but an out-of-order element.
-            if (match.Issue is null && snapIsOnChild && isPrecedingBaseElement(snapNav, diffName))
+            if (match.Issue is null && isOutOfOrder)
             {
                 match.Issue = SnapshotGenerator.CreateIssueInvalidElementOrder(diffNav.Current);
             }
@@ -545,26 +555,39 @@ namespace Hl7.Fhir.Specification.Snapshot
             return match;
         }
 
-        /// <summary>Determines if any preceding sibling of the current element in <paramref name="snapNav"/> matches the specified element name.</summary>
-        private static bool isPrecedingBaseElement(ElementDefinitionNavigator snapNav, string diffName)
+        /// <summary>Returns the position of each (distinct) child element of the current element in <paramref name="nav"/>.</summary>
+        private static Dictionary<string, int> listBaseChildPositions(ElementDefinitionNavigator nav)
         {
-            var bm = snapNav.Bookmark();
-            try
+            var bm = nav.Bookmark();
+            var result = new Dictionary<string, int>(StringComparer.Ordinal);
+            var position = 0;
+
+            do
             {
-                while (snapNav.MoveToPrevious())
+                // Slices share the same path name; the position of the first occurrence determines the order
+                if (!result.ContainsKey(nav.PathName))
                 {
-                    if (SnapshotGenerator.IsEqualName(snapNav.PathName, diffName)
-                        || ElementDefinitionNavigator.IsRenamedChoiceTypeElement(snapNav.PathName, diffName))
-                    {
-                        return true;
-                    }
+                    result.Add(nav.PathName, position);
                 }
-                return false;
+                position++;
             }
-            finally
+            while (nav.MoveToNext());
+
+            nav.ReturnToBookmark(bm);
+            return result;
+        }
+
+        /// <summary>Determine the position of the base element that matches the specified differential element name.</summary>
+        private static bool tryGetBasePosition(Dictionary<string, int> basePositions, List<string> choiceNames, string diffName, out int position)
+        {
+            if (basePositions.TryGetValue(diffName, out position))
             {
-                snapNav.ReturnToBookmark(bm);
+                return true;
             }
+
+            // The diff may rename a choice type element, e.g. constrain "value[x]" to "valueString"
+            var matchingChoice = choiceNames.FirstOrDefault(choiceName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, diffName));
+            return !(matchingChoice is null) && basePositions.TryGetValue(matchingChoice, out position);
         }
 
         // [WMR 20170308] The snapshot generator initializes snapNav with base profile elements, then merges diff constraints on top of that.
