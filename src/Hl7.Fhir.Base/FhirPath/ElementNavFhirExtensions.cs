@@ -49,6 +49,8 @@ namespace Hl7.Fhir.FhirPath
             // lets keep both to keep everyone happy.
             t.Add("htmlchecks", (PocoNode f) => f.HtmlChecks(), doNullProp: false);
             t.Add("htmlChecks", (PocoNode f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlchecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlChecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
@@ -84,12 +86,23 @@ namespace Hl7.Fhir.FhirPath
         public static bool HasValue(this PocoNode focus) => focus is PrimitiveNode {Value: not null};
 
         /// <summary>
-        /// Check if the node has a valid Xhtml narrative value, and not just extensions.
+        /// Check whether the node contains valid Xhtml narrative.
         /// </summary>
-        /// <param name="focus"></param>
-        /// <returns></returns>
-        public static bool HtmlChecks(this PocoNode focus) =>
-            focus is PrimitiveNode {Primitive: XHtml {JsonValue: string xhtml}} && XHtml.IsValidNarrativeXhtml(xhtml, out _, out _);
+        /// <remarks>When invoked on an xhtml element, the contents are validated against the rules around HTML usage.
+        /// When invoked on a string, the contents of the string are parsed as the content of a div and validated
+        /// against those same rules. For any other kind of element, the result is <c>null</c> (empty).</remarks>
+        public static bool? HtmlChecks(this PocoNode focus) => focus switch
+        {
+            PrimitiveNode { Primitive: XHtml { JsonValue: string xhtml } } => XHtml.IsValidNarrativeXhtml(xhtml, out _, out _),
+            PrimitiveNode { Value: string s } => XHtml.IsValidNarrativeXhtml($"<div xmlns=\"{XmlNs.XHTML}\">{s}</div>", out _, out _),
+            _ => null
+        };
+
+        public static bool? HtmlChecks(this IEnumerable<PocoNode> focus)
+        {
+            var single = focus.Take(2).ToArray();
+            return single.Length == 1 ? single[0].HtmlChecks() : null;
+        }
 
         public static IEnumerable<Base?> ToFhirValues(this IEnumerable<PocoNode> results)
         {
