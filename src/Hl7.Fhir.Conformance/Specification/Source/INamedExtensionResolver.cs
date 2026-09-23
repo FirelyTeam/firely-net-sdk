@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Validating <c>myExt</c> therefore means going from the name back to the definition:
     /// <c>TryResolveNamedExtensionAsync("myExt")</c> returns the <c>my-ext</c> StructureDefinition.
     /// </remarks>
-    public interface INamedExtensionResolver
+    public interface INamedExtensionResolver : IAsyncResourceResolver
     {
         /// <summary>Find the extension definition registered under <paramref name="name"/>.</summary>
         /// <param name="name">The json/xml name of the property, as it appears in the instance.</param>
