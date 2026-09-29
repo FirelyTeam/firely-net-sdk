@@ -16,6 +16,14 @@ trigger:
 
 name: $(date:yyyyMMdd)$(rev:.r)
 
+parameters:
+# Every test project is built for each of these target frameworks, and every test job runs once per framework.
+- name: testTargetFrameworks
+  type: object
+  default:
+  - net10.0
+  - net8.0
+
 variables:
 - group: CodeSigning
 - group: APIKeys
@@ -73,7 +81,7 @@ stages:
         }
         
         Write-Host "##[command]Build Configuration: $(buildConfiguration)"
-        Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)"
+        Write-Host "##[command]Test Target Frameworks: ${{ join(', ', parameters.testTargetFrameworks) }}"
         Write-Host "##[command]Build Number: $(Build.BuildNumber)"
       displayName: 'Build Information'
       
@@ -104,30 +112,31 @@ stages:
         projects: ./Hl7.Fhir.sln
         arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
 
-    - task: DotNetCoreCLI@2
-      displayName: Create Test artifacts
-      inputs:
-        command: publish
-        projects: |
-         **/Hl7.*Tests/*.csproj
-         **/Hl7.FhirPath.R4.Tests/*.csproj
-        publishWebProjects: false
-        zipAfterPublish: false
-        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK) 
+    - ${{ each tfm in parameters.testTargetFrameworks }}:
+      - task: DotNetCoreCLI@2
+        displayName: Create Test artifacts (${{ tfm }})
+        inputs:
+          command: publish
+          projects: |
+           **/Hl7.*Tests/*.csproj
+           **/Hl7.FhirPath.R4.Tests/*.csproj
+          publishWebProjects: false
+          zipAfterPublish: false
+          arguments: --configuration $(buildConfiguration) --no-build -f ${{ tfm }}
 
-    - task: CopyFiles@2
-      displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
-      inputs:
-        sourceFolder: $(System.DefaultWorkingDirectory)
-        Contents: '**/bin/$(buildConfiguration)/*/publish/**'
-        flattenFolders: false
-        TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
+      - task: CopyFiles@2
+        displayName: 'Copy Test artifacts (${{ tfm }}) to $(System.DefaultWorkingDirectory)/bin/${{ tfm }}'
+        inputs:
+          sourceFolder: $(System.DefaultWorkingDirectory)
+          Contents: '**/bin/$(buildConfiguration)/${{ tfm }}/publish/**'
+          flattenFolders: false
+          TargetFolder: '$(System.DefaultWorkingDirectory)/bin/${{ tfm }}'
 
-    - task: PublishPipelineArtifact@1
-      displayName: Publish Test artifacts
-      inputs:
-        targetPath: $(System.DefaultWorkingDirectory)/bin
-        artifactName: TestBuild
+      - task: PublishPipelineArtifact@1
+        displayName: Publish Test artifacts (${{ tfm }})
+        inputs:
+          targetPath: $(System.DefaultWorkingDirectory)/bin/${{ tfm }}
+          artifactName: TestBuild_${{ tfm }}
     
     - template: templates/sign-dlls-template.yml
     
@@ -216,115 +225,128 @@ stages:
   displayName: Test
   dependsOn: build
   jobs:
-  - job:
-    displayName: Tests common test projects
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests common test projects
-          projects: |
-            **/Hl7.Fhir.Support.Tests/**/publish/Hl7.Fhir.Support.Tests.dll
-            **/Hl7.FhirPath.Tests/**/publish/HL7.FhirPath.Tests.dll
-            **/Hl7.Fhir.Support.Poco.Tests/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
-  - job:
-    displayName: Tests FhirPath Core test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests FhirPath Core test project
-          projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
-  - job:
-    displayName: Tests Serialization STU3 test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Serialization STU3 test project
-          projects: |
-            **/publish/Hl7.Fhir.Serialization.STU3.Tests.dll
-  - job:
-    displayName: Tests Serialization R4 test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Serialization R4 test project
-          projects: |
-            **/publish/Hl7.Fhir.Serialization.R4.Tests.dll
-    
-  - job:
-    displayName: Tests Serialization R4B test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Serialization R4B test project
-          projects: |
-            **/publish/Hl7.Fhir.Serialization.R4B.Tests.dll
-  - job:
-    displayName: Tests Serialization R5 test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Serialization R5 test project
-          projects: |
-            **/publish/Hl7.Fhir.Serialization.R5.Tests.dll
+  - ${{ each tfm in parameters.testTargetFrameworks }}:
+    - job:
+      displayName: Tests common test projects (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests common test projects (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: |
+              **/Hl7.Fhir.Support.Tests/**/publish/Hl7.Fhir.Support.Tests.dll
+              **/Hl7.FhirPath.Tests/**/publish/HL7.FhirPath.Tests.dll
+              **/Hl7.Fhir.Support.Poco.Tests/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
+    - job:
+      displayName: Tests FhirPath Core test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests FhirPath Core test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
+    - job:
+      displayName: Tests Serialization STU3 test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Serialization STU3 test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: |
+              **/publish/Hl7.Fhir.Serialization.STU3.Tests.dll
+    - job:
+      displayName: Tests Serialization R4 test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Serialization R4 test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: |
+              **/publish/Hl7.Fhir.Serialization.R4.Tests.dll
 
-  - job:
-    displayName: Tests Specification STU3 test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Specification STU3 test project
-          projects: '**/publish/Hl7.Fhir.Specification.STU3.Tests.dll' 
+    - job:
+      displayName: Tests Serialization R4B test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Serialization R4B test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: |
+              **/publish/Hl7.Fhir.Serialization.R4B.Tests.dll
+    - job:
+      displayName: Tests Serialization R5 test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Serialization R5 test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: |
+              **/publish/Hl7.Fhir.Serialization.R5.Tests.dll
 
-  - job:
-    displayName: Tests Specification R4 test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Specification R4 test project
-          projects: '**/publish/Hl7.Fhir.Specification.R4.Tests.dll' 
+    - job:
+      displayName: Tests Specification STU3 test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Specification STU3 test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: '**/publish/Hl7.Fhir.Specification.STU3.Tests.dll' 
 
-  - job:
-    displayName: Tests Specification R4B test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Specification R4B test project
-          projects: '**/publish/Hl7.Fhir.Specification.R4B.Tests.dll' 
-  - job:
-    displayName: Tests Specification R5 test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Specification R5 test project
-          projects: '**/publish/Hl7.Fhir.Specification.R5.Tests.dll' 
-  - job:
-    displayName: Tests Core test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Core test project
-          projects: |
-            **/publish/Hl7.Fhir.R*.Tests.dll
-            **/publish/Hl7.Fhir.STU3.Tests.dll
-  - job:
-    displayName: Tests ElementModel test project
-    steps:
-      - checkout: none
-      - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests ElementModel test project
-          projects: '**/publish/Hl7.Fhir.ElementModel.*.Tests.dll'
+    - job:
+      displayName: Tests Specification R4 test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Specification R4 test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: '**/publish/Hl7.Fhir.Specification.R4.Tests.dll' 
+
+    - job:
+      displayName: Tests Specification R4B test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Specification R4B test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: '**/publish/Hl7.Fhir.Specification.R4B.Tests.dll' 
+    - job:
+      displayName: Tests Specification R5 test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Specification R5 test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: '**/publish/Hl7.Fhir.Specification.R5.Tests.dll' 
+    - job:
+      displayName: Tests Core test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests Core test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: |
+              **/publish/Hl7.Fhir.R*.Tests.dll
+              **/publish/Hl7.Fhir.STU3.Tests.dll
+    - job:
+      displayName: Tests ElementModel test project (${{ tfm }})
+      steps:
+        - checkout: none
+        - template: templates/test-job-template.yml
+          parameters:
+            testRunTitle: Tests ElementModel test project (${{ tfm }})
+            targetFramework: ${{ tfm }}
+            projects: '**/publish/Hl7.Fhir.ElementModel.*.Tests.dll'
 
 - stage: deploy_git
   displayName: Deploy to GitHub

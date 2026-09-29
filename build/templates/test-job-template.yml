@@ -4,11 +4,12 @@ parameters:
 - name: testRunTitle
   default: 'Test'
 - name: projects
+- name: targetFramework
 
 steps:
 - powershell: |
     Write-Host "##[section]Starting test execution: ${{ parameters.testRunTitle }}"
-    Write-Host "##[command]Target Framework: $(TEST_TARGETFRAMEWORK)"
+    Write-Host "##[command]Target Framework: ${{ parameters.targetFramework }}"
     Write-Host "##[command]Test Projects: ${{ parameters.projects }}"
     Write-Host "##[command]Filters: TestCategory!=IntegrationTest&TestCategory!=FhirClient"
   displayName: 'Test Configuration Info'
@@ -17,10 +18,17 @@ steps:
   displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
   inputs:
     version: $(NET_CORE_SDK)
+# The SDK only brings its own runtime; tests for older frameworks need theirs installed too.
+- ${{ if eq(parameters.targetFramework, 'net8.0') }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET runtime 8.x'
+    inputs:
+      packageType: runtime
+      version: 8.x
 - task: DownloadPipelineArtifact@2
   inputs:
     displayName: Download Build artifacts
-    artifact: 'TestBuild'
+    artifact: 'TestBuild_${{ parameters.targetFramework }}'
     path: $(System.DefaultWorkingDirectory)/TestBuild
     
 - task: DotNetCoreCLI@2
@@ -28,7 +36,7 @@ steps:
   inputs:
     command: test
     projects: ${{ parameters.projects }}
-    arguments: '-f $(TEST_TARGETFRAMEWORK) --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
+    arguments: '-f ${{ parameters.targetFramework }} --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
     testRunTitle: ${{ parameters.testRunTitle }}
     
 - powershell: |
