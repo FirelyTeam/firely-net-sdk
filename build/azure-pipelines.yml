@@ -109,7 +109,7 @@ stages:
       displayName: Build
       inputs:
         command: build
-        projects: ./Hl7.Fhir.sln
+        projects: ./Hl7.Fhir.slnx
         arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
 
     - ${{ each tfm in parameters.testTargetFrameworks }}:

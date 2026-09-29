@@ -1,6 +1,6 @@
 {
   "solution": {
-    "path": "Hl7.Fhir.sln",
+    "path": "Hl7.Fhir.slnx",
     "projects": [
       "src\\Hl7.Fhir.ElementModel\\Hl7.Fhir.ElementModel.csproj",
       "src\\Hl7.Fhir.Serialization\\Hl7.Fhir.Serialization.csproj",
