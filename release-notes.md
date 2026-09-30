@@ -8,6 +8,19 @@ terminology validation. There are no breaking API changes, but two `SnapshotGene
 10014 -> 10019), which affects code that switches on those numbers. See the behavioural
 notes below.
 
+**Platform support**
+- The SDK now also targets `net10.0`, next to `net8.0` and `netstandard2.1`. This is additive: .NET 8
+  and .NET 9 applications keep resolving to the `net8.0` assets. On .NET 10, the allocation-free
+  class mapping lookup described under Performance is now active.
+- `net8.0` remains supported until the next major version (SDK 7), even after Microsoft ends support
+  for .NET 8 in November 2026.
+- **Upcoming: `netstandard2.1` will be removed** in a later minor release, once Unity 6.8 - which
+  replaces Mono with CoreCLR and .NET 10 - has shipped. Its only remaining audience is Unity, and
+  Unity 6.8 can consume the `net10.0` assets. If you depend on the `netstandard2.1` assets for
+  another platform, please let us know.
+- The `System.Reflection.Emit.Lightweight` and `System.Buffers` package dependencies were removed; both
+  are part of every framework the SDK targets.
+
 **Serialization**
 - The serializers no longer write empty objects (`{}`) or empty elements (`<x/>`). A structure is
   opened only once it is known to have content, so an empty POCO - or one emptied out by a

@@ -1,0 +1,114 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="FullDebug" />
+    <BuildType Name="Release" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="release-notes.md" />
+    <File Path="src/firely-net-sdk-tests.props" />
+    <File Path="src/firely-net-sdk.props" />
+    <File Path="src/specification.data.props" />
+  </Folder>
+  <Folder Name="/Specification.Data/">
+    <Project Path="src/Hl7.Fhir.Specification.Data.R4/Hl7.Fhir.Specification.Data.R4.csproj" />
+    <Project Path="src/Hl7.Fhir.Specification.Data.R4B/Hl7.Fhir.Specification.Data.R4B.csproj" />
+    <Project Path="src/Hl7.Fhir.Specification.Data.R5/Hl7.Fhir.Specification.Data.R5.csproj" />
+    <Project Path="src/Hl7.Fhir.Specification.Data.STU3/Hl7.Fhir.Specification.Data.STU3.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="src/Benchmarks/Benchmarks.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/CrossVersionBenchmarks/CrossVersionBenchmarks.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Folder Name="/Tests/Common/">
+    <Project Path="src/Hl7.Fhir.Support.Poco.Tests/Hl7.Fhir.Support.Poco.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Support.Tests/Hl7.Fhir.Support.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.FhirPath.Tests/HL7.FhirPath.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Folder Name="/Tests/R4/">
+    <Project Path="src/Hl7.Fhir.ElementModel.R4.Tests/Hl7.Fhir.ElementModel.R4.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.R4.Tests/Hl7.Fhir.R4.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Serialization.R4.Tests/Hl7.Fhir.Serialization.R4.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Specification.R4.Tests/Hl7.Fhir.Specification.R4.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.FhirPath.R4.Tests/Hl7.FhirPath.R4.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Folder Name="/Tests/R4B/">
+    <Project Path="src/Hl7.Fhir.ElementModel.R4B.Tests/Hl7.Fhir.ElementModel.R4B.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.R4B.Tests/Hl7.Fhir.R4B.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Serialization.R4B.Tests/Hl7.Fhir.Serialization.R4B.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Specification.R4B.Tests/Hl7.Fhir.Specification.R4B.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Folder Name="/Tests/R5/">
+    <Project Path="src/Hl7.Fhir.ElementModel.R5.Tests/Hl7.Fhir.ElementModel.R5.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.R5.Tests/Hl7.Fhir.R5.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Serialization.R5.Tests/Hl7.Fhir.Serialization.R5.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Specification.R5.Tests/Hl7.Fhir.Specification.R5.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Folder Name="/Tests/Shared/">
+    <Project Path="src/Hl7.Fhir.ElementModel.Shared.Tests/Hl7.Fhir.ElementModel.Shared.Tests.shproj" />
+    <Project Path="src/Hl7.Fhir.Serialization.Shared.Tests/Hl7.Fhir.Serialization.Shared.Tests.shproj" />
+    <Project Path="src/Hl7.Fhir.Shared.Tests/Hl7.Fhir.Shared.Tests.shproj" />
+    <Project Path="src/Hl7.Fhir.Specification.Shared.Tests/Hl7.Fhir.Specification.Shared.Tests.shproj" />
+  </Folder>
+  <Folder Name="/Tests/STU3/">
+    <Project Path="src/Hl7.Fhir.ElementModel.STU3.Tests/Hl7.Fhir.ElementModel.STU3.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Serialization.STU3.Tests/Hl7.Fhir.Serialization.STU3.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.Specification.STU3.Tests/Hl7.Fhir.Specification.STU3.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+    <Project Path="src/Hl7.Fhir.STU3.Tests/Hl7.Fhir.STU3.Tests.csproj">
+      <BuildType Solution="FullDebug|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Project Path="src/Hl7.Fhir.Base/Hl7.Fhir.Base.csproj" />
+  <Project Path="src/Hl7.Fhir.Conformance/Hl7.Fhir.Conformance.csproj" />
+  <Project Path="src/Hl7.Fhir.R4/Hl7.Fhir.R4.csproj" />
+  <Project Path="src/Hl7.Fhir.R4B/Hl7.Fhir.R4B.csproj" />
+  <Project Path="src/Hl7.Fhir.R5/Hl7.Fhir.R5.csproj" />
+  <Project Path="src/Hl7.Fhir.R6/Hl7.Fhir.R6.csproj" />
+  <Project Path="src/Hl7.Fhir.Shims.Base/Hl7.Fhir.Shims.Base.shproj" />
+  <Project Path="src/Hl7.Fhir.Shims.R4AndUp/Hl7.Fhir.Shims.R4AndUp.shproj" />
+  <Project Path="src/Hl7.Fhir.Shims.STU3AndUp/Hl7.Fhir.Shims.STU3AndUp.shproj" />
+  <Project Path="src/Hl7.Fhir.STU3/Hl7.Fhir.STU3.csproj" />
+</Solution>
