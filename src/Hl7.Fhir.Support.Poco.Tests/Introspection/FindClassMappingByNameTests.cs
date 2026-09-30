@@ -7,8 +7,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 {
     /// <summary>
     /// The span overload of <see cref="ModelInspector.FindClassMapping(ReadOnlySpan{char})"/> has a separate,
-    /// allocation-free implementation on .NET 10+. These tests run on every test target framework, so both
-    /// implementations are checked against the string overload.
+    /// allocation-free implementation on .NET 10+. These tests check it against the string overload.
     /// </summary>
     [TestClass]
     public class FindClassMappingByNameTests
