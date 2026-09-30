@@ -31,7 +31,7 @@ public static class PocoNodeExtensions
         result = node?.Poco is DomainResource
             ? node
                 .Child<PocoListNode>("contained")
-                ?.FirstOrDefault<Resource>(contained => contained.ResourceIdentity().IsTargetOf(identity))
+                ?.FirstOrDefault<Resource>(contained => contained.ResourceIdentity()?.IsTargetOf(identity) is true)
             : null;
         return result is not null;
     }
