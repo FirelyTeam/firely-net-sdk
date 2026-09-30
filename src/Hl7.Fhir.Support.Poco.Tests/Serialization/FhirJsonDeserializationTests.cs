@@ -816,6 +816,59 @@ public partial class FhirJsonDeserializationTests
             act.Should().NotThrow().Which.Should().BeOfType<Patient>().Which.Active.Should().Be(true);
     }
 
+    // "given" is a list of primitives, so "given" and "_given" are merged by index. Each case is run in both
+    // property orders. The value that is processed first is kept, the other is reported if it targets the same element.
+    public static IEnumerable<object?[]> PrimitiveArrayData()
+    {
+        const string G = "\"given\"", U = "\"_given\"";
+
+        static object?[] row(string properties, int twice, string?[] values, string?[] ids) => [properties, twice, values, ids];
+
+        // Null placeholders: no element is supplied twice.
+        yield return row($$"""{{G}}: ["a", null], {{U}}: [null, { "id": "x" }]""", 0, ["a", null], [null, "x"]);
+        yield return row($$"""{{U}}: [null, { "id": "x" }], {{G}}: ["a", null]""", 0, ["a", null], [null, "x"]);
+
+        // Unequal lengths: the extra elements are not supplied twice.
+        yield return row($$"""{{G}}: ["a", "b"], {{U}}: [{ "id": "x" }]""", 0, ["a", "b"], ["x", null]);
+        yield return row($$"""{{U}}: [{ "id": "x" }], {{G}}: ["a", "b"]""", 0, ["a", "b"], ["x", null]);
+        yield return row($$"""{{G}}: ["a"], {{U}}: [null, { "id": "y" }]""", 0, ["a", null], [null, "y"]);
+        yield return row($$"""{{U}}: [null, { "id": "y" }], {{G}}: ["a"]""", 0, ["a", null], [null, "y"]);
+
+        // The same element is supplied twice: the first value wins and exactly one JSON135 is reported.
+        yield return row($$"""{{G}}: ["a"], {{U}}: ["b"]""", 1, ["a"], [null]);
+        yield return row($$"""{{U}}: ["b"], {{G}}: ["a"]""", 1, ["b"], [null]);
+        yield return row($$"""{{G}}: ["a", "b"], {{U}}: ["c"]""", 1, ["a", "b"], [null, null]);
+        yield return row($$"""{{U}}: ["c"], {{G}}: ["a", "b"]""", 1, ["c", "b"], [null, null]);
+
+        // Only the colliding element is reported, although the other element also holds a primitive in '_given'.
+        yield return row($$"""{{G}}: [null, "b"], {{U}}: ["c", "d"]""", 1, ["c", "b"], [null, null]);
+        yield return row($$"""{{U}}: ["c", "d"], {{G}}: [null, "b"]""", 1, ["c", "d"], [null, null]);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(PrimitiveArrayData))]
+    public void PrimitiveArrayValueSuppliedTwice_IsOnlyFatalForSameElement(string properties, int expectedTwice,
+        string?[] expectedValues, string?[] expectedIds)
+    {
+        var json = $$"""{ "resourceType" : "Patient", "name" : [{ {{properties}} }] }""";
+        var deserializer = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable));
+        var act = () => deserializer.DeserializeResource(json);
+
+        Patient patient;
+        if (expectedTwice == 0)
+            patient = act.Should().NotThrow().Which.Should().BeOfType<Patient>().Which;
+        else
+        {
+            var ex = act.Should().Throw<DeserializationFailedException>().Which;
+            ex.Exceptions.Count(e => e.ErrorCode == ERR.PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE).Should().Be(expectedTwice);
+            patient = ex.PartialResult.Should().BeOfType<Patient>().Which;
+        }
+
+        var givenElements = patient.Name.Should().ContainSingle().Which.GivenElement;
+        givenElements.Select(g => g?.Value).Should().Equal(expectedValues);
+        givenElements.Select(g => g?.ElementId).Should().Equal(expectedIds);
+    }
+
     [TestMethod]
     [DataRow(DeserializationMode.Strict, true)]
     [DataRow(DeserializationMode.NoOverflow, false)]
