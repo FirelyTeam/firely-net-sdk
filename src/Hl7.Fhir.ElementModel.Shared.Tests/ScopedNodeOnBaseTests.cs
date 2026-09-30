@@ -100,6 +100,31 @@ namespace Hl7.Fhir.Model.Tests
         }
 
         [TestMethod]
+        public void TestResolveSkipsContainedResourceWithoutId()
+        {
+            var bundle = new Bundle
+            {
+                Entry =
+                [
+                    new()
+                    {
+                        FullUrl = "https://example.com/base/Patient/1",
+                        Resource = new Patient
+                        {
+                            Contained = [new Organization(), new Organization { Id = "o1" }],
+                            ManagingOrganization = new ResourceReference("#o1")
+                        }
+                    }
+                ]
+            };
+
+            var reference = bundle.ToPocoNode().NavigateTo("entry.resource.managingOrganization").Single();
+
+            Assert.AreEqual("Bundle.entry[0].resource[0].contained[1]", reference.Resolve("#o1")!.GetLocation());
+            Assert.IsNull(reference.Resolve("#o2"));
+        }
+
+        [TestMethod]
         public void TestResolve()
         {
             PocoNode inner7 = _bundleNode!.NavigateTo("entry[6].resource.managingOrganization").Single();
