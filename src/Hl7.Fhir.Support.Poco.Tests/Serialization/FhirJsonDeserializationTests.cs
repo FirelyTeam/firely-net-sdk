@@ -241,10 +241,15 @@ public partial class FhirJsonDeserializationTests
         yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
         yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
         yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
+        yield return data<ContactDetail>(new { name = "John", _name = "Johnny" }, nameIs("John"), ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE, ERR.PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE);
+        yield return data<ContactDetail>(new { _name = "Johnny", name = "John" }, nameIs("Johnny"), ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE, ERR.PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE);
 
         static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.Value
             .Should().Be("Ewout");
         
+        static Action<object> nameIs(string expected) => parsed =>
+            parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.Value.Should().Be(expected);
+
         static void checkId(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.ElementId
             .Should().Be("12345");
         
@@ -784,6 +789,53 @@ public partial class FhirJsonDeserializationTests
         {
             dfe.Exceptions.Select(ex => ex.ErrorCode).Should().BeEquivalentTo(expectedErrs);
         }
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Strict, true)]
+    [DataRow(DeserializationMode.NoOverflow, true)]
+    [DataRow(DeserializationMode.Recoverable, true)]
+    [DataRow(DeserializationMode.BackwardsCompatible, true)]
+    [DataRow(DeserializationMode.Ostrich, false)]
+    public void PrimitiveValueSuppliedTwice_IsFatal(DeserializationMode mode, bool shouldThrow)
+    {
+        // "active" and "_active" are different properties, so this is not a duplicate property, but
+        // the value in "_active" would be silently lost.
+        var json = """{ "resourceType" : "Patient", "active" : true, "_active" : false }""";
+        var deserializer = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(mode));
+
+        var act = () => deserializer.DeserializeResource(json);
+
+        if (shouldThrow)
+        {
+            var ex = act.Should().Throw<DeserializationFailedException>().Which;
+            ex.Exceptions.Should().Contain(e => e.ErrorCode == ERR.PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE);
+            ex.PartialResult.Should().BeOfType<Patient>().Which.Active.Should().Be(true);
+        }
+        else // Ostrich ignores all errors, even fatal ones.
+            act.Should().NotThrow().Which.Should().BeOfType<Patient>().Which.Active.Should().Be(true);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Strict, true)]
+    [DataRow(DeserializationMode.NoOverflow, false)]
+    [DataRow(DeserializationMode.Recoverable, false)]
+    [DataRow(DeserializationMode.BackwardsCompatible, true)]
+    [DataRow(DeserializationMode.Ostrich, false)]
+    public void PrimitiveInUnderscoreProperty_WithoutValue_IsNotFatal(DeserializationMode mode, bool shouldThrow)
+    {
+        var json = """{ "resourceType" : "Patient", "_active" : true }""";
+        var deserializer = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(mode));
+
+        var act = () => deserializer.DeserializeResource(json);
+
+        if (shouldThrow)
+        {
+            var ex = act.Should().Throw<DeserializationFailedException>().Which;
+            ex.Exceptions.Should().ContainSingle(e => e.ErrorCode == ERR.UNDERSCORE_SHOULD_BE_OBJECT_CODE);
+        }
+        else
+            act.Should().NotThrow().Which.Should().BeOfType<Patient>().Which.Active.Should().Be(true);
     }
 
     [TestMethod]

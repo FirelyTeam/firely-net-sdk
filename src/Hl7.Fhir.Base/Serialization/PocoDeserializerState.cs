@@ -25,6 +25,11 @@ internal class PocoDeserializerState
     /// </summary>
     public SourceCommentCollector? Comments { get; init; }
 
+    /// <summary>
+    /// Greater than zero while parsing the value of a property that occurred more than once in its object.
+    /// </summary>
+    public int DuplicatePropertyDepth { get; set; }
+
     private readonly Stack<BaseFhirJsonDeserializer.ObjectParsingState> objectContext = new();
 
     public void EnterObjectContext() =>
