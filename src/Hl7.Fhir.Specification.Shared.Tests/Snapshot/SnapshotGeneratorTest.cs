@@ -3435,6 +3435,47 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER, null, "Observation.valueString");
         }
 
+        // [EK 20260930] #3591 A '..' in a differential path used to produce a phantom element 'Observation.'
+        // and silently lose the constraint. Report an issue and skip the element instead.
+        [TestMethod]
+        public async Tasks.Task TestDifferentialPathWithEmptySegment()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation).Value,
+                Name = "MyDoubleDotObservation",
+                Url = "http://example.org/fhir/StructureDefinition/MyDoubleDotObservation",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation...unit") { Fixed = new FhirString("%") }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryResourceResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var (_, expanded) = await generateSnapshotAndCompare(profile);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpOutcome(_generator.Outcome);
+            var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
+            Assert.HasCount(1, issues);
+            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PATH, null, "Observation...unit");
+
+            // No phantom element, and the snapshot is identical to the base
+            Assert.IsFalse(expanded.Snapshot.Element.Any(e => e.Path.EndsWith(".")));
+            var baseSd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
+            Assert.HasCount(baseSd.Snapshot.Element.Count, expanded.Snapshot.Element);
+        }
+
         private static StructureDefinition ObservationTypeResliceProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
