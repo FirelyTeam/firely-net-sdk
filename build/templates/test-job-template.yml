@@ -6,6 +6,12 @@ parameters:
 - name: projects
 - name: targetFramework
 
+variables:
+  ${{ if eq(parameters.targetFramework, 'net8.0') }}:
+    sdkVersion: '8.x'
+  ${{ if eq(parameters.targetFramework, 'net10.0') }}:
+    sdkVersion: '10.x'
+
 steps:
 - powershell: |
     Write-Host "##[section]Starting test execution: ${{ parameters.testRunTitle }}"
@@ -15,16 +21,10 @@ steps:
   displayName: 'Test Configuration Info'
   
 - task: UseDotNet@2
-  displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
-  inputs:
-    version: $(NET_CORE_SDK)
-# The SDK only brings its own runtime; tests for older frameworks need theirs installed too.
-- ${{ if eq(parameters.targetFramework, 'net8.0') }}:
-  - task: UseDotNet@2
-    displayName: 'Use .NET runtime 8.x'
+  displayName: 'Use .NET SDK $(sdkVersion)'
     inputs:
-      packageType: runtime
-      version: 8.x
+      packageType: sdk
+      version: $(sdkVersion)
 - task: DownloadPipelineArtifact@2
   inputs:
     displayName: Download Build artifacts
