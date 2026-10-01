@@ -64,8 +64,7 @@ namespace Hl7.Fhir.Utility
         /// Severity of this specific issue.
         /// </summary>
         /// <remarks>
-        /// Setter is public to permit others to upgrade/downgrade specific issues
-        /// as needed.
+        /// The severity is set when the issue is created and cannot be changed afterwards.
         /// </remarks>
         public OperationOutcome.IssueSeverity IssueSeverity { get; private set; } = OperationOutcome.IssueSeverity.Error;
 

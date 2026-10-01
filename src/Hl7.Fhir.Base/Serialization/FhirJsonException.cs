@@ -50,9 +50,13 @@ public class FhirJsonException(
     public const string UNEXPECTED_OBJECT_VALUE_FOR_PRIMITIVE_CODE = "JSON132";
     public const string USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE = "JSON133";
     public const string UNDERSCORE_SHOULD_BE_OBJECT_CODE = "JSON134";
+    public const string PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE = "JSON135";
 
     // Fatal errors - there is dataloss so processing should not continue.
     internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", "Duplicate property", OO_Sev.Fatal);
+
+    // The value of a primitive was supplied twice (e.g. by both 'name' and '_name'), so the second one is dropped.
+    internal static FhirJsonException PRIMITIVE_VALUE_SUPPLIED_TWICE(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE, $"The value of the primitive was already supplied, so the value in property '{propName}' cannot be stored.", "Primitive value supplied twice", OO_Sev.Fatal);
 
     // Non Fatal errors - All data present in the parsed data could be retrieved and
     // captured in the POCO model (maybe using overflow), even if the syntax or the data was not fully FHIR compliant.

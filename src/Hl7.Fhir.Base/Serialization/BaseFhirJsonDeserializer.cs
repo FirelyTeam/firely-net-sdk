@@ -254,7 +254,8 @@ public class BaseFhirJsonDeserializer
         // This includes choice properties, which may differ in suffix, but are still the same property.
         var usesUnderscore = propertyName.StartsWith('_');
         var propertyNameWithoutTypeSuffix = (usesUnderscore ? "_" : "") + propertyMapping.Name;
-        if(state.GetObjectContext().HitProperty(propertyNameWithoutTypeSuffix))
+        var isDuplicate = state.GetObjectContext().HitProperty(propertyNameWithoutTypeSuffix);
+        if(isDuplicate)
             state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
 
         if(usesUnderscore && !metadata.ValueMapping.IsFhirPrimitive)
@@ -265,7 +266,12 @@ public class BaseFhirJsonDeserializer
             state.SetIndex(0);
 
         target.TryGetValue(elementName, out var existingValue);
+
+        // Values in a duplicate property merge into the existing instance, which is already reported as fatal.
+        if (isDuplicate) state.DuplicatePropertyDepth++;
         var result = deserializeRhs(existingValue, ref reader, propertyName, metadata, state);
+        if (isDuplicate) state.DuplicatePropertyDepth--;
+
         target.SetValue(elementName, result);
 
         // Pass the name as encountered in the serialized form (without the '_' prefix), so the
@@ -534,7 +540,7 @@ public class BaseFhirJsonDeserializer
             else if(!propertyValueMapping.IsFhirPrimitive)
                 state.Errors.Add(ERR.UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE(ref reader, state.Path.GetInstancePath(), elementName));
 
-            deserializePrimitiveInto(ref reader, existingValue, propertyValueMapping);
+            deserializePrimitiveInto(ref reader, existingValue, propertyValueMapping, propertyName, state);
         }
         else if (isOnJsonObject(ref reader))
         {
@@ -638,14 +644,20 @@ public class BaseFhirJsonDeserializer
     private void deserializePrimitiveInto(
         ref Utf8JsonReader reader,
         Base existing,
-        ClassMapping propertyValueMapping
+        ClassMapping propertyValueMapping,
+        string propertyName,
+        PocoDeserializerState state
     )
     {
+        // The same property occurring twice is caught earlier, but 'name' and '_name' are different properties
+        // that can both supply a value. Dropping the second one loses information, so that is a fatal error.
+        if (existing is PrimitiveType { JsonValue: not null } && state.DuplicatePropertyDepth == 0)
+            state.Errors.Add(ERR.PRIMITIVE_VALUE_SUPPLIED_TWICE(ref reader, state.Path.GetInstancePath(), propertyName));
+
         var primitiveValue = readPrimitiveValue(ref reader, propertyValueMapping.PrimitiveValueProperty?.ImplementingType);
 
         if (existing is PrimitiveType existingPrimitive)
         {
-            // Note, this loses information, hence the repeated property is a fatal error.
             existingPrimitive.JsonValue ??= primitiveValue;
         }
         else
