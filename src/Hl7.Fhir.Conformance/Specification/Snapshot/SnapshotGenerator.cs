@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = differential.MakeTree();
+            var fullDifferential = DifferentialTreeConstructor.MakeTree(removeElementsWithInvalidPath(differential.Element));
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
 #if FIX_SLICENAMES_ON_ROOT_ELEMENTS
@@ -582,6 +582,20 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             return result;
+        }
+
+        // #3591 Report and skip differential elements with an empty path segment (e.g. 'Observation...unit'),
+        // as these can never be merged and would otherwise result in a phantom parent element.
+        private List<ElementDefinition> removeElementsWithInvalidPath(List<ElementDefinition> elements)
+        {
+            var invalid = elements.Where(e => !string.IsNullOrEmpty(e.Path) && e.Path.Split('.').Any(string.IsNullOrEmpty)).ToList();
+            if (invalid.Count == 0) return elements;
+
+            foreach (var elem in invalid)
+            {
+                addIssue(CreateIssueInvalidPath(elem));
+            }
+            return elements.Where(e => !invalid.Contains(e)).ToList();
         }
 
 #if FIX_SLICENAMES_ON_SPECIALIZATIONS

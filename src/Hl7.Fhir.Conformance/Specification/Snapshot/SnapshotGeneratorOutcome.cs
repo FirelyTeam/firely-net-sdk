@@ -432,5 +432,19 @@ namespace Hl7.Fhir.Specification.Snapshot
                 location
             );
         }
+
+        // #3591 A differential path may not contain empty segments, e.g. 'Observation...unit'.
+        // Such an element cannot be matched to any element in the base and would otherwise silently
+        // produce a phantom parent element ('Observation.') and lose the constraints on the element.
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_PATH = Issue.Create(10021, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        internal static OperationOutcome.IssueComponent CreateIssueInvalidPath(ElementDefinition elementDef)
+        {
+            var location = FormatLocation(elementDef);
+            return PROFILE_ELEMENTDEF_INVALID_PATH.ToIssueComponent(
+                $"Invalid path '{elementDef.Path}' in differential: name portion missing ('..'). The element is ignored.",
+                location
+            );
+        }
     }
 }
