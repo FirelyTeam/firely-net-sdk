@@ -9421,6 +9421,51 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+#if R5 // Only R5 (and later) defines a StructureDefinition for 'Base'
+        // #3597 Inline children of a new element that is typed 'Base' (which has no snapshot children of its own)
+        // were emitted one level too high, e.g. "Model.b" instead of "Model.a.b".
+        [TestMethod]
+        [DataRow(false, DisplayName = "Base-typed element is the last element")]
+        [DataRow(true, DisplayName = "Base-typed element is followed by a sibling")]
+        public async Tasks.Task TestLogicalModelWithInlineChildrenOfBaseTypedElement(bool withSibling)
+        {
+            var elements = new List<ElementDefinition>
+            {
+                logicalElement("BaseTypedModel"),
+                logicalElement("BaseTypedModel.a", "Base", 0, "*"),
+                logicalElement("BaseTypedModel.a.b", "code", 1, "1"),
+                logicalElement("BaseTypedModel.a.c", "string", 0, "1")
+            };
+            var expectedPaths = new List<string>
+            {
+                "BaseTypedModel", "BaseTypedModel.id", "BaseTypedModel.extension",
+                "BaseTypedModel.a", "BaseTypedModel.a.b", "BaseTypedModel.a.c"
+            };
+            if (withSibling)
+            {
+                elements.Add(logicalElement("BaseTypedModel.d", "string", 0, "1"));
+                expectedPaths.Add("BaseTypedModel.d");
+            }
+
+            var model = createLogicalModel("BaseTypedModel", ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element), elements.ToArray());
+
+            var (_, expanded) = await generateSnapshotAndCompare(model);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var snapshot = expanded.Snapshot.Element;
+            CollectionAssert.AreEqual(expectedPaths, snapshot.Select(e => e.Path).ToList());
+            CollectionAssert.AreEqual(expectedPaths, snapshot.Select(e => e.ElementId).ToList());
+
+            foreach (var elem in snapshot.Where(e => e.Path.StartsWith("BaseTypedModel.a.")))
+            {
+                Assert.AreEqual(elem.Path, elem.Base.Path);
+            }
+        }
+#endif
+
         [TestMethod]
         public async Tasks.Task TestLogicalModelDerivedFromLogicalModel()
         {
