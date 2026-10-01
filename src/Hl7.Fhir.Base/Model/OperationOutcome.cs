@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
 
                 if (Diagnostics != null)
                 {
-                    buffer.Append("(further diagnostics: ");
+                    buffer.Append(" (further diagnostics: ");
                     buffer.Append(Diagnostics);
                     buffer.Append(")");
                 }
