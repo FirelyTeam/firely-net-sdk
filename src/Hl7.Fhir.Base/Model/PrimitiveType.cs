@@ -94,7 +94,9 @@ public partial class PrimitiveType : P.IToSystemPrimitive
                 { } prim => prim.JsonValue
             };
         }
-        catch (FormatException)
+        // The Value getters of instant, integer64 and the integer types validate JsonValue and throw a CodedValidationException,
+        // where the date and time types throw a FormatException from Parse. Both mean the same: an unparseable literal.
+        catch (Exception e) when (e is FormatException or CodedValidationException)
         {
             // If it fails, just return the unparsed contents
             return this.JsonValue;
