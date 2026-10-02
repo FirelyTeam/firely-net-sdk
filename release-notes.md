@@ -1,48 +1,43 @@
 ## Intro:
 
-This release adds `net10.0` to the frameworks the SDK targets, next to `net8.0` and
-`netstandard2.1`. It also lets `FhirClient` send a resource directly as the body of an operation
-request, extends the FHIRPath `htmlChecks()` function to string input, and makes the
-`SnapshotGenerator` report differential elements that are out of order. There is one binary
-breaking change: `ElementNavFhirExtensions.HtmlChecks(PocoNode)` now returns `bool?` instead of
-`bool`. Code that calls it needs to be recompiled. See the FHIRPath notes below.
+This release makes the JSON parser reject a primitive whose value is supplied twice, makes the
+`SnapshotGenerator` report differential paths with an empty segment, and fixes FHIRPath evaluation
+over invalid primitive values. There are no breaking API changes, but two changes alter behaviour
+or output that callers may depend on: the new fatal parser issue `JSON135`, and the text of
+`OperationOutcome.IssueComponent.ToString()`. See the behavioural notes below.
 
-**Platform support**
-- The SDK now also targets `net10.0`, next to `net8.0` and `netstandard2.1`. This is additive: .NET 8
-  and .NET 9 applications keep resolving to the `net8.0` assets. On .NET 10, class mapping lookups
-  by name through `ModelInspector.FindClassMapping(ReadOnlySpan<char>)` no longer allocate.
-- `net8.0` remains supported until the next major version (SDK 7), even after Microsoft ends support
-  for .NET 8 in November 2026.
-- **Upcoming: `netstandard2.1` will be removed** in a later minor release, once Unity 6.8 - which
-  replaces Mono with CoreCLR and .NET 10 - has shipped. Its only remaining audience is Unity, and
-  Unity 6.8 can consume the `net10.0` assets. If you depend on the `netstandard2.1` assets for
-  another platform, please let us know.
+**Serialization**
+- The JSON parser now reports a fatal issue, `JSON135` (`PRIMITIVE_VALUE_SUPPLIED_TWICE`), when a
+  primitive gets its value from both `name` and `_name`, e.g. `{"name":"John","_name":"Johnny"}`.
+  The second value used to be dropped silently, with only the non-fatal `JSON134`, so the
+  `NoOverflow`, `Recoverable` and `BackwardsCompatible` modes accepted the data loss. This applies in
+  either property order and to elements of primitive arrays. `JSON134` stays a non-fatal error for
+  a primitive under `_name` when no value was set yet. See issue [#3533](https://github.com/FirelyTeam/firely-net-sdk/issues/3533).
 
-**FhirClient**
-- Operations with exactly one resource input can now send that resource directly as the POST body,
-  instead of wrapping it in a `Parameters` resource. `WholeSystemOperationAsync`,
-  `TypeOperationAsync`, `InstanceOperationAsync` and `OperationAsync` have new overloads that take a
-  `Resource`, and `TransactionBuilder` has matching overloads for its operation entries. The
-  existing `Parameters` overloads are unchanged. See issue [#3599](https://github.com/FirelyTeam/firely-net-sdk/issues/3599).
+  > **Behavioural note:** JSON that parsed before, with a non-fatal `JSON134`, now fails to parse in
+  > every mode except `Ostrich` when both `name` and `_name` carry a value.
 
 **FHIRPath**
-- `htmlChecks()` can now be invoked on a `string`. Its contents are validated as the content of a
-  narrative `div`, following the current FHIRPath build ([FHIR-56303](https://jira.hl7.org/browse/FHIR-56303)).
-  Invoked on anything other than `xhtml` or a `string`, it now returns empty instead of `false`. To
-  support this, `ElementNavFhirExtensions.HtmlChecks(PocoNode)` returns `bool?` instead of `bool`,
-  which is a binary breaking change for code that calls it directly. See issue [#3604](https://github.com/FirelyTeam/firely-net-sdk/issues/3604).
+- An unparseable `instant`, `integer64`, `integer`, `positiveInt` or `unsignedInt` value no longer
+  makes almost every FHIRPath expression that reaches it throw. Its value is now the unparsed
+  string, as it already was for `date`, `dateTime` and `time`. Before, even `$this is Reference`
+  threw an `InvalidOperationException` for such a node, so a sweep like
+  `descendants().where($this is Reference)` failed on the whole resource. The `Value` getter of the
+  POCO still throws.
 
 **Snapshot generation**
-- The `SnapshotGenerator` now reports a specific issue (`PROFILE_ELEMENTDEF_INVALID_ELEMENT_ORDER`,
-  code 10020) when a differential element is out of order, i.e. when it constrains a base element
-  that precedes a base element already matched by an earlier differential element. The spec
-  requires `differential.element` and `snapshot.element` to follow the order of the base
-  definition. Such elements could previously not be matched and were silently treated as new
-  elements, which surfaced downstream as a confusing error. The generator does not reorder the
-  differential. See issue [#3600](https://github.com/FirelyTeam/firely-net-sdk/issues/3600).
+- The `SnapshotGenerator` now reports a specific issue (`PROFILE_ELEMENTDEF_INVALID_PATH`, code
+  10021) for a differential element whose path has an empty segment, such as `Observation...unit`,
+  and skips that element. Such an element used to produce a phantom element `Observation.` in the
+  snapshot, and any constraint on it, like a `fixedString`, was silently lost. The rest of the
+  differential is still processed. See issue [#3591](https://github.com/FirelyTeam/firely-net-sdk/issues/3591).
 
-**Dependencies**
-- The `System.Reflection.Emit.Lightweight` and `System.Buffers` package dependencies were removed;
-  both are part of every framework the SDK targets.
-- Updated Microsoft.SourceLink.GitHub to 10.0.401. MSTest (4.4.1) and Verify.MSTest (33.1.5) were
-  updated too, but are test-only and not part of the shipped packages.
+**Other**
+- `PocoNode.Resolve("#id")` no longer throws a `NullReferenceException` when the resource has a
+  contained resource without an `id` before the one it refers to. A contained resource without an
+  `id` does not match, and resolution continues. See issue [#3613](https://github.com/FirelyTeam/firely-net-sdk/issues/3613).
+- `OperationOutcome.IssueComponent.ToString()` now writes a space before `(further diagnostics:`,
+  as it already did before `(at`. See issue [#3621](https://github.com/FirelyTeam/firely-net-sdk/issues/3621).
+
+  > **Behavioural note:** this changes the rendered text of an issue. Tests that compare against
+  > `ToString()` output need new expected strings.
