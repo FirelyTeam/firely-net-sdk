@@ -392,8 +392,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Merge differential extensions with snapshot extensions
             // Match extensions on url
+            // Extensions can repeat (e.g. additional-binding), so every snapshot extension is merged with
+            // at most one differential extension; additional differential extensions with the same url are appended
             List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
-                => mergeCollection(snap, diff, matchExtensions);
+                => mergeCollection(snap, diff, matchExtensions, matchSnapItemsOnce: true);
 
             // Enhanced extension merging with special handling for translation extensions
             List<Extension> mergeExtensionsWithTranslationSupport<T>(List<Extension> snap, List<Extension> diff) where T : PrimitiveType
@@ -409,10 +411,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         result = new List<Extension>(snap.DeepCopy());
+                        // Each snapshot extension can only be merged with a single differential extension
+                        var matchedSnapIndices = new HashSet<int>();
                         // Properly merge matching collection items with translation support
                         foreach (var diffItem in diff)
                         {
-                            var idx = snap.FindIndex(e => matchExtensionsWithTranslation<T>(e, diffItem));
+                            var idx = findUnmatchedIndex(snap, e => matchExtensionsWithTranslation<T>(e, diffItem), matchedSnapIndices);
                             Extension mergedItem;
                             if (idx < 0)
                             {
@@ -617,9 +621,26 @@ namespace Hl7.Fhir.Specification.Snapshot
                     : mergeCollection(snap, diff, matchExamples);
             }
 
+            // Find the first snapshot item that satisfies the predicate and has not been matched by an earlier
+            // differential item, and register it as matched. Returns -1 if there is no such item.
+            static int findUnmatchedIndex<T>(List<T> snap, Predicate<T> isMatch, HashSet<int> matchedIndices)
+            {
+                for (var i = 0; i < snap.Count; i++)
+                {
+                    if (!matchedIndices.Contains(i) && isMatch(snap[i]))
+                    {
+                        matchedIndices.Add(i);
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
             // Merge two collections
             // Differential collection items replace/overwrite matching snapshot collection items
-            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : Element
+            // If matchSnapItemsOnce is true, then every snapshot item can be matched by at most one differential item:
+            // further differential items that match the same snapshot item are added to the result (for repeating items)
+            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems, bool matchSnapItemsOnce = false) where T : Element
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -632,10 +653,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         result = new List<T>(snap.DeepCopy());
+                        var matchedSnapIndices = new HashSet<int>();
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
-                            var idx = snap.FindIndex(e => matchItems(e, diffItem));
+                            var idx = matchSnapItemsOnce
+                                ? findUnmatchedIndex(snap, e => matchItems(e, diffItem), matchedSnapIndices)
+                                : snap.FindIndex(e => matchItems(e, diffItem));
                             T mergedItem;
                             if (idx < 0)
                             {
