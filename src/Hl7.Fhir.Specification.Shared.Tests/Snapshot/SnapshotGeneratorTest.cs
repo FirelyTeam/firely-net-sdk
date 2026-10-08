@@ -11146,98 +11146,135 @@ namespace Hl7.Fhir.Specification.Tests
             element.Comment.Should().Be(baseElement.Comment);
         }
 
+        private const string ADDITIONAL_BINDING = "http://hl7.org/fhir/tools/StructureDefinition/additional-binding";
+
+        private static Extension additionalBinding(string key, string valueSet) => new(ADDITIONAL_BINDING, null)
+        {
+            Extension = new List<Extension>
+            {
+                new("key", new Id(key)),
+                new("purpose", new Code("candidate")),
+                new("valueSet", new Canonical(valueSet))
+            }
+        };
+
+        private static string additionalBindingValueSet(Extension additionalBinding)
+            => additionalBinding.GetExtensionValue<Canonical>("valueSet")?.Value;
+
+        // The base binding can carry other extensions (e.g. binding name), so only look at the additional-bindings
+        private static IEnumerable<string> additionalBindingValueSets(IEnumerable<Extension> extensions)
+            => extensions.Where(e => e.Url == ADDITIONAL_BINDING).Select(additionalBindingValueSet);
+
+        private static StructureDefinition createPatientMaritalStatusBindingProfile(string name, string baseDefinition, params Extension[] bindingExtensions) => new()
+        {
+            Url = "http://example.org/fhir/StructureDefinition/" + name,
+            Name = name,
+            Status = PublicationStatus.Active,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Abstract = false,
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = baseDefinition,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Differential = new StructureDefinition.DifferentialComponent
+            {
+                Element = new List<ElementDefinition>
+                {
+                    new ElementDefinition("Patient.maritalStatus")
+                    {
+                        Binding = new ElementDefinition.ElementDefinitionBindingComponent
+                        {
+                            Extension = bindingExtensions.ToList()
+                        }
+                    }
+                }
+            }
+        };
+
+        // Generates the snapshot of a profile that adds the given extensions to Patient.maritalStatus.binding,
+        // on top of a base profile that has the given base extensions. Returns the extensions on the snapshot binding.
+        private async Tasks.Task<List<Extension>> generateMaritalStatusBindingExtensions(Extension[] baseExtensions, Extension[] diffExtensions)
+        {
+            var baseProfile = createPatientMaritalStatusBindingProfile("BasePatientBindingExtensions",
+                ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient), baseExtensions);
+            var derivedProfile = createPatientMaritalStatusBindingProfile("DerivedPatientBindingExtensions",
+                baseProfile.Url, diffExtensions);
+
+            var resolver = new MultiResolver(_standardFhirSource, new InMemoryResourceResolver(baseProfile, derivedProfile));
+            _generator = new SnapshotGenerator(resolver, _settings);
+
+            await _generator.UpdateAsync(derivedProfile);
+            Assert.IsNotNull(derivedProfile.Snapshot?.Element);
+
+            return derivedProfile.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus").Binding.Extension;
+        }
+
         [TestMethod]
         public async Tasks.Task TestRepeatingBindingExtensionsAreNotCollapsedOnBaseMatch()
         {
             // Issue #3625
             // When the base binding already has an extension with a given url, and the differential
-            // adds multiple extensions with that same url (e.g. tools additional-binding), all
-            // differential extensions should end up in the snapshot. Previously they all matched the
-            // first base extension on url and overwrote each other, so only the last one survived.
-            const string ADDITIONAL_BINDING = "http://hl7.org/fhir/tools/StructureDefinition/additional-binding";
+            // adds multiple extensions with that same url (e.g. tools additional-binding) with new keys,
+            // the inherited extension must be kept and all differential extensions must be added.
+            var extensions = await generateMaritalStatusBindingExtensions(
+                [additionalBinding("base", "http://example.org/fhir/ValueSet/base")],
+                [
+                    additionalBinding("first", "http://example.org/fhir/ValueSet/first"),
+                    additionalBinding("second", "http://example.org/fhir/ValueSet/second")
+                ]);
 
-            static Extension additionalBinding(string key, string valueSet) => new(ADDITIONAL_BINDING, null)
-            {
-                Extension = new List<Extension>
-                {
-                    new("key", new Id(key)),
-                    new("purpose", new Code("candidate")),
-                    new("valueSet", new Canonical(valueSet))
-                }
-            };
+            additionalBindingValueSets(extensions).Should().Equal(
+                "http://example.org/fhir/ValueSet/base",
+                "http://example.org/fhir/ValueSet/first",
+                "http://example.org/fhir/ValueSet/second");
+        }
 
-            var baseProfile = new StructureDefinition
-            {
-                Url = "http://example.org/fhir/StructureDefinition/BasePatientAdditionalBinding",
-                Name = "BasePatientAdditionalBinding",
-                Status = PublicationStatus.Active,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                Abstract = false,
-                Type = FHIRAllTypes.Patient.GetLiteral(),
-                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
-                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-                Differential = new StructureDefinition.DifferentialComponent
-                {
-                    Element = new List<ElementDefinition>
-                    {
-                        new ElementDefinition("Patient.maritalStatus")
-                        {
-                            Binding = new ElementDefinition.ElementDefinitionBindingComponent
-                            {
-                                Extension = new List<Extension>
-                                {
-                                    additionalBinding("base", "http://example.org/fhir/ValueSet/base")
-                                }
-                            }
-                        }
-                    }
-                }
-            };
+        [TestMethod]
+        public async Tasks.Task TestNewKeyedBindingExtensionsKeepAllInheritedBindings()
+        {
+            // Issue #3625: base has 4 additional-bindings, the differential adds 5 with new keys => 9
+            var baseExtensions = Enumerable.Range(1, 4)
+                .Select(i => additionalBinding($"base{i}", $"http://example.org/fhir/ValueSet/base{i}")).ToArray();
+            var diffExtensions = Enumerable.Range(1, 5)
+                .Select(i => additionalBinding($"new{i}", $"http://example.org/fhir/ValueSet/new{i}")).ToArray();
 
-            var derivedProfile = new StructureDefinition
-            {
-                Url = "http://example.org/fhir/StructureDefinition/DerivedPatientAdditionalBinding",
-                Name = "DerivedPatientAdditionalBinding",
-                Status = PublicationStatus.Active,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                Abstract = false,
-                Type = FHIRAllTypes.Patient.GetLiteral(),
-                BaseDefinition = baseProfile.Url,
-                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-                Differential = new StructureDefinition.DifferentialComponent
-                {
-                    Element = new List<ElementDefinition>
-                    {
-                        new ElementDefinition("Patient.maritalStatus")
-                        {
-                            Binding = new ElementDefinition.ElementDefinitionBindingComponent
-                            {
-                                Extension = new List<Extension>
-                                {
-                                    additionalBinding("first", "http://example.org/fhir/ValueSet/first"),
-                                    additionalBinding("second", "http://example.org/fhir/ValueSet/second")
-                                }
-                            }
-                        }
-                    }
-                }
-            };
+            var extensions = await generateMaritalStatusBindingExtensions(baseExtensions, diffExtensions);
 
-            var resolver = new InMemoryResourceResolver(baseProfile, derivedProfile);
-            var multiResolver = new MultiResolver(_standardFhirSource, resolver);
-            _generator = new SnapshotGenerator(multiResolver, _settings);
+            additionalBindingValueSets(extensions).Should().Equal(
+                baseExtensions.Concat(diffExtensions).Select(additionalBindingValueSet));
+        }
 
-            await _generator.UpdateAsync(derivedProfile);
-            Assert.IsNotNull(derivedProfile.Snapshot?.Element);
+        [TestMethod]
+        public async Tasks.Task TestRestatedNonFirstKeyedBindingExtensionMergesOntoMatchingKey()
+        {
+            // The differential restates (and changes) the second inherited binding, and adds a new one.
+            // The restated binding must replace the inherited binding with the same key, not the first one.
+            var extensions = await generateMaritalStatusBindingExtensions(
+                [
+                    additionalBinding("a", "http://example.org/fhir/ValueSet/a"),
+                    additionalBinding("b", "http://example.org/fhir/ValueSet/b")
+                ],
+                [
+                    additionalBinding("b", "http://example.org/fhir/ValueSet/b-changed"),
+                    additionalBinding("c", "http://example.org/fhir/ValueSet/c")
+                ]);
 
-            var maritalStatus = derivedProfile.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
-            var valueSets = maritalStatus.Binding.Extension
-                .Where(e => e.Url == ADDITIONAL_BINDING)
-                .Select(e => (e.GetExtensionValue<Canonical>("valueSet"))?.Value)
-                .ToList();
+            additionalBindingValueSets(extensions).Should().Equal(
+                "http://example.org/fhir/ValueSet/a",
+                "http://example.org/fhir/ValueSet/b-changed",
+                "http://example.org/fhir/ValueSet/c");
+        }
 
-            valueSets.Should().Contain("http://example.org/fhir/ValueSet/first");
-            valueSets.Should().Contain("http://example.org/fhir/ValueSet/second");
+        [TestMethod]
+        public async Tasks.Task TestRepeatingExtensionsWithoutKeyMergeOnUrl()
+        {
+            // Extensions without a key are matched on url only: the first differential extension replaces
+            // the inherited extension, every further extension with the same url is added.
+            const string URL = "http://example.org/fhir/StructureDefinition/unkeyed";
+            var extensions = await generateMaritalStatusBindingExtensions(
+                [new Extension(URL, new FhirString("base"))],
+                [new Extension(URL, new FhirString("first")), new Extension(URL, new FhirString("second"))]);
+
+            extensions.Where(e => e.Url == URL).Select(e => ((FhirString)e.Value).Value).Should().Equal("first", "second");
         }
 
         private static string mergeAppendText(string s1, string s2)

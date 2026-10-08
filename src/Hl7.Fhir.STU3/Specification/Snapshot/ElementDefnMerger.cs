@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         result = new List<T>(snap.DeepCopy());
-                        var matchedSnapIndices = new HashSet<int>();
+                        var matchedSnapIndices = matchSnapItemsOnce ? new HashSet<int>() : null;
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
@@ -709,48 +709,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return c.Display == d.Display;
             }
 
-            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && (x.Url == y.Url);
+            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && (x.Url == y.Url) && matchExtensionKeys(x, y);
 
             // Enhanced extension merging with special handling for translation extensions
             List<Extension> mergeExtensionsWithTranslationSupport<T>(List<Extension> snap, List<Extension> diff) where T : PrimitiveType
-            {
-                var result = snap;
-                if (!diff.IsNullOrEmpty())
-                {
-                    if (snap.IsNullOrEmpty())
-                    {
-                        result = (List<Extension>)diff.DeepCopy();
-                        onConstraint(result);
-                    }
-                    else if (!diff.IsExactly(snap))
-                    {
-                        result = new List<Extension>(snap.DeepCopy());
-                        // Each snapshot extension can only be merged with a single differential extension
-                        var matchedSnapIndices = new HashSet<int>();
-                        // Properly merge matching collection items with translation support
-                        foreach (var diffItem in diff)
-                        {
-                            var idx = findUnmatchedIndex(snap, e => matchExtensionsWithTranslation<T>(e, diffItem), matchedSnapIndices);
-                            Extension mergedItem;
-                            if (idx < 0)
-                            {
-                                // No match; add diff item
-                                mergedItem = (Extension)diffItem.DeepCopy();
-                                result.Add(mergedItem);
-                            }
-                            else
-                            {
-                                // Match; merge diff with snap
-                                var snapItem = result[idx];
-                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
-                                result[idx] = mergedItem;
-                            }
-                            onConstraint(mergedItem);
-                        }
-                    }
-                }
-                return result;
-            }
+                => mergeCollection(snap, diff, matchExtensionsWithTranslation<T>, matchSnapItemsOnce: true);
 
             // Enhanced extension matching with special logic for translation extensions
             static bool matchExtensionsWithTranslation<T>(Extension x, Extension y) where T : PrimitiveType
@@ -767,8 +730,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return isEqualString(xLang, yLang);
                 }
                 
-                // For other extensions, URL match is sufficient
-                return true;
+                // For other extensions, URL match is sufficient (and the key, if both have one)
+                return matchExtensionKeys(x, y);
+            }
+
+            // Repeating extensions can carry a 'key' sub-extension (e.g. additional-binding)
+            // that identifies the item. If both have a key, the keys must be equal; otherwise the url match is sufficient.
+            static bool matchExtensionKeys(Extension x, Extension y)
+            {
+                var xKey = getExtensionString(x, "key");
+                var yKey = getExtensionString(y, "key");
+                return xKey is null || yKey is null || isEqualString(xKey, yKey);
             }
 
             /// <summary>
