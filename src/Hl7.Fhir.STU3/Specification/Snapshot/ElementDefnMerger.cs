@@ -478,10 +478,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
+            // Find the first snapshot item that satisfies the predicate and has not been matched by an earlier
+            // differential item, and register it as matched. Returns -1 if there is no such item.
+            static int findUnmatchedIndex<T>(List<T> snap, Predicate<T> isMatch, HashSet<int> matchedIndices)
+            {
+                for (var i = 0; i < snap.Count; i++)
+                {
+                    if (!matchedIndices.Contains(i) && isMatch(snap[i]))
+                    {
+                        matchedIndices.Add(i);
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
             // Merge two collections
             // Differential collection items replace/overwrite matching snapshot collection items
+            // If matchSnapItemsOnce is true, then every snapshot item can be matched by at most one differential item:
+            // further differential items that match the same snapshot item are added to the result (for repeating items)
             // [Backported from R4] 
-            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : Element
+            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems, bool matchSnapItemsOnce = false) where T : Element
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -494,10 +511,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         result = new List<T>(snap.DeepCopy());
+                        var matchedSnapIndices = matchSnapItemsOnce ? new HashSet<int>() : null;
                         // Properly merge matching collection items
                         foreach (var diffItem in diff)
                         {
-                            var idx = snap.FindIndex(e => matchItems(e, diffItem));
+                            var idx = matchSnapItemsOnce
+                                ? findUnmatchedIndex(snap, e => matchItems(e, diffItem), matchedSnapIndices)
+                                : snap.FindIndex(e => matchItems(e, diffItem));
                             T mergedItem;
                             if (idx < 0)
                             {
@@ -641,8 +661,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Merge differential extensions with snapshot extensions
             // Match extensions on url
+            // Extensions can repeat (e.g. additional-binding), so every snapshot extension is merged with
+            // at most one differential extension; additional differential extensions with the same url are appended
             List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
-                => mergeCollection(snap, diff, matchExtensions);
+                => mergeCollection(snap, diff, matchExtensions, matchSnapItemsOnce: true);
 
             string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
@@ -687,46 +709,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return c.Display == d.Display;
             }
 
-            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && (x.Url == y.Url);
+            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && (x.Url == y.Url) && matchExtensionKeys(x, y);
 
             // Enhanced extension merging with special handling for translation extensions
             List<Extension> mergeExtensionsWithTranslationSupport<T>(List<Extension> snap, List<Extension> diff) where T : PrimitiveType
-            {
-                var result = snap;
-                if (!diff.IsNullOrEmpty())
-                {
-                    if (snap.IsNullOrEmpty())
-                    {
-                        result = (List<Extension>)diff.DeepCopy();
-                        onConstraint(result);
-                    }
-                    else if (!diff.IsExactly(snap))
-                    {
-                        result = new List<Extension>(snap.DeepCopy());
-                        // Properly merge matching collection items with translation support
-                        foreach (var diffItem in diff)
-                        {
-                            var idx = snap.FindIndex(e => matchExtensionsWithTranslation<T>(e, diffItem));
-                            Extension mergedItem;
-                            if (idx < 0)
-                            {
-                                // No match; add diff item
-                                mergedItem = (Extension)diffItem.DeepCopy();
-                                result.Add(mergedItem);
-                            }
-                            else
-                            {
-                                // Match; merge diff with snap
-                                var snapItem = result[idx];
-                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
-                                result[idx] = mergedItem;
-                            }
-                            onConstraint(mergedItem);
-                        }
-                    }
-                }
-                return result;
-            }
+                => mergeCollection(snap, diff, matchExtensionsWithTranslation<T>, matchSnapItemsOnce: true);
 
             // Enhanced extension matching with special logic for translation extensions
             static bool matchExtensionsWithTranslation<T>(Extension x, Extension y) where T : PrimitiveType
@@ -743,8 +730,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return isEqualString(xLang, yLang);
                 }
                 
-                // For other extensions, URL match is sufficient
-                return true;
+                // For other extensions, URL match is sufficient (and the key, if both have one)
+                return matchExtensionKeys(x, y);
+            }
+
+            // Repeating extensions can carry a 'key' sub-extension (e.g. additional-binding)
+            // that identifies the item. If both have a key, the keys must be equal; otherwise the url match is sufficient.
+            static bool matchExtensionKeys(Extension x, Extension y)
+            {
+                var xKey = getExtensionString(x, "key");
+                var yKey = getExtensionString(y, "key");
+                return xKey is null || yKey is null || isEqualString(xKey, yKey);
             }
 
             /// <summary>
