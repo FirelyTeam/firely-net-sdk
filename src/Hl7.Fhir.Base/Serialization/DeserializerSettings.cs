@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization;
 /// <param name="primitiveMapping">The mapping of the FHIR primitive the value is for, e.g. to tell <c>integer</c>
 /// from <c>positiveInt</c>.</param>
 /// <returns>The value to store in the primitive. Return <paramref name="value"/> to decline the conversion.</returns>
-public delegate object PrimitiveValueConverter(object value, Type targetType, ClassMapping primitiveMapping);
+public delegate object? PrimitiveValueConverter(object value, Type targetType, ClassMapping primitiveMapping);
 
 /// <summary>
 /// Settings that control the behaviour of the <see cref="BaseFhirXmlDeserializer"/>, FhirXmlDeserializer,
