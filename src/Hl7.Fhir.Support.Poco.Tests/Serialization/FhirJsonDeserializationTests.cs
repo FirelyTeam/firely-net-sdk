@@ -1525,6 +1525,25 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
+    public void StringOverloads_ClearThePooledBuffer()
+    {
+        const string marker = "pooled-buffer-marker-3598";
+        var json = $$"""{"resourceType": "Patient", "id": "{{marker}}"}""";
+        new FhirJsonDeserializer().DeserializeResource(json);
+
+        // On the same thread, the shared pool hands back the buffer that was just returned.
+        var buffer = ArrayPool<byte>.Shared.Rent(Encoding.UTF8.GetMaxByteCount(json.Length));
+        try
+        {
+            Encoding.UTF8.GetString(buffer).Should().NotContain(marker);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    [TestMethod]
     public void FhirJsonReaderOptions_SkipCommentsAndAllowTrailingCommas()
     {
         SerializationUtil.FhirJsonReaderOptions.CommentHandling.Should().Be(JsonCommentHandling.Skip);

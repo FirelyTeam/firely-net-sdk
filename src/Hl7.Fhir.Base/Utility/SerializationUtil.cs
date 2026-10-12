@@ -163,15 +163,18 @@ public static class SerializationUtil
         // GetMaxByteCount overflows for strings over ~715M chars, fall back to an exact count for those.
         var size = json.Length < int.MaxValue / 3 - 1 ? Encoding.UTF8.GetMaxByteCount(json.Length) : Encoding.UTF8.GetByteCount(json);
         var buffer = ArrayPool<byte>.Shared.Rent(size);
+        var length = 0;
 
         try
         {
-            var length = Encoding.UTF8.GetBytes(json, 0, json.Length, buffer, 0);
+            length = Encoding.UTF8.GetBytes(json, 0, json.Length, buffer, 0);
             var reader = new Utf8JsonReader(buffer.AsSpan(0, length), FhirJsonReaderOptions);
             return read(ref reader, state);
         }
         finally
         {
+            // The pool is shared with the whole process, so don't leave (possibly sensitive) resource data behind.
+            buffer.AsSpan(0, length).Clear();
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }
