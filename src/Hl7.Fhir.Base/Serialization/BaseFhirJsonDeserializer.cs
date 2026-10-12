@@ -658,6 +658,9 @@ public class BaseFhirJsonDeserializer
 
         if (existing is PrimitiveType existingPrimitive)
         {
+            if (Settings.PrimitiveValueConverter is not null)
+                primitiveValue = Settings.ConvertPrimitiveValue(primitiveValue, propertyValueMapping);
+
             existingPrimitive.JsonValue ??= primitiveValue;
         }
         else

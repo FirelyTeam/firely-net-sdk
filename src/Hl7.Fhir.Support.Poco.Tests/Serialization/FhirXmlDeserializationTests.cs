@@ -821,4 +821,161 @@ public partial class FhirXmlDeserializationTests
         state.Errors.Should().NotContain(e => e.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE
                                               || e.ErrorCode == COVE.WRONG_CASED_RESOURCE_TYPE_CODE);
     }
+
+    // In Xml every value is text, so "wrongly typed" means the text is not a valid literal for the
+    // primitive and stays a string after parsing.
+    private const string WRONGLY_TYPED_PATIENT_XML = """
+        <Patient xmlns="http://hl7.org/fhir">
+          <extension url="http://example.org/int"><valueInteger value="42.0"/></extension>
+          <extension url="http://example.org/pos"><valuePositiveInt value="7.0"/></extension>
+          <extension url="http://example.org/unsigned"><valueUnsignedInt value="0.0"/></extension>
+          <extension url="http://example.org/dec"><valueDecimal value=".5"/></extension>
+          <extension url="http://example.org/bool"><valueBoolean value="False"/></extension>
+          <active id="a1" value="True"/>
+          <name><family value="Doe"/></name>
+          <birthDate value="2000-01-01"/>
+          <multipleBirthInteger value="2.0"/>
+        </Patient>
+        """;
+
+    private static (Patient, IEnumerable<CodedException>) parseWithConverter(DeserializerSettings settings, string xml = WRONGLY_TYPED_PATIENT_XML)
+    {
+        getTestDeserializer(settings).TryDeserializeResource(xml, out var resource, out var issues);
+        return (resource.Should().BeOfType<Patient>().Subject, issues);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Recoverable)]
+    [DataRow(DeserializationMode.Strict)]
+    [DataRow(DeserializationMode.Ostrich)]
+    public void PrimitiveValueConverter_ConvertsWronglyTypedPrimitives(DeserializationMode mode)
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = FhirJsonDeserializationTests.ConvertNumbersAndBooleans }
+            .UsingMode(mode).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        var (patient, issues) = parseWithConverter(settings);
+
+        FhirJsonDeserializationTests.AssertConvertedPatient(patient, decValue: 0.5m);
+        issues.Should().NotContain(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Recoverable)]
+    [DataRow(DeserializationMode.Ostrich)]
+    public void PrimitiveValueConverter_NotSet_KeepsReportingWrongTypes(DeserializationMode mode)
+    {
+        var settings = new DeserializerSettings().UsingMode(mode).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        var (patient, issues) = parseWithConverter(settings);
+
+        patient.ActiveElement.JsonValue.Should().Be("True");
+        patient.Extension[0].Value.Should().BeOfType<Integer>().Which.JsonValue.Should().Be("42.0");
+        issues.Count(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE).Should().Be(mode == DeserializationMode.Ostrich ? 0 : 7, "Ostrich runs no validator");
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_Declining_KeepsReportingWrongTypes()
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = (v, _, _) => v }
+            .UsingMode(DeserializationMode.Recoverable).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        var (patient, issues) = parseWithConverter(settings);
+
+        patient.ActiveElement.JsonValue.Should().Be("True");
+        issues.Count(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE).Should().Be(7);
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_FailedConversion_KeepsReportingWrongType()
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = FhirJsonDeserializationTests.ConvertNumbersAndBooleans }
+            .UsingMode(DeserializationMode.Recoverable).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        // "forty-two" throws a FormatException, "4.5" an OverflowException.
+        var (patient, issues) = parseWithConverter(settings,
+            """<Patient xmlns="http://hl7.org/fhir"><extension url="http://example.org/int"><valueInteger value="forty-two"/></extension><active value="yes"/><multipleBirthInteger value="4.5"/></Patient>""");
+
+        patient.ActiveElement.JsonValue.Should().Be("yes");
+        patient.MultipleBirth.Should().BeOfType<Integer>().Which.JsonValue.Should().Be("4.5");
+        patient.Extension[0].Value.Should().BeOfType<Integer>().Which.JsonValue.Should().Be("forty-two");
+        issues.Count(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE).Should().Be(3);
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_OtherExceptionsPropagate()
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = (_, _, _) => throw new InvalidOperationException("boom") };
+
+        var act = () => parseWithConverter(settings);
+
+        act.Should().Throw<InvalidOperationException>().WithMessage("boom");
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_IsOnlyCalledForWronglyTypedValues()
+    {
+        var calls = new List<(object, Type, string)>();
+        var settings = new DeserializerSettings
+        {
+            PrimitiveValueConverter = (v, t, m) =>
+            {
+                calls.Add((v, t, m.Name));
+                return FhirJsonDeserializationTests.ConvertNumbersAndBooleans(v, t, m);
+            }
+        };
+
+        var (patient, _) = parseWithConverter(settings,
+            """<Patient xmlns="http://hl7.org/fhir"><meta><lastUpdated value="2020-01-01T00:00:00Z"/></meta><extension url="http://example.org/dec"><valueDecimal value=".5"/></extension><extension url="http://example.org/time"><valueTime value="10:00:00"/></extension><active value="true"/><name><family value="Doe"/></name><gender value="male"/><birthDate value="2000"/><deceasedDateTime value="2020-01-01"/><multipleBirthInteger value="2"/></Patient>""");
+
+        calls.Should().BeEquivalentTo([
+            ("2020-01-01T00:00:00Z", typeof(string), "instant"), ("2020-01-01", typeof(string), "dateTime"), ("10:00:00", typeof(string), "time"),
+            ("2000", typeof(string), "date"), (".5", typeof(decimal), "decimal")]);
+        patient.BirthDateElement.JsonValue.Should().Be("2000");
+        patient.Name.Single().Family.Should().Be("Doe");
+        patient.Extension[0].Value.Should().BeOfType<FhirDecimal>().Which.JsonValue.Should().Be(0.5m);
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_CanFixDateTimeFormat()
+    {
+        object fixDateTime(object v, Type _, ClassMapping m) =>
+            m.NativeType == typeof(FhirDateTime) && v is string s ? s.Replace(' ', 'T') + "Z" : v;
+        var settings = new DeserializerSettings { PrimitiveValueConverter = fixDateTime };
+        const string data = """<Patient xmlns="http://hl7.org/fhir"><deceasedDateTime value="2020-01-01 10:00:00"/></Patient>""";
+
+        var (patient, issues) = parseWithConverter(settings, data);
+        patient.Deceased.Should().BeOfType<FhirDateTime>().Which.Value.Should().Be("2020-01-01T10:00:00Z");
+        issues.Should().BeEmpty();
+
+        (_, issues) = parseWithConverter(new DeserializerSettings(), data);
+        issues.Should().ContainSingle(i => i.ErrorCode == COVE.LITERAL_INVALID_CODE);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Recoverable)]
+    [DataRow(DeserializationMode.Ostrich)]
+    public void PrimitiveValueConverter_ConvertsRepeatingPrimitives(DeserializationMode mode)
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = FhirJsonDeserializationTests.ConvertNumbersAndBooleans }
+            .UsingMode(mode).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+        const string xml = """
+            <ClaimResponse xmlns="http://hl7.org/fhir">
+              <item>
+                <sequenceLinkId value="1.0"/>
+                <noteNumber id="n1" value="1.0"/>
+                <noteNumber value="2"/>
+                <noteNumber value="3.0"><extension url="http://example.org/b"><valueBoolean value="True"/></extension></noteNumber>
+              </item>
+            </ClaimResponse>
+            """;
+
+        getTestDeserializer(settings).TryDeserializeResource(xml, out var resource, out var issues);
+
+        var item = resource.Should().BeOfType<ClaimResponse>().Subject.Item.Single();
+        item.SequenceLinkIdElement.JsonValue.Should().Be(1);
+        item.NoteNumberElement.Select(n => n.JsonValue).Should().Equal(1, 2, 3);
+        item.NoteNumberElement[0].ElementId.Should().Be("n1");
+        item.NoteNumberElement[2].Extension.Single().Value.Should().BeOfType<FhirBoolean>().Which.JsonValue.Should().Be(true);
+        issues.Should().NotContain(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
+    }
 }

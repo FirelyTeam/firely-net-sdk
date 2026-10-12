@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -8,6 +8,8 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Hl7.FhirPath.Sprache;
@@ -16,6 +18,20 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization;
 
+/// <summary>
+/// Converts a primitive value that the deserializer read from the source data, but which is not of the
+/// .NET type that the FHIR primitive stores, e.g. a Json string <c>"42"</c> for an <c>integer</c>.
+/// </summary>
+/// <param name="value">The value as read by the parser: a <see cref="string"/>, <see cref="int"/>,
+/// <see cref="decimal"/> or <see cref="bool"/> for Json, and the (failed to parse) <see cref="string"/> for Xml.</param>
+/// <param name="targetType">The .NET type the primitive stores its value as: <see cref="int"/> for <c>integer</c>,
+/// <c>positiveInt</c> and <c>unsignedInt</c>, <see cref="decimal"/> for <c>decimal</c>, <see cref="bool"/> for
+/// <c>boolean</c> and <see cref="string"/> for all others (including <c>integer64</c>, <c>instant</c> and
+/// <c>base64Binary</c>, whose value property is of another type, but which store their literal as a string).</param>
+/// <param name="primitiveMapping">The mapping of the FHIR primitive the value is for, e.g. to tell <c>integer</c>
+/// from <c>positiveInt</c>.</param>
+/// <returns>The value to store in the primitive. Return <paramref name="value"/> to decline the conversion.</returns>
+public delegate object PrimitiveValueConverter(object value, Type targetType, ClassMapping primitiveMapping);
 
 /// <summary>
 /// Settings that control the behaviour of the <see cref="BaseFhirXmlDeserializer"/>, FhirXmlDeserializer,
@@ -28,6 +44,54 @@ public record DeserializerSettings
     /// and possibly alter the value. Setting this property to <c>null</c> will disable validation completely.
     /// </summary>
     public IPocoValidator? Validator { get; init; } = FhirAttributeValidator.Default;
+
+    /// <summary>
+    /// If set, this converter is invoked for every primitive value that is not already of the .NET type
+    /// the primitive stores, before the value is stored and validated. This allows fixing values
+    /// of the wrong type, like Json <c>"active": "true"</c> or an Xml <c>&lt;valueInteger value="42.0"/&gt;</c>.
+    /// Values for <c>date</c>, <c>dateTime</c>, <c>instant</c>, <c>time</c> and <c>integer64</c> are always offered,
+    /// so they can be fixed when they are in the wrong format.
+    /// </summary>
+    /// <remarks>
+    /// <para>A conversion that fails with a <see cref="FormatException"/>, <see cref="InvalidCastException"/> or
+    /// <see cref="OverflowException"/>, or returns <c>null</c>, is treated as declined: the original value is
+    /// kept, and the usual error is reported for it. Any other exception propagates out of the deserializer.</para>
+    /// <para>The converter runs independently of the <see cref="Validator"/>, so it also works in
+    /// <see cref="DeserializationMode.Ostrich"/> and <see cref="DeserializationMode.SyntaxOnly"/>.</para>
+    /// </remarks>
+    public PrimitiveValueConverter? PrimitiveValueConverter { get; init; }
+
+    internal object ConvertPrimitiveValue(object value, ClassMapping primitiveMapping)
+    {
+        // Dynamic primitives (unknown elements) accept any value, so there is nothing to convert.
+        if (PrimitiveValueConverter is not { } convert
+            || primitiveMapping.PrimitiveValueProperty?.ImplementingType is not { } valueType
+            || valueType == typeof(object)) return value;
+
+        // Primitives store int, decimal and bool natively and everything else as a string literal - including
+        // integer64, instant, base64Binary and enum codes, whose value property is of another type. So a valid
+        // "123" for an integer64 is not a long, but it is of the right type, and is not offered.
+        var targetType = valueType == typeof(int) || valueType == typeof(decimal) || valueType == typeof(bool)
+            ? valueType
+            : typeof(string);
+
+        // These parse their string literal into a typed value, so a string can still be in the wrong format
+        // ("2020-1-1", "42.0"), and are always offered. Other string types are not: they are unchecked
+        // (string, uri, markdown) or only regex-checked (id, code, oid, uuid), which a converter can't sensibly fix.
+        var nativeType = primitiveMapping.NativeType;
+        var alwaysOffer = nativeType == typeof(Date) || nativeType == typeof(FhirDateTime) || nativeType == typeof(Instant)
+                          || nativeType == typeof(Time) || nativeType == typeof(Integer64);
+        if (value.GetType() == targetType && !alwaysOffer) return value;
+
+        try
+        {
+            return convert(value, targetType, primitiveMapping) ?? value;
+        }
+        catch (Exception e) when (e is FormatException or InvalidCastException or OverflowException)
+        {
+            return value;
+        }
+    }
 
     /// <summary>
     /// Specifies a filter that can be used to filter out exceptions that are not considered fatal. The filter

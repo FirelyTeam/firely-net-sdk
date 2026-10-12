@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -136,9 +137,44 @@ public static class SerializationUtil
     public static JsonReader JsonReaderFromJsonText(string json)
         => jsonReaderFromTextReader(new StringReader(json));
 
+    /// <summary>
+    /// The options the SDK uses to read FHIR Json: comments are skipped and trailing commas are allowed.
+    /// Use these to construct a <see cref="Utf8JsonReader"/> that behaves the same as the one the SDK's
+    /// <c>string</c>-based deserialization methods use.
+    /// </summary>
+    public static readonly JsonReaderOptions FhirJsonReaderOptions = new()
+    {
+        CommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true
+    };
+
     public static Utf8JsonReader Utf8JsonReaderFromJsonText(string json) =>
-        new(Encoding.UTF8.GetBytes(json),
-            new JsonReaderOptions { CommentHandling = JsonCommentHandling.Skip, AllowTrailingCommas = true });
+        new(Encoding.UTF8.GetBytes(json), FhirJsonReaderOptions);
+
+    internal delegate TResult Utf8JsonReaderFunc<in TState, out TResult>(ref Utf8JsonReader reader, TState state);
+
+    /// <summary>
+    /// Encodes the Json text into a pooled buffer and invokes <paramref name="read"/> with a reader over it.
+    /// The reader (and anything else referring to the buffer) must not escape <paramref name="read"/>, since
+    /// the buffer is returned to the pool afterwards.
+    /// </summary>
+    internal static TResult ReadJsonText<TState, TResult>(string json, TState state, Utf8JsonReaderFunc<TState, TResult> read)
+    {
+        // GetMaxByteCount overflows for strings over ~715M chars, fall back to an exact count for those.
+        var size = json.Length < int.MaxValue / 3 - 1 ? Encoding.UTF8.GetMaxByteCount(json.Length) : Encoding.UTF8.GetByteCount(json);
+        var buffer = ArrayPool<byte>.Shared.Rent(size);
+
+        try
+        {
+            var length = Encoding.UTF8.GetBytes(json, 0, json.Length, buffer, 0);
+            var reader = new Utf8JsonReader(buffer.AsSpan(0, length), FhirJsonReaderOptions);
+            return read(ref reader, state);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
 
     public static XmlReader XmlReaderFromStream(Stream input, bool ignoreComments = true)
         => WrapXmlReader(XmlReader.Create(input), ignoreComments);

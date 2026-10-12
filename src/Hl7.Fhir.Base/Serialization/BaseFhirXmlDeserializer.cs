@@ -516,10 +516,15 @@ public class BaseFhirXmlDeserializer
                     if(propMapping.IsCollection)
                         state.SetIndex(0);
 
-                    readAttribute(target, propMapping, reader.LocalName, reader, state);
-
-                    if(!propMapping.RepresentsValueElement)
-                        state.ExitElement();
+                    try
+                    {
+                        readAttribute(target, propMapping, reader.LocalName, reader, state);
+                    }
+                    finally
+                    {
+                        if(!propMapping.RepresentsValueElement)
+                            state.ExitElement();
+                    }
                 }
             } while (reader.MoveToNextAttribute());
         }
@@ -551,6 +556,9 @@ public class BaseFhirXmlDeserializer
 
         if (target is PrimitiveType primitive && attributeName == "value")
         {
+            if (Settings.PrimitiveValueConverter is not null)
+                parsedValue = Settings.ConvertPrimitiveValue(parsedValue, propMapping.DeclaringClass);
+
             primitive.JsonValue = parsedValue;
 
             // Validator should not be called on the primitive values, this will
@@ -578,6 +586,9 @@ public class BaseFhirXmlDeserializer
 
             if (Settings.AnnotateLineInfo)
                 targetElement.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
+
+            if (Settings.PrimitiveValueConverter is not null)
+                parsedValue = Settings.ConvertPrimitiveValue(parsedValue, targetElementMapping);
 
             targetElement.JsonValue = parsedValue;
 

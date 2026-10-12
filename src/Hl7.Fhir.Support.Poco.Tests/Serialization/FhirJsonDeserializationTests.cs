@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1260,6 +1261,277 @@ public partial class FhirJsonDeserializationTests
         // Should not throw: no wrong-case errors on correct casing.
         var act = () => deserializer.DeserializeResource(json);
         act.Should().NotThrow();
+    }
+
+    internal static object ConvertNumbersAndBooleans(object value, Type targetType, ClassMapping _) =>
+        value is not string s ? value
+        : targetType == typeof(int) ? (object)int.Parse(s, NumberStyles.Float, CultureInfo.InvariantCulture)
+        : targetType == typeof(decimal) ? (object)decimal.Parse(s, NumberStyles.Float, CultureInfo.InvariantCulture)
+        : targetType == typeof(bool) ? (object)bool.Parse(s)
+        : value;
+
+    private const string WRONGLY_TYPED_PATIENT_JSON = """
+        {
+          "resourceType": "Patient",
+          "extension": [
+            { "url": "http://example.org/int", "valueInteger": "42" },
+            { "url": "http://example.org/pos", "valuePositiveInt": "7" },
+            { "url": "http://example.org/unsigned", "valueUnsignedInt": "0" },
+            { "url": "http://example.org/dec", "valueDecimal": "3.14" },
+            { "url": "http://example.org/bool", "valueBoolean": "false" }
+          ],
+          "active": "true",
+          "_active": { "id": "a1" },
+          "name": [ { "family": "Doe" } ],
+          "birthDate": "2000-01-01",
+          "multipleBirthInteger": "2"
+        }
+        """;
+
+    private static (Patient, IEnumerable<CodedException>) parseWithConverter(DeserializerSettings settings, string json = WRONGLY_TYPED_PATIENT_JSON)
+    {
+        new FhirJsonDeserializer(settings).TryDeserializeResource(json, out var resource, out var issues);
+        return (resource.Should().BeOfType<Patient>().Subject, issues);
+    }
+
+    internal static void AssertConvertedPatient(Patient p, int intValue = 42, int posValue = 7, int unsignedValue = 0, decimal decValue = 3.14m, bool boolValue = false, int birthValue = 2)
+    {
+        p.Extension.Select(e => ((PrimitiveType)e.Value!).JsonValue).Should().Equal(intValue, posValue, unsignedValue, decValue, boolValue);
+        p.ActiveElement!.JsonValue.Should().Be(true);
+        p.ActiveElement!.ElementId.Should().Be("a1");
+        p.MultipleBirth.Should().BeOfType<Integer>().Which.JsonValue.Should().Be(birthValue);
+        p.BirthDateElement!.JsonValue.Should().Be("2000-01-01");
+        p.Name.Single().Family.Should().Be("Doe");
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Recoverable)]
+    [DataRow(DeserializationMode.Strict)]
+    [DataRow(DeserializationMode.Ostrich)]
+    public void PrimitiveValueConverter_ConvertsWronglyTypedPrimitives(DeserializationMode mode)
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = ConvertNumbersAndBooleans }
+            .UsingMode(mode).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+        settings.PrimitiveValueConverter.Should().NotBeNull();
+
+        var (patient, issues) = parseWithConverter(settings);
+
+        AssertConvertedPatient(patient);
+        issues.Should().NotContain(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Recoverable)]
+    [DataRow(DeserializationMode.Ostrich)]
+    public void PrimitiveValueConverter_NotSet_KeepsReportingWrongTypes(DeserializationMode mode)
+    {
+        var settings = new DeserializerSettings().UsingMode(mode).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        var (patient, issues) = parseWithConverter(settings);
+
+        patient.ActiveElement!.JsonValue.Should().Be("true");
+        patient.Extension[0].Value.Should().BeOfType<Integer>().Which.JsonValue.Should().Be("42");
+        issues.Count(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE).Should().Be(mode == DeserializationMode.Ostrich ? 0 : 7, "Ostrich runs no validator");
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_Declining_KeepsReportingWrongTypes()
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = (v, _, _) => v }
+            .UsingMode(DeserializationMode.Recoverable).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        var (patient, issues) = parseWithConverter(settings);
+
+        patient.ActiveElement!.JsonValue.Should().Be("true");
+        issues.Count(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE).Should().Be(7);
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_FailedConversion_KeepsReportingWrongType()
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = ConvertNumbersAndBooleans }
+            .UsingMode(DeserializationMode.Recoverable).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+
+        // "forty-two" throws a FormatException, "4.5" an OverflowException.
+        var (patient, issues) = parseWithConverter(settings,
+            """{"resourceType": "Patient", "active": "yes", "multipleBirthInteger": "4.5", "extension": [{ "url": "http://example.org/int", "valueInteger": "forty-two" }]}""");
+
+        patient.ActiveElement!.JsonValue.Should().Be("yes");
+        patient.MultipleBirth.Should().BeOfType<Integer>().Which.JsonValue.Should().Be("4.5");
+        patient.Extension[0].Value.Should().BeOfType<Integer>().Which.JsonValue.Should().Be("forty-two");
+        issues.Count(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE).Should().Be(3);
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_OtherExceptionsPropagate()
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = (_, _, _) => throw new InvalidOperationException("boom") };
+
+        var act = () => parseWithConverter(settings);
+
+        act.Should().Throw<InvalidOperationException>().WithMessage("boom");
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_IsOnlyCalledForWronglyTypedValues()
+    {
+        var calls = new List<(object, Type, string)>();
+        var settings = new DeserializerSettings
+        {
+            PrimitiveValueConverter = (v, t, m) =>
+            {
+                calls.Add((v, t, m.Name));
+                return ConvertNumbersAndBooleans(v, t, m);
+            }
+        };
+
+        var (patient, _) = parseWithConverter(settings,
+            """{"resourceType": "Patient", "meta": { "lastUpdated": "2020-01-01T00:00:00Z" }, "active": true, "gender": "male", "deceasedDateTime": "2020-01-01", "multipleBirthInteger": 2, "birthDate": 2000, "name": [{ "family": "Doe" }], "extension": [{ "url": "http://example.org/dec", "valueDecimal": "3.14" }, { "url": "http://example.org/time", "valueTime": "10:00:00" }]}""");
+
+        // Correctly typed values are not offered, also not for enum codes, whose value property is not a string. The number
+        // given for the date is offered, but declined. Date/time types are always offered.
+        calls.Should().BeEquivalentTo([
+            ("2020-01-01T00:00:00Z", typeof(string), "instant"), ("2020-01-01", typeof(string), "dateTime"), ("10:00:00", typeof(string), "time"),
+            ("3.14", typeof(decimal), "decimal"), ((object)2000, typeof(string), "date")]);
+        patient.BirthDateElement!.JsonValue.Should().Be(2000);
+        patient.Name.Single().Family.Should().Be("Doe");
+        patient.Extension[0].Value.Should().BeOfType<FhirDecimal>().Which.JsonValue.Should().Be(3.14m);
+    }
+
+    [TestMethod]
+    public void PrimitiveValueConverter_CanFixDateTimeFormat()
+    {
+        object fixDateTime(object v, Type _, ClassMapping m) =>
+            m.NativeType == typeof(FhirDateTime) && v is string s ? s.Replace(' ', 'T') + "Z" : v;
+        var settings = new DeserializerSettings { PrimitiveValueConverter = fixDateTime };
+        const string data = """{"resourceType": "Patient", "deceasedDateTime": "2020-01-01 10:00:00"}""";
+
+        var (patient, issues) = parseWithConverter(settings, data);
+        patient.Deceased.Should().BeOfType<FhirDateTime>().Which.Value.Should().Be("2020-01-01T10:00:00Z");
+        issues.Should().BeEmpty();
+
+        (_, issues) = parseWithConverter(new DeserializerSettings(), data);
+        issues.Should().ContainSingle(i => i.ErrorCode == COVE.LITERAL_INVALID_CODE);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Recoverable)]
+    [DataRow(DeserializationMode.Ostrich)]
+    public void PrimitiveValueConverter_ConvertsRepeatingPrimitives(DeserializationMode mode)
+    {
+        var settings = new DeserializerSettings { PrimitiveValueConverter = ConvertNumbersAndBooleans }
+            .UsingMode(mode).Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]);
+        const string json = """
+            {
+              "resourceType": "ClaimResponse",
+              "item": [ { "sequenceLinkId": "1", "noteNumber": [ "1", 2, "3" ], "_noteNumber": [ { "id": "n1" }, null, { "extension": [ { "url": "http://example.org/b", "valueBoolean": "true" } ] } ] } ]
+            }
+            """;
+
+        new FhirJsonDeserializer(settings).TryDeserializeResource(json, out var resource, out var issues);
+
+        var item = resource.Should().BeOfType<ClaimResponse>().Subject.Item.Single();
+        item.SequenceLinkIdElement.JsonValue.Should().Be(1);
+        item.NoteNumberElement.Select(n => n.JsonValue).Should().Equal(1, 2, 3);
+        item.NoteNumberElement[0].ElementId.Should().Be("n1");
+        item.NoteNumberElement[2].Extension.Single().Value.Should().BeOfType<FhirBoolean>().Which.JsonValue.Should().Be(true);
+        issues.Should().NotContain(i => i.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
+    }
+
+
+    private static readonly BaseFhirJsonSerializer JSON_SERIALIZER = new(ModelInfo.ModelInspector);
+
+    private static readonly Dictionary<string, string> STRING_OVERLOAD_CASES = new()
+    {
+        ["comments and trailing commas"] = """
+            { /* leading */ "resourceType": "Patient", // trailing
+              "active": true, "name": [ { "family": "Doe", "given": [ "John", ], }, ], }
+            """,
+        ["non-ascii"] = """{"resourceType": "Patient", "name": [{"family": "Zażółć gęślą jaźń 😀 日本語"}]}""",
+        ["large"] = "{\"resourceType\": \"Bundle\", \"type\": \"collection\", \"entry\": [" +
+                    string.Join(",", Enumerable.Range(0, 5000).Select(i =>
+                        $"{{\"resource\": {{\"resourceType\": \"Patient\", \"id\": \"p{i}\", \"name\": [{{\"family\": \"Müller-{i} 😀\"}}]}}}}")) +
+                    "]}",
+        ["model errors"] = """{"resourceType": "Patient", "name": [{"family": "żółć"}], "active": "x", "gender": "unknown-code", "foo": 1}""",
+        ["invalid json"] = """{"resourceType": "Patient", "active": tru }""",
+        ["invalid json after non-ascii"] = """{"resourceType": "Patient", "name": [{"family": "żółć 😀"}], "active": ]}""",
+        ["truncated json"] = """{"resourceType": "Patient", "name": [""",
+    };
+
+    private delegate T ReaderFunc<out T>(ref Utf8JsonReader reader);
+
+    // Reads the json the way the string overloads did before they used a pooled buffer.
+    private static string outcomeViaReader<T>(string json, ReaderFunc<T> parse) => outcome(() =>
+    {
+        var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(json), SerializationUtil.FhirJsonReaderOptions);
+        return parse(ref reader);
+    });
+
+    private static string outcome<T>(Func<T> parse)
+    {
+        try
+        {
+            return describe(parse());
+        }
+        catch (DeserializationFailedException dfe)
+        {
+            return $"{dfe.Message}\n{describe(dfe.PartialResult)}\n{describe(dfe.Exceptions)}";
+        }
+        catch (Exception e)
+        {
+            return $"{e.GetType()}: {e.Message}";
+        }
+
+        static string describe(object? result) => result switch
+        {
+            Base b => JSON_SERIALIZER.SerializeToString(b),
+            IEnumerable<CodedException> issues => string.Join("\n", issues.Select(i => $"{i.ErrorCode}: {i.Message}")),
+            ValueTuple<bool, Resource?, IEnumerable<CodedException>> t => $"{t.Item1}\n{describe(t.Item2)}\n{describe(t.Item3)}",
+            _ => result?.ToString() ?? "null"
+        };
+    }
+
+    [TestMethod]
+    [DataRow("comments and trailing commas")]
+    [DataRow("non-ascii")]
+    [DataRow("large")]
+    [DataRow("model errors")]
+    [DataRow("invalid json")]
+    [DataRow("invalid json after non-ascii")]
+    [DataRow("truncated json")]
+    public void StringOverloads_BehaveLikeReaderWithFhirJsonReaderOptions(string testCase)
+    {
+        var json = STRING_OVERLOAD_CASES[testCase];
+        var d = new FhirJsonDeserializer();
+        var expected = outcomeViaReader(json, (ref Utf8JsonReader r) => d.DeserializeResource(ref r));
+        if (testCase.EndsWith("json")) expected.Should().Contain("BytePositionInLine");
+
+        outcome(() => d.DeserializeResource(json)).Should().Be(expected);
+        outcome(() => d.Deserialize<Resource>(json)).Should().Be(outcomeViaReader(json, (ref Utf8JsonReader r) => d.Deserialize<Resource>(ref r)));
+        outcome(() => d.DeserializeObject(typeof(Patient), json)).Should().Be(outcomeViaReader(json, (ref Utf8JsonReader r) => d.DeserializeObject(typeof(Patient), ref r)));
+        outcome(() => (d.TryDeserializeResource(json, out var instance, out var issues), instance, issues))
+            .Should().Be(outcomeViaReader(json, (ref Utf8JsonReader r) => (d.TryDeserializeResource(ref r, out var instance, out var issues), instance, issues)));
+    }
+
+    [TestMethod]
+    public void StringOverloads_SmallDocumentAfterLargeOneIsUnaffectedByPooledBuffer()
+    {
+        var d = new FhirJsonDeserializer();
+        _ = d.DeserializeResource(STRING_OVERLOAD_CASES["large"]);
+
+        var patient = d.Deserialize<Patient>("""{"resourceType": "Patient", "id": "small"}""");
+
+        JSON_SERIALIZER.SerializeToString(patient).Should().Be("""{"resourceType":"Patient","id":"small"}""");
+    }
+
+    [TestMethod]
+    public void FhirJsonReaderOptions_SkipCommentsAndAllowTrailingCommas()
+    {
+        SerializationUtil.FhirJsonReaderOptions.CommentHandling.Should().Be(JsonCommentHandling.Skip);
+        SerializationUtil.FhirJsonReaderOptions.AllowTrailingCommas.Should().BeTrue();
+        var options = SerializationUtil.Utf8JsonReaderFromJsonText("{}").CurrentState.Options;
+        options.CommentHandling.Should().Be(JsonCommentHandling.Skip);
+        options.AllowTrailingCommas.Should().BeTrue();
     }
 
 // This test is only relevant when we have getter/setter codegen enabled. - See PropertyMapping's
