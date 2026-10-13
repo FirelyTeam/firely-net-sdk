@@ -128,11 +128,9 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="json">A string of json.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Resource DeserializeResource(this BaseFhirJsonDeserializer deserializer, string json)
-    {
-        var reader = SerializationUtil.Utf8JsonReaderFromJsonText(json);
-        return deserializer.DeserializeResource(ref reader);
-    }
+    public static Resource DeserializeResource(this BaseFhirJsonDeserializer deserializer, string json) =>
+        SerializationUtil.ReadJsonText(json, deserializer,
+            static (ref Utf8JsonReader reader, BaseFhirJsonDeserializer d) => d.DeserializeResource(ref reader));
 
     /// <summary>
     /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
@@ -148,8 +146,10 @@ public static class PocoDeserializationExtensions
         [NotNullWhen(true)] out Resource? instance,
         out IEnumerable<CodedException> issues)
     {
-        var reader = SerializationUtil.Utf8JsonReaderFromJsonText(json);
-        return deserializer.TryDeserializeResource(ref reader, out instance, out issues);
+        (var success, instance, issues) = SerializationUtil.ReadJsonText(json, deserializer,
+            static (ref Utf8JsonReader reader, BaseFhirJsonDeserializer d) =>
+                (d.TryDeserializeResource(ref reader, out var instance, out var issues), instance, issues));
+        return success;
     }
 
 
@@ -188,11 +188,9 @@ public static class PocoDeserializationExtensions
     /// <param name="targetType">The type of POCO to construct and deserialize</param>
     /// <param name="json">A string of json.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Base DeserializeObject(this BaseFhirJsonDeserializer deserializer, Type targetType, string json)
-    {
-        var reader = SerializationUtil.Utf8JsonReaderFromJsonText(json);
-        return deserializer.DeserializeObject(targetType, ref reader);
-    }
+    public static Base DeserializeObject(this BaseFhirJsonDeserializer deserializer, Type targetType, string json) =>
+        SerializationUtil.ReadJsonText(json, (deserializer, targetType),
+            static (ref Utf8JsonReader reader, (BaseFhirJsonDeserializer d, Type t) s) => s.d.DeserializeObject(s.t, ref reader));
 
     /// <summary>
     /// Reads a (subtree) of serialized FHIR Json data into a POCO object.
@@ -218,9 +216,7 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="json">A string of json.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static T Deserialize<T>(this BaseFhirJsonDeserializer deserializer, string json) where T : Base
-    {
-        var reader = SerializationUtil.Utf8JsonReaderFromJsonText(json);
-        return deserializer.Deserialize<T>(ref reader);
-    }
+    public static T Deserialize<T>(this BaseFhirJsonDeserializer deserializer, string json) where T : Base =>
+        SerializationUtil.ReadJsonText(json, deserializer,
+            static (ref Utf8JsonReader reader, BaseFhirJsonDeserializer d) => d.Deserialize<T>(ref reader));
 }

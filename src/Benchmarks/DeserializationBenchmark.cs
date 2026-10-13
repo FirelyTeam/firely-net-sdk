@@ -53,6 +53,13 @@ namespace Firely.Sdk.Benchmarks
         }
 
         [Benchmark]
+        public Resource JsonStringDeserializer()
+        {
+            JsonDeserializer.TryDeserializeResource(JsonData, out var resource, out _);
+            return resource;
+        }
+
+        [Benchmark]
         public Resource XmlDictionaryDeserializer()
         {
             using var xmlReader = XmlReader.Create(new StringReader(XmlData));
