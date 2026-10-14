@@ -6,7 +6,9 @@ using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
+using System.Linq;
 using Task = System.Threading.Tasks.Task;
+using ValidateCodeResult = Hl7.Fhir.Specification.Terminology.ValidateCodeResult;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -38,11 +40,20 @@ namespace Hl7.Fhir.Specification.Tests
 
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
             var result = await _service.ValueSetValidateCode(parameters);
-            result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value
-                .IsExactly(new FhirString(
-                    $"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"))
-                .Should().BeTrue();
+            var vcr = new ValidateCodeResult(result);
+            vcr.Result!.Value.Should().BeFalse();
+            vcr.Message!.Value.Should().StartWith($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})");
+
+            var issues = ((OperationOutcome)vcr.Issues!).Issue;
+            issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_IN_VS));
+
+            if (system is not null)
+            {
+                // 'theSystem' cannot be resolved, so this is reported as well
+                issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
+                                             && i.Expression.Single() == "system");
+                vcr.Message.Value.Should().Contain($"A definition for CodeSystem '{system}' could not be found");
+            }
         }
 
         [TestMethod]
@@ -123,6 +134,49 @@ namespace Hl7.Fhir.Specification.Tests
 
             // but we're called with the correct version before that.
             await resolver.Received().FindValueSetAsync(Arg.Is<string>(u => u == resolved));
+        }
+
+        [TestMethod]
+        public async Task ValidateCodeReturnsCodingDetailsAndIssues()
+        {
+            const string system = "http://example.org/fhir/CodeSystem/shape";
+            var codeSystem = new CodeSystem
+            {
+                Url = system,
+                Version = "1.0.0",
+                Status = PublicationStatus.Active,
+                Content = CodeSystem.CodeSystemContentMode.Complete,
+                Concept = [new() { Code = "code1", Display = "Display 1" }]
+            };
+            var valueSet = new ValueSet
+            {
+                Url = "http://example.org/fhir/ValueSet/shape-all",
+                Status = PublicationStatus.Active,
+                Compose = new() { Include = [new() { System = system }] }
+            };
+            var service = new LocalTerminologyService(new InMemoryResourceResolver(codeSystem, valueSet));
+
+            var valid = new ValidateCodeResult(await service.ValueSetValidateCode(
+                new ValidateCodeParameters().WithValueSet(valueSet.Url).WithCoding(new Coding(system, "code1", "Wrong"))));
+
+            valid.Result!.Value.Should().BeTrue();
+            valid.Code!.Value.Should().Be("code1");
+            valid.System!.Value.Should().Be(system);
+            valid.Version!.Value.Should().Be("1.0.0");
+            valid.Display!.Value.Should().Be("Display 1");
+            var displayIssue = ((OperationOutcome)valid.Issues!).Issue.Should().ContainSingle().Subject;
+            displayIssue.Details.Coding.Single().Code.Should().Be(TerminologyServiceOperationExceptionExtensions.INVALID_DISPLAY);
+            displayIssue.Expression.Should().Equal("Coding.display");
+
+            var invalid = new ValidateCodeResult(await service.ValueSetValidateCode(
+                new ValidateCodeParameters().WithValueSet(valueSet.Url).WithCode("codeX", system)));
+
+            invalid.Result!.Value.Should().BeFalse();
+            invalid.Code!.Value.Should().Be("codeX");
+            invalid.System!.Value.Should().Be(system);
+            ((OperationOutcome)invalid.Issues!).Issue.Select(i => i.Details.Coding.Single().Code).Should().Equal(
+                TerminologyServiceOperationExceptionExtensions.NOT_IN_VS,
+                TerminologyServiceOperationExceptionExtensions.INVALID_CODE);
         }
     }
 }

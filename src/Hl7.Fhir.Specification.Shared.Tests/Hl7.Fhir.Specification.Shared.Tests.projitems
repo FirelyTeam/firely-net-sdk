@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Terminology\SharedExpansionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Terminology\TerminologyValidationHelpersTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Terminology\ValueSetExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Terminology\ValidateCodeResultTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestDataHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TimingSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)xUnitBug.cs" />

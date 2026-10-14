@@ -26,17 +26,36 @@ namespace Hl7.Fhir.Specification.Terminology;
 public static class TerminologyServiceOperationExceptionExtensions
 {
     /// <summary>
-    /// These are codes from the Terminology Issue Type code system
-    /// (http://hl7.org/fhir/tools/CodeSystem/tx-issue-type)
-    /// See https://hl7.org/fhir/tools/0.8.0/CodeSystem-tx-issue-type.html.
+    /// The system of the Terminology Issue Type code system, used in <c>OperationOutcome.issue.details.coding</c>.
     /// </summary>
-    private static readonly Code NOT_FOUND = new("not-found");
-    private static readonly Code INVALID_DATA = new("invalid-data");
-    private static readonly Code INVALID_CODE = new("invalid-code");
-    private static readonly Code INVALID_DISPLAY = new("invalid-display");
-    private static readonly Code CANNOT_INFER = new("cannot-infer");
-    private static readonly Code CODE_RULE = new("code-rule");
-    private static readonly Code VS_INVALID = new("vs-invalid");
+    public const string TX_ISSUE_TYPE_SYSTEM = "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type";
+
+    // These are codes from the Terminology Issue Type code system
+    // (http://hl7.org/fhir/tools/CodeSystem/tx-issue-type)
+    // See https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-tx-issue-type.html.
+
+    /// <summary>A resource (e.g. a CodeSystem or ValueSet) needed to process the request could not be found.</summary>
+    public const string NOT_FOUND = "not-found";
+    /// <summary>The data is invalidly formed.</summary>
+    public const string INVALID_DATA = "invalid-data";
+    /// <summary>The code is not valid in the code system.</summary>
+    public const string INVALID_CODE = "invalid-code";
+    /// <summary>The display is not valid for the code.</summary>
+    public const string INVALID_DISPLAY = "invalid-display";
+    /// <summary>The system cannot be inferred from the context.</summary>
+    public const string CANNOT_INFER = "cannot-infer";
+    /// <summary>The code fails a rule, e.g. it is abstract or inactive where that is not allowed.</summary>
+    public const string CODE_RULE = "code-rule";
+    /// <summary>The value set is invalid and cannot be processed.</summary>
+    public const string VS_INVALID = "vs-invalid";
+    /// <summary>The code is valid in its code system, but not in the value set.</summary>
+    public const string NOT_IN_VS = "not-in-vs";
+    /// <summary>This coding of a CodeableConcept is not in the value set, but another coding is.</summary>
+    public const string THIS_CODE_NOT_IN_VS = "this-code-not-in-vs";
+    /// <summary>A comment about the code, e.g. that it is inactive or deprecated.</summary>
+    public const string CODE_COMMENT = "code-comment";
+    /// <summary>The status of a resource used in processing (e.g. draft, retired) is worth noting.</summary>
+    public const string STATUS_CHECK = "status-check";
 
     extension(FhirOperationException)
     {
@@ -177,7 +196,7 @@ public static class TerminologyServiceOperationExceptionExtensions
 
         private static OperationOutcome createOutcome(
             string details,
-            IssueSeverity severity, IssueType issueType, Code? txIssueType = null) =>
+            IssueSeverity severity, IssueType issueType, string? txIssueType = null) =>
             new()
             {
                 Issue =
@@ -191,7 +210,7 @@ public static class TerminologyServiceOperationExceptionExtensions
                             {
                                 Coding = [ new()
                                 {
-                                    Code = txIssueType.Literal, System = "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type"
+                                    Code = txIssueType, System = TX_ISSUE_TYPE_SYSTEM
                                 } ]
                             }
                             : null,

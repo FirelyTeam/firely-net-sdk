@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
+using ValidateCodeResult = Hl7.Fhir.Specification.Terminology.ValidateCodeResult;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -42,9 +43,20 @@ namespace Hl7.Fhir.Specification.Tests
 
             var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
             var result = await _service.ValueSetValidateCode(parameters);
-            result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.IsExactly(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"))
-                .Should().BeTrue();
+            var vcr = new ValidateCodeResult(result);
+            vcr.Result!.Value.Should().BeFalse();
+            vcr.Message!.Value.Should().StartWith($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})");
+
+            var issues = ((OperationOutcome)vcr.Issues!).Issue;
+            issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_IN_VS));
+
+            if (system is not null)
+            {
+                // 'theSystem' cannot be resolved, so this is reported as well
+                issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
+                                             && i.Expression.Single() == "system");
+                vcr.Message.Value.Should().Contain($"A definition for CodeSystem '{system}' could not be found");
+            }
         }
 
         [TestMethod]
@@ -336,5 +348,272 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
         }
+
+        #region Shape of the $validate-code result
+
+        private const string ShapeSystem = "http://example.org/fhir/CodeSystem/shape";
+        private const string ShapeAllVs = "http://example.org/fhir/ValueSet/shape-all";
+        private const string ShapeCode1Vs = "http://example.org/fhir/ValueSet/shape-code1";
+
+        private static LocalTerminologyService createShapeService()
+        {
+            var codeSystem = new CodeSystem
+            {
+                Url = ShapeSystem,
+                Version = "1.0.0",
+                Name = "Shape",
+                Status = PublicationStatus.Active,
+                Content = CodeSystemContentMode.Complete,
+                Property =
+                [
+                    new() { Code = "notSelectable", Uri = CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE, Type = CodeSystem.PropertyType.Boolean },
+                    new() { Code = "inactive", Uri = CodeSystem.CONCEPTPROPERTY_INACTIVE, Type = CodeSystem.PropertyType.Boolean },
+                    new() { Code = "status", Uri = CodeSystem.CONCEPTPROPERTY_STATUS, Type = CodeSystem.PropertyType.Code },
+                ],
+                Concept =
+                [
+                    new() { Code = "code1", Display = "Display 1" },
+                    new() { Code = "code2", Display = "Display 2" },
+                    new()
+                    {
+                        Code = "abstract", Display = "Abstract",
+                        Property = [new() { Code = "notSelectable", Value = new FhirBoolean(true) }]
+                    },
+                    new()
+                    {
+                        Code = "inactive", Display = "Inactive",
+                        Property = [new() { Code = "inactive", Value = new FhirBoolean(true) }]
+                    },
+                    new()
+                    {
+                        Code = "deprecated", Display = "Deprecated",
+                        Property = [new() { Code = "status", Value = new Code("deprecated") }]
+                    },
+                ]
+            };
+
+            var allVs = new ValueSet
+            {
+                Url = ShapeAllVs,
+                Name = "ShapeAll",
+                Status = PublicationStatus.Active,
+                Compose = new() { Include = [new() { System = ShapeSystem }] }
+            };
+
+            var code1Vs = new ValueSet
+            {
+                Url = ShapeCode1Vs,
+                Name = "ShapeCode1",
+                Status = PublicationStatus.Active,
+                Compose = new() { Include = [new() { System = ShapeSystem, Concept = [new() { Code = "code1" }] }] }
+            };
+
+            return new LocalTerminologyService(new InMemoryResourceResolver(codeSystem, allVs, code1Vs));
+        }
+
+        private static async System.Threading.Tasks.Task<ValidateCodeResult> validateShape(string valueSet, Action<ValidateCodeParameters> configure)
+        {
+            var parameters = new ValidateCodeParameters().WithValueSet(valueSet);
+            configure(parameters);
+            return new ValidateCodeResult(await createShapeService().ValueSetValidateCode(parameters));
+        }
+
+        private static OperationOutcome.IssueComponent[] issues(ValidateCodeResult result) =>
+            (result.Issues as OperationOutcome)?.Issue.ToArray() ?? [];
+
+        private static string txIssueType(OperationOutcome.IssueComponent issue) =>
+            issue.Details.Coding.Single(c => c.System == TerminologyServiceOperationExceptionExtensions.TX_ISSUE_TYPE_SYSTEM).Code;
+
+        [TestMethod]
+        public async Task ValidCodeReturnsCodeSystemVersionAndDisplay()
+        {
+            var result = await validateShape(ShapeAllVs, p => p.WithCode("code1", ShapeSystem));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Code!.Value.Should().Be("code1");
+            result.System!.Value.Should().Be(ShapeSystem);
+            result.Version!.Value.Should().Be("1.0.0");
+            result.Display!.Value.Should().Be("Display 1");
+            result.Message.Should().BeNull();
+            result.Issues.Should().BeNull();
+            result.Inactive.Should().BeNull();
+            result.Status.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async Task WrongDisplayIsAWarning()
+        {
+            var result = await validateShape(ShapeAllVs, p => p.WithCoding(new Coding(ShapeSystem, "code1", "Wrong")));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Display!.Value.Should().Be("Display 1");
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.INVALID_DISPLAY);
+            issue.Expression.Should().Equal("Coding.display");
+            result.Message!.Value.Should().Be(issue.Details.Text);
+        }
+
+        [TestMethod]
+        public async Task CodeInCodeSystemButNotInValueSet()
+        {
+            var result = await validateShape(ShapeCode1Vs, p => p.WithCoding(new Coding(ShapeSystem, "code2")));
+
+            result.Result!.Value.Should().BeFalse();
+            result.Code!.Value.Should().Be("code2");
+            result.System!.Value.Should().Be(ShapeSystem);
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
+            issue.Code.Should().Be(OperationOutcome.IssueType.CodeInvalid);
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            issue.Expression.Should().Equal("Coding.code");
+            result.Message!.Value.Should().Be(issue.Details.Text);
+        }
+
+        [TestMethod]
+        public async Task CodeUnknownInCompleteCodeSystem()
+        {
+            var result = await validateShape(ShapeAllVs, p => p.WithCode("codeX", ShapeSystem));
+
+            result.Result!.Value.Should().BeFalse();
+            result.Code!.Value.Should().Be("codeX");
+            result.System!.Value.Should().Be(ShapeSystem);
+            issues(result).Select(txIssueType).Should().Equal(
+                TerminologyServiceOperationExceptionExtensions.NOT_IN_VS,
+                TerminologyServiceOperationExceptionExtensions.INVALID_CODE);
+            issues(result).Should().OnlyContain(i => i.Expression.Single() == "code");
+            result.Message!.Value.Should().Be(string.Join("; ", issues(result).Select(i => i.Details.Text)));
+        }
+
+        [TestMethod]
+        public async Task UnknownCodeSystem()
+        {
+            const string unknownSystem = "http://example.org/fhir/CodeSystem/unknown";
+            var result = await validateShape(ShapeAllVs, p => p.WithCoding(new Coding(unknownSystem, "code1")));
+
+            result.Result!.Value.Should().BeFalse();
+            result.System!.Value.Should().Be(unknownSystem);
+            result.UnknownSystem!.Value.Should().Be(unknownSystem);
+            var notFound = issues(result).Should().ContainSingle(i => i.Code == OperationOutcome.IssueType.NotFound).Subject;
+            txIssueType(notFound).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_FOUND);
+            notFound.Expression.Should().Equal("Coding.system");
+        }
+
+        [TestMethod]
+        public async Task AbstractCodeNotAllowed()
+        {
+            var result = await validateShape(ShapeAllVs, p => p.WithCoding(new Coding(ShapeSystem, "abstract")).WithAbstract(false));
+
+            result.Result!.Value.Should().BeFalse();
+            result.Code!.Value.Should().Be("abstract");
+            var issue = issues(result).Should().ContainSingle().Subject;
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.CODE_RULE);
+            issue.Code.Should().Be(OperationOutcome.IssueType.BusinessRule);
+            result.Message!.Value.Should().Contain("abstract");
+        }
+
+        [TestMethod]
+        public async Task InactiveCodeIsValidWithAWarning()
+        {
+            var result = await validateShape(ShapeAllVs, p => p.WithCoding(new Coding(ShapeSystem, "inactive")));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Inactive!.Value.Should().BeTrue();
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.CODE_COMMENT);
+            issue.Expression.Should().Equal("Coding");
+            result.Message!.Value.Should().Be(issue.Details.Text);
+        }
+
+        [TestMethod]
+        public async Task DeprecatedCodeReturnsStatus()
+        {
+            var result = await validateShape(ShapeAllVs, p => p.WithCode("deprecated", ShapeSystem));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Status!.Value.Should().Be("deprecated");
+            result.Inactive.Should().BeNull();
+            var issue = issues(result).Should().ContainSingle().Subject;
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.CODE_COMMENT);
+            issue.Expression.Should().Equal("code");
+        }
+
+        [TestMethod]
+        public async Task ValidCodeableConceptEchoesConceptAndReturnsMatchingCoding()
+        {
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding(ShapeSystem, "codeX"));
+            cc.Coding.Add(new Coding(ShapeSystem, "code1", "Wrong"));
+
+            var result = await validateShape(ShapeAllVs, p => p.WithCodeableConcept(cc));
+
+            result.Result!.Value.Should().BeTrue();
+            result.CodeableConcept!.Matches(cc).Should().BeTrue();
+            result.CodeableConcept.Should().NotBeSameAs(cc);
+            result.Code!.Value.Should().Be("code1");
+            result.System!.Value.Should().Be(ShapeSystem);
+            result.Display!.Value.Should().Be("Display 1");
+            issues(result).Should().ContainSingle().Which.Expression.Should().Equal("CodeableConcept.coding[1].display");
+        }
+
+        [TestMethod]
+        public async Task InvalidCodeableConceptReportsAllCodings()
+        {
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding(ShapeSystem, "codeX"));
+            cc.Coding.Add(new Coding(ShapeSystem, "code2"));
+
+            var result = await validateShape(ShapeCode1Vs, p => p.WithCodeableConcept(cc));
+
+            result.Result!.Value.Should().BeFalse();
+            result.CodeableConcept!.Matches(cc).Should().BeTrue();
+            result.CodeableConcept.Should().NotBeSameAs(cc);
+            result.Code.Should().BeNull();
+            result.System.Should().BeNull();
+
+            var all = issues(result);
+            txIssueType(all[0]).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            all[0].Expression.Should().BeEmpty();
+            all.Should().Contain(i => i.Expression.SingleOrDefault() == "CodeableConcept.coding[0].code"
+                                      && txIssueType(i) == TerminologyServiceOperationExceptionExtensions.INVALID_CODE);
+            all.Should().Contain(i => i.Expression.SingleOrDefault() == "CodeableConcept.coding[1].code"
+                                      && txIssueType(i) == TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            result.Message!.Value.Should().StartWith("None of the Codings in the CodeableConcept were valid");
+        }
+
+        [TestMethod]
+        public async Task InvalidSingleCodingCodeableConceptReturnsThatCodingsResult()
+        {
+            var cc = new CodeableConcept(ShapeSystem, "code2");
+
+            var result = await validateShape(ShapeCode1Vs, p => p.WithCodeableConcept(cc));
+
+            result.Result!.Value.Should().BeFalse();
+            result.CodeableConcept!.Matches(cc).Should().BeTrue();
+            var issue = issues(result).Should().ContainSingle().Subject;
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            issue.Expression.Should().Equal("CodeableConcept.coding[0].code");
+            result.Message!.Value.Should().Be(issue.Details.Text);
+        }
+
+        [TestMethod]
+        public async Task InvalidCodeableConceptWithUnknownSystemReportsIt()
+        {
+            const string unknownSystem = "http://example.org/fhir/CodeSystem/unknown";
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding(unknownSystem, "a"));
+            cc.Coding.Add(new Coding(unknownSystem, "b"));
+
+            var result = await validateShape(ShapeAllVs, p => p.WithCodeableConcept(cc));
+
+            result.Result!.Value.Should().BeFalse();
+            result.UnknownSystem!.Value.Should().Be(unknownSystem);
+            issues(result).Where(i => txIssueType(i) == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
+                .Select(i => i.Expression.Single())
+                .Should().Equal("CodeableConcept.coding[0].system", "CodeableConcept.coding[1].system");
+        }
+
+        #endregion
     }
 }
