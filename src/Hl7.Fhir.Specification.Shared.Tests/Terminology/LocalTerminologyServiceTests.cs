@@ -462,6 +462,8 @@ namespace Hl7.Fhir.Specification.Tests
             result.Result!.Value.Should().BeFalse();
             result.Code!.Value.Should().Be("code2");
             result.System!.Value.Should().Be(ShapeSystem);
+            result.Version!.Value.Should().Be("1.0.0");
+            result.Display!.Value.Should().Be("Display 2");
             var issue = issues(result).Should().ContainSingle().Subject;
             issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
             issue.Code.Should().Be(OperationOutcome.IssueType.CodeInvalid);
@@ -612,6 +614,55 @@ namespace Hl7.Fhir.Specification.Tests
             issues(result).Where(i => txIssueType(i) == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
                 .Select(i => i.Expression.Single())
                 .Should().Equal("CodeableConcept.coding[0].system", "CodeableConcept.coding[1].system");
+        }
+
+        [TestMethod]
+        public async Task EnumeratedConceptGetsDisplayAndVersionFromCodeSystem()
+        {
+            var result = await validateShape(ShapeCode1Vs, p => p.WithCoding(new Coding(ShapeSystem, "code1", "Wrong")));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Display!.Value.Should().Be("Display 1");
+            result.Version!.Value.Should().Be("1.0.0");
+            var issue = issues(result).Should().ContainSingle().Subject;
+            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.INVALID_DISPLAY);
+            issue.Details.Text.Should().Contain("should be 'Display 1'");
+        }
+
+        [TestMethod]
+        public async Task StatusComesFromTheCodeSystemVersionInTheExpansion()
+        {
+            CodeSystem version(string v, string status) => new()
+            {
+                Url = ShapeSystem,
+                Version = v,
+                Status = PublicationStatus.Active,
+                Content = CodeSystemContentMode.Complete,
+                Property = [new() { Code = "status", Uri = CodeSystem.CONCEPTPROPERTY_STATUS, Type = CodeSystem.PropertyType.Code }],
+                Concept = [new() { Code = "code1", Display = "Display 1", Property = [new() { Code = "status", Value = new Code(status) }] }]
+            };
+
+            var expanded = new ValueSet
+            {
+                Url = "http://example.org/fhir/ValueSet/pre-expanded",
+                Status = PublicationStatus.Active,
+                Expansion = new()
+                {
+                    Timestamp = "2026-10-14",
+                    Contains = [new() { System = ShapeSystem, Version = "1.0.0", Code = "code1", Display = "Display 1" }]
+                }
+            };
+
+            // the resolver finds version 2.0.0 when asked without a version
+            var service = new LocalTerminologyService(new InMemoryResourceResolver(version("2.0.0", "retired"), version("1.0.0", "active"), expanded));
+            var result = new ValidateCodeResult(await service.ValueSetValidateCode(
+                new ValidateCodeParameters().WithValueSet(expanded.Url).WithCode("code1", ShapeSystem)));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Version!.Value.Should().Be("1.0.0");
+            result.Status.Should().BeNull(); // version 1.0.0 is active, 2.0.0 would have been retired
+            result.Inactive.Should().BeNull();
+            result.Issues.Should().BeNull();
         }
 
         #endregion

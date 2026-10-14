@@ -274,14 +274,21 @@ public class LocalTerminologyService : BaseTerminologyService
             return notFound;
         }
 
+        // The expansion may lack the display and version (e.g. for concepts enumerated in the ValueSet),
+        // so complete them from the code system, which we also need for the status of the concept.
+        var resolvedSystem = component.System ?? system;
+        var codeSystem = resolvedSystem is null ? null : await findCodeSystem(resolvedSystem, component.Version).ConfigureAwait(false);
+        var concept = codeSystem?.Concept.FindCode(code);
+        var conceptDisplay = component.Display ?? concept?.Display;
+
         // abstractAllowed == null means abstract codes are not checked.
         var abstractRejected = component.Abstract == true && abstractAllowed == false;
 
         var result = ValidateCodeResult.ForResult(!abstractRejected,
-            display: component.Display ?? display,
+            display: conceptDisplay ?? display,
             code: code,
-            system: component.System ?? system,
-            version: component.Version);
+            system: resolvedSystem,
+            version: component.Version ?? codeSystem?.Version);
 
         if (abstractRejected)
         {
@@ -289,14 +296,14 @@ public class LocalTerminologyService : BaseTerminologyService
                 $"{codeLabel} is abstract, which is not allowed here", codePath);
         }
 
-        if (display != null && component.Display != null && display != component.Display)
+        if (display != null && conceptDisplay != null && display != conceptDisplay)
         {
             // this is only a warning (so success is still true)
             result.AddIssue(IssueSeverity.Warning, IssueType.Invalid, TX.INVALID_DISPLAY,
-                $"{codeLabel} has incorrect display '{display}', should be '{component.Display}'", elementPath(path, "display"));
+                $"{codeLabel} has incorrect display '{display}', should be '{conceptDisplay}'", elementPath(path, "display"));
         }
 
-        await addConceptStatus(result, component, code, path ?? "code").ConfigureAwait(false);
+        addConceptStatus(result, component, codeSystem, concept, code, path ?? "code");
 
         setMessage(result);
         return result;
@@ -339,7 +346,17 @@ public class LocalTerminologyService : BaseTerminologyService
 
         // Find out why the code is not in the valueset: is it unknown in its code system,
         // or is the code system itself unknown?
-        var codeSystem = await findCodeSystem(system).ConfigureAwait(false);
+        var codeSystem = await findCodeSystem(system, null).ConfigureAwait(false);
+        var concept = codeSystem?.Concept.FindCode(code);
+        if (codeSystem is not null)
+        {
+            // Report what we know about the code, even though it is not in the valueset.
+            if (!string.IsNullOrEmpty(codeSystem.Version))
+                result.SetSingleValue(ValidateCodeResult.VERSION_ATTRIBUTE, new FhirString(codeSystem.Version));
+            if (!string.IsNullOrEmpty(concept?.Display))
+                result.SetSingleValue(ValidateCodeResult.DISPLAY_ATTRIBUTE, new FhirString(concept!.Display));
+        }
+
         if (codeSystem is null)
         {
             result.AddIssue(IssueSeverity.Error, IssueType.NotFound, TX.NOT_FOUND,
@@ -349,9 +366,9 @@ public class LocalTerminologyService : BaseTerminologyService
 #endif
         }
 #if STU3
-        else if (codeSystem.Content == CodeSystem.CodeSystemContentMode.Complete && codeSystem.Concept.FindCode(code) is null)
+        else if (codeSystem.Content == CodeSystem.CodeSystemContentMode.Complete && concept is null)
 #else
-        else if (codeSystem.Content == CodeSystemContentMode.Complete && codeSystem.Concept.FindCode(code) is null)
+        else if (codeSystem.Content == CodeSystemContentMode.Complete && concept is null)
 #endif
         {
             var version = string.IsNullOrEmpty(codeSystem.Version) ? string.Empty : $" version '{codeSystem.Version}'";
@@ -367,14 +384,20 @@ public class LocalTerminologyService : BaseTerminologyService
         }
     }
 
-    private async Task<CodeSystem?> findCodeSystem(string system)
+    // Finds the code system, in the given version if there is one. Returns null rather than another version.
+    private async Task<CodeSystem?> findCodeSystem(string system, string? version)
     {
         // Take the same lock as the expansion, since the caller-supplied resolver
         // is not guaranteed to be safe for concurrent use.
         await SEMAPHORE.WaitAsync().ConfigureAwait(false);
         try
         {
-            return await _resolver.FindCodeSystemAsync(system).ConfigureAwait(false);
+            if (string.IsNullOrEmpty(version))
+                return await _resolver.FindCodeSystemAsync(system).ConfigureAwait(false);
+
+            var codeSystem = await _resolver.FindCodeSystemAsync($"{system}|{version}").ConfigureAwait(false)
+                             ?? await _resolver.FindCodeSystemAsync(system).ConfigureAwait(false);
+            return codeSystem?.Version == version ? codeSystem : null;
         }
         finally
         {
@@ -385,15 +408,13 @@ public class LocalTerminologyService : BaseTerminologyService
     /// <summary>
     /// Adds the inactive and status parameters and a warning when the concept is not active in its code system.
     /// </summary>
-    private async T.Task addConceptStatus(ValidateCodeResult result, ValueSet.ContainsComponent component, string code, string expression)
+    private static void addConceptStatus(ValidateCodeResult result, ValueSet.ContainsComponent component,
+        CodeSystem? codeSystem, CodeSystem.ConceptDefinitionComponent? concept, string code, string expression)
     {
         var inactive = component.Inactive == true;
         string? status = null;
 
-        var system = component.System;
-        if (system is not null
-            && await findCodeSystem(system).ConfigureAwait(false) is { } codeSystem
-            && codeSystem.Concept.FindCode(code) is { } concept)
+        if (codeSystem is not null && concept is not null)
         {
             status = conceptProperty(codeSystem, concept, "status", CodeSystem.CONCEPTPROPERTY_STATUS) switch
             {
