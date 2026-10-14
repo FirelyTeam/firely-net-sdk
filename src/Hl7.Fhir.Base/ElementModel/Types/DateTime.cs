@@ -95,6 +95,31 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     private readonly DateTimeOffset _value;
 
     /// <summary>
+    /// The number of fraction digits in the parsed value. Values not created by Parse() keep full tick precision.
+    /// </summary>
+    private int FractionDigits { get; init; } = 7;
+
+    /// <summary>
+    /// Gets the range covered by this datetime at its precision. Fails when the datetime has no offset.
+    /// </summary>
+    public bool TryGetRange([NotNullWhen(true)] out DateTimeRange? range)
+    {
+        range = HasOffset ? DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, null) : null;
+        return range is not null;
+    }
+
+    /// <summary>
+    /// Gets the range covered by this datetime at its precision. A datetime without an offset
+    /// is read as a wall-clock time in <paramref name="assumedZone"/>.
+    /// </summary>
+    public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
+        DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, HasOffset ? null : assumedZone);
+
+    /// <inheritdoc cref="GetRange(TimeZoneInfo)"/>
+    public DateTimeRange GetRange(TimeSpan assumedOffset) =>
+        GetRange(TimeZoneInfo.CreateCustomTimeZone(assumedOffset.ToString(), assumedOffset, null, null));
+
+    /// <summary>
     /// Converts the datetime to a full DateTimeOffset instance.
     /// </summary>
     /// <param name="defaultOffset">Offset used when the datetime does not specify one.</param>
@@ -151,7 +176,8 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         var success = DateTimeOffset.TryParse(parseableDt, out var parsedValue);
         value = new DateTime(parsedValue, prec, offset.Success)
         {
-            OriginalParsedString = representation
+            OriginalParsedString = representation,
+            FractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0
         };
 
         return success;

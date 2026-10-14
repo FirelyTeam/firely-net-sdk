@@ -65,6 +65,26 @@ public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable
     private readonly DateTimeOffset _value;
 
     /// <summary>
+    /// Gets the range covered by this date at its precision. Fails when the date has no offset, which is always the case for a FHIR date.
+    /// </summary>
+    public bool TryGetRange([NotNullWhen(true)] out DateTimeRange? range)
+    {
+        range = HasOffset ? DateTimeRange.Create(ToString(), Precision, 0, _value, null) : null;
+        return range is not null;
+    }
+
+    /// <summary>
+    /// Gets the range covered by this date at its precision. A date without an offset
+    /// is read as a wall-clock date in <paramref name="assumedZone"/>.
+    /// </summary>
+    public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
+        DateTimeRange.Create(ToString(), Precision, 0, _value, HasOffset ? null : assumedZone);
+
+    /// <inheritdoc cref="GetRange(TimeZoneInfo)"/>
+    public DateTimeRange GetRange(TimeSpan assumedOffset) =>
+        GetRange(TimeZoneInfo.CreateCustomTimeZone(assumedOffset.ToString(), assumedOffset, null, null));
+
+    /// <summary>
     /// Converts the date to a full DateTimeOffset instance.
     /// </summary>
     public DateTimeOffset ToDateTimeOffset(TimeSpan defaultOffset) =>
