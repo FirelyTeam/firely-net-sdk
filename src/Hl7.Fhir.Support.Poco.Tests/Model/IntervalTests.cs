@@ -69,6 +69,17 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void DefaultIsUnboundedOnBothSides()
+        {
+            var all = default(Interval<int>);
+            all.HasLow.Should().BeFalse();
+            all.HasHigh.Should().BeFalse();
+            all.Contains(int.MinValue).Should().BeTrue();
+            all.Covers(new Interval<int>(1, 5)).Should().BeTrue();
+            all.ToString().Should().Be("(-∞, +∞)");
+        }
+
+        [TestMethod]
         public void EqualityAndToString()
         {
             (new Interval<int>(1, 5) == new Interval<int>(1, 5)).Should().BeTrue();

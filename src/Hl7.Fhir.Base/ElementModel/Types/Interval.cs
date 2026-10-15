@@ -22,8 +22,10 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// of an <i>unknown</i> bound, and the operations return definite answers rather than three-valued logic; CQL semantics
 /// can be layered on top.</para>
 /// <para>Empty intervals cannot be created: the low bound must lie before the high bound, or equal it when both are closed.</para>
+/// <para>This is a value type to avoid an allocation per interval. <c>default(Interval&lt;T&gt;)</c> is the interval
+/// unbounded on both sides, which contains every value.</para>
 /// </remarks>
-public sealed class Interval<T> : IEquatable<Interval<T>> where T : IComparable<T>
+public readonly struct Interval<T> : IEquatable<Interval<T>> where T : IComparable<T>
 {
     private readonly T _low;
     private readonly T _high;
@@ -119,8 +121,6 @@ public sealed class Interval<T> : IEquatable<Interval<T>> where T : IComparable<
     /// </summary>
     public bool Overlaps(Interval<T> other)
     {
-        if (other is null) throw new ArgumentNullException(nameof(other));
-
         return startsBeforeEnd(this, other) && startsBeforeEnd(other, this);
 
         static bool startsBeforeEnd(Interval<T> a, Interval<T> b)
@@ -136,8 +136,6 @@ public sealed class Interval<T> : IEquatable<Interval<T>> where T : IComparable<
     /// </summary>
     public bool Covers(Interval<T> other)
     {
-        if (other is null) throw new ArgumentNullException(nameof(other));
-
         var lowOk = !HasLow || (other.HasLow && boundCovers(_low, LowClosed, other._low, other.LowClosed, below: true));
         var highOk = !HasHigh || (other.HasHigh && boundCovers(_high, HighClosed, other._high, other.HighClosed, below: false));
         return lowOk && highOk;
@@ -153,18 +151,17 @@ public sealed class Interval<T> : IEquatable<Interval<T>> where T : IComparable<
     /// <summary>
     /// Two intervals are equal when they have the same bounds (by <see cref="EqualityComparer{T}.Default"/>) and closedness.
     /// </summary>
-    public bool Equals(Interval<T>? other) =>
-        other is not null
-        && HasLow == other.HasLow && LowClosed == other.LowClosed
+    public bool Equals(Interval<T> other) =>
+        HasLow == other.HasLow && LowClosed == other.LowClosed
         && HasHigh == other.HasHigh && HighClosed == other.HighClosed
         && (!HasLow || EqualityComparer<T>.Default.Equals(_low, other._low))
         && (!HasHigh || EqualityComparer<T>.Default.Equals(_high, other._high));
 
     public override bool Equals(object? obj) => obj is Interval<T> other && Equals(other);
 
-    public static bool operator ==(Interval<T>? left, Interval<T>? right) => left is null ? right is null : left.Equals(right);
+    public static bool operator ==(Interval<T> left, Interval<T> right) => left.Equals(right);
 
-    public static bool operator !=(Interval<T>? left, Interval<T>? right) => !(left == right);
+    public static bool operator !=(Interval<T> left, Interval<T> right) => !(left == right);
 
     public override int GetHashCode() =>
         HashCode.Combine(HasLow ? _low : default, LowClosed, HasHigh ? _high : default, HighClosed);
