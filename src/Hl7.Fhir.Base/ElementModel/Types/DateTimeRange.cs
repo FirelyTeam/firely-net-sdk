@@ -22,6 +22,10 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// Two ranges are equal when their precision is equal and their bounds denote the same instants; <see cref="OriginalValue"/>
 /// is not compared. Bounds are compared as instants, ignoring their offsets, so <c>[10:00+01:00, 10:00:01+01:00)</c>
 /// and <c>[09:00Z, 09:00:01Z)</c> are equal although they print differently.
+/// <para>A bound that falls outside what <see cref="DateTimeOffset"/> can represent, such as the end of
+/// <c>9999-12-31</c>, makes that side unbounded. This is exact for every representable instant, whereas clamping to
+/// <see cref="DateTimeOffset.MaxValue"/> would wrongly exclude that instant from a half-open range, and throwing would
+/// make valid values (often used as an "indefinitely" sentinel) unusable.</para>
 /// </remarks>
 public sealed class DateTimeRange : IEquatable<DateTimeRange>
 {
@@ -131,7 +135,8 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
         return zone is null
             ? new DateTimeRange(originalValue, precision, start, end)
-            : new DateTimeRange(originalValue, precision, inZone(start, zone, earliest: true), inZone(end, zone, earliest: false));
+            : new DateTimeRange(originalValue, precision, inZone(start.DateTime, zone, earliest: true),
+                end is { } e ? inZone(e.DateTime, zone, earliest: false) : null);
     }
 
     /// <summary>
@@ -141,21 +146,23 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     internal static DateTimeRange Create(string? originalValue, DateTimePrecision precision, int fractionDigits,
         DateTimeOffset start, TimeSpan offset)
     {
-        var startAtOffset = new DateTimeOffset(start.DateTime, offset);
-        return new DateTimeRange(originalValue, precision, startAtOffset, addUnit(startAtOffset, precision, fractionDigits));
+        var startAtOffset = at(start.DateTime, offset);
+        var end = addUnit(start.DateTime, precision, fractionDigits) is { } e ? at(e, offset) : null;
+        return new DateTimeRange(originalValue, precision, startAtOffset, end);
     }
 
-    private static DateTimeOffset inZone(DateTimeOffset wallClock, TimeZoneInfo zone, bool earliest)
+    private static DateTimeOffset? inZone(System.DateTime wallClock, TimeZoneInfo zone, bool earliest)
     {
-        var local = System.DateTime.SpecifyKind(wallClock.DateTime, DateTimeKind.Unspecified);
+        var local = System.DateTime.SpecifyKind(wallClock, DateTimeKind.Unspecified);
 
         var current = zone.GetUtcOffset(local);
         // Compare with the offsets one day before and after. This catches gaps of up to a day (such as Pacific/Apia
         // skipping 2011-12-30, which TimeZoneInfo.IsInvalidTime does not report on every platform) and assumes
         // no zone has two transitions within a day.
-        var before = zone.GetUtcOffset(local.AddDays(-1));
-        var after = zone.GetUtcOffset(local.AddDays(1));
-        if (before == current && after == current) return new DateTimeOffset(local, current);
+        // The probes are clamped to the calendar's limits.
+        var before = zone.GetUtcOffset(local.Ticks >= TimeSpan.TicksPerDay ? local.AddDays(-1) : System.DateTime.MinValue);
+        var after = zone.GetUtcOffset(System.DateTime.MaxValue.Ticks - local.Ticks >= TimeSpan.TicksPerDay ? local.AddDays(1) : System.DateTime.MaxValue);
+        if (before == current && after == current) return at(local, current);
 
         // Keep the candidates under which this wall-clock time really occurs; if there are none, the time was skipped
         // and both surrounding offsets are candidates.
@@ -169,13 +176,44 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
         };
 
         // A larger offset gives an earlier instant for the same wall-clock time.
-        return new DateTimeOffset(local, earliest ? (a > b ? a : b) : (a < b ? a : b));
+        return at(local, earliest ? (a > b ? a : b) : (a < b ? a : b));
     }
 
     private static bool occursAt(System.DateTime local, TimeSpan offset, TimeZoneInfo zone) =>
-        zone.GetUtcOffset(new DateTimeOffset(local, offset).UtcDateTime) == offset;
+        at(local, offset) is { } instant && zone.GetUtcOffset(instant.UtcDateTime) == offset;
 
-    private static DateTimeOffset addUnit(DateTimeOffset start, DateTimePrecision precision, int fractionDigits) => precision switch
+    /// <summary>
+    /// The instant of wall-clock time <paramref name="local"/> at <paramref name="offset"/>, or <c>null</c> when it lies
+    /// outside the range of <see cref="DateTimeOffset"/>, which leaves that side of the range unbounded.
+    /// </summary>
+    private static DateTimeOffset? at(System.DateTime local, TimeSpan offset)
+    {
+        var utcTicks = local.Ticks - offset.Ticks;
+        return utcTicks < 0 || utcTicks > System.DateTime.MaxValue.Ticks
+            ? null
+            : new DateTimeOffset(System.DateTime.SpecifyKind(local, DateTimeKind.Unspecified), offset);
+    }
+
+    /// <summary>
+    /// The start of the next unit at <paramref name="precision"/>, or <c>null</c> when it lies beyond the calendar's
+    /// limits, which leaves the end of the range unbounded.
+    /// </summary>
+    private static DateTimeOffset? addUnit(DateTimeOffset start, DateTimePrecision precision, int fractionDigits) =>
+        addUnit(start.DateTime, precision, fractionDigits) is { } end ? at(end, start.Offset) : null;
+
+    private static System.DateTime? addUnit(System.DateTime start, DateTimePrecision precision, int fractionDigits)
+    {
+        try
+        {
+            return addUnitUnchecked(start, precision, fractionDigits);
+        }
+        catch (ArgumentOutOfRangeException) when (precision is >= DateTimePrecision.Year and <= DateTimePrecision.Fraction)
+        {
+            return null;
+        }
+    }
+
+    private static System.DateTime addUnitUnchecked(System.DateTime start, DateTimePrecision precision, int fractionDigits) => precision switch
     {
         DateTimePrecision.Year => start.AddYears(1),
         DateTimePrecision.Month => start.AddMonths(1),

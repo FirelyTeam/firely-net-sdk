@@ -55,7 +55,7 @@ public static class PeriodRangeExtensions
         bool side(FhirDateTime? element, out P.DateTimeRange? r)
         {
             r = null;
-            if (element?.Value is null) return true;
+            if (element?.JsonValue is null) return true;
             if (!element.TryToSystemDateTime(out var dt)) return false;
             r = toRange(dt);
             return r is not null;

@@ -21,6 +21,10 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// <para>An unbounded side means the interval extends indefinitely in that direction. Unlike CQL, there is no notion
 /// of an <i>unknown</i> bound, and the operations return definite answers rather than three-valued logic; CQL semantics
 /// can be layered on top.</para>
+/// <para>The operations treat <typeparamref name="T"/> as a dense domain: they compare bounds only and never
+/// look for a value between them. For a discrete type such as <see cref="int"/>, use closed bounds, so <c>[1, 1]</c>
+/// rather than <c>(0, 2)</c>; with open bounds, <c>(1, 2)</c> is accepted although it holds no integer, and
+/// <c>[1, 2)</c> is reported to overlap <c>(1, 2]</c>.</para>
 /// <para>Empty intervals cannot be created: the low bound must lie before the high bound, or equal it when both are closed.</para>
 /// <para>This is a value type to avoid an allocation per interval. <c>default(Interval&lt;T&gt;)</c> is the interval
 /// unbounded on both sides, which contains every value.</para>

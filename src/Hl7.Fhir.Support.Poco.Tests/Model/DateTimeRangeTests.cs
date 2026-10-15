@@ -280,5 +280,51 @@ namespace Hl7.Fhir.Tests.Model
             range!.Start.Should().BeNull();
             range.End.Should().Be(utc(2026, 3, 15, 10).AddSeconds(1));
         }
+
+        [TestMethod]
+        public void BoundsBeyondTheCalendarAreUnbounded()
+        {
+            P.DateTime.Parse("9999-12-31T23:59:59Z").TryGetRange(out var last).Should().BeTrue();
+            last!.Start.Should().Be(new DateTimeOffset(9999, 12, 31, 23, 59, 59, TimeSpan.Zero));
+            last.End.Should().BeNull();
+            last.Contains(DateTimeOffset.MaxValue).Should().BeTrue();
+
+            var lastDay = P.Date.Parse("9999-12-31").GetRange(TimeSpan.FromHours(-5));
+            lastDay.End.Should().BeNull();
+
+            var first = P.Date.Parse("0001-01-01").GetRange(TimeSpan.FromHours(1));
+            first.Start.Should().BeNull();
+            first.End.Should().Be(new DateTimeOffset(1, 1, 2, 0, 0, 0, TimeSpan.FromHours(1)));
+        }
+
+        [TestMethod]
+        public void ProbesAreClampedAtTheCalendarLimits()
+        {
+            var first = P.Date.Parse("0001-01-01").GetRange(TimeZoneInfo.Utc);
+            first.Start.Should().Be(DateTimeOffset.MinValue);
+            first.End.Should().Be(new DateTimeOffset(1, 1, 2, 0, 0, 0, TimeSpan.Zero));
+
+            var almostLast = P.Date.Parse("9999-12-30").GetRange(TimeZoneInfo.Utc);
+            almostLast.End.Should().Be(new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero));
+
+            P.Date.Parse("9999-12-31").GetRange(TimeZoneInfo.Utc).End.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void PeriodAtTheUpperLimitHasAnUnboundedEnd()
+        {
+            new Period { Start = "2026-01-01T00:00:00Z", End = "9999-12-31T23:59:59Z" }
+                .TryGetRange(out var range).Should().BeTrue();
+            range!.End.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void PeriodWithANonStringBoundFails()
+        {
+            var period = new Period { StartElement = new FhirDateTime { JsonValue = 123 } };
+            period.TryGetRange(out var range).Should().BeFalse();
+            range.Should().BeNull();
+            period.TryGetRange(TimeZoneInfo.Utc, out range).Should().BeFalse();
+        }
     }
 }
