@@ -243,31 +243,56 @@ public class TerminologyValidationHelpersTests
         Assert.Equal("'count' must be non-negative.", exception.Message);
     }
 
-    [Fact]
-    public void ValidateNoDuplicateParameters_WithoutDuplicates_DoesNotThrow()
+    private const string DUPLICATES_MESSAGE = "List of input parameters contains the following duplicates";
+
+    public static TheoryData<string, string> Operations => new()
     {
-        // Arrange
-        var parameters = new Parameters();
+        { "ValueSetValidateCode", ValidateCodeParameters.CODE_ATTRIBUTE },
+        { "CodeSystemValidateCode", CodeSystemValidateCodeParameters.CODE_ATTRIBUTE },
+        { "Subsumes", SubsumesParameters.CODE_A_ATTRIBUTE },
+        { "Translate", TranslateParameters.CODE_ATTRIBUTE },
+        { "Expand", ExpandParameters.URL_ATTRIBUTE },
+    };
 
-        // Act
-        var exception = Record.Exception(() => parameters.NoDuplicates());
-
-        // Assert
-        Assert.Null(exception);
+    private static System.Threading.Tasks.Task invoke(string operation, Parameters parameters)
+    {
+        var service = new LocalTerminologyService(new Hl7.Fhir.Specification.Source.InMemoryResourceResolver());
+        return operation switch
+        {
+            "ValueSetValidateCode" => ((ITerminologyService)service).ValueSetValidateCode(parameters),
+            "CodeSystemValidateCode" => ((ITerminologyService)service).CodeSystemValidateCode(parameters),
+            "Subsumes" => ((ITerminologyService)service).Subsumes(parameters),
+            "Translate" => ((ITerminologyService)service).Translate(parameters),
+            "Expand" => ((ITerminologyService)service).Expand(parameters),
+            _ => throw new ArgumentOutOfRangeException(nameof(operation))
+        };
     }
 
-    [Fact]
-    public void ValidateNoDuplicateParameters_WithDuplicates_ThrowsException()
+    [Theory]
+    [MemberData(nameof(Operations))]
+    public async System.Threading.Tasks.Task RepeatedSingleValuedParameter_IsRejected(string operation, string knownParameter)
     {
-        // Arrange
         var parameters = new Parameters();
-        parameters.Add("param1", new Code("value1"));
-        parameters.Add("param1", new Code("value2")); // duplicate
+        parameters.Add(knownParameter, new Code("value1"));
+        parameters.Add(knownParameter, new Code("value2"));
 
-        // Act & Assert
-        var exception = Assert.Throws<FhirOperationException>(() => parameters.NoDuplicates());
+        var exception = await Assert.ThrowsAsync<FhirOperationException>(() => invoke(operation, parameters));
 
-        Assert.Equal("List of input parameters contains the following duplicates: param1", exception.Message);
+        Assert.Equal($"{DUPLICATES_MESSAGE}: {knownParameter}", exception.Message);
+    }
+
+    [Theory]
+    [MemberData(nameof(Operations))]
+    public async System.Threading.Tasks.Task RepeatedTxResource_IsNotRejectedAsDuplicate(string operation, string _)
+    {
+        var parameters = new Parameters();
+        parameters.Add("tx-resource", new ValueSet { Url = "http://example.org/vs1" });
+        parameters.Add("tx-resource", new CodeSystem { Url = "http://example.org/cs1" });
+
+        // The operation may still fail for other reasons (e.g. missing code), just not because of the repeat.
+        var exception = await Record.ExceptionAsync(() => invoke(operation, parameters));
+
+        exception?.Message.Should().NotContain(DUPLICATES_MESSAGE);
     }
 
     [Fact]

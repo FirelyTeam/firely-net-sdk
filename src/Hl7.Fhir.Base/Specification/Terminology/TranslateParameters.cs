@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -27,6 +28,17 @@ public class TranslateParameters : Parameters
     public const string TARGET_ATTRIBUTE = "target";
     public const string TARGET_SYSTEM_ATTRIBUTE = "targetSystem";
     public const string REVERSE_ATTRIBUTE = "reverse";
+
+    /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/conceptmap-operation-translate.html">ConceptMap/$translate OperationDefinition</see>.</remarks>
+    internal static readonly IReadOnlyList<string> KnownNoDuplicates =
+    [
+        URL_ATTRIBUTE, CONCEPT_MAP_ATTRIBUTE, CONCEPT_MAP_VERSION_ATTRIBUTE, CODE_ATTRIBUTE, SYSTEM_ATTRIBUTE, VERSION_ATTRIBUTE,
+        SOURCE_ATTRIBUTE, CODING_ATTRIBUTE, CODEABLE_CONCEPT_ATTRIBUTE, TARGET_ATTRIBUTE, TARGET_SYSTEM_ATTRIBUTE, REVERSE_ATTRIBUTE
+    ];
+
+    /// <summary>All parameters of this operation the SDK knows about.</summary>
+    public static readonly IReadOnlyList<string> KnownParameters = [..KnownNoDuplicates];
 
     public TranslateParameters()
     {
