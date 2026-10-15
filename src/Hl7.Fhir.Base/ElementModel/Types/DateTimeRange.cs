@@ -9,15 +9,17 @@
 #nullable enable
 
 using System;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
 /// <summary>
 /// The range of time covered by a <see cref="Date"/> or <see cref="DateTime"/> at its precision,
 /// as the half-open interval [<see cref="Start"/>, <see cref="End"/>).
-/// A <c>null</c> bound means that side of the range is open.
+/// A <c>null</c> bound means that side of the range is unbounded.
 /// </summary>
-public sealed class DateTimeRange
+/// <remarks>Two ranges are equal when their bounds and precision are equal; <see cref="OriginalValue"/> is not compared.</remarks>
+public sealed class DateTimeRange : IEquatable<DateTimeRange>
 {
     internal DateTimeRange(string? originalValue, DateTimePrecision precision, DateTimeOffset? start, DateTimeOffset? end)
     {
@@ -40,22 +42,52 @@ public sealed class DateTimeRange
     public DateTimePrecision Precision { get; }
 
     /// <summary>
-    /// The first instant covered (inclusive), or <c>null</c> when the start is open.
+    /// The first instant covered (inclusive), or <c>null</c> when the range is unbounded below.
     /// </summary>
     public DateTimeOffset? Start { get; }
 
     /// <summary>
-    /// The first instant after the range (exclusive), or <c>null</c> when the end is open.
+    /// The first instant after the range (exclusive), or <c>null</c> when the range is unbounded above.
     /// </summary>
     public DateTimeOffset? End { get; }
 
     /// <summary>
-    /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
-    /// <paramref name="end"/>, with the coarser of both precisions. A <c>null</c> argument leaves that side open.
+    /// Whether <paramref name="instant"/> lies within this range.
     /// </summary>
+    public bool Contains(DateTimeOffset instant) =>
+        (Start is null || Start.Value <= instant) && (End is null || instant < End.Value);
+
+    /// <summary>
+    /// Whether this range and <paramref name="other"/> share at least one instant.
+    /// </summary>
+    public bool Overlaps(DateTimeRange other)
+    {
+        if (other is null) throw new ArgumentNullException(nameof(other));
+
+        return (Start is null || other.End is null || Start.Value < other.End.Value)
+            && (other.Start is null || End is null || other.Start.Value < End.Value);
+    }
+
+    /// <summary>
+    /// Whether every instant of <paramref name="other"/> lies within this range.
+    /// </summary>
+    public bool Covers(DateTimeRange other)
+    {
+        if (other is null) throw new ArgumentNullException(nameof(other));
+
+        return (Start is null || (other.Start is not null && Start.Value <= other.Start.Value))
+            && (End is null || (other.End is not null && other.End.Value <= End.Value));
+    }
+
+    /// <summary>
+    /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
+    /// <paramref name="end"/>, with the coarser of both precisions. A <c>null</c> argument leaves that side unbounded.
+    /// </summary>
+    /// <exception cref="ArgumentException">Neither argument contributes a bound.</exception>
     public static DateTimeRange Between(DateTimeRange? start, DateTimeRange? end)
     {
-        if (start is null && end is null) throw new ArgumentException("At least one of start and end must be given.");
+        if (start?.Start is null && end?.End is null)
+            throw new ArgumentException("At least one of start and end must contribute a bound.");
 
         var precision = (start, end) switch
         {
@@ -68,29 +100,61 @@ public sealed class DateTimeRange
         return new DateTimeRange(start?.OriginalValue ?? end?.OriginalValue, precision, start?.Start, end?.End);
     }
 
-    public override string ToString() => $"[{Start?.ToString("o") ?? ""}, {End?.ToString("o") ?? ""})";
+    public bool Equals(DateTimeRange? other) =>
+        other is not null && Precision == other.Precision && Start == other.Start && End == other.End;
+
+    public override bool Equals(object? obj) => obj is DateTimeRange other && Equals(other);
+
+    public override int GetHashCode() => HashCode.Combine(Precision, Start, End);
+
+    public override string ToString() =>
+        (Start is { } s ? $"[{s:o}" : "(-∞") + ", " + (End is { } e ? $"{e:o})" : "+∞)");
 
     /// <summary>
-    /// Builds the range for a value whose start has been rounded to its precision.
-    /// When the value has no offset, <paramref name="startWallClock"/> is a wall-clock time and
-    /// both bounds get the offset that <paramref name="zone"/> has at that moment, so a range that
-    /// crosses a daylight saving change ends with a different offset than it starts.
+    /// Builds the range for a value whose start has already been rounded to its precision.
+    /// <paramref name="start"/> keeps its own offset when <paramref name="zone"/> is <c>null</c>.
+    /// Otherwise it is a wall-clock time and each bound gets the offset <paramref name="zone"/> has at that moment,
+    /// so a range that crosses a daylight saving change ends with a different offset than it starts.
     /// </summary>
+    /// <remarks>
+    /// A wall-clock time that a daylight saving change skips or repeats has two candidate offsets.
+    /// The start takes the one giving the earlier instant and the end the one giving the later instant,
+    /// so the range is widened, never narrowed.
+    /// </remarks>
     internal static DateTimeRange Create(string? originalValue, DateTimePrecision precision, int fractionDigits,
-        DateTimeOffset startWallClock, TimeZoneInfo? zone)
+        DateTimeOffset start, TimeZoneInfo? zone)
     {
-        var endWallClock = addUnit(startWallClock, precision, fractionDigits);
+        var end = addUnit(start, precision, fractionDigits);
 
         return zone is null
-            ? new DateTimeRange(originalValue, precision, startWallClock, endWallClock)
-            : new DateTimeRange(originalValue, precision, inZone(startWallClock, zone), inZone(endWallClock, zone));
+            ? new DateTimeRange(originalValue, precision, start, end)
+            : new DateTimeRange(originalValue, precision, inZone(start, zone, earliest: true), inZone(end, zone, earliest: false));
     }
 
-    private static DateTimeOffset inZone(DateTimeOffset wallClock, TimeZoneInfo zone)
+    /// <summary>
+    /// Builds the range for a value whose start has already been rounded to its precision, reading
+    /// <paramref name="start"/> as a wall-clock time at the fixed <paramref name="offset"/>.
+    /// </summary>
+    internal static DateTimeRange Create(string? originalValue, DateTimePrecision precision, int fractionDigits,
+        DateTimeOffset start, TimeSpan offset)
     {
-        // TODO: decide how to treat wall-clock times that are invalid or ambiguous because of a DST change.
+        var startAtOffset = new DateTimeOffset(start.DateTime, offset);
+        return new DateTimeRange(originalValue, precision, startAtOffset, addUnit(startAtOffset, precision, fractionDigits));
+    }
+
+    private static DateTimeOffset inZone(DateTimeOffset wallClock, TimeZoneInfo zone, bool earliest)
+    {
         var local = System.DateTime.SpecifyKind(wallClock.DateTime, DateTimeKind.Unspecified);
-        return new DateTimeOffset(local, zone.GetUtcOffset(local));
+
+        TimeSpan[] candidates =
+            zone.IsAmbiguousTime(local) ? zone.GetAmbiguousTimeOffsets(local)
+            // A skipped time lies in a gap of at most a few hours; take the offsets on either side of it.
+            : zone.IsInvalidTime(local) ? new[] { zone.GetUtcOffset(local.AddHours(-6)), zone.GetUtcOffset(local.AddHours(6)) }
+            : new[] { zone.GetUtcOffset(local) };
+
+        // A larger offset gives an earlier instant for the same wall-clock time.
+        var offset = earliest ? candidates.Max() : candidates.Min();
+        return new DateTimeOffset(local, offset);
     }
 
     private static DateTimeOffset addUnit(DateTimeOffset start, DateTimePrecision precision, int fractionDigits) => precision switch

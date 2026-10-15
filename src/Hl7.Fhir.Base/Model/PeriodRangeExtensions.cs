@@ -22,8 +22,14 @@ public static class PeriodRangeExtensions
 {
     /// <summary>
     /// Gets the range from the start of <see cref="Period.StartElement"/> to the end of <see cref="Period.EndElement"/>.
-    /// A missing start or end leaves that side open. Fails when both are missing, either is invalid, or either has no offset.
+    /// A missing start or end leaves that side open. Fails when both are missing or either is invalid.
     /// </summary>
+    /// <remarks>
+    /// This overload is only for periods whose bounds are full instants with an explicit offset, such as audit or
+    /// provenance data. It also fails for any bound without an offset, which includes every date-only value
+    /// (e.g. <c>"2026-03-15"</c>) and so most periods in practice. Use
+    /// <see cref="TryGetRange(Period, TimeZoneInfo, out P.DateTimeRange?)"/> unless a missing offset must be rejected.
+    /// </remarks>
     public static bool TryGetRange(this Period period, [NotNullWhen(true)] out P.DateTimeRange? range) =>
         tryGetRange(period, dt => dt.TryGetRange(out var r) ? r : null, out range);
 

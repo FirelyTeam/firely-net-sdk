@@ -95,7 +95,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     private readonly DateTimeOffset _value;
 
     /// <summary>
-    /// The number of fraction digits in the parsed value. Values not created by Parse() keep full tick precision.
+    /// The number of fraction digits in the parsed value, which sets the width of a <see cref="DateTimePrecision.Fraction"/> range:
+    /// <c>.000</c> spans 1 ms. It is set only by Parse(); a datetime built any other way (FromDateTimeOffset(), Now(),
+    /// a cast, or arithmetic) gets 7, so the same instant obtained that way spans a single tick of 100 ns.
     /// </summary>
     private int FractionDigits { get; init; } = 7;
 
@@ -115,9 +117,15 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
         DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, HasOffset ? null : assumedZone);
 
-    /// <inheritdoc cref="GetRange(TimeZoneInfo)"/>
+    /// <summary>
+    /// Gets the range covered by this value at its precision. A value without an offset
+    /// is read as a wall-clock time at the fixed <paramref name="assumedOffset"/>.
+    /// </summary>
+    /// <exception cref="ArgumentException"><paramref name="assumedOffset"/> is not a whole number of minutes or exceeds 14 hours.</exception>
     public DateTimeRange GetRange(TimeSpan assumedOffset) =>
-        GetRange(TimeZoneInfo.CreateCustomTimeZone(assumedOffset.ToString(), assumedOffset, null, null));
+        HasOffset
+            ? DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, null)
+            : DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, assumedOffset);
 
     /// <summary>
     /// Converts the datetime to a full DateTimeOffset instance.

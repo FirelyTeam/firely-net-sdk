@@ -80,9 +80,15 @@ public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable
     public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
         DateTimeRange.Create(ToString(), Precision, 0, _value, HasOffset ? null : assumedZone);
 
-    /// <inheritdoc cref="GetRange(TimeZoneInfo)"/>
+    /// <summary>
+    /// Gets the range covered by this value at its precision. A value without an offset
+    /// is read as a wall-clock time at the fixed <paramref name="assumedOffset"/>.
+    /// </summary>
+    /// <exception cref="ArgumentException"><paramref name="assumedOffset"/> is not a whole number of minutes or exceeds 14 hours.</exception>
     public DateTimeRange GetRange(TimeSpan assumedOffset) =>
-        GetRange(TimeZoneInfo.CreateCustomTimeZone(assumedOffset.ToString(), assumedOffset, null, null));
+        HasOffset
+            ? DateTimeRange.Create(ToString(), Precision, 0, _value, null)
+            : DateTimeRange.Create(ToString(), Precision, 0, _value, assumedOffset);
 
     /// <summary>
     /// Converts the date to a full DateTimeOffset instance.
