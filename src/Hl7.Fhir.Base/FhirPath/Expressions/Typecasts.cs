@@ -225,10 +225,11 @@ namespace Hl7.FhirPath.Expressions
 
         public static string ReadableTypeName(Type t)
         {
-            if (t.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>)))
-                return "collection";
-            else if (t.CanBeTreatedAsType(typeof(PocoNode)))
+            // PocoNode also implements IEnumerable<PocoNode>, so it has to be checked first
+            if (t.CanBeTreatedAsType(typeof(PocoNode)))
                 return "any type";
+            else if (t.CanBeTreatedAsType(typeof(IEnumerable<PocoNode>)))
+                return "collection";
             else if (t.CanBeTreatedAsType(typeof(P.Any)))
                 return "FhirPath type " + t.Name;
             else
