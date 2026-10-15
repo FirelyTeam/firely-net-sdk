@@ -43,6 +43,7 @@ public class ExpandParameters : Parameters
     public const string TX_RESOURCE_ATTRIBUTE = "tx-resource";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/valueset-operation-expand.html">ValueSet/$expand OperationDefinition</see>.</remarks>
     internal static readonly IReadOnlyList<string> KnownNoDuplicates =
     [
         URL_ATTRIBUTE, VALUE_SET_ATTRIBUTE, VALUE_SET_VERSION_ATTRIBUTE, CONTEXT_ATTRIBUTE, CONTEXT_DIRECTION_ATTRIBUTE, FILTER_ATTRIBUTE,

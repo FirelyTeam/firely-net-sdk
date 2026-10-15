@@ -28,6 +28,7 @@ public class CodeSystemValidateCodeParameters : Parameters
     public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/codesystem-operation-validate-code.html">CodeSystem/$validate-code OperationDefinition</see>.</remarks>
     internal static readonly IReadOnlyList<string> KnownNoDuplicates =
     [
         URL_ATTRIBUTE, VALUE_SET_ATTRIBUTE, CODE_ATTRIBUTE, VERSION_ATTRIBUTE, DISPLAY_ATTRIBUTE, CODING_ATTRIBUTE,

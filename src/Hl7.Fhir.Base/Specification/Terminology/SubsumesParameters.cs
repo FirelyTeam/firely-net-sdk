@@ -34,6 +34,7 @@ public class SubsumesParameters : Parameters
     public const string CODING_B_ATTRIBUTE = "codingB";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/codesystem-operation-subsumes.html">CodeSystem/$subsumes OperationDefinition</see>.</remarks>
     internal static readonly IReadOnlyList<string> KnownNoDuplicates =
     [
         CODE_A_ATTRIBUTE, CODE_B_ATTRIBUTE, SYSTEM_ATTRIBUTE, VERSION_ATTRIBUTE, CODING_A_ATTRIBUTE, CODING_B_ATTRIBUTE

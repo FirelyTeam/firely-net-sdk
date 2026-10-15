@@ -33,6 +33,7 @@ public class ValidateCodeParameters : Parameters
     public const string TX_RESOURCE_ATTRIBUTE = "tx-resource";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/valueset-operation-validate-code.html">ValueSet/$validate-code OperationDefinition</see>.</remarks>
     internal static readonly IReadOnlyList<string> KnownNoDuplicates =
     [
         URL_ATTRIBUTE, CONTEXT_ATTRIBUTE, VALUE_SET_ATTRIBUTE, VALUE_SET_VERSION_ATTRIBUTE, CODE_ATTRIBUTE, SYSTEM_ATTRIBUTE,

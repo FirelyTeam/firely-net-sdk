@@ -30,6 +30,7 @@ public class TranslateParameters : Parameters
     public const string REVERSE_ATTRIBUTE = "reverse";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/conceptmap-operation-translate.html">ConceptMap/$translate OperationDefinition</see>.</remarks>
     internal static readonly IReadOnlyList<string> KnownNoDuplicates =
     [
         URL_ATTRIBUTE, CONCEPT_MAP_ATTRIBUTE, CONCEPT_MAP_VERSION_ATTRIBUTE, CODE_ATTRIBUTE, SYSTEM_ATTRIBUTE, VERSION_ATTRIBUTE,
