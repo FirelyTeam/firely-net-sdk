@@ -1,12 +1,28 @@
 ## Intro:
 
-This release makes the JSON parser reject a primitive whose value is supplied twice, makes the
-`SnapshotGenerator` report differential paths with an empty segment, and fixes FHIRPath evaluation
-over invalid primitive values. There are no breaking API changes, but two changes alter behaviour
-or output that callers may depend on: the new fatal parser issue `JSON135`, and the text of
-`OperationOutcome.IssueComponent.ToString()`. See the behavioural notes below.
+This release adds an opt-in `PrimitiveValueConverter` hook to the POCO deserializers, makes the
+JSON parser reject a primitive whose value is supplied twice, keeps repeated same-url extensions in
+snapshots, makes the `SnapshotGenerator` report differential paths with an empty segment, and fixes
+FHIRPath evaluation over invalid primitive values. `LocalTerminologyService` now returns the full
+`$validate-code` result shape, and the terminology services accept repeated `tx-resource`
+parameters. There are no breaking API changes, but several changes alter behaviour or output that
+callers may depend on: the new fatal parser issue `JSON135`, the text of
+`OperationOutcome.IssueComponent.ToString()`, warnings on inactive codes from `$validate-code`, and
+`$expand` rejecting repeated 0..1 parameters. See the behavioural notes below.
 
 **Serialization**
+- New `DeserializerSettings.PrimitiveValueConverter` lets callers fix a wrongly typed primitive while
+  parsing, such as `"valueInteger": "42"` or `"active": "true"`, in both Json and Xml and in every
+  mode, `Ostrich` included. It is called only for values that are not of the type the primitive
+  stores, plus `date`, `dateTime`, `instant`, `time` and `integer64`, which can be the right type in
+  the wrong format. If it declines (returns the input) or throws a `FormatException`,
+  `InvalidCastException` or `OverflowException`, the usual error is reported; any other exception
+  propagates. When not set, parsing is unaffected.
+- The string overloads of the Json deserializers now encode into a pooled buffer instead of
+  allocating a fresh `byte[]` per parse, and the reader options the SDK uses are now public as
+  `SerializationUtil.FhirJsonReaderOptions`. See issue [#3598](https://github.com/FirelyTeam/firely-net-sdk/issues/3598).
+- An exception thrown while reading an Xml attribute is no longer hidden behind
+  "Can only exit from a resource part.".
 - The JSON parser now reports a fatal issue, `JSON135` (`PRIMITIVE_VALUE_SUPPLIED_TWICE`), when a
   primitive gets its value from both `name` and `_name`, e.g. `{"name":"John","_name":"Johnny"}`.
   The second value used to be dropped silently, with only the non-fatal `JSON134`, so the
@@ -31,6 +47,30 @@ or output that callers may depend on: the new fatal parser issue `JSON135`, and 
   and skips that element. Such an element used to produce a phantom element `Observation.` in the
   snapshot, and any constraint on it, like a `fixedString`, was silently lost. The rest of the
   differential is still processed. See issue [#3591](https://github.com/FirelyTeam/firely-net-sdk/issues/3591).
+- When a differential has several extensions with the same url, e.g. repeated `additional-binding`
+  extensions on a binding, and the base already has one with that url, the snapshot now keeps all of
+  them. The first replaces the base extension, the rest are added next to it. They used to overwrite
+  each other, so only the last one survived. See issue [#3625](https://github.com/FirelyTeam/firely-net-sdk/issues/3625).
+
+**Terminology**
+- `LocalTerminologyService`'s ValueSet `$validate-code` now returns the full result shape the HL7
+  terminology ecosystem tests expect: `code`, `system`, `version` and `display`, plus an `issues`
+  OperationOutcome with tx-issue-type codings and expressions relative to the input, for both valid
+  and invalid codes. A `CodeableConcept` input is echoed back, and inactive or non-active concepts
+  get `inactive`/`status` parameters. `ValidateCodeResult` has new properties to read and write
+  these (`CodeableConcept`, `NormalizedCode`, `CausedByUnknownSystem`, `UnknownSystem`, `Inactive`,
+  `Status`), and new `Add*` extension methods put an issue in its `issues`. See issue [#3631](https://github.com/FirelyTeam/firely-net-sdk/issues/3631).
+
+  > **Behavioural note:** an inactive, retired or deprecated code now returns `result = true` with a
+  > `message` (a `code-comment` warning). For an unknown system, `message` now also says the
+  > CodeSystem could not be found.
+- The terminology services no longer reject an operation with repeated `tx-resource` parameters,
+  which the tx-ecosystem IG requires servers to accept. Only repeats of the operation's 0..1
+  parameters are rejected; known 0..* and unknown parameters pass through. Each typed `*Parameters`
+  class now lists its parameters in a public `KnownParameters`.
+
+  > **Behavioural note:** `$expand` now gets the same check, so a repeated `url`, `filter`, `count`
+  > etc. is rejected where it used to be accepted.
 
 **Other**
 - `PocoNode.Resolve("#id")` no longer throws a `NullReferenceException` when the resource has a
