@@ -95,7 +95,7 @@ public partial class FhirXmlDeserializationTests
     [DataRow("<foo value =\"1.1\"/>", typeof(Integer64), "1.1", COVE.LITERAL_INVALID_CODE,
         DisplayName = "XmlLong2")]
     [DataRow("<foo value =\"3.14\"/>", typeof(FhirDecimal), 3.14, null, DisplayName = "XmlDecimal1")]
-    [DataRow("<foo value =\"3.14e2\"/>", typeof(FhirDecimal), 3.14e2, null, DisplayName = "XmlDecimal1")]
+    [DataRow("<foo value =\"3.14e2\"/>", typeof(FhirDecimal), 3.14e2, null, DisplayName = "XmlDecimalScientific")]
     [DataRow("<foo value =\"3.14e500\"/>", typeof(FhirDecimal), "3.14e500", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE,
         DisplayName = "XmlDecimal2")]
 
