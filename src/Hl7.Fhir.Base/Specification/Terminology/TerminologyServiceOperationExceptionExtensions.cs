@@ -37,6 +37,10 @@ public static class TerminologyServiceOperationExceptionExtensions
     private static readonly Code CANNOT_INFER = new("cannot-infer");
     private static readonly Code CODE_RULE = new("code-rule");
     private static readonly Code VS_INVALID = new("vs-invalid");
+    private static readonly Code NOT_IN_VS = new("not-in-vs");
+    private static readonly Code CODE_COMMENT = new("code-comment");
+
+    private const string TX_ISSUE_TYPE_SYSTEM = "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type";
 
     extension(FhirOperationException)
     {
@@ -191,7 +195,7 @@ public static class TerminologyServiceOperationExceptionExtensions
                             {
                                 Coding = [ new()
                                 {
-                                    Code = txIssueType.Literal, System = "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type"
+                                    Code = txIssueType.Literal, System = TX_ISSUE_TYPE_SYSTEM
                                 } ]
                             }
                             : null,
@@ -199,6 +203,73 @@ public static class TerminologyServiceOperationExceptionExtensions
                     }
                 ]
             };
+    }
+
+    // These report the same kinds of errors as the methods above, but as issues in a $validate-code result.
+    extension(ValidateCodeResult result)
+    {
+        /// <summary>
+        /// Reports that a coded parameter is invalidly formed, e.g. a coding without a code.
+        /// </summary>
+        /// <remarks>This is the $validate-code result counterpart of <see cref="IncompleteCodedParameter"/>.</remarks>
+        public IssueComponent AddIncompleteCodedParameter(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Error, IssueType.Invalid, INVALID_DATA, expression);
+
+        /// <summary>
+        /// Reports that a code is not part of the specified code system.
+        /// </summary>
+        /// <remarks>This is the $validate-code result counterpart of <see cref="CodeNotInSystem"/>.</remarks>
+        public IssueComponent AddCodeNotInSystem(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Error, IssueType.CodeInvalid, INVALID_CODE, expression);
+
+        /// <summary>
+        /// Reports that a code is not part of the value set it is validated against.
+        /// </summary>
+        public IssueComponent AddCodeNotInValueSet(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Error, IssueType.CodeInvalid, NOT_IN_VS, expression);
+
+        /// <summary>
+        /// Reports that a code is valid, but its display is not. This is a warning, the code is still valid.
+        /// </summary>
+        /// <remarks>This is the $validate-code result counterpart of <see cref="InvalidDisplay"/>.</remarks>
+        public IssueComponent AddInvalidDisplay(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Warning, IssueType.Invalid, INVALID_DISPLAY, expression);
+
+        /// <summary>
+        /// Reports that a code fails a business rule of the operation, e.g. it is abstract where that is not allowed.
+        /// </summary>
+        /// <remarks>This is the $validate-code result counterpart of <see cref="UnprocessableCodedParameter"/>.</remarks>
+        public IssueComponent AddUnprocessableCodedParameter(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Error, IssueType.BusinessRule, CODE_RULE, expression);
+
+        /// <summary>
+        /// Reports that a code system needed to validate the code cannot be resolved.
+        /// </summary>
+        /// <remarks>This is the $validate-code result counterpart of <see cref="Unresolvable"/>.</remarks>
+        public IssueComponent AddUnresolvable(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Error, IssueType.NotFound, NOT_FOUND, expression);
+
+        /// <summary>
+        /// Reports a remark about a valid code, e.g. that the concept is inactive or deprecated. This is a warning.
+        /// </summary>
+        public IssueComponent AddCodeComment(string details, params string[] expression) =>
+            result.addIssue(details, IssueSeverity.Warning, IssueType.BusinessRule, CODE_COMMENT, expression);
+
+        private IssueComponent addIssue(string details, IssueSeverity severity, IssueType issueType, Code txIssueType, string[] expression)
+        {
+            var issue = new IssueComponent
+            {
+                Severity = severity,
+                Code = issueType,
+                Details = new CodeableConcept(TX_ISSUE_TYPE_SYSTEM, txIssueType.Literal!, details),
+            };
+
+            if (expression.Length > 0)
+                issue.Expression = expression;
+
+            result.AddIssue(issue);
+            return issue;
+        }
     }
 }
 
