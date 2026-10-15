@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2026, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -50,9 +50,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void OverlongFractionSpansOneTick()
         {
-            if (!P.DateTime.TryParse("2026-01-01T00:00:00.123456789Z", out var dt)) return; // not parseable by DateTimeOffset on every runtime
-
-            dt.TryGetRange(out var range).Should().BeTrue();
+            P.DateTime.Parse("2026-01-01T00:00:00.123456789Z").TryGetRange(out var range).Should().BeTrue();
             (range!.End - range.Start).Should().Be(TimeSpan.FromTicks(1));
         }
 
@@ -137,6 +135,38 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void SkippedDayIsWidenedAcrossTheWholeGap()
+        {
+            var apia = TimeZoneInfo.TryFindSystemTimeZoneById("Pacific/Apia", out var tz) ? tz
+                : TimeZoneInfo.FindSystemTimeZoneById("Samoa Standard Time");
+
+            // Samoa skipped all of 2011-12-30, moving from -10:00 to +14:00.
+            var range = P.DateTime.Parse("2011-12-30T12:00").GetRange(apia);
+
+            range.Start.Should().Be(new DateTimeOffset(2011, 12, 30, 12, 0, 0, TimeSpan.FromHours(14)));
+            range.End.Should().Be(new DateTimeOffset(2011, 12, 30, 12, 1, 0, TimeSpan.FromHours(-10)));
+        }
+
+        [TestMethod]
+        public void InvertedRangeIsRejected()
+        {
+            var later = P.Date.Parse("2026-03-16").GetRange(TimeZoneInfo.Utc);
+            var earlier = P.Date.Parse("2026-03-14").GetRange(TimeZoneInfo.Utc);
+
+            FluentActions.Invoking(() => P.DateTimeRange.Between(later, earlier)).Should().Throw<ArgumentException>();
+            new Period(new FhirDateTime("2026-03-16"), new FhirDateTime("2026-03-14"))
+                .TryGetRange(TimeZoneInfo.Utc, out _).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void ComparisonsRejectNull()
+        {
+            var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
+            FluentActions.Invoking(() => day.Overlaps(null!)).Should().Throw<ArgumentNullException>();
+            FluentActions.Invoking(() => day.Covers(null!)).Should().Throw<ArgumentNullException>();
+        }
+
+        [TestMethod]
         public void BetweenTakesOuterBoundsAndCoarserPrecision()
         {
             var range = P.DateTimeRange.Between(
@@ -210,7 +240,11 @@ namespace Hl7.Fhir.Tests.Model
             var b = P.DateTime.Parse("2026-01-01T01:00:00+01:00").GetRange(TimeZoneInfo.Utc);
 
             a.Should().Be(b);
-            a.GetHashCode().Should().Be(b.GetHashCode());
+            (a == b).Should().BeTrue();
+            (a != b).Should().BeFalse();
+            (a == null).Should().BeFalse();
+            ((P.DateTimeRange?)null == null).Should().BeTrue();
+            a!.GetHashCode().Should().Be(b.GetHashCode());
             a.Should().NotBe(P.DateTime.Parse("2026-01-01T00:00Z").GetRange(TimeZoneInfo.Utc));
         }
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2026, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -9,7 +9,6 @@
 #nullable enable
 
 using System;
-using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
@@ -18,7 +17,11 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// as the half-open interval [<see cref="Start"/>, <see cref="End"/>).
 /// A <c>null</c> bound means that side of the range is unbounded.
 /// </summary>
-/// <remarks>Two ranges are equal when their bounds and precision are equal; <see cref="OriginalValue"/> is not compared.</remarks>
+/// <remarks>
+/// Two ranges are equal when their precision is equal and their bounds denote the same instants; <see cref="OriginalValue"/>
+/// is not compared. Bounds are compared as instants, ignoring their offsets, so <c>[10:00+01:00, 10:00:01+01:00)</c>
+/// and <c>[09:00Z, 09:00:01Z)</c> are equal although they print differently.
+/// </remarks>
 public sealed class DateTimeRange : IEquatable<DateTimeRange>
 {
     internal DateTimeRange(string? originalValue, DateTimePrecision precision, DateTimeOffset? start, DateTimeOffset? end)
@@ -83,11 +86,13 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
     /// <paramref name="end"/>, with the coarser of both precisions. A <c>null</c> argument leaves that side unbounded.
     /// </summary>
-    /// <exception cref="ArgumentException">Neither argument contributes a bound.</exception>
+    /// <exception cref="ArgumentException">Neither argument contributes a bound, or the end lies before the start.</exception>
     public static DateTimeRange Between(DateTimeRange? start, DateTimeRange? end)
     {
         if (start?.Start is null && end?.End is null)
             throw new ArgumentException("At least one of start and end must contribute a bound.");
+        if (start?.Start is { } lower && end?.End is { } upper && upper <= lower)
+            throw new ArgumentException("The end of the range lies before its start.");
 
         var precision = (start, end) switch
         {
@@ -104,6 +109,10 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
         other is not null && Precision == other.Precision && Start == other.Start && End == other.End;
 
     public override bool Equals(object? obj) => obj is DateTimeRange other && Equals(other);
+
+    public static bool operator ==(DateTimeRange? left, DateTimeRange? right) => left is null ? right is null : left.Equals(right);
+
+    public static bool operator !=(DateTimeRange? left, DateTimeRange? right) => !(left == right);
 
     public override int GetHashCode() => HashCode.Combine(Precision, Start, End);
 
@@ -146,16 +155,31 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     {
         var local = System.DateTime.SpecifyKind(wallClock.DateTime, DateTimeKind.Unspecified);
 
-        TimeSpan[] candidates =
-            zone.IsAmbiguousTime(local) ? zone.GetAmbiguousTimeOffsets(local)
-            // A skipped time lies in a gap of at most a few hours; take the offsets on either side of it.
-            : zone.IsInvalidTime(local) ? new[] { zone.GetUtcOffset(local.AddHours(-6)), zone.GetUtcOffset(local.AddHours(6)) }
-            : new[] { zone.GetUtcOffset(local) };
+        var current = zone.GetUtcOffset(local);
+        // Compare with the offsets one day before and after. This catches gaps of up to a day (such as Pacific/Apia
+        // skipping 2011-12-30, which TimeZoneInfo.IsInvalidTime does not report on every platform) and assumes
+        // no zone has two transitions within a day.
+        var before = zone.GetUtcOffset(local.AddDays(-1));
+        var after = zone.GetUtcOffset(local.AddDays(1));
+        if (before == current && after == current) return new DateTimeOffset(local, current);
+
+        // Keep the candidates under which this wall-clock time really occurs; if there are none, the time was skipped
+        // and both surrounding offsets are candidates.
+        var validBefore = occursAt(local, before, zone);
+        var validAfter = occursAt(local, after, zone);
+        var (a, b) = (validBefore, validAfter) switch
+        {
+            (true, false) => (before, before),
+            (false, true) => (after, after),
+            _ => (before, after)
+        };
 
         // A larger offset gives an earlier instant for the same wall-clock time.
-        var offset = earliest ? candidates.Max() : candidates.Min();
-        return new DateTimeOffset(local, offset);
+        return new DateTimeOffset(local, earliest ? (a > b ? a : b) : (a < b ? a : b));
     }
+
+    private static bool occursAt(System.DateTime local, TimeSpan offset, TimeZoneInfo zone) =>
+        zone.GetUtcOffset(new DateTimeOffset(local, offset).UtcDateTime) == offset;
 
     private static DateTimeOffset addUnit(DateTimeOffset start, DateTimePrecision precision, int fractionDigits) => precision switch
     {

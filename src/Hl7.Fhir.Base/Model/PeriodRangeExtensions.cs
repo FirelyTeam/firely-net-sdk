@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2026, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -22,7 +22,7 @@ public static class PeriodRangeExtensions
 {
     /// <summary>
     /// Gets the range from the start of <see cref="Period.StartElement"/> to the end of <see cref="Period.EndElement"/>.
-    /// A missing start or end leaves that side open. Fails when both are missing or either is invalid.
+    /// A missing start or end leaves that side open. Fails when both are missing, either is invalid, or the end lies before the start.
     /// </summary>
     /// <remarks>
     /// This overload is only for periods whose bounds are full instants with an explicit offset, such as audit or
@@ -36,7 +36,7 @@ public static class PeriodRangeExtensions
     /// <summary>
     /// Gets the range from the start of <see cref="Period.StartElement"/> to the end of <see cref="Period.EndElement"/>,
     /// reading values without an offset in <paramref name="assumedZone"/>. A missing start or end leaves that side open.
-    /// Fails when both are missing or either is invalid.
+    /// Fails when both are missing, either is invalid, or the end lies before the start.
     /// </summary>
     public static bool TryGetRange(this Period period, TimeZoneInfo assumedZone, [NotNullWhen(true)] out P.DateTimeRange? range) =>
         tryGetRange(period, dt => dt.GetRange(assumedZone), out range);
@@ -46,6 +46,7 @@ public static class PeriodRangeExtensions
         range = null;
         if (!side(period.StartElement, out var start) || !side(period.EndElement, out var end)) return false;
         if (start is null && end is null) return false;
+        if (start?.Start is { } s && end?.End is { } e && e <= s) return false; // end before start: not a usable period
 
         range = P.DateTimeRange.Between(start, end);
         return true;
