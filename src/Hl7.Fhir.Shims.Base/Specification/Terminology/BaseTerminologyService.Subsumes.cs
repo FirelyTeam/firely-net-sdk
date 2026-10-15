@@ -24,7 +24,7 @@ public abstract partial class BaseTerminologyService
     {
         try
         {
-            var validParams = new SubsumesParameters(parameters.NoDuplicates());
+            var validParams = new SubsumesParameters(parameters.NoDuplicates(SubsumesParameters.KnownNoDuplicates));
             TerminologyValidationHelpers.ValidateSubsumesParameters(validParams.CodeA, validParams.CodeB, validParams.CodingA, validParams.CodingB, validParams.System, validParams.Version?.Value);
             return await Subsumes(validParams).ConfigureAwait(false);
         }

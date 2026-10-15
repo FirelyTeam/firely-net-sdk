@@ -40,6 +40,22 @@ public class ExpandParameters : Parameters
     public const string SYSTEM_VERSION_ATTRIBUTE = "systemVersion";
     public const string CHECK_SYSTEM_VERSION_ATTRIBUTE = "checkSystemVersion";
     public const string FORCE_SYSTEM_VERSION_ATTRIBUTE = "forceSystemVersion";
+    public const string TX_RESOURCE_ATTRIBUTE = "tx-resource";
+
+    /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    internal static readonly IReadOnlyList<string> KnownNoDuplicates =
+    [
+        URL_ATTRIBUTE, VALUE_SET_ATTRIBUTE, VALUE_SET_VERSION_ATTRIBUTE, CONTEXT_ATTRIBUTE, CONTEXT_DIRECTION_ATTRIBUTE, FILTER_ATTRIBUTE,
+        DATE_ATTRIBUTE, OFFSET_ATTRIBUTE, COUNT_ATTRIBUTE, INCLUDE_DESIGNATIONS_ATTRIBUTE, INCLUDE_DEFINITION_ATTRIBUTE, ACTIVE_ONLY_ATTRIBUTE,
+        EXCLUDE_NESTED_ATTRIBUTE, EXCLUDE_NOT_FOR_UI_ATTRIBUTE, EXCLUDE_POST_COORDINATED_ATTRIBUTE, DISPLAY_LANGUAGE_ATTRIBUTE
+    ];
+
+    /// <summary>All parameters of this operation the SDK knows about.</summary>
+    public static readonly IReadOnlyList<string> KnownParameters =
+    [
+        ..KnownNoDuplicates, DESIGNATION_ATTRIBUTE, EXCLUDE_SYSTEM_ATTRIBUTE, SYSTEM_VERSION_ATTRIBUTE, CHECK_SYSTEM_VERSION_ATTRIBUTE,
+        FORCE_SYSTEM_VERSION_ATTRIBUTE, TX_RESOURCE_ATTRIBUTE
+    ];
 
     public ExpandParameters()
     {
