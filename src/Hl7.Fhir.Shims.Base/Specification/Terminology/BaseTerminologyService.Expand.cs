@@ -48,7 +48,7 @@ public partial class BaseTerminologyService
     {
         try
         {
-            var validParams = new ExpandParameters(parameters);
+            var validParams = new ExpandParameters(parameters.NoDuplicates(ExpandParameters.KnownNoDuplicates));
             TerminologyValidationHelpers.ValidateExpandParameters(validParams.Url, validParams.ValueSet, validParams.Context, validParams.ContextDirection, validParams.Offset, validParams.Count);
             return await Expand(validParams).ConfigureAwait(false);
         }

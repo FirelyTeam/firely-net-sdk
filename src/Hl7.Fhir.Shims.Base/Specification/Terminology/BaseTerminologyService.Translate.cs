@@ -21,7 +21,7 @@ public partial class BaseTerminologyService
     {
         try
         {
-            var validParams = new TranslateParameters(parameters.NoDuplicates());
+            var validParams = new TranslateParameters(parameters.NoDuplicates(TranslateParameters.KnownNoDuplicates));
             TerminologyValidationHelpers.ValidateTranslateParameters(validParams.Code, validParams.Coding, validParams.CodeableConcept, validParams.Url, validParams.ConceptMap, validParams.System);
             return await Translate(validParams).ConfigureAwait(false);
         }

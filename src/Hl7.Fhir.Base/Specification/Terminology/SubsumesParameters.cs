@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -31,6 +32,16 @@ public class SubsumesParameters : Parameters
     public const string VERSION_ATTRIBUTE = "version";
     public const string CODING_A_ATTRIBUTE = "codingA";
     public const string CODING_B_ATTRIBUTE = "codingB";
+
+    /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/codesystem-operation-subsumes.html">CodeSystem/$subsumes OperationDefinition</see>.</remarks>
+    internal static readonly IReadOnlyList<string> KnownNoDuplicates =
+    [
+        CODE_A_ATTRIBUTE, CODE_B_ATTRIBUTE, SYSTEM_ATTRIBUTE, VERSION_ATTRIBUTE, CODING_A_ATTRIBUTE, CODING_B_ATTRIBUTE
+    ];
+
+    /// <summary>All parameters of this operation the SDK knows about.</summary>
+    public static readonly IReadOnlyList<string> KnownParameters = [..KnownNoDuplicates];
 
     /// <summary>
     /// The "A" code that is to be tested. If a code is provided, a system must be provided.

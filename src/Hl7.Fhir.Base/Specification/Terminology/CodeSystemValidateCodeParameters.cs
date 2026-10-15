@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -25,6 +26,17 @@ public class CodeSystemValidateCodeParameters : Parameters
     public const string DATE_ATTRIBUTE = "date";
     public const string ABSTRACT_ATTRIBUTE = "abstract";
     public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
+
+    /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/codesystem-operation-validate-code.html">CodeSystem/$validate-code OperationDefinition</see>.</remarks>
+    internal static readonly IReadOnlyList<string> KnownNoDuplicates =
+    [
+        URL_ATTRIBUTE, VALUE_SET_ATTRIBUTE, CODE_ATTRIBUTE, VERSION_ATTRIBUTE, DISPLAY_ATTRIBUTE, CODING_ATTRIBUTE,
+        CODEABLE_CONCEPT_ATTRIBUTE, DATE_ATTRIBUTE, ABSTRACT_ATTRIBUTE, DISPLAY_LANGUAGE_ATTRIBUTE
+    ];
+
+    /// <summary>All parameters of this operation the SDK knows about.</summary>
+    public static readonly IReadOnlyList<string> KnownParameters = [..KnownNoDuplicates];
 
     public CodeSystemValidateCodeParameters()
     {

@@ -79,7 +79,7 @@ public partial class BaseTerminologyService
     {
         try
         {
-            var validParams = new CodeSystemValidateCodeParameters(parameters.NoDuplicates());
+            var validParams = new CodeSystemValidateCodeParameters(parameters.NoDuplicates(CodeSystemValidateCodeParameters.KnownNoDuplicates));
             TerminologyValidationHelpers.ValidateCodeSystemValidateCodeParameters(validParams.Code, validParams.Coding, validParams.CodeableConcept, validParams.Url);
             return await CodeSystemValidateCode(validParams).ConfigureAwait(false);
         }

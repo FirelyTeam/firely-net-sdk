@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -29,6 +30,19 @@ public class ValidateCodeParameters : Parameters
     public const string ABSTRACT_ATTRIBUTE = "abstract";
     public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
     public const string INFER_SYSTEM_ATTRIBUTE = "inferSystem";
+    public const string TX_RESOURCE_ATTRIBUTE = "tx-resource";
+
+    /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/valueset-operation-validate-code.html">ValueSet/$validate-code OperationDefinition</see>.</remarks>
+    internal static readonly IReadOnlyList<string> KnownNoDuplicates =
+    [
+        URL_ATTRIBUTE, CONTEXT_ATTRIBUTE, VALUE_SET_ATTRIBUTE, VALUE_SET_VERSION_ATTRIBUTE, CODE_ATTRIBUTE, SYSTEM_ATTRIBUTE,
+        SYSTEM_VERSION_ATTRIBUTE, DISPLAY_ATTRIBUTE, CODING_ATTRIBUTE, CODEABLE_CONCEPT_ATTRIBUTE, DATE_ATTRIBUTE, ABSTRACT_ATTRIBUTE,
+        DISPLAY_LANGUAGE_ATTRIBUTE, INFER_SYSTEM_ATTRIBUTE
+    ];
+
+    /// <summary>All parameters of this operation the SDK knows about.</summary>
+    public static readonly IReadOnlyList<string> KnownParameters = [..KnownNoDuplicates, TX_RESOURCE_ATTRIBUTE];
 
     public ValidateCodeParameters()
     {

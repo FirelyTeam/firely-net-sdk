@@ -10,6 +10,8 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -21,16 +23,16 @@ public static class TerminologyParametersExtensions
     extension(Parameters parameters)
     {
         /// <summary>
-        /// Validates that there are no duplicate parameters in the provided <see cref="Parameters"/> instance.
+        /// Validates that none of the <paramref name="singleValued"/> parameters (the operation's 0..1 parameters)
+        /// occur more than once. Other parameters, such as the repeating <c>tx-resource</c>, are left alone.
         /// </summary>
         /// <exception cref="FhirOperationException"></exception>
-        internal Parameters NoDuplicates()
+        internal Parameters NoDuplicates(IReadOnlyCollection<string> singleValued)
         {
-            //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.TryGetDuplicates(out var duplicates))
+            if (parameters.TryGetDuplicates(out var duplicates) && duplicates.Where(singleValued.Contains).ToList() is { Count: > 0 } invalid)
             {
                 var message =
-                    $"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}";
+                    $"List of input parameters contains the following duplicates: {string.Join(", ", invalid)}";
                 throw FhirOperationException.InvalidOperationInvocation(message);
             }
 
