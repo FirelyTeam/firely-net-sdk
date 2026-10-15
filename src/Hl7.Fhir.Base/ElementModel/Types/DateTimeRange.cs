@@ -126,6 +126,8 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     /// A wall-clock time that a daylight saving change skips or repeats has two candidate offsets.
     /// The start takes the one giving the earlier instant and the end the one giving the later instant,
     /// so the range is widened, never narrowed.
+    /// The widening depends on the transition being present in the platform's time-zone data. Windows omits some
+    /// historical transitions (the 2011 Samoa date-line shift among them), and for those dates the range is returned unwidened.
     /// </remarks>
     internal static DateTimeRange Create(string? originalValue, DateTimePrecision precision, int fractionDigits,
         DateTimeOffset start, TimeZoneInfo? zone)

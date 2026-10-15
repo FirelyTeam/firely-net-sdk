@@ -114,6 +114,11 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// Gets the range covered by this datetime at its precision. A datetime without an offset
     /// is read as a wall-clock time in <paramref name="assumedZone"/>.
     /// </summary>
+    /// <remarks>
+    /// A wall-clock time that a daylight saving change skips or repeats gives a widened range, never a narrowed one.
+    /// The widening depends on the transition being present in the platform's time-zone data. Windows omits some
+    /// historical transitions (the 2011 Samoa date-line shift among them), and for those dates the range is returned unwidened.
+    /// </remarks>
     public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
         DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, HasOffset ? null : assumedZone);
 
