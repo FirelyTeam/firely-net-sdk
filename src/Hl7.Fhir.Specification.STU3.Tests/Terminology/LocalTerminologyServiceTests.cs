@@ -45,12 +45,12 @@ namespace Hl7.Fhir.Specification.Tests
             vcr.Message!.Value.Should().StartWith($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})");
 
             var issues = ((OperationOutcome)vcr.Issues!).Issue;
-            issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_IN_VS));
+            issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == "not-in-vs"));
 
             if (system is not null)
             {
                 // 'theSystem' cannot be resolved, so this is reported as well
-                issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
+                issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == "not-found")
                                              && i.Expression.Single() == "system");
                 vcr.Message.Value.Should().Contain($"A definition for CodeSystem '{system}' could not be found");
             }
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Specification.Tests
             valid.Version!.Value.Should().Be("1.0.0");
             valid.Display!.Value.Should().Be("Display 1");
             var displayIssue = ((OperationOutcome)valid.Issues!).Issue.Should().ContainSingle().Subject;
-            displayIssue.Details.Coding.Single().Code.Should().Be(TerminologyServiceOperationExceptionExtensions.INVALID_DISPLAY);
+            displayIssue.Details.Coding.Single().Code.Should().Be("invalid-display");
             displayIssue.Expression.Should().Equal("Coding.display");
 
             var invalid = new ValidateCodeResult(await service.ValueSetValidateCode(
@@ -175,8 +175,8 @@ namespace Hl7.Fhir.Specification.Tests
             invalid.Code!.Value.Should().Be("codeX");
             invalid.System!.Value.Should().Be(system);
             ((OperationOutcome)invalid.Issues!).Issue.Select(i => i.Details.Coding.Single().Code).Should().Equal(
-                TerminologyServiceOperationExceptionExtensions.NOT_IN_VS,
-                TerminologyServiceOperationExceptionExtensions.INVALID_CODE);
+                "not-in-vs",
+                "invalid-code");
         }
     }
 }

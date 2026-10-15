@@ -48,12 +48,12 @@ namespace Hl7.Fhir.Specification.Tests
             vcr.Message!.Value.Should().StartWith($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})");
 
             var issues = ((OperationOutcome)vcr.Issues!).Issue;
-            issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_IN_VS));
+            issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == "not-in-vs"));
 
             if (system is not null)
             {
                 // 'theSystem' cannot be resolved, so this is reported as well
-                issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
+                issues.Should().Contain(i => i.Details.Coding.Any(c => c.Code == "not-found")
                                              && i.Expression.Single() == "system");
                 vcr.Message.Value.Should().Contain($"A definition for CodeSystem '{system}' could not be found");
             }
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Specification.Tests
             (result.Issues as OperationOutcome)?.Issue.ToArray() ?? [];
 
         private static string txIssueType(OperationOutcome.IssueComponent issue) =>
-            issue.Details.Coding.Single(c => c.System == TerminologyServiceOperationExceptionExtensions.TX_ISSUE_TYPE_SYSTEM).Code;
+            issue.Details.Coding.Single(c => c.System == "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type").Code;
 
         [TestMethod]
         public async Task ValidCodeReturnsCodeSystemVersionAndDisplay()
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Display!.Value.Should().Be("Display 1");
             var issue = issues(result).Should().ContainSingle().Subject;
             issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.INVALID_DISPLAY);
+            txIssueType(issue).Should().Be("invalid-display");
             issue.Expression.Should().Equal("Coding.display");
             result.Message!.Value.Should().Be(issue.Details.Text);
         }
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Specification.Tests
             var issue = issues(result).Should().ContainSingle().Subject;
             issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
             issue.Code.Should().Be(OperationOutcome.IssueType.CodeInvalid);
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            txIssueType(issue).Should().Be("not-in-vs");
             issue.Expression.Should().Equal("Coding.code");
             result.Message!.Value.Should().Be(issue.Details.Text);
         }
@@ -481,8 +481,8 @@ namespace Hl7.Fhir.Specification.Tests
             result.Code!.Value.Should().Be("codeX");
             result.System!.Value.Should().Be(ShapeSystem);
             issues(result).Select(txIssueType).Should().Equal(
-                TerminologyServiceOperationExceptionExtensions.NOT_IN_VS,
-                TerminologyServiceOperationExceptionExtensions.INVALID_CODE);
+                "not-in-vs",
+                "invalid-code");
             issues(result).Should().OnlyContain(i => i.Expression.Single() == "code");
             result.Message!.Value.Should().Be(string.Join("; ", issues(result).Select(i => i.Details.Text)));
         }
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.System!.Value.Should().Be(unknownSystem);
             result.UnknownSystem!.Value.Should().Be(unknownSystem);
             var notFound = issues(result).Should().ContainSingle(i => i.Code == OperationOutcome.IssueType.NotFound).Subject;
-            txIssueType(notFound).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_FOUND);
+            txIssueType(notFound).Should().Be("not-found");
             notFound.Expression.Should().Equal("Coding.system");
         }
 
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Result!.Value.Should().BeFalse();
             result.Code!.Value.Should().Be("abstract");
             var issue = issues(result).Should().ContainSingle().Subject;
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.CODE_RULE);
+            txIssueType(issue).Should().Be("code-rule");
             issue.Code.Should().Be(OperationOutcome.IssueType.BusinessRule);
             result.Message!.Value.Should().Contain("abstract");
         }
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Inactive!.Value.Should().BeTrue();
             var issue = issues(result).Should().ContainSingle().Subject;
             issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.CODE_COMMENT);
+            txIssueType(issue).Should().Be("code-comment");
             issue.Expression.Should().Equal("Coding");
             result.Message!.Value.Should().Be(issue.Details.Text);
         }
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Status!.Value.Should().Be("deprecated");
             result.Inactive.Should().BeNull();
             var issue = issues(result).Should().ContainSingle().Subject;
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.CODE_COMMENT);
+            txIssueType(issue).Should().Be("code-comment");
             issue.Expression.Should().Equal("code");
         }
 
@@ -575,12 +575,12 @@ namespace Hl7.Fhir.Specification.Tests
             result.System.Should().BeNull();
 
             var all = issues(result);
-            txIssueType(all[0]).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            txIssueType(all[0]).Should().Be("not-in-vs");
             all[0].Expression.Should().BeEmpty();
             all.Should().Contain(i => i.Expression.SingleOrDefault() == "CodeableConcept.coding[0].code"
-                                      && txIssueType(i) == TerminologyServiceOperationExceptionExtensions.INVALID_CODE);
+                                      && txIssueType(i) == "invalid-code");
             all.Should().Contain(i => i.Expression.SingleOrDefault() == "CodeableConcept.coding[1].code"
-                                      && txIssueType(i) == TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+                                      && txIssueType(i) == "not-in-vs");
             result.Message!.Value.Should().StartWith("None of the Codings in the CodeableConcept were valid");
         }
 
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Result!.Value.Should().BeFalse();
             result.CodeableConcept!.Matches(cc).Should().BeTrue();
             var issue = issues(result).Should().ContainSingle().Subject;
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.NOT_IN_VS);
+            txIssueType(issue).Should().Be("not-in-vs");
             issue.Expression.Should().Equal("CodeableConcept.coding[0].code");
             result.Message!.Value.Should().Be(issue.Details.Text);
         }
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             result.Result!.Value.Should().BeFalse();
             result.UnknownSystem!.Value.Should().Be(unknownSystem);
-            issues(result).Where(i => txIssueType(i) == TerminologyServiceOperationExceptionExtensions.NOT_FOUND)
+            issues(result).Where(i => txIssueType(i) == "not-found")
                 .Select(i => i.Expression.Single())
                 .Should().Equal("CodeableConcept.coding[0].system", "CodeableConcept.coding[1].system");
         }
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Specification.Tests
             result.Display!.Value.Should().Be("Display 1");
             result.Version!.Value.Should().Be("1.0.0");
             var issue = issues(result).Should().ContainSingle().Subject;
-            txIssueType(issue).Should().Be(TerminologyServiceOperationExceptionExtensions.INVALID_DISPLAY);
+            txIssueType(issue).Should().Be("invalid-display");
             issue.Details.Text.Should().Contain("should be 'Display 1'");
         }
 

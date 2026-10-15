@@ -149,14 +149,9 @@ public class ValidateCodeResult : Parameters
     /// <summary>
     /// Adds an issue to the <c>issues</c> OperationOutcome of this result, creating the OperationOutcome on first use.
     /// </summary>
-    /// <param name="severity">The severity of the issue.</param>
-    /// <param name="issueType">The FHIR issue type of the issue.</param>
-    /// <param name="txIssueType">A code from the tx-issue-type code system (see the constants in
-    /// <see cref="TerminologyServiceOperationExceptionExtensions"/>), or <c>null</c> to leave it out.</param>
-    /// <param name="text">The human-readable text of the issue, put in <c>details.text</c>.</param>
-    /// <param name="expression">Optional FHIRPath expressions pointing at the element the issue is about, e.g. <c>Coding.code</c>.</param>
-    /// <returns>The issue that was added.</returns>
-    public IssueComponent AddIssue(IssueSeverity severity, IssueType issueType, string? txIssueType, string text, params string[] expression)
+    /// <remarks>Use the named methods in <see cref="TerminologyServiceOperationExceptionExtensions"/>
+    /// (e.g. <c>AddCodeNotInValueSet</c>) to add an issue for a specific cause.</remarks>
+    internal void AddIssue(IssueComponent issue)
     {
         if (Issues is not OperationOutcome outcome)
         {
@@ -164,21 +159,7 @@ public class ValidateCodeResult : Parameters
             this.SetSingleResource(ISSUES_ATTRIBUTE, outcome);
         }
 
-        var issue = new IssueComponent
-        {
-            Severity = severity,
-            Code = issueType,
-            Details = new CodeableConcept { Text = text }
-        };
-
-        if (txIssueType is not null)
-            issue.Details.Coding.Add(new Coding(TerminologyServiceOperationExceptionExtensions.TX_ISSUE_TYPE_SYSTEM, txIssueType));
-
-        if (expression.Length > 0)
-            issue.Expression = expression;
-
         outcome.Issue.Add(issue);
-        return issue;
     }
 
     /// <summary>

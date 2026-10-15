@@ -20,7 +20,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Hl7.Fhir.Model.OperationOutcome;
 using T = System.Threading.Tasks;
-using TX = Hl7.Fhir.Specification.Terminology.TerminologyServiceOperationExceptionExtensions;
 
 namespace Hl7.Fhir.Specification.Terminology;
 
@@ -214,8 +213,7 @@ public class LocalTerminologyService : BaseTerminologyService
             // None of the codings were valid: report the issues of all codings, but not the code/system/display
             // of any one of them, since none of them was the one that was validated.
             result = ValidateCodeResult.ForResult(false);
-            result.AddIssue(IssueSeverity.Error, IssueType.CodeInvalid, TX.NOT_IN_VS,
-                $"None of the Codings in the CodeableConcept were valid for the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
+            result.AddCodeNotInValueSet($"None of the Codings in the CodeableConcept were valid for the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
 
             if (result.Issues is OperationOutcome outcome)
             {
@@ -256,7 +254,7 @@ public class LocalTerminologyService : BaseTerminologyService
         if (code is null)
         {
             var noCode = ValidateCodeResult.ForResult(false, system: system);
-            noCode.AddIssue(IssueSeverity.Error, IssueType.Invalid, TX.INVALID_DATA, "No code supplied.", codePath);
+            noCode.AddIncompleteCodedParameter("No code supplied.", codePath);
             setMessage(noCode);
             return noCode;
         }
@@ -292,15 +290,13 @@ public class LocalTerminologyService : BaseTerminologyService
 
         if (abstractRejected)
         {
-            result.AddIssue(IssueSeverity.Error, IssueType.BusinessRule, TX.CODE_RULE,
-                $"{codeLabel} is abstract, which is not allowed here", codePath);
+            result.AddUnprocessableCodedParameter($"{codeLabel} is abstract, which is not allowed here", codePath);
         }
 
         if (display != null && conceptDisplay != null && display != conceptDisplay)
         {
             // this is only a warning (so success is still true)
-            result.AddIssue(IssueSeverity.Warning, IssueType.Invalid, TX.INVALID_DISPLAY,
-                $"{codeLabel} has incorrect display '{display}', should be '{conceptDisplay}'", elementPath(path, "display"));
+            result.AddInvalidDisplay($"{codeLabel} has incorrect display '{display}', should be '{conceptDisplay}'", elementPath(path, "display"));
         }
 
         addConceptStatus(result, component, codeSystem, concept, code, path ?? "code");
@@ -333,13 +329,11 @@ public class LocalTerminologyService : BaseTerminologyService
 
         if (system is not null && await isValueSet(system).ConfigureAwait(false))
         {
-            result.AddIssue(IssueSeverity.Error, IssueType.Invalid, TX.INVALID_DATA,
-                $"The Coding references a value set, not a code system ('{system}')", systemPath);
+            result.AddIncompleteCodedParameter($"The Coding references a value set, not a code system ('{system}')", systemPath);
             return;
         }
 
-        result.AddIssue(IssueSeverity.Error, IssueType.CodeInvalid, TX.NOT_IN_VS,
-            $"{codeLabel} does not exist in the value set '{vs.Title ?? vs.Name}' ({vs.Url})", codePath);
+        result.AddCodeNotInValueSet($"{codeLabel} does not exist in the value set '{vs.Title ?? vs.Name}' ({vs.Url})", codePath);
 
         if (system is null)
             return;
@@ -359,8 +353,7 @@ public class LocalTerminologyService : BaseTerminologyService
 
         if (codeSystem is null)
         {
-            result.AddIssue(IssueSeverity.Error, IssueType.NotFound, TX.NOT_FOUND,
-                $"A definition for CodeSystem '{system}' could not be found, so the code cannot be validated", systemPath);
+            result.AddUnresolvable($"A definition for CodeSystem '{system}' could not be found, so the code cannot be validated", systemPath);
 #if !STU3
             result.UnknownSystem = new Canonical(system);
 #endif
@@ -372,8 +365,7 @@ public class LocalTerminologyService : BaseTerminologyService
 #endif
         {
             var version = string.IsNullOrEmpty(codeSystem.Version) ? string.Empty : $" version '{codeSystem.Version}'";
-            result.AddIssue(IssueSeverity.Error, IssueType.CodeInvalid, TX.INVALID_CODE,
-                $"Code '{code}' does not exist in the code system '{system}'{version}", codePath);
+            result.AddCodeNotInSystem($"Code '{code}' does not exist in the code system '{system}'{version}", codePath);
         }
 
         async Task<bool> isValueSet(string sys)
@@ -438,13 +430,11 @@ public class LocalTerminologyService : BaseTerminologyService
 
         if (inactive)
         {
-            result.AddIssue(IssueSeverity.Warning, IssueType.BusinessRule, TX.CODE_COMMENT,
-                $"The concept '{code}' has a status of {status ?? "inactive"} and its use should be reviewed", expression);
+            result.AddCodeComment($"The concept '{code}' has a status of {status ?? "inactive"} and its use should be reviewed", expression);
         }
         else if (status is not null && status != "active")
         {
-            result.AddIssue(IssueSeverity.Warning, IssueType.BusinessRule, TX.CODE_COMMENT,
-                $"The concept '{code}' has a status of {status} and its use should be reviewed", expression);
+            result.AddCodeComment($"The concept '{code}' has a status of {status} and its use should be reviewed", expression);
         }
     }
 

@@ -69,30 +69,51 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void AddIssueCreatesAndExtendsTheIssuesOutcome()
+        public void IssueHelpersCreateAndExtendTheIssuesOutcome()
         {
             var result = ValidateCodeResult.ForResult(false);
             result.Issues.Should().BeNull();
 
-            var first = result.AddIssue(OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid,
-                TerminologyServiceOperationExceptionExtensions.NOT_IN_VS, "Not in the value set", "Coding.code");
-            result.AddIssue(OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule,
-                null, "Just a remark");
+            var first = result.AddCodeNotInValueSet("Not in the value set", "Coding.code");
+            var second = result.AddCodeComment("Just a remark");
 
             var outcome = result.Issues.Should().BeOfType<OperationOutcome>().Subject;
-            outcome.Issue.Should().HaveCount(2);
+            outcome.Issue.Should().Equal(first, second);
             result.Get(ValidateCodeResult.ISSUES_ATTRIBUTE).Should().ContainSingle();
 
-            outcome.Issue[0].Should().BeSameAs(first);
             first.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
             first.Code.Should().Be(OperationOutcome.IssueType.CodeInvalid);
             first.Details.Text.Should().Be("Not in the value set");
             first.Details.Coding.Should().ContainSingle().Which.Should().Match<Coding>(c =>
-                c.System == TerminologyServiceOperationExceptionExtensions.TX_ISSUE_TYPE_SYSTEM && c.Code == "not-in-vs");
+                c.System == "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type" && c.Code == "not-in-vs");
             first.Expression.Should().Equal("Coding.code");
 
-            outcome.Issue[1].Details.Coding.Should().BeEmpty();
-            outcome.Issue[1].Expression.Should().BeEmpty();
+            second.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
+            second.Details.Coding.Single().Code.Should().Be("code-comment");
+            second.Expression.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        [DataRow("incomplete", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid, "invalid-data")]
+        [DataRow("not-in-system", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid, "invalid-code")]
+        [DataRow("display", OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid, "invalid-display")]
+        [DataRow("unprocessable", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.BusinessRule, "code-rule")]
+        [DataRow("unresolvable", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotFound, "not-found")]
+        public void IssueHelpersUseTheIssueTypeOfTheirCause(string cause, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType issueType, string txIssueType)
+        {
+            var result = ValidateCodeResult.ForResult(false);
+            var issue = cause switch
+            {
+                "incomplete" => result.AddIncompleteCodedParameter("text"),
+                "not-in-system" => result.AddCodeNotInSystem("text"),
+                "display" => result.AddInvalidDisplay("text"),
+                "unprocessable" => result.AddUnprocessableCodedParameter("text"),
+                _ => result.AddUnresolvable("text"),
+            };
+
+            issue.Severity.Should().Be(severity);
+            issue.Code.Should().Be(issueType);
+            issue.Details.Coding.Single().Code.Should().Be(txIssueType);
         }
     }
 }
