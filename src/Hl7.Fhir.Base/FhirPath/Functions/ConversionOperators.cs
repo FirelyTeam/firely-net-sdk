@@ -18,6 +18,20 @@ namespace Hl7.FhirPath.Functions
     internal static class ConversionOperators
     {
         /// <summary>
+        /// Gets the System (CQL/FhirPath) type that corresponds to the focus item, which is the input
+        /// to all conversion functions (toX() and convertsToX()).
+        /// </summary>
+        /// <returns>The System value, or <c>null</c> if the item has no value or has no corresponding
+        /// System type (e.g. a HumanName, Reference or resource). In that case, the item cannot be
+        /// converted, which means toX() should return empty and convertsToX() false.</returns>
+        public static Any? ToSystemType(this Hl7.Fhir.Model.PocoNode focus) => focus switch
+        {
+            Hl7.Fhir.Model.PrimitiveNode pn => Any.TryConvert(pn.Value, out var primitive) ? primitive : null,
+            { Poco: IToSystemPrimitive tsp } when tsp.TryConvertToSystemType(out var result) => result,
+            _ => null
+        };
+
+        /// <summary>
         /// FhirPath toBoolean() function
         /// </summary>
         /// <param name="focus"></param>
