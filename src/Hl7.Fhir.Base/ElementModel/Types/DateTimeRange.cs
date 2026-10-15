@@ -13,8 +13,9 @@ using System;
 namespace Hl7.Fhir.ElementModel.Types;
 
 /// <summary>
-/// The range of time covered by a <see cref="Date"/> or <see cref="DateTime"/> at its precision,
-/// as the half-open interval [<see cref="Start"/>, <see cref="End"/>).
+/// The range of time covered by a <see cref="Date"/> or <see cref="DateTime"/> at its precision:
+/// a half-open <see cref="Interval{T}"/> of instants [<see cref="Start"/>, <see cref="End"/>),
+/// together with the precision and lexical value it came from.
 /// A <c>null</c> bound means that side of the range is unbounded.
 /// </summary>
 /// <remarks>
@@ -30,8 +31,8 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
         OriginalValue = originalValue;
         Precision = precision;
-        Start = start;
-        End = end;
+        Interval = Interval<DateTimeOffset>.Create(start is not null, start.GetValueOrDefault(), true,
+            end is not null, end.GetValueOrDefault(), false);
     }
 
     /// <summary>
@@ -45,42 +46,36 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     public DateTimePrecision Precision { get; }
 
     /// <summary>
+    /// The instants covered, as an interval closed below and open above.
+    /// </summary>
+    public Interval<DateTimeOffset> Interval { get; }
+
+    /// <summary>
     /// The first instant covered (inclusive), or <c>null</c> when the range is unbounded below.
     /// </summary>
-    public DateTimeOffset? Start { get; }
+    public DateTimeOffset? Start => Interval.HasLow ? Interval.Low : null;
 
     /// <summary>
     /// The first instant after the range (exclusive), or <c>null</c> when the range is unbounded above.
     /// </summary>
-    public DateTimeOffset? End { get; }
+    public DateTimeOffset? End => Interval.HasHigh ? Interval.High : null;
 
     /// <summary>
     /// Whether <paramref name="instant"/> lies within this range.
     /// </summary>
-    public bool Contains(DateTimeOffset instant) =>
-        (Start is null || Start.Value <= instant) && (End is null || instant < End.Value);
+    public bool Contains(DateTimeOffset instant) => Interval.Contains(instant);
 
     /// <summary>
     /// Whether this range and <paramref name="other"/> share at least one instant.
     /// </summary>
-    public bool Overlaps(DateTimeRange other)
-    {
-        if (other is null) throw new ArgumentNullException(nameof(other));
-
-        return (Start is null || other.End is null || Start.Value < other.End.Value)
-            && (other.Start is null || End is null || other.Start.Value < End.Value);
-    }
+    public bool Overlaps(DateTimeRange other) =>
+        Interval.Overlaps((other ?? throw new ArgumentNullException(nameof(other))).Interval);
 
     /// <summary>
     /// Whether every instant of <paramref name="other"/> lies within this range.
     /// </summary>
-    public bool Covers(DateTimeRange other)
-    {
-        if (other is null) throw new ArgumentNullException(nameof(other));
-
-        return (Start is null || (other.Start is not null && Start.Value <= other.Start.Value))
-            && (End is null || (other.End is not null && other.End.Value <= End.Value));
-    }
+    public bool Covers(DateTimeRange other) =>
+        Interval.Covers((other ?? throw new ArgumentNullException(nameof(other))).Interval);
 
     /// <summary>
     /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
@@ -106,7 +101,7 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     }
 
     public bool Equals(DateTimeRange? other) =>
-        other is not null && Precision == other.Precision && Start == other.Start && End == other.End;
+        other is not null && Precision == other.Precision && Interval.Equals(other.Interval);
 
     public override bool Equals(object? obj) => obj is DateTimeRange other && Equals(other);
 
@@ -114,10 +109,9 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
     public static bool operator !=(DateTimeRange? left, DateTimeRange? right) => !(left == right);
 
-    public override int GetHashCode() => HashCode.Combine(Precision, Start, End);
+    public override int GetHashCode() => HashCode.Combine(Precision, Interval);
 
-    public override string ToString() =>
-        (Start is { } s ? $"[{s:o}" : "(-∞") + ", " + (End is { } e ? $"{e:o})" : "+∞)");
+    public override string ToString() => Interval.ToString(v => v.ToString("o"));
 
     /// <summary>
     /// Builds the range for a value whose start has already been rounded to its precision.
