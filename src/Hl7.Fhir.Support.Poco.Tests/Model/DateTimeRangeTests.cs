@@ -137,8 +137,15 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void SkippedDayIsWidenedAcrossTheWholeGap()
         {
-            var apia = TimeZoneInfo.TryFindSystemTimeZoneById("Pacific/Apia", out var tz) ? tz
-                : TimeZoneInfo.FindSystemTimeZoneById("Samoa Standard Time");
+            // The OS time-zone data for Pacific/Apia does not model the 2011 shift on every platform
+            // (Windows lacks it), so build an equivalent zone: -10:00 before 2011-12-30, +14:00 from then on.
+            var shift = TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(
+                new System.DateTime(2011, 12, 30), System.DateTime.MaxValue.Date, TimeSpan.Zero,
+                TimeZoneInfo.TransitionTime.CreateFixedDateRule(System.DateTime.MinValue, 1, 1),
+                TimeZoneInfo.TransitionTime.CreateFixedDateRule(System.DateTime.MinValue, 1, 2),
+                TimeSpan.FromHours(24));
+            var apia = TimeZoneInfo.CreateCustomTimeZone("Test/Apia", TimeSpan.FromHours(-10), "Apia", "Apia",
+                "Apia", [shift]);
 
             // Samoa skipped all of 2011-12-30, moving from -10:00 to +14:00.
             var range = P.DateTime.Parse("2011-12-30T12:00").GetRange(apia);
