@@ -195,7 +195,9 @@ namespace Hl7.Fhir.Tests.Model
             openEnd.Start.Should().Be(utc(2026, 3, 15));
             openEnd.End.Should().BeNull();
 
-            FluentActions.Invoking(() => P.DateTimeRange.Between(openStart, null)).Should().Throw<ArgumentException>();
+            var everything = P.DateTimeRange.Between(openStart, null);
+            everything.Start.Should().BeNull();
+            everything.End.Should().BeNull();
             FluentActions.Invoking(() => P.DateTimeRange.Between(null, null)).Should().Throw<ArgumentException>();
         }
 
@@ -325,6 +327,33 @@ namespace Hl7.Fhir.Tests.Model
             period.TryGetRange(out var range).Should().BeFalse();
             range.Should().BeNull();
             period.TryGetRange(TimeZoneInfo.Utc, out range).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void BothBoundsBeyondTheCalendarGiveTheUnboundedRange()
+        {
+            foreach (var (value, offset) in new[] { ("0001-01-01T00:00:00", 2), ("9999-12-31T20:00:00", -5), ("9999-12-31T23", -5) })
+            {
+                var range = P.DateTime.Parse(value).GetRange(TimeSpan.FromHours(offset));
+                range.Start.Should().BeNull();
+                range.End.Should().BeNull();
+                range.Contains(DateTimeOffset.MaxValue).Should().BeTrue();
+            }
+
+            var plus2 = TimeZoneInfo.CreateCustomTimeZone("plus2", TimeSpan.FromHours(2), "plus2", "plus2");
+            P.DateTime.Parse("0001-01-01T00:00:00").GetRange(plus2).Start.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void PeriodWhoseOnlyBoundIsBeyondTheCalendarIsUnbounded()
+        {
+            new Period { End = "9999-12-31" }.TryGetRange(TimeZoneInfo.Utc, out var range).Should().BeTrue();
+            range!.Start.Should().BeNull();
+            range.End.Should().BeNull();
+
+            var plus2 = TimeZoneInfo.CreateCustomTimeZone("plus2", TimeSpan.FromHours(2), "plus2", "plus2");
+            new Period { Start = "0001-01-01", End = "9999-12-31" }.TryGetRange(plus2, out range).Should().BeTrue();
+            range!.Start.Should().BeNull();
         }
     }
 }

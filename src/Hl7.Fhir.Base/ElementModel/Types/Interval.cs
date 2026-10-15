@@ -76,10 +76,9 @@ public readonly struct Interval<T> : IEquatable<Interval<T>> where T : IComparab
     /// <summary>
     /// Creates an interval from optional bounds; a side without a bound is unbounded.
     /// </summary>
-    /// <exception cref="ArgumentException">Neither side is bounded, or the interval would be empty.</exception>
+    /// <exception cref="ArgumentException">The interval would be empty.</exception>
     internal static Interval<T> Create(bool hasLow, T low, bool lowClosed, bool hasHigh, T high, bool highClosed)
     {
-        if (!hasLow && !hasHigh) throw new ArgumentException("An interval must have at least one bound.");
         return new(hasLow, low, lowClosed, hasHigh, high, highClosed);
     }
 

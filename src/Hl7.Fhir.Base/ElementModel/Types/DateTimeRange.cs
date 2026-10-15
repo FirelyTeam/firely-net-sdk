@@ -25,14 +25,13 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// <para>A bound that falls outside what <see cref="DateTimeOffset"/> can represent, such as the end of
 /// <c>9999-12-31</c>, makes that side unbounded. This is exact for every representable instant, whereas clamping to
 /// <see cref="DateTimeOffset.MaxValue"/> would wrongly exclude that instant from a half-open range, and throwing would
-/// make valid values (often used as an "indefinitely" sentinel) unusable.</para>
+/// make valid values (often used as an "indefinitely" sentinel) unusable. When both bounds fall outside, the range is
+/// unbounded on both sides: it then contains every representable instant.</para>
 /// </remarks>
 public sealed class DateTimeRange : IEquatable<DateTimeRange>
 {
     internal DateTimeRange(string? originalValue, DateTimePrecision precision, DateTimeOffset? start, DateTimeOffset? end)
     {
-        if (start is null && end is null) throw new ArgumentException("A range must have at least one bound.");
-
         OriginalValue = originalValue;
         Precision = precision;
         Interval = Interval<DateTimeOffset>.Create(start is not null, start.GetValueOrDefault(), true,
@@ -88,8 +87,8 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     /// <exception cref="ArgumentException">Neither argument contributes a bound, or the end lies before the start.</exception>
     public static DateTimeRange Between(DateTimeRange? start, DateTimeRange? end)
     {
-        if (start?.Start is null && end?.End is null)
-            throw new ArgumentException("At least one of start and end must contribute a bound.");
+        if (start is null && end is null)
+            throw new ArgumentException("At least one of start and end must be given.");
         if (start?.Start is { } lower && end?.End is { } upper && upper <= lower)
             throw new ArgumentException("The end of the range lies before its start.");
 

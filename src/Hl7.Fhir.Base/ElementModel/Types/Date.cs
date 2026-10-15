@@ -84,7 +84,8 @@ public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// Gets the range covered by this value at its precision. A value without an offset
     /// is read as a wall-clock time at the fixed <paramref name="assumedOffset"/>.
     /// </summary>
-    /// <exception cref="ArgumentException"><paramref name="assumedOffset"/> is not a whole number of minutes or exceeds 14 hours.</exception>
+    /// <exception cref="ArgumentException"><paramref name="assumedOffset"/> is not a whole number of minutes.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="assumedOffset"/> exceeds 14 hours.</exception>
     public DateTimeRange GetRange(TimeSpan assumedOffset) =>
         HasOffset
             ? DateTimeRange.Create(ToString(), Precision, 0, _value, null)
