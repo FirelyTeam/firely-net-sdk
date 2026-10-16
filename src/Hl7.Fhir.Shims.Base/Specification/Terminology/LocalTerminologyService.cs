@@ -172,12 +172,18 @@ public class LocalTerminologyService : BaseTerminologyService
             ? await getExpandedValueSet(parameters.Url!, parameters.ValueSetVersion, "validate code").ConfigureAwait(false)
             : await getExpandedValueSet(valueSet, "validate code").ConfigureAwait(false);
         
+        // Without the lenient-display-validation parameter, a wrong display is a warning.
+        // TODO: Make this strict (false) in the next major version. The ValueSet/$validate-code OperationDefinition says:
+        // "If the 'lenient-display-validation' parameter is false or absent, then an invalid display will cause the 'result'
+        // output parameter to be 'false', i.e. the validation will fail."
+        var lenientDisplay = parameters.LenientDisplayValidation?.Value ?? true;
+
         if (parameters.CodeableConcept is not null)
-            return await validateCodeVs(valueSet, parameters.CodeableConcept, parameters.Abstract?.Value).ConfigureAwait(false);
+            return await validateCodeVs(valueSet, parameters.CodeableConcept, parameters.Abstract?.Value, lenientDisplay).ConfigureAwait(false);
         if (parameters.Coding is not null)
-            return await validateCodeVs(valueSet, parameters.Coding, parameters.Abstract?.Value).ConfigureAwait(false);
+            return await validateCodeVs(valueSet, parameters.Coding, parameters.Abstract?.Value, lenientDisplay).ConfigureAwait(false);
         
-        return await validateCodeVs(valueSet, parameters.Code?.Value, parameters.System?.Value, parameters.Display?.Value, parameters.Abstract?.Value).ConfigureAwait(false);
+        return await validateCodeVs(valueSet, parameters.Code?.Value, parameters.System?.Value, parameters.Display?.Value, parameters.Abstract?.Value, lenientDisplay).ConfigureAwait(false);
     }
 
     protected override async Task<Resource> Expand(ExpandParameters parameters)
@@ -189,7 +195,7 @@ public class LocalTerminologyService : BaseTerminologyService
     }
 
 
-    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
+    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, CodeableConcept cc, bool? abstractAllowed, bool lenientDisplay)
     {
         // Look for one succesful match in any of the codes in the CodeableConcept.
         // These are run sequentially (rather than in parallel) since the caller-supplied resolver
@@ -198,7 +204,7 @@ public class LocalTerminologyService : BaseTerminologyService
         for (var i = 0; i < cc.Coding.Count; i++)
         {
             var coding = cc.Coding[i];
-            callResults.Add(await validateCodeVs(vs, coding.Code, coding.System, coding.Display, abstractAllowed, $"CodeableConcept.coding[{i}]").ConfigureAwait(false));
+            callResults.Add(await validateCodeVs(vs, coding.Code, coding.System, coding.Display, abstractAllowed, lenientDisplay, $"CodeableConcept.coding[{i}]").ConfigureAwait(false));
         }
 
         var result = callResults.FirstOrDefault(p => p.Result?.Value == true);
@@ -213,16 +219,23 @@ public class LocalTerminologyService : BaseTerminologyService
             // None of the codings were valid: report the issues of all codings, but not the code/system/display
             // of any one of them, since none of them was the one that was validated.
             result = ValidateCodeResult.ForResult(false);
-            result.AddCodeNotInValueSet($"None of the Codings in the CodeableConcept were valid for the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
 
-            if (result.Issues is OperationOutcome outcome)
+            // With strict display validation, a coding that is in the value set can still be rejected for a wrong display.
+            // When every coding is in the value set, saying that none of them is would be wrong; their issues say why.
+            // A CodeableConcept without codings has no such issues, so it is still reported as not in the value set.
+            var allInValueSet = cc.Coding.Count > 0 && cc.Coding.All(c => c.Code is not null && vs.FindInExpansion(c.Code, c.System) is not null);
+            if (lenientDisplay || !allInValueSet)
+                result.AddCodeNotInValueSet($"None of the Codings in the CodeableConcept were valid for the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
+
+            var outcome = result.Issues as OperationOutcome ?? new OperationOutcome();
+            foreach (var callResult in callResults)
             {
-                foreach (var callResult in callResults)
-                {
-                    if (callResult.Issues is OperationOutcome callOutcome)
-                        outcome.Issue.AddRange(callOutcome.Issue);
-                }
+                if (callResult.Issues is OperationOutcome callOutcome)
+                    outcome.Issue.AddRange(callOutcome.Issue);
             }
+
+            if (result.Issues is null && outcome.Issue.Count > 0)
+                result.SetSingleResource(ValidateCodeResult.ISSUES_ATTRIBUTE, outcome);
 
 #if !STU3
             // Only report an unknown system when it is the reason that none of the codings could be validated.
@@ -238,16 +251,16 @@ public class LocalTerminologyService : BaseTerminologyService
         return result;
     }
 
-    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, Coding coding, bool? abstractAllowed)
+    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, Coding coding, bool? abstractAllowed, bool lenientDisplay)
     {
-        return await validateCodeVs(vs, coding.Code, coding.System, coding.Display, abstractAllowed, "Coding")
+        return await validateCodeVs(vs, coding.Code, coding.System, coding.Display, abstractAllowed, lenientDisplay, "Coding")
             .ConfigureAwait(false);
     }
 
     // Validates a code against an expanded valueset. The path is the path of the coding that is validated, used in
     // the expressions of the issues: null when validating the code/system/display parameters, "Coding" when
     // validating a Coding, and "CodeableConcept.coding[n]" when validating a coding of a CodeableConcept.
-    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, string? code, string? system, string? display, bool? abstractAllowed, string? path = null)
+    private async Task<ValidateCodeResult> validateCodeVs(ValueSet vs, string? code, string? system, string? display, bool? abstractAllowed, bool lenientDisplay, string? path = null)
     {
         var codePath = elementPath(path, "code");
 
@@ -282,7 +295,10 @@ public class LocalTerminologyService : BaseTerminologyService
         // abstractAllowed == null means abstract codes are not checked.
         var abstractRejected = component.Abstract == true && abstractAllowed == false;
 
-        var result = ValidateCodeResult.ForResult(!abstractRejected,
+        // A wrong display only makes the code invalid when display validation is not lenient.
+        var displayInvalid = display != null && conceptDisplay != null && display != conceptDisplay;
+
+        var result = ValidateCodeResult.ForResult(!abstractRejected && (lenientDisplay || !displayInvalid),
             display: conceptDisplay ?? display,
             code: code,
             system: resolvedSystem,
@@ -293,10 +309,9 @@ public class LocalTerminologyService : BaseTerminologyService
             result.AddUnprocessableCodedParameter($"{codeLabel} is abstract, which is not allowed here", codePath);
         }
 
-        if (display != null && conceptDisplay != null && display != conceptDisplay)
+        if (displayInvalid)
         {
-            // this is only a warning (so success is still true)
-            result.AddInvalidDisplay($"{codeLabel} has incorrect display '{display}', should be '{conceptDisplay}'", elementPath(path, "display"));
+            result.AddInvalidDisplay($"{codeLabel} has incorrect display '{display}', should be '{conceptDisplay}'", lenientDisplay, elementPath(path, "display"));
         }
 
         addConceptStatus(result, component, codeSystem, concept, code, path ?? "code");

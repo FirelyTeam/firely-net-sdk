@@ -249,6 +249,8 @@ public class TerminologyValidationHelpersTests
     {
         { "ValueSetValidateCode", ValidateCodeParameters.CODE_ATTRIBUTE },
         { "CodeSystemValidateCode", CodeSystemValidateCodeParameters.CODE_ATTRIBUTE },
+        { "ValueSetValidateCode", ValidateCodeParameters.LENIENT_DISPLAY_VALIDATION_ATTRIBUTE },
+        { "CodeSystemValidateCode", CodeSystemValidateCodeParameters.LENIENT_DISPLAY_VALIDATION_ATTRIBUTE },
         { "Subsumes", SubsumesParameters.CODE_A_ATTRIBUTE },
         { "Translate", TranslateParameters.CODE_ATTRIBUTE },
         { "Expand", ExpandParameters.URL_ATTRIBUTE },

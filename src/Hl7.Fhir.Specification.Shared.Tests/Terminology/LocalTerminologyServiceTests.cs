@@ -455,6 +455,139 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async Task WrongDisplayWithLenientDisplayValidationIsAWarning()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCoding(new Coding(ShapeSystem, "code1", "Wrong"))
+                .WithLenientDisplayValidation(true));
+
+            result.Result!.Value.Should().BeTrue();
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
+            txIssueType(issue).Should().Be("invalid-display");
+        }
+
+        [TestMethod]
+        public async Task WrongDisplayWithoutLenientDisplayValidationIsAnError()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCoding(new Coding(ShapeSystem, "code1", "Wrong"))
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            result.Code!.Value.Should().Be("code1");
+            result.Display!.Value.Should().Be("Display 1");
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
+            issue.Code.Should().Be(OperationOutcome.IssueType.Invalid);
+            txIssueType(issue).Should().Be("invalid-display");
+            issue.Expression.Should().Equal("Coding.display");
+            result.Message!.Value.Should().Be(issue.Details.Text);
+        }
+
+        [TestMethod]
+        public async Task WrongDisplayOfCodeParameterWithoutLenientDisplayValidationIsAnError()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCode("code1", ShapeSystem, display: "Wrong")
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
+            issue.Expression.Should().Equal("display");
+        }
+
+        [TestMethod]
+        public async Task RightDisplayWithoutLenientDisplayValidationIsValid()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCoding(new Coding(ShapeSystem, "code1", "Display 1"))
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Issues.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async Task CodeableConceptWithOneWrongDisplayWithoutLenientDisplayValidationIsValidWhenAnotherCodingIsValid()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCodeableConcept(new CodeableConcept { Coding = [new Coding(ShapeSystem, "code1", "Wrong"), new Coding(ShapeSystem, "code2", "Display 2")] })
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeTrue();
+            result.Code!.Value.Should().Be("code2");
+        }
+
+        [TestMethod]
+        public async Task CodeableConceptWithOnlyAWrongDisplayWithoutLenientDisplayValidationIsInvalid()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCodeableConcept(new CodeableConcept { Coding = [new Coding(ShapeSystem, "code1", "Wrong")] })
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            var issue = issues(result).Should().ContainSingle().Subject;
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Error);
+            txIssueType(issue).Should().Be("invalid-display");
+            issue.Expression.Should().Equal("CodeableConcept.coding[0].display");
+        }
+
+        [TestMethod]
+        public async Task CodeableConceptWithOnlyWrongDisplaysWithoutLenientDisplayValidationDoesNotSayTheCodesAreNotInTheValueSet()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCodeableConcept(new CodeableConcept { Coding = [new Coding(ShapeSystem, "code1", "Wrong"), new Coding(ShapeSystem, "code2", "Wrong")] })
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            issues(result).Select(txIssueType).Should().Equal("invalid-display", "invalid-display");
+            issues(result).Select(i => i.Expression.Single()).Should().Equal("CodeableConcept.coding[0].display", "CodeableConcept.coding[1].display");
+            result.Message!.Value.Should().Be(string.Join("; ", issues(result).Select(i => i.Details.Text)));
+        }
+
+        [TestMethod]
+        public async Task TextOnlyCodeableConceptWithoutLenientDisplayValidationSaysItIsNotInTheValueSet()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCodeableConcept(new CodeableConcept { Text = "Only text" })
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            issues(result).Select(txIssueType).Should().Equal("not-in-vs");
+            result.Message!.Value.Should().Be(issues(result).Single().Details.Text);
+        }
+
+        [TestMethod]
+        public async Task AbstractCodeWithWrongDisplayWithoutLenientDisplayValidationReportsBothErrors()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCoding(new Coding(ShapeSystem, "abstract", "Wrong"))
+                .WithAbstract(false)
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            issues(result).Select(txIssueType).Should().Equal("code-rule", "invalid-display");
+            issues(result).Should().OnlyContain(i => i.Severity == OperationOutcome.IssueSeverity.Error);
+            result.Message!.Value.Should().Be(string.Join("; ", issues(result).Select(i => i.Details.Text)));
+        }
+
+        [TestMethod]
+        public void LenientDisplayValidationParameterIsSetAndCleared()
+        {
+            var vsParameters = new ValidateCodeParameters().WithLenientDisplayValidation(false);
+            vsParameters.LenientDisplayValidation!.Value.Should().BeFalse();
+            vsParameters.GetSingleValue<FhirBoolean>("lenient-display-validation")!.Value.Should().BeFalse();
+            vsParameters.WithLenientDisplayValidation(null).LenientDisplayValidation.Should().BeNull();
+
+            var csParameters = new CodeSystemValidateCodeParameters().WithLenientDisplayValidation(true);
+            csParameters.LenientDisplayValidation!.Value.Should().BeTrue();
+            csParameters.GetSingleValue<FhirBoolean>("lenient-display-validation")!.Value.Should().BeTrue();
+            csParameters.WithLenientDisplayValidation(null).LenientDisplayValidation.Should().BeNull();
+        }
+
+        [TestMethod]
         public async Task CodeInCodeSystemButNotInValueSet()
         {
             var result = await validateShape(ShapeCode1Vs, p => p.WithCoding(new Coding(ShapeSystem, "code2")));
