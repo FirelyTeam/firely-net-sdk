@@ -548,6 +548,18 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async Task TextOnlyCodeableConceptWithoutLenientDisplayValidationSaysItIsNotInTheValueSet()
+        {
+            var result = await validateShape(ShapeAllVs, p => p
+                .WithCodeableConcept(new CodeableConcept { Text = "Only text" })
+                .WithLenientDisplayValidation(false));
+
+            result.Result!.Value.Should().BeFalse();
+            issues(result).Select(txIssueType).Should().Equal("not-in-vs");
+            result.Message!.Value.Should().Be(issues(result).Single().Details.Text);
+        }
+
+        [TestMethod]
         public async Task AbstractCodeWithWrongDisplayWithoutLenientDisplayValidationReportsBothErrors()
         {
             var result = await validateShape(ShapeAllVs, p => p

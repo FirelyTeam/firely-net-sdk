@@ -222,7 +222,8 @@ public class LocalTerminologyService : BaseTerminologyService
 
             // With strict display validation, a coding that is in the value set can still be rejected for a wrong display.
             // When every coding is in the value set, saying that none of them is would be wrong; their issues say why.
-            var allInValueSet = cc.Coding.All(c => c.Code is not null && vs.FindInExpansion(c.Code, c.System) is not null);
+            // A CodeableConcept without codings has no such issues, so it is still reported as not in the value set.
+            var allInValueSet = cc.Coding.Count > 0 && cc.Coding.All(c => c.Code is not null && vs.FindInExpansion(c.Code, c.System) is not null);
             if (lenientDisplay || !allInValueSet)
                 result.AddCodeNotInValueSet($"None of the Codings in the CodeableConcept were valid for the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
 
