@@ -31,6 +31,7 @@ public class ValidateCodeParameters : Parameters
     public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
     public const string INFER_SYSTEM_ATTRIBUTE = "inferSystem";
     public const string TX_RESOURCE_ATTRIBUTE = "tx-resource";
+    public const string LENIENT_DISPLAY_VALIDATION_ATTRIBUTE = "lenient-display-validation";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
     /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/valueset-operation-validate-code.html">ValueSet/$validate-code OperationDefinition</see>.</remarks>
@@ -38,7 +39,7 @@ public class ValidateCodeParameters : Parameters
     [
         URL_ATTRIBUTE, CONTEXT_ATTRIBUTE, VALUE_SET_ATTRIBUTE, VALUE_SET_VERSION_ATTRIBUTE, CODE_ATTRIBUTE, SYSTEM_ATTRIBUTE,
         SYSTEM_VERSION_ATTRIBUTE, DISPLAY_ATTRIBUTE, CODING_ATTRIBUTE, CODEABLE_CONCEPT_ATTRIBUTE, DATE_ATTRIBUTE, ABSTRACT_ATTRIBUTE,
-        DISPLAY_LANGUAGE_ATTRIBUTE, INFER_SYSTEM_ATTRIBUTE
+        DISPLAY_LANGUAGE_ATTRIBUTE, INFER_SYSTEM_ATTRIBUTE, LENIENT_DISPLAY_VALIDATION_ATTRIBUTE
     ];
 
     /// <summary>All parameters of this operation the SDK knows about.</summary>
@@ -181,6 +182,20 @@ public class ValidateCodeParameters : Parameters
         set => this.SetSingleValue(INFER_SYSTEM_ATTRIBUTE, value);
     }
 
+    /// <summary>
+    /// If true, a display that does not match the code is reported as a warning and the code is still valid.
+    /// If false, such a display is an error and the code is not valid. When absent, the terminology service picks the default.
+    /// </summary>
+    /// <remarks>Defined by the FHIR terminology ecosystem IG, "Requirements for Servers", section "$validate-code (ValueSet)":
+    /// "The server SHALL support <c>lenient-display-validation</c>, and SHALL distinguish the two answers: with it set,
+    /// a display that is wrong but recognisable produces a warning; without it, an error".
+    /// Of the SDK's terminology services, <c>LocalTerminologyService</c> acts on it; services that call a terminology server send it along.</remarks>
+    public FhirBoolean? LenientDisplayValidation
+    {
+        get => this.GetSingleValue<FhirBoolean>(LENIENT_DISPLAY_VALIDATION_ATTRIBUTE);
+        set => this.SetSingleValue(LENIENT_DISPLAY_VALIDATION_ATTRIBUTE, value);
+    }
+
     #region Builder methods
     public ValidateCodeParameters WithValueSet(string? url, string? context = null, Resource? valueSet = null, string? valueSetVersion = null)
     {
@@ -239,6 +254,12 @@ public class ValidateCodeParameters : Parameters
     public ValidateCodeParameters WithAbstract(bool? @abstract)
     {
         Abstract = @abstract.HasValue ? new FhirBoolean(@abstract) : null;
+        return this;
+    }
+
+    public ValidateCodeParameters WithLenientDisplayValidation(bool? lenientDisplayValidation)
+    {
+        LenientDisplayValidation = lenientDisplayValidation.HasValue ? new FhirBoolean(lenientDisplayValidation) : null;
         return this;
     }
     #endregion

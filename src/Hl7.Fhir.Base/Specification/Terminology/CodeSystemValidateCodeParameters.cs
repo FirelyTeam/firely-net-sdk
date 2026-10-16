@@ -26,13 +26,15 @@ public class CodeSystemValidateCodeParameters : Parameters
     public const string DATE_ATTRIBUTE = "date";
     public const string ABSTRACT_ATTRIBUTE = "abstract";
     public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
+    public const string LENIENT_DISPLAY_VALIDATION_ATTRIBUTE = "lenient-display-validation";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
-    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/codesystem-operation-validate-code.html">CodeSystem/$validate-code OperationDefinition</see>.</remarks>
+    /// <remarks>Cardinalities as defined by the <see href="https://build.fhir.org/codesystem-operation-validate-code.html">CodeSystem/$validate-code OperationDefinition</see>.
+    /// <c>lenient-display-validation</c> is not defined there; it is taken as 0..1, like in ValueSet/$validate-code.</remarks>
     internal static readonly IReadOnlyList<string> KnownNoDuplicates =
     [
         URL_ATTRIBUTE, VALUE_SET_ATTRIBUTE, CODE_ATTRIBUTE, VERSION_ATTRIBUTE, DISPLAY_ATTRIBUTE, CODING_ATTRIBUTE,
-        CODEABLE_CONCEPT_ATTRIBUTE, DATE_ATTRIBUTE, ABSTRACT_ATTRIBUTE, DISPLAY_LANGUAGE_ATTRIBUTE
+        CODEABLE_CONCEPT_ATTRIBUTE, DATE_ATTRIBUTE, ABSTRACT_ATTRIBUTE, DISPLAY_LANGUAGE_ATTRIBUTE, LENIENT_DISPLAY_VALIDATION_ATTRIBUTE
     ];
 
     /// <summary>All parameters of this operation the SDK knows about.</summary>
@@ -142,6 +144,21 @@ public class CodeSystemValidateCodeParameters : Parameters
         set => this.SetSingleValue(DISPLAY_LANGUAGE_ATTRIBUTE, value);
     }
 
+    /// <summary>
+    /// If true, a display that does not match the code is reported as a warning and the code is still valid.
+    /// If false, such a display is an error and the code is not valid. When absent, the terminology service picks the default.
+    /// </summary>
+    /// <remarks>Defined by the FHIR terminology ecosystem IG, "Requirements for Servers", section "$validate-code (ValueSet)":
+    /// "The server SHALL support <c>lenient-display-validation</c>, and SHALL distinguish the two answers: with it set,
+    /// a display that is wrong but recognisable produces a warning; without it, an error". Its section "$validate-code (CodeSystem)"
+    /// says "The same rules apply, less the value set". None of the SDK's terminology services acts on it for CodeSystem $validate-code;
+    /// services that call a terminology server send it along.</remarks>
+    public FhirBoolean? LenientDisplayValidation
+    {
+        get => this.GetSingleValue<FhirBoolean>(LENIENT_DISPLAY_VALIDATION_ATTRIBUTE);
+        set => this.SetSingleValue(LENIENT_DISPLAY_VALIDATION_ATTRIBUTE, value);
+    }
+
     #region Builder methods
     public CodeSystemValidateCodeParameters WithCodeSystem(string? url, Resource? codeSystem = null, string? version = null)
     {
@@ -194,6 +211,12 @@ public class CodeSystemValidateCodeParameters : Parameters
     public CodeSystemValidateCodeParameters WithAbstract(bool? @abstract)
     {
         Abstract = @abstract.HasValue ? new FhirBoolean(@abstract) : null;
+        return this;
+    }
+
+    public CodeSystemValidateCodeParameters WithLenientDisplayValidation(bool? lenientDisplayValidation)
+    {
+        LenientDisplayValidation = lenientDisplayValidation.HasValue ? new FhirBoolean(lenientDisplayValidation) : null;
         return this;
     }
     #endregion

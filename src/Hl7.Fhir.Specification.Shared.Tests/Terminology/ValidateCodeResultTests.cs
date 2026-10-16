@@ -97,6 +97,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("incomplete", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid, "invalid-data")]
         [DataRow("not-in-system", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid, "invalid-code")]
         [DataRow("display", OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid, "invalid-display")]
+        [DataRow("display-strict", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid, "invalid-display")]
         [DataRow("unprocessable", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.BusinessRule, "code-rule")]
         [DataRow("unresolvable", OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotFound, "not-found")]
         public void IssueHelpersUseTheIssueTypeOfTheirCause(string cause, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType issueType, string txIssueType)
@@ -106,7 +107,8 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 "incomplete" => result.AddIncompleteCodedParameter("text"),
                 "not-in-system" => result.AddCodeNotInSystem("text"),
-                "display" => result.AddInvalidDisplay("text"),
+                "display" => result.AddInvalidDisplay("text", lenient: true),
+                "display-strict" => result.AddInvalidDisplay("text", lenient: false),
                 "unprocessable" => result.AddUnprocessableCodedParameter("text"),
                 _ => result.AddUnresolvable("text"),
             };
@@ -114,6 +116,19 @@ namespace Hl7.Fhir.Specification.Tests
             issue.Severity.Should().Be(severity);
             issue.Code.Should().Be(issueType);
             issue.Details.Coding.Single().Code.Should().Be(txIssueType);
+        }
+
+        [TestMethod]
+        public void ObsoleteAddInvalidDisplayIsLenient()
+        {
+            var result = ValidateCodeResult.ForResult(true);
+#pragma warning disable CS0618 // Type or member is obsolete: the overload without 'lenient' keeps its 6.x behaviour.
+            var issue = result.AddInvalidDisplay("text", "Coding.display");
+#pragma warning restore CS0618
+
+            issue.Severity.Should().Be(OperationOutcome.IssueSeverity.Warning);
+            issue.Details.Coding.Single().Code.Should().Be("invalid-display");
+            issue.Expression.Should().Equal("Coding.display");
         }
     }
 }
