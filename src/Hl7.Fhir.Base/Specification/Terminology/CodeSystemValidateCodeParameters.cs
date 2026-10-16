@@ -148,11 +148,11 @@ public class CodeSystemValidateCodeParameters : Parameters
     /// If true, a display that does not match the code is reported as a warning and the code is still valid.
     /// If false, such a display is an error and the code is not valid. When absent, the terminology service picks the default.
     /// </summary>
-    /// <remarks>Defined by the FHIR terminology ecosystem IG, "Requirements for Servers", section "$validate-code (ValueSet)":
-    /// "The server SHALL support <c>lenient-display-validation</c>, and SHALL distinguish the two answers: with it set,
-    /// a display that is wrong but recognisable produces a warning; without it, an error". Its section "$validate-code (CodeSystem)"
-    /// says "The same rules apply, less the value set". None of the SDK's terminology services acts on it for CodeSystem $validate-code;
-    /// services that call a terminology server send it along.</remarks>
+    /// <remarks>The CodeSystem/$validate-code OperationDefinition does not define this parameter. The <see href="https://build.fhir.org/valueset-operation-validate-code.html">ValueSet/$validate-code OperationDefinition</see> (FHIR current build) does:
+    /// "When the 'lenient-display-validation' parameter is true, an invalid display string will not cause the 'result' output parameter
+    /// to be 'false'. If the 'lenient-display-validation' parameter is false or absent, then an invalid display will cause the 'result'
+    /// output parameter to be 'false', i.e. the validation will fail."
+    /// None of the SDK's terminology services acts on it for CodeSystem $validate-code; services that call a terminology server send it along.</remarks>
     public FhirBoolean? LenientDisplayValidation
     {
         get => this.GetSingleValue<FhirBoolean>(LENIENT_DISPLAY_VALIDATION_ATTRIBUTE);

@@ -20,7 +20,8 @@ changes.
   > it in effect.
 
 **Terminology**
-- `$validate-code` supports the `lenient-display-validation` parameter of the FHIR terminology ecosystem IG.
+- `$validate-code` supports the `lenient-display-validation` parameter of the
+  [ValueSet/$validate-code OperationDefinition](https://build.fhir.org/valueset-operation-validate-code.html).
   `ValidateCodeParameters` and `CodeSystemValidateCodeParameters` have a `LenientDisplayValidation` property and a
   `WithLenientDisplayValidation()` builder method. When it is `false`, `LocalTerminologyService` (ValueSet `$validate-code`)
   reports a display that does not match the code as an `invalid-display` error and the code is not valid. Terminology services
@@ -30,5 +31,6 @@ changes.
   The overload without `lenient` is obsolete. See issue [#3640](https://github.com/FirelyTeam/firely-net-sdk/issues/3640).
 
   > **Upcoming change:** in the next major version, a missing `lenient-display-validation` parameter will mean strict
-  > validation, so a wrong display will be an error by default, as the terminology ecosystem IG requires. Pass `true` to keep
-  > it a warning.
+  > validation, so a wrong display will be an error by default. The OperationDefinition says: "If the
+  > 'lenient-display-validation' parameter is false or absent, then an invalid display will cause the 'result' output
+  > parameter to be 'false', i.e. the validation will fail." Pass `true` to keep it a warning.

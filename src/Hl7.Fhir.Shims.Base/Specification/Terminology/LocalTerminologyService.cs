@@ -173,8 +173,9 @@ public class LocalTerminologyService : BaseTerminologyService
             : await getExpandedValueSet(valueSet, "validate code").ConfigureAwait(false);
         
         // Without the lenient-display-validation parameter, a wrong display is a warning.
-        // TODO: Make this strict (false) in the next major version. The terminology ecosystem IG ("Requirements for Servers",
-        // "$validate-code (ValueSet)") expects an error when the parameter is not set.
+        // TODO: Make this strict (false) in the next major version. The ValueSet/$validate-code OperationDefinition says:
+        // "If the 'lenient-display-validation' parameter is false or absent, then an invalid display will cause the 'result'
+        // output parameter to be 'false', i.e. the validation will fail."
         var lenientDisplay = parameters.LenientDisplayValidation?.Value ?? true;
 
         if (parameters.CodeableConcept is not null)

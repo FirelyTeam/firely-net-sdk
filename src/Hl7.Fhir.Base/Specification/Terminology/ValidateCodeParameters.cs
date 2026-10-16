@@ -186,9 +186,11 @@ public class ValidateCodeParameters : Parameters
     /// If true, a display that does not match the code is reported as a warning and the code is still valid.
     /// If false, such a display is an error and the code is not valid. When absent, the terminology service picks the default.
     /// </summary>
-    /// <remarks>Defined by the FHIR terminology ecosystem IG, "Requirements for Servers", section "$validate-code (ValueSet)":
-    /// "The server SHALL support <c>lenient-display-validation</c>, and SHALL distinguish the two answers: with it set,
-    /// a display that is wrong but recognisable produces a warning; without it, an error".
+    /// <remarks>Defined by the <see href="https://build.fhir.org/valueset-operation-validate-code.html">ValueSet/$validate-code OperationDefinition</see> (FHIR current build):
+    /// "When the 'lenient-display-validation' parameter is true, an invalid display string will not cause the 'result' output parameter
+    /// to be 'false'. If the 'lenient-display-validation' parameter is false or absent, then an invalid display will cause the 'result'
+    /// output parameter to be 'false', i.e. the validation will fail."
+    /// The SDK keeps "absent" lenient until its next major version.
     /// Of the SDK's terminology services, <c>LocalTerminologyService</c> acts on it; services that call a terminology server send it along.</remarks>
     public FhirBoolean? LenientDisplayValidation
     {
