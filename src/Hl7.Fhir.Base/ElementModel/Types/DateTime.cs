@@ -95,6 +95,45 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     private readonly DateTimeOffset _value;
 
     /// <summary>
+    /// The number of fraction digits in the parsed value, which sets the width of a <see cref="DateTimePrecision.Fraction"/> range:
+    /// <c>.000</c> spans 1 ms. It is set only by Parse(); a datetime built any other way (FromDateTimeOffset(), Now(),
+    /// a cast, or arithmetic) gets 7, so the same instant obtained that way spans a single tick of 100 ns.
+    /// </summary>
+    private int FractionDigits { get; init; } = 7;
+
+    /// <summary>
+    /// Gets the range covered by this datetime at its precision. Fails when the datetime has no offset.
+    /// </summary>
+    public bool TryGetRange([NotNullWhen(true)] out DateTimeRange? range)
+    {
+        range = HasOffset ? DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, null) : null;
+        return range is not null;
+    }
+
+    /// <summary>
+    /// Gets the range covered by this datetime at its precision. A datetime without an offset
+    /// is read as a wall-clock time in <paramref name="assumedZone"/>.
+    /// </summary>
+    /// <remarks>
+    /// A wall-clock time that a daylight saving change skips or repeats gives a widened range, never a narrowed one.
+    /// The widening depends on the transition being present in the platform's time-zone data. Windows omits some
+    /// historical transitions (the 2011 Samoa date-line shift among them), and for those dates the range is returned unwidened.
+    /// </remarks>
+    public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
+        DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, HasOffset ? null : assumedZone);
+
+    /// <summary>
+    /// Gets the range covered by this value at its precision. A value without an offset
+    /// is read as a wall-clock time at the fixed <paramref name="assumedOffset"/>.
+    /// </summary>
+    /// <exception cref="ArgumentException"><paramref name="assumedOffset"/> is not a whole number of minutes.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="assumedOffset"/> exceeds 14 hours.</exception>
+    public DateTimeRange GetRange(TimeSpan assumedOffset) =>
+        HasOffset
+            ? DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, null)
+            : DateTimeRange.Create(ToString(), Precision, FractionDigits, _value, assumedOffset);
+
+    /// <summary>
     /// Converts the datetime to a full DateTimeOffset instance.
     /// </summary>
     /// <param name="defaultOffset">Offset used when the datetime does not specify one.</param>
@@ -151,7 +190,8 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         var success = DateTimeOffset.TryParse(parseableDt, out var parsedValue);
         value = new DateTime(parsedValue, prec, offset.Success)
         {
-            OriginalParsedString = representation
+            OriginalParsedString = representation,
+            FractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0
         };
 
         return success;
