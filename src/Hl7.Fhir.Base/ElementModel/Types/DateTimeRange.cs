@@ -19,8 +19,8 @@ namespace Hl7.Fhir.ElementModel.Types;
 /// A <c>null</c> bound means that side of the range is unbounded.
 /// </summary>
 /// <remarks>
-/// Two ranges are equal when their precision is equal and their bounds denote the same instants; <see cref="OriginalValue"/>
-/// is not compared. Bounds are compared as instants, ignoring their offsets, so <c>[10:00+01:00, 10:00:01+01:00)</c>
+/// Two ranges are equal when their bounds denote the same instants; <see cref="Precision"/> and <see cref="OriginalValue"/>
+/// are not compared. Bounds are compared as instants, ignoring their offsets, so <c>[10:00+01:00, 10:00:01+01:00)</c>
 /// and <c>[09:00Z, 09:00:01Z)</c> are equal although they print differently.
 /// <para>A bound that falls outside what <see cref="DateTimeOffset"/> can represent, such as the end of
 /// <c>9999-12-31</c>, makes that side unbounded. This is exact for every representable instant, whereas clamping to
@@ -39,7 +39,8 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     }
 
     /// <summary>
-    /// The lexical value this range was created from, or the start's for a range created by <see cref="Between"/>.
+    /// The lexical value this range was created from, or <c>null</c> for a range created by <see cref="Between"/>,
+    /// which spans two values and so has no single lexical value of its own.
     /// </summary>
     public string? OriginalValue { get; }
 
@@ -100,11 +101,12 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
             _ => throw new InvalidOperationException()
         };
 
-        return new DateTimeRange(start?.OriginalValue ?? end?.OriginalValue, precision, start?.Start, end?.End);
+        // A range built from two values has no single lexical value of its own.
+        return new DateTimeRange(null, precision, start?.Start, end?.End);
     }
 
     public bool Equals(DateTimeRange? other) =>
-        other is not null && Precision == other.Precision && Interval.Equals(other.Interval);
+        other is not null && Interval.Equals(other.Interval);
 
     public override bool Equals(object? obj) => obj is DateTimeRange other && Equals(other);
 
@@ -112,7 +114,7 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
     public static bool operator !=(DateTimeRange? left, DateTimeRange? right) => !(left == right);
 
-    public override int GetHashCode() => HashCode.Combine(Precision, Interval);
+    public override int GetHashCode() => Interval.GetHashCode();
 
     public override string ToString() => Interval.ToString(v => v.ToString("o"));
 

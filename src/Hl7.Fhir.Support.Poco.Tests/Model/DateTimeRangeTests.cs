@@ -183,6 +183,19 @@ namespace Hl7.Fhir.Tests.Model
             range.Start.Should().Be(utc(2026, 1, 1));
             range.End.Should().Be(utc(2027, 1, 1));
             range.Precision.Should().Be(P.DateTimePrecision.Month);
+            range.OriginalValue.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void EqualityIgnoresPrecision()
+        {
+            var end = P.DateTime.Parse("2024-12-31T23:59:59.999Z").GetRange(TimeZoneInfo.Utc);
+            var byYear = P.DateTimeRange.Between(P.Date.Parse("2024").GetRange(TimeZoneInfo.Utc), end);
+            var byDay = P.DateTimeRange.Between(P.Date.Parse("2024-01-01").GetRange(TimeZoneInfo.Utc), end);
+
+            byYear.Precision.Should().NotBe(byDay.Precision);
+            byYear.Should().Be(byDay);
+            byYear.GetHashCode().Should().Be(byDay.GetHashCode());
         }
 
         [TestMethod]
