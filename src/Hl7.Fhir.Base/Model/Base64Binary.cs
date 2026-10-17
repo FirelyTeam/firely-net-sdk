@@ -42,7 +42,7 @@ using P=Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class Base64Binary
+public partial class Base64Binary : IValue<string>
 {
     [CLSCompliant(false)]
     [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true,
@@ -84,6 +84,15 @@ public partial class Base64Binary
             base.JsonValue = value;
             _parsedValue = null;
         }
+    }
+
+    /// <summary>
+    /// Gets or sets Base64-encoded text, not the decoded file contents.
+    /// </summary>
+    string? IValue<string>.Value
+    {
+        get => (string?)JsonValue;
+        set => JsonValue = value;
     }
 
     [NonSerialized]  // To prevent binary serialization from serializing this field

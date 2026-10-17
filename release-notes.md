@@ -10,6 +10,12 @@ callers may depend on: the new fatal parser issue `JSON135`, the text of
 `OperationOutcome.IssueComponent.ToString()`, warnings on inactive codes from `$validate-code`, and
 `$expand` rejecting repeated 0..1 parameters. See the behavioural notes below.
 
+**Model**
+- Added `IValue<string>` to `Base64Binary` to read and write Base64 text.
+  Text kept from JSON or XML is available without decoding or additional memory allocation.
+  Byte access is unchanged.
+  See issue [#3611](https://github.com/FirelyTeam/firely-net-sdk/issues/3611).
+
 **Serialization**
 - New `DeserializerSettings.PrimitiveValueConverter` lets callers fix a wrongly typed primitive while
   parsing, such as `"valueInteger": "42"` or `"active": "true"`, in both Json and Xml and in every
