@@ -1,14 +1,8 @@
 ## Intro:
 
-This release adds an opt-in `PrimitiveValueConverter` hook to the POCO deserializers, makes the
-JSON parser reject a primitive whose value is supplied twice, keeps repeated same-url extensions in
-snapshots, makes the `SnapshotGenerator` report differential paths with an empty segment, and fixes
-FHIRPath evaluation over invalid primitive values. `LocalTerminologyService` now returns the full
-`$validate-code` result shape, and the terminology services accept repeated `tx-resource`
-parameters. There are no breaking API changes, but several changes alter behaviour or output that
-callers may depend on: the new fatal parser issue `JSON135`, the text of
-`OperationOutcome.IssueComponent.ToString()`, warnings on inactive codes from `$validate-code`, and
-`$expand` rejecting repeated 0..1 parameters. See the behavioural notes below.
+This release makes the FHIRPath conversion functions follow the FHIRPath specification for items
+of a complex type: they no longer throw, but return empty or `false`. There are no breaking API
+changes.
 
 **Model**
 - Added `IValue<string>` to `Base64Binary` to read and write Base64 text.
@@ -16,74 +10,17 @@ callers may depend on: the new fatal parser issue `JSON135`, the text of
   Byte access is unchanged.
   See issue [#3611](https://github.com/FirelyTeam/firely-net-sdk/issues/3611).
 
-**Serialization**
-- New `DeserializerSettings.PrimitiveValueConverter` lets callers fix a wrongly typed primitive while
-  parsing, such as `"valueInteger": "42"` or `"active": "true"`, in both Json and Xml and in every
-  mode, `Ostrich` included. It is called only for values that are not of the type the primitive
-  stores, plus `date`, `dateTime`, `instant`, `time` and `integer64`, which can be the right type in
-  the wrong format. If it declines (returns the input) or throws a `FormatException`,
-  `InvalidCastException` or `OverflowException`, the usual error is reported; any other exception
-  propagates. When not set, parsing is unaffected.
-- The string overloads of the Json deserializers now encode into a pooled buffer instead of
-  allocating a fresh `byte[]` per parse, and the reader options the SDK uses are now public as
-  `SerializationUtil.FhirJsonReaderOptions`. See issue [#3598](https://github.com/FirelyTeam/firely-net-sdk/issues/3598).
-- An exception thrown while reading an Xml attribute is no longer hidden behind
-  "Can only exit from a resource part.".
-- The JSON parser now reports a fatal issue, `JSON135` (`PRIMITIVE_VALUE_SUPPLIED_TWICE`), when a
-  primitive gets its value from both `name` and `_name`, e.g. `{"name":"John","_name":"Johnny"}`.
-  The second value used to be dropped silently, with only the non-fatal `JSON134`, so the
-  `NoOverflow`, `Recoverable` and `BackwardsCompatible` modes accepted the data loss. This applies in
-  either property order and to elements of primitive arrays. `JSON134` stays a non-fatal error for
-  a primitive under `_name` when no value was set yet. See issue [#3533](https://github.com/FirelyTeam/firely-net-sdk/issues/3533).
-
-  > **Behavioural note:** JSON that parsed before, with a non-fatal `JSON134`, now fails to parse in
-  > every mode except `Ostrich` when both `name` and `_name` carry a value.
-
 **FHIRPath**
-- An unparseable `instant`, `integer64`, `integer`, `positiveInt` or `unsignedInt` value no longer
-  makes almost every FHIRPath expression that reaches it throw. Its value is now the unparsed
-  string, as it already was for `date`, `dateTime` and `time`. Before, even `$this is Reference`
-  threw an `InvalidOperationException` for such a node, so a sweep like
-  `descendants().where($this is Reference)` failed on the whole resource. The `Value` getter of the
-  POCO still throws.
+- The conversion functions `toBoolean()`, `toInteger()`, `toLong()`, `toDecimal()`, `toQuantity()`,
+  `toString()`, `toDate()`, `toDateTime()` and `toTime()` now return empty for an item of a type
+  they cannot convert, such as a complex type or a resource, and the matching `convertsTo*()`
+  functions return `false`, as the [FHIRPath specification](https://hl7.org/fhirpath/STU3/#conversion)
+  requires. `Patient.name.first().convertsToString()` used to throw an `InvalidOperationException`
+  ("There is no known Cql/FhirPath type corresponding to the .NET type PocoNode") and now returns
+  `false`. The same goes for a `Coding` without a `code`, and a `Quantity` without a value or with a
+  comparator. Items with a System type equivalent, like `Quantity`, convert as before. See issue [#3636](https://github.com/FirelyTeam/firely-net-sdk/issues/3636).
 
-**Snapshot generation**
-- The `SnapshotGenerator` now reports a specific issue (`PROFILE_ELEMENTDEF_INVALID_PATH`, code
-  10021) for a differential element whose path has an empty segment, such as `Observation...unit`,
-  and skips that element. Such an element used to produce a phantom element `Observation.` in the
-  snapshot, and any constraint on it, like a `fixedString`, was silently lost. The rest of the
-  differential is still processed. See issue [#3591](https://github.com/FirelyTeam/firely-net-sdk/issues/3591).
-- When a differential has several extensions with the same url, e.g. repeated `additional-binding`
-  extensions on a binding, and the base already has one with that url, the snapshot now keeps all of
-  them. The first replaces the base extension, the rest are added next to it. They used to overwrite
-  each other, so only the last one survived. See issue [#3625](https://github.com/FirelyTeam/firely-net-sdk/issues/3625).
-
-**Terminology**
-- `LocalTerminologyService`'s ValueSet `$validate-code` now returns the full result shape the HL7
-  terminology ecosystem tests expect: `code`, `system`, `version` and `display`, plus an `issues`
-  OperationOutcome with tx-issue-type codings and expressions relative to the input, for both valid
-  and invalid codes. A `CodeableConcept` input is echoed back, and inactive or non-active concepts
-  get `inactive`/`status` parameters. `ValidateCodeResult` has new properties to read and write
-  these (`CodeableConcept`, `NormalizedCode`, `CausedByUnknownSystem`, `UnknownSystem`, `Inactive`,
-  `Status`), and new `Add*` extension methods put an issue in its `issues`. See issue [#3631](https://github.com/FirelyTeam/firely-net-sdk/issues/3631).
-
-  > **Behavioural note:** an inactive, retired or deprecated code now returns `result = true` with a
-  > `message` (a `code-comment` warning). For an unknown system, `message` now also says the
-  > CodeSystem could not be found.
-- The terminology services no longer reject an operation with repeated `tx-resource` parameters,
-  which the tx-ecosystem IG requires servers to accept. Only repeats of the operation's 0..1
-  parameters are rejected; known 0..* and unknown parameters pass through. Each typed `*Parameters`
-  class now lists its parameters in a public `KnownParameters`.
-
-  > **Behavioural note:** `$expand` now gets the same check, so a repeated `url`, `filter`, `count`
-  > etc. is rejected where it used to be accepted.
-
-**Other**
-- `PocoNode.Resolve("#id")` no longer throws a `NullReferenceException` when the resource has a
-  contained resource without an `id` before the one it refers to. A contained resource without an
-  `id` does not match, and resolution continues. See issue [#3613](https://github.com/FirelyTeam/firely-net-sdk/issues/3613).
-- `OperationOutcome.IssueComponent.ToString()` now writes a space before `(further diagnostics:`,
-  as it already did before `(at`. See issue [#3621](https://github.com/FirelyTeam/firely-net-sdk/issues/3621).
-
-  > **Behavioural note:** this changes the rendered text of an issue. Tests that compare against
-  > `ToString()` output need new expected strings.
+  > **Behavioural note:** if you added your own overload of one of these functions to a `SymbolTable`
+  > that already has the standard functions, with a `PocoNode` parameter, the standard function now
+  > takes precedence for complex types too. Register your overload in a child `SymbolTable` to keep
+  > it in effect.

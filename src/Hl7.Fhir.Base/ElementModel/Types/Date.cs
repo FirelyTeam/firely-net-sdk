@@ -65,6 +65,38 @@ public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable
     private readonly DateTimeOffset _value;
 
     /// <summary>
+    /// Gets the range covered by this date at its precision. Fails when the date has no offset, which is always the case for a FHIR date.
+    /// </summary>
+    public bool TryGetRange([NotNullWhen(true)] out DateTimeRange? range)
+    {
+        range = HasOffset ? DateTimeRange.Create(ToString(), Precision, 0, _value, null) : null;
+        return range is not null;
+    }
+
+    /// <summary>
+    /// Gets the range covered by this date at its precision. A date without an offset
+    /// is read as a wall-clock date in <paramref name="assumedZone"/>.
+    /// </summary>
+    /// <remarks>
+    /// A wall-clock time that a daylight saving change skips or repeats gives a widened range, never a narrowed one.
+    /// The widening depends on the transition being present in the platform's time-zone data. Windows omits some
+    /// historical transitions (the 2011 Samoa date-line shift among them), and for those dates the range is returned unwidened.
+    /// </remarks>
+    public DateTimeRange GetRange(TimeZoneInfo assumedZone) =>
+        DateTimeRange.Create(ToString(), Precision, 0, _value, HasOffset ? null : assumedZone);
+
+    /// <summary>
+    /// Gets the range covered by this value at its precision. A value without an offset
+    /// is read as a wall-clock time at the fixed <paramref name="assumedOffset"/>.
+    /// </summary>
+    /// <exception cref="ArgumentException"><paramref name="assumedOffset"/> is not a whole number of minutes.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="assumedOffset"/> exceeds 14 hours.</exception>
+    public DateTimeRange GetRange(TimeSpan assumedOffset) =>
+        HasOffset
+            ? DateTimeRange.Create(ToString(), Precision, 0, _value, null)
+            : DateTimeRange.Create(ToString(), Precision, 0, _value, assumedOffset);
+
+    /// <summary>
     /// Converts the date to a full DateTimeOffset instance.
     /// </summary>
     public DateTimeOffset ToDateTimeOffset(TimeSpan defaultOffset) =>
