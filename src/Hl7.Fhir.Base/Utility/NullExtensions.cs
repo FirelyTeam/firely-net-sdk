@@ -30,7 +30,8 @@ namespace Hl7.Fhir.Utility
         {
             if (element == null) { return true; }
 
-            var isEmpty = element is IValue<string> ss ? string.IsNullOrEmpty(ss.Value)
+            var isEmpty = element is IValue<string> ss && element is not Base64Binary
+                ? string.IsNullOrEmpty(ss.Value)
                 : element is not PrimitiveType pp || pp.JsonValue == null;
 
             // Note: Children collection includes extensions

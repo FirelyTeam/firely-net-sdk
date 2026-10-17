@@ -4,6 +4,12 @@ This release makes the FHIRPath conversion functions follow the FHIRPath specifi
 of a complex type: they no longer throw, but return empty or `false`. There are no breaking API
 changes.
 
+**Model**
+- Added `IValue<string>` to `Base64Binary` to read and write Base64 text.
+  Text kept from JSON or XML is available without decoding or additional memory allocation.
+  Byte access is unchanged.
+  See issue [#3611](https://github.com/FirelyTeam/firely-net-sdk/issues/3611).
+
 **FHIRPath**
 - The conversion functions `toBoolean()`, `toInteger()`, `toLong()`, `toDecimal()`, `toQuantity()`,
   `toString()`, `toDate()`, `toDateTime()` and `toTime()` now return empty for an item of a type

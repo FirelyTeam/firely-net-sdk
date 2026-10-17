@@ -8,6 +8,8 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -58,5 +60,66 @@ public class Base64Tests
         c.JsonValue = 314;
         Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
+    }
+
+    [TestMethod]
+    [DataRow(false)]
+    [DataRow(true)]
+    public void StringAccessDoesNotDecode(bool xml)
+    {
+        var settings = new DeserializerSettings().UsingMode(DeserializationMode.Ostrich);
+        var binary = (Binary)(xml
+            ? new FhirXmlDeserializer(settings).DeserializeResource(
+                """<Binary xmlns="http://hl7.org/fhir"><contentType value="application/octet-stream"/><content value="/wAB"/></Binary>""")
+            : new FhirJsonDeserializer(settings).DeserializeResource(
+                """{"resourceType":"Binary","contentType":"application/octet-stream","content":"/wAB"}"""));
+        var value = binary.ContentElement;
+
+        var getParsedBytes = PropertyInfoExtensions.GetField<Base64Binary, byte[]>("_parsedValue");
+        getParsedBytes(value).Should().BeNull();
+        var originalText = (string)value.JsonValue;
+
+        IValue<string> text = value;
+        var result = text.Value;
+
+        result.Should().Be("/wAB");
+        result.Should().BeSameAs(originalText);
+        getParsedBytes(value).Should().BeNull();
+    }
+
+    [TestMethod]
+    public void BytesReturnBase64()
+    {
+        var value = new Base64Binary([255, 0, 1]);
+        IValue<string> text = value;
+
+        text.Value.Should().Be("/wAB");
+        value.Value.Should().Equal(255, 0, 1);
+    }
+
+    [TestMethod]
+    public void StringAndBytesStayInSync()
+    {
+        var value = new Base64Binary();
+        IValue<string> text = value;
+        IValue<byte[]> bytes = value;
+        text.Value.Should().BeNull();
+
+        text.Value = "/wAB";
+        bytes.Value.Should().Equal(255, 0, 1);
+        text.Value.Should().Be("/wAB");
+
+        bytes.Value = [1, 2, 3];
+        text.Value.Should().Be("AQID");
+        bytes.Value.Should().Equal(1, 2, 3);
+
+        text.Value = null;
+        bytes.Value.Should().BeNull();
+        text.Value.Should().BeNull();
+
+        text.Value = "AQID";
+        bytes.Value = null;
+        text.Value.Should().BeNull();
+        bytes.Value.Should().BeNull();
     }
 }
