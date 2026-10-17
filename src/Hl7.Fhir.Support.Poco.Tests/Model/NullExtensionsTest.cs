@@ -40,6 +40,9 @@ namespace Hl7.Fhir.Model
         public void TestIsNullOrEmpty_Integer() => testIsNullOrEmpty_Primitive<Integer, int?>(42, 0);
 
         [TestMethod]
+        public void EmptyBytesAreNotNull() => testIsNullOrEmpty_Primitive<Base64Binary, byte[]>([1, 2, 3], []);
+
+        [TestMethod]
         public void TestIsNullOrEmpty_FhirDateTime() => testIsNullOrEmpty_StringPrimitive<FhirDateTime>(XmlConvert.ToString(DateTimeOffset.UtcNow));
 
         [TestMethod]
