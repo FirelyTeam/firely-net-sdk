@@ -9,6 +9,7 @@
 #nullable enable
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using System;
 using System.Net;
 using static Hl7.Fhir.Model.OperationOutcome;
 
@@ -232,8 +233,19 @@ public static class TerminologyServiceOperationExceptionExtensions
         /// Reports that a code is valid, but its display is not. This is a warning, the code is still valid.
         /// </summary>
         /// <remarks>This is the $validate-code result counterpart of <see cref="InvalidDisplay"/>.</remarks>
+        [Obsolete("Use the overload with 'lenient'. The default flips to strict (an error) in the next major version.")]
         public IssueComponent AddInvalidDisplay(string details, params string[] expression) =>
-            result.addIssue(details, IssueSeverity.Warning, IssueType.Invalid, INVALID_DISPLAY, expression);
+            result.AddInvalidDisplay(details, lenient: true, expression);
+
+        /// <summary>
+        /// Reports that the display of a code does not match it. When <paramref name="lenient"/> is true, this is a warning and
+        /// the code is still valid; otherwise it is an error and the code is not valid. This follows the
+        /// <c>lenient-display-validation</c> parameter of $validate-code.
+        /// </summary>
+        /// <remarks>This is the $validate-code result counterpart of <see cref="InvalidDisplay"/>.
+        /// It only adds the issue: the caller sets the result to false when <paramref name="lenient"/> is false.</remarks>
+        public IssueComponent AddInvalidDisplay(string details, bool lenient, params string[] expression) =>
+            result.addIssue(details, lenient ? IssueSeverity.Warning : IssueSeverity.Error, IssueType.Invalid, INVALID_DISPLAY, expression);
 
         /// <summary>
         /// Reports that a code fails a business rule of the operation, e.g. it is abstract where that is not allowed.
