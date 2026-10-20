@@ -48,3 +48,6 @@ changes.
   > validation, so a wrong display will be an error by default. The OperationDefinition says: "If the
   > 'lenient-display-validation' parameter is false or absent, then an invalid display will cause the 'result' output
   > parameter to be 'false', i.e. the validation will fail." Pass `true` to keep it a warning.
+
+**Blazor WebAssembly**
+- `TaskHelper.Await` now runs the delegate inline on the browser and WASI platforms instead of wrapping it in `Task.Run`, which cannot be blocked on in single-threaded WebAssembly ("Cannot wait on monitors on this runtime"). Resolvers that return an already completed task now work there; a task that is not complete throws a `PlatformNotSupportedException`. Other platforms are unchanged.
