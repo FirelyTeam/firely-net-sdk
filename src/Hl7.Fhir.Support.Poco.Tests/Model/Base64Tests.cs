@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -58,5 +59,73 @@ public class Base64Tests
         c.JsonValue = 314;
         Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
+    }
+
+    [TestMethod]
+    public void ValidatingDoesNotChangeNonCanonicalJsonValue()
+    {
+        // Convert.FromBase64String is lenient (it ignores whitespace), but validating must not
+        // rewrite the literal the user supplied.
+        const string literal = "PFBh cmFt";
+
+        var b = new Base64Binary { JsonValue = literal };
+        b.HasValidValue().Should().BeTrue();
+        b.JsonValue.Should().Be(literal);
+
+        var b2 = new Base64Binary { JsonValue = literal };
+        b2.Validate().Should().BeEmpty();
+        b2.JsonValue.Should().Be(literal);
+
+        var b3 = new Base64Binary { JsonValue = literal };
+        Encoding.UTF8.GetString(b3.Value!).Should().Be("<Param");
+        b3.JsonValue.Should().Be(literal);
+
+        // Same for literals that are padded with leading/trailing whitespace or line breaks.
+        var b4 = new Base64Binary { JsonValue = " PFBhcmFt\r\n" };
+        b4.HasValidValue().Should().BeTrue();
+        b4.JsonValue.Should().Be(" PFBhcmFt\r\n");
+    }
+
+    [TestMethod]
+    public void ValidatingCanonicalValueStillReleasesJsonValue()
+    {
+        var b = new Base64Binary { JsonValue = "PFBhcmFt" };
+        b.HasValidValue().Should().BeTrue();
+
+        // The literal is regenerated from the parsed bytes.
+        b.JsonValue.Should().Be("PFBhcmFt");
+        Encoding.UTF8.GetString(b.Value!).Should().Be("<Param");
+    }
+
+    [TestMethod]
+    public void MutatingValueAfterValidationUpdatesRetainedLiteral()
+    {
+        // The non-canonical literal is retained when validated, but modifying the bytes returned
+        // by Value must still win when the literal is later used (serialization, copying, comparing).
+        var b = new Base64Binary { JsonValue = "Y Q==" };
+        b.HasValidValue().Should().BeTrue();
+        b.JsonValue.Should().Be("Y Q==");
+
+        b.Value![0] = (byte)'b';
+
+        var copy = (Base64Binary)b.DeepCopy();
+        copy.JsonValue.Should().Be("Yg==");
+        b.IsExactly(copy).Should().BeTrue();
+
+        var att = new Patient { Photo = [new Attachment { DataElement = new Base64Binary { JsonValue = "Y Q==" } }] };
+        att.Photo[0].DataElement!.Value![0] = (byte)'b';
+        att.ToJson().Should().Contain("\"data\":\"Yg==\"");
+
+        b.JsonValue.Should().Be("Yg==");
+        b.Value![0].Should().Be((byte)'b');
+    }
+
+    [TestMethod]
+    public void UnmodifiedValueKeepsRetainedLiteral()
+    {
+        var b = new Base64Binary { JsonValue = "Y Q==" };
+        _ = b.Value;    // does not modify the bytes
+        b.JsonValue.Should().Be("Y Q==");
+        ((Base64Binary)b.DeepCopy()).JsonValue.Should().Be("Y Q==");
     }
 }
