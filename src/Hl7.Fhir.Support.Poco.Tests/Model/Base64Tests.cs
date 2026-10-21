@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -94,5 +95,37 @@ public class Base64Tests
         // The literal is regenerated from the parsed bytes.
         b.JsonValue.Should().Be("PFBhcmFt");
         Encoding.UTF8.GetString(b.Value!).Should().Be("<Param");
+    }
+
+    [TestMethod]
+    public void MutatingValueAfterValidationUpdatesRetainedLiteral()
+    {
+        // The non-canonical literal is retained when validated, but modifying the bytes returned
+        // by Value must still win when the literal is later used (serialization, copying, comparing).
+        var b = new Base64Binary { JsonValue = "Y Q==" };
+        b.HasValidValue().Should().BeTrue();
+        b.JsonValue.Should().Be("Y Q==");
+
+        b.Value![0] = (byte)'b';
+
+        var copy = (Base64Binary)b.DeepCopy();
+        copy.JsonValue.Should().Be("Yg==");
+        b.IsExactly(copy).Should().BeTrue();
+
+        var att = new Patient { Photo = [new Attachment { DataElement = new Base64Binary { JsonValue = "Y Q==" } }] };
+        att.Photo[0].DataElement!.Value![0] = (byte)'b';
+        att.ToJson().Should().Contain("\"data\":\"Yg==\"");
+
+        b.JsonValue.Should().Be("Yg==");
+        b.Value![0].Should().Be((byte)'b');
+    }
+
+    [TestMethod]
+    public void UnmodifiedValueKeepsRetainedLiteral()
+    {
+        var b = new Base64Binary { JsonValue = "Y Q==" };
+        _ = b.Value;    // does not modify the bytes
+        b.JsonValue.Should().Be("Y Q==");
+        ((Base64Binary)b.DeepCopy()).JsonValue.Should().Be("Y Q==");
     }
 }

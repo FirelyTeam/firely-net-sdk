@@ -71,7 +71,10 @@ public partial class Base64Binary
     {
         get
         {
-            if (_parsedValue is not null && base.JsonValue is null)
+            // A non-canonical literal is retained next to the parsed bytes (see ValidateObjectValue). Callers can
+            // modify the array returned by Value in place, so only keep the literal while it still decodes to
+            // the cached bytes; otherwise the bytes win and the literal is regenerated from them.
+            if (_parsedValue is not null && (base.JsonValue is null || !retainedLiteralMatchesBytes()))
             {
                 base.JsonValue = Convert.ToBase64String(_parsedValue);
                 _parsedValue = null;    // Clear the parsed value to free up memory
@@ -113,6 +116,9 @@ public partial class Base64Binary
 
         return _parsedValue is null ? COVE.INVALID_BASE64_VALUE(context, unparsed) : null;
     }
+
+    private bool retainedLiteralMatchesBytes() =>
+        base.JsonValue is string literal && doParse(literal) is { } decoded && decoded.AsSpan().SequenceEqual(_parsedValue);
 
     private static byte[]? doParse(string literal)
     {
