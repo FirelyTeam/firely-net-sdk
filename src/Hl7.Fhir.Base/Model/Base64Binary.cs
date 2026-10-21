@@ -91,7 +91,8 @@ public partial class Base64Binary
 
     /// <summary>
     /// Validates the JsonValue and updates the internal cached byte[] Value, releasing
-    /// the data in JsonValue to save memory.
+    /// the data in JsonValue to save memory if it is exactly the canonical base64 encoding
+    /// of the parsed bytes.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
@@ -103,8 +104,11 @@ public partial class Base64Binary
 
         _parsedValue = doParse(unparsed);
 
-        // Clear the string value to free up memory if we have successfully parsed the value.
-        if(_parsedValue is not null)
+        // Clear the string value to free up memory if we have successfully parsed the value,
+        // but only if the string can be regenerated exactly from the bytes. The decoder is lenient
+        // (e.g. it ignores whitespace), so a non-canonical literal must be kept as-is: validating
+        // should never rewrite the data of the user.
+        if (_parsedValue is not null && string.Equals(Convert.ToBase64String(_parsedValue), unparsed, System.StringComparison.Ordinal))
             base.JsonValue = null;
 
         return _parsedValue is null ? COVE.INVALID_BASE64_VALUE(context, unparsed) : null;

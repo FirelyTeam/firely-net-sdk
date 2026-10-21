@@ -59,4 +59,40 @@ public class Base64Tests
         Assert.Throws<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }
+
+    [TestMethod]
+    public void ValidatingDoesNotChangeNonCanonicalJsonValue()
+    {
+        // Convert.FromBase64String is lenient (it ignores whitespace), but validating must not
+        // rewrite the literal the user supplied.
+        const string literal = "PFBh cmFt";
+
+        var b = new Base64Binary { JsonValue = literal };
+        b.HasValidValue().Should().BeTrue();
+        b.JsonValue.Should().Be(literal);
+
+        var b2 = new Base64Binary { JsonValue = literal };
+        b2.Validate().Should().BeEmpty();
+        b2.JsonValue.Should().Be(literal);
+
+        var b3 = new Base64Binary { JsonValue = literal };
+        Encoding.UTF8.GetString(b3.Value!).Should().Be("<Param");
+        b3.JsonValue.Should().Be(literal);
+
+        // Same for literals that are padded with leading/trailing whitespace or line breaks.
+        var b4 = new Base64Binary { JsonValue = " PFBhcmFt\r\n" };
+        b4.HasValidValue().Should().BeTrue();
+        b4.JsonValue.Should().Be(" PFBhcmFt\r\n");
+    }
+
+    [TestMethod]
+    public void ValidatingCanonicalValueStillReleasesJsonValue()
+    {
+        var b = new Base64Binary { JsonValue = "PFBhcmFt" };
+        b.HasValidValue().Should().BeTrue();
+
+        // The literal is regenerated from the parsed bytes.
+        b.JsonValue.Should().Be("PFBhcmFt");
+        Encoding.UTF8.GetString(b.Value!).Should().Be("<Param");
+    }
 }
