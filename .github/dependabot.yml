@@ -50,6 +50,9 @@ updates:
 
 
     ignore:
+      # Pinned by hand to the lowest LTS version per target framework (customer requirement).
+      # Dependabot can't tell the per-TFM blocks in Directory.Packages.props apart and bumps the wrong one.
+      - dependency-name: "Microsoft.Extensions.Caching.Memory"
       - dependency-name: "Moq"
       - dependency-name: "xunit"
         update-types: ["version-update:semver-patch"]
