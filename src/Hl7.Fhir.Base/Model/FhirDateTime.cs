@@ -117,8 +117,19 @@ public partial class FhirDateTime
         (parsed.Precision <= P.DateTimePrecision.Day == !parsed.HasOffset) ? parsed : null;
 
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Checks whether the given literal can be parsed as a FHIR dateTime, in a lenient way.
     /// </summary>
+    /// <remarks>
+    /// <para>The literal is parsed as the element-model <see cref="P.DateTime"/> (FHIRPath/CQL <c>System.DateTime</c>).
+    /// That allows a time with only hours or hours and minutes (e.g. <c>2020-01-01T14+01:00</c> or
+    /// <c>2020-01-01T14:30Z</c>), and fractional seconds of any length.</para>
+    /// <para>On top of that, an offset is required exactly when the value has a time component, and is not allowed
+    /// on a year, year-month or date (<c>2020+01:00</c> and <c>2025-01-01Z</c> are rejected).</para>
+    /// <para>This is therefore more lenient than the FHIR dateTime format, which also requires seconds when a time
+    /// is present. Use <see cref="PATTERN"/> to check the FHIR format, but note that <see cref="PATTERN"/> on its
+    /// own does not enforce the offset rule (it accepts a date with an offset and a time without one).
+    /// Only both checks together match the FHIR dateTime type.</para>
+    /// </remarks>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
 

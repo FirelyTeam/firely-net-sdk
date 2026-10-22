@@ -96,8 +96,13 @@ public partial class Time
         P.Time.TryParse(value, out var v) && !v.HasOffset ? v : null;
 
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Checks whether the given literal can be parsed as a FHIR time, in a lenient way.
     /// </summary>
+    /// <remarks>
+    /// The literal is parsed as the element-model <see cref="P.Time"/>, which also accepts a time to the hour or the
+    /// minute (e.g. <c>12</c>, <c>12:30</c>) and fractional seconds of any length, and rejects an offset.
+    /// The FHIR time format (<see cref="PATTERN"/>) requires hours, minutes and seconds.
+    /// </remarks>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
     /// <summary>
