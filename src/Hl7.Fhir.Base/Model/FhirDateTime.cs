@@ -123,12 +123,15 @@ public partial class FhirDateTime
     /// <para>The literal is parsed as the element-model <see cref="P.DateTime"/> (FHIRPath/CQL <c>System.DateTime</c>).
     /// That allows a time with only hours or hours and minutes (e.g. <c>2020-01-01T14+01:00</c> or
     /// <c>2020-01-01T14:30Z</c>), and fractional seconds of any length.</para>
-    /// <para>On top of that, an offset is required exactly when the value has a time component, and is not allowed
-    /// on a year, year-month or date (<c>2020+01:00</c> and <c>2025-01-01Z</c> are rejected).</para>
-    /// <para>This is therefore more lenient than the FHIR dateTime format, which also requires seconds when a time
-    /// is present. Use <see cref="PATTERN"/> to check the FHIR format, but note that <see cref="PATTERN"/> on its
-    /// own does not enforce the offset rule (it accepts a date with an offset and a time without one).
-    /// Only both checks together match the FHIR dateTime type.</para>
+    /// <para>On top of that, this SDK requires an offset exactly when the value has a time component, and does not
+    /// allow one on a year, year-month or date (<c>2020+01:00</c> and <c>2025-01-01Z</c> are rejected). This offset
+    /// rule is an additional restriction of the SDK and is stricter than the FHIR dateTime format, which explicitly
+    /// allows a UTC offset on dates and partial dates (e.g. <c>2025-01-01+02:00</c>).</para>
+    /// <para><see cref="IsValidValue"/> is therefore more lenient than the FHIR format for times without seconds,
+    /// and stricter for offsets on dates. It also rejects impossible dates such as <c>2020-02-31</c>.
+    /// <see cref="PATTERN"/> alone is the check for the FHIR format (which also requires seconds when a time is
+    /// present); it does not check the offset rule or whether the date exists. Use <see cref="PATTERN"/> if you need
+    /// the FHIR format, and <see cref="IsValidValue"/> if you need the SDK's semantic checks.</para>
     /// </remarks>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
