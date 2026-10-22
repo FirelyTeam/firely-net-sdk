@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
@@ -21,35 +22,68 @@ namespace Hl7.FhirPath.Functions
 { 
     internal static class TypeOperators
     {
+        // The FHIR type names of a POCO class and all of its base classes (that have a class mapping), 
+        // cached per CLR type, so we do not have to walk the type hierarchy on every call.
+        private static readonly ConcurrentDictionary<Type, string[]> _fhirTypeNamesCache = new();
+
         public static bool Is(this PocoNode? focus, string type)
         {
             if (focus is null) return false;
 
-            var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
-#pragma warning disable CS0618 // Type or member is obsolete
-                .Select(t => ModelInspector.ForAssembly(t.Assembly).GetFhirTypeNameForType(t))
-#pragma warning restore CS0618 // Type or member is obsolete
-                .Prepend(((ITypedElement)focus).InstanceType);
-            return selfAndBaseClasses.Any(typeString => Is(typeString, type));
-            
-            static IEnumerable<Type> getBaseClasses(Type t)
+            if (Is(((ITypedElement)focus).InstanceType, type)) return true;
+
+            foreach (var typeName in getFhirTypeNames(focus.Poco.GetType()))
             {
-                return t.BaseType == null ? [] : getBaseClasses(t.BaseType).Append(t);
+                if (Is(typeName, type)) return true;
             }
+
+            return false;
+
+            static string[] getFhirTypeNames(Type t) =>
+                _fhirTypeNamesCache.GetOrAdd(t, static type =>
+                {
+                    var names = new List<string>();
+                    for (var current = type; current?.BaseType is not null; current = current.BaseType)
+                    {
+#pragma warning disable CS0618 // Type or member is obsolete
+                        if (ModelInspector.ForAssembly(current.Assembly).GetFhirTypeNameForType(current) is { } name)
+#pragma warning restore CS0618 // Type or member is obsolete
+                            names.Add(name);
+                    }
+                    return names.ToArray();
+                });
         }
 
         public static bool Is(string? instanceType, string declaredType)
         {
-            // Bit of a hack, this hardwires the FhirPath implementation to FHIR
-            if (instanceType?.Contains('.') is false) instanceType = "FHIR." + instanceType;
+            if (instanceType is null) return false;
+
+            // Bit of a hack, this hardwires the FhirPath implementation to FHIR:
+            // an instance type without a namespace is assumed to be in the FHIR namespace.
+            // The comparisons below are equivalent to prefixing the names with "FHIR."/"System.",
+            // but do not need to allocate those strings.
+            var instanceHasNamespace = instanceType.Contains('.');
+
             if (declaredType.Contains('.'))
-                return instanceType == declaredType;
-            else
             {
-                return instanceType == "System." + declaredType ||
-                        instanceType == "FHIR." + declaredType;
+                return instanceHasNamespace
+                    ? instanceType == declaredType
+                    : hasPrefixAndRest(declaredType, FHIR_PREFIX, instanceType);
             }
+
+            return instanceHasNamespace
+                ? hasPrefixAndRest(instanceType, SYSTEM_PREFIX, declaredType) ||
+                  hasPrefixAndRest(instanceType, FHIR_PREFIX, declaredType)
+                : instanceType == declaredType;
+
+            static bool hasPrefixAndRest(string value, string prefix, string rest) =>
+                value.Length == prefix.Length + rest.Length &&
+                value.StartsWith(prefix, StringComparison.Ordinal) &&
+                value.AsSpan(prefix.Length).SequenceEqual(rest);
         }
+
+        private const string FHIR_PREFIX = "FHIR.";
+        private const string SYSTEM_PREFIX = "System.";
 
         public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));

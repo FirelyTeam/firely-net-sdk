@@ -240,6 +240,25 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        public void TestUrnAndLocalPrefixesAreMatchedOrdinally()
+        {
+            var uuid = new ResourceIdentity("urn:uuid:3a3b1c52-0d4c-4d7e-9a53-aa7a8b0a0b11");
+            Assert.AreEqual(ResourceIdentityForm.Urn, uuid.Form);
+            Assert.AreEqual("3a3b1c52-0d4c-4d7e-9a53-aa7a8b0a0b11", uuid.Id);
+            Assert.AreEqual(new Uri("urn:uuid:"), uuid.BaseUri);
+
+            var oid = new ResourceIdentity("urn:oid:1.2.3.4.5.6");
+            Assert.AreEqual(ResourceIdentityForm.Urn, oid.Form);
+            Assert.AreEqual("1.2.3.4.5.6", oid.Id);
+
+            var local = new ResourceIdentity("#myid");
+            Assert.AreEqual(ResourceIdentityForm.Local, local.Form);
+
+            // Prefix matching is ordinal, so a prefix with different casing is not a urn or local reference.
+            Assert.AreNotEqual(ResourceIdentityForm.Urn, new ResourceIdentity("URN:UUID:3a3b1c52").Form);
+        }
+
+        [TestMethod]
         public void TestIsResourceId()
         {
             Assert.IsTrue(ResourceIdentity.IsRestResourceIdentity("Patient/4"));

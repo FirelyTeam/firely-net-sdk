@@ -199,9 +199,6 @@ public static class SymbolTableInit
         t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
         t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
 
-        // Kept for backwards compatibility, but no longer part of the spec
-        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
-
         t.Add("extension", (IEnumerable<PocoNode> f, string url) => f.Extension(url), doNullProp: true);
 
         // Logic operators do not use null propagation and may do short-cut eval

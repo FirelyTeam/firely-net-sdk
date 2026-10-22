@@ -105,7 +105,9 @@ namespace Hl7.FhirPath.Functions
             {
                 // If we are at a resource, we should match a path that is possibly not rooted in the resource
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")   
-                if(element.Is(name))
+                // Checking the instance type first avoids walking the base classes in the common case 
+                // where the element is exactly of the type named.
+                if (((ITypedElement)element).InstanceType == name || element.Is(name))
                 {
                     return new List<PocoNode>() { element };
                 }
