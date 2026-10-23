@@ -60,25 +60,32 @@ namespace Hl7.FhirPath.R4.Tests
             node.Is(type).Should().Be(expected);
         }
 
-        // A POCO subclass defined in an assembly without FHIR model metadata. Type checks must keep
-        // working for these without consulting a ModelInspector for the subclass' assembly.
+        // An application-defined subclass in an assembly that carries no FhirModelAssemblyAttribute,
+        // so no ModelInspector can supply metadata for that assembly. Type checks (including the ones
+        // that do not match and therefore test the whole hierarchy) must keep working for these.
         private class MyObservation : Observation { }
 
         [TestMethod]
         [DataRow("Observation", true)]
         [DataRow("DomainResource", true)]
         [DataRow("Resource", true)]
+        [DataRow("Base", true)]
         [DataRow("FHIR.Resource", true)]
         [DataRow("Patient", false)]
         [DataRow("MyObservation", false)]
         public void IsWorksForPocoSubclassFromAssemblyWithoutFhirMetadata(string type, bool expected)
         {
-            var node = new MyObservation { Id = "obs2" }.ToPocoNode();
+            // Evaluate twice: the second round goes through the cache.
+            for (var i = 0; i < 2; i++)
+            {
+                var node = new MyObservation { Id = "obs2" }.ToPocoNode();
 
-            node.Is(type).Should().Be(expected);
-            node.Navigate("Resource").Should().ContainSingle().Which.Should().BeSameAs(node);
-            evaluate(node, "Resource.id").Should().ContainSingle().Which.GetValue().Should().Be("obs2");
-            evaluate(node, "Observation.ofType(Patient)").Should().BeEmpty();
+                node.Is(type).Should().Be(expected);
+                node.Navigate("Resource").Should().ContainSingle().Which.Should().BeSameAs(node);
+                evaluate(node, "Resource.id").Should().ContainSingle().Which.GetValue().Should().Be("obs2");
+                evaluate(node, "Resource.ofType(Resource)").Should().ContainSingle();
+                evaluate(node, "Observation.ofType(Patient)").Should().BeEmpty();
+            }
         }
 
         [TestMethod]
