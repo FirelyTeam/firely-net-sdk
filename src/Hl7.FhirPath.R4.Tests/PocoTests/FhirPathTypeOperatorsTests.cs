@@ -95,6 +95,28 @@ namespace Hl7.FhirPath.R4.Tests
             TypeOperators.Is(instanceType, declaredType).Should().Be(expected);
         }
 
+        // An application-defined subclass in an assembly that carries no FhirModelAssemblyAttribute,
+        // so ModelInspector.ForAssembly cannot supply metadata for that assembly.
+        private class MyObservation : Observation { }
+
+        [TestMethod]
+        public void BaseTypeMatchShortCircuitsBeforeAssemblyWithoutFhirMetadata()
+        {
+            // Matching a base class must not require resolving the (metadata-less) application assembly.
+            // Evaluate repeatedly: the second round goes through any caches.
+            for (var i = 0; i < 2; i++)
+            {
+                var node = new MyObservation { Id = "my1" }.ToPocoNode();
+
+                node.Is("Resource").Should().BeTrue();
+                node.Is("DomainResource").Should().BeTrue();
+                node.Is("Base").Should().BeTrue();
+                node.Navigate("Resource").Should().ContainSingle().Which.Should().BeSameAs(node);
+                evaluate(node, "Resource.id").Should().ContainSingle().Which.GetValue().Should().Be("my1");
+                evaluate(node, "Resource.ofType(Resource)").Should().ContainSingle();
+            }
+        }
+
         [TestMethod]
         public void NavigateAcceptsRootTypeAndBaseTypes()
         {
