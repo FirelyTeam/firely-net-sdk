@@ -112,26 +112,21 @@ public partial class FhirDateTime
         return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
     }
 
+    // A FHIR dateTime is a date or partial date without an offset, or a date with a time to at least the second
+    // and an offset. The element-model parser is more lenient (it allows a time to the hour or minute), so the
+    // precision and offset rules are checked here.
     private static P.DateTime? doParse(string literal) =>
         P.DateTime.TryParse(literal, out var parsed) &&
-        (parsed.Precision <= P.DateTimePrecision.Day == !parsed.HasOffset) ? parsed : null;
+        (parsed.Precision <= P.DateTimePrecision.Day
+            ? !parsed.HasOffset
+            : parsed.Precision >= P.DateTimePrecision.Second && parsed.HasOffset) ? parsed : null;
 
     /// <summary>
-    /// Checks whether the given literal can be parsed as a FHIR dateTime, in a lenient way.
+    /// Checks whether the given literal is a valid FHIR dateTime.
     /// </summary>
     /// <remarks>
-    /// <para>The literal is parsed as the element-model <see cref="P.DateTime"/> (FHIRPath/CQL <c>System.DateTime</c>).
-    /// That allows a time with only hours or hours and minutes (e.g. <c>2020-01-01T14+01:00</c> or
-    /// <c>2020-01-01T14:30Z</c>), and fractional seconds of any length.</para>
-    /// <para>On top of that, this SDK requires an offset exactly when the value has a time component, and does not
-    /// allow one on a year, year-month or date (<c>2020+01:00</c> and <c>2025-01-01Z</c> are rejected). This offset
-    /// rule is an additional restriction of the SDK and is stricter than the FHIR dateTime format, which explicitly
-    /// allows a UTC offset on dates and partial dates (e.g. <c>2025-01-01+02:00</c>).</para>
-    /// <para><see cref="IsValidValue"/> is therefore more lenient than the FHIR format for times without seconds,
-    /// and stricter for offsets on dates. It also rejects impossible dates such as <c>2020-02-31</c>.
-    /// <see cref="PATTERN"/> alone is the check for the FHIR format (which also requires seconds when a time is
-    /// present); it does not check the offset rule or whether the date exists. Use <see cref="PATTERN"/> if you need
-    /// the FHIR format, and <see cref="IsValidValue"/> if you need the SDK's semantic checks.</para>
+    /// A time must include seconds and an offset, a date or partial date must not have an offset, and the date must
+    /// exist. Note that <see cref="PATTERN"/> is the R5 regex, which is more lenient about offsets.
     /// </remarks>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 

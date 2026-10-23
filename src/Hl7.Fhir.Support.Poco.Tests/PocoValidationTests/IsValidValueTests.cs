@@ -28,7 +28,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             t(FhirDateTime.IsValidValue("2020"));
             f(FhirDateTime.IsValidValue("2020+01:00"));
-            t(FhirDateTime.IsValidValue("2020-01-01T14+01:00"));
+            t(FhirDateTime.IsValidValue("2020-01-01"));
+            f(FhirDateTime.IsValidValue("2020-01-01+01:00"));
+            f(FhirDateTime.IsValidValue("2020-02-31"));
+            t(FhirDateTime.IsValidValue("2020-01-01T14:00:00+01:00"));
+            t(FhirDateTime.IsValidValue("2020-01-01T14:00:00.123Z"));
+            f(FhirDateTime.IsValidValue("2020-01-01T14:00:00"));
+            f(FhirDateTime.IsValidValue("2020-01-01T14:00+01:00"));
+            f(FhirDateTime.IsValidValue("2020-01-01T14+01:00"));
             f(FhirDateTime.IsValidValue("2020-01-01T14"));
 
             // FhirDecimal's test are exactly covered by System's Decimal.TryParse
@@ -49,7 +56,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             // Integer64's test are exactly covered by System's Integer.TryParse
 
             t(Time.IsValidValue("12:03:04"));
+            t(Time.IsValidValue("12:03:04.5"));
             f(Time.IsValidValue("12:03:04-01:00"));
+            f(Time.IsValidValue("12:03"));
+            f(Time.IsValidValue("12"));
         }
 
         private static void t(bool b) => b.Should().BeTrue();

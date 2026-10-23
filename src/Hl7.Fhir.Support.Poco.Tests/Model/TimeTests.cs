@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToTimeSpan(out var dto2).Should().BeTrue();
             dto.Equals(dto2).Should().BeTrue();
 
-            dft.Value = "01:02";
+            dft.Value = "01:02:03";
             dft.TryToTimeSpan(out dto).Should().BeTrue();
             dto.Hours.Should().Be(1);
             dft.TryToTimeSpan(out dto2).Should().BeTrue();
@@ -109,10 +109,9 @@ namespace Hl7.Fhir.Tests.Model
             dt.Minutes.Should().Be(12);
             dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Second);
 
+            // A FHIR time requires seconds, so a time to the minute is not valid.
             dft = new Time("11:12");
-            dft.TryToSystemTime(out dt).Should().BeTrue();
-            dt.Seconds.Should().BeNull();
-            dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Minute);
+            dft.TryToSystemTime(out dt).Should().BeFalse();
 
             dft = new Time("11:12:34.123");
             dft.TryToSystemTime(out dt).Should().BeTrue();
