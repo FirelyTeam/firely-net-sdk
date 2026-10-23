@@ -14,6 +14,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 #nullable enable
@@ -22,8 +23,8 @@ namespace Hl7.FhirPath.Functions
 { 
     internal static class TypeOperators
     {
-        // The FHIR type names of a POCO class and all of its base classes (that have a class mapping), 
-        // cached per CLR type, so we do not have to walk the type hierarchy on every call.
+        // The FHIR type names of a POCO class and its base classes, cached per CLR type, so we do not
+        // have to walk the type hierarchy on every call.
         private static readonly ConcurrentDictionary<Type, string[]> _fhirTypeNamesCache = new();
 
         public static bool Is(this PocoNode? focus, string type)
@@ -39,16 +40,19 @@ namespace Hl7.FhirPath.Functions
 
             return false;
 
+            // The names are taken from the [FhirType] attribute on each class in the hierarchy, which is
+            // also where a ModelInspector gets them from. Reading the attribute directly does not need an
+            // inspector (the FhirPath entry points create PocoNodes without one) and does not fail on
+            // classes from assemblies without FHIR metadata, such as application-defined POCO subclasses.
+            // Classes without the attribute are skipped, as they have no class mapping either.
             static string[] getFhirTypeNames(Type t) =>
                 _fhirTypeNamesCache.GetOrAdd(t, static type =>
                 {
                     var names = new List<string>();
-                    for (var current = type; current?.BaseType is not null; current = current.BaseType)
+                    for (var current = type; current is not null; current = current.BaseType)
                     {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        if (ModelInspector.ForAssembly(current.Assembly).GetFhirTypeNameForType(current) is { } name)
-#pragma warning restore CS0618 // Type or member is obsolete
-                            names.Add(name);
+                        if (current.GetCustomAttribute<FhirTypeAttribute>() is { } fhirType)
+                            names.Add(fhirType.Name);
                     }
                     return names.ToArray();
                 });
