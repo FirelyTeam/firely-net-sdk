@@ -58,32 +58,21 @@ namespace Hl7.FhirPath.Functions
         {
             if (instanceType is null) return false;
 
-            // Bit of a hack, this hardwires the FhirPath implementation to FHIR:
-            // an instance type without a namespace is assumed to be in the FHIR namespace.
-            // The comparisons below are equivalent to prefixing the names with "FHIR."/"System.",
-            // but do not need to allocate those strings.
-            var instanceHasNamespace = instanceType.Contains('.');
+            // Split both names into a namespace and a local name at the first '.' (no allocations).
+            // Bit of a hack, this hardwires the FhirPath implementation to FHIR: an instance type
+            // without a namespace is assumed to be in the FHIR namespace.
+            var instanceDot = instanceType.IndexOf('.');
+            var declaredDot = declaredType.IndexOf('.');
+            var instanceNamespace = instanceDot < 0 ? "FHIR".AsSpan() : instanceType.AsSpan(0, instanceDot);
 
-            if (declaredType.Contains('.'))
-            {
-                return instanceHasNamespace
-                    ? instanceType == declaredType
-                    : hasPrefixAndRest(declaredType, FHIR_PREFIX, instanceType);
-            }
+            if (!instanceType.AsSpan(instanceDot + 1).SequenceEqual(declaredType.AsSpan(declaredDot + 1)))
+                return false;
 
-            return instanceHasNamespace
-                ? hasPrefixAndRest(instanceType, SYSTEM_PREFIX, declaredType) ||
-                  hasPrefixAndRest(instanceType, FHIR_PREFIX, declaredType)
-                : instanceType == declaredType;
-
-            static bool hasPrefixAndRest(string value, string prefix, string rest) =>
-                value.Length == prefix.Length + rest.Length &&
-                value.StartsWith(prefix, StringComparison.Ordinal) &&
-                value.AsSpan(prefix.Length).SequenceEqual(rest);
+            // A declared type without a namespace matches both the System and the FHIR namespace.
+            return declaredDot < 0
+                ? instanceNamespace.SequenceEqual("System") || instanceNamespace.SequenceEqual("FHIR")
+                : instanceNamespace.SequenceEqual(declaredType.AsSpan(0, declaredDot));
         }
-
-        private const string FHIR_PREFIX = "FHIR.";
-        private const string SYSTEM_PREFIX = "System.";
 
         public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));
