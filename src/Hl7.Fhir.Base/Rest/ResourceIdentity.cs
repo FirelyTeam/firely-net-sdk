@@ -228,13 +228,13 @@ namespace Hl7.Fhir.Rest
 
         private static bool isUrn(string uri)
         {
-            return uri.StartsWith("urn:oid:") || uri.StartsWith("urn:uuid:");
+            return uri.StartsWith("urn:oid:", StringComparison.Ordinal) || uri.StartsWith("urn:uuid:", StringComparison.Ordinal);
             //return uri.StartsWith("urn:uuid:");   // Only UUID as per bundle.html#6.7.4
         }
 
         private static bool isLocal(string url)
         {
-            return url.StartsWith("#");
+            return url.StartsWith("#", StringComparison.Ordinal);
         }
 
 
@@ -317,8 +317,8 @@ namespace Hl7.Fhir.Rest
             {
                 int lastSep = 8;
 
-                if (url.StartsWith("urn:uuid:")) lastSep = 8;
-                if (url.StartsWith("urn:oid:")) lastSep = 7;
+                if (url.StartsWith("urn:uuid:", StringComparison.Ordinal)) lastSep = 8;
+                if (url.StartsWith("urn:oid:", StringComparison.Ordinal)) lastSep = 7;
 
                 BaseUri = new Uri(url.Substring(0, lastSep + 1), UriKind.Absolute);
                 Id = OriginalString.Substring(lastSep + 1);
