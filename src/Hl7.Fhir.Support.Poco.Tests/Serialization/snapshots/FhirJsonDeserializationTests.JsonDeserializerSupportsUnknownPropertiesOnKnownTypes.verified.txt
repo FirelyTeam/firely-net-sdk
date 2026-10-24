@@ -9,9 +9,9 @@
       Display: Type mismatch,
       LineNumber: 1,
       Position: 81,
-      InstancePath: Patient.telecom[0],
+      InstancePath: Patient.telecom,
       ErrorCode: PVAL127,
-      Message: Expected property to be a collection of ContactPoint, but found a single ContactPoint. At Patient.telecom[0], line 1, position 81.
+      Message: Expected property to be a collection of ContactPoint, but found a single ContactPoint. At Patient.telecom, line 1, position 81.
     },
     {
       Type: FhirJsonException,
@@ -47,9 +47,9 @@
       Display: Type mismatch,
       LineNumber: 1,
       Position: 138,
-      InstancePath: Patient.communication[0],
+      InstancePath: Patient.communication,
       ErrorCode: PVAL127,
-      Message: Expected property to be a collection of Patient.communication, but found a single Patient.communication. At Patient.communication[0], line 1, position 138.
+      Message: Expected property to be a collection of Patient.communication, but found a single Patient.communication. At Patient.communication, line 1, position 138.
     },
     {
       Type: FhirJsonException,
@@ -72,9 +72,9 @@
       Display: Type mismatch,
       LineNumber: 1,
       Position: 150,
-      InstancePath: Patient.name[0],
+      InstancePath: Patient.name,
       ErrorCode: PVAL127,
-      Message: Expected property to be a collection of HumanName, but found a single HumanName. At Patient.name[0], line 1, position 150.
+      Message: Expected property to be a collection of HumanName, but found a single HumanName. At Patient.name, line 1, position 150.
     },
     {
       Type: CodedValidationException,
@@ -85,9 +85,9 @@
       Display: Type mismatch,
       LineNumber: 1,
       Position: 58,
-      InstancePath: Patient.active[2],
+      InstancePath: Patient.active,
       ErrorCode: PVAL127,
-      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.active[2], line 1, position 58.
+      Message: Expected property to be a single boolean, but found a collection of boolean. At Patient.active, line 1, position 58.
     }
   ],
   Obj:
