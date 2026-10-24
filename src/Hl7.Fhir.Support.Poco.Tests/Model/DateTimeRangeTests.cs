@@ -222,6 +222,106 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void TryBetweenFailsForAReversedPairOrNoBoundsAtAll()
+        {
+            var earlier = P.Date.Parse("2026-03-14").GetRange(TimeZoneInfo.Utc);
+            var later = P.Date.Parse("2026-03-16").GetRange(TimeZoneInfo.Utc);
+
+            P.DateTimeRange.TryBetween(later, earlier, out var range).Should().BeFalse();
+            range.Should().BeNull();
+            P.DateTimeRange.TryBetween(null, null, out range).Should().BeFalse();
+            range.Should().BeNull();
+
+            P.DateTimeRange.TryBetween(earlier, later, out range).Should().BeTrue();
+            range.Should().Be(P.DateTimeRange.Between(earlier, later));
+            range!.Precision.Should().Be(P.DateTimePrecision.Day);
+
+            P.DateTimeRange.TryBetween(null, later, out range).Should().BeTrue();
+            range!.Start.Should().BeNull();
+            range.End.Should().Be(utc(2026, 3, 17));
+        }
+
+        [TestMethod]
+        public void TryBetweenRejectsAPairWhoseEndMeetsItsStart()
+        {
+            // The end is exclusive, so a pair whose end lies at the start would be an empty range, and is rejected
+            // like one whose end lies before the start.
+            var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
+            var nextDay = P.Date.Parse("2026-03-16").GetRange(TimeZoneInfo.Utc);
+
+            P.DateTimeRange.TryBetween(day, nextDay, out var range).Should().BeTrue();
+            range!.Start.Should().Be(utc(2026, 3, 15));
+            range.End.Should().Be(utc(2026, 3, 17));
+            P.DateTimeRange.TryBetween(nextDay, day, out _).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void ConstructorBuildsARangeFromInstants()
+        {
+            var range = new P.DateTimeRange(utc(2026, 1, 1), utc(2026, 1, 2), P.DateTimePrecision.Day);
+
+            range.Start.Should().Be(utc(2026, 1, 1));
+            range.End.Should().Be(utc(2026, 1, 2));
+            range.Precision.Should().Be(P.DateTimePrecision.Day);
+            range.OriginalValue.Should().BeNull();
+            range.Should().Be(P.Date.Parse("2026-01-01").GetRange(TimeZoneInfo.Utc));
+
+            var fromStart = new P.DateTimeRange(utc(2026, 1, 1), null, P.DateTimePrecision.Fraction);
+            fromStart.End.Should().BeNull();
+            fromStart.Contains(DateTimeOffset.MaxValue).Should().BeTrue();
+
+            var untilEnd = new P.DateTimeRange(null, utc(2026, 1, 2), P.DateTimePrecision.Fraction);
+            untilEnd.Start.Should().BeNull();
+            untilEnd.Contains(DateTimeOffset.MinValue).Should().BeTrue();
+
+            var everything = new P.DateTimeRange(null, null, P.DateTimePrecision.Year);
+            everything.Start.Should().BeNull();
+            everything.End.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void ConstructorRejectsAnEmptyRange()
+        {
+            FluentActions.Invoking(() => new P.DateTimeRange(utc(2026, 1, 2), utc(2026, 1, 1), P.DateTimePrecision.Day))
+                .Should().Throw<ArgumentException>();
+            FluentActions.Invoking(() => new P.DateTimeRange(utc(2026, 1, 1), utc(2026, 1, 1), P.DateTimePrecision.Day))
+                .Should().Throw<ArgumentException>();
+        }
+
+        [TestMethod]
+        public void ClampedBoundsStandInForUnboundedSides()
+        {
+            var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
+            day.StartOrMinValue.Should().Be(utc(2026, 3, 15));
+            day.EndOrMaxValue.Should().Be(utc(2026, 3, 16));
+
+            var untilDay = P.DateTimeRange.Between(null, day);
+            untilDay.StartOrMinValue.Should().Be(DateTimeOffset.MinValue);
+            untilDay.EndOrMaxValue.Should().Be(utc(2026, 3, 16));
+
+            var fromDay = P.DateTimeRange.Between(day, null);
+            fromDay.StartOrMinValue.Should().Be(utc(2026, 3, 15));
+            fromDay.EndOrMaxValue.Should().Be(DateTimeOffset.MaxValue);
+
+            P.Date.Parse("9999-12-31").GetRange(TimeZoneInfo.Utc).EndOrMaxValue.Should().Be(DateTimeOffset.MaxValue);
+        }
+
+        [TestMethod]
+        public void LastInstantIsOneTickBeforeTheEnd()
+        {
+            var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
+            day.LastInstant.Should().Be(utc(2026, 3, 16).AddTicks(-1));
+            day.Contains(day.LastInstant!.Value).Should().BeTrue();
+            day.Contains(day.LastInstant.Value.AddTicks(1)).Should().BeFalse();
+
+            P.DateTime.Parse("2026-01-01T00:00:00.000Z").GetRange(TimeZoneInfo.Utc).LastInstant
+                .Should().Be(utc(2026, 1, 1).AddMilliseconds(1).AddTicks(-1));
+
+            P.DateTimeRange.Between(day, null).LastInstant.Should().BeNull();
+            P.Date.Parse("9999-12-31").GetRange(TimeZoneInfo.Utc).LastInstant.Should().BeNull();
+        }
+
+        [TestMethod]
         public void ContainsIsHalfOpen()
         {
             var r = range(utc(2026, 1, 1), utc(2026, 1, 2));

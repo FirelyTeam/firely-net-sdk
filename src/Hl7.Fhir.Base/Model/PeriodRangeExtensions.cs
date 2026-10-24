@@ -45,11 +45,9 @@ public static class PeriodRangeExtensions
     {
         range = null;
         if (!side(period.StartElement, out var start) || !side(period.EndElement, out var end)) return false;
-        if (start is null && end is null) return false;
-        if (start?.Start is { } s && end?.End is { } e && e <= s) return false; // end before start: not a usable period
 
-        range = P.DateTimeRange.Between(start, end);
-        return true;
+        // A period without bounds, or one whose end lies before its start, is not a usable period.
+        return P.DateTimeRange.TryBetween(start, end, out range);
 
         // A missing side is open; a present side must convert.
         bool side(FhirDateTime? element, out P.DateTimeRange? r)
