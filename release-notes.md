@@ -18,7 +18,7 @@ changes.
 - `DateTime` now keeps the number of fraction digits from `Parse()`, so `.000` spans 1 ms. See issue
   [#3628](https://github.com/FirelyTeam/firely-net-sdk/issues/3628).
 - `DateTimeRange` can be built from two instants and a precision with a public constructor, and
-  `TryBetween(start, end, out range)` reports a reversed pair instead of throwing. `StartOrMinValue`
+  `TryBetween(start, end, out range)` reports a reversed pair, or two `null` arguments, instead of throwing. `StartOrMinValue`
   and `EndOrMaxValue` give the bounds with `DateTimeOffset.MinValue`/`MaxValue` for an unbounded side,
   for code that compares instants, and `LastInstant` is the last instant the range covers, one tick
   before `End`. See issue [#3657](https://github.com/FirelyTeam/firely-net-sdk/issues/3657).

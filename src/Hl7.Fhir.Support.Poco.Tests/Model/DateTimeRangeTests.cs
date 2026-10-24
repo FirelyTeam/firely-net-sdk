@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void TryBetweenFailsForAReversedPairOrNoBoundsAtAll()
+        public void TryBetweenFailsForAReversedPairOrTwoNullArguments()
         {
             var earlier = P.Date.Parse("2026-03-14").GetRange(TimeZoneInfo.Utc);
             var later = P.Date.Parse("2026-03-16").GetRange(TimeZoneInfo.Utc);
@@ -242,17 +242,35 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void TryBetweenRejectsAPairWhoseEndMeetsItsStart()
+        public void TryBetweenAcceptsAdjacentRangesAndRejectsThemReversed()
         {
-            // The end is exclusive, so a pair whose end lies at the start would be an empty range, and is rejected
-            // like one whose end lies before the start.
             var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
             var nextDay = P.Date.Parse("2026-03-16").GetRange(TimeZoneInfo.Utc);
 
             P.DateTimeRange.TryBetween(day, nextDay, out var range).Should().BeTrue();
             range!.Start.Should().Be(utc(2026, 3, 15));
             range.End.Should().Be(utc(2026, 3, 17));
+
+            // The end is exclusive, so a pair whose end lies at the start would be an empty range, and is rejected
+            // like one whose end lies before the start.
             P.DateTimeRange.TryBetween(nextDay, day, out _).Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void BoundsOffTheCalendarGiveTheUnboundedRangeAndAreStillOrdered()
+        {
+            // Both bounds fall outside what DateTimeOffset holds, so neither side is bounded, but the pair is still
+            // ordered: reversed, it is rejected like any other.
+            var firstDay = P.Date.Parse("0001-01-01").GetRange(TimeSpan.FromHours(1));
+            var lastDay = P.Date.Parse("9999-12-31").GetRange(TimeZoneInfo.Utc);
+
+            P.DateTimeRange.TryBetween(firstDay, lastDay, out var everything).Should().BeTrue();
+            everything!.Start.Should().BeNull();
+            everything.End.Should().BeNull();
+            P.DateTimeRange.Between(firstDay, lastDay).Should().Be(everything);
+
+            P.DateTimeRange.TryBetween(lastDay, firstDay, out _).Should().BeFalse();
+            FluentActions.Invoking(() => P.DateTimeRange.Between(lastDay, firstDay)).Should().Throw<ArgumentException>();
         }
 
         [TestMethod]
@@ -304,6 +322,7 @@ namespace Hl7.Fhir.Tests.Model
             fromDay.EndOrMaxValue.Should().Be(DateTimeOffset.MaxValue);
 
             P.Date.Parse("9999-12-31").GetRange(TimeZoneInfo.Utc).EndOrMaxValue.Should().Be(DateTimeOffset.MaxValue);
+            P.Date.Parse("0001-01-01").GetRange(TimeSpan.FromHours(1)).StartOrMinValue.Should().Be(DateTimeOffset.MinValue);
         }
 
         [TestMethod]
@@ -319,6 +338,25 @@ namespace Hl7.Fhir.Tests.Model
 
             P.DateTimeRange.Between(day, null).LastInstant.Should().BeNull();
             P.Date.Parse("9999-12-31").GetRange(TimeZoneInfo.Utc).LastInstant.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void LastInstantIsNullWhenNoInstantLiesBeforeTheEnd()
+        {
+            // A range that ends at the calendar's first instant covers no representable instant, so it has no last one.
+            new P.DateTimeRange(null, DateTimeOffset.MinValue, P.DateTimePrecision.Day).LastInstant.Should().BeNull();
+            P.DateTime.Parse("0001-01-01T00").GetRange(TimeSpan.FromHours(1)).LastInstant.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void LastInstantKeepsTheOffsetOfTheEnd()
+        {
+            // 02:30 does not exist in Amsterdam on 2026-03-29, so the range is widened and ends at a different offset
+            // than it starts; the last instant carries the offset of the end.
+            var range = P.DateTime.Parse("2026-03-29T02:30").GetRange(amsterdam());
+
+            range.LastInstant.Should().Be(range.End!.Value.AddTicks(-1));
+            range.LastInstant!.Value.Offset.Should().Be(TimeSpan.FromHours(1));
         }
 
         [TestMethod]
