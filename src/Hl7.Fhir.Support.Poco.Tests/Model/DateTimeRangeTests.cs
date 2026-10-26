@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void ConstructorBuildsARangeFromInstants()
         {
-            var range = new P.DateTimeRange(utc(2026, 1, 1), utc(2026, 1, 2), P.DateTimePrecision.Day);
+            var range = new P.DateTimeRange(P.DateTimePrecision.Day, utc(2026, 1, 1), utc(2026, 1, 2));
 
             range.Start.Should().Be(utc(2026, 1, 1));
             range.End.Should().Be(utc(2026, 1, 2));
@@ -284,15 +284,15 @@ namespace Hl7.Fhir.Tests.Model
             range.OriginalValue.Should().BeNull();
             range.Should().Be(P.Date.Parse("2026-01-01").GetRange(TimeZoneInfo.Utc));
 
-            var fromStart = new P.DateTimeRange(utc(2026, 1, 1), null, P.DateTimePrecision.Fraction);
+            var fromStart = new P.DateTimeRange(P.DateTimePrecision.Fraction, utc(2026, 1, 1), null);
             fromStart.End.Should().BeNull();
             fromStart.Contains(DateTimeOffset.MaxValue).Should().BeTrue();
 
-            var untilEnd = new P.DateTimeRange(null, utc(2026, 1, 2), P.DateTimePrecision.Fraction);
+            var untilEnd = new P.DateTimeRange(P.DateTimePrecision.Fraction, null, utc(2026, 1, 2));
             untilEnd.Start.Should().BeNull();
             untilEnd.Contains(DateTimeOffset.MinValue).Should().BeTrue();
 
-            var everything = new P.DateTimeRange(null, null, P.DateTimePrecision.Year);
+            var everything = new P.DateTimeRange(P.DateTimePrecision.Year, null, null);
             everything.Start.Should().BeNull();
             everything.End.Should().BeNull();
         }
@@ -300,10 +300,25 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void ConstructorRejectsAnEmptyRange()
         {
-            FluentActions.Invoking(() => new P.DateTimeRange(utc(2026, 1, 2), utc(2026, 1, 1), P.DateTimePrecision.Day))
-                .Should().Throw<ArgumentException>();
-            FluentActions.Invoking(() => new P.DateTimeRange(utc(2026, 1, 1), utc(2026, 1, 1), P.DateTimePrecision.Day))
-                .Should().Throw<ArgumentException>();
+            FluentActions.Invoking(() => new P.DateTimeRange(P.DateTimePrecision.Day, utc(2026, 1, 2), utc(2026, 1, 1)))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("The end of the range (2026-01-01T00:00:00.0000000+00:00) must lie after its start (2026-01-02T00:00:00.0000000+00:00).*")
+                .And.ParamName.Should().Be("end");
+            FluentActions.Invoking(() => new P.DateTimeRange(P.DateTimePrecision.Day, utc(2026, 1, 1), utc(2026, 1, 1)))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("The end of the range (2026-01-01T00:00:00.0000000+00:00) must lie after its start (2026-01-01T00:00:00.0000000+00:00).*");
+        }
+
+        [TestMethod]
+        public void BetweenNamesBothBoundsWhenTheEndLiesAtOrBeforeTheStart()
+        {
+            var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
+            var nextDay = P.Date.Parse("2026-03-16").GetRange(TimeZoneInfo.Utc);
+
+            FluentActions.Invoking(() => P.DateTimeRange.Between(nextDay, day))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("The end of the range (2026-03-16T00:00:00.0000000+00:00) lies at or before its start (2026-03-16T00:00:00.0000000+00:00).*")
+                .And.ParamName.Should().Be("end");
         }
 
         [TestMethod]
@@ -344,8 +359,13 @@ namespace Hl7.Fhir.Tests.Model
         public void LastInstantIsNullWhenNoInstantLiesBeforeTheEnd()
         {
             // A range that ends at the calendar's first instant covers no representable instant, so it has no last one.
-            new P.DateTimeRange(null, DateTimeOffset.MinValue, P.DateTimePrecision.Day).LastInstant.Should().BeNull();
+            new P.DateTimeRange(P.DateTimePrecision.Day, null, DateTimeOffset.MinValue).LastInstant.Should().BeNull();
             P.DateTime.Parse("0001-01-01T00").GetRange(TimeSpan.FromHours(1)).LastInstant.Should().BeNull();
+
+            // An end whose clock time is the calendar's first instant, behind UTC, has a positive UtcTicks but no clock time before it.
+            new P.DateTimeRange(P.DateTimePrecision.Day, null, new DateTimeOffset(System.DateTime.MinValue, TimeSpan.FromHours(-5))).LastInstant.Should().BeNull();
+            // An end at the UTC minimum, ahead of UTC, has a positive clock time but no instant before it.
+            new P.DateTimeRange(P.DateTimePrecision.Day, null, new DateTimeOffset(System.DateTime.MinValue.AddHours(1), TimeSpan.FromHours(1))).LastInstant.Should().BeNull();
         }
 
         [TestMethod]
