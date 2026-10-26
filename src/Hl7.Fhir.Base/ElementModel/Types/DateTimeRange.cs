@@ -9,6 +9,7 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
@@ -39,13 +40,34 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     }
 
     /// <summary>
+    /// Creates the range of instants from <paramref name="start"/> (inclusive) to <paramref name="end"/> (exclusive).
+    /// A <c>null</c> bound leaves that side unbounded; when both are <c>null</c>, the range contains every instant.
+    /// <see cref="OriginalValue"/> is <c>null</c>, since the range comes from no lexical value.
+    /// </summary>
+    /// <param name="precision">The precision the range stands for, such as <see cref="DateTimePrecision.Day"/> for a range covering whole days.</param>
+    /// <param name="start">The first instant covered, or <c>null</c> for a range unbounded below.</param>
+    /// <param name="end">The first instant after the range, or <c>null</c> for a range unbounded above.</param>
+    /// <exception cref="ArgumentException"><paramref name="end"/> lies at or before <paramref name="start"/>.</exception>
+    public DateTimeRange(DateTimePrecision precision, DateTimeOffset? start, DateTimeOffset? end)
+        : this(null, precision, start, endAfterStart(start, end))
+    {
+    }
+
+    private static DateTimeOffset? endAfterStart(DateTimeOffset? start, DateTimeOffset? end) =>
+        start is { } lower && end is { } upper && upper <= lower
+            ? throw new ArgumentException($"The end of the range ({upper:o}) must lie after its start ({lower:o}).", nameof(end))
+            : end;
+
+    /// <summary>
     /// The lexical value this range was created from, or <c>null</c> for a range created by <see cref="Between"/>,
-    /// which spans two values and so has no single lexical value of its own.
+    /// which spans two values and so has no single lexical value of its own, or by
+    /// <see cref="DateTimeRange(DateTimePrecision, DateTimeOffset?, DateTimeOffset?)"/>.
     /// </summary>
     public string? OriginalValue { get; }
 
     /// <summary>
-    /// The precision of the value, or the coarser of both precisions for a range created by <see cref="Between"/>.
+    /// The precision of the value, the coarser of both precisions for a range created by <see cref="Between"/>, or
+    /// the precision given to <see cref="DateTimeRange(DateTimePrecision, DateTimeOffset?, DateTimeOffset?)"/>.
     /// </summary>
     public DateTimePrecision Precision { get; }
 
@@ -63,6 +85,38 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     /// The first instant after the range (exclusive), or <c>null</c> when the range is unbounded above.
     /// </summary>
     public DateTimeOffset? End => Interval.HasHigh ? Interval.High : null;
+
+    /// <summary>
+    /// <see cref="Start"/>, or <see cref="DateTimeOffset.MinValue"/> when the range is unbounded below.
+    /// </summary>
+    /// <remarks>
+    /// For code that compares instants, such as a query over stored values, and does not need to tell an unbounded
+    /// side from the calendar's limit. <see cref="Contains"/>, <see cref="Overlaps"/> and <see cref="Covers"/> keep
+    /// the distinction.
+    /// </remarks>
+    public DateTimeOffset StartOrMinValue => Start ?? DateTimeOffset.MinValue;
+
+    /// <summary>
+    /// <see cref="End"/>, or <see cref="DateTimeOffset.MaxValue"/> when the range is unbounded above.
+    /// </summary>
+    /// <remarks>
+    /// For code that compares instants, such as a query over stored values, and does not need to tell an unbounded
+    /// side from the calendar's limit. <see cref="Contains"/>, <see cref="Overlaps"/> and <see cref="Covers"/> keep
+    /// the distinction: a range unbounded above contains <see cref="DateTimeOffset.MaxValue"/>, where the comparison
+    /// <c>instant &lt; EndOrMaxValue</c> excludes it.
+    /// </remarks>
+    public DateTimeOffset EndOrMaxValue => End ?? DateTimeOffset.MaxValue;
+
+    /// <summary>
+    /// The last instant covered (inclusive): one tick before <see cref="End"/>, or <c>null</c> when the range is
+    /// unbounded above or no representable instant lies before <see cref="End"/>.
+    /// </summary>
+    /// <remarks>
+    /// Use it where an inclusive upper bound is needed, such as the end of a FHIR <c>Period</c> that stands for this
+    /// range. A consumer that keeps instants at a coarser resolution, such as milliseconds, truncates it to that
+    /// resolution itself.
+    /// </remarks>
+    public DateTimeOffset? LastInstant => End is { Ticks: > 0, UtcTicks: > 0 } end ? end.AddTicks(-1) : null;
 
     /// <summary>
     /// Whether <paramref name="instant"/> lies within this range.
@@ -84,15 +138,44 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     /// <summary>
     /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
     /// <paramref name="end"/>, with the coarser of both precisions. A <c>null</c> argument leaves that side unbounded.
+    /// Use <see cref="TryBetween"/> where the bounds come from input that may be reversed.
     /// </summary>
-    /// <exception cref="ArgumentException">Neither argument contributes a bound, or the end lies before the start.</exception>
+    /// <exception cref="ArgumentException">Both arguments are <c>null</c>, or the end lies at or before the start.</exception>
     public static DateTimeRange Between(DateTimeRange? start, DateTimeRange? end)
     {
         if (start is null && end is null)
             throw new ArgumentException("At least one of start and end must be given.");
-        if (start?.Start is { } lower && end?.End is { } upper && upper <= lower)
-            throw new ArgumentException("The end of the range lies before its start.");
+        if (endsAtOrBeforeStart(start, end, out var lower, out var upper))
+            throw new ArgumentException($"The end of the range ({upper:o}) lies at or before its start ({lower:o}).", nameof(end));
 
+        return between(start, end);
+    }
+
+    /// <summary>
+    /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
+    /// <paramref name="end"/>, with the coarser of both precisions, as <see cref="Between"/> does. Fails instead of
+    /// throwing when both arguments are <c>null</c> or the end lies at or before the start.
+    /// </summary>
+    /// <returns><c>true</c> when <paramref name="range"/> was created.</returns>
+    public static bool TryBetween(DateTimeRange? start, DateTimeRange? end, [NotNullWhen(true)] out DateTimeRange? range)
+    {
+        range = null;
+        if ((start is null && end is null) || endsAtOrBeforeStart(start, end, out _, out _))
+            return false;
+
+        range = between(start, end);
+        return true;
+    }
+
+    private static bool endsAtOrBeforeStart(DateTimeRange? start, DateTimeRange? end, out DateTimeOffset lower, out DateTimeOffset upper)
+    {
+        lower = start?.Start ?? default;
+        upper = end?.End ?? default;
+        return start?.Start is not null && end?.End is not null && upper <= lower;
+    }
+
+    private static DateTimeRange between(DateTimeRange? start, DateTimeRange? end)
+    {
         var precision = (start, end) switch
         {
             ({ } s, { } e) => s.Precision < e.Precision ? s.Precision : e.Precision,
