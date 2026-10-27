@@ -143,6 +143,22 @@ public partial class FhirXmlDeserializationTests
     }
 
     [TestMethod]
+    public void ListErrorsAreReportedAtTheElement()
+    {
+        // These errors are about the list as a whole, so they should not point at its last element.
+        var content = "<Patient xmlns=\"http://hl7.org/fhir\"><Name><family value=\"a\"/></Name><Name><family value=\"b\"/></Name></Patient>";
+
+        var reader = constructReader(content);
+        reader.Read();
+
+        var state = new PocoDeserializerState();
+        _ = getTestDeserializer(new()).DeserializeResourceInternal(reader, state);
+
+        state.Errors.Should().ContainSingle(ce => ce.ErrorCode == COVE.WRONG_CASED_ELEMENT_CODE)
+            .Which.Should().BeAssignableTo<ExtendedCodedException>().Which.InstancePath.Should().Be("Patient.name");
+    }
+
+    [TestMethod]
     public void TryDeserializeResourceWithEmptyAttribute()
     {
         var content = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"\"/></Patient>";
