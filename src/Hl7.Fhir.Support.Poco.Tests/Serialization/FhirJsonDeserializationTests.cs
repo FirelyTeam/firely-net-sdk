@@ -324,6 +324,39 @@ public partial class FhirJsonDeserializationTests
             given = new[] { "Benedicte", "Denise", "Marie" },
         }, checkIdsName);
 
+        // 'line' and '_line' disagree on being an array: the single value goes into the first element, in either order.
+        yield return data<Address>(new { line = new[] { "Ewout", "Wouter" }, _line = new { id = "1" } },
+            lineIs(["Ewout", "Wouter"], ["1", null]), ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+        yield return data<Address>(new { _line = new { id = "1" }, line = new[] { "Ewout", "Wouter" } },
+            lineIs(["Ewout", "Wouter"], ["1", null]), ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+        yield return data<Address>(new { _line = new[] { new { id = "1" } }, line = "Ewout" },
+            lineIs(["Ewout"], ["1"]), ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+        yield return data<Address>(new { line = "Ewout", _line = new[] { new { id = "1" }, new { id = "2" } } },
+            lineIs(["Ewout", null], ["1", "2"]), ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+
+        // A non-repeating element stays a single value, in either order...
+        yield return data<Patient>(new { resourceType = "Patient", active = true, _active = new[] { new { id = "a" } } },
+            activeIs(true, "a"), ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+        yield return data<Patient>(new { resourceType = "Patient", _active = new[] { new { id = "a" } }, active = true },
+            activeIs(true, "a"), ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+        // ...unless it does turn out to repeat: then the values are kept as a list, which is reported as such.
+        yield return data<Patient>(new { resourceType = "Patient", birthDate = "1974-12-25", _birthDate = new[] { new { id = "a" }, new { id = "b" } } },
+            ERR.UNDERSCORE_ARRAY_MISMATCH_CODE, COVE.PROPERTY_TYPE_MISMATCH_CODE);
+
+        static Action<object> lineIs(string?[] values, string?[] ids) => parsed =>
+        {
+            var lines = parsed.Should().BeOfType<Address>().Which.LineElement;
+            lines.Select(le => le?.Value).Should().Equal(values);
+            lines.Select(le => le?.ElementId).Should().Equal(ids);
+        };
+
+        static Action<object> activeIs(bool value, string id) => parsed =>
+        {
+            var active = parsed.Should().BeOfType<Patient>().Which.ActiveElement!;
+            active.Value.Should().Be(value);
+            active.ElementId.Should().Be(id);
+        };
+
         static void checkName(object parsed) => parsed.Should().BeOfType<Address>().Which.Line.Should()
             .BeEquivalentTo("Ewout", "Wouter");
 
@@ -350,6 +383,21 @@ public partial class FhirJsonDeserializationTests
             checkName(parsed);
             checkIds(parsed);
         }
+    }
+
+    [TestMethod]
+    public void ListErrorsAreReportedAtTheElement()
+    {
+        // These errors are about the list as a whole, so they should not point at an element (let alone one past the end).
+        var (_, errors) = deserializeComplex(typeof(Address), new { line = new[] { "Ewout", null } }, out _,
+            new FhirJsonConverterOptions());
+        errors.Should().ContainSingle(e => e.ErrorCode == COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE)
+            .Which.Should().BeAssignableTo<ExtendedCodedException>().Which.InstancePath.Should().Be("line");
+
+        (_, errors) = deserializeComplex(typeof(Address), new { line = new[] { "Ewout" }, _line = new { id = "1" } }, out _,
+            new FhirJsonConverterOptions());
+        errors.Should().ContainSingle(e => e.ErrorCode == ERR.UNDERSCORE_ARRAY_MISMATCH_CODE)
+            .Which.Should().BeAssignableTo<ExtendedCodedException>().Which.InstancePath.Should().Be("line");
     }
 
     [TestMethod]
@@ -697,6 +745,18 @@ public partial class FhirJsonDeserializationTests
                  "_active" : { "id" : "5678" }
              }
              """, [ERR.DUPLICATE_PROPERTY_CODE]),
+            ("""
+             {
+                 "resourceType" : "Patient",
+                 "name" : [{ "given" : ["a"], "given" : "b" }]
+             }
+             """, [ERR.DUPLICATE_PROPERTY_CODE]),
+            ("""
+             {
+                 "resourceType" : "Patient",
+                 "name" : [{ "given" : "a", "given" : ["b"] }]
+             }
+             """, [ERR.DUPLICATE_PROPERTY_CODE]),
             (
                 """
                 {
@@ -868,6 +928,35 @@ public partial class FhirJsonDeserializationTests
         var givenElements = patient.Name.Should().ContainSingle().Which.GivenElement;
         givenElements.Select(g => g?.Value).Should().Equal(expectedValues);
         givenElements.Select(g => g?.ElementId).Should().Equal(expectedIds);
+    }
+
+    [TestMethod]
+    [DataRow(DeserializationMode.Strict, true)]
+    [DataRow(DeserializationMode.NoOverflow, false)]
+    [DataRow(DeserializationMode.Recoverable, false)]
+    [DataRow(DeserializationMode.BackwardsCompatible, true)]
+    [DataRow(DeserializationMode.Ostrich, false)]
+    public void UnderscoreArrayMismatch_IsNotFatal(DeserializationMode mode, bool shouldThrow)
+    {
+        // No data is lost: the '_given' object goes into the first element of 'given'.
+        var json = """{ "resourceType" : "Patient", "name" : [{ "given" : ["a", "b"], "_given" : { "id" : "x" } }] }""";
+        var deserializer = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(mode));
+
+        var act = () => deserializer.DeserializeResource(json);
+
+        Patient patient;
+        if (shouldThrow)
+        {
+            var ex = act.Should().Throw<DeserializationFailedException>().Which;
+            ex.Exceptions.Should().ContainSingle(e => e.ErrorCode == ERR.UNDERSCORE_ARRAY_MISMATCH_CODE);
+            patient = ex.PartialResult.Should().BeOfType<Patient>().Which;
+        }
+        else
+            patient = act.Should().NotThrow().Which.Should().BeOfType<Patient>().Which;
+
+        var given = patient.Name.Should().ContainSingle().Which.GivenElement;
+        given.Select(g => g.Value).Should().Equal("a", "b");
+        given.Select(g => g.ElementId).Should().Equal("x", null);
     }
 
     [TestMethod]

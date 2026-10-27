@@ -285,7 +285,9 @@ public class BaseFhirJsonDeserializer
     {
         if (Settings.Validator is null) return;
 
-        var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath,
+        // These validations are about the property as a whole, so for a list they are reported at the element itself,
+        // not at the index the path was left at after parsing the list.
+        var context = new PocoValidationContext(target, _inspector, state.Path.WithoutIndex().GetInstancePath,
                 line, pos, Settings.NarrativeValidation)
         {
             MemberName = metadata.PropertyMapping.NativeProperty?.Name
@@ -447,17 +449,7 @@ public class BaseFhirJsonDeserializer
                 {
                     onlyNulls = false;
 
-                    if (elementIndex >= originalSize)
-                        existingList.Add(null);
-
-                    ClassMapping actualClassMapping = metadata.ValueMapping;
-                    if(existingList[elementIndex] is null)
-                        existingList[elementIndex] = createNewObjectInstance(ref reader, metadata.ValueMapping, state, out actualClassMapping);
-
-                    if(existingList[elementIndex] is not Base existingBase)
-                        throw new InvalidOperationException($"Expected existing element at index {elementIndex} to be a Base, but it is {existingList[elementIndex]?.GetType().Name ?? "null"}.");
-
-                    deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, metadata.PropertyMapping.NativeProperty?.Name, actualClassMapping, state);
+                    deserializeListElementInto(existingList, elementIndex, ref reader, propertyName, metadata, state);
 
                     elementIndex += 1;
                     state.SetIndex(elementIndex);
@@ -474,25 +466,67 @@ public class BaseFhirJsonDeserializer
         }
     }
 
+    // A duplicate property is already reported (as fatal), and is not a mismatch between 'given' and '_given'.
+    private static void reportArrayMismatch(ref Utf8JsonReader reader, string propertyName, PocoDeserializerState state)
+    {
+        if (state.DuplicatePropertyDepth == 0)
+            state.Errors.Add(ERR.UNDERSCORE_ARRAY_MISMATCH(ref reader, state.Path.WithoutIndex().GetInstancePath(), propertyName.TrimStart('_')));
+    }
+
+    // Like the XML deserializer, keep a non-repeating element single if it turned out not to repeat.
+    private static object singleIfNotRepeating(IList list, PropertyValueMapping metadata) =>
+        !metadata.PropertyMapping.IsCollection && list.Count == 1 ? list[0]! : list;
+
+    // Deserializes a single value into the element at the given index of the list, adding that element
+    // if the index is just past the end of the list.
+    private void deserializeListElementInto(IList list, int index, ref Utf8JsonReader reader, string propertyName,
+        PropertyValueMapping metadata, PocoDeserializerState state)
+    {
+        if (index == list.Count)
+            list.Add(null);
+
+        ClassMapping actualClassMapping = metadata.ValueMapping;
+        if(list[index] is null)
+            list[index] = createNewObjectInstance(ref reader, metadata.ValueMapping, state, out actualClassMapping);
+
+        if(list[index] is not Base existingBase)
+            throw new InvalidOperationException($"Expected existing element at index {index} to be a Base, but it is {list[index]?.GetType().Name ?? "null"}.");
+
+        deserializeSingleValueInto(existingBase, ref reader, propertyName, metadata.PropertyMapping.Name, metadata.PropertyMapping.NativeProperty?.Name, actualClassMapping, state);
+    }
+
     private object deserializeRhs(object? existingValue, ref Utf8JsonReader reader, string propertyName, PropertyValueMapping metadata,
         PocoDeserializerState state)
     {
         switch (existingValue)
         {
-            case IList existingList:
+            case IList existingList when reader.TokenType == JsonTokenType.StartArray:
             {
                 // deserialize a normal list
                 deserializeListInto(existingList, ref reader, propertyName, metadata, state);
                 return existingList;
             }
+            case IList existingList:
+            {
+                // An earlier property for this element was an array (e.g. 'given'), but this one is a single value
+                // (e.g. '_given'). Merge the value into the first element, as when the single value comes first.
+                // A json null is already reported as such.
+                if (reader.TokenType != JsonTokenType.Null)
+                    reportArrayMismatch(ref reader, propertyName, state);
+
+                deserializeListElementInto(existingList, 0, ref reader, propertyName, metadata, state);
+                return singleIfNotRepeating(existingList, metadata);
+            }
             case Base existingBase when reader.TokenType == JsonTokenType.StartArray:
             {
-                // upgrade current existing value to a list
-                var list = metadata.CreateList();
-                list.Add(existingValue);
-                deserializeListInto(list, ref reader, propertyName, metadata, state);
+                // An earlier property for this element was a single value, but this one is an array:
+                // upgrade the existing value to the first element of a list.
+                reportArrayMismatch(ref reader, propertyName, state);
 
-                return existingBase;
+                var list = metadata.CreateList();
+                list.Add(existingBase);
+                deserializeListInto(list, ref reader, propertyName, metadata, state);
+                return singleIfNotRepeating(list, metadata);
             }
             case Base existingBase:
             {

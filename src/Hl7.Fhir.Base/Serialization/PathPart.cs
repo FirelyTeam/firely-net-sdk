@@ -72,6 +72,11 @@ internal abstract record PathPart(PathPart Previous, string _)
     }
 
     /// <summary>
+    /// Returns this path without its trailing index (if any), so it addresses a repeating element as a whole.
+    /// </summary>
+    public PathPart WithoutIndex() => this is IndexPathPart ipp ? ipp.Previous : this;
+
+    /// <summary>
     /// Return the fhirpath that includes the indexes. Note: in contained resources, this is just the path within the contained resource.
     /// </summary>
     public abstract string GetInstancePath();

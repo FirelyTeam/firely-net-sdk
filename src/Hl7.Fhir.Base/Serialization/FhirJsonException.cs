@@ -51,6 +51,7 @@ public class FhirJsonException(
     public const string USE_OF_UNDERSCORE_WITH_NON_PRIMITIVE_CODE = "JSON133";
     public const string UNDERSCORE_SHOULD_BE_OBJECT_CODE = "JSON134";
     public const string PRIMITIVE_VALUE_SUPPLIED_TWICE_CODE = "JSON135";
+    public const string UNDERSCORE_ARRAY_MISMATCH_CODE = "JSON136";
 
     // Fatal errors - there is dataloss so processing should not continue.
     internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", "Duplicate property", OO_Sev.Fatal);
@@ -72,6 +73,9 @@ public class FhirJsonException(
 
     // We will add the primitive value as a "value" property to the POCO, no data loss.
     internal static FhirJsonException UNDERSCORE_SHOULD_BE_OBJECT(ref Utf8JsonReader reader, string instancePath, string propertyName) => Initialize(ref reader, instancePath, UNDERSCORE_SHOULD_BE_OBJECT_CODE, $"Property '{propertyName}' has an underscore, which should be a (an array of) Json object or null.", "Property should be an object", OO_Sev.Error);
+
+    // The single value is merged into the first element of the array, no data loss.
+    internal static FhirJsonException UNDERSCORE_ARRAY_MISMATCH(ref Utf8JsonReader reader, string instancePath, string propertyName) => Initialize(ref reader, instancePath, UNDERSCORE_ARRAY_MISMATCH_CODE, $"Properties '{propertyName}' and '_{propertyName}' should either both be arrays or both be single values.", "Array mismatch", OO_Sev.Error);
 
     internal static FhirJsonException UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE(ref Utf8JsonReader reader, string instancePath, string elementName) => Initialize(ref reader, instancePath, UNEXPECTED_PRIMITIVE_VALUE_FOR_NON_PRIMITIVE_CODE, $"Encountered a json primitive while expecting a json object for non-primitive element '{elementName}'.", "Expected object", OO_Sev.Error);
 

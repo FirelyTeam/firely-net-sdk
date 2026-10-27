@@ -327,7 +327,7 @@ public class BaseFhirXmlDeserializer
             var context = new PocoValidationContext(
                 target,
                 _inspector,
-                state.Path.GetInstancePath,
+                state.Path.WithoutIndex().GetInstancePath,
                 lineNumber, position,
                 Settings.NarrativeValidation)
             {
