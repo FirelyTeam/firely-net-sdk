@@ -128,7 +128,7 @@ public class Date : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     private static readonly string DATEFORMAT =
         $"(?<year>[0-9]{{4}}) ((?<month>-[0-9][0-9]) ((?<day>-[0-9][0-9]) )?)? {Time.OFFSETFORMAT}?";
-    public static readonly Regex PARTIALDATEREGEX = new("^" + DATEFORMAT + "$",
+    public static readonly Regex PARTIALDATEREGEX = new("^" + DATEFORMAT + @"\z",
         RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
     /// <summary>

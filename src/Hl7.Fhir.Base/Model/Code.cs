@@ -72,7 +72,7 @@ public partial class Code : ICoded
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
-    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + @"\z", RegexOptions.Singleline);
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
     public virtual IReadOnlyCollection<Coding> ToCodings() => [new(system: null, code: Value)];

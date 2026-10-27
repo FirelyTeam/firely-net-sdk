@@ -41,6 +41,11 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("75 'kg");
             reject("75 kg");
             reject("'kg'");
+
+            // A trailing line break must not be accepted (see #3659)
+            Assert.AreEqual(new Quantity(1m, "mg"), Quantity.Parse("1 'mg'"));
+            reject("1 'mg'\n");
+            reject("40 weeks\n");
         }
 
         void reject(string testValue)

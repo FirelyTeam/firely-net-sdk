@@ -52,7 +52,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         new(QUANTITY_BASE_REGEX, RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     internal static readonly Regex QUANTITYREGEX_FOR_PARSE =
-        new($"^{QUANTITY_BASE_REGEX}?$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+        new($@"^{QUANTITY_BASE_REGEX}?\z", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     public static Quantity Parse(string representation) =>
         TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid quantity.");

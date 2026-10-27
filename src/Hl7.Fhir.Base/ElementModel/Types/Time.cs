@@ -97,7 +97,7 @@ public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable
     internal const string OFFSETFORMAT = "(?<offset>Z | (\\+|-) [0-9][0-9]:[0-9][0-9])";
 
     private static readonly Regex PARTIALTIMEREGEX =
-        new Regex("^" + PARTIALTIMEFORMAT + "$", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+        new Regex("^" + PARTIALTIMEFORMAT + @"\z", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
     private static bool tryParse(string representation, out Time? value)
     {
