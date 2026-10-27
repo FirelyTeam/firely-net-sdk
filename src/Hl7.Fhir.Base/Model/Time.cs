@@ -93,10 +93,10 @@ public partial class Time
     }
 
     private static P.Time? doParse(string value) =>
-        P.Time.TryParse(value, out var v) && !v.HasOffset ? v : null;
+        P.Time.TryParse(value, out var v) && !v.HasOffset && v.Precision >= P.DateTimePrecision.Second ? v : null;
 
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Checks whether the given literal is a valid FHIR time: hours, minutes and seconds, without an offset.
     /// </summary>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
