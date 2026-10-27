@@ -197,9 +197,10 @@ public static class SymbolTableInit
 
         t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
         t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
-        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
 
-        // Kept for backwards compatibility, but no longer part of the spec
+        // Kept for backwards compatibility, but no longer part of the spec.
+        // Note: register this only once. A second entry with the same signature makes the compiler
+        // resolve every 'as' through the (much slower) dynamic dispatcher instead of binding it directly.
         t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
 
         t.Add("extension", (IEnumerable<PocoNode> f, string url) => f.Extension(url), doNullProp: true);
