@@ -52,7 +52,9 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         new(QUANTITY_BASE_REGEX, RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     internal static readonly Regex QUANTITYREGEX_FOR_PARSE =
-        new($@"^{QUANTITY_BASE_REGEX}?\z", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+        // The lookbehind rejects a line break that is only followed by whitespace at the end: without a unit,
+        // the \s* in the base regex would otherwise swallow it (e.g. "40.0\n").
+        new($@"^{QUANTITY_BASE_REGEX}?(?<![\r\n]\s*)\z", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     public static Quantity Parse(string representation) =>
         TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid quantity.");
