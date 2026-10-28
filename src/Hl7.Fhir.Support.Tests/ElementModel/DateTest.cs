@@ -26,6 +26,11 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("2010-2-2");
             reject("2010-02-4");
             reject("2010-2-04");
+
+            // A trailing line break must not be accepted (see #3659)
+            accept("2010-08-12", 2010, 08, 12, P.DateTimePrecision.Day, null);
+            reject("2010-08-12\n");
+            reject("2010\n");
         }
 
         private void accept(string testInput, int? y, int? m, int? d, P.DateTimePrecision? p, TimeSpan? o)

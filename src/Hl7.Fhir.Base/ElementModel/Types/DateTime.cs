@@ -146,7 +146,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     private static readonly string DATETIMEFORMAT =
         $"(?<year>[0-9]{{4}}) ((?<month>-[0-9][0-9]) ((?<day>-[0-9][0-9]) (T{Time.TIMEFORMAT})?)?)? {Time.OFFSETFORMAT}?";
     private static readonly Regex DATETIMEREGEX =
-        new("^" + DATETIMEFORMAT + "$",
+        new("^" + DATETIMEFORMAT + @"\z",
             RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
     private static bool tryParse(string representation, out DateTime? value)

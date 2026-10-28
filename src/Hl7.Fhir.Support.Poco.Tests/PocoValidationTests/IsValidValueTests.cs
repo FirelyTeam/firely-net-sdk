@@ -62,6 +62,35 @@ namespace Hl7.Fhir.Support.Poco.Tests
             f(Time.IsValidValue("12"));
         }
 
+        [TestMethod]
+        public void TestTrailingLineBreakIsRejected()
+        {
+            // "$" matches before a final "\n" in .NET, so these used to be accepted (see #3659)
+            t(Code.IsValidValue("abc"));
+            f(Code.IsValidValue("abc\n"));
+
+            t(Date.IsValidValue("2024-01-01"));
+            f(Date.IsValidValue("2024-01-01\n"));
+
+            t(FhirDateTime.IsValidValue("2024-01-01T10:00:00Z"));
+            f(FhirDateTime.IsValidValue("2024-01-01T10:00:00Z\n"));
+
+            t(Id.IsValidValue("abc"));
+            f(Id.IsValidValue("abc\n"));
+
+            t(Instant.IsValidValue("2024-01-01T10:00:00Z"));
+            f(Instant.IsValidValue("2024-01-01T10:00:00Z\n"));
+
+            t(Oid.IsValidValue("urn:oid:1.2.3"));
+            f(Oid.IsValidValue("urn:oid:1.2.3\n"));
+
+            t(Time.IsValidValue("12:00:00"));
+            f(Time.IsValidValue("12:00:00\n"));
+
+            t(Uuid.IsValidValue("urn:uuid:157a6966-2b36-44cc-95a5-667e964e3cbc"));
+            f(Uuid.IsValidValue("urn:uuid:157a6966-2b36-44cc-95a5-667e964e3cbc\n"));
+        }
+
         private static void t(bool b) => b.Should().BeTrue();
         private static void f(bool b) => b.Should().BeFalse();
 

@@ -41,6 +41,19 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("75 'kg");
             reject("75 kg");
             reject("'kg'");
+
+            // A trailing line break must not be accepted (see #3659)
+            Assert.AreEqual(new Quantity(1m, "mg"), Quantity.Parse("1 'mg'"));
+            reject("1 'mg'\n");
+            reject("40 weeks\n");
+
+            // ... also not when there is no unit, where the whitespace before the (absent) unit used to swallow it
+            Assert.AreEqual(new Quantity(40.0m), Quantity.Parse("40.0"));
+            reject("40.0\n");
+            reject("40.0\r\n");
+            reject("40.0 \n");
+            reject("40.0\n ");
+            reject("1 'mg'\r\n");
         }
 
         void reject(string testValue)

@@ -46,6 +46,12 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("T12:04:45Z");
             reject("12:04:45Z");
 
+            // A trailing line break must not be accepted (see #3659)
+            accept("2012-03-04T12:34:35Z", 2012, 3, 4, 12, 34, 35, o: TimeSpan.Zero);
+            reject("2012-03-04T12:34:35Z\n");
+            reject("2012-03-04\n");
+            reject("2012\n");
+
             static void accept(string testValue, int? y = default, int? mo = default, int? d = default,
                 int? h = default, int? m = default, int? s = default, int? ms = default, TimeSpan? o = default)
             {

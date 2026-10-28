@@ -59,7 +59,7 @@ public partial class Oid
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
-    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+    public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + @"\z", RegexOptions.Singleline);
 
     /// <summary>
     /// Converts this Oid to a <see cref="P.String" />.
