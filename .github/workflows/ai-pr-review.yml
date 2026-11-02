@@ -69,7 +69,7 @@ jobs:
           rc=0
           bash .github/ai-review/fetch-context.sh "$PR" "$RUNNER_TEMP/ctx" || rc=$?
           if ((rc == 4)); then
-            if [[ -n $m ]]; then pr_marker_update "$PR" - - done; else pr_marker_update "$PR" 0 2 done; fi
+            if [[ -n $m ]]; then pr_marker_update_soft "$PR" - - done; else pr_marker_update "$PR" 0 2 done; fi
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" \
               --body "AI review skipped: this PR's diff is too large for the AI review loop (over 400 KB, or beyond what GitHub returns as a diff)."
             skip "diff too large"
@@ -91,10 +91,11 @@ jobs:
       pr: ${{ github.event.pull_request.number || inputs.pr }}
     secrets: inherit
 
-  # Skipped when round 1's guard found nothing to do, so its missing-marker comment is not repeated.
+  # Only after round 1 ran to its marker update: a guard that found the marker missing has
+  # already said so, and must not say it twice.
   round-2:
     needs: round-1
-    if: needs.round-1.outputs.go == 'true'
+    if: needs.round-1.outputs.completed == 'true'
     permissions:
       contents: write
       pull-requests: write
@@ -105,7 +106,7 @@ jobs:
 
   finish:
     needs: [start, round-1, round-2]
-    if: always() && needs.start.outputs.go == 'true'
+    if: always() && (needs.start.outputs.go == 'true' || needs.start.result == 'failure')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # contents: read only to check out the scripts.
@@ -125,6 +126,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number || inputs.pr }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          START_RESULT: ${{ needs.start.result }}
           R1_RESULT: ${{ needs.round-1.result }}
           R1_STEP: ${{ needs.round-1.outputs.failed_step }}
           R1_ROUND: ${{ needs.round-1.outputs.round }}
@@ -137,7 +140,9 @@ jobs:
           read -r r t s <<<"$m"
 
           job="" step="" round=""
-          if [[ $R1_RESULT == failure || $R1_RESULT == cancelled ]]; then
+          if [[ $START_RESULT == failure ]]; then
+            job=start step=start
+          elif [[ $R1_RESULT == failure || $R1_RESULT == cancelled ]]; then
             job=round-1 step=$R1_STEP round=$R1_ROUND
           elif [[ $R2_RESULT == failure || $R2_RESULT == cancelled ]]; then
             job=round-2 step=$R2_STEP round=$R2_ROUND
@@ -145,9 +150,10 @@ jobs:
           if [[ -n $job ]]; then
             # The marker counts completed rounds, so the failed one is the next.
             [[ -n $round ]] || round=$(( ${r:-0} + 1 ))
-            rc=0
-            pr_marker_update "$PR" - - failed || rc=$?
-            ((rc == 0 || rc == 5)) || exit "$rc"
+            # A failed start on pull_request has written no marker of its own; leave the body alone.
+            if [[ $job != start || $EVENT == workflow_dispatch ]]; then
+              pr_marker_update_soft "$PR" - - failed
+            fi
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" \
               --body "AI review loop stopped: ${step:-$job} failed in round $round. Run: $RUN_URL"
             exit 0
@@ -158,9 +164,7 @@ jobs:
             exit 0
           fi
           if ((r >= t)); then
-            rc=0
-            pr_marker_update "$PR" - - done || rc=$?
-            ((rc == 0 || rc == 5)) || exit "$rc"
+            pr_marker_update_soft "$PR" - - done
           else
             # `/ai-review more` raised the total during this run.
             gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"

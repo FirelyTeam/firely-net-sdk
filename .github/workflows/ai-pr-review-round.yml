@@ -1,7 +1,11 @@
 # One review/fix pair of the AI PR review loop, called by ai-pr-review.yml.
-# The model never holds a GitHub token: it reads context files and writes a JSON file; the bash
-# steps validate that file, post it and push the commits with GITHUB_TOKEN. GH_TOKEN is set per
-# bash step only, never at job level, because the model steps inherit the job environment.
+# The model never holds a GitHub token: it reads context files and writes a JSON file; bash steps
+# validate that file and post it. GH_TOKEN is set per bash step only, because the model steps
+# inherit the job environment.
+#
+# Two jobs, so no write token is used after model-run code (dotnet build/test of edited files) has
+# executed on a runner (R10): review-fix runs the models and hands the fix over as a git bundle;
+# publish-fix, on a fresh runner that runs no model code, verifies it, pushes and posts the replies.
 name: AI PR review round
 
 on:
@@ -12,28 +16,31 @@ on:
         required: true
         type: number
     outputs:
-      go:
-        description: "'true' when the guard started a round."
-        value: ${{ jobs.round.outputs.go }}
+      completed:
+        description: "'true' when this round ran to its marker update."
+        value: ${{ jobs.publish-fix.outputs.completed }}
       round:
         description: The round this run worked on.
-        value: ${{ jobs.round.outputs.round }}
+        value: ${{ jobs.review-fix.outputs.round }}
       failed_step:
         description: Id of the first step that failed, if any.
-        value: ${{ jobs.round.outputs.failed_step }}
+        value: ${{ jobs.review-fix.outputs.failed_step || jobs.publish-fix.outputs.failed_step }}
 
 permissions: {}
 
 jobs:
-  round:
+  review-fix:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    # No contents: write here: the commits leave this job only as an artifact.
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
     outputs:
-      go: ${{ steps.guard.outputs.go }}
       round: ${{ steps.guard.outputs.round }}
+      head_sha: ${{ steps.guard.outputs.head_sha }}
+      head_ref: ${{ steps.guard.outputs.head_ref }}
+      fix_go: ${{ steps.guard-fix.outputs.go }}
       failed_step: ${{ steps.failed.outputs.step }}
     env:
       PR: ${{ inputs.pr }}
@@ -111,6 +118,8 @@ jobs:
           owner: FirelyTeam
           repositories: skills-internal
           permission-contents: read
+          # Revoked by the install step, before any model runs.
+          skip-token-revoke: true
 
       # actions/checkout only accepts a path under the workspace, so check out to a subdirectory
       # and move the skills to ~/.claude/skills/, where the implementer can never commit them.
@@ -132,10 +141,14 @@ jobs:
       - name: Install the review skills
         id: skills
         if: steps.guard.outputs.go == 'true'
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           mkdir -p ~/.claude/skills
           cp -r .ai-review-skills/skills/pr-review-reviewer .ai-review-skills/skills/pr-review-implementer ~/.claude/skills/
           rm -rf .ai-review-skills
+          # A post-job revoke would leave the token valid while model-run code executes.
+          GH_TOKEN=$APP_TOKEN gh api -X DELETE installation/token
 
       - name: Fetch the review context
         id: context
@@ -144,9 +157,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
 
-      # --setting-sources user: skills load from ~/.claude, and nothing committed to the PR
-      # (.claude/settings.json hooks, .mcp.json) is loaded. --add-dir: Read reaches only the
-      # working directory otherwise. `//` makes the Write rule an absolute path.
+      # --setting-sources user and --strict-mcp-config: skills load from ~/.claude, and nothing
+      # committed to the PR (.claude/settings.json hooks, .mcp.json) is loaded. --add-dir: Read
+      # reaches only the working directory otherwise. `//` makes the Write rule an absolute path.
       - name: Review
         id: review
         if: steps.guard.outputs.go == 'true'
@@ -163,6 +176,7 @@ jobs:
             --model claude-opus-5-5
             --max-turns 40
             --setting-sources user
+            --strict-mcp-config
             --add-dir ${{ runner.temp }}/ctx
             --allowedTools Read,Grep,Glob,Skill,"Read(~/.claude/skills/**)","Write(/${{ runner.temp }}/review.json)"
             --disallowedTools Edit,NotebookEdit,WebFetch,WebSearch,Bash
@@ -175,6 +189,7 @@ jobs:
           EXEC_FILE: ${{ steps.review.outputs.execution_file }}
         run: mv "$EXEC_FILE" "$RUNNER_TEMP/exec-review.json"
 
+      # Safe to hold a write token here: the reviewer has no Bash, so no model-run code has executed.
       - name: Publish the review
         id: publish-review
         if: steps.guard.outputs.go == 'true'
@@ -184,9 +199,14 @@ jobs:
           ROUND: ${{ steps.guard.outputs.round }}
           TOTAL: ${{ steps.guard.outputs.total }}
         run: |
-          # Without a Skill call the model may still write plausible JSON; refuse it.
-          if ! jq -e 'any(.. | objects; .type? == "tool_use" and .name? == "Skill")' "$RUNNER_TEMP/exec-review.json" >/dev/null; then
-            echo "::error::The review session made no Skill tool call; not publishing."
+          . "$RUNNER_TEMP/tools/lib.sh"
+          # Without the skill the model may still write plausible JSON; refuse it.
+          if ! skill_loaded "$RUNNER_TEMP/exec-review.json" pr-review-reviewer; then
+            echo "::error::The review session did not load the pr-review-reviewer skill; not publishing."
+            exit 1
+          fi
+          if grep -qsF -- sk-ant- "$RUNNER_TEMP/review.json"; then
+            echo "::error::review.json contains an API key pattern; not publishing."
             exit 1
           fi
           bash "$RUNNER_TEMP/tools/publish-review.sh" "$PR" "$RUNNER_TEMP/review.json" "$RUNNER_TEMP/ctx/diff.patch" \
@@ -215,7 +235,7 @@ jobs:
             exit 0
           fi
           if [[ $(jq -r .head.sha <<<"$pr_json") != "$HEAD_SHA" ]]; then
-            pr_marker_update "$PR" - - stopped
+            pr_marker_update_soft "$PR" - - stopped
             # shellcheck disable=SC2059
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
             echo go=false >>"$GITHUB_OUTPUT"
@@ -235,8 +255,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          sha256sum .git/config >"$RUNNER_TEMP/git-config.sha256"
 
+      # From here on, code the model wrote may have run on this runner: no token is used below.
       - name: Fix
         id: fix
         if: steps.guard-fix.outputs.go == 'true'
@@ -252,80 +272,49 @@ jobs:
             --model claude-opus-5-5
             --max-turns 80
             --setting-sources user
+            --strict-mcp-config
             --add-dir ${{ runner.temp }}/ctx-fix
             --allowedTools Read,Grep,Glob,Edit,Write,Skill,"Write(/${{ runner.temp }}/replies.json)","Bash(dotnet build *)","Bash(dotnet test *)","Bash(git add *)","Bash(git commit *)","Bash(git status*)","Bash(git diff*)","Bash(git log*)","Bash(git show*)"
             --disallowedTools WebFetch,WebSearch,"Bash(git push*)","Bash(curl *)","Bash(wget *)"
 
-      # Pushes the implementer's commits unchanged. A rejected push means a human pushed: stop.
-      - name: Push
-        id: push
+      # The artifact of a public repo is public, so the key scan runs before upload as well as in
+      # publish-fix (which is the check that counts: this runner is no longer trusted).
+      - name: Bundle the fix
+        id: bundle
         if: steps.guard-fix.outputs.go == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
-          GITHUB_TOKEN: ${{ github.token }}
           HEAD_SHA: ${{ steps.guard.outputs.head_sha }}
-          HEAD_REF: ${{ steps.guard.outputs.head_ref }}
-          ROUND: ${{ steps.guard.outputs.round }}
           FIX_EXEC: ${{ steps.fix.outputs.execution_file }}
         run: |
           . "$RUNNER_TEMP/tools/lib.sh"
-          if ! jq -e 'any(.. | objects; .type? == "tool_use" and .name? == "Skill")' "$FIX_EXEC" >/dev/null; then
-            echo "::error::The fix session made no Skill tool call; not pushing."
+          if ! skill_loaded "$FIX_EXEC" pr-review-implementer; then
+            echo "::error::The fix session did not load the pr-review-implementer skill; not publishing."
             exit 1
           fi
-          if [[ $(git rev-parse HEAD) == "$HEAD_SHA" ]]; then
-            echo "No new commits."
-            echo go=true >>"$GITHUB_OUTPUT"
-            exit 0
+          out=$RUNNER_TEMP/fix-out
+          mkdir -p "$out"
+          cp "$RUNNER_TEMP/replies.json" "$out/"
+          : >"$RUNNER_TEMP/new-commits.diff"
+          if [[ $(git rev-parse HEAD) != "$HEAD_SHA" ]]; then
+            git bundle create "$out/commits.bundle" "$HEAD_SHA..HEAD"
+            git log -p --diff-merges=first-parent --format= "$HEAD_SHA..HEAD" >"$RUNNER_TEMP/new-commits.diff"
           fi
-          if ! git merge-base --is-ancestor "$HEAD_SHA" HEAD; then
-            echo "::error::HEAD no longer descends from the reviewed commit; not pushing."
-            exit 1
-          fi
-          # Every new commit, so an add-then-revert of a .github/ file is caught too.
-          if [[ -n $(git log --no-renames --name-only --format= "$HEAD_SHA..HEAD" -- .github) ]]; then
-            echo "::error::A new commit touches .github/; not pushing."
-            exit 1
-          fi
-          if ! sha256sum -c --quiet "$RUNNER_TEMP/git-config.sha256"; then
-            echo "::error::.git/config changed during the fix step; not pushing."
-            exit 1
-          fi
-          rc=0
-          out=$(GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 git -c core.hooksPath=/dev/null \
-            push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${HEAD_REF}" 2>&1) || rc=$?
-          sed -E 's#://[^@/]*@#://#g' <<<"$out"
-          if ((rc == 0)); then
-            echo go=true >>"$GITHUB_OUTPUT"
-          elif grep -qE '\[rejected\]|non-fast-forward|fetch first' <<<"$out"; then
-            # The replies refer to commits that never landed, so they are not posted.
-            rc=0
-            pr_marker_update "$PR" - - stopped || rc=$?
-            ((rc == 0 || rc == 5)) || exit "$rc"
-            # shellcheck disable=SC2059
-            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
-            echo go=false >>"$GITHUB_OUTPUT"
-          else
-            echo "::error::git push failed."
+          if grep -qF -- sk-ant- "$out/replies.json" "$RUNNER_TEMP/new-commits.diff"; then
+            echo "::error::The fix output contains an API key pattern; not uploading."
             exit 1
           fi
 
-      - name: Publish the replies
-        id: publish-replies
-        if: steps.push.outputs.go == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: bash "$RUNNER_TEMP/tools/publish-replies.sh" "$PR" "$RUNNER_TEMP/replies.json" "$RUNNER_TEMP/ctx-fix/threads.json"
-
-      - name: Record the round
-        id: marker
-        if: steps.push.outputs.go == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          ROUND: ${{ steps.guard.outputs.round }}
-        run: |
-          . "$RUNNER_TEMP/tools/lib.sh"
-          pr_marker_update "$PR" "$ROUND" - -
+      # Only the bundle and the replies: metadata comes from job outputs set before the fix ran.
+      - name: Upload the fix
+        id: upload
+        if: steps.guard-fix.outputs.go == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ai-review-fix-${{ inputs.pr }}-round-${{ steps.guard.outputs.round }}
+          path: ${{ runner.temp }}/fix-out
+          retention-days: 1
+          if-no-files-found: error
+          overwrite: true
 
       # Only the turn count and cost leave the execution logs; nothing else is printed.
       - name: Cost summary
@@ -365,9 +354,152 @@ jobs:
             || steps.guard-fix.outcome == 'failure' && 'guard-fix'
             || steps.git-identity.outcome == 'failure' && 'git-identity'
             || steps.fix.outcome == 'failure' && 'fix'
+            || steps.bundle.outcome == 'failure' && 'bundle'
+            || steps.upload.outcome == 'failure' && 'upload'
+            || steps.cost.outcome == 'failure' && 'cost'
+            || '' }}
+        run: echo "step=$STEP" >>"$GITHUB_OUTPUT"
+
+  # A fresh runner that runs no model code: it re-checks everything it was handed before pushing.
+  publish-fix:
+    needs: review-fix
+    if: needs.review-fix.outputs.fix_go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      completed: ${{ steps.marker.outputs.completed }}
+      failed_step: ${{ steps.failed.outputs.step }}
+    env:
+      PR: ${{ inputs.pr }}
+      HEAD_SHA: ${{ needs.review-fix.outputs.head_sha }}
+      HEAD_REF: ${{ needs.review-fix.outputs.head_ref }}
+      ROUND: ${{ needs.review-fix.outputs.round }}
+      BRANCH_CHANGED_FMT: 'AI review loop stopped: the branch changed during round %s. Comment `/ai-review more` to run another round.'
+    steps:
+      - name: Check out the loop scripts
+        id: tools-checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          path: .ai-review-tools
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Move the loop scripts out of the workspace
+        id: tools
+        run: |
+          cp -r .ai-review-tools/.github/ai-review "$RUNNER_TEMP/tools"
+          rm -rf .ai-review-tools
+
+      - name: Check out the reviewed commit
+        id: checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.review-fix.outputs.head_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Download the fix
+        id: download
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ai-review-fix-${{ inputs.pr }}-round-${{ needs.review-fix.outputs.round }}
+          path: ${{ runner.temp }}/fix
+
+      # Fetched here rather than taken from the artifact, which model-run code could have edited.
+      - name: Fetch the threads
+        id: context
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
+
+      # Pushes the implementer's commits unchanged. A rejected push means a human pushed: stop.
+      - name: Push
+        id: push
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          if grep -qF -- sk-ant- "$RUNNER_TEMP/fix/replies.json"; then
+            echo "::error::replies.json contains an API key pattern; not publishing."
+            exit 1
+          fi
+          bundle=$RUNNER_TEMP/fix/commits.bundle
+          if [[ ! -f $bundle ]]; then
+            echo "No new commits."
+            echo go=true >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git bundle verify "$bundle"
+          git fetch --no-tags "$bundle" HEAD
+          tip=$(git rev-parse FETCH_HEAD)
+          if ! git merge-base --is-ancestor "$HEAD_SHA" "$tip"; then
+            echo "::error::The fix does not descend from the reviewed commit; not pushing."
+            exit 1
+          fi
+          # The tree diff, plus every commit with merges diffed against their first parent: an
+          # add-then-revert and a hand-made merge commit are both caught.
+          git diff --name-only "$HEAD_SHA" "$tip" >"$RUNNER_TEMP/new-files"
+          git log --no-renames --diff-merges=first-parent --name-only --format= "$HEAD_SHA..$tip" >>"$RUNNER_TEMP/new-files"
+          if grep -qE '^(\.github/|\.claude/|\.mcp\.json$)' "$RUNNER_TEMP/new-files"; then
+            echo "::error::The fix touches .github/, .claude/ or .mcp.json; not pushing."
+            exit 1
+          fi
+          git log -p --diff-merges=first-parent --format= "$HEAD_SHA..$tip" >"$RUNNER_TEMP/new-commits.diff"
+          if grep -qF -- sk-ant- "$RUNNER_TEMP/new-commits.diff"; then
+            echo "::error::The new commits contain an API key pattern; not pushing."
+            exit 1
+          fi
+          rc=0
+          out=$(git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$tip:refs/heads/${HEAD_REF}" 2>&1) || rc=$?
+          sed -E 's#://[^@/]*@#://#g' <<<"$out"
+          if ((rc == 0)); then
+            echo go=true >>"$GITHUB_OUTPUT"
+          elif grep -qE '\[rejected\]|non-fast-forward|fetch first' <<<"$out"; then
+            # The replies refer to commits that never landed, so they are not posted.
+            pr_marker_update_soft "$PR" - - stopped
+            # shellcheck disable=SC2059
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
+            echo go=false >>"$GITHUB_OUTPUT"
+          else
+            echo "::error::git push failed."
+            exit 1
+          fi
+
+      - name: Publish the replies
+        id: publish-replies
+        if: steps.push.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$RUNNER_TEMP/tools/publish-replies.sh" "$PR" "$RUNNER_TEMP/fix/replies.json" "$RUNNER_TEMP/ctx/threads-implementer.json"
+
+      # completed=true also with a missing marker, so round 2's guard posts that comment once.
+      - name: Record the round
+        id: marker
+        if: steps.push.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          pr_marker_update_soft "$PR" "$ROUND" - -
+          echo completed=true >>"$GITHUB_OUTPUT"
+
+      - name: Name the failed step
+        id: failed
+        if: failure()
+        env:
+          STEP: >-
+            ${{ steps.tools-checkout.outcome == 'failure' && 'tools-checkout'
+            || steps.tools.outcome == 'failure' && 'tools'
+            || steps.checkout.outcome == 'failure' && 'checkout'
+            || steps.download.outcome == 'failure' && 'download'
+            || steps.context.outcome == 'failure' && 'context'
             || steps.push.outcome == 'failure' && 'push'
             || steps.publish-replies.outcome == 'failure' && 'publish-replies'
             || steps.marker.outcome == 'failure' && 'marker'
-            || steps.cost.outcome == 'failure' && 'cost'
             || '' }}
         run: echo "step=$STEP" >>"$GITHUB_OUTPUT"

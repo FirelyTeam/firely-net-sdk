@@ -53,9 +53,7 @@ jobs:
           }
 
           if [[ $cmd == stop ]]; then
-            rc=0
-            pr_marker_update "$PR" - - stopped || rc=$?
-            ((rc == 0 || rc == 5)) || exit "$rc"
+            pr_marker_update_soft "$PR" - - stopped
             react
             exit 0
           fi
@@ -72,6 +70,6 @@ jobs:
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "AI review: round cap (4) reached."
             exit 0
           fi
-          AI_REVIEW_ALLOW_RESTART=1 pr_marker_update "$PR" - "$n" running
+          AI_REVIEW_ALLOW_RESTART=1 pr_marker_update_soft "$PR" - "$n" running
           gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
           react

@@ -90,6 +90,24 @@ pr_marker_update() {
   gh_write api -X PATCH "repos/$GITHUB_REPOSITORY/pulls/$pr" -f body="$(marker_write "$body" "$r" "$t" "$s")"
 }
 
+# pr_marker_update, but a missing marker (rc 5) only warns: for best-effort `-` updates (R2).
+pr_marker_update_soft() {
+  local rc=0
+  pr_marker_update "$@" || rc=$?
+  ((rc == 0 || rc == 5)) || return "$rc"
+}
+
+# skill_loaded <execution_file> <skill>: exit 0 only if the session called the Skill tool for <skill>
+# (bare or plugin-prefixed name) and that call's tool_result is not an error.
+skill_loaded() {
+  jq -e --arg s "$2" '
+    [.. | objects | select(.type? == "tool_use" and .name? == "Skill"
+      and ((.input.skill // .input.command // "") | tostring | ltrimstr("/") | test("(^|:)\($s)$")))
+      | .id] as $ids
+    | any(.. | objects; .type? == "tool_result" and (.tool_use_id as $t | $ids | index($t) != null)
+      and .is_error != true)' <"$1" >/dev/null 2>&1
+}
+
 more_total() {
   if [[ $3 == running ]]; then echo $(($2 + 1)); else echo $(($1 + 1)); fi
 }

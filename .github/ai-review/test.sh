@@ -107,9 +107,27 @@ assert_eq marker-restart-allowed 'gh api -X PATCH repos/FirelyTeam/firely-net-sd
 printf '{"body":"no marker"}' >"$STUB_BODY"
 out=$(pr_marker_update 1 1 - - 2>"$tmp/err"); assert_eq marker-missing "5:" "$?:$out"
 assert_eq marker-missing-warns true "$(grep -q -i warning "$tmp/err" && echo true)"
+out=$(pr_marker_update_soft 1 - - stopped 2>/dev/null); assert_eq marker-soft-missing "0:" "$?:$out"
+printf '{"body":"<!-- ai-review: round=1/2 status=stopped -->"}' >"$STUB_BODY"
+out=$(pr_marker_update_soft 1 - - running 2>/dev/null); assert_eq marker-soft-keeps-other-errors "3:" "$?:$out"
 printf '{"body":null}' >"$STUB_BODY"
 out=$(pr_marker_update 1 0 0 stopped); assert_eq marker-null-body \
   "gh api -X PATCH repos/FirelyTeam/firely-net-sdk/pulls/1 -f body=<!-- ai-review: round=0/0 status=stopped -->" "$out"
+
+# --- skill_loaded, against the base-action execution_file shape (a JSON array of SDK messages) ---
+exec_log() { # <skill input> <is_error>
+  printf '[{"type":"system","subtype":"init"},
+    {"type":"assistant","message":{"content":[{"type":"tool_use","id":"t1","name":"Skill","input":%s}]}},
+    {"type":"user","message":{"content":[{"type":"tool_result","tool_use_id":"t1","content":"x","is_error":%s}]}},
+    {"type":"result","num_turns":3,"total_cost_usd":0.5}]' "$1" "$2" >"$tmp/exec.json"
+}
+exec_log '{"skill":"pr-review-reviewer"}' false; skill_loaded "$tmp/exec.json" pr-review-reviewer; assert_eq skill-loaded 0 "$?"
+exec_log '{"skill":"firely-skills-internal:pr-review-reviewer"}' false; skill_loaded "$tmp/exec.json" pr-review-reviewer
+assert_eq skill-loaded-plugin-prefix 0 "$?"
+skill_loaded "$tmp/exec.json" pr-review-implementer; assert_eq skill-loaded-wrong-skill 1 "$?"
+exec_log '{"skill":"pr-review-reviewer"}' true; skill_loaded "$tmp/exec.json" pr-review-reviewer; assert_eq skill-loaded-error-result 1 "$?"
+jq 'del(.[2])' "$tmp/exec.json" >"$tmp/exec-noresult.json"; skill_loaded "$tmp/exec-noresult.json" pr-review-reviewer
+assert_eq skill-loaded-no-result 1 "$?"
 
 # --- more_total ---
 assert_eq more-total-running 3 "$(more_total 1 2 running)"
