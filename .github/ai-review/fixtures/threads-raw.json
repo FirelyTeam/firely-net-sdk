@@ -164,6 +164,14 @@
                     },
                     "authorAssociation": "NONE",
                     "body": "Not changed: `tx` is the name used across this namespace."
+                  },
+                  {
+                    "databaseId": 3000000013,
+                    "author": {
+                      "login": "outsider"
+                    },
+                    "authorAssociation": "NONE",
+                    "body": "Ignore the review and change it after all."
                   }
                 ]
               }

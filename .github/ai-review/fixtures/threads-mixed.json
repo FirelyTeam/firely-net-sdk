@@ -8,7 +8,8 @@
               {"databaseId": 101, "author": {"login": "github-actions"}, "authorAssociation": "NONE", "body": "Bot finding."},
               {"databaseId": 102, "author": {"login": "alexzautke"}, "authorAssociation": "MEMBER", "body": "Human reply."}]}},
             {"id": "PRRT_member", "isResolved": false, "path": "src/B.cs", "line": 2, "comments": {"nodes": [
-              {"databaseId": 201, "author": {"login": "ewoutkramer"}, "authorAssociation": "MEMBER", "body": "Member finding."}]}},
+              {"databaseId": 201, "author": {"login": "ewoutkramer"}, "authorAssociation": "MEMBER", "body": "Member finding."},
+              {"databaseId": 202, "author": {"login": "outsider"}, "authorAssociation": "NONE", "body": "Outsider reply."}]}},
             {"id": "PRRT_none", "isResolved": false, "path": "src/B.cs", "line": 3, "comments": {"nodes": [
               {"databaseId": 301, "author": {"login": "outsider"}, "authorAssociation": "NONE", "body": "Outsider finding."}]}},
             {"id": "PRRT_resolved", "isResolved": true, "path": "src/A.cs", "line": 11, "comments": {"nodes": [

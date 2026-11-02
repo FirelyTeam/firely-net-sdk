@@ -9,8 +9,11 @@ case "$(uname -s)" in MINGW* | MSYS* | CYGWIN*) jq() { command jq -b "$@"; } ;; 
 # jq twins of normalize_login and sanitize, for use inside jq programs.
 AI_REVIEW_JQ_DEFS='
 def norm: sub("^app/"; "") | sub("\\[bot\\]$"; "");
-def san: split("`") | to_entries
-  | map(if .key % 2 == 0 then .value | gsub("@(?<c>[A-Za-z0-9-])"; "@​\(.c)") else .value end)
+def trusted: (.author.login // "" | norm) == "github-actions"
+  or (.authorAssociation | IN("OWNER", "MEMBER", "COLLABORATOR"));
+# Odd segments are code spans; with an odd backtick count the last one is not (an unmatched ` is literal).
+def san: split("`") | (length % 2 == 0) as $unbalanced | (length - 1) as $last | to_entries
+  | map(if .key % 2 == 0 or ($unbalanced and .key == $last) then .value | gsub("@(?<c>[A-Za-z0-9-])"; "@​\(.c)") else .value end)
   | join("`");
 '
 AI_REVIEW_MARKER_RE='<!-- ai-review: round=([0-9]+)/([0-9]+) status=(running|done|stopped|failed) -->'
@@ -125,10 +128,12 @@ build_review_payload() {
           and ([range(.start_line; .line + 1) as $n | at($n)] | all)))))) as $in
     | (($r.comments // []) - $in) as $out
     | {commit_id: $sha, event: "COMMENT",
-       body: ("**AI review — round \($round) of \($total)**\n\n\($r.summary)"
+       # each piece is sanitized on its own, so a stray backtick in one cannot shift code spans in the next
+       body: ("**AI review — round \($round) of \($total)**\n\n" + ($r.summary | san)
          + (if $out == [] then "" else "\n\n### Outside the diff\n\n"
-             + ($out | map("- `\(.path):\(if .start_line != null then "\(.start_line)-" else "" end)\(.line)`: \(.body)") | join("\n")) end)
-         | san),
+             + ($out | map("- `"
+                 + ("\(.path):\(if .start_line != null then "\(.start_line)-" else "" end)\(.line)" | gsub("`"; "") | san)
+                 + "`: " + (.body | san)) | join("\n")) end)),
        comments: ($in | map({path, line, side: "RIGHT"}
          + (if .start_line != null and .start_line < .line then {start_line, start_side: "RIGHT"} else {} end)
          + {body: (.body | san)}))}'
@@ -138,10 +143,10 @@ trusted_threads() {
   jq "$AI_REVIEW_JQ_DEFS"'
     [.data.repository.pullRequest.reviewThreads.nodes[]
      | select(.isResolved | not)
-     | select((.comments.nodes[0].author.login // "" | norm) == "github-actions"
-         or (.comments.nodes[0].authorAssociation | IN("OWNER", "MEMBER", "COLLABORATOR")))
+     | select(.comments.nodes[0] | trusted)
      | {thread_id: .id, is_resolved: .isResolved, path, line,
-        comments: [.comments.nodes[] | {id: .databaseId, author: (.author.login // "ghost" | norm), body}]}]' <"$1"
+        # untrusted replies never reach a model; the root is trusted, so reply targets are unchanged
+        comments: [.comments.nodes[] | select(trusted) | {id: .databaseId, author: (.author.login // "ghost" | norm), body}]}]' <"$1"
 }
 
 # Drops threads the implementer already declined (`Not changed:`) unless a non-github-actions comment came later.

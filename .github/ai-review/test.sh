@@ -74,9 +74,15 @@ assert_eq build-review-payload-cross-hunk "0 true" \
 zw=$'\xe2\x80\x8b'
 assert_eq sanitize "ping @${zw}FirelyTeam/devs and \`@param\`" "$(sanitize 'ping @FirelyTeam/devs and `@param`')"
 assert_eq sanitize-payload true "$(jq -r --arg zw "$zw" '.body | contains("@" + $zw + "FirelyTeam")' <<<"$payload")"
+# An unmatched backtick does not start code on GitHub, so the mention after it still pings.
+assert_eq sanitize-unbalanced "see \`foo and @${zw}alexzautke here" "$(sanitize 'see `foo and @alexzautke here')"
+echo '{"summary":"a stray ` here","comments":[{"path":"src/A.cs","line":40,"body":"cc @alexzautke"},{"path":"src/A.cs","line":41,"body":"b"}]}' >"$tmp/stray.json"
+assert_eq build-review-payload-stray-backtick true \
+  "$(build_review_payload "$tmp/stray.json" "$fx/diff.patch" 2222222 1 2 | jq -r --arg zw "$zw" '.body | contains("@" + $zw + "alexzautke")')"
 assert_eq trusted-threads "PRRT_bot PRRT_member" "$(trusted_threads "$fx/threads-mixed.json" | jq -r '[.[].thread_id] | join(" ")')"
 assert_eq trusted-threads-shape '{"thread_id":"PRRT_bot","is_resolved":false,"path":"src/A.cs","line":12,"comments":[{"id":101,"author":"github-actions","body":"Bot finding."},{"id":102,"author":"alexzautke","body":"Human reply."}]}' \
   "$(trusted_threads "$fx/threads-mixed.json" | jq -c '.[0]')"
+assert_eq trusted-threads-drop-outsider-reply "201" "$(trusted_threads "$fx/threads-mixed.json" | jq -r '[.[1].comments[].id] | join(" ")')"
 
 # --- command gate ---
 ev=$fx/event-issue-comment.json
@@ -121,6 +127,8 @@ assert_eq reply-to-reply-normalized 3000000001 "$(thread_root_id "$tmp/threads.j
 out=$(thread_root_id "$tmp/threads.json" 42); assert_eq thread-root-unknown "0:" "$?:$out"
 assert_eq implementer-threads-skip-declined "PRRT_handmade_ga_open PRRT_handmade_ga_followup" \
   "$(implementer_threads "$tmp/threads.json" | jq -r '[.[].thread_id] | join(" ")')"
+assert_eq implementer-threads-outsider-no-reopen "3000000013 false" \
+  "$(jq -r '[.. | .databaseId? | select(. == 3000000013)][0]' "$fx/threads-raw.json") $(implementer_threads "$tmp/threads.json" | jq -r 'any(.[]; .thread_id == "PRRT_handmade_ga_declined")')"
 assert_eq implementer-threads-human-followup true \
   "$(implementer_threads "$tmp/threads.json" | jq -r 'any(.[]; .thread_id == "PRRT_handmade_ga_followup")')"
 
