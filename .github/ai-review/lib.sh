@@ -108,6 +108,42 @@ skill_loaded() {
       and .is_error != true)' <"$1" >/dev/null 2>&1
 }
 
+# has_api_key <file>...: exit 0 if a file holds an Anthropic key pattern, raw (binary too) or as a
+# JSON-escaped string or key. Files go to grep/jq directly: `jq | grep -q` can lose a match to SIGPIPE.
+has_api_key() {
+  local f
+  for f; do
+    [[ -e $f ]] || continue
+    grep -qaF -- sk-ant- "$f" && return 0
+    jq -e '[.. | (strings, (objects | keys[]))] | any(contains("sk-ant-"))' <"$f" >/dev/null 2>&1 && return 0
+  done
+  return 1
+}
+
+# commits_have_api_key <base> <tip>: has_api_key over every commit in base..tip: patches (binary as
+# text, merges against their first parent), messages and identities. A git error counts as a hit.
+commits_have_api_key() {
+  local f rc=0
+  f=$(mktemp)
+  git log -p --text --diff-merges=first-parent --format='%an <%ae> %cn <%ce>%n%B' "$1..$2" >"$f" || rc=2
+  ((rc == 2)) || has_api_key "$f" || rc=1
+  rm -f "$f"
+  ((rc != 1))
+}
+
+# touches_protected <base> <tip>: exit 0 if the tree diff or any commit in base..tip (merges against
+# their first parent) touches .github/, .claude/ or .mcp.json. -z: git C-quotes odd paths otherwise.
+# A git error counts as a hit.
+touches_protected() {
+  local f rc=0
+  f=$(mktemp)
+  { git diff -z --no-renames --name-only "$1" "$2" \
+    && git log -z --no-renames --diff-merges=first-parent --name-only --format= "$1..$2"; } >"$f" || rc=2
+  ((rc == 2)) || grep -qzE '^(\.github/|\.claude/|\.mcp\.json$)' "$f" || rc=1
+  rm -f "$f"
+  ((rc != 1))
+}
+
 more_total() {
   if [[ $3 == running ]]; then echo $(($2 + 1)); else echo $(($1 + 1)); fi
 }

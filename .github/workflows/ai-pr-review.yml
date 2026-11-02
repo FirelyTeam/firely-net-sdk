@@ -148,6 +148,9 @@ jobs:
             job=round-2 step=$R2_STEP round=$R2_ROUND
           fi
           if [[ -n $job ]]; then
+            # failed_step can come from the fix job, where model-run code may have written it.
+            [[ $step =~ ^[a-z-]{1,40}$ ]] || step=""
+            [[ $round =~ ^[1-4]$ ]] || round=""
             # The marker counts completed rounds, so the failed one is the next.
             [[ -n $round ]] || round=$(( ${r:-0} + 1 ))
             # A failed start on pull_request has written no marker of its own; leave the body alone.

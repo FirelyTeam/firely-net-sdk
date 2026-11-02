@@ -129,6 +129,28 @@ exec_log '{"skill":"pr-review-reviewer"}' true; skill_loaded "$tmp/exec.json" pr
 jq 'del(.[2])' "$tmp/exec.json" >"$tmp/exec-noresult.json"; skill_loaded "$tmp/exec-noresult.json" pr-review-reviewer
 assert_eq skill-loaded-no-result 1 "$?"
 
+# --- key and path refusals ---
+echo '{"replies":[{"comment_id":1,"body":"fine"}]}' >"$tmp/clean.json"
+has_api_key "$tmp/clean.json"; assert_eq api-key-clean 1 "$?"
+echo 'x sk-ant-api03-abc' >"$tmp/raw.txt"; has_api_key "$tmp/clean.json" "$tmp/raw.txt"; assert_eq api-key-raw 0 "$?"
+echo '{"replies":[{"comment_id":1,"body":"sk-ant-api03-abc"}]}' >"$tmp/escaped.json"
+has_api_key "$tmp/escaped.json"; assert_eq api-key-json-escaped 0 "$?"
+printf 'bin\0ary sk-ant-api03-abc\0' >"$tmp/bin.dat"; has_api_key "$tmp/bin.dat"; assert_eq api-key-binary 0 "$?"
+G() { git -C "$tmp/repo" -c user.name=t -c user.email=t@t -c core.autocrlf=false "$@"; }
+git init -q "$tmp/repo" && echo a >"$tmp/repo/a" && G add a && G commit -qm A
+base=$(G rev-parse HEAD)
+echo b >"$tmp/repo/b" && G add b && G commit -qm "plain change"
+(cd "$tmp/repo" && touches_protected "$base" HEAD); assert_eq protected-clean 1 "$?"
+(cd "$tmp/repo" && commits_have_api_key "$base" HEAD); assert_eq commits-key-clean 1 "$?"
+G commit -q --allow-empty -m "note sk-ant-api03-abc"
+(cd "$tmp/repo" && commits_have_api_key "$base" HEAD); assert_eq commits-key-message 0 "$?"
+G reset -q --hard HEAD~1
+printf 'bin\0sk-ant-api03-abc' >"$tmp/repo/k.bin" && G add k.bin && G commit -qm bin && G rm -q k.bin && G commit -qm unbin
+(cd "$tmp/repo" && commits_have_api_key "$base" HEAD); assert_eq commits-key-binary-removed 0 "$?"
+mkdir -p "$tmp/repo/.claude/skills/é" && echo x >"$tmp/repo/.claude/skills/é/SKILL.md" && G add .claude && G commit -qm odd
+(cd "$tmp/repo" && touches_protected "$base" HEAD); assert_eq protected-quoted-path 0 "$?"
+(cd "$tmp/repo" && touches_protected "$base" nosuchrev 2>/dev/null); assert_eq protected-git-error 0 "$?"
+
 # --- more_total ---
 assert_eq more-total-running 3 "$(more_total 1 2 running)"
 assert_eq more-total-stopped 2 "$(more_total 1 2 stopped)"
