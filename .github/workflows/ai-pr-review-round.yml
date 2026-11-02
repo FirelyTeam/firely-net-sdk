@@ -56,8 +56,9 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: FirelyTeam/skills-internal
-          # TODO: re-pin to the merge commit on main once the skills PR merges
-          ref: b2e6adef3233ada6c5d40d6f4a1cbe222ea71b85
+          # TODO: re-pin to the merge commit on main once the skills PR merges. A squash merge
+          # leaves this branch commit unreachable from main, so it may be garbage-collected.
+          ref: bfed67d264747d67e5769343ef8688af279617ee
           token: ${{ steps.app-token.outputs.token }}
           path: skills-internal
           sparse-checkout: |
@@ -128,12 +129,20 @@ jobs:
           . "$RUNNER_TEMP/tools/lib.sh"
           pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
           m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          read -r r t s <<<"$m"
+          # A closed, merged or draft PR ends the loop quietly: no comment.
+          if ! pr_active "$pr_json"; then
+            echo "PR #$PR is closed or a draft; stopping."
+            [[ $s != running ]] || pr_marker_update_soft "$PR" - - stopped
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
           if [[ -z $m ]]; then
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$MISSING_MARKER_MSG"
             echo go=false >>"$GITHUB_OUTPUT"
             exit 0
           fi
-          read -r r t s <<<"$m"
+          t=$(round_cap "$t")
           if [[ $s != running ]] || ((r >= t)); then
             echo "Nothing to do: round $r of $t, status $s."
             echo go=false >>"$GITHUB_OUTPUT"
@@ -183,7 +192,11 @@ jobs:
 
       # --setting-sources user and --strict-mcp-config: skills load from ~/.claude, and nothing
       # committed to the PR (.claude/settings.json hooks, .mcp.json) is loaded. --add-dir: Read
-      # reaches only the working directory otherwise. `//` makes the Write rule an absolute path.
+      # reaches only the working directory otherwise. Read, Grep and Glob need no allow rule there;
+      # a bare Read allow would reach /proc/self/environ, which holds the API key, and review.json
+      # is public. Unlisted tools (Edit, NotebookEdit) are denied in headless mode. `//` makes a
+      # rule path absolute. Path checks for writes match only Edit(path) rules, so the review.json
+      # allow is given as Edit(...) as well as Write(...).
       - name: Review
         id: review
         if: steps.guard.outputs.go == 'true'
@@ -202,8 +215,8 @@ jobs:
             --setting-sources user
             --strict-mcp-config
             --add-dir ${{ runner.temp }}/ctx
-            --allowedTools Read,Grep,Glob,Skill,"Read(~/.claude/skills/**)","Write(/${{ runner.temp }}/review.json)"
-            --disallowedTools Edit,NotebookEdit,WebFetch,WebSearch,Bash
+            --allowedTools Skill,"Read(~/.claude/skills/**)","Write(/${{ runner.temp }}/review.json)","Edit(/${{ runner.temp }}/review.json)"
+            --disallowedTools WebFetch,WebSearch,Bash,"Read(//proc/**)","Read(//sys/**)"
 
       - name: Publish the review
         id: publish-review
@@ -360,6 +373,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      # Deny rules win over the bare Read allow, so Read cannot reach /proc/self/environ (the API
+      # key). dotnet build/test can still read the environment: this job stays untrusted.
       - name: Fix
         id: fix
         if: steps.guard-fix.outputs.go == 'true'
@@ -378,7 +393,7 @@ jobs:
             --strict-mcp-config
             --add-dir ${{ runner.temp }}/ctx-fix
             --allowedTools Read,Grep,Glob,Edit,Write,Skill,"Write(/${{ runner.temp }}/replies.json)","Bash(dotnet build *)","Bash(dotnet test *)","Bash(git add *)","Bash(git commit *)","Bash(git status*)","Bash(git diff*)","Bash(git log*)","Bash(git show*)"
-            --disallowedTools WebFetch,WebSearch,"Bash(git push*)","Bash(curl *)","Bash(wget *)"
+            --disallowedTools WebFetch,WebSearch,"Bash(git push*)","Bash(curl *)","Bash(wget *)","Read(//proc/**)","Read(//sys/**)"
 
       # The artifact of a public repo is public, so the key scan runs before upload as well as in
       # publish-fix (which is the check that counts: this runner is not trusted).
@@ -517,11 +532,17 @@ jobs:
           stop_round() { echo go=false >>"$GITHUB_OUTPUT"; exit 0; }
           pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
           m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          read -r _ _ s <<<"$m"
+          # First, so a closed PR gets no comment and a deleted head branch is never re-created.
+          if ! pr_active "$pr_json"; then
+            echo "PR #$PR is closed or a draft; not pushing."
+            [[ $s != running ]] || pr_marker_update_soft "$PR" - - stopped
+            stop_round
+          fi
           if [[ -z $m ]]; then
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$MISSING_MARKER_MSG"
             stop_round
           fi
-          read -r _ _ s <<<"$m"
           if [[ $s != running ]]; then
             echo "Marker status is $s; not pushing."
             stop_round
@@ -557,7 +578,7 @@ jobs:
             exit 1
           fi
           if touches_protected "$HEAD_SHA" "$tip"; then
-            echo "::error::The fix touches .github/, .claude/ or .mcp.json; not pushing."
+            echo "::error::The fix touches .github/, .claude/, .mcp.json, build/ or nuget.config; not pushing."
             exit 1
           fi
           if commits_have_api_key "$HEAD_SHA" "$tip"; then

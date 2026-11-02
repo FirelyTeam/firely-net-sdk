@@ -48,21 +48,27 @@ jobs:
           skip() { echo "Not running for PR #$PR: $*."; echo go=false >>"$GITHUB_OUTPUT"; exit 0; }
           pr_json=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" \
             --json state,isDraft,author,headRefName,headRepository,headRepositoryOwner,labels,body)
+          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          read -r _ _ s <<<"$m"
+          # A dispatch (from `/ai-review more`) the PR itself rules out: set the marker back to
+          # stopped, or it says running while nothing runs.
+          skip_pr() {
+            if [[ $EVENT == workflow_dispatch && $s == running ]]; then pr_marker_update_soft "$PR" - - stopped; fi
+            skip "$@"
+          }
           author=$(normalize_login "$(jq -r '.author.login // ""' <<<"$pr_json")")
           head_repo=$(jq -r '"\(.headRepositoryOwner.login)/\(.headRepository.name)"' <<<"$pr_json")
-          [[ $(jq -r .state <<<"$pr_json") == OPEN ]] || skip "not open"
-          [[ $(jq -r .isDraft <<<"$pr_json") != true ]] || skip "draft"
-          [[ ${head_repo,,} == "${GITHUB_REPOSITORY,,}" ]] || skip "head repo is $head_repo"
-          [[ $author != dependabot && $author != renovate ]] || skip "author $author"
-          [[ $(jq -r .headRefName <<<"$pr_json") != release/* ]] || skip "release branch"
-          ! jq -e 'any(.labels[]; .name == "no-ai-review")' <<<"$pr_json" >/dev/null || skip "label no-ai-review"
+          [[ $(jq -r .state <<<"$pr_json") == OPEN ]] || skip_pr "not open"
+          [[ $(jq -r .isDraft <<<"$pr_json") != true ]] || skip_pr "draft"
+          [[ ${head_repo,,} == "${GITHUB_REPOSITORY,,}" ]] || skip_pr "head repo is $head_repo"
+          [[ $author != dependabot && $author != renovate ]] || skip_pr "author $author"
+          [[ $(jq -r .headRefName <<<"$pr_json") != release/* ]] || skip_pr "release branch"
+          ! jq -e 'any(.labels[]; .name == "no-ai-review")' <<<"$pr_json" >/dev/null || skip_pr "label no-ai-review"
 
-          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
           if [[ $EVENT == pull_request ]]; then
             # A re-readied PR does not start over; `/ai-review more` adds rounds.
             [[ -z $m ]] || skip "it already has an ai-review marker ($m)"
           else
-            read -r _ _ s <<<"$m"
             [[ $s == running ]] || skip "marker status is ${s:-missing}, not running"
           fi
 
@@ -140,6 +146,8 @@ jobs:
           . .github/ai-review/lib.sh
           m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
           read -r r t s <<<"$m"
+          # Before both uses below: a hand-edited total must not keep the loop re-dispatching.
+          t=$(round_cap "$t")
 
           job="" step="" round=""
           if [[ $START_RESULT == failure ]]; then

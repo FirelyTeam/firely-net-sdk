@@ -156,11 +156,30 @@ printf 'bin\0sk-ant-api03-abc' >"$tmp/repo/k.bin" && G add k.bin && G commit -qm
 mkdir -p "$tmp/repo/.claude/skills/é" && echo x >"$tmp/repo/.claude/skills/é/SKILL.md" && G add .claude && G commit -qm odd
 (cd "$tmp/repo" && touches_protected "$base" HEAD); assert_eq protected-quoted-path 0 "$?"
 (cd "$tmp/repo" && touches_protected "$base" nosuchrev 2>/dev/null); assert_eq protected-git-error 0 "$?"
+# Azure Pipelines runs build/ and restores with nuget.config (any case) on every bot push.
+b2=$(G rev-parse HEAD)
+mkdir -p "$tmp/repo/build" && echo x >"$tmp/repo/build/azure-pipelines.yml" && G add build && G commit -qm pipe
+(cd "$tmp/repo" && touches_protected "$b2" HEAD); assert_eq protected-build 0 "$?"
+G reset -q --hard "$b2"
+echo x >"$tmp/repo/NuGet.Config" && G add NuGet.Config && G commit -qm nuget
+(cd "$tmp/repo" && touches_protected "$b2" HEAD); assert_eq protected-nuget-config 0 "$?"
+G reset -q --hard "$b2"
+mkdir -p "$tmp/repo/src/build" && echo x >"$tmp/repo/src/build/x.cs" && G add src && G commit -qm src
+(cd "$tmp/repo" && touches_protected "$b2" HEAD); assert_eq protected-nested-build-ok 1 "$?"
 
 # --- more_total ---
 assert_eq more-total-running 3 "$(more_total 1 2 running)"
 assert_eq more-total-stopped 2 "$(more_total 1 2 stopped)"
 assert_eq more-total-done 3 "$(more_total 2 2 done)"
+
+# --- round_cap: a hand-edited marker total cannot pass the hard cap ---
+assert_eq round-cap "4 2 4 0" "$(round_cap 40) $(round_cap 2) $(round_cap 4) $(round_cap '')"
+
+# --- pr_active: closed, merged and draft PRs stop the loop ---
+assert_eq pr-active "0 1 1" "$(
+  pr_active '{"state":"open","draft":false}'; echo -n "$? "
+  pr_active '{"state":"closed","draft":false,"merged":true}'; echo -n "$? "
+  pr_active '{"state":"open","draft":true}'; echo -n "$?")"
 
 # --- identity and reply targets, against the captured real fixtures ---
 assert_eq normalize-login "dependabot github-actions github-actions" \
@@ -177,6 +196,10 @@ assert_eq implementer-threads-outsider-no-reopen "3000000013 false" \
   "$(jq -r '[.. | .databaseId? | select(. == 3000000013)][0]' "$fx/threads-raw.json") $(implementer_threads "$tmp/threads.json" | jq -r 'any(.[]; .thread_id == "PRRT_handmade_ga_declined")')"
 assert_eq implementer-threads-human-followup true \
   "$(implementer_threads "$tmp/threads.json" | jq -r 'any(.[]; .thread_id == "PRRT_handmade_ga_followup")')"
+# A thread the reviewer verified but could not resolve needs no more work, until a human replies.
+printf '[{"thread_id":"V","comments":[{"id":1,"author":"github-actions","body":"Bug."},{"id":2,"author":"github-actions","body":"Fixed in abc1234: x"},{"id":3,"author":"github-actions","body":"Verified: x"}]},
+  {"thread_id":"VH","comments":[{"id":4,"author":"github-actions","body":"Bug."},{"id":5,"author":"github-actions","body":"Verified: x"},{"id":6,"author":"alexzautke","body":"Not quite."}]}]' >"$tmp/verified.json"
+assert_eq implementer-threads-skip-verified VH "$(implementer_threads "$tmp/verified.json" | jq -r '[.[].thread_id] | join(" ")')"
 
 # --- scripts, dry-run ---
 trusted_threads "$fx/threads-mixed.json" >"$tmp/mixed.json"

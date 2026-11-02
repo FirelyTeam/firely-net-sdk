@@ -132,20 +132,34 @@ commits_have_api_key() {
 }
 
 # touches_protected <base> <tip>: exit 0 if the tree diff or any commit in base..tip (merges against
-# their first parent) touches .github/, .claude/ or .mcp.json. -z: git C-quotes odd paths otherwise.
+# their first parent) touches .github/, .claude/, .mcp.json, build/ (Azure Pipelines) or a nuget.config
+# at any depth. Case-insensitive, so it errs toward refusing. -z: git C-quotes odd paths otherwise.
 # A git error counts as a hit.
 touches_protected() {
   local f rc=0
   f=$(mktemp)
   { git diff -z --no-renames --name-only "$1" "$2" \
     && git log -z --no-renames --diff-merges=first-parent --name-only --format= "$1..$2"; } >"$f" || rc=2
-  ((rc == 2)) || grep -qzE '^(\.github/|\.claude/|\.mcp\.json$)' "$f" || rc=1
+  ((rc == 2)) || grep -qziE '^(\.github/|\.claude/|\.mcp\.json$|build/)|(^|/)nuget\.config$' "$f" || rc=1
   rm -f "$f"
   ((rc != 1))
 }
 
+AI_REVIEW_MAX_ROUNDS=4
+
 more_total() {
   if [[ $3 == running ]]; then echo $(($2 + 1)); else echo $(($1 + 1)); fi
+}
+
+# round_cap <T>: the marker's total, at most AI_REVIEW_MAX_ROUNDS (the PR body is editable); empty is 0.
+round_cap() {
+  local t=${1:-0}
+  echo $((t > AI_REVIEW_MAX_ROUNDS ? AI_REVIEW_MAX_ROUNDS : t))
+}
+
+# pr_active <REST pull JSON>: exit 0 only for an open, non-draft PR (closed covers merged).
+pr_active() {
+  jq -e '.state == "open" and .draft != true' <<<"$1" >/dev/null
 }
 
 diff_lines() {
@@ -203,13 +217,16 @@ trusted_threads() {
         comments: [.comments.nodes[] | select(trusted) | {id: .databaseId, author: (.author.login // "ghost" | norm), body}]}]' <"$1"
 }
 
-# Drops threads the implementer already declined (`Not changed:`) unless a non-github-actions comment came later.
+# Drops threads the implementer already declined (`Not changed:`) unless a non-github-actions comment
+# came later, and threads the reviewer verified (last comment a github-actions `Verified:`) but could
+# not resolve.
 implementer_threads() {
   jq "$AI_REVIEW_JQ_DEFS"'
     map(select(.comments as $c
       | ([range($c | length) | select(($c[.].author | norm) == "github-actions"
           and ($c[.].body | startswith("Not changed:")))] | last) as $i
-      | $i == null or any($c[$i + 1:][]; (.author | norm) != "github-actions")))' <"$1"
+      | ($i == null or any($c[$i + 1:][]; (.author | norm) != "github-actions"))
+        and ($c[-1] | (.author | norm) == "github-actions" and (.body | startswith("Verified:")) | not)))' <"$1"
 }
 
 command_gate() {

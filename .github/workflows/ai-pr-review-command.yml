@@ -66,7 +66,7 @@ jobs:
           fi
           read -r r t s <<<"$m"
           n=$(more_total "$r" "$t" "$s")
-          if ((n > 4)); then
+          if ((n > AI_REVIEW_MAX_ROUNDS)); then
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "AI review: round cap (4) reached."
             exit 0
           fi
