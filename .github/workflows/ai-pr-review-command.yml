@@ -1,0 +1,77 @@
+# `/ai-review stop` and `/ai-review more` on a PR, from OWNER, MEMBER or COLLABORATOR only.
+# Runs outside the loop's concurrency group and never checks out PR code: issue_comment checks
+# out the default branch.
+name: AI PR review command
+
+on:
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: ai-pr-review-command-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: write
+  actions: write
+
+jobs:
+  command:
+    # A cheap pre-filter; command_gate below is the real check.
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/ai-review ')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out the loop scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Run the command
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.issue.number }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+        run: |
+          . .github/ai-review/lib.sh
+          cmd=$(command_gate "$GITHUB_EVENT_PATH")
+          if [[ -z $cmd ]]; then
+            echo "Not an /ai-review command from a maintainer on a PR; ignored."
+            exit 0
+          fi
+          head_repo=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" --json headRepository,headRepositoryOwner \
+            --jq '"\(.headRepositoryOwner.login)/\(.headRepository.name)"')
+          if [[ ${head_repo,,} != "${GITHUB_REPOSITORY,,}" ]]; then
+            echo "PR head is in $head_repo, not this repo; ignored."
+            exit 0
+          fi
+          react() {
+            gh_write api -X POST "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID/reactions" -f content=+1 \
+              || warn "could not add a reaction"
+          }
+
+          if [[ $cmd == stop ]]; then
+            rc=0
+            pr_marker_update "$PR" - - stopped || rc=$?
+            ((rc == 0 || rc == 5)) || exit "$rc"
+            react
+            exit 0
+          fi
+
+          # more: no marker counts as R=0 T=0.
+          m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
+          if [[ -z $m ]]; then
+            pr_marker_update "$PR" 0 0 stopped
+            m="0 0 stopped"
+          fi
+          read -r r t s <<<"$m"
+          n=$(more_total "$r" "$t" "$s")
+          if ((n > 4)); then
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "AI review: round cap (4) reached."
+            exit 0
+          fi
+          AI_REVIEW_ALLOW_RESTART=1 pr_marker_update "$PR" - "$n" running
+          gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
+          react

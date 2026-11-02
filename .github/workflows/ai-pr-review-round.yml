@@ -1,0 +1,373 @@
+# One review/fix pair of the AI PR review loop, called by ai-pr-review.yml.
+# The model never holds a GitHub token: it reads context files and writes a JSON file; the bash
+# steps validate that file, post it and push the commits with GITHUB_TOKEN. GH_TOKEN is set per
+# bash step only, never at job level, because the model steps inherit the job environment.
+name: AI PR review round
+
+on:
+  workflow_call:
+    inputs:
+      pr:
+        description: Pull request number.
+        required: true
+        type: number
+    outputs:
+      go:
+        description: "'true' when the guard started a round."
+        value: ${{ jobs.round.outputs.go }}
+      round:
+        description: The round this run worked on.
+        value: ${{ jobs.round.outputs.round }}
+      failed_step:
+        description: Id of the first step that failed, if any.
+        value: ${{ jobs.round.outputs.failed_step }}
+
+permissions: {}
+
+jobs:
+  round:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      go: ${{ steps.guard.outputs.go }}
+      round: ${{ steps.guard.outputs.round }}
+      failed_step: ${{ steps.failed.outputs.step }}
+    env:
+      PR: ${{ inputs.pr }}
+      MISSING_MARKER_MSG: 'AI review loop stopped: the progress marker was removed from the PR description. Comment `/ai-review more` to continue.'
+      BRANCH_CHANGED_FMT: 'AI review loop stopped: the branch changed during round %s. Comment `/ai-review more` to run another round.'
+    steps:
+      # The scripts come from the workflow's own commit, not the PR head: an older PR head has no
+      # scripts, and the fix step can edit the working tree before later steps run them.
+      - name: Check out the loop scripts
+        id: tools-checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          path: .ai-review-tools
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Move the loop scripts out of the workspace
+        id: tools
+        run: |
+          cp -r .ai-review-tools/.github/ai-review "$RUNNER_TEMP/tools"
+          rm -rf .ai-review-tools
+
+      - name: Guard
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
+          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          if [[ -z $m ]]; then
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$MISSING_MARKER_MSG"
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          read -r r t s <<<"$m"
+          if [[ $s != running ]] || ((r >= t)); then
+            echo "Nothing to do: round $r of $t, status $s."
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          {
+            echo go=true
+            echo "head_sha=$(jq -r .head.sha <<<"$pr_json")"
+            echo "head_ref=$(jq -r .head.ref <<<"$pr_json")"
+            echo "round=$((r + 1))"
+            echo "total=$t"
+          } >>"$GITHUB_OUTPUT"
+
+      # The exact commit the review is posted on, not the merge ref or the branch name.
+      - name: Check out the PR head
+        id: checkout
+        if: steps.guard.outputs.go == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ steps.guard.outputs.head_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up .NET
+        id: dotnet
+        if: steps.guard.outputs.go == 'true'
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+
+      - name: Create a skills-internal read token
+        id: app-token
+        if: steps.guard.outputs.go == 'true'
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ secrets.CAPTAIN_CLOSURE_APP_ID }}
+          private-key: ${{ secrets.CAPTAIN_CLOSURE_SECRET_KEY }}
+          owner: FirelyTeam
+          repositories: skills-internal
+          permission-contents: read
+
+      # actions/checkout only accepts a path under the workspace, so check out to a subdirectory
+      # and move the skills to ~/.claude/skills/, where the implementer can never commit them.
+      - name: Check out the review skills
+        id: skills-checkout
+        if: steps.guard.outputs.go == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: FirelyTeam/skills-internal
+          # TODO: re-pin to the merge commit on main once the skills PR merges
+          ref: b2e6adef3233ada6c5d40d6f4a1cbe222ea71b85
+          token: ${{ steps.app-token.outputs.token }}
+          path: .ai-review-skills
+          sparse-checkout: |
+            skills/pr-review-reviewer
+            skills/pr-review-implementer
+          persist-credentials: false
+
+      - name: Install the review skills
+        id: skills
+        if: steps.guard.outputs.go == 'true'
+        run: |
+          mkdir -p ~/.claude/skills
+          cp -r .ai-review-skills/skills/pr-review-reviewer .ai-review-skills/skills/pr-review-implementer ~/.claude/skills/
+          rm -rf .ai-review-skills
+
+      - name: Fetch the review context
+        id: context
+        if: steps.guard.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
+
+      # --setting-sources user: skills load from ~/.claude, and nothing committed to the PR
+      # (.claude/settings.json hooks, .mcp.json) is loaded. --add-dir: Read reaches only the
+      # working directory otherwise. `//` makes the Write rule an absolute path.
+      - name: Review
+        id: review
+        if: steps.guard.outputs.go == 'true'
+        uses: anthropics/claude-code-action/base-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1.0.266
+        timeout-minutes: 20
+        with:
+          anthropic_api_key: ${{ secrets.AI_REVIEW_ANTHROPIC_API_KEY }}
+          prompt: >-
+            Use the pr-review-reviewer skill.
+            repo=${{ github.repository }}, pr=${{ inputs.pr }},
+            round=${{ steps.guard.outputs.round }}, total=${{ steps.guard.outputs.total }},
+            context_dir=${{ runner.temp }}/ctx, output_file=${{ runner.temp }}/review.json
+          claude_args: |
+            --model claude-opus-5-5
+            --max-turns 40
+            --setting-sources user
+            --add-dir ${{ runner.temp }}/ctx
+            --allowedTools Read,Grep,Glob,Skill,"Read(~/.claude/skills/**)","Write(/${{ runner.temp }}/review.json)"
+            --disallowedTools Edit,NotebookEdit,WebFetch,WebSearch,Bash
+
+      # Both model steps write the same execution file; move this one away before fix runs.
+      - name: Keep the review execution log
+        id: keep-review-log
+        if: always() && steps.review.outputs.execution_file != ''
+        env:
+          EXEC_FILE: ${{ steps.review.outputs.execution_file }}
+        run: mv "$EXEC_FILE" "$RUNNER_TEMP/exec-review.json"
+
+      - name: Publish the review
+        id: publish-review
+        if: steps.guard.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.guard.outputs.head_sha }}
+          ROUND: ${{ steps.guard.outputs.round }}
+          TOTAL: ${{ steps.guard.outputs.total }}
+        run: |
+          # Without a Skill call the model may still write plausible JSON; refuse it.
+          if ! jq -e 'any(.. | objects; .type? == "tool_use" and .name? == "Skill")' "$RUNNER_TEMP/exec-review.json" >/dev/null; then
+            echo "::error::The review session made no Skill tool call; not publishing."
+            exit 1
+          fi
+          bash "$RUNNER_TEMP/tools/publish-review.sh" "$PR" "$RUNNER_TEMP/review.json" "$RUNNER_TEMP/ctx/diff.patch" \
+            "$HEAD_SHA" "$ROUND" "$TOTAL" "$RUNNER_TEMP/ctx/threads.json"
+
+      - name: Guard the fix
+        id: guard-fix
+        if: steps.guard.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.guard.outputs.head_sha }}
+          ROUND: ${{ steps.guard.outputs.round }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
+          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          if [[ -z $m ]]; then
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$MISSING_MARKER_MSG"
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          read -r _ _ s <<<"$m"
+          if [[ $s == stopped ]]; then
+            echo "Stopped by /ai-review stop."
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ $(jq -r .head.sha <<<"$pr_json") != "$HEAD_SHA" ]]; then
+            pr_marker_update "$PR" - - stopped
+            # shellcheck disable=SC2059
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Again, so threads include the review just posted.
+          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
+          # The implementer skill reads context_dir/threads.json; give it the R7-filtered threads.
+          mkdir -p "$RUNNER_TEMP/ctx-fix"
+          cp "$RUNNER_TEMP/ctx/pr.json" "$RUNNER_TEMP/ctx/diff.patch" "$RUNNER_TEMP/ctx-fix/"
+          cp "$RUNNER_TEMP/ctx/threads-implementer.json" "$RUNNER_TEMP/ctx-fix/threads.json"
+          echo go=true >>"$GITHUB_OUTPUT"
+
+      - name: Set the git identity
+        id: git-identity
+        if: steps.guard-fix.outputs.go == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          sha256sum .git/config >"$RUNNER_TEMP/git-config.sha256"
+
+      - name: Fix
+        id: fix
+        if: steps.guard-fix.outputs.go == 'true'
+        uses: anthropics/claude-code-action/base-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1.0.266
+        timeout-minutes: 45
+        with:
+          anthropic_api_key: ${{ secrets.AI_REVIEW_ANTHROPIC_API_KEY }}
+          prompt: >-
+            Use the pr-review-implementer skill.
+            repo=${{ github.repository }}, pr=${{ inputs.pr }}, round=${{ steps.guard.outputs.round }},
+            context_dir=${{ runner.temp }}/ctx-fix, output_file=${{ runner.temp }}/replies.json
+          claude_args: |
+            --model claude-opus-5-5
+            --max-turns 80
+            --setting-sources user
+            --add-dir ${{ runner.temp }}/ctx-fix
+            --allowedTools Read,Grep,Glob,Edit,Write,Skill,"Write(/${{ runner.temp }}/replies.json)","Bash(dotnet build *)","Bash(dotnet test *)","Bash(git add *)","Bash(git commit *)","Bash(git status*)","Bash(git diff*)","Bash(git log*)","Bash(git show*)"
+            --disallowedTools WebFetch,WebSearch,"Bash(git push*)","Bash(curl *)","Bash(wget *)"
+
+      # Pushes the implementer's commits unchanged. A rejected push means a human pushed: stop.
+      - name: Push
+        id: push
+        if: steps.guard-fix.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.guard.outputs.head_sha }}
+          HEAD_REF: ${{ steps.guard.outputs.head_ref }}
+          ROUND: ${{ steps.guard.outputs.round }}
+          FIX_EXEC: ${{ steps.fix.outputs.execution_file }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          if ! jq -e 'any(.. | objects; .type? == "tool_use" and .name? == "Skill")' "$FIX_EXEC" >/dev/null; then
+            echo "::error::The fix session made no Skill tool call; not pushing."
+            exit 1
+          fi
+          if [[ $(git rev-parse HEAD) == "$HEAD_SHA" ]]; then
+            echo "No new commits."
+            echo go=true >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! git merge-base --is-ancestor "$HEAD_SHA" HEAD; then
+            echo "::error::HEAD no longer descends from the reviewed commit; not pushing."
+            exit 1
+          fi
+          # Every new commit, so an add-then-revert of a .github/ file is caught too.
+          if [[ -n $(git log --no-renames --name-only --format= "$HEAD_SHA..HEAD" -- .github) ]]; then
+            echo "::error::A new commit touches .github/; not pushing."
+            exit 1
+          fi
+          if ! sha256sum -c --quiet "$RUNNER_TEMP/git-config.sha256"; then
+            echo "::error::.git/config changed during the fix step; not pushing."
+            exit 1
+          fi
+          rc=0
+          out=$(GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 git -c core.hooksPath=/dev/null \
+            push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${HEAD_REF}" 2>&1) || rc=$?
+          sed -E 's#://[^@/]*@#://#g' <<<"$out"
+          if ((rc == 0)); then
+            echo go=true >>"$GITHUB_OUTPUT"
+          elif grep -qE '\[rejected\]|non-fast-forward|fetch first' <<<"$out"; then
+            # The replies refer to commits that never landed, so they are not posted.
+            rc=0
+            pr_marker_update "$PR" - - stopped || rc=$?
+            ((rc == 0 || rc == 5)) || exit "$rc"
+            # shellcheck disable=SC2059
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
+            echo go=false >>"$GITHUB_OUTPUT"
+          else
+            echo "::error::git push failed."
+            exit 1
+          fi
+
+      - name: Publish the replies
+        id: publish-replies
+        if: steps.push.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$RUNNER_TEMP/tools/publish-replies.sh" "$PR" "$RUNNER_TEMP/replies.json" "$RUNNER_TEMP/ctx-fix/threads.json"
+
+      - name: Record the round
+        id: marker
+        if: steps.push.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ROUND: ${{ steps.guard.outputs.round }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          pr_marker_update "$PR" "$ROUND" - -
+
+      # Only the turn count and cost leave the execution logs; nothing else is printed.
+      - name: Cost summary
+        id: cost
+        if: always() && steps.guard.outputs.go == 'true'
+        env:
+          FIX_EXEC: ${{ steps.fix.outputs.execution_file }}
+        run: |
+          {
+            echo "| step | turns | cost |"
+            echo "|---|---|---|"
+            for pair in "review|$RUNNER_TEMP/exec-review.json" "fix|$FIX_EXEC"; do
+              name=${pair%%|*} f=${pair#*|}
+              [[ -n $f && -f $f ]] || continue
+              jq -r --arg s "$name" '[.[] | select(.type? == "result")] | last // {}
+                | "| \($s) | \(.num_turns // "?") | $\(.total_cost_usd // "?") |"' "$f" || true
+            done
+          } >>"$GITHUB_STEP_SUMMARY"
+
+      - name: Name the failed step
+        id: failed
+        if: failure()
+        env:
+          STEP: >-
+            ${{ steps.tools-checkout.outcome == 'failure' && 'tools-checkout'
+            || steps.tools.outcome == 'failure' && 'tools'
+            || steps.guard.outcome == 'failure' && 'guard'
+            || steps.checkout.outcome == 'failure' && 'checkout'
+            || steps.dotnet.outcome == 'failure' && 'dotnet'
+            || steps.app-token.outcome == 'failure' && 'app-token'
+            || steps.skills-checkout.outcome == 'failure' && 'skills-checkout'
+            || steps.skills.outcome == 'failure' && 'skills'
+            || steps.context.outcome == 'failure' && 'context'
+            || steps.review.outcome == 'failure' && 'review'
+            || steps.keep-review-log.outcome == 'failure' && 'keep-review-log'
+            || steps.publish-review.outcome == 'failure' && 'publish-review'
+            || steps.guard-fix.outcome == 'failure' && 'guard-fix'
+            || steps.git-identity.outcome == 'failure' && 'git-identity'
+            || steps.fix.outcome == 'failure' && 'fix'
+            || steps.push.outcome == 'failure' && 'push'
+            || steps.publish-replies.outcome == 'failure' && 'publish-replies'
+            || steps.marker.outcome == 'failure' && 'marker'
+            || steps.cost.outcome == 'failure' && 'cost'
+            || '' }}
+        run: echo "step=$STEP" >>"$GITHUB_OUTPUT"

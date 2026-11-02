@@ -1,0 +1,167 @@
+# AI PR review loop (pilot): review 1 -> fix 1 -> review 2 -> fix 2 on a same-repo PR.
+# Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S -->.
+# Steer it with `/ai-review stop|more` (ai-pr-review-command.yml).
+name: AI PR review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Pull request number. Runs only when the PR's marker status is running.
+        required: true
+        type: number
+
+concurrency:
+  group: ai-pr-review-${{ github.event.pull_request.number || inputs.pr }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  start:
+    # Fork PRs never get past here; the step checks the head repo again for workflow_dispatch.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      go: ${{ steps.start.outputs.go }}
+    steps:
+      - name: Check out the loop scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Decide whether to run
+        id: start
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          . .github/ai-review/lib.sh
+          skip() { echo "Not running for PR #$PR: $*."; echo go=false >>"$GITHUB_OUTPUT"; exit 0; }
+          pr_json=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" \
+            --json state,isDraft,author,headRefName,headRepository,headRepositoryOwner,labels,body)
+          author=$(normalize_login "$(jq -r '.author.login // ""' <<<"$pr_json")")
+          head_repo=$(jq -r '"\(.headRepositoryOwner.login)/\(.headRepository.name)"' <<<"$pr_json")
+          [[ $(jq -r .state <<<"$pr_json") == OPEN ]] || skip "not open"
+          [[ $(jq -r .isDraft <<<"$pr_json") != true ]] || skip "draft"
+          [[ ${head_repo,,} == "${GITHUB_REPOSITORY,,}" ]] || skip "head repo is $head_repo"
+          [[ $author != dependabot && $author != renovate ]] || skip "author $author"
+          [[ $(jq -r .headRefName <<<"$pr_json") != release/* ]] || skip "release branch"
+          ! jq -e 'any(.labels[]; .name == "no-ai-review")' <<<"$pr_json" >/dev/null || skip "label no-ai-review"
+
+          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          if [[ $EVENT == pull_request ]]; then
+            # A re-readied PR does not start over; `/ai-review more` adds rounds.
+            [[ -z $m ]] || skip "it already has an ai-review marker ($m)"
+          else
+            read -r _ _ s <<<"$m"
+            [[ $s == running ]] || skip "marker status is ${s:-missing}, not running"
+          fi
+
+          rc=0
+          bash .github/ai-review/fetch-context.sh "$PR" "$RUNNER_TEMP/ctx" || rc=$?
+          if ((rc == 4)); then
+            if [[ -n $m ]]; then pr_marker_update "$PR" - - done; else pr_marker_update "$PR" 0 2 done; fi
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" \
+              --body "AI review skipped: this PR's diff is too large for the AI review loop (over 400 KB, or beyond what GitHub returns as a diff)."
+            skip "diff too large"
+          fi
+          ((rc == 0)) || exit "$rc"
+
+          [[ -n $m ]] || pr_marker_update "$PR" 0 2 running
+          echo go=true >>"$GITHUB_OUTPUT"
+
+  # A called workflow can only narrow the caller's token, and the top level is {}.
+  round-1:
+    needs: start
+    if: needs.start.outputs.go == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/ai-pr-review-round.yml
+    with:
+      pr: ${{ github.event.pull_request.number || inputs.pr }}
+    secrets: inherit
+
+  # Skipped when round 1's guard found nothing to do, so its missing-marker comment is not repeated.
+  round-2:
+    needs: round-1
+    if: needs.round-1.outputs.go == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/ai-pr-review-round.yml
+    with:
+      pr: ${{ github.event.pull_request.number || inputs.pr }}
+    secrets: inherit
+
+  finish:
+    needs: [start, round-1, round-2]
+    if: always() && needs.start.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # contents: read only to check out the scripts.
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: write
+    steps:
+      - name: Check out the loop scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          R1_RESULT: ${{ needs.round-1.result }}
+          R1_STEP: ${{ needs.round-1.outputs.failed_step }}
+          R1_ROUND: ${{ needs.round-1.outputs.round }}
+          R2_RESULT: ${{ needs.round-2.result }}
+          R2_STEP: ${{ needs.round-2.outputs.failed_step }}
+          R2_ROUND: ${{ needs.round-2.outputs.round }}
+        run: |
+          . .github/ai-review/lib.sh
+          m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
+          read -r r t s <<<"$m"
+
+          job="" step="" round=""
+          if [[ $R1_RESULT == failure || $R1_RESULT == cancelled ]]; then
+            job=round-1 step=$R1_STEP round=$R1_ROUND
+          elif [[ $R2_RESULT == failure || $R2_RESULT == cancelled ]]; then
+            job=round-2 step=$R2_STEP round=$R2_ROUND
+          fi
+          if [[ -n $job ]]; then
+            # The marker counts completed rounds, so the failed one is the next.
+            [[ -n $round ]] || round=$(( ${r:-0} + 1 ))
+            rc=0
+            pr_marker_update "$PR" - - failed || rc=$?
+            ((rc == 0 || rc == 5)) || exit "$rc"
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" \
+              --body "AI review loop stopped: ${step:-$job} failed in round $round. Run: $RUN_URL"
+            exit 0
+          fi
+
+          if [[ $s != running ]]; then
+            echo "Marker status is ${s:-missing}; nothing to finish."
+            exit 0
+          fi
+          if ((r >= t)); then
+            rc=0
+            pr_marker_update "$PR" - - done || rc=$?
+            ((rc == 0 || rc == 5)) || exit "$rc"
+          else
+            # `/ai-review more` raised the total during this run.
+            gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
+          fi
