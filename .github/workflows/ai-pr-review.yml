@@ -131,9 +131,11 @@ jobs:
           R1_RESULT: ${{ needs.round-1.result }}
           R1_STEP: ${{ needs.round-1.outputs.failed_step }}
           R1_ROUND: ${{ needs.round-1.outputs.round }}
+          R1_COMPLETED: ${{ needs.round-1.outputs.completed }}
           R2_RESULT: ${{ needs.round-2.result }}
           R2_STEP: ${{ needs.round-2.outputs.failed_step }}
           R2_ROUND: ${{ needs.round-2.outputs.round }}
+          R2_COMPLETED: ${{ needs.round-2.outputs.completed }}
         run: |
           . .github/ai-review/lib.sh
           m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
@@ -146,6 +148,14 @@ jobs:
             job=round-1 step=$R1_STEP round=$R1_ROUND
           elif [[ $R2_RESULT == failure || $R2_RESULT == cancelled ]]; then
             job=round-2 step=$R2_STEP round=$R2_ROUND
+          elif [[ $s == running ]] && ((r < t)); then
+            # Still running with rounds left: only a round that ran to its marker update may hand
+            # over to a new run. Anything else (a forged stop, say) fails instead of re-dispatching.
+            if [[ $R2_RESULT == success ]]; then
+              [[ $R2_COMPLETED == true ]] || job=round-2 round=$R2_ROUND
+            else
+              [[ $R1_COMPLETED == true ]] || job=round-1 round=$R1_ROUND
+            fi
           fi
           if [[ -n $job ]]; then
             # failed_step can come from the fix job, where model-run code may have written it.
@@ -169,6 +179,6 @@ jobs:
           if ((r >= t)); then
             pr_marker_update_soft "$PR" - - done
           else
-            # `/ai-review more` raised the total during this run.
+            # `/ai-review more` raised the total during this run, and the last round completed.
             gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
           fi

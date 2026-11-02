@@ -272,7 +272,6 @@ jobs:
       pull-requests: read
     outputs:
       fix_go: ${{ steps.guard-fix.outputs.go }}
-      stop_reason: ${{ steps.guard-fix.outputs.stop_reason }}
       failed_step: ${{ steps.failed.outputs.step }}
     env:
       PR: ${{ inputs.pr }}
@@ -488,66 +487,58 @@ jobs:
           cp -r .ai-review-tools/.github/ai-review "$RUNNER_TEMP/tools"
           rm -rf .ai-review-tools
 
-      # fix_go and stop_reason come from the untrusted fix job: only fixed texts can follow.
-      - name: Handle a stop
-        id: stop
-        env:
-          GH_TOKEN: ${{ github.token }}
-          FIX_GO: ${{ needs.fix.outputs.fix_go }}
-          STOP_REASON: ${{ needs.fix.outputs.stop_reason }}
-        run: |
-          . "$RUNNER_TEMP/tools/lib.sh"
-          if [[ $FIX_GO == true ]]; then
-            echo go=true >>"$GITHUB_OUTPUT"
-            exit 0
-          fi
-          case $STOP_REASON in
-            stopped) echo "Stopped by /ai-review stop." ;;
-            missing-marker) gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$MISSING_MARKER_MSG" ;;
-            branch-changed)
-              pr_marker_update_soft "$PR" - - stopped
-              # shellcheck disable=SC2059
-              gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")" ;;
-            *)
-              echo "::error::The fix job reported neither a fix nor a known stop reason."
-              exit 1 ;;
-          esac
-          echo go=false >>"$GITHUB_OUTPUT"
-
       - name: Check out the reviewed commit
         id: checkout
-        if: steps.stop.outputs.go == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.review.outputs.head_sha }}
           fetch-depth: 1
           persist-credentials: false
 
+      # fix_go is untrusted: it only decides whether there is an artifact to fetch.
       - name: Download the fix
         id: download
-        if: steps.stop.outputs.go == 'true'
+        if: needs.fix.outputs.fix_go == 'true'
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ai-review-fix-${{ inputs.pr }}-round-${{ needs.review.outputs.round }}
           path: ${{ runner.temp }}/fix
 
-      # Fetched here rather than taken from the fix job, which model-run code could have edited.
-      - name: Fetch the threads
-        id: context
-        if: steps.stop.outputs.go == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
-
-      # Pushes the implementer's commits unchanged. A rejected push means a human pushed: stop.
+      # Pushes the implementer's commits unchanged. Whether to stop is decided here, from the
+      # GitHub API, never from the fix job: its fix_go is only a cross-check.
       - name: Push
         id: push
-        if: steps.stop.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
+          FIX_GO: ${{ needs.fix.outputs.fix_go }}
         run: |
           . "$RUNNER_TEMP/tools/lib.sh"
+          stop_round() { echo go=false >>"$GITHUB_OUTPUT"; exit 0; }
+          pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
+          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          if [[ -z $m ]]; then
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$MISSING_MARKER_MSG"
+            stop_round
+          fi
+          read -r _ _ s <<<"$m"
+          if [[ $s != running ]]; then
+            echo "Marker status is $s; not pushing."
+            stop_round
+          fi
+          # A bundle built on a human push would still fast-forward: the head must be the reviewed one.
+          if [[ $(jq -r .head.sha <<<"$pr_json") != "$HEAD_SHA" ]]; then
+            pr_marker_update_soft "$PR" - - stopped
+            # shellcheck disable=SC2059
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
+            stop_round
+          fi
+          # Nothing stops the round, so a reported stop is forged or stale: fail, never end quietly
+          # with the marker still running (finish would re-dispatch).
+          if [[ $FIX_GO != true ]]; then
+            echo "::error::The fix job reported a stop the PR does not show; failing the round."
+            exit 1
+          fi
           if has_api_key "$RUNNER_TEMP/fix/replies.json"; then
             echo "::error::replies.json contains an API key pattern; not publishing."
             exit 1
@@ -589,6 +580,14 @@ jobs:
             exit 1
           fi
 
+      # Fetched here rather than taken from the fix job, which model-run code could have edited.
+      - name: Fetch the threads
+        id: context
+        if: steps.push.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
+
       - name: Publish the replies
         id: publish-replies
         if: steps.push.outputs.go == 'true'
@@ -614,11 +613,10 @@ jobs:
           STEP: >-
             ${{ steps.tools-checkout.outcome == 'failure' && 'tools-checkout'
             || steps.tools.outcome == 'failure' && 'tools'
-            || steps.stop.outcome == 'failure' && 'stop'
             || steps.checkout.outcome == 'failure' && 'checkout'
             || steps.download.outcome == 'failure' && 'download'
-            || steps.context.outcome == 'failure' && 'context'
             || steps.push.outcome == 'failure' && 'push'
+            || steps.context.outcome == 'failure' && 'context'
             || steps.publish-replies.outcome == 'failure' && 'publish-replies'
             || steps.marker.outcome == 'failure' && 'marker'
             || '' }}

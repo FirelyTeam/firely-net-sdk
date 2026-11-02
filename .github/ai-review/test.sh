@@ -133,8 +133,14 @@ assert_eq skill-loaded-no-result 1 "$?"
 echo '{"replies":[{"comment_id":1,"body":"fine"}]}' >"$tmp/clean.json"
 has_api_key "$tmp/clean.json"; assert_eq api-key-clean 1 "$?"
 echo 'x sk-ant-api03-abc' >"$tmp/raw.txt"; has_api_key "$tmp/clean.json" "$tmp/raw.txt"; assert_eq api-key-raw 0 "$?"
-echo '{"replies":[{"comment_id":1,"body":"sk-ant-api03-abc"}]}' >"$tmp/escaped.json"
+# JSON-escaped `s` (backslash u0073): no literal key in the bytes, so only the jq decode can catch it.
+# The backslash is built with printf so no editor or tool can decode the escape in this source.
+bs=$(printf '\x5c')
+printf '{"replies":[{"comment_id":1,"body":"%su0073k-ant-x"}]}\n' "$bs" >"$tmp/escaped.json"
+printf '{"replies":[],"%su0073k-ant-x":1}\n' "$bs" >"$tmp/escaped-key.json"
+assert_eq api-key-fixtures-have-no-literal-key 0 "$(cat "$tmp/escaped.json" "$tmp/escaped-key.json" | grep -c sk-ant-)"
 has_api_key "$tmp/escaped.json"; assert_eq api-key-json-escaped 0 "$?"
+has_api_key "$tmp/escaped-key.json"; assert_eq api-key-json-escaped-key 0 "$?"
 printf 'bin\0ary sk-ant-api03-abc\0' >"$tmp/bin.dat"; has_api_key "$tmp/bin.dat"; assert_eq api-key-binary 0 "$?"
 G() { git -C "$tmp/repo" -c user.name=t -c user.email=t@t -c core.autocrlf=false "$@"; }
 git init -q "$tmp/repo" && echo a >"$tmp/repo/a" && G add a && G commit -qm A
