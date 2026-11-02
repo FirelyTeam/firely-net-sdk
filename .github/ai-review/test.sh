@@ -64,6 +64,11 @@ echo '{"summary":"s","comments":[],"thread_replies":[{"comment_id":"101","body":
 build_review_payload "$tmp/badreply.json" "$fx/diff.patch" 2222222 1 2 >/dev/null 2>&1; assert_eq invalid-thread-reply 2 "$?"
 echo '{"summary":"s","comments":[]}' >"$tmp/round1.json"
 build_review_payload "$tmp/round1.json" "$fx/diff.patch" 2222222 1 2 >/dev/null 2>&1; assert_eq no-thread-replies-ok 0 "$?"
+# GitHub rejects the whole review (422) when start_line and line are in different hunks.
+printf 'diff --git a/src/C.cs b/src/C.cs\n--- a/src/C.cs\n+++ b/src/C.cs\n@@ -1,1 +1,1 @@\n c1\n@@ -20,1 +20,1 @@\n c20\n' >"$tmp/twohunks.patch"
+echo '{"summary":"s","comments":[{"path":"src/C.cs","start_line":1,"line":20,"body":"spans"}]}' >"$tmp/span.json"
+assert_eq build-review-payload-cross-hunk "0 true" \
+  "$(build_review_payload "$tmp/span.json" "$tmp/twohunks.patch" 2222222 1 2 | jq -r '"\(.comments | length) \(.body | contains("src/C.cs:1-20"))"')"
 
 # --- text and filters ---
 zw=$'\xe2\x80\x8b'

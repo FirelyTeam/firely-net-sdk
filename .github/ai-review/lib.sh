@@ -121,7 +121,8 @@ build_review_payload() {
     | (reduce inputs as $l ({}; .[$l] = true)) as $ok
     | def at($line): $ok["\(.path)\t\($line)"] == true;
     (($r.comments // []) | map(select((.line | type == "number") and at(.line)
-        and ((.start_line == null) or ((.start_line | type == "number") and at(.start_line)))))) as $in
+        and ((.start_line == null) or ((.start_line | type == "number")
+          and ([range(.start_line; .line + 1) as $n | at($n)] | all)))))) as $in
     | (($r.comments // []) - $in) as $out
     | {commit_id: $sha, event: "COMMENT",
        body: ("**AI review — round \($round) of \($total)**\n\n\($r.summary)"
