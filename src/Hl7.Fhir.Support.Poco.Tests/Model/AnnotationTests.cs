@@ -6,12 +6,14 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Model
@@ -131,6 +133,104 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.AreEqual(1, element.Annotations(typeof(AnnotationData)).Count());
 
+        }
+
+        private static object annotationList(Base b) =>
+            typeof(Base).GetField("_annotations", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(b);
+
+        [TestMethod]
+        public void ReadingAnnotationsDoesNotCreateAnAnnotationList()
+        {
+            var patient = new Patient { Id = "x" };
+            Assert.IsNull(annotationList(patient));
+
+            Assert.IsFalse(patient.HasAnnotation<AnnotationData>());
+            Assert.IsFalse(patient.TryGetAnnotation<AnnotationData>(out _));
+            Assert.IsNull(patient.Annotation<AnnotationData>());
+            Assert.IsFalse(patient.Annotations(typeof(AnnotationData)).Any());
+            Assert.IsFalse(patient.Annotations<AnnotationData>().Any());
+            patient.RemoveAnnotations(typeof(AnnotationData));
+            patient.RemoveAnnotations<AnnotationData>();
+
+            Assert.IsNull(annotationList(patient), "Only reading or removing annotations should not allocate a list.");
+
+            // The "self" annotation still works without a list.
+            Assert.AreSame(patient, patient.Annotations(typeof(IFhirValueProvider)).Single());
+            Assert.IsNull(annotationList(patient));
+
+            // Writing creates it.
+            patient.AddAnnotation(new AnnotationData { Data = "hi" });
+            Assert.IsNotNull(annotationList(patient));
+            Assert.AreEqual("hi", patient.Annotation<AnnotationData>().Data);
+        }
+
+        [TestMethod]
+        public void DeepCopyOfPatientWithoutAnnotationsHasNoAnnotationList()
+        {
+            var patient = new Patient { Id = "x", Name = { new HumanName { Family = "Doe" } } };
+
+            // Reading used to create an empty list on the source, which was then copied to the clone.
+            _ = patient.HasAnnotation<AnnotationData>();
+            _ = patient.Name[0].HasAnnotation<AnnotationData>();
+
+            var copy = (Patient)patient.DeepCopy();
+
+            Assert.IsNull(annotationList(patient));
+            Assert.IsNull(annotationList(copy));
+            Assert.IsNull(annotationList(copy.Name[0]));
+        }
+
+        [TestMethod]
+        public void DeepCopyOfEmptiedAnnotationListHasNoAnnotationList()
+        {
+            var patient = new Patient();
+            patient.AddAnnotation(new AnnotationData());
+            patient.RemoveAnnotations<AnnotationData>();
+
+            var copy = (Patient)patient.DeepCopy();
+
+            Assert.IsNull(annotationList(copy));
+        }
+
+        [TestMethod]
+        public void DeepCopyCopiesAnnotationsIndependently()
+        {
+            var patient = new Patient { Name = { new HumanName { Family = "Doe" } } };
+            patient.AddAnnotation(new AnnotationData { Data = "patient" });
+            patient.Name[0].AddAnnotation(new AnnotationData { Data = "name" });
+
+            var copy = (Patient)patient.DeepCopy();
+
+            Assert.AreEqual("patient", copy.Annotation<AnnotationData>().Data);
+            Assert.AreEqual("name", copy.Name[0].Annotation<AnnotationData>().Data);
+
+            // Changes to the copy do not affect the original, and vice versa.
+            copy.AddAnnotation(new AnnotationData { Data = "copy only" });
+            patient.AddAnnotation(new AnnotationData { Data = "original only" });
+            copy.Name[0].RemoveAnnotations<AnnotationData>();
+
+            Assert.AreEqual(2, copy.Annotations<AnnotationData>().Count());
+            Assert.AreEqual("copy only", copy.Annotations<AnnotationData>().Last().Data);
+            Assert.AreEqual(2, patient.Annotations<AnnotationData>().Count());
+            Assert.AreEqual("original only", patient.Annotations<AnnotationData>().Last().Data);
+            Assert.AreEqual("name", patient.Name[0].Annotation<AnnotationData>().Data);
+            Assert.IsNull(copy.Name[0].Annotation<AnnotationData>());
+        }
+
+        [TestMethod]
+        public void ConcurrentFirstAnnotationWritesOnAPocoAreAllKept()
+        {
+            const int threads = 16;
+
+            for (var round = 0; round < 50; round++)
+            {
+                var patient = new Patient();
+                var all = Enumerable.Range(0, threads).Select(i => new AnnotationData { Data = i.ToString() }).ToArray();
+
+                Parallel.For(0, threads, new ParallelOptions { MaxDegreeOfParallelism = threads }, i => patient.AddAnnotation(all[i]));
+
+                Assert.AreEqual(threads, patient.Annotations<AnnotationData>().Count());
+            }
         }
     }
 }

@@ -63,8 +63,8 @@ namespace Hl7.Fhir.Model
       if(other is not Base dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
 
-      if (_annotations is not null)
-        dest.annotations.AddRange(annotations);
+      if (_annotations is { IsEmpty: false } source)
+        dest.annotations.AddRange(source);
 
       if (HasOverflow)
         Overflow.CopyToInternal(dest.Overflow);

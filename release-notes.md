@@ -56,3 +56,6 @@ changes.
 
 **Blazor WebAssembly**
 - `TaskHelper.Await` now runs the delegate inline on the browser and WASI platforms instead of wrapping it in `Task.Run`, which cannot be blocked on in single-threaded WebAssembly ("Cannot wait on monitors on this runtime"). Resolvers that return an already completed task now work there; a task that is not complete throws a `PlatformNotSupportedException`. Other platforms are unchanged.
+
+**Performance**
+- Reading annotations from a POCO or an `AnnotationList` (`HasAnnotation`, `TryGetAnnotation`, `Annotations(type)`, `RemoveAnnotations`) no longer creates an empty annotation list, and `DeepCopy()`/`CopyTo()` no longer copy empty ones. The list is now created on the first write only. This removes a `ConcurrentDictionary` allocation per element that was only inspected, which speeds up work like snapshot generation. The public API is unchanged. See issue [#3665](https://github.com/FirelyTeam/firely-net-sdk/issues/3665).
