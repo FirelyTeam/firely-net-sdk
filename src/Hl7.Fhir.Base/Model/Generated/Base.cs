@@ -63,7 +63,9 @@ namespace Hl7.Fhir.Model
       if(other is not Base dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
 
-      if (_annotations is { IsEmpty: false } source)
+      // AddRange replaces the destination's annotations, so an (emptied) source must still clear an existing
+      // destination list. Only when there is nothing to copy and nothing to clear do we avoid allocating a list.
+      if (_annotations is { } source && (!source.IsEmpty || dest._annotations is not null))
         dest.annotations.AddRange(source);
 
       if (HasOverflow)

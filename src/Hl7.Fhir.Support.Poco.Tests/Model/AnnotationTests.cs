@@ -193,6 +193,63 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void CopyToFromEmptiedSourceClearsAnnotationsOfExistingTarget()
+        {
+            var source = new Patient();
+            source.AddAnnotation(new AnnotationData { Data = "source" });
+            source.RemoveAnnotations<AnnotationData>();
+
+            var target = new Patient();
+            target.AddAnnotation(new AnnotationData { Data = "target" });
+
+            source.CopyTo(target);
+
+            Assert.IsFalse(target.HasAnnotation<AnnotationData>());
+            Assert.IsFalse(target.Annotations<AnnotationData>().Any());
+        }
+
+        [TestMethod]
+        public void CopyToFromEmptiedSourceDoesNotAllocateListOnFreshTarget()
+        {
+            var source = new Patient();
+            source.AddAnnotation(new AnnotationData());
+            source.RemoveAnnotations<AnnotationData>();
+
+            var target = new Patient();
+            source.CopyTo(target);
+
+            Assert.IsNull(annotationList(target));
+        }
+
+        [TestMethod]
+        public void CopyToFromNeverAnnotatedSourceLeavesTargetAnnotationsUntouched()
+        {
+            var source = new Patient();
+            Assert.IsNull(annotationList(source));
+
+            var target = new Patient();
+            target.AddAnnotation(new AnnotationData { Data = "target" });
+
+            source.CopyTo(target);
+
+            Assert.AreEqual("target", target.Annotation<AnnotationData>().Data);
+        }
+
+        [TestMethod]
+        public void CopyToFromAnnotatedSourceReplacesAnnotationsOfExistingTarget()
+        {
+            var source = new Patient();
+            source.AddAnnotation(new AnnotationData { Data = "source" });
+
+            var target = new Patient();
+            target.AddAnnotation(new AnnotationData { Data = "target" });
+
+            source.CopyTo(target);
+
+            Assert.AreEqual("source", target.Annotations<AnnotationData>().Single().Data);
+        }
+
+        [TestMethod]
         public void DeepCopyCopiesAnnotationsIndependently()
         {
             var patient = new Patient { Name = { new HumanName { Family = "Doe" } } };
