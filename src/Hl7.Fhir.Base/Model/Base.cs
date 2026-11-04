@@ -82,7 +82,7 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
         if (_annotations is not { } list)
             return [];
 
-        if (list.OfType(type).ToList() is { Count: > 0 } annotation)
+        if (list.Annotations(type) is ICollection<object> { Count: > 0 } annotation)
             return annotation;
 
         if (list.TryGetAnnotation(out TypedElementAnnotatedProvider? original))

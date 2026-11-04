@@ -289,5 +289,26 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(threads, patient.Annotations<AnnotationData>().Count());
             }
         }
+
+        [TestMethod]
+        public void AnnotationReturnsTheStoredInstanceAndAMissDoesNotThrow()
+        {
+            var patient = new Patient();
+            var data = new AnnotationData { Data = "x" };
+            patient.AddAnnotation(data);
+
+            Assert.AreSame(data, patient.Annotation<AnnotationData>());
+            Assert.IsTrue(patient.TryGetAnnotation<AnnotationData>(out var found));
+            Assert.AreSame(data, found);
+            Assert.AreSame(data, patient.Annotations(typeof(AnnotationData)).Single());
+
+            // Misses, both on an annotated element (other type) and on an element without annotations.
+            Assert.IsNull(patient.Annotation<string>());
+            Assert.IsFalse(patient.TryGetAnnotation<string>(out var none));
+            Assert.IsNull(none);
+            Assert.IsEmpty(patient.Annotations<string>());
+            Assert.IsNull(new Patient().Annotation<AnnotationData>());
+            Assert.IsFalse(new Patient().TryGetAnnotation<AnnotationData>(out _));
+        }
     }
 }

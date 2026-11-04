@@ -27,14 +27,9 @@ public class AnnotationList : IAnnotatable, IEnumerable<object>
     private ConcurrentDictionary<Type, List<object>> _annotations;
 
     // Returns the dictionary, creating (and safely publishing) it when it does not exist yet. For writes only.
-    private ConcurrentDictionary<Type, List<object>> getOrCreate()
-    {
-        if (_annotations is { } existing)
-            return existing;
-
-        var created = new ConcurrentDictionary<Type, List<object>>();
-        return Interlocked.CompareExchange(ref _annotations, created, null) ?? created;
-    }
+    // Right-sized: an element rarely carries more than a handful of annotation types, so avoid the default capacity (31 buckets).
+    private ConcurrentDictionary<Type, List<object>> getOrCreate() =>
+        LazyInitializer.EnsureInitialized(ref _annotations, () => new ConcurrentDictionary<Type, List<object>>(concurrencyLevel: 1, capacity: 3));
 
     /// <summary>
     /// Create a list containing the given annotations.
@@ -72,7 +67,7 @@ public class AnnotationList : IAnnotatable, IEnumerable<object>
     /// Returns all annotations of type <paramref name="type"/>
     /// </summary>
     public IEnumerable<object> Annotations(Type type) =>
-        _annotations is { } dict && dict.TryGetValue(type, out var values) ? values : [];
+        _annotations is { } dict && dict.TryGetValue(type, out var values) ? values : Array.Empty<object>();
 
     /// <summary>
     /// Returns all annotations of type <paramref name="type"/>
@@ -90,9 +85,13 @@ public class AnnotationList : IAnnotatable, IEnumerable<object>
     public void AddRange(AnnotationList source)
     {
         // The lists inside the dictionary are never mutated (writes replace them), so a shallow copy is independent.
-        var copy = source._annotations is { IsEmpty: false } sourceDict
-            ? new ConcurrentDictionary<Type, List<object>>(sourceDict)
-            : null;
+        ConcurrentDictionary<Type, List<object>> copy = null;
+        if (source._annotations is { IsEmpty: false } sourceDict)
+        {
+            copy = new ConcurrentDictionary<Type, List<object>>(1, sourceDict.Count);
+            foreach (var (type, values) in sourceDict)
+                copy[type] = values;
+        }
 
         Interlocked.Exchange(ref _annotations, copy);
     }
