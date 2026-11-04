@@ -138,6 +138,12 @@ namespace Hl7.Fhir.Tests.Model
         private static object annotationList(Base b) =>
             typeof(Base).GetField("_annotations", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(b);
 
+        // The dictionary inside the annotation list of the object (null when it has no list or the list never held an annotation).
+        private static object annotationDictionary(Base b) =>
+            annotationList(b) is { } list
+                ? typeof(AnnotationList).GetField("_annotations", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(list)
+                : null;
+
         [TestMethod]
         public void ReadingAnnotationsDoesNotCreateAnAnnotationList()
         {
@@ -181,7 +187,7 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void DeepCopyOfEmptiedAnnotationListHasNoAnnotationList()
+        public void DeepCopyOfEmptiedAnnotationListAllocatesNoDictionary()
         {
             var patient = new Patient();
             patient.AddAnnotation(new AnnotationData());
@@ -189,7 +195,9 @@ namespace Hl7.Fhir.Tests.Model
 
             var copy = (Patient)patient.DeepCopy();
 
-            Assert.IsNull(annotationList(copy));
+            // The copy may carry an (empty) AnnotationList object, but no dictionary.
+            Assert.IsNull(annotationDictionary(copy));
+            Assert.IsFalse(copy.HasAnnotation<AnnotationData>());
         }
 
         [TestMethod]
@@ -209,7 +217,7 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void CopyToFromEmptiedSourceDoesNotAllocateListOnFreshTarget()
+        public void CopyToFromEmptiedSourceAllocatesNoDictionaryOnFreshTarget()
         {
             var source = new Patient();
             source.AddAnnotation(new AnnotationData());
@@ -218,7 +226,9 @@ namespace Hl7.Fhir.Tests.Model
             var target = new Patient();
             source.CopyTo(target);
 
-            Assert.IsNull(annotationList(target));
+            // The target may get an (empty) AnnotationList object, but no dictionary.
+            Assert.IsNull(annotationDictionary(target));
+            Assert.IsFalse(target.HasAnnotation<AnnotationData>());
         }
 
         [TestMethod]
