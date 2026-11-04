@@ -25,13 +25,15 @@ if (($(wc -c <"$out/diff.patch") > 400 * 1024)); then
   exit 4
 fi
 
-# shortcut: first 100 threads and 50 comments per thread, no pagination; enough for the pilot.
-gh api graphql -f owner="${repo%%/*}" -f name="${repo#*/}" -F pr="$pr" -f query='
-  query($owner: String!, $name: String!, $pr: Int!) {
-    repository(owner: $owner, name: $name) { pullRequest(number: $pr) { reviewThreads(first: 100) { nodes {
-      id isResolved path line
-      comments(first: 50) { nodes { databaseId author { login } authorAssociation body } }
-    } } } }
+# Writes one JSON page per 100 threads; trusted_threads slurps them.
+# shortcut: first 100 comments per thread, no pagination there; enough for the pilot.
+gh api graphql --paginate -f owner="${repo%%/*}" -f name="${repo#*/}" -F pr="$pr" -f query='
+  query($owner: String!, $name: String!, $pr: Int!, $endCursor: String) {
+    repository(owner: $owner, name: $name) { pullRequest(number: $pr) {
+      reviewThreads(first: 100, after: $endCursor) { pageInfo { hasNextPage endCursor } nodes {
+        id isResolved path line
+        comments(first: 100) { nodes { databaseId author { login } authorAssociation body } }
+      } } } }
   }' >"$tmp/threads-raw.json"
 trusted_threads "$tmp/threads-raw.json" >"$out/threads.json"
 implementer_threads "$out/threads.json" >"$out/threads-implementer.json"

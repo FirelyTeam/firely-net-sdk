@@ -188,6 +188,8 @@ trusted_threads "$fx/threads-raw.json" >"$tmp/threads.json"
 assert_eq trusted-threads-real "PRRT_handmade_ga_open PRRT_handmade_ga_declined PRRT_handmade_ga_followup" \
   "$(jq -r '[.[].thread_id] | join(" ")' "$tmp/threads.json")"
 assert_eq trusted-threads-outdated-kept null "$(jq -r '.[1].line' "$tmp/threads.json")"
+cat "$fx/threads-raw.json" "$fx/threads-raw.json" >"$tmp/threads-2pages.json"
+assert_eq trusted-threads-all-pages 6 "$(trusted_threads "$tmp/threads-2pages.json" | jq length)"
 assert_eq reply-to-reply-normalized 3000000001 "$(thread_root_id "$tmp/threads.json" 3000000002)"
 out=$(thread_root_id "$tmp/threads.json" 42); assert_eq thread-root-unknown "0:" "$?:$out"
 assert_eq implementer-threads-skip-declined "PRRT_handmade_ga_open PRRT_handmade_ga_followup" \

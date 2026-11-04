@@ -207,9 +207,10 @@ build_review_payload() {
          + {body: (.body | san)}))}'
 }
 
+# $1 holds one or more GraphQL result pages (gh api --paginate output).
 trusted_threads() {
-  jq "$AI_REVIEW_JQ_DEFS"'
-    [.data.repository.pullRequest.reviewThreads.nodes[]
+  jq -s "$AI_REVIEW_JQ_DEFS"'
+    [.[].data.repository.pullRequest.reviewThreads.nodes[]
      | select(.isResolved | not)
      | select(.comments.nodes[0] | trusted)
      | {thread_id: .id, is_resolved: .isResolved, path, line,
