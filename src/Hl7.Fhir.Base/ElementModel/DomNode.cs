@@ -50,10 +50,10 @@ public class DomNode<T> : IAnnotatable where T : DomNode<T>
 
     public void RemoveAnnotations(Type type)
     {
-        AnnotationsInternal.RemoveAnnotations(type);
+        _annotations?.RemoveAnnotations(type);
     }
 
-    public virtual IEnumerable<object> Annotations(Type type) => AnnotationsInternal.Annotations(type);
+    public virtual IEnumerable<object> Annotations(Type type) => _annotations?.Annotations(type) ?? [];
 
     #endregion
 
