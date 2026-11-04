@@ -56,9 +56,8 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: FirelyTeam/skills-internal
-          # TODO: re-pin to the merge commit on main once the skills PR merges. A squash merge
-          # leaves this branch commit unreachable from main, so it may be garbage-collected.
-          ref: bfed67d264747d67e5769343ef8688af279617ee
+          # Merge of FirelyTeam/skills-internal#8 on main.
+          ref: 62b3fb9316e6252c69b0006820d669de0945c40f
           token: ${{ steps.app-token.outputs.token }}
           path: skills-internal
           sparse-checkout: |
