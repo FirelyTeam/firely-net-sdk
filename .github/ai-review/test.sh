@@ -142,6 +142,8 @@ assert_eq api-key-fixtures-have-no-literal-key 0 "$(cat "$tmp/escaped.json" "$tm
 has_api_key "$tmp/escaped.json"; assert_eq api-key-json-escaped 0 "$?"
 has_api_key "$tmp/escaped-key.json"; assert_eq api-key-json-escaped-key 0 "$?"
 printf 'bin\0ary sk-ant-api03-abc\0' >"$tmp/bin.dat"; has_api_key "$tmp/bin.dat"; assert_eq api-key-binary 0 "$?"
+echo '{"body":"t eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyZXBvOngifQ.c2ln"}' >"$tmp/jwt.json"
+has_api_key "$tmp/jwt.json"; assert_eq api-key-jwt 0 "$?"
 G() { git -C "$tmp/repo" -c user.name=t -c user.email=t@t -c core.autocrlf=false "$@"; }
 git init -q "$tmp/repo" && echo a >"$tmp/repo/a" && G add a && G commit -qm A
 base=$(G rev-parse HEAD)

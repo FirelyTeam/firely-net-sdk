@@ -5,9 +5,13 @@
 # The job is the security boundary (R14): hosted runners have passwordless sudo, so code that runs
 # in a job can read every secret and token that job references. Hence four jobs:
 #   skills       App key and token; fetches the private skills. No model, no PR code.
-#   review       Reviewer model (no Bash, runs no repo code), API key, pull-requests: write.
-#   fix          Implementer model, which runs dotnet build/test on code it edits. API key and a
-#                read-only token only; every output it hands on is re-checked downstream.
+#   review       Reviewer model (no Bash, runs no repo code), Claude API access, pull-requests: write.
+#   fix          Implementer model, which runs dotnet build/test on code it edits. Claude API access
+#                and a read-only token only; every output it hands on is re-checked downstream.
+# Claude API access is workload identity federation, not a stored key: the job's GitHub OIDC token
+# is exchanged for a short-lived Claude token. The rule, organization and service account IDs are
+# identifiers, not secrets, and live in repository variables. id-token: write lets any code in the
+# job mint OIDC tokens for this repo, so no other cloud trust may accept this workflow's tokens.
 #   publish-fix  No model code: verifies the fix bundle, pushes, posts, writes the marker.
 name: AI PR review round
 
@@ -93,6 +97,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      id-token: write
     outputs:
       go: ${{ steps.guard.outputs.go }}
       round: ${{ steps.guard.outputs.round }}
@@ -192,8 +197,8 @@ jobs:
       # --setting-sources user and --strict-mcp-config: skills load from ~/.claude, and nothing
       # committed to the PR (.claude/settings.json hooks, .mcp.json) is loaded. --add-dir: Read
       # reaches only the working directory otherwise. Read, Grep and Glob need no allow rule there;
-      # a bare Read allow would reach /proc/self/environ, which holds the API key, and review.json
-      # is public. Unlisted tools (Edit, NotebookEdit) are denied in headless mode. `//` makes a
+      # a bare Read allow would reach /proc/self/environ, which holds the OIDC request token, and
+      # review.json is public. claude-workload-identity/ holds the identity and Claude tokens. Unlisted tools (Edit, NotebookEdit) are denied in headless mode. `//` makes a
       # rule path absolute. Path checks for writes match only Edit(path) rules, so the review.json
       # allow is given as Edit(...) as well as Write(...).
       - name: Review
@@ -202,7 +207,9 @@ jobs:
         uses: anthropics/claude-code-action/base-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1.0.266
         timeout-minutes: 20
         with:
-          anthropic_api_key: ${{ secrets.AI_REVIEW_ANTHROPIC_API_KEY }}
+          anthropic_federation_rule_id: ${{ vars.AI_REVIEW_ANTHROPIC_FEDERATION_RULE_ID }}
+          anthropic_organization_id: ${{ vars.AI_REVIEW_ANTHROPIC_ORGANIZATION_ID }}
+          anthropic_service_account_id: ${{ vars.AI_REVIEW_ANTHROPIC_SERVICE_ACCOUNT_ID }}
           prompt: >-
             Use the pr-review-reviewer skill.
             repo=${{ github.repository }}, pr=${{ inputs.pr }},
@@ -215,7 +222,7 @@ jobs:
             --strict-mcp-config
             --add-dir ${{ runner.temp }}/ctx
             --allowedTools Skill,"Read(~/.claude/skills/**)","Write(/${{ runner.temp }}/review.json)","Edit(/${{ runner.temp }}/review.json)"
-            --disallowedTools WebFetch,WebSearch,Bash,"Read(//proc/**)","Read(//sys/**)"
+            --disallowedTools WebFetch,WebSearch,Bash,"Read(//proc/**)","Read(//sys/**)","Read(/${{ runner.temp }}/claude-workload-identity/**)"
 
       - name: Publish the review
         id: publish-review
@@ -282,6 +289,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+      id-token: write
     outputs:
       fix_go: ${{ steps.guard-fix.outputs.go }}
       failed_step: ${{ steps.failed.outputs.step }}
@@ -372,15 +380,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # Deny rules win over the bare Read allow, so Read cannot reach /proc/self/environ (the API
-      # key). dotnet build/test can still read the environment: this job stays untrusted.
+      # Deny rules win over the bare Read allow, so Read cannot reach /proc/self/environ (the OIDC
+      # request token) or claude-workload-identity/ (the identity and Claude tokens). dotnet
+      # build/test can still read both: this job stays untrusted.
       - name: Fix
         id: fix
         if: steps.guard-fix.outputs.go == 'true'
         uses: anthropics/claude-code-action/base-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1.0.266
         timeout-minutes: 45
         with:
-          anthropic_api_key: ${{ secrets.AI_REVIEW_ANTHROPIC_API_KEY }}
+          anthropic_federation_rule_id: ${{ vars.AI_REVIEW_ANTHROPIC_FEDERATION_RULE_ID }}
+          anthropic_organization_id: ${{ vars.AI_REVIEW_ANTHROPIC_ORGANIZATION_ID }}
+          anthropic_service_account_id: ${{ vars.AI_REVIEW_ANTHROPIC_SERVICE_ACCOUNT_ID }}
           prompt: >-
             Use the pr-review-implementer skill.
             repo=${{ github.repository }}, pr=${{ inputs.pr }}, round=${{ needs.review.outputs.round }},
@@ -392,7 +403,7 @@ jobs:
             --strict-mcp-config
             --add-dir ${{ runner.temp }}/ctx-fix
             --allowedTools Read,Grep,Glob,Edit,Write,Skill,"Write(/${{ runner.temp }}/replies.json)","Bash(dotnet build *)","Bash(dotnet test *)","Bash(git add *)","Bash(git commit *)","Bash(git status*)","Bash(git diff*)","Bash(git log*)","Bash(git show*)"
-            --disallowedTools WebFetch,WebSearch,"Bash(git push*)","Bash(curl *)","Bash(wget *)","Read(//proc/**)","Read(//sys/**)"
+            --disallowedTools WebFetch,WebSearch,"Bash(git push*)","Bash(curl *)","Bash(wget *)","Read(//proc/**)","Read(//sys/**)","Read(/${{ runner.temp }}/claude-workload-identity/**)"
 
       # The artifact of a public repo is public, so the key scan runs before upload as well as in
       # publish-fix (which is the check that counts: this runner is not trusted).

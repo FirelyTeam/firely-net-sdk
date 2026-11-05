@@ -109,12 +109,14 @@ skill_loaded() {
 }
 
 # has_api_key <file>...: exit 0 if a file holds an Anthropic key pattern, raw (binary too) or as a
-# JSON-escaped string or key. Files go to grep/jq directly: `jq | grep -q` can lose a match to SIGPIPE.
+# JSON-escaped string or key, or a JWT (the federation's GitHub OIDC identity token; JWT characters
+# never need JSON escaping). Files go to grep/jq directly: `jq | grep -q` can lose a match to SIGPIPE.
 has_api_key() {
   local f
   for f; do
     [[ -e $f ]] || continue
     grep -qaF -- sk-ant- "$f" && return 0
+    grep -qaE -- 'eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.' "$f" && return 0
     jq -e '[.. | (strings, (objects | keys[]))] | any(contains("sk-ant-"))' <"$f" >/dev/null 2>&1 && return 0
   done
   return 1
