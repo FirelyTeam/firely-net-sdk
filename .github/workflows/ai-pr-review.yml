@@ -86,12 +86,14 @@ jobs:
           echo go=true >>"$GITHUB_OUTPUT"
 
   # A called workflow can only narrow the caller's token, and the top level is {}.
+  # id-token: write is for the Claude API federation in the review and fix jobs.
   round-1:
     needs: start
     if: needs.start.outputs.go == 'true'
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
     uses: ./.github/workflows/ai-pr-review-round.yml
     with:
       pr: ${{ github.event.pull_request.number || inputs.pr }}
@@ -105,6 +107,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
     uses: ./.github/workflows/ai-pr-review-round.yml
     with:
       pr: ${{ github.event.pull_request.number || inputs.pr }}
