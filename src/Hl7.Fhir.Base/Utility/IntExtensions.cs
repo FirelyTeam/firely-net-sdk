@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Hl7.Fhir.Utility
 {
@@ -33,6 +34,14 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// The share of <paramref name="total"/> that <paramref name="part"/> is, as a whole percentage.
         /// </summary>
-        public static int PercentageOf(this int part, int total) => part * 100 / total;
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="total"/> is 0.</exception>
+        /// <exception cref="OverflowException">The percentage does not fit in an <see cref="int"/>.</exception>
+        public static int PercentageOf(this int part, int total)
+        {
+            if (total == 0)
+                throw new ArgumentOutOfRangeException(nameof(total), "Cannot compute a percentage of a total of 0.");
+
+            return checked((int)((long)part * 100 / total));
+        }
     }
 }
