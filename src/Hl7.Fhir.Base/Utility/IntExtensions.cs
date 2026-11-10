@@ -29,5 +29,10 @@ namespace Hl7.Fhir.Utility
             if (n < 1_000_000_000) return 9;
             return 10;
         }
+
+        /// <summary>
+        /// The share of <paramref name="total"/> that <paramref name="part"/> is, as a whole percentage.
+        /// </summary>
+        public static int PercentageOf(this int part, int total) => part * 100 / total;
     }
 }
