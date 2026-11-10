@@ -48,6 +48,12 @@ assert_eq marker-write-append $'text\n\n<!-- ai-review: round=0/2 status=running
 # --- diff and payload ---
 assert_eq diff-lines $'src/A.cs\t10\nsrc/A.cs\t11\nsrc/A.cs\t12\nsrc/A.cs\t13\nsrc/B.cs\t1\nsrc/B.cs\t2\nsrc/B.cs\t3' \
   "$(diff_lines "$fx/diff.patch")"
+# An added `++ counter;` reads `+++ counter;`: a line of the hunk, not a file header.
+printf 'diff --git a/src/D.cs b/src/D.cs\n--- a/src/D.cs\n+++ b/src/D.cs\n@@ -1,1 +1,3 @@\n a\n+++ counter;\n+b\ndiff --git a/src/E.cs b/src/E.cs\n--- a/src/E.cs\n+++ b/src/E.cs\n@@ -5 +5 @@\n-x\n+y\n' >"$tmp/plusplus.patch"
+assert_eq diff-lines-plusplus $'src/D.cs\t1\nsrc/D.cs\t2\nsrc/D.cs\t3\nsrc/E.cs\t5' "$(diff_lines "$tmp/plusplus.patch")"
+# Git C-quotes non-ASCII paths.
+printf 'diff --git "a/src/\\303\\251.cs" "b/src/\\303\\251.cs"\n--- "a/src/\\303\\251.cs"\n+++ "b/src/\\303\\251.cs"\n@@ -1,0 +1,1 @@\n+z\n' >"$tmp/quoted.patch"
+assert_eq diff-lines-quoted $'src/\xc3\xa9.cs\t1' "$(diff_lines "$tmp/quoted.patch")"
 payload=$(build_review_payload "$fx/review.json" "$fx/diff.patch" 2222222 1 2)
 assert_eq build-review-payload-count 1 "$(jq -r '.comments | length' <<<"$payload")"
 assert_eq build-review-payload-comment '{"path":"src/A.cs","line":12,"side":"RIGHT","start_line":11,"start_side":"RIGHT"}' \
@@ -72,10 +78,17 @@ assert_eq build-review-payload-cross-hunk "0 true" \
 
 # --- text and filters ---
 zw=$'\xe2\x80\x8b'
-assert_eq sanitize "ping @${zw}FirelyTeam/devs and \`@param\`" "$(sanitize 'ping @FirelyTeam/devs and `@param`')"
+assert_eq sanitize "ping @${zw}FirelyTeam/devs and \`@${zw}param\`" "$(sanitize 'ping @FirelyTeam/devs and `@param`')"
 assert_eq sanitize-payload true "$(jq -r --arg zw "$zw" '.body | contains("@" + $zw + "FirelyTeam")' <<<"$payload")"
 # An unmatched backtick does not start code on GitHub, so the mention after it still pings.
 assert_eq sanitize-unbalanced "see \`foo and @${zw}alexzautke here" "$(sanitize 'see `foo and @alexzautke here')"
+# Mismatched runs (` then ``) form no code span either.
+assert_eq sanitize-mismatched-runs "see \`foo @${zw}alice\`\`" "$(sanitize 'see `foo @alice``')"
+# Fenced blocks stay byte-exact (suggestions), and the text after the closing fence is neutralized.
+assert_eq sanitize-fence $'```suggestion\n[Obsolete("@x")]\n```\ncc @'"${zw}"'bob' \
+  "$(sanitize $'```suggestion\n[Obsolete("@x")]\n```\ncc @bob')"
+# A backtick fence's info string cannot hold a backtick, so this line is not a fence.
+assert_eq sanitize-not-a-fence "\`\`\`a\`b @${zw}carol" "$(sanitize '```a`b @carol')"
 echo '{"summary":"a stray ` here","comments":[{"path":"src/A.cs","line":40,"body":"cc @alexzautke"},{"path":"src/A.cs","line":41,"body":"b"}]}' >"$tmp/stray.json"
 assert_eq build-review-payload-stray-backtick true \
   "$(build_review_payload "$tmp/stray.json" "$fx/diff.patch" 2222222 1 2 | jq -r --arg zw "$zw" '.body | contains("@" + $zw + "alexzautke")')"
@@ -224,7 +237,8 @@ assert_eq publish-replies-unknown-dropped true "$(grep -q 'comment 999' "$tmp/er
 # --- fetch-context, stubbed reads ---
 export STUB_PR=$fx/pr-human.json STUB_THREADS=$fx/threads-raw.json STUB_DIFF=$fx/diff.patch STUB_REVIEWS=$tmp/reviews.json
 printf '[{"user":{"login":"github-actions[bot]"},"commit_id":"aaa"}]\n[{"user":{"login":"alexzautke"},"commit_id":"bbb"}]\n' >"$STUB_REVIEWS"
-bash "$dir/fetch-context.sh" 1 "$tmp/ctx"; assert_eq fetch-context-exit 0 "$?"
+bash "$dir/fetch-context.sh" 1 "$tmp/ctx" d14a13e0e5c86e9a32cf134f165c70e0b8757382; assert_eq fetch-context-exit 0 "$?"
+bash "$dir/fetch-context.sh" 1 "$tmp/ctx-moved" 1111111 2>/dev/null; assert_eq fetch-context-head-moved 3 "$?"
 assert_eq fetch-context-files "diff.patch pr.json round-diff.patch threads-implementer.json threads.json" "$(cd "$tmp/ctx" && echo *)"
 assert_eq fetch-context-threads "3 2" "$(jq length "$tmp/ctx/threads.json") $(jq length "$tmp/ctx/threads-implementer.json")"
 printf '[{"user":{"login":"alexzautke"},"commit_id":"bbb"}]\n' >"$STUB_REVIEWS"

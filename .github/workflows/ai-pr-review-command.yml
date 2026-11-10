@@ -53,7 +53,17 @@ jobs:
           }
 
           if [[ $cmd == stop ]]; then
-            pr_marker_update_soft "$PR" - - stopped
+            # No marker yet (the start job has not run): write a stopped one, so that start skips.
+            rc=0
+            pr_marker_update "$PR" - - stopped || rc=$?
+            if ((rc == 5)); then pr_marker_update "$PR" 0 0 stopped; elif ((rc != 0)); then exit "$rc"; fi
+            # shortcut: marker writes are read-modify-write, so a round's write in the same second
+            # can undo this stop. Writing it again after that write has landed closes most of the
+            # gap; move the state to an atomic store if stops still get lost.
+            sleep 15
+            m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
+            read -r _ _ s <<<"$m"
+            if [[ $s == running ]]; then pr_marker_update_soft "$PR" - - stopped; fi
             react
             exit 0
           fi

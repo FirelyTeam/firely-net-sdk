@@ -11,10 +11,20 @@ AI_REVIEW_JQ_DEFS='
 def norm: sub("^app/"; "") | sub("\\[bot\\]$"; "");
 def trusted: (.author.login // "" | norm) == "github-actions"
   or (.authorAssociation | IN("OWNER", "MEMBER", "COLLABORATOR"));
-# Odd segments are code spans; with an odd backtick count the last one is not (an unmatched ` is literal).
-def san: split("`") | (length % 2 == 0) as $unbalanced | (length - 1) as $last | to_entries
-  | map(if .key % 2 == 0 or ($unbalanced and .key == $last) then .value | gsub("@(?<c>[A-Za-z0-9-])"; "@​\(.c)") else .value end)
-  | join("`");
+# Neutralizes every @mention except inside fenced code blocks (``` or ~~~ at line start), where
+# GitHub never links them and suggestions must stay byte-exact. Inline code spans get the
+# invisible zero-width space too: telling real spans from stray backtick runs is not worth the risk.
+def san: split("\n")
+  | reduce .[] as $l ({out: [], f: null};
+      ([$l | capture("^ {0,3}(?<r>`{3,}|~{3,})(?<rest>.*)$")] | first) as $m
+      | if .f == null then
+          if $m != null and ($m.r[0:1] == "~" or ($m.rest | contains("`") | not))
+          then .f = {c: $m.r[0:1], n: ($m.r | length)} | .out += [$l]
+          else .out += [$l | gsub("@(?<c>[A-Za-z0-9-])"; "@​\(.c)")] end
+        elif $m != null and $m.r[0:1] == .f.c and ($m.r | length) >= .f.n and ($m.rest | test("^\\s*$"))
+        then .f = null | .out += [$l]
+        else .out += [$l] end)
+  | .out | join("\n");
 '
 AI_REVIEW_MARKER_RE='<!-- ai-review: round=([0-9]+)/([0-9]+) status=(running|done|stopped|failed) -->'
 
@@ -164,11 +174,42 @@ pr_active() {
   jq -e '.state == "open" and .draft != true' <<<"$1" >/dev/null
 }
 
+# Prints "path<TAB>line" for every new-side line in a unified diff. A `+++` line is a file header
+# only outside a hunk (the hunk counts say where it ends), so an added line `++ x;` is not one.
+# Git C-quotes odd paths ("b/\303\251.cs"); LC_ALL=C makes awk's %c emit raw bytes.
 diff_lines() {
-  awk '
-    /^\+\+\+ / { file = ($2 == "/dev/null") ? "" : substr($0, 7); next }
-    /^@@ / { split($3, a, ","); n = substr(a[1], 2) + 0; next }
-    /^[+ ]/ { if (file != "") print file "\t" n; n++ }
+  LC_ALL=C awk '
+    function unquote(s,   out, i, c) {
+      s = substr(s, 2, length(s) - 2)
+      for (i = 1; i <= length(s); i++) {
+        c = substr(s, i, 1)
+        if (c != "\\") { out = out c; continue }
+        c = substr(s, ++i, 1)
+        if (c ~ /[0-7]/) { out = out sprintf("%c", c * 64 + substr(s, i + 1, 1) * 8 + substr(s, i + 2, 1)); i += 2 }
+        else if (c == "t") out = out "\t"
+        else if (c == "n") out = out "\n"
+        else out = out c
+      }
+      return out
+    }
+    /^diff --git / { old = new = 0; file = ""; next }
+    old + new == 0 && /^\+\+\+ / {
+      p = substr($0, 5)
+      if (p ~ /^"/) p = unquote(p)
+      file = (p == "/dev/null") ? "" : substr(p, 3)
+      next
+    }
+    /^@@ / {
+      split($2, a, ","); old = (2 in a) ? a[2] + 0 : 1
+      split($3, b, ","); new = (2 in b) ? b[2] + 0 : 1
+      n = substr(b[1], 2) + 0
+      next
+    }
+    old + new > 0 {
+      c = substr($0, 1, 1)
+      if (c == "+" || c == " ") { if (file != "") print file "\t" n; n++; new-- }
+      if (c == "-" || c == " ") old--
+    }
   ' "$1"
 }
 

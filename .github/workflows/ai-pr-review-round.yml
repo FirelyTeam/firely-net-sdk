@@ -195,7 +195,9 @@ jobs:
         if: steps.guard.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
+          HEAD_SHA: ${{ steps.guard.outputs.head_sha }}
+        # HEAD_SHA: the diff must match the checked-out commit the review is posted on.
+        run: bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx" "$HEAD_SHA"
 
       # --setting-sources user and --strict-mcp-config: skills load from ~/.claude, and nothing
       # committed to the PR (.claude/settings.json hooks, .mcp.json) is loaded. --add-dir: Read
@@ -370,7 +372,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx"
+          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx" "$HEAD_SHA"
           # The implementer skill reads context_dir/threads.json; give it the R7-filtered threads.
           mkdir -p "$RUNNER_TEMP/ctx-fix"
           cp "$RUNNER_TEMP/ctx/pr.json" "$RUNNER_TEMP/ctx/diff.patch" "$RUNNER_TEMP/ctx-fix/"
@@ -442,7 +444,10 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ai-review-fix-${{ inputs.pr }}-round-${{ needs.review.outputs.round }}
-          path: ${{ runner.temp }}/fix-out
+          # Only these two files, whatever else build/test code drops in fix-out.
+          path: |
+            ${{ runner.temp }}/fix-out/replies.json
+            ${{ runner.temp }}/fix-out/commits.bundle
           retention-days: 1
           if-no-files-found: error
           overwrite: true

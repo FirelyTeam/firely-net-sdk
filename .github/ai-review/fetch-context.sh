@@ -1,19 +1,27 @@
 #!/usr/bin/env bash
-# fetch-context.sh <pr> <out_dir>
+# fetch-context.sh <pr> <out_dir> [expected_head_sha]
 # Writes pr.json, diff.patch, threads.json (trusted threads, for the reviewer),
 # threads-implementer.json (minus threads already declined) and, after an earlier loop review,
-# round-diff.patch. Exits 4 when the diff is unavailable (HTTP 406) or over 400 KB.
+# round-diff.patch. Exits 4 when the diff is unavailable (HTTP 406) or over 400 KB, and 3 when
+# the PR head is not expected_head_sha before or after the diff fetch (the diff is always live).
 set -euo pipefail
 # shellcheck source=lib.sh
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
-pr=$1 out=$2
+pr=$1 out=$2 want=${3:-}
 repo=$GITHUB_REPOSITORY
 mkdir -p "$out"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
+head_is_expected() {
+  [[ -z $want || $1 == "$want" ]] && return 0
+  echo "::error::PR #$pr head moved to $1 during the round (expected $want); comment \`/ai-review more\` to run another round." >&2
+  exit 3
+}
+
 gh pr view "$pr" -R "$repo" --json number,title,body,author,baseRefName,headRefName,headRefOid >"$out/pr.json"
+head_is_expected "$(jq -r .headRefOid <"$out/pr.json")"
 
 if ! gh api -H "Accept: application/vnd.github.diff" "repos/$repo/pulls/$pr" >"$out/diff.patch" 2>"$tmp/err"; then
   cat "$tmp/err" >&2
@@ -24,6 +32,7 @@ if (($(wc -c <"$out/diff.patch") > 400 * 1024)); then
   echo "PR #$pr diff is over 400 KB" >&2
   exit 4
 fi
+[[ -z $want ]] || head_is_expected "$(gh pr view "$pr" -R "$repo" --json headRefOid | jq -r .headRefOid)"
 
 # Writes one JSON page per 100 threads; trusted_threads slurps them.
 # shortcut: first 100 comments per thread, no pagination there; enough for the pilot.
