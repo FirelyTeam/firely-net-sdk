@@ -108,7 +108,6 @@ public partial record PocoNode(Base Poco, PocoNode? Parent, int? Index, string? 
 
     private AnnotationList? _annotations;
 
-    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     /// <inheritdoc />
     IEnumerable<object> IAnnotated.Annotations(Type type)
@@ -122,17 +121,19 @@ public partial record PocoNode(Base Poco, PocoNode? Parent, int? Index, string? 
         if (type == typeof(IResourceTypeSupplier))
             return [this];
         
-        if(Annotations.OfType(type).ToList() is {Count: > 0} annotations)
+        // Reading must not create the (empty) annotation list.
+        if(_annotations?.OfType(type).ToList() is {Count: > 0} annotations)
             return annotations;
         
         return Poco.Annotations(type);
     }
 
     /// <inheritdoc />
-    void IAnnotatable.AddAnnotation(object annotation) => Annotations.AddAnnotation(annotation);
+    void IAnnotatable.AddAnnotation(object annotation) =>
+        LazyInitializer.EnsureInitialized(ref _annotations, () => [])!.AddAnnotation(annotation);
 
     /// <inheritdoc />
-    void IAnnotatable.RemoveAnnotations(Type type) => Annotations.RemoveAnnotations(type);
+    void IAnnotatable.RemoveAnnotations(Type type) => _annotations?.RemoveAnnotations(type);
 
     #endregion
 }

@@ -34,7 +34,7 @@ public static class AnnotatedExtensions
 
     public static bool TryGetAnnotation<A>(this IAnnotated annotated, [NotNullWhen(true)] out A? annotation) where A : class
     {
-        annotation = annotated.Annotations<A>().FirstOrDefault();
+        annotation = annotated.Annotation(typeof(A)) as A;
         return annotation != null;
     }
 

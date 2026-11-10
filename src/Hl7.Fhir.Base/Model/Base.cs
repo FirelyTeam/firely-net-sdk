@@ -71,6 +71,10 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
 
     [NonSerialized] private AnnotationList? _annotations = null;
 
+    // "Get or create" accessor for the annotation list, for writers only. Readers must use `_annotations`
+    // (null-conditional), so that merely inspecting an object never allocates an empty list.
+    // The name is shared with the generated code (Generated/Base.cs, CopyToInternal), so it cannot be renamed
+    // here without changing the code generator (CSharpFirely2).
     private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     public IEnumerable<object> Annotations(Type type)
@@ -78,10 +82,14 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
         if (type == typeof(IFhirValueProvider))
             return [this];
         
-        if (annotations.OfType(type).ToList() is { Count: > 0 } annotation)
+        // Reading must not create the (empty) annotation list.
+        if (_annotations is not { } list)
+            return [];
+
+        if (list.Annotations(type) is ICollection<object> { Count: > 0 } annotation)
             return annotation;
 
-        if (annotations.TryGetAnnotation(out TypedElementAnnotatedProvider? original))
+        if (list.TryGetAnnotation(out TypedElementAnnotatedProvider? original))
             return original.OriginalElement.Annotations(type);
 
         return [];
@@ -89,7 +97,7 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
 
     public void AddAnnotation(object annotation) => annotations.AddAnnotation(annotation);
 
-    public void RemoveAnnotations(Type type) => annotations.RemoveAnnotations(type);
+    public void RemoveAnnotations(Type type) => _annotations?.RemoveAnnotations(type);
 
     #endregion
 
