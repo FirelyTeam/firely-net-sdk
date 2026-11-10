@@ -71,6 +71,10 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
 
     [NonSerialized] private AnnotationList? _annotations = null;
 
+    // "Get or create" accessor for the annotation list, for writers only. Readers must use `_annotations`
+    // (null-conditional), so that merely inspecting an object never allocates an empty list.
+    // The name is shared with the generated code (Generated/Base.cs, CopyToInternal), so it cannot be renamed
+    // here without changing the code generator (CSharpFirely2).
     private AnnotationList annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     public IEnumerable<object> Annotations(Type type)

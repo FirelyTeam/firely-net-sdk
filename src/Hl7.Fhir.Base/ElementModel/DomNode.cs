@@ -39,6 +39,8 @@ public class DomNode<T> : IAnnotatable where T : DomNode<T>
 
     #region << Annotations >>
     private AnnotationList? _annotations;
+    // "Get or create" accessor for writers (and copy constructors in subclasses). Readers use `_annotations`
+    // (null-conditional), so that merely inspecting a node never allocates an empty list.
     protected AnnotationList AnnotationsInternal => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     protected bool HasAnnotations => _annotations is not null && !_annotations.IsEmpty;

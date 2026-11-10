@@ -108,7 +108,6 @@ public partial record PocoNode(Base Poco, PocoNode? Parent, int? Index, string? 
 
     private AnnotationList? _annotations;
 
-    private AnnotationList Annotations => LazyInitializer.EnsureInitialized(ref _annotations, () => [])!;
 
     /// <inheritdoc />
     IEnumerable<object> IAnnotated.Annotations(Type type)
@@ -130,7 +129,8 @@ public partial record PocoNode(Base Poco, PocoNode? Parent, int? Index, string? 
     }
 
     /// <inheritdoc />
-    void IAnnotatable.AddAnnotation(object annotation) => Annotations.AddAnnotation(annotation);
+    void IAnnotatable.AddAnnotation(object annotation) =>
+        LazyInitializer.EnsureInitialized(ref _annotations, () => [])!.AddAnnotation(annotation);
 
     /// <inheritdoc />
     void IAnnotatable.RemoveAnnotations(Type type) => _annotations?.RemoveAnnotations(type);
