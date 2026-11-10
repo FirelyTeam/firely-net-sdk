@@ -5,7 +5,9 @@
 # The job is the security boundary (R14): hosted runners have passwordless sudo, so code that runs
 # in a job can read every secret and token that job references. Hence four jobs:
 #   skills       App key and token; fetches the private skills. No model, no PR code.
-#   review       Reviewer model (no Bash, runs no repo code), Claude API access, pull-requests: write.
+#   review       Reviewer model (no Bash, runs no repo code), Claude API access, pull-requests: write,
+#                and contents: write only because resolveReviewThread refuses GITHUB_TOKEN without it.
+#                The model never holds that token: it is set on the publish step only.
 #   fix          Implementer model, which runs dotnet build/test on code it edits. Claude API access
 #                and a read-only token only; every output it hands on is re-checked downstream.
 # Claude API access is workload identity federation, not a stored key: the job's GitHub OIDC token
@@ -95,7 +97,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     permissions:
-      contents: read
+      # write: resolveReviewThread fails with "Resource not accessible by integration" without it.
+      contents: write
       pull-requests: write
       id-token: write
     outputs:
