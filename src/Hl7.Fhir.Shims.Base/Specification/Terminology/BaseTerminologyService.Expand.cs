@@ -78,12 +78,30 @@ public partial class BaseTerminologyService
 
     /// <summary>
     /// Expands a copy of the value set in the shape the request asks for, so that shape is not stored in the resolved
-    /// value set and reused for later requests. A value set that already has an expansion is not expanded again: the
-    /// requested shape is applied to a copy of that expansion.
+    /// value set and reused for later requests.
     /// </summary>
+    /// <remarks>
+    /// A value set with a <c>compose</c> is always expanded again, so the answer does not depend on an expansion stored by
+    /// an earlier request (which, for example, does not mark enumerated codes as abstract). Only when that fails, or when
+    /// there is no <c>compose</c>, is the requested shape applied to a copy of the stored expansion.
+    /// </remarks>
     private protected static async T.Task<ValueSet> ExpandCopy(ValueSetExpander expander, ValueSet valueSet, ExpandParameters supported)
     {
         var copy = (ValueSet)valueSet.DeepCopy();
+
+        if (copy.Compose is not null)
+        {
+            try
+            {
+                await expander.ExpandAsync(copy, supported).ConfigureAwait(false);
+                return copy;
+            }
+            catch (TerminologyServiceException) when (valueSet.HasExpansion)
+            {
+                // The stored expansion was made elsewhere (e.g. it came with the value set): use that one.
+                copy = (ValueSet)valueSet.DeepCopy();
+            }
+        }
 
         if (copy.HasExpansion)
             expander.ApplyToStoredExpansion(copy, supported);

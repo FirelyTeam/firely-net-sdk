@@ -362,6 +362,23 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
         }
 
         [TestMethod]
+        public async Tasks.Task ExcludeNotForUIDoesNotDependOnAnEarlierDefaultExpansion()
+        {
+            var vs = new ValueSet { Url = "http://example.org/fhir/ValueSet/simple-enumerated", Status = PublicationStatus.Active }
+                .Includes(i => i.System(SIMPLE).Concepts("code1", "code2"));
+            var service = new LocalTerminologyService(new InMemoryResourceResolver(simpleCodeSystem(), vs));
+
+            // A default expansion is stored on the resolved value set; enumerated codes are not marked abstract there.
+            var plain = (ValueSet)await service.Expand(new ExpandParameters().WithValueSet(url: vs.Url));
+            codes(plain.Expansion.Contains).Should().Equal("code1", "code2");
+
+            var parameters = new ExpandParameters().WithValueSet(url: vs.Url);
+            parameters.ExcludeNotForUI = new FhirBoolean(true);
+            var result = (ValueSet)await service.Expand(parameters);
+            codes(result.Expansion.Contains).Should().Equal("code1");
+        }
+
+        [TestMethod]
         public async Tasks.Task AStoredExpansionWithoutComposeGetsTheRequestedShape()
         {
             var stored = new ValueSet { Url = "http://example.org/fhir/ValueSet/stored-only", Status = PublicationStatus.Active, Expansion = new() { Total = 4 } };
