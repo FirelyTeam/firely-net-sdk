@@ -1,0 +1,11 @@
+{
+  "summary": "Reviewed full diff of #1 at 2222222 (round 1 of 2). Ping @FirelyTeam/devs.",
+  "comments": [
+    {"path": "src/A.cs", "line": 12, "start_line": 11, "body": "In the diff, cc @alexzautke."},
+    {"path": "src/A.cs", "line": 40, "body": "Outside any hunk."}
+  ],
+  "thread_replies": [
+    {"comment_id": 101, "body": "Verified: fixed.", "resolve": true},
+    {"comment_id": 201, "body": "Reply to a human thread.", "resolve": false}
+  ]
+}

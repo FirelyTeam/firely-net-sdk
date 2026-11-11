@@ -1,0 +1,211 @@
+# AI PR review loop (pilot): review 1 -> fix 1 -> review 2 -> fix 2 on a same-repo PR.
+# Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S -->.
+# Steer it with `/ai-review stop|more` (ai-pr-review-command.yml).
+name: AI PR review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Pull request number. Runs only when the PR's marker status is running.
+        required: true
+        type: number
+
+concurrency:
+  group: ai-pr-review-${{ github.event.pull_request.number || inputs.pr }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  start:
+    # Fork PRs never get past here; the step checks the head repo again for workflow_dispatch.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      go: ${{ steps.start.outputs.go }}
+    steps:
+      - name: Check out the loop scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Decide whether to run
+        id: start
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          . .github/ai-review/lib.sh
+          skip() { echo "Not running for PR #$PR: $*."; echo go=false >>"$GITHUB_OUTPUT"; exit 0; }
+          pr_json=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" \
+            --json state,isDraft,author,headRefName,headRepository,headRepositoryOwner,labels,body)
+          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          read -r _ _ s <<<"$m"
+          # A dispatch (from `/ai-review more`) the PR itself rules out: set the marker back to
+          # stopped, or it says running while nothing runs.
+          skip_pr() {
+            if [[ $EVENT == workflow_dispatch && $s == running ]]; then pr_marker_update_soft "$PR" - - stopped; fi
+            skip "$@"
+          }
+          author=$(normalize_login "$(jq -r '.author.login // ""' <<<"$pr_json")")
+          head_repo=$(jq -r '"\(.headRepositoryOwner.login)/\(.headRepository.name)"' <<<"$pr_json")
+          [[ $(jq -r .state <<<"$pr_json") == OPEN ]] || skip_pr "not open"
+          [[ $(jq -r .isDraft <<<"$pr_json") != true ]] || skip_pr "draft"
+          [[ ${head_repo,,} == "${GITHUB_REPOSITORY,,}" ]] || skip_pr "head repo is $head_repo"
+          [[ $author != dependabot && $author != renovate ]] || skip_pr "author $author"
+          [[ $(jq -r .headRefName <<<"$pr_json") != release/* ]] || skip_pr "release branch"
+          ! jq -e 'any(.labels[]; .name == "no-ai-review")' <<<"$pr_json" >/dev/null || skip_pr "label no-ai-review"
+
+          if [[ $EVENT == pull_request ]]; then
+            # A re-readied PR does not start over; `/ai-review more` adds rounds.
+            [[ -z $m ]] || skip "it already has an ai-review marker ($m)"
+          else
+            [[ $s == running ]] || skip "marker status is ${s:-missing}, not running"
+          fi
+
+          rc=0
+          bash .github/ai-review/fetch-context.sh "$PR" "$RUNNER_TEMP/ctx" || rc=$?
+          if ((rc == 4)); then
+            if [[ -n $m ]]; then pr_marker_update_soft "$PR" - - done; else pr_marker_update "$PR" 0 2 done; fi
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" \
+              --body "AI review skipped: this PR's diff is too large for the AI review loop (over 400 KB, or beyond what GitHub returns as a diff)."
+            skip "diff too large"
+          fi
+          ((rc == 0)) || exit "$rc"
+
+          [[ -n $m ]] || pr_marker_update "$PR" 0 2 running
+          echo go=true >>"$GITHUB_OUTPUT"
+
+  # A called workflow can only narrow the caller's token, and the top level is {}.
+  # id-token: write is for the Claude API federation in the review and fix jobs.
+  round-1:
+    needs: start
+    if: needs.start.outputs.go == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    uses: ./.github/workflows/ai-pr-review-round.yml
+    with:
+      pr: ${{ github.event.pull_request.number || inputs.pr }}
+    secrets: inherit
+
+  # Only after round 1 ran to its marker update: a guard that found the marker missing has
+  # already said so, and must not say it twice.
+  round-2:
+    needs: round-1
+    if: needs.round-1.outputs.completed == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    uses: ./.github/workflows/ai-pr-review-round.yml
+    with:
+      pr: ${{ github.event.pull_request.number || inputs.pr }}
+    secrets: inherit
+
+  finish:
+    needs: [start, round-1, round-2]
+    if: always() && (needs.start.outputs.go == 'true' || needs.start.result == 'failure')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # contents: read only to check out the scripts.
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: write
+    steps:
+      - name: Check out the loop scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      # Anyone can download a public repo's artifacts, and the skills artifact comes from the
+      # private skills-internal: delete the run's artifacts as soon as the rounds are over.
+      - name: Delete the run's artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" \
+            --jq '.artifacts[] | select(.name | startswith("ai-review-")) | .id' >"$RUNNER_TEMP/artifacts" \
+            || echo "warning: could not list the run's artifacts" >&2
+          while read -r id; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id" \
+              || echo "warning: could not delete artifact $id" >&2
+          done <"$RUNNER_TEMP/artifacts"
+
+      - name: Finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          START_RESULT: ${{ needs.start.result }}
+          R1_RESULT: ${{ needs.round-1.result }}
+          R1_STEP: ${{ needs.round-1.outputs.failed_step }}
+          R1_ROUND: ${{ needs.round-1.outputs.round }}
+          R1_COMPLETED: ${{ needs.round-1.outputs.completed }}
+          R2_RESULT: ${{ needs.round-2.result }}
+          R2_STEP: ${{ needs.round-2.outputs.failed_step }}
+          R2_ROUND: ${{ needs.round-2.outputs.round }}
+          R2_COMPLETED: ${{ needs.round-2.outputs.completed }}
+        run: |
+          . .github/ai-review/lib.sh
+          # A plain assignment, so a failed GET fails the step instead of reading as no marker.
+          body=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')
+          m=$(marker_read "$body")
+          read -r r t s <<<"$m"
+          # Before both uses below: a hand-edited total must not keep the loop re-dispatching.
+          t=$(round_cap "$t")
+
+          job="" step="" round=""
+          if [[ $START_RESULT == failure ]]; then
+            job=start step=start
+          elif [[ $R1_RESULT == failure || $R1_RESULT == cancelled ]]; then
+            job=round-1 step=$R1_STEP round=$R1_ROUND
+          elif [[ $R2_RESULT == failure || $R2_RESULT == cancelled ]]; then
+            job=round-2 step=$R2_STEP round=$R2_ROUND
+          elif [[ $s == running ]] && ((r < t)); then
+            # Still running with rounds left: only a round that ran to its marker update may hand
+            # over to a new run. Anything else (a forged stop, say) fails instead of re-dispatching.
+            if [[ $R2_RESULT == success ]]; then
+              [[ $R2_COMPLETED == true ]] || job=round-2 round=$R2_ROUND
+            else
+              [[ $R1_COMPLETED == true ]] || job=round-1 round=$R1_ROUND
+            fi
+          fi
+          if [[ -n $job ]]; then
+            # failed_step can come from the fix job, where model-run code may have written it.
+            [[ $step =~ ^[a-z-]{1,40}$ ]] || step=""
+            [[ $round =~ ^[1-4]$ ]] || round=""
+            # The marker counts completed rounds, so the failed one is the next.
+            [[ -n $round ]] || round=$(( ${r:-0} + 1 ))
+            # A failed start on pull_request has written no marker of its own; leave the body alone.
+            if [[ $job != start || $EVENT == workflow_dispatch ]]; then
+              pr_marker_update_soft "$PR" - - failed
+            fi
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" \
+              --body "AI review loop stopped: ${step:-$job} failed in round $round. Run: $RUN_URL"
+            exit 0
+          fi
+
+          if [[ $s != running ]]; then
+            echo "Marker status is ${s:-missing}; nothing to finish."
+            exit 0
+          fi
+          if ((r >= t)); then
+            pr_marker_update_soft "$PR" - - done
+          else
+            # `/ai-review more` raised the total during this run, and the last round completed.
+            gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
+          fi

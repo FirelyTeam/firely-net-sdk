@@ -1,0 +1,20 @@
+diff --git a/src/A.cs b/src/A.cs
+index 1111111..2222222 100644
+--- a/src/A.cs
++++ b/src/A.cs
+@@ -10,4 +10,4 @@ public class A
+ int ten;
+-int eleven;
++int elevenNew;
++int twelve;
+ int thirteen;
+--- removed line that starts with dashes
+diff --git a/src/B.cs b/src/B.cs
+index 3333333..4444444 100644
+--- a/src/B.cs
++++ b/src/B.cs
+@@ -1,2 +1,3 @@
+ int one;
++int two;
+ int three;
+\ No newline at end of file
