@@ -130,6 +130,20 @@ jobs:
           sparse-checkout: .github/ai-review
           persist-credentials: false
 
+      # Anyone can download a public repo's artifacts, and the skills artifact comes from the
+      # private skills-internal: delete the run's artifacts as soon as the rounds are over.
+      - name: Delete the run's artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" \
+            --jq '.artifacts[] | select(.name | startswith("ai-review-")) | .id' >"$RUNNER_TEMP/artifacts" \
+            || echo "warning: could not list the run's artifacts" >&2
+          while read -r id; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id" \
+              || echo "warning: could not delete artifact $id" >&2
+          done <"$RUNNER_TEMP/artifacts"
+
       - name: Finish
         env:
           GH_TOKEN: ${{ github.token }}
@@ -147,7 +161,9 @@ jobs:
           R2_COMPLETED: ${{ needs.round-2.outputs.completed }}
         run: |
           . .github/ai-review/lib.sh
-          m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
+          # A plain assignment, so a failed GET fails the step instead of reading as no marker.
+          body=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')
+          m=$(marker_read "$body")
           read -r r t s <<<"$m"
           # Before both uses below: a hand-edited total must not keep the loop re-dispatching.
           t=$(round_cap "$t")

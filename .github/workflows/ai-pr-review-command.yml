@@ -61,15 +61,18 @@ jobs:
             # can undo this stop. Writing it again after that write has landed closes most of the
             # gap; move the state to an atomic store if stops still get lost.
             sleep 15
-            m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
+            body=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')
+            m=$(marker_read "$body")
             read -r _ _ s <<<"$m"
             if [[ $s == running ]]; then pr_marker_update_soft "$PR" - - stopped; fi
             react
             exit 0
           fi
 
-          # more: no marker counts as R=0 T=0.
-          m=$(marker_read "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')")
+          # more: no marker counts as R=0 T=0. A plain assignment, so a failed GET stops the step
+          # (bash -e) instead of reading as "no marker" and resetting the round count.
+          body=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""')
+          m=$(marker_read "$body")
           if [[ -z $m ]]; then
             pr_marker_update "$PR" 0 0 stopped
             m="0 0 stopped"

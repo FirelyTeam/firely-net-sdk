@@ -45,6 +45,9 @@ assert_eq marker-write-replace $'above\n<!-- ai-review: round=2/2 status=done --
   "$(marker_write $'above\n<!-- ai-review: round=1/2 status=running -->\nbelow & more' 2 2 done)"
 assert_eq marker-write-append $'text\n\n<!-- ai-review: round=0/2 status=running -->' "$(marker_write text 0 2 running)"
 
+# Workflow shells have no pipefail: a failed GET must not become an empty body that gets PATCHed.
+out=$(set +o pipefail; STUB_BODY=$tmp/missing.json pr_marker_update 1 0 2 running 2>/dev/null); assert_eq marker-update-get-fails "1:" "$?:$out"
+
 # --- diff and payload ---
 assert_eq diff-lines $'src/A.cs\t10\nsrc/A.cs\t11\nsrc/A.cs\t12\nsrc/A.cs\t13\nsrc/B.cs\t1\nsrc/B.cs\t2\nsrc/B.cs\t3' \
   "$(diff_lines "$fx/diff.patch")"
@@ -54,6 +57,9 @@ assert_eq diff-lines-plusplus $'src/D.cs\t1\nsrc/D.cs\t2\nsrc/D.cs\t3\nsrc/E.cs\
 # Git C-quotes non-ASCII paths.
 printf 'diff --git "a/src/\\303\\251.cs" "b/src/\\303\\251.cs"\n--- "a/src/\\303\\251.cs"\n+++ "b/src/\\303\\251.cs"\n@@ -1,0 +1,1 @@\n+z\n' >"$tmp/quoted.patch"
 assert_eq diff-lines-quoted $'src/\xc3\xa9.cs\t1' "$(diff_lines "$tmp/quoted.patch")"
+# A path with a space ends its +++ line with a tab, quoted or not.
+printf 'diff --git a/My File.cs b/My File.cs\n--- a/My File.cs\t\n+++ b/My File.cs\t\n@@ -1,0 +1,1 @@\n+z\ndiff --git "a/\\303\\251 x.cs" "b/\\303\\251 x.cs"\n--- "a/\\303\\251 x.cs"\t\n+++ "b/\\303\\251 x.cs"\t\n@@ -1,0 +1,1 @@\n+z\n' >"$tmp/space.patch"
+assert_eq diff-lines-space $'My File.cs\t1\n\xc3\xa9 x.cs\t1' "$(diff_lines "$tmp/space.patch")"
 payload=$(build_review_payload "$fx/review.json" "$fx/diff.patch" 2222222 1 2)
 assert_eq build-review-payload-count 1 "$(jq -r '.comments | length' <<<"$payload")"
 assert_eq build-review-payload-comment '{"path":"src/A.cs","line":12,"side":"RIGHT","start_line":11,"start_side":"RIGHT"}' \

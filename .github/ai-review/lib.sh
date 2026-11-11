@@ -79,8 +79,11 @@ marker_write() {
 
 # pr_marker_update <pr> <R|-> <T|-> <S|->; returns 3 on a refused restart, 5 on a missing marker with a `-`.
 pr_marker_update() {
-  local pr=$1 body cur r t s
-  body=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$pr" | jq -r '.body // ""') || return 1
+  local pr=$1 json body cur r t s
+  # Two steps: workflow `run:` shells have no pipefail, and a failed GET read as an empty body
+  # would PATCH the whole description down to the marker.
+  json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$pr") || return 1
+  body=$(jq -r '.body // ""' <<<"$json") || return 1
   cur=$(marker_read "$body")
   if [[ -z $cur ]]; then
     if [[ $2 == - || $3 == - || $4 == - ]]; then
@@ -195,6 +198,7 @@ diff_lines() {
     /^diff --git / { old = new = 0; file = ""; next }
     old + new == 0 && /^\+\+\+ / {
       p = substr($0, 5)
+      sub(/\t$/, "", p)  # git ends the line with a tab when the path has a space
       if (p ~ /^"/) p = unquote(p)
       file = (p == "/dev/null") ? "" : substr(p, 3)
       next
