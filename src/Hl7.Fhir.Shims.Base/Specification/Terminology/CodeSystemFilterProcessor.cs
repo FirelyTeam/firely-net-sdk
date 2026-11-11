@@ -28,6 +28,16 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <exception cref="CodeSystemUnknownException">Thrown when the requested CodeSystem can not be found by the resource resolver in ValueSetExpanderSettings</exception>
         internal async static Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> FilterConceptsFromCodeSystem(string codeSystemUri, IEnumerable<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
         {
+            var (codeSystem, result) = await FilterCodeSystemConcepts(codeSystemUri, filters, settings).ConfigureAwait(false);
+            return result.Select(c => c.ToContainsComponent(codeSystem, settings));
+        }
+
+        /// <summary>
+        /// Applies the filters to the code system and returns the matching concepts (with their nested children, if the code
+        /// system has a nested hierarchy), together with the code system they come from.
+        /// </summary>
+        internal async static Tasks.Task<(CodeSystem CodeSystem, List<CSDC> Concepts)> FilterCodeSystemConcepts(string codeSystemUri, IEnumerable<ValueSet.FilterComponent> filters, ValueSetExpanderSettings settings)
+        {
             if (settings.ValueSetSource == null)
                 throw Error.InvalidOperation($"No valueset resolver available to resolve codesystem '{codeSystemUri}', so the expansion cannot be completed.");
 
@@ -37,10 +47,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (codeSystem.Content.GetLiteral() != "complete")
                 throw new CodeSystemIncompleteException($"CodeSystem `{codeSystemUri}` is marked incomplete, so the defined filter(s) cannot be applied.");
 
-
-            var result = applyFilters(filters, codeSystem);
-
-            return result.Select(c => c.ToContainsComponent(codeSystem, settings));
+            return (codeSystem, applyFilters(filters, codeSystem));
         }
 
         private static List<CSDC> applyFilters(IEnumerable<ValueSet.FilterComponent> filters, CodeSystem codeSystem)

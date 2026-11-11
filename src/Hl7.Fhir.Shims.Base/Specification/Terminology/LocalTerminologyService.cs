@@ -148,7 +148,10 @@ public class LocalTerminologyService : BaseTerminologyService
         return vs;
     }
 
-    private async Task<ValueSet> getExpandedValueSet(FhirUri url, FhirString? version, string operation)
+    private async Task<ValueSet> getExpandedValueSet(FhirUri url, FhirString? version, string operation) =>
+        await getExpandedValueSet(await resolveValueSet(url, version, operation).ConfigureAwait(false), operation).ConfigureAwait(false);
+
+    private async Task<ValueSet> resolveValueSet(FhirUri url, FhirString? version, string operation)
     {
         // Handling the url + version is a bit tricky, since some callers (i.e. Firely tools) will call this
         // operation with a version in the url, but others will supply this as url+version (which is the correct way).
@@ -162,7 +165,7 @@ public class LocalTerminologyService : BaseTerminologyService
             throw new FhirOperationException(
                 $"Operation {operation} failed: valueset '{resolvableCanonical}' is unknown.", HttpStatusCode.NotFound);
 
-        return await getExpandedValueSet(vs, operation).ConfigureAwait(false);
+        return vs;
     }
 
     protected override async Task<ValidateCodeResult> ValueSetValidateCode(ValidateCodeParameters parameters)
@@ -188,6 +191,36 @@ public class LocalTerminologyService : BaseTerminologyService
 
     protected override async Task<Resource> Expand(ExpandParameters parameters)
     {
+        // Unsupported parameters are ignored, as before. A flat or not-for-UI expansion is made on a copy, so that
+        // shape is not stored in the resolved ValueSet and reused for later requests.
+        var supported = SupportedExpandParameters(parameters);
+        if (AsksForDifferentShape(supported))
+        {
+            var source = parameters.ValueSet as ValueSet
+                         ?? await resolveValueSet(parameters.Url!, parameters.ValueSetVersion, "expand").ConfigureAwait(false);
+
+            try
+            {
+                // Imported value sets are still expanded in place, so this is serialized like the other expansions.
+                await SEMAPHORE.WaitAsync().ConfigureAwait(false);
+                try
+                {
+                    return await ExpandCopy(_expander, source, supported).ConfigureAwait(false);
+                }
+                finally
+                {
+                    SEMAPHORE.Release();
+                }
+            }
+            catch (TerminologyServiceException e)
+            {
+                // Unprocessable entity
+                throw new FhirOperationException(
+                    $"Operation expand failed: creating the required expansion failed with message \"{e.Message}\".",
+                    HttpStatusCode.UnprocessableEntity);
+            }
+        }
+
         if(parameters.ValueSet is ValueSet vs)
             return await getExpandedValueSet(vs, "expand").ConfigureAwait(false);
         
