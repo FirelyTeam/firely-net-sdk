@@ -76,6 +76,10 @@ public partial class BaseTerminologyService
     private protected static bool AsksForDifferentShape(ExpandParameters parameters) =>
         parameters.ExcludeNested?.Value == true || parameters.ExcludeNotForUI?.Value == true;
 
+    /// <summary>Whether the value set has an expansion with nested codes.</summary>
+    private protected static bool IsNested(ValueSet valueSet) =>
+        valueSet.Expansion?.Contains.Any(c => c.Contains.Any()) == true;
+
     /// <summary>
     /// Expands a copy of the value set in the shape the request asks for, so that shape is not stored in the resolved
     /// value set and reused for later requests.
@@ -85,10 +89,6 @@ public partial class BaseTerminologyService
     /// an earlier request (which, for example, does not mark enumerated codes as abstract). Only when that fails, or when
     /// there is no <c>compose</c>, is the requested shape applied to a copy of the stored expansion.
     /// </remarks>
-    /// <summary>Whether the value set has an expansion with nested codes.</summary>
-    private protected static bool IsNested(ValueSet valueSet) =>
-        valueSet.Expansion?.Contains.Any(c => c.Contains.Any()) == true;
-
     private protected static async T.Task<ValueSet> ExpandCopy(ValueSetExpander expander, ValueSet valueSet, ExpandParameters supported)
     {
         var copy = (ValueSet)valueSet.DeepCopy();
