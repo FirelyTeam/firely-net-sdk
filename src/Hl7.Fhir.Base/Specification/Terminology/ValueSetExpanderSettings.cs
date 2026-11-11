@@ -38,6 +38,13 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         public bool IncludeDesignations { get; set; }
 
+        /// <summary>
+        /// Return every expansion flat (no nested <c>contains</c>), whatever <c>excludeNested</c> the request sent.
+        /// The request is not changed, so an <c>excludeNested</c> parameter is still echoed as it was sent.
+        /// Default <c>false</c>: concepts from a hierarchical code system are nested, as before.
+        /// </summary>
+        public bool AlwaysExpandFlat { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
         public ValueSetExpanderSettings() { }
 
@@ -59,6 +66,7 @@ namespace Hl7.Fhir.Specification.Terminology
             other.MaxExpansionSize = MaxExpansionSize;
             other.ValueSetSource = ValueSetSource;
             other.IncludeDesignations = IncludeDesignations;
+            other.AlwaysExpandFlat = AlwaysExpandFlat;
         }
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> object that is a copy of the current instance.</summary>

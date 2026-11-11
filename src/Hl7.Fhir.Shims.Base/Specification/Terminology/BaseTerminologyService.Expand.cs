@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using System;
+using System.Linq;
 using System.Net;
 using T = System.Threading.Tasks;
 
@@ -58,6 +59,62 @@ public partial class BaseTerminologyService
         }
     }
     
+    /// <summary>
+    /// The request's parameters that are in <see cref="ValueSetExpander.SupportedParameters"/>. The others are ignored, so
+    /// the terminology services stay lenient about parameters they do not implement.
+    /// </summary>
+    private protected static ExpandParameters SupportedExpandParameters(ExpandParameters parameters)
+    {
+        var supported = new ExpandParameters();
+        supported.Parameter.AddRange(parameters.Parameter.Where(p => ValueSetExpander.SupportedParameters.Contains(p.Name)));
+        return supported;
+    }
+
+    /// <summary>
+    /// Whether the request asks for an expansion that differs from the default one (flat, or without not-for-UI codes).
+    /// </summary>
+    private protected static bool AsksForDifferentShape(ExpandParameters parameters) =>
+        parameters.ExcludeNested?.Value == true || parameters.ExcludeNotForUI?.Value == true;
+
+    /// <summary>Whether the value set has an expansion with nested codes.</summary>
+    private protected static bool IsNested(ValueSet valueSet) =>
+        valueSet.Expansion?.Contains.Any(c => c.Contains.Any()) == true;
+
+    /// <summary>
+    /// Expands a copy of the value set in the shape the request asks for, so that shape is not stored in the resolved
+    /// value set and reused for later requests.
+    /// </summary>
+    /// <remarks>
+    /// A value set with a <c>compose</c> is always expanded again, so the answer does not depend on an expansion stored by
+    /// an earlier request (which, for example, does not mark enumerated codes as abstract). Only when that fails, or when
+    /// there is no <c>compose</c>, is the requested shape applied to a copy of the stored expansion.
+    /// </remarks>
+    private protected static async T.Task<ValueSet> ExpandCopy(ValueSetExpander expander, ValueSet valueSet, ExpandParameters supported)
+    {
+        var copy = (ValueSet)valueSet.DeepCopy();
+
+        if (copy.Compose is not null)
+        {
+            try
+            {
+                await expander.ExpandAsync(copy, supported).ConfigureAwait(false);
+                return copy;
+            }
+            catch (TerminologyServiceException) when (valueSet.HasExpansion)
+            {
+                // The stored expansion was made elsewhere (e.g. it came with the value set): use that one.
+                copy = (ValueSet)valueSet.DeepCopy();
+            }
+        }
+
+        if (copy.HasExpansion)
+            expander.ApplyToStoredExpansion(copy, supported);
+        else
+            await expander.ExpandAsync(copy, supported).ConfigureAwait(false);
+
+        return copy;
+    }
+
     protected virtual async T.Task<Resource> Expand(ExpandParameters parameters)
     {
         // Context parameter is not supported
@@ -72,6 +129,11 @@ public partial class BaseTerminologyService
 
         if (vs is null)
             throw FhirOperationException.Unresolvable($"Unable to resolve ValueSet '{canonical}'.");
+
+        // Unsupported parameters are ignored, as before. A flat or not-for-UI expansion is made on a copy.
+        var supported = SupportedExpandParameters(parameters);
+        if (AsksForDifferentShape(supported) || (expander.Settings.AlwaysExpandFlat && IsNested(vs)))
+            return await ExpandCopy(expander, vs, supported).ConfigureAwait(false);
 
         // do not regenerate expansion if already present
         if (!vs.HasExpansion)

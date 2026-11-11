@@ -37,9 +37,9 @@ public class ExpandParameters : Parameters
     public const string EXCLUDE_POST_COORDINATED_ATTRIBUTE = "excludePostCoordinated";
     public const string DISPLAY_LANGUAGE_ATTRIBUTE = "displayLanguage";
     public const string EXCLUDE_SYSTEM_ATTRIBUTE = "excludeSystem";
-    public const string SYSTEM_VERSION_ATTRIBUTE = "systemVersion";
-    public const string CHECK_SYSTEM_VERSION_ATTRIBUTE = "checkSystemVersion";
-    public const string FORCE_SYSTEM_VERSION_ATTRIBUTE = "forceSystemVersion";
+    public const string SYSTEM_VERSION_ATTRIBUTE = "system-version";
+    public const string CHECK_SYSTEM_VERSION_ATTRIBUTE = "check-system-version";
+    public const string FORCE_SYSTEM_VERSION_ATTRIBUTE = "force-system-version";
     public const string TX_RESOURCE_ATTRIBUTE = "tx-resource";
 
     /// <summary>The 0..1 parameters of this operation; only these may not repeat.</summary>
