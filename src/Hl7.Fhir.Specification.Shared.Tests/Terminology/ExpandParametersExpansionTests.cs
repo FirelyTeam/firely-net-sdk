@@ -400,6 +400,99 @@ namespace Hl7.Fhir.Specification.Shared.Tests.Terminology
             stored.Expansion.Contains.Should().HaveCount(2, "the stored expansion itself is not changed");
         }
 
+        private static ValueSet storedWithGrouping(string url)
+        {
+            // A grouping entry without a code, holding two codes.
+            var stored = new ValueSet { Url = url, Status = PublicationStatus.Active, Expansion = new() { Total = 2 } };
+            var group = new ValueSet.ContainsComponent { Abstract = true, Display = "Group" };
+            group.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code1" });
+            group.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code3" });
+            stored.Expansion.Contains.Add(group);
+            return stored;
+        }
+
+        [TestMethod]
+        public async Tasks.Task RemovingAGroupingEntryDoesNotChangeTheTotal()
+        {
+            var stored = storedWithGrouping("http://example.org/fhir/ValueSet/grouped");
+            var service = new LocalTerminologyService(new InMemoryResourceResolver(stored));
+            var parameters = new ExpandParameters().WithValueSet(url: stored.Url);
+            parameters.ExcludeNotForUI = new FhirBoolean(true);
+
+            var result = (ValueSet)await service.Expand(parameters);
+            codes(result.Expansion.Contains).Should().Equal("code1", "code3");
+            result.Expansion.Total.Should().Be(2);
+        }
+
+        [TestMethod]
+        public async Tasks.Task TheSizeCapCountsOnlyEntriesWithACode()
+        {
+            var stored = storedWithGrouping("http://example.org/fhir/ValueSet/grouped");
+            var vs = new ValueSet { Url = "http://example.org/fhir/ValueSet/grouped-importer", Status = PublicationStatus.Active }
+                .Includes(i => i.ValueSets(stored.Url));
+
+            await expander(new InMemoryResourceResolver(stored), maxSize: 2).ExpandAsync(vs);
+            allCodes(vs.Expansion.Contains).Should().Equal(null, "code1", "code3");
+            vs.Expansion.Total.Should().Be(2);
+        }
+
+        [TestMethod]
+        public async Tasks.Task ExcludeNotForUIDoesNotDependOnTheOrderOfIntersectedValueSets()
+        {
+            var plain = new ValueSet { Url = "http://example.org/fhir/ValueSet/plain", Status = PublicationStatus.Active, Expansion = new() };
+            plain.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code1" });
+            plain.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code2" });
+            var marked = new ValueSet { Url = "http://example.org/fhir/ValueSet/marked", Status = PublicationStatus.Active, Expansion = new() };
+            marked.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code1" });
+            marked.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code2", Abstract = true });
+            var resolver = new InMemoryResourceResolver(plain, marked);
+
+            foreach (var order in new[] { new[] { plain.Url, marked.Url }, new[] { marked.Url, plain.Url } })
+            {
+                var vs = new ValueSet { Url = "http://example.org/fhir/ValueSet/intersect", Status = PublicationStatus.Active }
+                    .Includes(i => i.ValueSets(order));
+                await expander(resolver).ExpandAsync(vs, new ExpandParameters { ExcludeNotForUI = new FhirBoolean(true) });
+                codes(vs.Expansion.Contains).Should().Equal("code1");
+            }
+        }
+
+        [TestMethod]
+        public async Tasks.Task IncludeDesignationsFromTheRequestAppliesToImportedValueSets()
+        {
+            var cs = simpleCodeSystem();
+            cs.Concept[0].Designation.Add(new CodeSystem.DesignationComponent { Language = "nl", Value = "Code een" });
+            var imported = new ValueSet { Url = "http://example.org/fhir/ValueSet/imported", Status = PublicationStatus.Active }
+                .Includes(i => i.System(SIMPLE).Concepts("code1"));
+            imported.Compose.Include[0].Concept[0].Designation.Add(new ValueSet.DesignationComponent { Language = "nl", Value = "Code een" });
+            var resolver = new InMemoryResourceResolver(cs, imported);
+
+            var vs = new ValueSet { Url = "http://example.org/fhir/ValueSet/importer", Status = PublicationStatus.Active }
+                .Includes(i => i.ValueSets(imported.Url));
+            await expander(resolver).ExpandAsync(vs, new ExpandParameters { IncludeDesignations = new FhirBoolean(true) });
+            vs.Expansion.Contains.Single().Designation.Should().ContainSingle();
+            imported.HasExpansion.Should().BeFalse("the request-specific expansion of the import is not stored");
+
+            var without = new ValueSet { Url = vs.Url, Status = PublicationStatus.Active }.Includes(i => i.ValueSets(imported.Url));
+            var settings = new ValueSetExpanderSettings { ValueSetSource = resolver, IncludeDesignations = true };
+            await new ValueSetExpander(settings).ExpandAsync(without, new ExpandParameters { IncludeDesignations = new FhirBoolean(false) });
+            without.Expansion.Contains.Single().Designation.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public async Tasks.Task AlwaysExpandFlatFlattensAnExpansionThatCameWithTheValueSet()
+        {
+            var stored = new ValueSet { Url = "http://example.org/fhir/ValueSet/stored-nested", Status = PublicationStatus.Active, Expansion = new() };
+            var parent = new ValueSet.ContainsComponent { System = SIMPLE, Code = "code2" };
+            parent.Contains.Add(new ValueSet.ContainsComponent { System = SIMPLE, Code = "code2a" });
+            stored.Expansion.Contains.Add(parent);
+            var resolver = new InMemoryResourceResolver(stored);
+            var service = new LocalTerminologyService(resolver, new ValueSetExpanderSettings { ValueSetSource = resolver, AlwaysExpandFlat = true });
+
+            var result = (ValueSet)await service.Expand(new ExpandParameters().WithValueSet(url: stored.Url));
+            codes(result.Expansion.Contains).Should().Equal("code2", "code2a");
+            stored.Expansion.Contains.Should().ContainSingle("the stored expansion itself is not changed");
+        }
+
         private class ResolvingTerminologyService(IAsyncResourceResolver resolver) : BaseTerminologyService
         {
             protected internal override async Tasks.Task<ValueSet> ResolveValueSet(Canonical canonical) =>

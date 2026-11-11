@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (excludeNotForUI(parameters)) contains = RemoveNotForUI(contains);
 
             var reshaped = contains.ToList();
-            var removed = valueSet.Expansion.Contains.CountConcepts() - reshaped.CountConcepts();
+            var removed = CountCodes(valueSet.Expansion.Contains) - CountCodes(reshaped);
             valueSet.Expansion.Contains = reshaped;
             if (valueSet.Expansion.Total is { } total) valueSet.Expansion.Total = total - removed;
 
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Specification.Terminology
             await handleExclude(source, parameters, inclusionChain).ConfigureAwait(false);
 
             if (source.Compose.Include.Any())
-                source.Expansion!.Total = source.Expansion.Contains.CountConcepts();
+                source.Expansion!.Total = CountCodes(source.Expansion.Contains);
 
             //This is expensive, but we should not have any duplicates
             //TODO something like: source.Expansion.Contains = source.Expansion.Contains.Distinct
@@ -270,12 +270,12 @@ namespace Hl7.Fhir.Specification.Terminology
                 var expanded = new List<IEnumerable<ValueSet.ContainsComponent>>();
                 foreach (var vs in canonicals)
                 {
-                    expanded.Add(await expandValueSetAndFilterOnSystem(vs!).ConfigureAwait(false));
+                    // Not-for-UI entries are removed from each input before intersecting, so an entry marked abstract in one
+                    // value set cannot survive through the metadata of another.
+                    var imported = await expandValueSetAndFilterOnSystem(vs!).ConfigureAwait(false);
+                    expanded.Add(excludeNotForUI(parameters) ? RemoveNotForUI(imported) : imported);
                 }
                 var concepts = expanded.Count == 1 ? expanded.Single() : expanded.Aggregate((l, r) => l.Intersect(r, _systemAndCodeComparer));
-
-                if (excludeNotForUI(parameters))
-                    concepts = RemoveNotForUI(concepts);
 
                 addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet!)}' would result in an expansion larger than the maximum expansion size.");
 
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
                 async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> expandValueSetAndFilterOnSystem(string canonical)
                 {
-                    var expansion = await getExpansionForValueSet(canonical, inclusionChain).ConfigureAwait(false);
+                    var expansion = await getExpansionForValueSet(canonical, parameters, inclusionChain).ConfigureAwait(false);
                     return filterOnSystem(flatten ? FlattenContains(expansion) : expansion);
                 }
             }
@@ -464,16 +464,20 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
+        // Counts the entries that carry a code, nested ones included; grouping entries without a code are not concepts.
+        internal static int CountCodes(IEnumerable<ValueSet.ContainsComponent> contains) =>
+            contains.Sum(c => (c.Code is null ? 0 : 1) + CountCodes(c.Contains));
+
         // Adds the source entries to dest, counting every code (nested ones included) against the maximum expansion size.
         private void addCapped(List<ValueSet.ContainsComponent> dest, IEnumerable<ValueSet.ContainsComponent> source, string message)
         {
-            var capacityLeft = Settings.MaxExpansionSize - dest.CountConcepts();
+            var capacityLeft = Settings.MaxExpansionSize - CountCodes(dest);
             var added = new List<ValueSet.ContainsComponent>();
             var count = 0;
 
             foreach (var entry in source)
             {
-                count += 1 + entry.Contains.CountConcepts();
+                count += (entry.Code is null ? 0 : 1) + CountCodes(entry.Contains);
                 if (count > capacityLeft)
                     throw new ValueSetExpansionTooBigException(message);
 
@@ -516,7 +520,7 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> getExpansionForValueSet(string uri, Stack<string> inclusionChain)
+        private async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> getExpansionForValueSet(string uri, ExpandParameters parameters, Stack<string> inclusionChain)
         {
             if (inclusionChain.Contains(uri))
                 throw new TerminologyServiceException($"ValueSet expansion encountered a cycling dependency from {inclusionChain.Peek()} back to {uri}.");
@@ -526,6 +530,17 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var importedVs = await Settings.ValueSetSource.AsAsync().FindValueSetAsync(uri).ConfigureAwait(false)
                 ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find valueset '{uri}', so the expansion cannot be completed.");
+
+            // When the request asks for designations other than the settings, the import is expanded on a copy with that
+            // option, so the request-specific result is not stored in the resolved value set.
+            var designations = includeDesignations(parameters);
+            if (designations != Settings.IncludeDesignations && importedVs.Compose is not null)
+            {
+                var copy = (ValueSet)importedVs.DeepCopy();
+                await expandAsync(copy, new ExpandParameters { IncludeDesignations = new FhirBoolean(designations) }, inclusionChain).ConfigureAwait(false);
+                return copy.Expansion!.Contains;
+            }
+
             if (!importedVs.HasExpansion) await expandAsync(importedVs, importParameters(), inclusionChain).ConfigureAwait(false);
 
             return importedVs.HasExpansion

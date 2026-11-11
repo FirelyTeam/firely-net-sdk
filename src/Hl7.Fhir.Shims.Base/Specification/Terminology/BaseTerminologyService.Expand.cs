@@ -85,6 +85,10 @@ public partial class BaseTerminologyService
     /// an earlier request (which, for example, does not mark enumerated codes as abstract). Only when that fails, or when
     /// there is no <c>compose</c>, is the requested shape applied to a copy of the stored expansion.
     /// </remarks>
+    /// <summary>Whether the value set has an expansion with nested codes.</summary>
+    private protected static bool IsNested(ValueSet valueSet) =>
+        valueSet.Expansion?.Contains.Any(c => c.Contains.Any()) == true;
+
     private protected static async T.Task<ValueSet> ExpandCopy(ValueSetExpander expander, ValueSet valueSet, ExpandParameters supported)
     {
         var copy = (ValueSet)valueSet.DeepCopy();
@@ -128,7 +132,7 @@ public partial class BaseTerminologyService
 
         // Unsupported parameters are ignored, as before. A flat or not-for-UI expansion is made on a copy.
         var supported = SupportedExpandParameters(parameters);
-        if (AsksForDifferentShape(supported))
+        if (AsksForDifferentShape(supported) || (expander.Settings.AlwaysExpandFlat && IsNested(vs)))
             return await ExpandCopy(expander, vs, supported).ConfigureAwait(false);
 
         // do not regenerate expansion if already present

@@ -198,14 +198,27 @@ public class LocalTerminologyService : BaseTerminologyService
         {
             var source = parameters.ValueSet as ValueSet
                          ?? await resolveValueSet(parameters.Url!, parameters.ValueSetVersion, "expand").ConfigureAwait(false);
+            return await expandCopy(source, supported).ConfigureAwait(false);
+        }
 
+        var expanded = parameters.ValueSet is ValueSet vs
+            ? await getExpandedValueSet(vs, "expand").ConfigureAwait(false)
+            : await getExpandedValueSet(parameters.Url!, parameters.ValueSetVersion, "expand").ConfigureAwait(false);
+
+        // An expansion that came with the value set is not made by the expander, so it may be nested.
+        return _expander.Settings.AlwaysExpandFlat && IsNested(expanded)
+            ? await expandCopy(expanded, supported).ConfigureAwait(false)
+            : expanded;
+
+        async Task<ValueSet> expandCopy(ValueSet source, ExpandParameters requested)
+        {
             try
             {
                 // Imported value sets are still expanded in place, so this is serialized like the other expansions.
                 await SEMAPHORE.WaitAsync().ConfigureAwait(false);
                 try
                 {
-                    return await ExpandCopy(_expander, source, supported).ConfigureAwait(false);
+                    return await ExpandCopy(_expander, source, requested).ConfigureAwait(false);
                 }
                 finally
                 {
@@ -220,11 +233,6 @@ public class LocalTerminologyService : BaseTerminologyService
                     HttpStatusCode.UnprocessableEntity);
             }
         }
-
-        if(parameters.ValueSet is ValueSet vs)
-            return await getExpandedValueSet(vs, "expand").ConfigureAwait(false);
-        
-        return await getExpandedValueSet(parameters.Url!, parameters.ValueSetVersion, "expand").ConfigureAwait(false);
     }
 
 
