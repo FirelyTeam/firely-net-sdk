@@ -26,7 +26,9 @@ def san: split("\n")
         else .out += [$l] end)
   | .out | join("\n");
 '
-AI_REVIEW_MARKER_RE='<!-- ai-review: round=([0-9]+)/([0-9]+) status=(running|done|stopped|failed) -->'
+# waiting: review-only mode, between rounds; the author's next push starts the next one.
+# mode=author-fixes: the author fixes the review comments, so rounds only review (no fix job).
+AI_REVIEW_MARKER_RE='<!-- ai-review: round=([0-9]+)/([0-9]+) status=(running|done|stopped|failed|waiting)( mode=author-fixes)? -->'
 
 normalize_login() {
   local l=${1#app/}
@@ -59,6 +61,7 @@ thread_node_id() {
   jq -r --argjson id "$2" 'map(select(.comments[0].id == $id)) | .[0].thread_id // empty' <"$1"
 }
 
+# Prints "R T S" (three fields: callers `read -r r t s`); the mode comes from marker_mode.
 marker_read() {
   if [[ $1 =~ $AI_REVIEW_MARKER_RE ]]; then
     echo "${BASH_REMATCH[1]} ${BASH_REMATCH[2]} ${BASH_REMATCH[3]}"
@@ -66,8 +69,15 @@ marker_read() {
   return 0
 }
 
+# Prints author-fixes when the marker has that mode, else nothing.
+marker_mode() {
+  if [[ $1 =~ $AI_REVIEW_MARKER_RE && -n ${BASH_REMATCH[4]} ]]; then echo author-fixes; fi
+  return 0
+}
+
+# marker_write <body> <R> <T> <S> [<mode>]
 marker_write() {
-  local body=$1 m="<!-- ai-review: round=$2/$3 status=$4 -->"
+  local body=$1 m="<!-- ai-review: round=$2/$3 status=$4${5:+ mode=$5} -->"
   if [[ -z $body || $body == null ]]; then
     printf '%s\n' "$m"
   elif [[ $body =~ $AI_REVIEW_MARKER_RE ]]; then
@@ -77,30 +87,41 @@ marker_write() {
   fi
 }
 
-# pr_marker_update <pr> <R|-> <T|-> <S|->; returns 3 on a refused restart, 5 on a missing marker with a `-`.
+# pr_marker_update <pr> <R|-> <T|-> <S|-|next> [<mode|-|none>]; returns 3 on a refused restart,
+# 5 on a missing marker with a `-`. S=next ends a review-only round: waiting while rounds are left,
+# else done; a status other than running (a stop that came in) is kept. The mode is kept unless
+# given; none clears it.
 pr_marker_update() {
-  local pr=$1 json body cur r t s
+  local pr=$1 json body cur r t s mode
   # Two steps: workflow `run:` shells have no pipefail, and a failed GET read as an empty body
   # would PATCH the whole description down to the marker.
   json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$pr") || return 1
   body=$(jq -r '.body // ""' <<<"$json") || return 1
   cur=$(marker_read "$body")
   if [[ -z $cur ]]; then
-    if [[ $2 == - || $3 == - || $4 == - ]]; then
+    if [[ $2 == - || $3 == - || $4 == - || $4 == next ]]; then
       warn "PR #$pr has no ai-review marker; not updated"
       return 5
     fi
   else
     read -r r t s <<<"$cur"
   fi
-  if [[ ${s:-} == stopped && $4 == running && ${AI_REVIEW_ALLOW_RESTART:-} != 1 ]]; then
-    warn "PR #$pr: ai-review status is stopped; not setting running"
+  mode=$(marker_mode "$body")
+  if [[ ${s:-} == stopped && ($4 == running || $4 == waiting) && ${AI_REVIEW_ALLOW_RESTART:-} != 1 ]]; then
+    warn "PR #$pr: ai-review status is stopped; not setting $4"
     return 3
   fi
   if [[ $2 != - ]]; then r=$2; fi
   if [[ $3 != - ]]; then t=$3; fi
-  if [[ $4 != - ]]; then s=$4; fi
-  gh_write api -X PATCH "repos/$GITHUB_REPOSITORY/pulls/$pr" -f body="$(marker_write "$body" "$r" "$t" "$s")"
+  if [[ $4 == next ]]; then
+    if [[ $s == running ]]; then
+      if ((r < $(round_cap "$t"))); then s=waiting; else s=done; fi
+    fi
+  elif [[ $4 != - ]]; then
+    s=$4
+  fi
+  case ${5:--} in -) ;; none) mode="" ;; *) mode=$5 ;; esac
+  gh_write api -X PATCH "repos/$GITHUB_REPOSITORY/pulls/$pr" -f body="$(marker_write "$body" "$r" "$t" "$s" "$mode")"
 }
 
 # pr_marker_update, but a missing marker (rc 5) only warns: for best-effort `-` updates (R2).
@@ -162,8 +183,9 @@ touches_protected() {
 
 AI_REVIEW_MAX_ROUNDS=4
 
+# waiting counts as running: a round is still planned, so `more` adds one on top.
 more_total() {
-  if [[ $3 == running ]]; then echo $(($2 + 1)); else echo $(($1 + 1)); fi
+  if [[ $3 == running || $3 == waiting ]]; then echo $(($2 + 1)); else echo $(($1 + 1)); fi
 }
 
 # round_cap <T>: the marker's total, at most AI_REVIEW_MAX_ROUNDS (the PR body is editable); empty is 0.
@@ -282,5 +304,6 @@ command_gate() {
     select(.issue.pull_request != null
       and (.comment.author_association | IN("OWNER", "MEMBER", "COLLABORATOR")))
     | .comment.body | split("\n")[0] | rtrimstr("\r")
-    | if . == "/ai-review stop" then "stop" elif . == "/ai-review more" then "more" else empty end' <"$1"
+    | if . == "/ai-review stop" then "stop" elif . == "/ai-review more" then "more"
+      elif . == "/ai-review fix" then "fix" else empty end' <"$1"
 }

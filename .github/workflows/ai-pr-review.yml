@@ -1,6 +1,8 @@
 # AI PR review loop (pilot): review 1 -> fix 1 -> review 2 -> fix 2 on a same-repo PR.
-# Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S -->.
-# Steer it with `/ai-review stop|more` (ai-pr-review-command.yml).
+# Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S [mode=M] -->.
+# Steer it with `/ai-review stop|more|fix` (ai-pr-review-command.yml).
+# When someone else pushes during a round, the PR switches to mode=author-fixes: rounds only review,
+# and each push starts the next one (ai-pr-review-push.yml) while status is waiting.
 name: AI PR review
 
 on:
@@ -69,7 +71,8 @@ jobs:
             # A re-readied PR does not start over; `/ai-review more` adds rounds.
             [[ -z $m ]] || skip "it already has an ai-review marker ($m)"
           else
-            [[ $s == running ]] || skip "marker status is ${s:-missing}, not running"
+            # waiting: a `/ai-review more` that came in during a review-only round.
+            [[ $s == running || $s == waiting ]] || skip "marker status is ${s:-missing}, not running"
           fi
 
           rc=0
@@ -82,7 +85,14 @@ jobs:
           fi
           ((rc == 0)) || exit "$rc"
 
-          [[ -n $m ]] || pr_marker_update "$PR" 0 2 running
+          if [[ -z $m ]]; then
+            pr_marker_update "$PR" 0 2 running
+          elif [[ $s == waiting ]]; then
+            rc=0
+            pr_marker_update "$PR" - - running || rc=$?
+            if ((rc == 3)); then skip "stopped meanwhile"; fi
+            ((rc == 0)) || exit "$rc"
+          fi
           echo go=true >>"$GITHUB_OUTPUT"
 
   # A called workflow can only narrow the caller's token, and the top level is {}.

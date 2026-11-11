@@ -1,0 +1,77 @@
+# Review-only mode of the AI PR review loop (marker mode=author-fixes): the author fixes the review
+# comments, often with their own agent, and each push starts the next review round.
+# A separate workflow with its own concurrency group: in the loop's group a queued push run would
+# replace a queued `/ai-review more` run. Pushes made with GITHUB_TOKEN (the loop's own) start no
+# workflows, so the loop never triggers itself; keep it that way if the push token ever changes.
+name: AI PR review push
+
+on:
+  pull_request:
+    types: [synchronize]
+
+# A newer push cancels the wait of an older one, so a burst of pushes costs one round.
+concurrency:
+  group: ai-pr-review-push-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  next-round:
+    # A pre-filter on the body as it was at push time. The mode is read live below: the round that
+    # is running now may be the one that switches the PR to author fixes.
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository
+      && contains(github.event.pull_request.body, '<!-- ai-review:')
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: write
+    steps:
+      - name: Check out the loop scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/ai-review
+          persist-credentials: false
+
+      - name: Start the next review round
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          PUSHED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          . .github/ai-review/lib.sh
+          # Lets a burst of pushes settle: a newer push cancels this run.
+          sleep 120
+          # Waits out a round in progress (at most 160 minutes).
+          for ((i = 0; i < 160; i++)); do
+            pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
+            body=$(jq -r '.body // ""' <<<"$pr_json")
+            read -r r t s <<<"$(marker_read "$body")"
+            [[ $s == running ]] || break
+            sleep 60
+          done
+          mode=$(marker_mode "$body")
+          if [[ $s == running ]]; then
+            echo "A round is still running; not starting another."
+            exit 0
+          fi
+          if [[ $mode != author-fixes || $s != waiting ]]; then
+            echo "Marker is ${r:-?}/${t:-?} ${s:-missing} ${mode:-(loop fixes)}; nothing to start."
+            exit 0
+          fi
+          pr_active "$pr_json" || { echo "PR #$PR is closed or a draft."; exit 0; }
+          head=$(jq -r .head.sha <<<"$pr_json")
+          [[ $head == "$PUSHED_SHA" ]] || { echo "Head moved to $head; that push has its own run."; exit 0; }
+          # A plain assignment, so a failed GET fails the step instead of reading as "not reviewed".
+          ids=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews" \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and .commit_id == \"$head\") | .id")
+          [[ -z $ids ]] || { echo "Head $head already has an AI review."; exit 0; }
+          ((r < $(round_cap "$t"))) || { echo "No rounds left ($r of $t)."; exit 0; }
+          rc=0
+          pr_marker_update "$PR" - - running || rc=$?
+          if ((rc == 3)); then echo "Stopped meanwhile."; exit 0; fi
+          ((rc == 0)) || exit "$rc"
+          gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
