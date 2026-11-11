@@ -87,6 +87,7 @@ jobs:
 
   # A called workflow can only narrow the caller's token, and the top level is {}.
   # id-token: write is for the Claude API federation in the review and fix jobs.
+  # fromJSON: on workflow_dispatch inputs.pr is the string '3676', which the round's number input rejects.
   round-1:
     needs: start
     if: needs.start.outputs.go == 'true'
@@ -96,7 +97,7 @@ jobs:
       id-token: write
     uses: ./.github/workflows/ai-pr-review-round.yml
     with:
-      pr: ${{ github.event.pull_request.number || inputs.pr }}
+      pr: ${{ fromJSON(github.event.pull_request.number || inputs.pr) }}
     secrets: inherit
 
   # Only after round 1 ran to its marker update: a guard that found the marker missing has
@@ -110,7 +111,7 @@ jobs:
       id-token: write
     uses: ./.github/workflows/ai-pr-review-round.yml
     with:
-      pr: ${{ github.event.pull_request.number || inputs.pr }}
+      pr: ${{ fromJSON(github.event.pull_request.number || inputs.pr) }}
     secrets: inherit
 
   finish:
