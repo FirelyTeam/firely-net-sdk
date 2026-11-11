@@ -70,8 +70,9 @@ jobs:
             --jq ".[] | select(.user.login == \"github-actions[bot]\" and .commit_id == \"$head\") | .id")
           [[ -z $ids ]] || { echo "Head $head already has an AI review."; exit 0; }
           ((r < $(round_cap "$t"))) || { echo "No rounds left ($r of $t)."; exit 0; }
-          rc=0
-          pr_marker_update "$PR" - - running || rc=$?
-          if ((rc == 3)); then echo "Stopped meanwhile."; exit 0; fi
-          ((rc == 0)) || exit "$rc"
+          # Dispatch first: a newer push can cancel this run between the two calls, and the start
+          # job turns waiting into running itself (refusing stopped). The other order could leave
+          # running with no run queued. running then makes later push runs wait for this round
+          # instead of dispatching a second review of the same head.
           gh_write workflow run ai-pr-review.yml -R "$GITHUB_REPOSITORY" -f pr="$PR"
+          pr_marker_update_soft "$PR" - - running || echo "Marker not set to running (stopped meanwhile?); start decides."

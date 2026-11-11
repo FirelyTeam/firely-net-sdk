@@ -31,6 +31,12 @@ on:
       round:
         description: The round this run worked on.
         value: ${{ jobs.review.outputs.round }}
+      review_only:
+        description: >-
+          'true' when the round ended in review-only mode (a review-only round, or the switch to it).
+          The next round then starts from a push or a command, which may already have set the marker
+          back to running.
+        value: ${{ jobs.review.outputs.review_only || jobs.publish-fix.outputs.review_only }}
       failed_step:
         description: Id of the first step that failed, if any. The fix job's value is untrusted.
         value: ${{ jobs.skills.outputs.failed_step || jobs.review.outputs.failed_step || jobs.fix.outputs.failed_step || jobs.publish-fix.outputs.failed_step }}
@@ -104,6 +110,7 @@ jobs:
     outputs:
       go: ${{ steps.guard.outputs.go }}
       mode: ${{ steps.guard.outputs.mode }}
+      review_only: ${{ steps.record-review-only.outputs.review_only }}
       round: ${{ steps.guard.outputs.round }}
       head_sha: ${{ steps.guard.outputs.head_sha }}
       head_ref: ${{ steps.guard.outputs.head_ref }}
@@ -267,6 +274,7 @@ jobs:
         run: |
           . "$RUNNER_TEMP/tools/lib.sh"
           pr_marker_update_soft "$PR" "$ROUND" - next
+          echo review_only=true >>"$GITHUB_OUTPUT"
 
       # Only the turn count and cost leave the execution log; nothing else is printed.
       - name: Cost summary
@@ -513,6 +521,7 @@ jobs:
       pull-requests: write
     outputs:
       completed: ${{ steps.marker.outputs.completed }}
+      review_only: ${{ steps.push.outputs.review_only }}
       failed_step: ${{ steps.failed.outputs.step }}
     env:
       PR: ${{ inputs.pr }}
@@ -574,6 +583,7 @@ jobs:
           author_fixes() {
             pr_marker_update_soft "$PR" "$ROUND" - next author-fixes
             gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$AUTHOR_FIXES_MSG"
+            echo review_only=true >>"$GITHUB_OUTPUT"
             stop_round
           }
           pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")

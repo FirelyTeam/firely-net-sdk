@@ -166,10 +166,12 @@ jobs:
           R1_STEP: ${{ needs.round-1.outputs.failed_step }}
           R1_ROUND: ${{ needs.round-1.outputs.round }}
           R1_COMPLETED: ${{ needs.round-1.outputs.completed }}
+          R1_REVIEW_ONLY: ${{ needs.round-1.outputs.review_only }}
           R2_RESULT: ${{ needs.round-2.result }}
           R2_STEP: ${{ needs.round-2.outputs.failed_step }}
           R2_ROUND: ${{ needs.round-2.outputs.round }}
           R2_COMPLETED: ${{ needs.round-2.outputs.completed }}
+          R2_REVIEW_ONLY: ${{ needs.round-2.outputs.review_only }}
         run: |
           . .github/ai-review/lib.sh
           # A plain assignment, so a failed GET fails the step instead of reading as no marker.
@@ -186,6 +188,11 @@ jobs:
             job=round-1 step=$R1_STEP round=$R1_ROUND
           elif [[ $R2_RESULT == failure || $R2_RESULT == cancelled ]]; then
             job=round-2 step=$R2_STEP round=$R2_ROUND
+          elif [[ $R1_REVIEW_ONLY == true || $R2_REVIEW_ONLY == true ]]; then
+            # The round left the marker waiting. A push run or `/ai-review more` may already have set
+            # it back to running and dispatched the next run: leave the marker and dispatching to them.
+            echo "Review-only round; the next round starts from a push or a command."
+            exit 0
           elif [[ $s == running ]] && ((r < t)); then
             # Still running with rounds left: only a round that ran to its marker update may hand
             # over to a new run. Anything else (a forged stop, say) fails instead of re-dispatching.
