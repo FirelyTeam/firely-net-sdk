@@ -31,6 +31,12 @@ on:
       round:
         description: The round this run worked on.
         value: ${{ jobs.review.outputs.round }}
+      review_only:
+        description: >-
+          'true' when the round ended in review-only mode (a review-only round, or the switch to it).
+          The next round then starts from a push or a command, which may already have set the marker
+          back to running.
+        value: ${{ jobs.review.outputs.review_only || jobs.publish-fix.outputs.review_only }}
       failed_step:
         description: Id of the first step that failed, if any. The fix job's value is untrusted.
         value: ${{ jobs.skills.outputs.failed_step || jobs.review.outputs.failed_step || jobs.fix.outputs.failed_step || jobs.publish-fix.outputs.failed_step }}
@@ -103,6 +109,8 @@ jobs:
       id-token: write
     outputs:
       go: ${{ steps.guard.outputs.go }}
+      mode: ${{ steps.guard.outputs.mode }}
+      review_only: ${{ steps.record-review-only.outputs.review_only }}
       round: ${{ steps.guard.outputs.round }}
       head_sha: ${{ steps.guard.outputs.head_sha }}
       head_ref: ${{ steps.guard.outputs.head_ref }}
@@ -135,7 +143,8 @@ jobs:
         run: |
           . "$RUNNER_TEMP/tools/lib.sh"
           pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
-          m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
+          body=$(jq -r '.body // ""' <<<"$pr_json")
+          m=$(marker_read "$body")
           read -r r t s <<<"$m"
           # A closed, merged or draft PR ends the loop quietly: no comment.
           if ! pr_active "$pr_json"; then
@@ -161,6 +170,7 @@ jobs:
             echo "head_ref=$(jq -r .head.ref <<<"$pr_json")"
             echo "round=$((r + 1))"
             echo "total=$t"
+            echo "mode=$(marker_mode "$body")"
           } >>"$GITHUB_OUTPUT"
 
       # The exact commit the review is posted on, not the merge ref or the branch name.
@@ -252,6 +262,20 @@ jobs:
           bash "$RUNNER_TEMP/tools/publish-review.sh" "$PR" "$RUNNER_TEMP/review.json" "$RUNNER_TEMP/ctx/diff.patch" \
             "$HEAD_SHA" "$ROUND" "$TOTAL" "$RUNNER_TEMP/ctx/threads.json"
 
+      # Author fixes: the author's agent or the author fixes, so the round ends with the review.
+      # The fix job is skipped, and with it publish-fix, so `completed` stays unset: the next round
+      # starts from the author's next push (ai-pr-review-push.yml), not straight after this one.
+      - name: Record the review-only round
+        id: record-review-only
+        if: steps.guard.outputs.go == 'true' && steps.guard.outputs.mode == 'author-fixes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ROUND: ${{ steps.guard.outputs.round }}
+        run: |
+          . "$RUNNER_TEMP/tools/lib.sh"
+          pr_marker_update_soft "$PR" "$ROUND" - next
+          echo review_only=true >>"$GITHUB_OUTPUT"
+
       # Only the turn count and cost leave the execution log; nothing else is printed.
       - name: Cost summary
         id: cost
@@ -280,6 +304,7 @@ jobs:
             || steps.context.outcome == 'failure' && 'context'
             || steps.review.outcome == 'failure' && 'review'
             || steps.publish-review.outcome == 'failure' && 'publish-review'
+            || steps.record-review-only.outcome == 'failure' && 'record-review-only'
             || steps.cost.outcome == 'failure' && 'cost'
             || '' }}
         run: echo "step=$STEP" >>"$GITHUB_OUTPUT"
@@ -288,7 +313,7 @@ jobs:
   # everything it hands on. Stops are reported as outputs; publish-fix writes the marker/comment.
   fix:
     needs: review
-    if: needs.review.outputs.go == 'true'
+    if: needs.review.outputs.go == 'true' && needs.review.outputs.mode != 'author-fixes'
     runs-on: ubuntu-latest
     timeout-minutes: 70
     permissions:
@@ -296,7 +321,8 @@ jobs:
       pull-requests: read
       id-token: write
     outputs:
-      fix_go: ${{ steps.guard-fix.outputs.go }}
+      # The context step can still stop the fix (the head moved after guard-fix).
+      fix_go: ${{ steps.context.outputs.go || steps.guard-fix.outputs.go }}
       failed_step: ${{ steps.failed.outputs.step }}
     env:
       PR: ${{ inputs.pr }}
@@ -365,22 +391,33 @@ jobs:
           cp -r "$RUNNER_TEMP/skills/." ~/.claude/skills/
           test -f ~/.claude/skills/pr-review-implementer/SKILL.md
 
-      # Fetched again, so threads include the review just posted.
+      # Fetched again, so threads include the review just posted. Exit 3 means the head moved
+      # since guard-fix (the author pushed during setup): not fixing, so publish-fix sees the moved
+      # head and switches the PR to author fixes instead of the round failing.
       - name: Fetch the fix context
         id: context
         if: steps.guard-fix.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx" "$HEAD_SHA"
+          rc=0
+          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx" "$HEAD_SHA" || rc=$?
+          if ((rc == 3)); then
+            echo "Not fixing: the head moved during setup."
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ((rc == 0)) || exit "$rc"
           # The implementer skill reads context_dir/threads.json; give it the R7-filtered threads.
           mkdir -p "$RUNNER_TEMP/ctx-fix"
           cp "$RUNNER_TEMP/ctx/pr.json" "$RUNNER_TEMP/ctx/diff.patch" "$RUNNER_TEMP/ctx-fix/"
           cp "$RUNNER_TEMP/ctx/threads-implementer.json" "$RUNNER_TEMP/ctx-fix/threads.json"
+          echo go=true >>"$GITHUB_OUTPUT"
 
+      # From here on gated on the context step, which runs only after guard-fix said go.
       - name: Set the git identity
         id: git-identity
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -390,7 +427,7 @@ jobs:
       # build/test can still read both: this job stays untrusted.
       - name: Fix
         id: fix
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         uses: anthropics/claude-code-action/base-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1.0.266
         timeout-minutes: 45
         with:
@@ -414,7 +451,7 @@ jobs:
       # publish-fix (which is the check that counts: this runner is not trusted).
       - name: Bundle the fix
         id: bundle
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         env:
           FIX_EXEC: ${{ steps.fix.outputs.execution_file }}
         run: |
@@ -440,7 +477,7 @@ jobs:
 
       - name: Upload the fix
         id: upload
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ai-review-fix-${{ inputs.pr }}-round-${{ needs.review.outputs.round }}
@@ -496,6 +533,7 @@ jobs:
       pull-requests: write
     outputs:
       completed: ${{ steps.marker.outputs.completed }}
+      review_only: ${{ steps.push.outputs.review_only }}
       failed_step: ${{ steps.failed.outputs.step }}
     env:
       PR: ${{ inputs.pr }}
@@ -503,7 +541,11 @@ jobs:
       HEAD_REF: ${{ needs.review.outputs.head_ref }}
       ROUND: ${{ needs.review.outputs.round }}
       MISSING_MARKER_MSG: 'AI review loop stopped: the progress marker was removed from the PR description. Comment `/ai-review more` to continue.'
-      BRANCH_CHANGED_FMT: 'AI review loop stopped: the branch changed during round %s. Comment `/ai-review more` to run another round.'
+      AUTHOR_FIXES_MSG: >-
+        AI review loop: the branch changed while round ${{ needs.review.outputs.round }} was being fixed,
+        so the loop's fix was not pushed. From now on the loop only reviews this PR and leaves the fixes
+        to you: each push starts the next review round, until the round total. Comment `/ai-review fix`
+        to let the loop fix again, `/ai-review more` to add a round, or `/ai-review stop` to stop.
     steps:
       - name: Check out the loop scripts
         id: tools-checkout
@@ -548,6 +590,14 @@ jobs:
         run: |
           . "$RUNNER_TEMP/tools/lib.sh"
           stop_round() { echo go=false >>"$GITHUB_OUTPUT"; exit 0; }
+          # Someone else pushed during the round: the author fixes the review comments (often
+          # their own agent). The review counts as the round; the fix and its replies are dropped.
+          author_fixes() {
+            pr_marker_update_soft "$PR" "$ROUND" - next author-fixes
+            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$AUTHOR_FIXES_MSG"
+            echo review_only=true >>"$GITHUB_OUTPUT"
+            stop_round
+          }
           pr_json=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR")
           m=$(marker_read "$(jq -r '.body // ""' <<<"$pr_json")")
           read -r _ _ s <<<"$m"
@@ -567,10 +617,7 @@ jobs:
           fi
           # A bundle built on a human push would still fast-forward: the head must be the reviewed one.
           if [[ $(jq -r .head.sha <<<"$pr_json") != "$HEAD_SHA" ]]; then
-            pr_marker_update_soft "$PR" - - stopped
-            # shellcheck disable=SC2059
-            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
-            stop_round
+            author_fixes
           fi
           # Nothing stops the round, so a reported stop is forged or stale: fail, never end quietly
           # with the marker still running (finish would re-dispatch).
@@ -610,10 +657,7 @@ jobs:
             echo go=true >>"$GITHUB_OUTPUT"
           elif grep -qE '\[rejected\]|non-fast-forward|fetch first' <<<"$out"; then
             # The replies refer to commits that never landed, so they are not posted.
-            pr_marker_update_soft "$PR" - - stopped
-            # shellcheck disable=SC2059
-            gh_write pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "$(printf "$BRANCH_CHANGED_FMT" "$ROUND")"
-            echo go=false >>"$GITHUB_OUTPUT"
+            author_fixes
           else
             echo "::error::git push failed."
             exit 1

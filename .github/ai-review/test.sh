@@ -44,6 +44,13 @@ assert_eq marker-write-null "<!-- ai-review: round=0/2 status=running -->" "$(ma
 assert_eq marker-write-replace $'above\n<!-- ai-review: round=2/2 status=done -->\nbelow & more' \
   "$(marker_write $'above\n<!-- ai-review: round=1/2 status=running -->\nbelow & more' 2 2 done)"
 assert_eq marker-write-append $'text\n\n<!-- ai-review: round=0/2 status=running -->' "$(marker_write text 0 2 running)"
+# The mode is a separate read: marker_read stays three fields, so `read -r r t s` keeps working.
+authm='x <!-- ai-review: round=1/2 status=waiting mode=author-fixes --> y'
+assert_eq marker-read-mode "1 2 waiting|author-fixes" "$(marker_read "$authm")|$(marker_mode "$authm")"
+assert_eq marker-mode-none "" "$(marker_mode '<!-- ai-review: round=1/2 status=running -->')"
+assert_eq marker-write-mode 'x <!-- ai-review: round=2/2 status=done mode=author-fixes --> y' \
+  "$(marker_write "$authm" 2 2 done author-fixes)"
+assert_eq marker-write-clear-mode 'x <!-- ai-review: round=1/3 status=running --> y' "$(marker_write "$authm" 1 3 running)"
 
 # Workflow shells have no pipefail: a failed GET must not become an empty body that gets PATCHed.
 out=$(set +o pipefail; STUB_BODY=$tmp/missing.json pr_marker_update 1 0 2 running 2>/dev/null); assert_eq marker-update-get-fails "1:" "$?:$out"
@@ -109,6 +116,8 @@ jq '.comment.body = "/ai-review stop\r\nplease"' "$ev" >"$tmp/stop.json"
 assert_eq command-gate-member-stop stop "$(command_gate "$tmp/stop.json")"
 jq '.comment.body = "/ai-review more"' "$ev" >"$tmp/more.json"
 assert_eq command-gate-member-more more "$(command_gate "$tmp/more.json")"
+jq '.comment.body = "/ai-review fix"' "$ev" >"$tmp/fix.json"
+assert_eq command-gate-member-fix fix "$(command_gate "$tmp/fix.json")"
 jq '.comment.author_association = "NONE"' "$tmp/stop.json" >"$tmp/outsider.json"
 assert_eq command-gate-outsider "" "$(command_gate "$tmp/outsider.json")"
 jq 'del(.issue.pull_request)' "$tmp/stop.json" >"$tmp/issue.json"
@@ -132,6 +141,21 @@ out=$(pr_marker_update_soft 1 - - running 2>/dev/null); assert_eq marker-soft-ke
 printf '{"body":null}' >"$STUB_BODY"
 out=$(pr_marker_update 1 0 0 stopped); assert_eq marker-null-body \
   "gh api -X PATCH repos/FirelyTeam/firely-net-sdk/pulls/1 -f body=<!-- ai-review: round=0/0 status=stopped -->" "$out"
+patched() { printf 'gh api -X PATCH repos/FirelyTeam/firely-net-sdk/pulls/1 -f body=<!-- ai-review: %s -->' "$1"; }
+# Author fixes: the switch counts the round and waits for the next push, or ends at the total.
+printf '{"body":"<!-- ai-review: round=0/2 status=running -->"}' >"$STUB_BODY"
+assert_eq marker-switch-waiting "$(patched 'round=1/2 status=waiting mode=author-fixes')" "$(pr_marker_update 1 1 - next author-fixes)"
+assert_eq marker-switch-done "$(patched 'round=2/2 status=done mode=author-fixes')" "$(pr_marker_update 1 2 - next author-fixes)"
+# Every other update keeps the mode; none clears it.
+printf '{"body":"<!-- ai-review: round=1/2 status=waiting mode=author-fixes -->"}' >"$STUB_BODY"
+assert_eq marker-keeps-mode "$(patched 'round=1/2 status=stopped mode=author-fixes')" "$(pr_marker_update 1 - - stopped)"
+assert_eq marker-clears-mode "$(patched 'round=1/3 status=running')" "$(pr_marker_update 1 - 3 running none)"
+# A stop that came in during a review-only round stays a stop.
+printf '{"body":"<!-- ai-review: round=1/3 status=stopped mode=author-fixes -->"}' >"$STUB_BODY"
+assert_eq marker-next-keeps-stop "$(patched 'round=2/3 status=stopped mode=author-fixes')" "$(pr_marker_update 1 2 - next)"
+out=$(pr_marker_update 1 - - waiting 2>/dev/null); assert_eq marker-no-restart-waiting "3:" "$?:$out"
+printf '{"body":"no marker"}' >"$STUB_BODY"
+out=$(pr_marker_update 1 1 - next 2>/dev/null); assert_eq marker-next-missing "5:" "$?:$out"
 
 # --- skill_loaded, against the base-action execution_file shape (a JSON array of SDK messages) ---
 exec_log() { # <skill input> <is_error>
@@ -192,6 +216,7 @@ mkdir -p "$tmp/repo/src/build" && echo x >"$tmp/repo/src/build/x.cs" && G add sr
 assert_eq more-total-running 3 "$(more_total 1 2 running)"
 assert_eq more-total-stopped 2 "$(more_total 1 2 stopped)"
 assert_eq more-total-done 3 "$(more_total 2 2 done)"
+assert_eq more-total-waiting 3 "$(more_total 1 2 waiting)"
 
 # --- round_cap: a hand-edited marker total cannot pass the hard cap ---
 assert_eq round-cap "4 2 4 0" "$(round_cap 40) $(round_cap 2) $(round_cap 4) $(round_cap '')"

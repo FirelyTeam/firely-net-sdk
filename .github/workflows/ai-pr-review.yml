@@ -1,6 +1,9 @@
 # AI PR review loop (pilot): review 1 -> fix 1 -> review 2 -> fix 2 on a same-repo PR.
-# Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S -->.
-# Steer it with `/ai-review stop|more` (ai-pr-review-command.yml).
+# Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S [mode=M] -->.
+# Steer it with `/ai-review stop|more|fix` (ai-pr-review-command.yml).
+# When someone else pushes during a round, the PR switches to mode=author-fixes: rounds only review,
+# and each push starts the next one (ai-pr-review-push.yml) while status is waiting. A PR opened
+# with the label ai-review-author-fixes starts in that mode.
 name: AI PR review
 
 on:
@@ -69,7 +72,8 @@ jobs:
             # A re-readied PR does not start over; `/ai-review more` adds rounds.
             [[ -z $m ]] || skip "it already has an ai-review marker ($m)"
           else
-            [[ $s == running ]] || skip "marker status is ${s:-missing}, not running"
+            # waiting: a `/ai-review more` that came in during a review-only round.
+            [[ $s == running || $s == waiting ]] || skip "marker status is ${s:-missing}, not running"
           fi
 
           rc=0
@@ -82,7 +86,19 @@ jobs:
           fi
           ((rc == 0)) || exit "$rc"
 
-          [[ -n $m ]] || pr_marker_update "$PR" 0 2 running
+          if [[ -z $m ]]; then
+            # The author says up front that they (or their agent) fix the review comments.
+            mode=-
+            if jq -e 'any(.labels[]; .name == "ai-review-author-fixes")' <<<"$pr_json" >/dev/null; then
+              mode=author-fixes
+            fi
+            pr_marker_update "$PR" 0 2 running "$mode"
+          elif [[ $s == waiting ]]; then
+            rc=0
+            pr_marker_update "$PR" - - running || rc=$?
+            if ((rc == 3)); then skip "stopped meanwhile"; fi
+            ((rc == 0)) || exit "$rc"
+          fi
           echo go=true >>"$GITHUB_OUTPUT"
 
   # A called workflow can only narrow the caller's token, and the top level is {}.
@@ -156,10 +172,12 @@ jobs:
           R1_STEP: ${{ needs.round-1.outputs.failed_step }}
           R1_ROUND: ${{ needs.round-1.outputs.round }}
           R1_COMPLETED: ${{ needs.round-1.outputs.completed }}
+          R1_REVIEW_ONLY: ${{ needs.round-1.outputs.review_only }}
           R2_RESULT: ${{ needs.round-2.result }}
           R2_STEP: ${{ needs.round-2.outputs.failed_step }}
           R2_ROUND: ${{ needs.round-2.outputs.round }}
           R2_COMPLETED: ${{ needs.round-2.outputs.completed }}
+          R2_REVIEW_ONLY: ${{ needs.round-2.outputs.review_only }}
         run: |
           . .github/ai-review/lib.sh
           # A plain assignment, so a failed GET fails the step instead of reading as no marker.
@@ -176,6 +194,11 @@ jobs:
             job=round-1 step=$R1_STEP round=$R1_ROUND
           elif [[ $R2_RESULT == failure || $R2_RESULT == cancelled ]]; then
             job=round-2 step=$R2_STEP round=$R2_ROUND
+          elif [[ $R1_REVIEW_ONLY == true || $R2_REVIEW_ONLY == true ]]; then
+            # The round left the marker waiting. A push run or `/ai-review more` may already have set
+            # it back to running and dispatched the next run: leave the marker and dispatching to them.
+            echo "Review-only round; the next round starts from a push or a command."
+            exit 0
           elif [[ $s == running ]] && ((r < t)); then
             # Still running with rounds left: only a round that ran to its marker update may hand
             # over to a new run. Anything else (a forged stop, say) fails instead of re-dispatching.
