@@ -321,7 +321,8 @@ jobs:
       pull-requests: read
       id-token: write
     outputs:
-      fix_go: ${{ steps.guard-fix.outputs.go }}
+      # The context step can still stop the fix (the head moved after guard-fix).
+      fix_go: ${{ steps.context.outputs.go || steps.guard-fix.outputs.go }}
       failed_step: ${{ steps.failed.outputs.step }}
     env:
       PR: ${{ inputs.pr }}
@@ -390,22 +391,33 @@ jobs:
           cp -r "$RUNNER_TEMP/skills/." ~/.claude/skills/
           test -f ~/.claude/skills/pr-review-implementer/SKILL.md
 
-      # Fetched again, so threads include the review just posted.
+      # Fetched again, so threads include the review just posted. Exit 3 means the head moved
+      # since guard-fix (the author pushed during setup): not fixing, so publish-fix sees the moved
+      # head and switches the PR to author fixes instead of the round failing.
       - name: Fetch the fix context
         id: context
         if: steps.guard-fix.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx" "$HEAD_SHA"
+          rc=0
+          bash "$RUNNER_TEMP/tools/fetch-context.sh" "$PR" "$RUNNER_TEMP/ctx" "$HEAD_SHA" || rc=$?
+          if ((rc == 3)); then
+            echo "Not fixing: the head moved during setup."
+            echo go=false >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ((rc == 0)) || exit "$rc"
           # The implementer skill reads context_dir/threads.json; give it the R7-filtered threads.
           mkdir -p "$RUNNER_TEMP/ctx-fix"
           cp "$RUNNER_TEMP/ctx/pr.json" "$RUNNER_TEMP/ctx/diff.patch" "$RUNNER_TEMP/ctx-fix/"
           cp "$RUNNER_TEMP/ctx/threads-implementer.json" "$RUNNER_TEMP/ctx-fix/threads.json"
+          echo go=true >>"$GITHUB_OUTPUT"
 
+      # From here on gated on the context step, which runs only after guard-fix said go.
       - name: Set the git identity
         id: git-identity
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -415,7 +427,7 @@ jobs:
       # build/test can still read both: this job stays untrusted.
       - name: Fix
         id: fix
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         uses: anthropics/claude-code-action/base-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1.0.266
         timeout-minutes: 45
         with:
@@ -439,7 +451,7 @@ jobs:
       # publish-fix (which is the check that counts: this runner is not trusted).
       - name: Bundle the fix
         id: bundle
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         env:
           FIX_EXEC: ${{ steps.fix.outputs.execution_file }}
         run: |
@@ -465,7 +477,7 @@ jobs:
 
       - name: Upload the fix
         id: upload
-        if: steps.guard-fix.outputs.go == 'true'
+        if: steps.context.outputs.go == 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ai-review-fix-${{ inputs.pr }}-round-${{ needs.review.outputs.round }}

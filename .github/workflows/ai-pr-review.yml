@@ -2,7 +2,8 @@
 # Round state lives in a hidden marker in the PR body: <!-- ai-review: round=R/T status=S [mode=M] -->.
 # Steer it with `/ai-review stop|more|fix` (ai-pr-review-command.yml).
 # When someone else pushes during a round, the PR switches to mode=author-fixes: rounds only review,
-# and each push starts the next one (ai-pr-review-push.yml) while status is waiting.
+# and each push starts the next one (ai-pr-review-push.yml) while status is waiting. A PR opened
+# with the label ai-review-author-fixes starts in that mode.
 name: AI PR review
 
 on:
@@ -86,7 +87,12 @@ jobs:
           ((rc == 0)) || exit "$rc"
 
           if [[ -z $m ]]; then
-            pr_marker_update "$PR" 0 2 running
+            # The author says up front that they (or their agent) fix the review comments.
+            mode=-
+            if jq -e 'any(.labels[]; .name == "ai-review-author-fixes")' <<<"$pr_json" >/dev/null; then
+              mode=author-fixes
+            fi
+            pr_marker_update "$PR" 0 2 running "$mode"
           elif [[ $s == waiting ]]; then
             rc=0
             pr_marker_update "$PR" - - running || rc=$?
