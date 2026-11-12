@@ -176,6 +176,24 @@ public class SourceNodeToPocoTests
         poco.Meta.LastUpdated.Should().Be(DateTimeOffset.Parse(lastUpdated));
     }
 
+    [DataTestMethod]
+    [DataRow("IlRlc3QgLSBCaW5hcnkgU3VwcG9ydCBWb25rIg==", DisplayName = "canonical")]
+    [DataRow("IlRlc3QgLSBCaW5hcnkg\nU3VwcG9ydCBWb25rIg==", DisplayName = "non-canonical")]
+    [DataRow("not base64!", DisplayName = "invalid")]
+    public void KeepsBase64BinaryLiteralWhenBuildingFromSourceNode(string base64)
+    {
+        // Base64Binary.JsonValue holds the literal; byte[] is only its parsed Value.
+        var node = SourceNode.Resource("Binary", "Binary",
+            SourceNode.Valued("contentType", "text/plain"),
+            SourceNode.Valued("content", base64));
+
+        var direct = node.ToPoco<Binary>(ModelInfo.ModelInspector);
+        var untyped = ((ISourceNode)node.ToTypedElement().ToPocoNode()).ToPoco<Binary>(ModelInfo.ModelInspector);
+
+        direct.ContentElement.JsonValue.Should().Be(base64);
+        untyped.ContentElement.JsonValue.Should().Be(base64);
+    }
+
     private static SourceNode createPatientSourceNode() =>
         SourceNode.Resource("Patient", "Patient",
             SourceNode.Valued("active", "true"),
