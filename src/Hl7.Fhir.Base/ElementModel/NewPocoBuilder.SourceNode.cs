@@ -114,8 +114,7 @@ internal partial class NewPocoBuilder
         if (classMapping.EnumType is not null || classMapping.PrimitiveValueProperty is not { } primitiveValueProperty)
             return text;
 
-        var convertedValue = PrimitiveTypeConverter.ConvertTo(text, primitiveValueProperty.ImplementingType);
-        return normalizePrimitiveValueForPocoStorage(convertedValue);
+        return convertLiteralForPocoStorage(text, primitiveValueProperty.ImplementingType);
     }
 
     private ClassMapping determineBestDynamicMappingForElement(ISourceNode node)

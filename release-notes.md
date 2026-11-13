@@ -59,3 +59,6 @@ changes.
 
 **Performance**
 - Reading annotations from a POCO or an `AnnotationList` (`HasAnnotation`, `TryGetAnnotation`, `Annotations(type)`, `RemoveAnnotations`) no longer creates an empty annotation list, so `DeepCopy()`/`CopyTo()` no longer propagate one from elements that were only inspected. The list (and its dictionary) is now created on the first write only, and the dictionary is sized for a few annotation types. This removes a `ConcurrentDictionary` allocation per element that was only inspected, which speeds up work like snapshot generation. The public API is unchanged. See issue [#3665](https://github.com/FirelyTeam/firely-net-sdk/issues/3665).
+
+**Fixes**
+- Building a POCO from an `ISourceNode` (`ToPoco()`) stored a `base64Binary` value as a decoded `byte[]` in `JsonValue` instead of keeping the base64 text, so validation reported an incorrect literal type (e.g. on `Binary.data`), and an invalid base64 literal threw a `FormatException` instead of being reported by validation. The literal is now kept as-is. This was broken since 6.2.1.

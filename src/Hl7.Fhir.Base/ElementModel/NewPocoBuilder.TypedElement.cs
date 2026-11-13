@@ -39,7 +39,7 @@ internal partial class NewPocoBuilder
             // will already be correct, but with strings it can represent FhirDateTime, FhirUri, etc.
             // Now that we have the ClassMapping, convert the string to the expected primitive type.
             else if (node is PocoNode { Poco: IDynamicType } && value is string s && classMapping.PrimitiveValueProperty is not null)
-                objectValue = PrimitiveTypeConverter.ConvertTo(s, classMapping.PrimitiveValueProperty.ImplementingType);
+                objectValue = convertLiteralForPocoStorage(s, classMapping.PrimitiveValueProperty.ImplementingType);
             else
                 objectValue = normalizePrimitiveValueForPocoStorage(value);
 
