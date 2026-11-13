@@ -170,10 +170,19 @@ public class SourceNodeToPocoTests
             SourceNode.Node("meta",
                 SourceNode.Valued("lastUpdated", lastUpdated)));
 
-        var poco = patient.ToPoco<Patient>(ModelInfo.ModelInspector);
+        var direct = patient.ToPoco<Patient>(ModelInfo.ModelInspector);
+        var dynamicPatient = new DynamicResource
+        {
+            DynamicTypeName = "Patient",
+            ["meta"] = new DynamicDataType { ["lastUpdated"] = new DynamicPrimitive { JsonValue = lastUpdated } }
+        };
+        var untypedElement = ((ITypedElement)dynamicPatient.ToPocoNode()).ToPoco<Patient>(ModelInfo.ModelInspector);
 
-        poco.Meta!.LastUpdatedElement!.JsonValue.Should().BeOfType<string>();
-        poco.Meta.LastUpdated.Should().Be(DateTimeOffset.Parse(lastUpdated));
+        foreach (var poco in new[] { direct, untypedElement })
+        {
+            poco.Meta!.LastUpdatedElement!.JsonValue.Should().BeOfType<string>();
+            poco.Meta.LastUpdated.Should().Be(DateTimeOffset.Parse(lastUpdated));
+        }
     }
 
     [TestMethod]
@@ -188,10 +197,12 @@ public class SourceNodeToPocoTests
             SourceNode.Valued("content", base64));
 
         var direct = node.ToPoco<Binary>(ModelInfo.ModelInspector);
-        var untyped = ((ISourceNode)node.ToTypedElement().ToPocoNode()).ToPoco<Binary>(ModelInfo.ModelInspector);
+        // A PocoNode over a dynamic POCO holds raw strings and goes through the ITypedElement builder.
+        var dynamicBinary = new DynamicResource { DynamicTypeName = "Binary", ["content"] = new DynamicPrimitive { JsonValue = base64 } };
+        var untypedElement = ((ITypedElement)dynamicBinary.ToPocoNode()).ToPoco<Binary>(ModelInfo.ModelInspector);
 
         direct.ContentElement!.JsonValue.Should().Be(base64);
-        untyped.ContentElement!.JsonValue.Should().Be(base64);
+        untypedElement.ContentElement!.JsonValue.Should().Be(base64);
     }
 
     private static SourceNode createPatientSourceNode() =>
