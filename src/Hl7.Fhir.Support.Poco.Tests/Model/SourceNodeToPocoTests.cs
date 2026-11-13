@@ -176,7 +176,7 @@ public class SourceNodeToPocoTests
         poco.Meta.LastUpdated.Should().Be(DateTimeOffset.Parse(lastUpdated));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("IlRlc3QgLSBCaW5hcnkgU3VwcG9ydCBWb25rIg==", DisplayName = "canonical")]
     [DataRow("IlRlc3QgLSBCaW5hcnkg\nU3VwcG9ydCBWb25rIg==", DisplayName = "non-canonical")]
     [DataRow("not base64!", DisplayName = "invalid")]
@@ -190,8 +190,8 @@ public class SourceNodeToPocoTests
         var direct = node.ToPoco<Binary>(ModelInfo.ModelInspector);
         var untyped = ((ISourceNode)node.ToTypedElement().ToPocoNode()).ToPoco<Binary>(ModelInfo.ModelInspector);
 
-        direct.ContentElement.JsonValue.Should().Be(base64);
-        untyped.ContentElement.JsonValue.Should().Be(base64);
+        direct.ContentElement!.JsonValue.Should().Be(base64);
+        untyped.ContentElement!.JsonValue.Should().Be(base64);
     }
 
     private static SourceNode createPatientSourceNode() =>
