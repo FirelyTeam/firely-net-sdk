@@ -2,6 +2,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -167,6 +168,13 @@ internal partial class NewPocoBuilder
 
         throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
     }
+
+    private static object convertLiteralForPocoStorage(string text, Type implementingType) =>
+        // Base64Binary keeps its literal as JsonValue and parses it lazily, so decoding here would
+        // put a byte[] in JsonValue (and throw on invalid base64 instead of letting validation report it).
+        implementingType == typeof(byte[])
+            ? text
+            : normalizePrimitiveValueForPocoStorage(PrimitiveTypeConverter.ConvertTo(text, implementingType));
 
     private static object normalizePrimitiveValueForPocoStorage(object value) => value switch
     {
