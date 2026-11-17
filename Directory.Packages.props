@@ -8,13 +8,13 @@
 	<!-- Testing Packages (all frameworks) -->
 	<ItemGroup>
 		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
-		<PackageVersion Include="MSTest.TestFramework" Version="4.5.1" />
+		<PackageVersion Include="MSTest.TestFramework" Version="4.5.3" />
 		<PackageVersion Include="MSTest.TestAdapter" Version="4.5.1" />
 		<PackageVersion Include="xunit" Version="2.9.2" />
 		<PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
 		<PackageVersion Include="FluentAssertions" Version="7.2.2" />
 		<PackageVersion Include="NSubstitute" Version="6.2.0" />
-		<PackageVersion Include="Verify.MSTest" Version="33.3.4" />
+		<PackageVersion Include="Verify.MSTest" Version="33.5.0" />
 	</ItemGroup>
 
 	<!-- Main Dependencies (all frameworks) -->
