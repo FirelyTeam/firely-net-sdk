@@ -112,14 +112,11 @@ public partial class FhirDateTime
         return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
     }
 
-    // A FHIR dateTime is a date or partial date without an offset, or a date with a time to at least the second
-    // and an offset. The element-model parser is more lenient (it allows a time to the hour or minute), so the
-    // precision and offset rules are checked here.
+    // Deliberately accepts a time to the hour or minute, so parsing, POCO validation and conversions keep
+    // working for existing data. IsValidValue adds the seconds rule.
     private static P.DateTime? doParse(string literal) =>
         P.DateTime.TryParse(literal, out var parsed) &&
-        (parsed.Precision <= P.DateTimePrecision.Day
-            ? !parsed.HasOffset
-            : parsed.Precision >= P.DateTimePrecision.Second && parsed.HasOffset) ? parsed : null;
+        (parsed.Precision <= P.DateTimePrecision.Day == !parsed.HasOffset) ? parsed : null;
 
     /// <summary>
     /// Checks whether the given literal is a valid FHIR dateTime.
@@ -128,7 +125,8 @@ public partial class FhirDateTime
     /// A time must include seconds and an offset, a date or partial date must not have an offset, and the date must
     /// exist. Note that <see cref="PATTERN"/> is the R5 regex, which is more lenient about offsets.
     /// </remarks>
-    public static bool IsValidValue(string value) => doParse(value) is not null;
+    public static bool IsValidValue(string value) =>
+        doParse(value) is { } parsed && (parsed.Precision <= P.DateTimePrecision.Day || parsed.Precision >= P.DateTimePrecision.Second);
 
 
     /// <summary>

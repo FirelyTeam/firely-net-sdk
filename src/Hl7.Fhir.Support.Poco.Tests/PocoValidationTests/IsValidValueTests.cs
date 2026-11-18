@@ -60,6 +60,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             f(Time.IsValidValue("12:03:04-01:00"));
             f(Time.IsValidValue("12:03"));
             f(Time.IsValidValue("12"));
+
+            // IsValidValue is strict, but parsing and conversions still accept a time without seconds.
+            t(new FhirDateTime("2020-01-01T14:00+01:00").TryToSystemDateTime(out _));
+            t(new Time("12:03").TryToSystemTime(out _));
         }
 
         [TestMethod]

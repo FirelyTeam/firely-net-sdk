@@ -500,6 +500,16 @@ public partial class FhirJsonDeserializationTests
     }
 
     [TestMethod]
+    [DataRow("""{"resourceType":"Observation","status":"final","code":{"text":"t"},"effectiveDateTime":"2020-01-01T14:00Z"}""", DisplayName = "DateTime")]
+    [DataRow("""{"resourceType":"Observation","status":"final","code":{"text":"t"},"valueTime":"12:03"}""", DisplayName = "Time")]
+    public void AcceptsTimesWithoutSeconds(string json)
+    {
+        // #3651 made these fail with PVAL124, see #3650
+        FhirJsonDeserializer.DEFAULT.TryDeserializeResource(json, out _, out var issues).Should().BeTrue();
+        issues.Should().BeEmpty();
+    }
+
+    [TestMethod]
     public void TestBase64Parsing()
     {
         var attachment = deserializeAttachment(new FhirJsonConverterOptions());
