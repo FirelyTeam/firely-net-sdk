@@ -185,5 +185,19 @@ namespace Hl7.Fhir.ElementModel.Tests
             P.Time.TryParse("hi", out var time).Should().BeFalse();
             time.Should().BeNull();
         }
+
+        [TestMethod]
+        [DataRow("13:01:44.5", true)]
+        [DataRow("13:01:44.123+01:00", true)]
+        [DataRow("13:01:44,5", false)]
+        [DataRow("13:01:44,123+01:00", false)]
+        [DataRow("13:01:44:5", false)]
+        [DataRow("13:01:44-5", false)]
+        [DataRow("13:01:44 5", false)]
+        [DataRow("13:01:44x5", false)]
+        public void FractionSeparatorMustBeADot(string input, bool valid)
+        {
+            P.Time.TryParse(input, out _).Should().Be(valid);
+        }
     }
 }

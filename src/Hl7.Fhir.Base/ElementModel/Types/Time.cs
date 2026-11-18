@@ -93,7 +93,7 @@ public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     internal static readonly string PARTIALTIMEFORMAT = $"{TIMEFORMAT}{OFFSETFORMAT}?";
     internal const string TIMEFORMAT =
-        "(?<time>(?<hours>[0-9][0-9]) ((?<minutes>:[0-9][0-9]) ((?<seconds>:[0-9][0-9]) ((?<frac>.[0-9]+))?)?)?)";
+        "(?<time>(?<hours>[0-9][0-9]) ((?<minutes>:[0-9][0-9]) ((?<seconds>:[0-9][0-9]) ((?<frac>\\.[0-9]+))?)?)?)";
     internal const string OFFSETFORMAT = "(?<offset>Z | (\\+|-) [0-9][0-9]:[0-9][0-9])";
 
     private static readonly Regex PARTIALTIMEREGEX =

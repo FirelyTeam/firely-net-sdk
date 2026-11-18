@@ -231,5 +231,19 @@ namespace Hl7.Fhir.ElementModel.Tests
             P.DateTime.TryParse("hi", out var parsed).Should().BeFalse();
             parsed.Should().BeNull();
         }
+
+        [TestMethod]
+        [DataRow("2020-01-01T13:01:44.5", true)]
+        [DataRow("2020-01-01T13:01:44.123+01:00", true)]
+        [DataRow("2020-01-01T13:01:44,5", false)]
+        [DataRow("2020-01-01T13:01:44,123+01:00", false)]
+        [DataRow("2020-01-01T13:01:44:5", false)]
+        [DataRow("2020-01-01T13:01:44-5", false)]
+        [DataRow("2020-01-01T13:01:44 5", false)]
+        [DataRow("2020-01-01T13:01:44x5", false)]
+        public void FractionSeparatorMustBeADot(string input, bool valid)
+        {
+            P.DateTime.TryParse(input, out _).Should().Be(valid);
+        }
     }
 }
