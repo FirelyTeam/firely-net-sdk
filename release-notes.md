@@ -1,44 +1,24 @@
 ## Intro:
 
-This release adds a way to get the range of time a FHIR `date` or `dateTime` covers at its
-precision, and makes the FHIRPath conversion functions follow the FHIRPath specification for items
-of a complex type: they no longer throw, but return empty or `false`. There are no breaking API
+This release adds flat and not-for-UI value set expansions, the `lenient-display-validation` parameter for
+`$validate-code`, and more ways to build a `DateTimeRange`. It also makes `IsValidValue` stricter about FHIR
+date/time and primitive literals, and fixes several parsing and `base64Binary` issues. There are no breaking API
 changes.
 
 **Date and time ranges**
-- New `Interval<T>` and `DateTimeRange` types in `Hl7.Fhir.ElementModel.Types`. `Interval<T>` is a
-  generic interval whose sides are closed, open or unbounded, with `Contains`, `Overlaps` and
-  `Covers`. `DateTimeRange` is a half-open range [`Start`, `End`) that also keeps the `Precision`.
-- `Date` and `DateTime` get `TryGetRange(out range)`, `GetRange(TimeZoneInfo)` and
-  `GetRange(TimeSpan)`. For example, `2026-03` covers all of March 2026, and `10:00:00+01:00` covers
-  one second. A value without an offset is read in the given time zone, and the range is widened
-  where daylight saving skips or repeats a time.
-- `Period` gets `TryGetRange(out range)` and `TryGetRange(TimeZoneInfo, out range)`, from the start
-  of `start` to the end of `end`. A missing side is unbounded.
-- `DateTime` now keeps the number of fraction digits from `Parse()`, so `.000` spans 1 ms. See issue
-  [#3628](https://github.com/FirelyTeam/firely-net-sdk/issues/3628).
 - `DateTimeRange` can be built from two instants and a precision with a public constructor, and
   `TryBetween(start, end, out range)` reports a reversed pair, or two `null` arguments, instead of throwing. `StartOrMinValue`
   and `EndOrMaxValue` give the bounds with `DateTimeOffset.MinValue`/`MaxValue` for an unbounded side,
   for code that compares instants, and `LastInstant` is the last instant the range covers, one tick
   before `End`. See issue [#3657](https://github.com/FirelyTeam/firely-net-sdk/issues/3657).
 
-**FHIRPath**
-- The conversion functions `toBoolean()`, `toInteger()`, `toLong()`, `toDecimal()`, `toQuantity()`,
-  `toString()`, `toDate()`, `toDateTime()` and `toTime()` now return empty for an item of a type
-  they cannot convert, such as a complex type or a resource, and the matching `convertsTo*()`
-  functions return `false`, as the [FHIRPath specification](https://hl7.org/fhirpath/STU3/#conversion)
-  requires. `Patient.name.first().convertsToString()` used to throw an `InvalidOperationException`
-  ("There is no known Cql/FhirPath type corresponding to the .NET type PocoNode") and now returns
-  `false`. The same goes for a `Coding` without a `code`, and a `Quantity` without a value or with a
-  comparator. Items with a System type equivalent, like `Quantity`, convert as before. See issue [#3636](https://github.com/FirelyTeam/firely-net-sdk/issues/3636).
-
-  > **Behavioural note:** if you added your own overload of one of these functions to a `SymbolTable`
-  > that already has the standard functions, with a `PocoNode` parameter, the standard function now
-  > takes precedence for complex types too. Register your overload in a child `SymbolTable` to keep
-  > it in effect.
-
 **Terminology**
+- `ValueSetExpander.ExpandAsync(ValueSet, ExpandParameters)` and a public `SupportedParameters`. `excludeNested=true`
+  (or the new `ValueSetExpanderSettings.AlwaysExpandFlat`) returns a flat, depth-first expansion, and `excludeNotForUI=true`
+  leaves out not-selectable and abstract codes. Unsupported parameters are rejected; applied ones are echoed in
+  `expansion.parameter`. The size cap now counts nested codes, intersections keep nested codes, and `Total` is recomputed
+  after excludes. The `ExpandParameters` builders for `system-version`, `check-system-version` and `force-system-version` now
+  use the OperationDefinition names. See issue [#3632](https://github.com/FirelyTeam/firely-net-sdk/issues/3632).
 - `$validate-code` supports the `lenient-display-validation` parameter of the
   [ValueSet/$validate-code OperationDefinition](https://build.fhir.org/valueset-operation-validate-code.html).
   `ValidateCodeParameters` and `CodeSystemValidateCodeParameters` have a `LenientDisplayValidation` property and a
@@ -59,6 +39,15 @@ changes.
 
 **Performance**
 - Reading annotations from a POCO or an `AnnotationList` (`HasAnnotation`, `TryGetAnnotation`, `Annotations(type)`, `RemoveAnnotations`) no longer creates an empty annotation list, so `DeepCopy()`/`CopyTo()` no longer propagate one from elements that were only inspected. The list (and its dictionary) is now created on the first write only, and the dictionary is sized for a few annotation types. This removes a `ConcurrentDictionary` allocation per element that was only inspected, which speeds up work like snapshot generation. The public API is unchanged. See issue [#3665](https://github.com/FirelyTeam/firely-net-sdk/issues/3665).
+- FHIRPath `as`/`is` and `ResourceIdentity` do less work per call.
 
 **Fixes**
+- `FhirDateTime.IsValidValue` and `Time.IsValidValue` now require seconds, as the FHIR `dateTime` and `time` formats do.
+  Parsing and deserialization still accept a time without seconds. See issue [#3650](https://github.com/FirelyTeam/firely-net-sdk/issues/3650).
+- `IsValidValue` and the element-model parsers for date/time, `id`, `code`, `oid`, `uuid` and `Quantity` no longer accept a
+  trailing line break. See issue [#3659](https://github.com/FirelyTeam/firely-net-sdk/issues/3659).
+- Validating a `Base64Binary` no longer rewrites a literal that contains whitespace. See issue [#3648](https://github.com/FirelyTeam/firely-net-sdk/issues/3648).
+- The JSON deserializer merges `x` and `_x` when only one of them is an array, instead of throwing or dropping elements, and
+  reports the new non-fatal `JSON136`. Property-level validation errors are now reported at the element itself. See issue
+  [#3655](https://github.com/FirelyTeam/firely-net-sdk/issues/3655).
 - Building a POCO from an `ISourceNode` (`ToPoco()`) stored a `base64Binary` value as a decoded `byte[]` in `JsonValue` instead of keeping the base64 text, so validation reported an incorrect literal type (e.g. on `Binary.data`), and an invalid base64 literal threw a `FormatException` instead of being reported by validation. The literal is now kept as-is. This was broken since 6.2.1.
