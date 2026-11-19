@@ -95,6 +95,22 @@ namespace Hl7.Fhir.Support.Poco.Tests
             f(Uuid.IsValidValue("urn:uuid:157a6966-2b36-44cc-95a5-667e964e3cbc\n"));
         }
 
+        [TestMethod]
+        public void TestFractionSeparatorMustBeADot()
+        {
+            t(FhirDateTime.IsValidValue("2020-01-01T14:00:00.5Z"));
+            f(FhirDateTime.IsValidValue("2020-01-01T14:00:00,5Z"));
+            f(FhirDateTime.IsValidValue("2020-01-01T14:00:00:5Z"));
+
+            t(Instant.IsValidValue("2020-02-03T12:34:34.5Z"));
+            f(Instant.IsValidValue("2020-02-03T12:34:34,5Z"));
+            f(Instant.IsValidValue("2020-02-03T12:34:34:5Z"));
+
+            t(Time.IsValidValue("12:03:04.5"));
+            f(Time.IsValidValue("12:03:04,5"));
+            f(Time.IsValidValue("12:03:04:5"));
+        }
+
         private static void t(bool b) => b.Should().BeTrue();
         private static void f(bool b) => b.Should().BeFalse();
 
