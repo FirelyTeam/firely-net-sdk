@@ -148,14 +148,24 @@ namespace Hl7.FhirPath.Functions
             }
 
             // Data of dynamic or custom types (e.g. logical models such as CDA) has types no inspector knows,
-            // so we cannot tell whether the name is valid.
-            if (ns is not "System" && unmatched.Any(n => isUnverifiable(n) || isUnverifiable(rootOf(n)))) return;
+            // so we cannot tell whether the name is valid. The same goes for data that only uses classes from
+            // the base assembly (e.g. a Bundle, Parameters or literals) without an inspector annotation: the
+            // base model does not know the resources and datatypes of a FHIR release, and whether another
+            // inspector knows the name depends on which inspectors happen to have been created so far.
+            if (ns is not "System" && (onlyBaseModel(unmatched.First()) || unmatched.Any(n => isUnverifiable(n) || isUnverifiable(rootOf(n))))) return;
 
             throw Error.InvalidOperation($"Unknown type '{typeName}'.");
 
             static bool isUnverifiable(PocoNode node) =>
                 node.Poco is IDynamicType || !isModelAssembly(node.Poco.GetType().Assembly);
+
+            static bool onlyBaseModel(PocoNode node) =>
+                node.FindInspector() is null
+                && node.Poco.GetType().Assembly == _baseAssembly
+                && rootOf(node).Poco.GetType().Assembly == _baseAssembly;
         }
+
+        private static readonly Assembly _baseAssembly = typeof(Base).Assembly;
 
         private static bool isKnownType(string? ns, string name, IEnumerable<PocoNode> unmatched)
         {
