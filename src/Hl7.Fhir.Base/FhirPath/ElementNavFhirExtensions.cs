@@ -9,7 +9,6 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
@@ -245,11 +244,9 @@ namespace Hl7.Fhir.FhirPath
         /// Implements the FHIRPath <c>conformsTo()</c> function: whether the single input element conforms to the
         /// profile with the given canonical url.
         /// </summary>
-        /// <remarks>The profile is checked by <see cref="FhirEvaluationContext.ProfileConformanceChecker"/> when one
-        /// is configured. Otherwise (or when it returns <c>null</c>), only the canonicals of the core FHIR types are
-        /// supported: the input conforms when its type is, or derives from, that type (any <c>|version</c> is ignored).
-        /// Any other profile raises an error. Without an annotated <see cref="ModelInspector"/>, a tree whose root is a type
-        /// shared between FHIR releases (e.g. a Bundle), or a standalone dynamic type, can only check the canonicals of those shared types.</remarks>
+        /// <remarks>Checking conformance requires validation, which is done by the
+        /// <see cref="FhirEvaluationContext.ProfileConformanceChecker"/>. When none is configured, an error is raised.
+        /// Empty input gives an empty result, and input with more than one item raises an error.</remarks>
         internal static bool? ConformsTo(IEnumerable<PocoNode> input, string? structure, EvaluationContext ctx)
         {
             var items = input.Take(2).ToArray();
@@ -257,38 +254,10 @@ namespace Hl7.Fhir.FhirPath
             if (items.Length > 1)
                 throw new InvalidOperationException("The 'conformsTo' function can only be called on a single item, but the input contains more than one.");
 
-            var node = items[0];
+            var checker = (ctx as FhirEvaluationContext)?.ProfileConformanceChecker
+                ?? throw new InvalidOperationException($"The 'conformsTo' function cannot be executed because the {nameof(FhirEvaluationContext)} does not include a {nameof(FhirEvaluationContext.ProfileConformanceChecker)}.");
 
-            if (ctx is FhirEvaluationContext { ProfileConformanceChecker: { } checker } && checker(node, structure) is { } result)
-                return result;
-
-            // Fallback: the canonicals of the core FHIR types. The version (if any) is ignored.
-            var canonical = structure.Split('|')[0];
-            foreach (var inspector in candidateInspectors(node))
-            {
-                if (inspector.FindClassMappingByCanonical(canonical) is { } target)
-                {
-                    // FindClassMapping(Base) honours dynamic types (e.g. a DynamicResource with a DynamicTypeName).
-                    var actualType = inspector.FindClassMapping(node.Poco)?.NativeType ?? node.Poco.GetType();
-                    return target.NativeType.IsAssignableFrom(actualType);
-                }
-            }
-
-            throw new InvalidOperationException($"The 'conformsTo' function cannot resolve profile '{structure}'. " +
-                $"Only the core FHIR types can be checked, unless a {nameof(FhirEvaluationContext.ProfileConformanceChecker)} is set on the {nameof(FhirEvaluationContext)}.");
-
-            // The inspector annotated on the tree (if any), followed by the inspectors for the assemblies of the node and
-            // its ancestors. Types shared between releases (e.g. Bundle, HumanName) live in the base assembly, whose inspector
-            // does not know the release-specific types, so an ancestor (e.g. the Patient a HumanName is in) may be needed.
-            static IEnumerable<ModelInspector> candidateInspectors(PocoNode node)
-            {
-                if (node.FindInspector() is { } annotated) yield return annotated;
-
-#pragma warning disable CS0618 // Type or member is obsolete
-                for (PocoNode? current = node; current is not null; current = current.Parent?.SingleOrDefault())
-                    yield return ModelInspector.ForType(current.Poco.GetType());
-#pragma warning restore CS0618 // Type or member is obsolete
-            }
+            return checker(items[0], structure);
         }
 
         /// <summary>

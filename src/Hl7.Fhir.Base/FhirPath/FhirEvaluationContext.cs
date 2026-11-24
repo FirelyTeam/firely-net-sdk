@@ -37,14 +37,11 @@ namespace Hl7.Fhir.FhirPath
         /// <summary>
         /// Checks whether a node conforms to the profile with the given canonical url, used by the FHIRPath
         /// <c>conformsTo()</c> function. The canonical is passed as written in the expression (including any
-        /// <c>|version</c>). Return <c>true</c> or <c>false</c> for a profile that could be checked, or <c>null</c>
-        /// when the profile cannot be resolved.
+        /// <c>|version</c>). Return whether the node conforms (typically: validating it against the profile gives no
+        /// errors), and throw an exception when the profile cannot be resolved, which makes the evaluation fail.
         /// </summary>
-        /// <remarks>The checker is called for every profile, including the canonicals of the core FHIR types, and any
-        /// exception it throws propagates to the caller. When this is not set, or returns <c>null</c>, <c>conformsTo()</c>
-        /// only checks the type of the input against the canonicals of the core FHIR types
-        /// (e.g. <c>http://hl7.org/fhir/StructureDefinition/Patient</c>) and raises an error for any other profile.</remarks>
-        public Func<PocoNode, string, bool?>? ProfileConformanceChecker { get; set; }
+        /// <remarks>When this is not set, <c>conformsTo()</c> raises an error.</remarks>
+        public Func<PocoNode, string, bool>? ProfileConformanceChecker { get; set; }
     }
 }
 

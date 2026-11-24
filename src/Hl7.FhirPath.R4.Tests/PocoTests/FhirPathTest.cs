@@ -383,55 +383,17 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        [DynamicData(nameof(ConformsToTestData))]
-        public void ConformsToCoreTypeTests(Base poco, string expression, bool? expectedResult)
+        public void ConformsToWithoutProfileConformanceChecker()
         {
-            var result = poco.Scalar(expression, new FhirEvaluationContext());
+            Action action = () => new Patient().Scalar("conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", new FhirEvaluationContext());
 
-            result.Should().Be(expectedResult);
-        }
-
-        public static IEnumerable<object[]> ConformsToTestData()
-        {
-            var patient = new Patient { Name = [new HumanName { Family = "Doe" }] };
-
-            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", true];
-            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Patient|4.0.1')", true];
-            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/DomainResource')", true];
-            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Resource')", true];
-            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Observation')", false];
-            yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/HumanName')", true];
-            yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/Address')", false];
-            yield return [patient, "telecom.conformsTo('http://hl7.org/fhir/StructureDefinition/ContactPoint')", null];
-            yield return [patient, "{}.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", null];
-            // HumanName lives in the base assembly, so the Patient canonical is found through the parent Patient.
-            yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", false];
-            yield return [new Patient { Gender = AdministrativeGender.Male }, "gender.conformsTo('http://hl7.org/fhir/StructureDefinition/code')", true];
-
-            var bundle = new Bundle { Entry = [new Bundle.EntryComponent { Resource = patient }] };
-            yield return [bundle, "conformsTo('http://hl7.org/fhir/StructureDefinition/Bundle')", true];
-            yield return [bundle, "entry.resource.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", true];
-            yield return [bundle, "entry.resource.name.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", false];
-        }
-
-        [TestMethod]
-        public void ConformsToErrors()
-        {
-            var patient = new Patient { Name = [new HumanName { Family = "Doe" }, new HumanName { Family = "Roe" }] };
-            var context = new FhirEvaluationContext();
-
-            Action unknownProfile = () => patient.Scalar("conformsTo('http://example.org/StructureDefinition/my-patient')", context);
-            unknownProfile.Should().Throw<InvalidOperationException>().WithMessage("*cannot resolve profile*");
-
-            Action multipleItems = () => patient.Scalar("name.conformsTo('http://hl7.org/fhir/StructureDefinition/HumanName')", context);
-            multipleItems.Should().Throw<InvalidOperationException>().WithMessage("*single item*");
+            action.Should().Throw<InvalidOperationException>().WithMessage("*ProfileConformanceChecker*");
         }
 
         [TestMethod]
         public void ConformsToUsesProfileConformanceChecker()
         {
             const string myProfile = "http://example.org/StructureDefinition/my-patient";
-            var patient = new Patient { Active = true };
             var checkedProfiles = new List<string>();
 
             var context = new FhirEvaluationContext
@@ -439,25 +401,26 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 ProfileConformanceChecker = (node, profile) =>
                 {
                     checkedProfiles.Add(profile);
-                    return profile == myProfile ? ((Patient)node.Poco).Active == true : null;
+                    return profile.StartsWith(myProfile)
+                        ? ((Patient)node.Poco).Active == true
+                        : throw new InvalidOperationException($"Unknown profile '{profile}'");
                 }
             };
 
-            patient.Scalar($"conformsTo('{myProfile}')", context).Should().Be(true);
-            // The checker returns null for a profile it does not know, so the core-type fallback is used.
-            patient.Scalar("conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", context).Should().Be(true);
-            Action unknown = () => patient.Scalar("conformsTo('http://example.org/StructureDefinition/other')", context);
-            unknown.Should().Throw<InvalidOperationException>();
+            new Patient { Active = true }.Scalar($"conformsTo('{myProfile}')", context).Should().Be(true);
+            new Patient { Active = false }.Scalar($"conformsTo('{myProfile}|1.0.0')", context).Should().Be(false);
+            checkedProfiles.Should().Equal(myProfile, $"{myProfile}|1.0.0");
 
-            checkedProfiles.Should().Equal(myProfile, "http://hl7.org/fhir/StructureDefinition/Patient", "http://example.org/StructureDefinition/other");
+            // Exceptions from the checker (e.g. for an unknown profile) surface as an evaluation error.
+            Action unknown = () => new Patient().Scalar("conformsTo('http://example.org/StructureDefinition/other')", context);
+            unknown.Should().Throw<InvalidOperationException>().WithMessage("*Unknown profile*");
 
-            new Patient { Active = false }.Scalar($"conformsTo('{myProfile}')", context).Should().Be(false);
-
-            // The checker is not called for empty or multiple input.
+            // The checker is not called for empty input (empty result) or for multiple items (an error).
             checkedProfiles.Clear();
-            patient.Scalar($"{{}}.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient().Scalar($"{{}}.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient().Scalar($"name.conformsTo('{myProfile}')", context).Should().BeNull();
             Action multiple = () => new Patient { Name = [new(), new()] }.Scalar($"name.conformsTo('{myProfile}')", context);
-            multiple.Should().Throw<InvalidOperationException>();
+            multiple.Should().Throw<InvalidOperationException>().WithMessage("*single item*");
             checkedProfiles.Should().BeEmpty();
         }
 
