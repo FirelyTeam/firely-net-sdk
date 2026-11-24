@@ -260,15 +260,17 @@ namespace Hl7.Fhir.Support.Tests
 
         [TestMethod]
         // the result needs more digits than a decimal holds at the requested precision
-        [DataRow("100000000000000000000000.lowBoundary()")]
-        [DataRow("7.9228162514264337593543950335.highBoundary(28)")]
+        [DataRow("100000000000000000000000.0.lowBoundary()", "*too large or too small for a Decimal*")]
+        [DataRow("7.9228162514264337593543950335.highBoundary(28)", "*too large or too small for a Decimal*")]
         // the precision is outside what a decimal supports
-        [DataRow("1.587.lowBoundary(29)")]
-        public void DecimalBoundaryThatDoesNotFitFails(string expression)
+        [DataRow("1.587.lowBoundary(29)", "*precision of a decimal boundary must be between 0 and 28*")]
+        public void DecimalBoundaryThatDoesNotFitFails(string expression, string expectedMessage)
         {
-            var act = () => _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
+            var evaluator = _compiler.Compile(expression);
+            var act = () => evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
 
-            act.Should().Throw<System.Exception>();
+            // The evaluator wraps the exception thrown by the function, but keeps its message.
+            act.Should().Throw<System.Exception>().WithMessage(expectedMessage);
         }
 
 
