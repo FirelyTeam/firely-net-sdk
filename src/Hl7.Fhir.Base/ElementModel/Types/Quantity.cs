@@ -10,6 +10,7 @@
 
 using Fhir.Metrics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -327,8 +328,12 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// (e.g. <c>2.0 'cm' * 2.0 'm'</c> gives <c>0.040000 'm2'</c>, and <c>2 'kg' * 3 'm'</c> gives <c>6000 'g.m'</c>).</para>
     /// <para>The multiplication is not possible, and <c>false</c> is returned, when a unit cannot be converted
     /// to canonical UCUM units. This includes non-UCUM units, the calendar durations 'year' and 'month',
-    /// units with an offset (like 'Cel'), arbitrary units (like '[IU]'), and results that do not fit in a decimal.
-    /// Annotations (like '{tbl}') carry no meaning in UCUM and are dropped from the result.</para>
+    /// units with an offset or other special units (like 'Cel' or '[pH]'), arbitrary units (like '[IU]'), malformed
+    /// units (like 'm/'), units that Fhir.Metrics cannot parse (like units with parentheses, e.g. 'mg/(kg.d)'), and results
+    /// that do not fit in a decimal. Annotations (like '{tbl}') carry no meaning in UCUM and are dropped from the result.</para>
+    /// <para>Conversions use the UCUM definitions embedded in Fhir.Metrics, so results may carry tiny rounding noise
+    /// (e.g. <c>60 '1/min' * 2 'min'</c> gives <c>120.00000000000024 '1'</c>) and use the older value of the Avogadro
+    /// constant for 'mol'. Quantity equality rounds to 8 decimals, which hides the noise.</para>
     /// </remarks>
     public static bool TryMultiply(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
         tryCalculate(left, right, multiply: true, out result);
@@ -399,7 +404,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         static string? toUcumUnit(Quantity q) => q.System switch
         {
             QuantityUnitSystem.UCUM when q.Unit == UCUM_UNIT => "",
-            QuantityUnitSystem.UCUM when !containsArbitraryUnit(q.Unit) => q.Unit,
+            QuantityUnitSystem.UCUM when isWellFormedUcumUnit(q.Unit) && !containsArbitraryUnit(q.Unit) => q.Unit,
             // Calendar years and months have no definite UCUM equivalent.
             QuantityUnitSystem.CalendarDuration => definiteCalendarUnitToUcum(q.Unit),
             _ => null
@@ -421,18 +426,53 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     private static IMetricService metricService => FhirMetricService.Instance.Value;
 
-    // UCUM arbitrary units (UCUM §4.5, "arbitrary units", marked as such in ucum-essence.xml) are not
-    // commensurable with any other unit, so they cannot be converted to canonical units.
-    private static readonly string[] ARBITRARY_UNITS =
+    // UCUM arbitrary units (UCUM §4.5, marked isArbitrary="yes" in ucum-essence.xml) are not commensurable with
+    // any other unit, so they cannot be converted to canonical units. The list is read from the ucum-essence.xml that
+    // Fhir.Metrics embeds, so it matches the units Fhir.Metrics knows; the fallback is the list from UCUM 1.9.
+    internal static IReadOnlyCollection<string> ArbitraryUnits => ARBITRARY_UNITS.Value;
+
+    internal const string UCUM_ESSENCE_RESOURCE = "Fhir.Metrics.Data.ucum-essence.xml";
+
+    internal static readonly string[] ARBITRARY_UNITS_FALLBACK =
     [
-        "[IU]", "[iU]", "[arb'U]", "[USP'U]", "[GPL'U]", "[MPL'U]", "[APL'U]", "[beth'U]", "[anti'Xa'U]",
+        "[hp_X]", "[hp_C]", "[hp_M]", "[hp_Q]", "[kp_X]", "[kp_C]", "[kp_M]", "[kp_Q]",
+        "[iU]", "[IU]", "[arb'U]", "[USP'U]", "[GPL'U]", "[MPL'U]", "[APL'U]", "[beth'U]", "[anti'Xa'U]",
         "[todd'U]", "[dye'U]", "[smgy'U]", "[bdsk'U]", "[ka'U]", "[knk'U]", "[mclg'U]", "[tb'U]",
-        "[CCID_50]", "[TCID_50]", "[EID_50]", "[PFU]", "[FFU]", "[CFU]", "[IR]", "[BAU]", "[AU]",
+        "[CCID_50]", "[TCID_50]", "[EID_50]", "[PFU]", "[FFU]", "[CFU]", "[BAU]", "[AU]",
         "[Amb'a'1'U]", "[PNU]", "[Lf]", "[D'ag'U]", "[FEU]", "[ELU]", "[EU]"
     ];
 
+    private static readonly Lazy<string[]> ARBITRARY_UNITS = new(() => ReadArbitraryUnits() ?? ARBITRARY_UNITS_FALLBACK);
+
+    internal static string[]? ReadArbitraryUnits()
+    {
+        try
+        {
+            using var stream = typeof(FhirMetricService).Assembly.GetManifestResourceStream(UCUM_ESSENCE_RESOURCE);
+            if (stream is null) return null;
+
+            var units = global::System.Xml.Linq.XDocument.Load(stream).Root?.Elements()
+                .Where(e => e.Name.LocalName == "unit" && (string?)e.Attribute("isArbitrary") == "yes")
+                .Select(e => (string?)e.Attribute("Code"))
+                .OfType<string>()
+                .ToArray();
+
+            return units is { Length: > 0 } ? units : null;
+        }
+        catch (Exception e) when (e is global::System.Xml.XmlException or global::System.IO.IOException)
+        {
+            return null;
+        }
+    }
+
     private static bool containsArbitraryUnit(string unit) =>
-        unit.IndexOf('[') >= 0 && ARBITRARY_UNITS.Any(au => unit.Contains(au));
+        unit.IndexOf('[') >= 0 && ARBITRARY_UNITS.Value.Any(au => unit.Contains(au));
+
+    // Fhir.Metrics is lenient and accepts units with empty components (e.g. 'm/' as 'm', 'kg.' as 'kg', '//' as unity),
+    // which are not valid UCUM. A leading '/' (e.g. '/min') is valid.
+    private static bool isWellFormedUcumUnit(string unit) =>
+        unit.Length > 0 && unit[0] != '.' && unit[unit.Length - 1] is not ('.' or '/') &&
+        !unit.Contains("..") && !unit.Contains("//") && !unit.Contains("./") && !unit.Contains("/.");
 
     public static explicit operator String(Quantity q) => RunCast<String>(q);
 

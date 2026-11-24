@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Tests
 {
@@ -175,24 +176,39 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("{")]
         [DataRow("m)")]
         [DataRow("(m")]
-        [DataRow("10*")]
         [DataRow("m-")]
         [DataRow("m2.3")]
         [DataRow("")]
-        public void QuantityArithmeticWithMalformedUnitDoesNotThrow(string unit)
+        public void QuantityArithmeticWithMalformedUnitIsNotPossible(string unit)
         {
             var malformed = new Quantity(2m, unit);
             var valid = new Quantity(3m, "m");
 
-            var calculate = () =>
-            {
-                Quantity.TryMultiply(malformed, valid, out _);
-                Quantity.TryMultiply(valid, malformed, out _);
-                Quantity.TryDivide(malformed, valid, out _);
-                Quantity.TryDivide(valid, malformed, out _);
-            };
+            Quantity.TryMultiply(malformed, valid, out var result).Should().BeFalse();
+            result.Should().BeNull();
+            Quantity.TryMultiply(valid, malformed, out result).Should().BeFalse();
+            result.Should().BeNull();
+            Quantity.TryDivide(malformed, valid, out result).Should().BeFalse();
+            result.Should().BeNull();
+            Quantity.TryDivide(valid, malformed, out result).Should().BeFalse();
+            result.Should().BeNull();
+        }
 
-            calculate.Should().NotThrow();
+        [TestMethod]
+        public void ArbitraryUnitsAreReadFromUcumEssence()
+        {
+            // The embedded ucum-essence.xml must be found, and the fallback list must match it.
+            var fromEssence = Quantity.ReadArbitraryUnits();
+            fromEssence.Should().NotBeNull();
+            fromEssence.Should().BeEquivalentTo(Quantity.ARBITRARY_UNITS_FALLBACK);
+            Quantity.ArbitraryUnits.Should().BeEquivalentTo(fromEssence);
+
+            // Every arbitrary unit (also with a prefix) makes multiplication and division with another unit impossible
+            foreach (var unit in fromEssence!.Concat(["k[IU]", "[IU]/mL", "[hp_X]"]))
+            {
+                Quantity.TryMultiply(new Quantity(2m, unit), new Quantity(3m, "s"), out _).Should().BeFalse(unit);
+                Quantity.TryDivide(new Quantity(2m, "s"), new Quantity(3m, unit), out _).Should().BeFalse(unit);
+            }
         }
 
         [TestMethod]
