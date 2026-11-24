@@ -263,7 +263,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             fixture.IsTrue(@"Patient.identifier.skip(1).all(use = 'official')");
             fixture.IsTrue(@"Patient.identifier.skip(999).all(use = 'official')");   // {}.All() aways returns true
-            fixture.IsTrue(@"Patient.identifier.skip(1).all({}).empty()");   // empty results still count as "empty"
+            fixture.IsTrue(@"Patient.identifier.skip(1).all({}) = false");   // an empty criteria result counts as false
+            fixture.IsTrue(@"(1 | 2 | 3).all(iif($this = 2, {}, true)) = false");   // one empty criteria result makes all() false
         }
 
         [TestMethod]

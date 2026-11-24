@@ -36,6 +36,10 @@ namespace HL7.FhirPath.Tests
                     ("{}.all(true)", true, false),
                     ("{}.all(false)", true, false),
                     ("(1 | 2 | 3).all($this > 0 )", true, false),
+                    ("(1 | 2 | 3).all($this > 1 )", false, false),
+                    ("(1 | 2 | 3).all({})", false, false),
+                    ("(1 | 2 | 3).all($this)", true, false),
+                    ("(1 | 2 | 3).all(iif($this = 2, {}, true))", false, false),
 
                     // function  allTrue() : Boolean
                     ("{}.allTrue()", true, false),
