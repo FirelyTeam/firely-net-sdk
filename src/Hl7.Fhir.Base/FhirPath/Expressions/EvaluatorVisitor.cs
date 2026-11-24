@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using FP = Hl7.FhirPath.Expressions;
+using P = Hl7.Fhir.ElementModel.Types;
 using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.Model.PocoNode>;
 
 namespace Hl7.FhirPath.Expressions
@@ -54,6 +55,14 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
+            // FHIRPath times have no timezone. The parser accepts a time literal with an offset so that,
+            // as the FHIRPath conformance tests require, it is reported as an execution error.
+            if (expression.Value is P.Time { HasOffset: true } time)
+            {
+                return WrapForDebugTracer((_, _) =>
+                    throw new InvalidOperationException($"Time literal '@T{time}' is invalid: a time cannot have a timezone offset."), expression);
+            }
+
             return WrapForDebugTracer(InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value)), expression);
         }
 

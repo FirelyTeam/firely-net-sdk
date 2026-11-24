@@ -279,9 +279,6 @@ namespace Hl7.FhirPath.R4.Tests
             "testLargeExponentDecDivide", "testLargeExponentDecDiv", "testLargeExponentDecMod", "testLargeExponentDecRound",
             "testLargeExponentDecGreater", "testSmallExponentDecPlus", "testLargeExponentDateAdd",
 
-            // Time literals with a timezone (@T14:34:28Z) should be an execution error, not a syntax error
-            "testLiteralTimeUTC", "testLiteralTimeTimezoneOffset",
-
             // sort() with descending (-) keys on strings
             "testSort8", "testSort10",
 

@@ -156,6 +156,15 @@ namespace Hl7.FhirPath.Parser
         public static readonly Parser<P.Time> Time =
             Parse.Regex(TimeRegEx).Select(s => P.Time.Parse(s.Substring(2)));
 
+        // A time literal followed by a timezone offset is not valid FHIRPath, but the conformance tests expect
+        // this to be reported as an execution error rather than a syntax error. This rule recognizes such a
+        // literal, so the grammar can turn it into an expression that fails when evaluated.
+        internal static readonly Regex TimeWithOffsetRegEx =
+            new Regex("@T" + TIMEFORMAT + @"(Z|((\+|-)[0-9][0-9]:[0-9][0-9]))", RegexOptions.IgnorePatternWhitespace);
+
+        internal static readonly Parser<P.Time> TimeWithOffset =
+            Parse.Regex(TimeWithOffsetRegEx).Select(s => P.Time.Parse(s.Substring(2)));
+
         // NUMBER
         //   : [0-9]+('.' [0-9]+)?
         //   ;
