@@ -191,6 +191,23 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        [DataRow("1", "System.SimpleTypeInfo")]
+        [DataRow("'a'", "System.SimpleTypeInfo")]
+        [DataRow("4 'mg'", "System.SimpleTypeInfo")]
+        [DataRow("Observation", "System.ClassInfo")]
+        [DataRow("Observation.value", "System.ClassInfo")]
+        public void TypeReturnsTypeInfoKind(string expression, string kind)
+        {
+            var node = createObservation().ToPocoNode();
+            var other = kind == "System.SimpleTypeInfo" ? "System.ClassInfo" : "System.SimpleTypeInfo";
+
+            evaluate(node, $"({expression}).type() is {kind}").Should().ContainSingle().Which.GetValue().Should().Be(true);
+            evaluate(node, $"({expression}).type() is {other}").Should().ContainSingle().Which.GetValue().Should().Be(false);
+            evaluate(node, $"({expression}).type().ofType({kind})").Should().ContainSingle();
+            evaluate(node, $"({expression}).type().ofType({other})").Should().BeEmpty();
+        }
+
+        [TestMethod]
         public void TypeIsEvaluatedPerItem()
         {
             var node = createObservation().ToPocoNode();
