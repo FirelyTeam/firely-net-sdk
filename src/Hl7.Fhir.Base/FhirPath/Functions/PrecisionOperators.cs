@@ -19,7 +19,8 @@ namespace Hl7.FhirPath.Functions
     /// <remarks>Fractional seconds count as the number of fraction digits written in the input, so <c>@T10:30:00.0</c>
     /// gives 7 and <c>@T10:30:00.000</c> gives 9. This matches the HL7 Java engine for times and for dateTimes in data;
     /// for dateTime literals the Java engine pads the fraction to at least 3 digits. A value that was not parsed from
-    /// text, such as the result of <c>now()</c> or of date arithmetic, counts as having millisecond (3 digit) precision.</remarks>
+    /// text, such as the result of <c>now()</c> or of date arithmetic, counts as having millisecond (3 digit) precision.
+    /// Note that date arithmetic currently drops an all-zero fraction (see #3712), so such a result has second precision.</remarks>
     internal static class PrecisionOperators
     {
         private const int MILLISECOND_DIGITS = 3;
