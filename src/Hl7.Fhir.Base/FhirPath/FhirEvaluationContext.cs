@@ -40,9 +40,10 @@ namespace Hl7.Fhir.FhirPath
         /// <c>|version</c>). Return <c>true</c> or <c>false</c> for a profile that could be checked, or <c>null</c>
         /// when the profile cannot be resolved.
         /// </summary>
-        /// <remarks>When this is not set, or returns <c>null</c>, <c>conformsTo()</c> can only check the
-        /// canonicals of the core FHIR types (e.g. <c>http://hl7.org/fhir/StructureDefinition/Patient</c>)
-        /// and raises an error for any other profile.</remarks>
+        /// <remarks>The checker is called for every profile, including the canonicals of the core FHIR types, and any
+        /// exception it throws propagates to the caller. When this is not set, or returns <c>null</c>, <c>conformsTo()</c>
+        /// only checks the type of the input against the canonicals of the core FHIR types
+        /// (e.g. <c>http://hl7.org/fhir/StructureDefinition/Patient</c>) and raises an error for any other profile.</remarks>
         public Func<PocoNode, string, bool?>? ProfileConformanceChecker { get; set; }
     }
 }

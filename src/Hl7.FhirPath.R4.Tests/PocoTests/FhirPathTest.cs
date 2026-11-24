@@ -403,6 +403,15 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/HumanName')", true];
             yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/Address')", false];
             yield return [patient, "telecom.conformsTo('http://hl7.org/fhir/StructureDefinition/ContactPoint')", null];
+            yield return [patient, "{}.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", null];
+            // HumanName lives in the base assembly, so the Patient canonical is found through the parent Patient.
+            yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", false];
+            yield return [new Patient { Gender = AdministrativeGender.Male }, "gender.conformsTo('http://hl7.org/fhir/StructureDefinition/code')", true];
+
+            var bundle = new Bundle { Entry = [new Bundle.EntryComponent { Resource = patient }] };
+            yield return [bundle, "conformsTo('http://hl7.org/fhir/StructureDefinition/Bundle')", true];
+            yield return [bundle, "entry.resource.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", true];
+            yield return [bundle, "entry.resource.name.conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", false];
         }
 
         [TestMethod]
@@ -441,6 +450,15 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             unknown.Should().Throw<InvalidOperationException>();
 
             checkedProfiles.Should().Equal(myProfile, "http://hl7.org/fhir/StructureDefinition/Patient", "http://example.org/StructureDefinition/other");
+
+            new Patient { Active = false }.Scalar($"conformsTo('{myProfile}')", context).Should().Be(false);
+
+            // The checker is not called for empty or multiple input.
+            checkedProfiles.Clear();
+            patient.Scalar($"{{}}.conformsTo('{myProfile}')", context).Should().BeNull();
+            Action multiple = () => new Patient { Name = [new(), new()] }.Scalar($"name.conformsTo('{myProfile}')", context);
+            multiple.Should().Throw<InvalidOperationException>();
+            checkedProfiles.Should().BeEmpty();
         }
 
         [TestMethod]

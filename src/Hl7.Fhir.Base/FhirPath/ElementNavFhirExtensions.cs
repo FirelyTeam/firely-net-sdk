@@ -247,7 +247,9 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <remarks>The profile is checked by <see cref="FhirEvaluationContext.ProfileConformanceChecker"/> when one
         /// is configured. Otherwise (or when it returns <c>null</c>), only the canonicals of the core FHIR types are
-        /// supported: the input conforms when its type is, or derives from, that type. Any other profile raises an error.</remarks>
+        /// supported: the input conforms when its type is, or derives from, that type (any <c>|version</c> is ignored).
+        /// Any other profile raises an error. Without an annotated <see cref="ModelInspector"/>, a tree whose root is a type
+        /// shared between FHIR releases (e.g. a Bundle) can only check the canonicals of those shared types.</remarks>
         internal static bool? ConformsTo(IEnumerable<PocoNode> input, string? structure, EvaluationContext ctx)
         {
             var items = input.Take(2).ToArray();
@@ -260,15 +262,33 @@ namespace Hl7.Fhir.FhirPath
             if (ctx is FhirEvaluationContext { ProfileConformanceChecker: { } checker } && checker(node, structure) is { } result)
                 return result;
 
+            // Fallback: the canonicals of the core FHIR types. The version (if any) is ignored.
             var canonical = structure.Split('|')[0];
-#pragma warning disable CS0618 // Type or member is obsolete
-            var inspector = node.Poco is { } poco ? node.FindInspector() ?? ModelInspector.ForType(poco.GetType()) : null;
-#pragma warning restore CS0618 // Type or member is obsolete
+            foreach (var inspector in candidateInspectors(node))
+            {
+                if (inspector.FindClassMappingByCanonical(canonical) is { } target)
+                {
+                    // FindClassMapping(Base) honours dynamic types (e.g. a DynamicResource with a DynamicTypeName).
+                    var actualType = inspector.FindClassMapping(node.Poco)?.NativeType ?? node.Poco.GetType();
+                    return target.NativeType.IsAssignableFrom(actualType);
+                }
+            }
 
-            return inspector?.FindClassMappingByCanonical(canonical) is { } mapping
-                ? mapping.NativeType.IsAssignableFrom(node.Poco!.GetType())
-                : throw new InvalidOperationException($"The 'conformsTo' function cannot resolve profile '{structure}'. " +
-                    $"Only the core FHIR types can be checked, unless a {nameof(FhirEvaluationContext.ProfileConformanceChecker)} is set on the {nameof(FhirEvaluationContext)}.");
+            throw new InvalidOperationException($"The 'conformsTo' function cannot resolve profile '{structure}'. " +
+                $"Only the core FHIR types can be checked, unless a {nameof(FhirEvaluationContext.ProfileConformanceChecker)} is set on the {nameof(FhirEvaluationContext)}.");
+
+            // The inspector annotated on the tree (if any), followed by the inspectors for the assemblies of the node and
+            // its ancestors. Types shared between releases (e.g. Bundle, HumanName) live in the base assembly, whose inspector
+            // does not know the release-specific types, so an ancestor (e.g. the Patient a HumanName is in) may be needed.
+            static IEnumerable<ModelInspector> candidateInspectors(PocoNode node)
+            {
+                if (node.FindInspector() is { } annotated) yield return annotated;
+
+#pragma warning disable CS0618 // Type or member is obsolete
+                for (PocoNode? current = node; current is not null; current = current.Parent?.SingleOrDefault())
+                    yield return ModelInspector.ForType(current.Poco.GetType());
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
         }
 
         /// <summary>
