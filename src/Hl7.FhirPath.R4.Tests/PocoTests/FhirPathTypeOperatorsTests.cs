@@ -227,6 +227,36 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        [DataRow("Bundle.entry.resource.ofType(Patient)")]
+        [DataRow("Bundle.entry.resource.ofType(Patient1)")]
+        [DataRow("Bundle.entry.resource.as(Patient)")]
+        [DataRow("Bundle.entry.resource as Patient")]
+        public void UnknownTypeNameOnConformanceModelDataIsNotAnError(string expression)
+        {
+            // The conformance assembly is shared by R4, R4B, R5 and R6, so like the base assembly it cannot tell
+            // which release the data belongs to.
+            var node = new Bundle
+            {
+                Type = Bundle.BundleType.Collection,
+                Entry = { new Bundle.EntryComponent { Resource = new ValueSet { Id = "vs1" } } }
+            }.ToPocoNode();
+
+            evaluate(node, expression).Should().BeEmpty();
+            evaluate(node, expression, strictAs: true).Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void UnknownTypeNameOnConformanceResourceInReleaseResourceIsAnError()
+        {
+            // A conformance resource contained in a release-specific resource gets the model of its root.
+            var patient = new Patient { Contained = { new ValueSet { Id = "vs1" } } };
+
+            evaluate(patient.ToPocoNode(), "Patient.contained.ofType(Observation)").Should().BeEmpty();
+            var act = () => evaluate(patient.ToPocoNode(), "Patient.contained.ofType(Patient1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'Patient1'*");
+        }
+
+        [TestMethod]
         public void BooleanFunctionsOnBooleanWithoutValue()
         {
             var active = new FhirBoolean(null);
