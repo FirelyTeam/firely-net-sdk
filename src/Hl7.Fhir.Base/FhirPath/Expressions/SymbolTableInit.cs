@@ -422,9 +422,6 @@ public static class SymbolTableInit
         var trueResult = arguments.Skip(2).First();
         var otherResult = arguments.Skip(3).FirstOrDefault();
 
-        if (expression.Count() > 1)
-            throw Error.InvalidOperation($"Result of {nameof(expression)} is not of type boolean");
-
         return (expression.BooleanEval() ?? false)
             ? trueResult(newContext, InvokeeFactory.EmptyArgs) // share focus with this function
             : otherResult == null ? [] : otherResult(newContext, InvokeeFactory.EmptyArgs);

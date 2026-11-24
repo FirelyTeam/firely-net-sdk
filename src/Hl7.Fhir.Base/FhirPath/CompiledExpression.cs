@@ -36,14 +36,14 @@ namespace Hl7.FhirPath
         /// <returns>True if expression returns true of empty, otheriwse false</returns>
         public static bool Predicate(this CompiledExpression evaluator, PocoNode input, EvaluationContext ctx)
         {
-            var result = evaluator(input, ctx).BooleanEval();
+            var result = evaluator(input, ctx).LenientBooleanEval();
             return result is null || result.Value;
         }
 
         /// <inheritdoc cref="Predicate{T}"/>
         public static bool Predicate(this CompiledExpression evaluator, Base input, EvaluationContext ctx)
         {
-            var result = evaluator(input.ToPocoNode(), ctx).BooleanEval();
+            var result = evaluator(input.ToPocoNode(), ctx).LenientBooleanEval();
             return result is null || result.Value;
         }
 
@@ -56,7 +56,7 @@ namespace Hl7.FhirPath
         /// <returns>True if expression returns true , and false if expression returns empty of false.</returns>
         public static bool IsTrue(this CompiledExpression evaluator, PocoNode input, EvaluationContext ctx)
         {
-            var result = evaluator(input, ctx).BooleanEval();
+            var result = evaluator(input, ctx).LenientBooleanEval();
             return result is not null && result.Value;
         }
 
@@ -71,7 +71,7 @@ namespace Hl7.FhirPath
         /// <returns>True if the result of an expression is equal to a given boolean, otherwise false</returns>
         public static bool IsBoolean(this CompiledExpression evaluator, bool value, PocoNode input, EvaluationContext ctx)
         {
-            var result = evaluator(input, ctx).BooleanEval();
+            var result = evaluator(input, ctx).LenientBooleanEval();
             return result is not null && result.Value == value;
         }
     }
