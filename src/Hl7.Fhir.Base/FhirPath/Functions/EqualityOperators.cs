@@ -67,19 +67,12 @@ namespace Hl7.FhirPath.Functions
             var r = right.Value;
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
-            // Convert quantities
+            // Convert quantities. A FHIR Quantity with a comparator or without a value has no System.Quantity
+            // equivalent; it is then compared structurally (below) instead of throwing.
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = tryConvertQuantity(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = tryConvertQuantity(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -99,6 +92,19 @@ namespace Hl7.FhirPath.Functions
                 // Else, we're comparing a complex (without a value) to a primitive which (probably) should return false
                 return false;
             }
+        }
+
+        private static P.Quantity? tryConvertQuantity(ITypedElement quantity)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var poco = quantity is PocoNode node
+                ? node.Poco as Quantity
+                : quantity.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly));
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return poco is P.IToSystemPrimitive convertible && convertible.TryConvertToSystemType(out var result)
+                ? result as P.Quantity
+                : null;
         }
 
         public static bool? IsEqualTo(P.Any? left, P.Any? right)

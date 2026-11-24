@@ -39,6 +39,71 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public TestContext TestContext { get; set; }
 
         [TestMethod]
+        public void TestRepeatWithQuantitiesThatCannotBeConvertedToSystemQuantity()
+        {
+            // repeat() compares the projections of different items with each other. A FHIR Quantity
+            // with a comparator or without a value has no System.Quantity equivalent, which should
+            // not make that comparison throw.
+            var observation = new Observation
+            {
+                Component =
+                [
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 5, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 5, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 6, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Unit = "mg/L" } },
+                    // A value element with only an extension (e.g. data-absent-reason) is still a quantity without a value
+                    new Observation.ComponentComponent { Value = new Quantity { ValueElement = new FhirDecimal { Extension = [new Extension("http://hl7.org/fhir/StructureDefinition/data-absent-reason", new Code("unknown"))] }, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { ValueElement = new FhirDecimal { Extension = [new Extension("http://hl7.org/fhir/StructureDefinition/data-absent-reason", new Code("unknown"))] }, Unit = "mg/L" } },
+                ]
+            };
+
+            var result = observation.Select("Observation.component.repeat(value)").ToList();
+
+            // Equal quantities ('<5 mg/L', value-less, extension-only value) are each in the result once.
+            // The next round projects Quantity.value, which adds the decimals 5 and 6 and the extension-only decimal.
+            result.Select(r => r.TypeName).Should().Equal("Quantity", "Quantity", "Quantity", "Quantity", "decimal", "decimal", "decimal");
+        }
+
+        [TestMethod]
+        public void TestEqualityOfNestedQuantitiesThatCannotBeConvertedToSystemQuantity()
+        {
+            static Observation.ComponentComponent lessThan5() => new()
+            {
+                Code = new CodeableConcept("http://loinc.org", "1234-5"),
+                Value = new Quantity { Value = 5, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" }
+            };
+
+            var bundle = new Bundle
+            {
+                Entry =
+                [
+                    new Bundle.EntryComponent { Resource = new Observation { Component = [lessThan5()] } },
+                    new Bundle.EntryComponent { Resource = new Observation { Component = [lessThan5()] } },
+                ]
+            };
+
+            // The components of both Observations are compared in the same repeat() round
+            bundle.Select("Bundle.entry.resource.ofType(Observation).repeat(component)").Should().ContainSingle();
+            bundle.Select("Bundle.entry.resource.ofType(Observation).component.distinct()").Should().ContainSingle();
+
+            var observation = new Observation
+            {
+                Component =
+                [
+                    lessThan5(),
+                    lessThan5(),
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 5, Unit = "mg/L" } },
+                ]
+            };
+
+            // Quantities that can't be converted to a System.Quantity are compared structurally
+            observation.IsTrue("Observation.component[0].value = Observation.component[1].value").Should().BeTrue();
+            observation.IsTrue("Observation.component[0].value != Observation.component[2].value").Should().BeTrue();
+        }
+
+        [TestMethod]
         public void TestFhirPathPolymporphism()
         {
             var patient = new Patient() { Active = false };
