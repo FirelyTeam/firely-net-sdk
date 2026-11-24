@@ -223,6 +223,43 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void TestQuantityArithmeticOnFhirQuantities()
+        {
+            var ucum = new Observation { Value = new Quantity { Value = 5, Code = "mg", System = "http://unitsofmeasure.org" } };
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value * 2 'mg') = 0.000010 'g2'", true));
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value * 2) = 10 'mg'", true));
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value / 5 'mg') = 1 '1'", true));
+
+            // A code without a system is taken to be UCUM
+            var noSystem = new Observation { Value = new Quantity { Value = 5, Code = "mg" } };
+            Assert.IsTrue(fixture.IsBoolean(noSystem, "(Observation.value * 2) = 10 'mg'", true));
+
+            // A unit given only as text, or a code from another system, is not a UCUM unit: the result is empty
+            var textOnly = new Observation { Value = new Quantity { Value = 5, Unit = "tablets" } };
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value * 2 'mg').empty()", true));
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(2 'mg' / Observation.value).empty()", true));
+
+            var otherSystem = new Observation { Value = new Quantity { Value = 5, Code = "258684004", System = "http://snomed.info/sct" } };
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "(Observation.value * 2 'mg').empty()", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "(Observation.value / 1 'mg').empty()", true));
+
+            // Scaling by a number keeps the unit (and the non-UCUM system, also through unary minus and abs())
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value * 2).toString() = '10 \\'tablets\\''", true));
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value / 2).toString() = '2.5 \\'tablets\\''", true));
+            var otherSystemDays = new Observation { Value = new Quantity { Value = 5, Code = "d", System = "http://example.org/units" } };
+            Assert.IsTrue(fixture.IsBoolean(otherSystemDays, "((-Observation.value) * 2 'mg').empty()", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystemDays, "(Observation.value.abs() * 2 'mg').empty()", true));
+
+            // A UCUM system with only unit text (no code) is not a UCUM unit either
+            var ucumSystemTextOnly = new Observation { Value = new Quantity { Value = 5, Unit = "mg", System = "http://unitsofmeasure.org" } };
+            Assert.IsTrue(fixture.IsBoolean(ucumSystemTextOnly, "(Observation.value * 2 'mg').empty()", true));
+
+            // A quantity without code or unit is unitless
+            var unitless = new Observation { Value = new Quantity { Value = 5 } };
+            Assert.IsTrue(fixture.IsBoolean(unitless, "(Observation.value * 2 'mg') = 10 'mg'", true));
+        }
+
+        [TestMethod]
         public void TestEquality()
         {
 

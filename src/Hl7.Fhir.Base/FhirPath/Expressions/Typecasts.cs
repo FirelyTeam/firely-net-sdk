@@ -32,10 +32,10 @@ namespace Hl7.FhirPath.Expressions
         {
             if (source is PocoNode element)
             {
-                if (element is {Poco: Quantity})
+                if (element is {Poco: Quantity quantity})
                 {
                     // Need to downcast from a FHIR Quantity to a System.Quantity
-                    return ParseQuantity(element);
+                    return toOperandQuantity(element, quantity);
                 }
                 else
                     throw new InvalidCastException($"Cannot convert from '{element.Poco.TypeName}' to Quantity");
@@ -44,6 +44,24 @@ namespace Hl7.FhirPath.Expressions
             throw new InvalidCastException($"Cannot convert from '{source.GetType().Name}' to Quantity");
         }
 
+
+        // Converts a FHIR Quantity that is passed to a function or operator taking a System.Quantity (like * and /).
+        // Only a code in the UCUM system (or without a system) is a UCUM unit. A code from another system, or a
+        // unit that is only given as text, is kept but marked as not being UCUM, so that it is not taken to be a
+        // UCUM unit, or unitless (as ToSystemQuantity() does, which turns a missing code into '1').
+        private static P.Quantity toOperandQuantity(PocoNode element, Quantity quantity)
+        {
+            var converted = ParseQuantity(element);
+
+            var hasCode = !string.IsNullOrEmpty(quantity.Code);
+            var isUcum = hasCode
+                ? string.IsNullOrEmpty(quantity.System) || quantity.System == P.Quantity.UCUM
+                : string.IsNullOrEmpty(quantity.Unit);
+
+            return isUcum
+                ? converted
+                : new P.Quantity(converted.Value, hasCode ? quantity.Code : quantity.Unit, P.QuantityUnitSystem.Unknown);
+        }
 
         internal static P.Quantity ParseQuantity(PocoNode qe)
         {
