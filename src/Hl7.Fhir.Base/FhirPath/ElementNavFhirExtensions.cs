@@ -54,14 +54,12 @@ namespace Hl7.Fhir.FhirPath
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
-            t.Add("lowBoundary", (int i, long precision) => i, doNullProp: false);
             t.Add("lowBoundary", (int i) => i, doNullProp: false);
             t.Add("lowBoundary", (P.Any a, long precision) => LowBoundary(a, precision), doNullProp: false);
             t.Add("lowBoundary", (P.Any a) => LowBoundary(a, null), doNullProp: false);
 
             t.Add("highBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, add), doNullProp: false);
             t.Add("highBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, add), doNullProp: false);
-            t.Add("highBoundary", (int i, long precision) => i, doNullProp: false);
             t.Add("highBoundary", (int i) => i, doNullProp: false);
             t.Add("highBoundary", (P.Any a, long precision) => HighBoundary(a, precision), doNullProp: false);
             t.Add("highBoundary", (P.Any a) => HighBoundary(a, null), doNullProp: false);

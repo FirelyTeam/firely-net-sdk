@@ -150,6 +150,10 @@ namespace Hl7.Fhir.Support.Tests
                     ("1.5 'kg'.lowBoundary(17).empty()", true),
                     ("12.lowBoundary(16) = 11.5", true),
                     ("12.lowBoundary(17).empty()", true),
+                    ("12.lowBoundary((-1).toLong()).empty()", true), // a Long precision on an integer is range-checked too
+                    ("12.lowBoundary(16.toLong()) = 11.5", true),
+                    ("12.toLong().lowBoundary(17).empty()", true),
+                    ("12.toLong().lowBoundary((-1).toLong()).empty()", true),
                     ("@2014.lowBoundary(6) = @2014-01", true),
                     ("@2014.lowBoundary() = @2014-01-01T00:00:00.000", true),
                     ("@2014.lowBoundary(8) = @2014-01-01", true),
@@ -186,6 +190,7 @@ namespace Hl7.Fhir.Support.Tests
                     ("1.5 'kg'.highBoundary(16) = 1.55 'kg'", true),
                     ("1.5 'kg'.highBoundary(17).empty()", true),
                     ("12.highBoundary(16) = 12.5", true),
+                    ("12.highBoundary(999.toLong()).empty()", true),
                     ("1.5 'kg'.highBoundary(999999999).empty()", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
                     ("@2014.highBoundary(8) = @2014-12-31", true),
