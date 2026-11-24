@@ -247,16 +247,18 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        [DataRow("2015-02-04T10Z", 1, "hour", "2015-02-04T11+00:00")]
-        [DataRow("2015-02-04T10:00Z", 1, "hour", "2015-02-04T11:00+00:00")]
-        [DataRow("2015-02-04T10:00Z", -1, "day", "2015-02-03T10:00+00:00")]
+        [DataRow("2015-02-04T10Z", 1, "hour", "2015-02-04T11Z")]
+        [DataRow("2015-02-04T10:00Z", 1, "hour", "2015-02-04T11:00Z")]
+        [DataRow("2015-02-04T10:00Z", -1, "day", "2015-02-03T10:00Z")]
         [DataRow("2015-02-04T23:30+02:00", 45, "minutes", "2015-02-05T00:15+02:00")]
         [DataRow("2015-02-04-05:00", 1, "day", "2015-02-05-05:00")]
         [DataRow("2015-02-04T10:00", 1, "hour", "2015-02-04T11:00")]
         [DataRow("2015-02-04T10", 90, "minutes", "2015-02-04T11")]
         [DataRow("2015-02", 1, "month", "2015-03")]
-        [DataRow("2015Z", 1, "year", "2016+00:00")]
+        [DataRow("2015Z", 1, "year", "2016Z")]
         [DataRow("2015-12-05:00", 1, "month", "2016-01-05:00")]
+        [DataRow("2015-02-04T10:00:00Z", 1, "hour", "2015-02-04T11:00:00Z")]
+        [DataRow("2015-02-04T10:00+00:00", 1, "hour", "2015-02-04T11:00+00:00")]
         public void CanAddToPartialDateTime(string input, int value, string unit, string expected)
         {
             var result = P.DateTime.Parse(input) + new P.Quantity(value, unit);
