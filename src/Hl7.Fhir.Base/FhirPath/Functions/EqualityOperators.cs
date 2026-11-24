@@ -329,8 +329,10 @@ namespace Hl7.FhirPath.Functions
                 // vs. code, or a different system), so they cannot be hashed on their children. Hash
                 // them all alike and let Equals() decide. Quantities that cannot be converted (no value, or a
                 // comparator) keep the structural hash, so they are not compared to every other quantity.
-                if (element.InstanceType == "Quantity" && element.Value is null && isComparableQuantity(element))
-                    return element.InstanceType.GetHashCode();
+                // Quantity literals (System.Quantity) share the bucket, since they can equal a FHIR Quantity.
+                if (element.Value is P.Quantity ||
+                    (element.InstanceType == "Quantity" && element.Value is null && isComparableQuantity(element)))
+                    return QUANTITY_HASH;
 
                 var result = element.Value != null ? element.Value.GetHashCode() : 0;
 
@@ -344,11 +346,12 @@ namespace Hl7.FhirPath.Functions
                 return result;
             }
 
-            private static bool isComparableQuantity(ITypedElement element)
-            {
-                var names = element.Children().Select(c => c.Name).ToList();
-                return names.Contains("value") && !names.Contains("comparator");
-            }
+            private static readonly int QUANTITY_HASH = "Quantity".GetHashCode();
+
+            // A value element can be present with only extensions (e.g. data-absent-reason), so check its value.
+            private static bool isComparableQuantity(ITypedElement element) =>
+                element.Children("value").FirstOrDefault()?.Value is not null &&
+                !element.Children("comparator").Any();
         }
 
         private class ValueProviderComparer : IComparer<ITypedElement?>

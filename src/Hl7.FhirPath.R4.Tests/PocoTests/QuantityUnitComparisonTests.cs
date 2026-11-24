@@ -39,6 +39,11 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "a-code", Value = new Quantity { Value = 1, Code = "a", System = "http://unitsofmeasure.org" } },
                 new() { Name = "with-comparator", Value = new Quantity { Value = 1, Code = "mg", Comparator = Quantity.QuantityComparator.LessThan } },
                 new() { Name = "no-value", Value = new Quantity { Unit = "mg" } },
+                new() { Name = "absent-value", Value = new Quantity
+                {
+                    ValueElement = new FhirDecimal { Extension = [new Extension("http://hl7.org/fhir/StructureDefinition/data-absent-reason", new Code("unknown"))] },
+                    Unit = "mg"
+                } },
                 new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
             ]
@@ -120,7 +125,18 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             input().Select($"{p("with-comparator")} | {p("mg-code")}").Should().HaveCount(2);
             input().Select($"{p("no-value")} | {p("mg-code")}").Should().HaveCount(2);
+            input().Select($"{p("absent-value")} | {p("mg-code")}").Should().HaveCount(2);
+            input().Select($"({p("absent-value")} | {p("tablets")}).distinct()").Should().HaveCount(2);
             input().Select($"({p("with-comparator")} | {p("no-value")} | {p("tablets")}).distinct()").Should().HaveCount(3);
+        }
+
+        [TestMethod]
+        public void SetFunctionsMatchFhirQuantityToLiteral()
+        {
+            input().Select($"{p("mg-code")}.intersect(1 'mg')").Should().HaveCount(1);
+            input().Select($"{p("mg-code")} | 1 'mg'").Should().HaveCount(1);
+            input().Scalar($"({p("mg-code")} | 1 'mg' | 1 'mg').count()").Should().Be(1);
+            input().Select($"{p("tablets")} | 1 'tablets'").Should().HaveCount(2);
         }
     }
 }
