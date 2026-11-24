@@ -223,6 +223,19 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        [DataRow("http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument", "http://hl7.org/fhir/cda/StructureDefinition", "ClinicalDocument")]
+        [DataRow("http://hl7.org/fhir/StructureDefinition/Patient", "FHIR", "Patient")]
+        [DataRow("MyType", "FHIR", "MyType")]
+        public void TypeOfLogicalModelTypes(string typeName, string ns, string name)
+        {
+            var node = new DynamicDataType { DynamicTypeName = typeName }.ToPocoNode();
+
+            evaluate(node, "type().namespace").Should().ContainSingle().Which.GetValue().Should().Be(ns);
+            evaluate(node, "type().name").Should().ContainSingle().Which.GetValue().Should().Be(name);
+            evaluate(node, "type() is System.ClassInfo").Should().ContainSingle().Which.GetValue().Should().Be(true);
+        }
+
+        [TestMethod]
         public void TypeIsEvaluatedPerItem()
         {
             var node = createObservation().ToPocoNode();
