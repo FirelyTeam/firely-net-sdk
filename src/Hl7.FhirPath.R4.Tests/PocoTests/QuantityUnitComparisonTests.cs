@@ -32,6 +32,13 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "mg-code", Value = new Quantity { Value = 1, Code = "mg", System = "http://unitsofmeasure.org" } },
                 new() { Name = "milligram-text", Value = new Quantity { Value = 1, Unit = "milligram" } },
                 new() { Name = "d-text", Value = new Quantity { Value = 1, Unit = "d" } },
+                new() { Name = "tablets-2", Value = new Quantity { Value = 2, Unit = "tablets" } },
+                new() { Name = "capsules", Value = new Quantity { Value = 1, Unit = "capsules" } },
+                new() { Name = "year-text", Value = new Quantity { Value = 1, Unit = "year" } },
+                new() { Name = "years-text", Value = new Quantity { Value = 1, Unit = "years" } },
+                new() { Name = "a-code", Value = new Quantity { Value = 1, Code = "a", System = "http://unitsofmeasure.org" } },
+                new() { Name = "with-comparator", Value = new Quantity { Value = 1, Code = "mg", Comparator = Quantity.QuantityComparator.LessThan } },
+                new() { Name = "no-value", Value = new Quantity { Unit = "mg" } },
                 new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
                 new() { Name = "mg-text-dl", Value = new Quantity { Value = 1, Unit = "mg/dL" } },
@@ -59,6 +66,10 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [DataRow("mg-code", "milligram-text", null, false)]
         [DataRow("mg-code-and-text", "mg-code", true, true)]
         [DataRow("mg-code-and-text", "milligram-text", null, false)]
+        [DataRow("tablets", "tablets-2", false, false)]
+        [DataRow("tablets", "capsules", null, false)]
+        [DataRow("year-text", "years-text", true, true)]
+        [DataRow("year-text", "a-code", null, true)]
         [DataRow("empty-code", "tablets", true, true)]
         [DataRow("empty-code", "no-unit", null, false)]
         public void ComparesFhirQuantities(string left, string right, bool? equal, bool equivalent)
@@ -71,13 +82,16 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
         [TestMethod]
         [DataRow("tablets", "1 'tablets'", null, false)]
-        [DataRow("tablets", "1", null, false)]
+        [DataRow("tablets", "1", null, false)] // Java: false (complex vs primitive); here the integer converts to 1 '1'
         [DataRow("tablets", "1 '1'", null, false)]
         [DataRow("no-unit", "1", true, true)]
         [DataRow("no-unit", "1 '1'", true, true)]
         [DataRow("mg-text", "1 'mg'", null, false)]
         [DataRow("d-text", "1 day", null, false)]
         [DataRow("d-text", "1 'd'", null, false)]
+        [DataRow("year-text", "1 year", true, true)]
+        [DataRow("year-text", "1 'a'", null, true)]
+        [DataRow("year-text", "1 month", null, false)]
         [DataRow("mg-code", "1 'mg'", true, true)]
         public void ComparesFhirQuantityToSystemValue(string left, string right, bool? equal, bool equivalent)
         {
@@ -196,6 +210,14 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             input().Select($"{p("mg-code-and-text")}.exclude({p("mg-code")})").Should().BeEmpty();
             input().Select($"{p("mg-text")} | {p("mg-code")}").Should().HaveCount(2);
             input().Select($"{p("tablets")} | {p("no-unit")}").Should().HaveCount(2);
+        }
+
+        [TestMethod]
+        public void SetFunctionsDoNotThrowOnUnconvertibleQuantities()
+        {
+            input().Select($"{p("with-comparator")} | {p("mg-code")}").Should().HaveCount(2);
+            input().Select($"{p("no-value")} | {p("mg-code")}").Should().HaveCount(2);
+            input().Select($"({p("with-comparator")} | {p("no-value")} | {p("tablets")}).distinct()").Should().HaveCount(3);
         }
     }
 }
