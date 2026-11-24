@@ -578,6 +578,8 @@ public sealed class FhirPathAnalyzer
 
             if (name == "iif") return iif(focus, arguments, expression);
 
+            if (name is "repeat" or "repeatAll" && arguments.Count == 1) return repeat(focus, arguments[0]);
+
             TypeSet lastArgument = TypeSet.Unknown;
             if (ITERATING_FUNCTIONS.Contains(name))
             {
@@ -617,6 +619,39 @@ public sealed class FhirPathAnalyzer
             if (FILTERING_FUNCTIONS.Contains(name)) return ORDERED_FUNCTIONS.Contains(name) || name == "sort" ? focus.AsUnordered(false) : focus;
 
             return TypeSet.Unknown;
+        }
+
+        /// <summary>
+        /// <c>repeat()</c> runs its projection on the focus, and then again on every item it returns, so <c>$this</c>
+        /// in the projection can be of the focus' types and of the projection's own result types. The projection is
+        /// analyzed with <c>$this</c> growing until it stops changing, reporting diagnostics only on the final pass.
+        /// </summary>
+        private TypeSet repeat(TypeSet focus, Expression projection)
+        {
+            const int MAX_ROUNDS = 20;
+            var @this = focus.AsUnordered(false);
+
+            for (var round = 0; round < MAX_ROUNDS && @this.IsKnown; round++)
+            {
+                var result = inScopeQuietly(projection, @this);
+                var grown = TypeSet.Union(@this, result).AsUnordered(false);
+                if (grown.IsKnown && grown.Types!.SetEquals(@this.Types!)) break;
+                @this = grown;
+            }
+
+            // If the types did not settle, $this is left unknown, which never leads to errors.
+            if (@this.IsKnown && !TypeSet.Union(@this, inScopeQuietly(projection, @this)).Types!.SetEquals(@this.Types!))
+                @this = TypeSet.Unknown;
+
+            return visitInScope(projection, @this).AsUnordered(focus.Unordered);
+        }
+
+        private TypeSet inScopeQuietly(Expression expression, TypeSet @this)
+        {
+            var diagnosticCount = Diagnostics.Count;
+            var result = visitInScope(expression, @this);
+            Diagnostics.RemoveRange(diagnosticCount, Diagnostics.Count - diagnosticCount);
+            return result;
         }
 
         private TypeSet iif(TypeSet focus, List<Expression> arguments, FunctionCallExpression expression)

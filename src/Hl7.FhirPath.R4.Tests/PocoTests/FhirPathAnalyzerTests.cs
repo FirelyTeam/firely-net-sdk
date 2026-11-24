@@ -99,6 +99,14 @@ namespace Hl7.FhirPath.R4.Tests
             invalid("Patient.name.where(given1 = 'x')", "Patient", FhirPathDiagnosticCode.UnknownElement);
             invalid("Patient.name.exists(given1)", "Patient", FhirPathDiagnosticCode.UnknownElement);
             invalid("Patient.name.select(given).nam", "Patient", FhirPathDiagnosticCode.UnknownElement);
+
+            // repeat() also runs its projection on the items it returns
+            valid("QuestionnaireResponse.repeat(item | answer)", "QuestionnaireResponse");
+            valid("QuestionnaireResponse.repeat(item | answer).value", "QuestionnaireResponse");
+            valid("Questionnaire.repeat(item).linkId", "Questionnaire");
+            valid("Patient.repeat(children())", "Patient");
+            invalid("Questionnaire.repeat(item).linkid", "Questionnaire", FhirPathDiagnosticCode.UnknownElement);
+            invalid("QuestionnaireResponse.repeat(item | answer | bogus)", "QuestionnaireResponse", FhirPathDiagnosticCode.UnknownElement);
         }
 
         [TestMethod]
