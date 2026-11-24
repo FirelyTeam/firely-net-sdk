@@ -53,6 +53,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "mg-local", Value = new Quantity { Value = 1, Code = "mg", System = "http://example.org/units" } },
                 new() { Name = "mg-no-system", Value = new Quantity { Value = 1, Code = "mg" } },
                 new() { Name = "days-text", Value = new Quantity { Value = 1, Unit = "days" } },
+                new() { Name = "day-text", Value = new Quantity { Value = 1, Unit = "day" } },
             ]
         };
 
@@ -189,6 +190,18 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{p("mg-local")} = 1000 'ug'").Should().BeNull();
             eval($"{p("mg-local")} ~ 1000 'ug'").Should().BeFalse();
             eval($"{p("mg-local")} < 2000 'ug'").Should().BeNull();
+        }
+
+        // As in the reference engine, the plural and singular calendar words are the same unit text only when ordering
+        [TestMethod]
+        public void PluralCalendarUnitTextOnlyMatchesWhenOrdering()
+        {
+            eval($"{p("days-text")} <= {p("day-text")}").Should().BeTrue();
+            eval($"{p("days-text")} < {p("day-text")}").Should().BeFalse();
+            eval($"{p("days-text")} = {p("day-text")}").Should().BeNull();
+            eval($"{p("days-text")} ~ {p("day-text")}").Should().BeFalse();
+            eval($"{p("days-text")}.abs() = {p("day-text")}").Should().BeNull();
+            input().Scalar($"({p("days-text")} | {p("day-text")}).count()").Should().Be(2);
         }
 
         [TestMethod]

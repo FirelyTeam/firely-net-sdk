@@ -212,7 +212,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             // As in the reference engine, a FHIR Quantity without a code only equals another one without a code
             // (with the same unit text); only ordering also matches it to a coded quantity with that unit text.
             Quantity q when HasCode != q.HasCode => null,
-            Quantity => TryCompareTo(other, comparisonType, out var comparison) ? comparison == 0 : null,
+            Quantity q => tryCompare(q, comparisonType, forOrdering: false, out var comparison) ? comparison == 0 : null,
             _ => false
         };
 
@@ -259,7 +259,12 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
 
-        if (!tryGetComparableValues(otherQ, comparisonType, out var left, out var right))
+        return tryCompare(otherQ, comparisonType, forOrdering: true, out result);
+    }
+
+    private bool tryCompare(Quantity other, QuantityComparison comparisonType, bool forOrdering, [NotNullWhen(true)] out int? result)
+    {
+        if (!tryGetComparableValues(other, comparisonType, forOrdering, out var left, out var right))
         {
             result = null;
             return false;
@@ -274,6 +279,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// </summary>
     /// <param name="other">The quantity to compare with.</param>
     /// <param name="comparisonType">How calendar durations are normalized to UCUM.</param>
+    /// <param name="forOrdering">True when ordering (rather than testing equality), where plural calendar words in the
+    /// unit text of a quantity without a code match the singular ones.</param>
     /// <param name="left">The value of this quantity.</param>
     /// <param name="right">The value of the other quantity, in the same unit as <paramref name="left"/>.</param>
     /// <remarks>This follows the reference (Java) engine: quantities with the same unit are compared as-is, where a
@@ -281,14 +288,17 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// (e.g. 'g' and 'mg') are converted to the smaller of the two units. Durations are first normalized to UCUM
     /// (taking <paramref name="comparisonType"/> into account), and calendar durations are only comparable to
     /// durations with the same unit after normalization.</remarks>
-    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, out decimal left, out decimal right)
+    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering, out decimal left, out decimal right)
     {
         left = Value;
         right = other.Value;
 
         // A FHIR quantity with only unit text can only be compared with a quantity with the same unit text.
         if (!HasCode || !other.HasCode)
-            return calendarWordToSingular(UnitText) == calendarWordToSingular(other.UnitText);
+            // As in the reference engine, plural calendar words only match the singular ones when ordering.
+            return forOrdering
+                ? calendarWordToSingular(UnitText) == calendarWordToSingular(other.UnitText)
+                : UnitText == other.UnitText;
 
         var l = this;
         var r = other;
@@ -477,7 +487,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
                 return false;
             }
         }
-        else if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, out left, out right))
+        else if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, forOrdering: false, out left, out right))
             return false;
 
         return new Decimal(left).Equals(new Decimal(right), Decimal.CQL_EQUIVALENCE_COMPARISON);
