@@ -408,8 +408,6 @@ public static class SymbolTableInit
     }
 
     // allTrue(), anyTrue(), allFalse() and anyFalse() take a collection of Booleans: any other item is an error.
-    // A FHIR boolean without a value (e.g. one with only extensions) is not true or false.
-    // allTrue(), anyTrue(), allFalse() and anyFalse() take a collection of Booleans: any other item is an error.
     // Like the HL7 Java engine, evaluation stops as soon as the result is known, so items after that point
     // are not checked. A FHIR boolean without a value (e.g. one with only extensions) is not true or false.
     private static bool? booleanValue(PocoNode node, string function) => node.GetValue() switch
