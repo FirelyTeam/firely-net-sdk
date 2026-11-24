@@ -278,15 +278,13 @@ namespace Hl7.Fhir.Support.Tests
         [DataRow("1.587.highBoundary(28)")]
         [DataRow("1.587.highBoundary(-1)")]
         [DataRow("1.587 'cm'.lowBoundary(29)")]
+        [DataRow("1.lowBoundary(17)")]
+        [DataRow("1.5 'kg'.highBoundary(-1)")]
         public void UnsupportedDecimalBoundaryIsEmpty(string expression)
         {
             var result = _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
 
             result.Should().BeEmpty();
         }
-
-
-
-
     }
 }
