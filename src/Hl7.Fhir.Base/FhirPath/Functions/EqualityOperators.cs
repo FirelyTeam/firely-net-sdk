@@ -127,9 +127,25 @@ namespace Hl7.FhirPath.Functions
             // ToSystemQuantity() also validates the quantity (value present, no comparator).
             var systemQuantity = quantity.ToSystemQuantity();
 
-            return string.IsNullOrEmpty(quantity.Code) && !string.IsNullOrEmpty(quantity.Unit)
-                ? new P.Quantity(systemQuantity.Value, UNIT_TEXT_ONLY_PREFIX + quantity.Unit)
-                : systemQuantity;
+            if (!string.IsNullOrEmpty(quantity.Code) || string.IsNullOrEmpty(quantity.Unit))
+                return systemQuantity;
+
+            // As in the Java engine, the unit text year(s)/month(s) without a code is the calendar duration
+            // (the same as the FHIRPath literal 1 year), which is equivalent to the UCUM 'a' / 'mo'.
+            if (quantity.System is null or P.Quantity.UCUM)
+            {
+                var calendarUnit = quantity.Unit switch
+                {
+                    "year" or "years" => "year",
+                    "month" or "months" => "month",
+                    _ => null
+                };
+
+                if (calendarUnit is not null)
+                    return P.Quantity.ForCalendarDuration(systemQuantity.Value, calendarUnit);
+            }
+
+            return new P.Quantity(systemQuantity.Value, UNIT_TEXT_ONLY_PREFIX + quantity.Unit);
         }
 
         private const string UNIT_TEXT_ONLY_PREFIX = "\u0000unit-text:";
@@ -311,8 +327,9 @@ namespace Hl7.FhirPath.Functions
             {
                 // Quantities that are equal under FHIRPath rules can differ structurally (e.g. unit text
                 // vs. code, or a different system), so they cannot be hashed on their children. Hash
-                // them all alike and let Equals() decide.
-                if (element.InstanceType == "Quantity" && element.Value is null)
+                // them all alike and let Equals() decide. Quantities that cannot be converted (no value, or a
+                // comparator) keep the structural hash, so they are not compared to every other quantity.
+                if (element.InstanceType == "Quantity" && element.Value is null && isComparableQuantity(element))
                     return element.InstanceType.GetHashCode();
 
                 var result = element.Value != null ? element.Value.GetHashCode() : 0;
@@ -325,6 +342,12 @@ namespace Hl7.FhirPath.Functions
                 }
 
                 return result;
+            }
+
+            private static bool isComparableQuantity(ITypedElement element)
+            {
+                var names = element.Children().Select(c => c.Name).ToList();
+                return names.Contains("value") && !names.Contains("comparator");
             }
         }
 
