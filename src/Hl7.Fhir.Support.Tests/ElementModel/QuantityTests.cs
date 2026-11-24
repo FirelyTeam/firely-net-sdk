@@ -173,10 +173,11 @@ namespace Hl7.Fhir.ElementModel.Tests
             ((ICqlEquatable)new Quantity(1m, "cm")).IsEquivalentTo(new Quantity(1m, "mm")).Should().BeFalse();
             fourGrams.IsEquivalentTo(new Quantity(4m, "m")).Should().BeFalse();
 
-            // Values are converted to the larger unit, so the result is the same as when both had that unit
-            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1400m, "g")).Should().BeTrue();
-            ((ICqlEquatable)new Quantity(1400m, "g")).IsEquivalentTo(new Quantity(1m, "kg")).Should().BeTrue();
-            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1.4m, "kg")).Should().BeTrue();
+            // As in the reference engine, values are rounded in the canonical unit (here 'g'), also when the units are the same
+            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1400m, "g")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1400m, "g")).IsEquivalentTo(new Quantity(1m, "kg")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1.4m, "kg")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1.0m, "kg")).IsEquivalentTo(new Quantity(1000.4m, "g")).Should().BeTrue();
         }
 
         public enum Comparison

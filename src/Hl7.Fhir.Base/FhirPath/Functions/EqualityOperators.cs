@@ -129,7 +129,7 @@ namespace Hl7.FhirPath.Functions
 
             return string.IsNullOrEmpty(quantity.Code) && !string.IsNullOrEmpty(quantity.Unit)
                 ? new P.Quantity(systemQuantity.Value, UNIT_TEXT_ONLY_PREFIX + quantity.Unit)
-                : systemQuantity;
+                : quantity.ToFhirPathQuantity();
         }
 
         private const string UNIT_TEXT_ONLY_PREFIX = "\u0000unit-text:";

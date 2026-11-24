@@ -35,6 +35,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
                 new() { Name = "mg-text-dl", Value = new Quantity { Value = 1, Unit = "mg/dL" } },
+                new() { Name = "mg-dl-code-and-text", Value = new Quantity { Value = 2, Unit = "mg/dL", Code = "mg/dL", System = "http://unitsofmeasure.org" } },
                 new() { Name = "mg-snomed", Value = new Quantity { Value = 1, Unit = "mg", Code = "258684004", System = "http://snomed.info/sct" } },
                 new() { Name = "g-snomed", Value = new Quantity { Value = 1, Unit = "g", Code = "258682000", System = "http://snomed.info/sct" } },
                 new() { Name = "mg-local", Value = new Quantity { Value = 1, Code = "mg", System = "http://example.org/units" } },
@@ -84,42 +85,67 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{right} ~ {p(left)}").Should().Be(equivalent);
         }
 
+        // Ordering follows the reference (Java) engine: a quantity without a code is only ordered against
+        // a quantity with the same unit text, and its unit text is never converted as a UCUM unit.
         [TestMethod]
-        [DataRow("mg-text < 2 'mg'", true)]
-        [DataRow("mg-text < 2000 'ug'", true)]
-        [DataRow("mg-text > 0.5 'mg'", true)]
-        [DataRow("mg-text-dl <= 10 'mg/L'", true)]
-        [DataRow("mg-text-dl < 10 'mg/L'", false)]
+        [DataRow("mg-text-dl < mg-dl-code-and-text", true)]
+        [DataRow("mg-dl-code-and-text > mg-text-dl", true)]
+        [DataRow("mg-text-dl >= mg-dl-code-and-text", false)]
+        [DataRow("tablets <= tablets", true)]
+        [DataRow("tablets < tablets", false)]
+        [DataRow("mg-text < mg-code", null)]
+        [DataRow("mg-text < 2 'mg'", null)]
+        [DataRow("mg-text < 2000 'ug'", null)]
         [DataRow("tablets < 2", null)]
-        [DataRow("tablets < 2 'tablets'", true)]
-        [DataRow("mg-text.comparable(1 'g')", true)]
-        [DataRow("tablets.comparable(1 'g')", false)]
-        public void OrdersFhirQuantitiesByUnitText(string expression, bool? expected)
+        [DataRow("tablets < no-unit", null)]
+        [DataRow("no-unit < 2", true)]
+        [DataRow("mg-code < 2000 'ug'", true)]
+        [DataRow("mg-code > 999 'ug'", true)]
+        public void OrdersFhirQuantities(string expression, bool? expected)
         {
-            var name = expression.Split(' ', '.')[0];
-            eval(p(name) + expression.Substring(name.Length)).Should().Be(expected);
+            eval(expand(expression)).Should().Be(expected);
         }
 
         [TestMethod]
-        public void ConvertsFhirQuantityWithUnitTextToString()
+        public void ComparableNeedsCodes()
         {
-            input().Scalar($"{p("mg-text")}.toString()").Should().Be("1 'mg'");
-            input().Scalar($"{p("no-unit")}.toString()").Should().Be("1 '1'");
+            eval($"{p("mg-code")}.comparable(1 'g')").Should().BeTrue();
+            eval($"{p("mg-code")}.comparable(1 'm')").Should().BeFalse();
+            eval($"{p("mg-text")}.comparable(1 'g')").Should().BeFalse();
+            eval($"{p("tablets")}.comparable({p("tablets")})").Should().BeFalse();
         }
 
+        // Units are only converted when the FHIR system is UCUM. Codes are compared regardless of the system.
         [TestMethod]
         [DataRow("mg-snomed", "g-snomed", null, false)]
         [DataRow("mg-snomed", "mg-snomed", true, true)]
         [DataRow("mg-snomed", "mg-code", null, false)]
-        [DataRow("mg-local", "mg-code", null, false)]
+        [DataRow("mg-local", "mg-code", true, true)]
         [DataRow("mg-local", "mg-local", true, true)]
         public void DoesNotConvertUnitsFromOtherSystems(string left, string right, bool? equal, bool equivalent)
         {
             eval($"{p(left)} = {p(right)}").Should().Be(equal);
             eval($"{p(left)} ~ {p(right)}").Should().Be(equivalent);
             eval($"{p(left)} < {p(right)}").Should().Be(equal is null ? null : false);
-            eval($"{p(left)} = 1 'mg'").Should().BeNull();
         }
+
+        [TestMethod]
+        public void ConvertsOnlyUcumCodes()
+        {
+            eval($"{p("mg-code")} = 1000 'ug'").Should().BeTrue();
+            eval($"{p("mg-local")} = 1000 'ug'").Should().BeNull();
+            eval($"{p("mg-local")} ~ 1000 'ug'").Should().BeFalse();
+            eval($"{p("mg-local")} < 2000 'ug'").Should().BeNull();
+        }
+
+        private static readonly string[] NAMES = input().Parameter.Select(pc => pc.Name).OrderByDescending(n => n.Length).ToArray();
+
+        // Replaces the parameter names in an expression with the path to their value
+        private static string expand(string expression) =>
+            string.Join(" ", expression.Split(' ').Select(token =>
+                NAMES.FirstOrDefault(n => token == n) is { } name
+                    ? p(name) + token.Substring(name.Length)
+                    : token));
 
         [TestMethod]
         public void MembershipDoesNotMatchUnitTextQuantityToUnitless()

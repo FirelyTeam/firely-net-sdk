@@ -61,15 +61,26 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
         return (new P.Quantity(Value.Value, Code), null);
     }
 
-    /// <remarks>Unlike <see cref="ToSystemQuantity"/>, this conversion (which is used by FHIRPath) falls back to the
-    /// human-readable <see cref="Unit"/> text when there is no <see cref="Code"/>, so such a quantity can still be
-    /// compared with other quantities by its unit.</remarks>
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
         var (v, e) = tryConvertToSystemTypeInternal();
-        result = v is not null ? Hl7.FhirPath.Expressions.Typecasts.ParseQuantityForComparison(this) : null;
+        result = v is not null ? withFhirPathUnitInfo(v) : null;
         return e is null;
     }
+
+    /// <summary>
+    /// Converts this Quantity to a <see cref="P.Quantity" /> for use in FHIRPath, which (like the reference engine)
+    /// also needs the unit text and whether the code is a UCUM code to order and convert quantities.
+    /// </summary>
+    internal P.Quantity ToFhirPathQuantity() => withFhirPathUnitInfo(ToSystemQuantity());
+
+    private P.Quantity withFhirPathUnitInfo(P.Quantity q) =>
+        new(q.Value, q.Unit, q.System)
+        {
+            UnitText = Unit,
+            HasCode = !string.IsNullOrEmpty(Code) || string.IsNullOrEmpty(Unit),
+            IsUcumCode = !string.IsNullOrEmpty(Code) ? System == P.Quantity.UCUM : string.IsNullOrEmpty(Unit),
+        };
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
     public IReadOnlyCollection<Coding> ToCodings() => [new(System, Code)];

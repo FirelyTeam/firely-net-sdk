@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -237,7 +237,8 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="l"></param>
         /// <param name="r"></param>
         /// <returns></returns>
-        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, out _);
+        /// <remarks>As in the reference (Java) engine, a FHIR Quantity without a code is not comparable.</remarks>
+        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.HasCode && r.HasCode && l.TryCompareTo(r, out _);
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 
