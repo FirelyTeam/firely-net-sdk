@@ -39,10 +39,16 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     internal bool HasCode { get; init; } = true;
 
     /// <summary>
-    /// Whether <see cref="Unit"/> may be converted as a UCUM code. False for a FHIR Quantity with
-    /// a code from another system (or no system), as in the reference engine.
+    /// The system of the unit code: UCUM for quantity literals, or the system of the FHIR Quantity this quantity was
+    /// converted from (null when that has no code). As in the reference (Java) engine, only UCUM codes are converted.
     /// </summary>
-    internal bool IsUcumCode { get; init; } = true;
+    internal string? UnitSystem { get; init; } = UCUM;
+
+    /// <summary>
+    /// Creates a copy of this quantity with another value.
+    /// </summary>
+    internal Quantity WithValue(decimal value) =>
+        new(value, Unit, System) { UnitText = UnitText, HasCode = HasCode, UnitSystem = UnitSystem };
 
     public Quantity(decimal value, string? unit = UCUM_UNIT)
         : this(value, unit, QuantityUnitSystem.UCUM)
@@ -60,6 +66,11 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     {
         return calendarUnit is not null
             ? new Quantity(value, calendarUnit, QuantityUnitSystem.CalendarDuration)
+            {
+                // As in the reference engine: the unit text is the calendar word, and year and month have no UCUM code.
+                UnitText = calendarUnit,
+                UnitSystem = calendarUnit is "year" or "month" ? null : UCUM
+            }
             : throw new ArgumentNullException(nameof(calendarUnit));
     }
 
@@ -272,7 +283,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         // A FHIR quantity with only unit text can only be compared with a quantity with the same unit text.
         if (!HasCode || !other.HasCode)
-            return UnitText == other.UnitText;
+            return calendarWordToSingular(UnitText) == calendarWordToSingular(other.UnitText);
 
         var l = this;
         var r = other;
@@ -291,19 +302,69 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         if (!tryGetUcumConversion(l, out var lc) || !tryGetUcumConversion(r, out var rc) || lc.CanonicalUnit != rc.CanonicalUnit)
             return false;
 
+        // Express the operand with the larger unit in the smaller unit, so no precision is lost. If that
+        // does not fit in a decimal, express the other operand in the larger unit instead.
+        var convertLeft = lc.Factor > rc.Factor;
         try
         {
-            // Express the operand with the larger unit in the smaller unit, so no precision is lost.
-            if (lc.Factor > rc.Factor)
-                left = l.Value * lc.Factor / rc.Factor;
-            else
-                right = r.Value * rc.Factor / lc.Factor;
-
-            return true;
+            if (convertLeft) left = l.Value * lc.Factor / rc.Factor;
+            else right = r.Value * rc.Factor / lc.Factor;
         }
         catch (OverflowException)
         {
-            return false;
+            try
+            {
+                if (convertLeft) right = r.Value * rc.Factor / lc.Factor;
+                else left = l.Value * lc.Factor / rc.Factor;
+            }
+            catch (OverflowException)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Like the reference engine, the plural calendar words are the same unit text as the singular ones.
+    private static string? calendarWordToSingular(string? unitText) =>
+        unitText is "years" or "months" or "weeks" or "days" or "hours" or "minutes" or "seconds" or "milliseconds"
+            ? unitText.Substring(0, unitText.Length - 1)
+            : unitText;
+
+    /// <summary>
+    /// Determines whether the units of two quantities are comparable, following the reference (Java) engine's comparable():
+    /// both need a unit code from the same system, and the codes must be the same, or UCUM codes of the same dimension.
+    /// </summary>
+    internal bool IsComparableTo(Quantity other)
+    {
+        var (ls, lu) = unitCode(this);
+        var (rs, ru) = unitCode(other);
+
+        if (ls is null || rs is null || ls != rs) return false;
+        if (lu == ru) return true;
+
+        return ls == UCUM && tryGetUcumConversion(lu, out var lc) && tryGetUcumConversion(ru, out var rc)
+               && lc.CanonicalUnit == rc.CanonicalUnit;
+
+        static (string? system, string unit) unitCode(Quantity q)
+        {
+            if (!q.HasCode) return (null, q.Unit);
+
+            if (q.IsCalendarDuration)
+            {
+                try
+                {
+                    var normalized = normalizeDurationToUcum(q, QuantityComparison.None);
+                    return (normalized.IsDefiniteDuration ? UCUM : null, normalized.Unit);
+                }
+                catch (InvalidOperationException)
+                {
+                    return (null, q.Unit);
+                }
+            }
+
+            return (q.UnitSystem, q.Unit);
         }
     }
 
@@ -339,20 +400,24 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     private const int MAX_CACHED_UCUM_CONVERSIONS = 10_000;
 
     /// <summary>
-    /// Gets the factor to convert a UCUM unit to its canonical unit (e.g. 0.001 to convert 'mg' to 'g').
+    /// Gets the factor to convert the UCUM unit of a quantity to its canonical unit (e.g. 0.001 to convert 'mg' to 'g').
     /// </summary>
     private static bool tryGetUcumConversion(Quantity q, [NotNullWhen(true)] out UcumConversion? conversion)
     {
         conversion = null;
-        if (q.System != QuantityUnitSystem.UCUM || !q.IsUcumCode || !q.HasCode) return false;
+        return q.System == QuantityUnitSystem.UCUM && q.UnitSystem == UCUM && q.HasCode
+               && tryGetUcumConversion(q.Unit, out conversion);
+    }
 
-        if (!UCUM_CONVERSIONS.TryGetValue(q.Unit, out conversion))
+    private static bool tryGetUcumConversion(string unit, [NotNullWhen(true)] out UcumConversion? conversion)
+    {
+        if (!UCUM_CONVERSIONS.TryGetValue(unit, out conversion))
         {
-            conversion = getUcumConversion(q.Unit);
+            conversion = getUcumConversion(unit);
 
             // Units can come from data, so don't let the cache grow without bounds.
-            if (UCUM_CONVERSIONS.Count < MAX_CACHED_UCUM_CONVERSIONS)
-                UCUM_CONVERSIONS.TryAdd(q.Unit, conversion);
+            if (UCUM_CONVERSIONS.Count >= MAX_CACHED_UCUM_CONVERSIONS) UCUM_CONVERSIONS.Clear();
+            UCUM_CONVERSIONS.TryAdd(unit, conversion);
         }
 
         return conversion is not null;
@@ -427,29 +492,9 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
 
-    /// <remarks>Quantities in different units can be equal (e.g. 4 'g' and 4000 'mg'), and equality rounds the values,
-    /// so the hash code is based on the dimension (canonical unit) of the quantity only.</remarks>
-    public override int GetHashCode()
-    {
-        var q = this;
-
-        // Calendar durations can be equal to UCUM durations (e.g. 1 day and 1 'd').
-        if (IsCalendarDuration)
-        {
-            try
-            {
-                q = normalizeDurationToUcum(this, CQL_EQUALS_COMPARISON);
-            }
-            catch (InvalidOperationException)
-            {
-                return Unit.GetHashCode();
-            }
-        }
-
-        return tryGetUcumConversion(q, out var conversion)
-            ? conversion.CanonicalUnit.GetHashCode()
-            : q.Unit.GetHashCode();
-    }
+    /// <remarks>Quantities with different units can be equal (e.g. 4 'g' and 4000 'mg', or a FHIR Quantity with only
+    /// unit text and one with a code), and equality rounds the values, so all quantities have the same hash code.</remarks>
+    public override int GetHashCode() => nameof(Quantity).GetHashCode();
 
     public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
 

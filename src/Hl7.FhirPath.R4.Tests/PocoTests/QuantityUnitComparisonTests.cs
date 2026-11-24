@@ -39,6 +39,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "mg-snomed", Value = new Quantity { Value = 1, Unit = "mg", Code = "258684004", System = "http://snomed.info/sct" } },
                 new() { Name = "g-snomed", Value = new Quantity { Value = 1, Unit = "g", Code = "258682000", System = "http://snomed.info/sct" } },
                 new() { Name = "mg-local", Value = new Quantity { Value = 1, Code = "mg", System = "http://example.org/units" } },
+                new() { Name = "mg-no-system", Value = new Quantity { Value = 1, Code = "mg" } },
+                new() { Name = "days-text", Value = new Quantity { Value = 1, Unit = "days" } },
             ]
         };
 
@@ -101,6 +103,15 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [DataRow("no-unit < 2", true)]
         [DataRow("mg-code < 2000 'ug'", true)]
         [DataRow("mg-code > 999 'ug'", true)]
+        [DataRow("days-text < 2 days", true)]
+        [DataRow("days-text <= 1 day", true)]
+        [DataRow("days-text < 2 'd'", null)]
+        [DataRow("no-unit < 200 '%'", null)]
+        [DataRow("(-tablets) < 5", null)]
+        [DataRow("tablets.abs() < 5", null)]
+        [DataRow("tablets.lowBoundary() < 2", null)]
+        [DataRow("mg-local.abs() < 2000 'ug'", null)]
+        [DataRow("(-mg-code) < 2000 'ug'", true)]
         public void OrdersFhirQuantities(string expression, bool? expected)
         {
             eval(expand(expression)).Should().Be(expected);
@@ -113,6 +124,14 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{p("mg-code")}.comparable(1 'm')").Should().BeFalse();
             eval($"{p("mg-text")}.comparable(1 'g')").Should().BeFalse();
             eval($"{p("tablets")}.comparable({p("tablets")})").Should().BeFalse();
+            eval($"{p("no-unit")}.comparable({p("no-unit")})").Should().BeFalse();
+            eval($"{p("mg-local")}.comparable({p("mg-code")})").Should().BeFalse();
+            eval($"{p("mg-local")}.comparable({p("mg-local")})").Should().BeTrue();
+            eval($"{p("mg-no-system")}.comparable({p("mg-no-system")})").Should().BeFalse();
+            eval($"(-{p("mg-local")}).comparable(1 'g')").Should().BeFalse();
+            eval("1 hour.comparable(1 'min')").Should().BeTrue();
+            eval("1 year.comparable(1 year)").Should().BeFalse();
+            eval("1 'Ym'.comparable(1 'ym')").Should().BeTrue();
         }
 
         // Units are only converted when the FHIR system is UCUM. Codes are compared regardless of the system.
@@ -138,14 +157,25 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{p("mg-local")} < 2000 'ug'").Should().BeNull();
         }
 
+        [TestMethod]
+        public void UnionAndDistinctUseFhirPathEquality()
+        {
+            input().Scalar($"({p("mg-code")} | 1000 'ug').count()").Should().Be(1);
+            input().Scalar("(4 'g' | 4000 'mg' | 4 'kg').count()").Should().Be(2);
+        }
+
         private static readonly string[] NAMES = input().Parameter.Select(pc => pc.Name).OrderByDescending(n => n.Length).ToArray();
 
         // Replaces the parameter names in an expression with the path to their value
         private static string expand(string expression) =>
             string.Join(" ", expression.Split(' ').Select(token =>
-                NAMES.FirstOrDefault(n => token == n) is { } name
-                    ? p(name) + token.Substring(name.Length)
-                    : token));
+            {
+                var prefix = new string(token.TakeWhile(c => c is '(' or '-').ToArray());
+                var rest = token.Substring(prefix.Length);
+                return NAMES.FirstOrDefault(n => rest == n || rest.StartsWith(n + ".") || rest.StartsWith(n + ")")) is { } name
+                    ? prefix + p(name) + rest.Substring(name.Length)
+                    : token;
+            }));
 
         [TestMethod]
         public void MembershipDoesNotMatchUnitTextQuantityToUnitless()

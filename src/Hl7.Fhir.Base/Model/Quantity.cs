@@ -79,7 +79,7 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
         {
             UnitText = Unit,
             HasCode = !string.IsNullOrEmpty(Code) || string.IsNullOrEmpty(Unit),
-            IsUcumCode = !string.IsNullOrEmpty(Code) ? System == P.Quantity.UCUM : string.IsNullOrEmpty(Unit),
+            UnitSystem = string.IsNullOrEmpty(Code) ? null : System,
         };
 
     /// <inheritdoc cref="ICoded.ToCodings"/>

@@ -139,6 +139,12 @@ namespace Hl7.Fhir.ElementModel.Tests
             (new Quantity(1m, "ng") < new Quantity(0.002m, "ug")).Should().BeTrue();
             new Quantity(1m, "pg").Should().Be(new Quantity(0.001m, "ng"));
 
+            // Very different scales: the conversion to the smaller unit overflows, so the other way around is used
+            (new Quantity(1m, "Ym") > new Quantity(1m, "ym")).Should().BeTrue();
+
+            // UCUM annotations are dimensionless
+            (new Quantity(1m, "{score}") == new Quantity(1m)).Should().BeTrue();
+
             // Equal quantities must have the same hash code, also when their units differ
             kg.GetHashCode().Should().Be(new Quantity(3140m, "g").GetHashCode());
             new Quantity(1m, "d").GetHashCode().Should().Be(Quantity.ForCalendarDuration(1m, "day").GetHashCode());
