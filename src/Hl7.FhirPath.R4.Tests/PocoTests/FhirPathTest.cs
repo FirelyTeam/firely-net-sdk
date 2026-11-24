@@ -16,6 +16,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -423,6 +424,18 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             new Patient().Scalar("conformsTo({})", context).Should().BeNull();
             new Patient().Scalar("conformsTo('')", context).Should().BeNull();
             checkedProfiles.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void ConformsToKeepsAHostRegistration()
+        {
+            // A host that registered its own conformsTo() before the SDK supported it keeps it.
+            var symbols = new SymbolTable().AddStandardFP();
+            symbols.Add("conformsTo", (IEnumerable<PocoNode> focus, string profile, EvaluationContext ctx) => profile == "host", doNullProp: false);
+            symbols.AddFhirExtensions();
+            var compiler = new FhirPathCompiler(symbols);
+
+            compiler.Compile("conformsTo('host')").IsTrue(new Patient().ToPocoNode(), new FhirEvaluationContext()).Should().BeTrue();
         }
 
         [TestMethod]

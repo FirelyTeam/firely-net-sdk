@@ -44,7 +44,9 @@ namespace Hl7.Fhir.FhirPath
             t.Add("resolve", (IEnumerable<PocoNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)).OfType<PocoNode>(), doNullProp: false);
 
             t.Add("memberOf", (PocoNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
-            t.Add("conformsTo", (IEnumerable<PocoNode> input, string structure, EvaluationContext ctx) => ConformsTo(input, structure, ctx), doNullProp: false);
+            // Hosts may have registered their own conformsTo() before the SDK supported it: keep one that is already there.
+            if (!t.ContainsFunction("conformsTo"))
+                t.Add("conformsTo", (IEnumerable<PocoNode> input, string structure, EvaluationContext ctx) => ConformsTo(input, structure, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
