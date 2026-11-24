@@ -131,6 +131,21 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval(expand(expression)).Should().Be(expected);
         }
 
+        // A quantity keeps its unit information through abs(), unary minus and the boundary functions, so equality
+        // gives the same result as without them
+        [TestMethod]
+        [DataRow("mg-text-dl", "mg-dl-code-and-text", null, false)]
+        [DataRow("mg-text-dl", "mg-text-dl", true, true)]
+        [DataRow("tablets", "no-unit", null, false)]
+        [DataRow("mg-code", "mg-code", true, true)]
+        public void EqualityAfterAbs(string left, string right, bool? equal, bool equivalent)
+        {
+            eval($"{p(left)}.abs() = {p(right)}").Should().Be(equal);
+            eval($"{p(left)}.abs() ~ {p(right)}").Should().Be(equivalent);
+            eval($"{p(right)} = {p(left)}.abs()").Should().Be(equal);
+            eval($"{p(right)} ~ {p(left)}.abs()").Should().Be(equivalent);
+        }
+
         [TestMethod]
         public void ComparableNeedsCodes()
         {

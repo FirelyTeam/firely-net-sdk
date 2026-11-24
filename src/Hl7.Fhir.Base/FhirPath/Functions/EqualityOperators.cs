@@ -111,9 +111,8 @@ namespace Hl7.FhirPath.Functions
 
         // Converts a FHIR Quantity to a System.Quantity for = and ~, following the reference (Java) engine:
         // a quantity that has unit text but no code is only comparable to another such quantity with the
-        // same unit text. Its unit is given a prefix that no UCUM code or FHIRPath unit can have, so it never
-        // matches a coded quantity, a quantity literal or a unitless quantity, and those comparisons give
-        // empty (=) / false (~). The prefixed unit is internal to this comparison and never surfaces.
+        // same unit text, so comparing it with a coded quantity, a quantity literal or a unitless quantity
+        // gives empty (=) / false (~).
         private static P.Quantity? quantityForComparison(ITypedElement element)
         {
             var quantity = element is PocoNode { Poco: Quantity q }
@@ -145,10 +144,10 @@ namespace Hl7.FhirPath.Functions
                     return P.Quantity.ForCalendarDuration(systemQuantity.Value, calendarUnit);
             }
 
-            return new P.Quantity(systemQuantity.Value, UNIT_TEXT_ONLY_PREFIX + quantity.Unit);
+            // The quantity remembers that it has unit text but no code, so it only equals another such quantity
+            // with the same unit text (see P.Quantity.TryEquals).
+            return quantity.ToFhirPathQuantity();
         }
-
-        private const string UNIT_TEXT_ONLY_PREFIX = "\u0000unit-text:";
 
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {

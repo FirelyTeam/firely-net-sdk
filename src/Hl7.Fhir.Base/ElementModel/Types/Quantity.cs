@@ -207,9 +207,14 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// calendar durations and definite quantity durations above seconds is determined by the <paramref name="comparisonType"/></remarks>
     public bool TryEquals(Any other, QuantityComparison comparisonType, [NotNullWhen(true)] out bool? result)
     {
-        result = other is Quantity
-            ? TryCompareTo(other, comparisonType, out var comparison) ? comparison == 0 : null
-            : false;
+        result = other switch
+        {
+            // As in the reference engine, a FHIR Quantity without a code only equals another one without a code
+            // (with the same unit text); only ordering also matches it to a coded quantity with that unit text.
+            Quantity q when HasCode != q.HasCode => null,
+            Quantity => TryCompareTo(other, comparisonType, out var comparison) ? comparison == 0 : null,
+            _ => false
+        };
 
         return result is not null;
     }
@@ -454,6 +459,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     private bool isEquivalentTo(Quantity other)
     {
         decimal left, right;
+
+        if (HasCode != other.HasCode) return false;
 
         if (HasCode && other.HasCode && !IsCalendarDuration && !other.IsCalendarDuration
             && tryGetUcumConversion(this, out var lc) && tryGetUcumConversion(other, out var rc))
