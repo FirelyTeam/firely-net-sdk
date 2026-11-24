@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -47,7 +47,7 @@ namespace Hl7.FhirPath.Expressions
 
         internal static P.Quantity ParseQuantity(PocoNode qe)
         {
-            return (qe.Poco as Quantity)?.ToSystemQuantity();
+            return ParseQuantityForComparison(qe.Poco as Quantity);
         }
 
         /// <summary>

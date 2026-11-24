@@ -61,10 +61,15 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
         return (new P.Quantity(Value.Value, Code), null);
     }
 
+    /// <remarks>Unlike <see cref="ToSystemQuantity"/>, this conversion (which is used by FHIRPath) falls back to the
+    /// human-readable <see cref="Unit"/> text when there is no <see cref="Code"/>, so such a quantity can still be
+    /// compared with other quantities by its unit.</remarks>
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
         var (v, e) = tryConvertToSystemTypeInternal();
-        result = v;
+        result = v is not null && string.IsNullOrEmpty(Code) && !string.IsNullOrEmpty(Unit)
+            ? new P.Quantity(v.Value, Unit)
+            : v;
         return e is null;
     }
 
