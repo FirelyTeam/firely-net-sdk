@@ -52,10 +52,9 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
 
     private (P.Quantity? v, Exception? e) tryConvertToSystemTypeInternal()
     {
-        // A value outside the range of a .NET decimal is kept as a string, which the Value getter rejects.
-        var value = FhirDecimal.TryGetSystemDecimal(ValueElement?.JsonValue, out var systemValue)
-            ? systemValue
-            : Value is { } v ? new P.Decimal(v) : null;
+        // Not the Value getter, which rejects a value outside the range of a .NET decimal (kept as a string), and loses
+        // the precision of a value with an exponent (see FhirDecimal.ExponentLiteral).
+        var value = ValueElement?.TryConvertToSystemTypeInternal() as P.Decimal;
 
         if (value is null)
             return (null, new InvalidOperationException("Cannot convert a Quantity without a value to a FhirPath Quantity."));

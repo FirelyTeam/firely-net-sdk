@@ -60,7 +60,44 @@ public partial class FhirDecimal
         (P.Decimal?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
+        ExponentLiteral is { } literal && P.Decimal.TryParse(literal, out var precise) ? precise :
         TryGetSystemDecimal(JsonValue, out var result) ? result : Value is not null ? new P.Decimal(Value.Value) : null;
+
+    /// <inheritdoc />
+    public override object? JsonValue
+    {
+        get => base.JsonValue;
+        set
+        {
+            base.JsonValue = value;
+            ExponentLiteral = null;
+        }
+    }
+
+    /// <summary>
+    /// The literal this decimal was parsed from, when it has an exponent that makes it precise to fewer digits than
+    /// its value shows: 9.5e2 has two significant digits, but its value 950 shows three. The lowBoundary() and
+    /// highBoundary() functions of FHIRPath need it. Cleared whenever the value changes.
+    /// </summary>
+    internal string? ExponentLiteral { get; private set; }
+
+    /// <summary>
+    /// Remembers the literal the current value was parsed from, when it is precise to fewer digits than the value shows
+    /// (see <see cref="ExponentLiteral"/>). Called by the parsers after setting the value.
+    /// </summary>
+    internal void KeepParsedLiteral(string literal)
+    {
+        if (JsonValue is decimal value && literal.IndexOfAny(['e', 'E']) != -1 &&
+            P.Decimal.TryParse(literal, out var parsed) && parsed.Value == value && parsed.PrecisionScale < 0)
+            ExponentLiteral = literal;
+    }
+
+    /// <inheritdoc />
+    protected internal override void CopyToInternal(Base other)
+    {
+        base.CopyToInternal(other);
+        if (other is FhirDecimal dest) dest.ExponentLiteral = ExponentLiteral;
+    }
 
     /// <summary>
     /// Gets the System decimal for the JsonValue of a decimal, including a literal that is outside the

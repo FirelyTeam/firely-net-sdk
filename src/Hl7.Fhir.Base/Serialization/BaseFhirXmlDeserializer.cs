@@ -560,6 +560,7 @@ public class BaseFhirXmlDeserializer
                 parsedValue = Settings.ConvertPrimitiveValue(parsedValue, propMapping.DeclaringClass);
 
             primitive.JsonValue = parsedValue;
+            if (primitive is FhirDecimal fhirDecimal) fhirDecimal.KeepParsedLiteral(trimmedValue);
 
             // Validator should not be called on the primitive values, this will
             // be handled by the Primitive's ValidateInstance.
@@ -591,6 +592,7 @@ public class BaseFhirXmlDeserializer
                 parsedValue = Settings.ConvertPrimitiveValue(parsedValue, targetElementMapping);
 
             targetElement.JsonValue = parsedValue;
+            if (targetElement is FhirDecimal fhirDecimal) fhirDecimal.KeepParsedLiteral(trimmedValue);
 
             // Handle atomic-types-as-primitives, Element.id, Extension.url etc.
             var newPropValue = setPropertyWithRepeating(target, attributeName, targetElementMapping, targetElement, state, reader);

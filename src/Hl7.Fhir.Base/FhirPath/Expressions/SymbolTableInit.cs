@@ -129,24 +129,24 @@ public static class SymbolTableInit
 
         // The conversion functions accept an item of any type. An item without a System type equivalent, such as
         // a complex type or a resource, does not convert: toX() returns empty and convertsToX() returns false.
-        t.Add("toBoolean", (PocoNode f) => toSystemValue(f)?.ToBoolean(), doNullProp: true);
-        t.Add("convertsToBoolean", (PocoNode f) => toSystemValue(f)?.ConvertsToBoolean() ?? false, doNullProp: true);
-        t.Add("toInteger", (PocoNode f) => toSystemValue(f)?.ToInteger(), doNullProp: true);
-        t.Add("convertsToInteger", (PocoNode f) => toSystemValue(f)?.ConvertsToInteger() ?? false, doNullProp: true);
-        t.Add("toLong", (PocoNode f) => toSystemValue(f)?.ToLong(), doNullProp: true);
-        t.Add("convertsToLong", (PocoNode f) => toSystemValue(f)?.ConvertsToLong() ?? false, doNullProp: true);
-        t.Add("toDecimal", (PocoNode f) => toSystemValue(f)?.ToDecimal(), doNullProp: true);
-        t.Add("convertsToDecimal", (PocoNode f) => toSystemValue(f)?.ConvertsToDecimal() ?? false, doNullProp: true);
-        t.Add("toQuantity", (PocoNode f) => toSystemValue(f)?.ToQuantity(), doNullProp: true);
-        t.Add("convertsToQuantity", (PocoNode f) => toSystemValue(f)?.ConvertsToQuantity() ?? false, doNullProp: true);
-        t.Add("toString", (PocoNode f) => toSystemValue(f)?.ToStringRepresentation(), doNullProp: true);
-        t.Add("convertsToString", (PocoNode f) => toSystemValue(f)?.ConvertsToString() ?? false, doNullProp: true);
-        t.Add("toDate", (PocoNode f) => toSystemValue(f)?.ToDate(), doNullProp: true);
-        t.Add("convertsToDate", (PocoNode f) => toSystemValue(f)?.ConvertsToDate() ?? false, doNullProp: true);
-        t.Add("toDateTime", (PocoNode f) => toSystemValue(f)?.ToDateTime(), doNullProp: true);
-        t.Add("convertsToDateTime", (PocoNode f) => toSystemValue(f)?.ConvertsToDateTime() ?? false, doNullProp: true);
-        t.Add("toTime", (PocoNode f) => toSystemValue(f)?.ToTime(), doNullProp: true);
-        t.Add("convertsToTime", (PocoNode f) => toSystemValue(f)?.ConvertsToTime() ?? false, doNullProp: true);
+        t.Add("toBoolean", (PocoNode f) => ToSystemValue(f)?.ToBoolean(), doNullProp: true);
+        t.Add("convertsToBoolean", (PocoNode f) => ToSystemValue(f)?.ConvertsToBoolean() ?? false, doNullProp: true);
+        t.Add("toInteger", (PocoNode f) => ToSystemValue(f)?.ToInteger(), doNullProp: true);
+        t.Add("convertsToInteger", (PocoNode f) => ToSystemValue(f)?.ConvertsToInteger() ?? false, doNullProp: true);
+        t.Add("toLong", (PocoNode f) => ToSystemValue(f)?.ToLong(), doNullProp: true);
+        t.Add("convertsToLong", (PocoNode f) => ToSystemValue(f)?.ConvertsToLong() ?? false, doNullProp: true);
+        t.Add("toDecimal", (PocoNode f) => ToSystemValue(f)?.ToDecimal(), doNullProp: true);
+        t.Add("convertsToDecimal", (PocoNode f) => ToSystemValue(f)?.ConvertsToDecimal() ?? false, doNullProp: true);
+        t.Add("toQuantity", (PocoNode f) => ToSystemValue(f)?.ToQuantity(), doNullProp: true);
+        t.Add("convertsToQuantity", (PocoNode f) => ToSystemValue(f)?.ConvertsToQuantity() ?? false, doNullProp: true);
+        t.Add("toString", (PocoNode f) => ToSystemValue(f)?.ToStringRepresentation(), doNullProp: true);
+        t.Add("convertsToString", (PocoNode f) => ToSystemValue(f)?.ConvertsToString() ?? false, doNullProp: true);
+        t.Add("toDate", (PocoNode f) => ToSystemValue(f)?.ToDate(), doNullProp: true);
+        t.Add("convertsToDate", (PocoNode f) => ToSystemValue(f)?.ConvertsToDate() ?? false, doNullProp: true);
+        t.Add("toDateTime", (PocoNode f) => ToSystemValue(f)?.ToDateTime(), doNullProp: true);
+        t.Add("convertsToDateTime", (PocoNode f) => ToSystemValue(f)?.ConvertsToDateTime() ?? false, doNullProp: true);
+        t.Add("toTime", (PocoNode f) => ToSystemValue(f)?.ToTime(), doNullProp: true);
+        t.Add("convertsToTime", (PocoNode f) => ToSystemValue(f)?.ConvertsToTime() ?? false, doNullProp: true);
 
         t.Add("upper", (string f) => f.ToUpper(), doNullProp: true);
         t.Add("lower", (string f) => f.ToLower(), doNullProp: true);
@@ -280,7 +280,7 @@ public static class SymbolTableInit
     /// The System type equivalent of an item, or null if it has none. A complex type only has one if it can be
     /// represented as a System type (e.g. Quantity, Coding, CodeableConcept).
     /// </summary>
-    private static P.Any toSystemValue(PocoNode item) => item switch
+    internal static P.Any ToSystemValue(PocoNode item) => item switch
     {
         PrimitiveNode primitive => P.Any.Convert(primitive.Value),
         { Poco: P.IToSystemPrimitive tsp } when tsp.TryConvertToSystemType(out var value) => value,

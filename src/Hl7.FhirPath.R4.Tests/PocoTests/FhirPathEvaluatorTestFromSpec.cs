@@ -206,12 +206,6 @@ namespace Hl7.FhirPath.R4.Tests
             // (-0.0034).lowBoundary(1) is expected to be -0.0, a negative zero, which System.Decimal does not print
             "LowBoundaryDecimal15",
 
-            // Decimals with an exponent lose their significance when parsed: 9.5e2 becomes 950 rather than a value with
-            // two significant digits, so its boundaries come out as 949.5/950.5 instead of 945/955
-            "LowBoundaryDecimalExponent1", "LowBoundaryDecimalExponent3", "LowBoundaryDecimalExponent4",
-            "HighBoundaryDecimalExponent1", "HighBoundaryDecimalExponent2", "HighBoundaryDecimalExponent4",
-            "HighBoundaryDecimalExponent5",
-
             // Precision arguments out of range (negative, or beyond what the engine supports) should give an empty result,
             // not an error or a clamped value. LowBoundaryDecimal3, LowBoundaryNegDecimal3, HighBoundaryDecimal3 and
             // LowBoundaryNegDecimal5 have the same problem, but pass today only because of the empty-focus bug above

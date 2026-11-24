@@ -51,16 +51,13 @@ namespace Hl7.Fhir.FhirPath
             t.Add("htmlchecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
             t.Add("htmlChecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
 
-            // An integer input is converted to a decimal, so its boundaries are those of the decimal (1 gives 0.5 and 1.5).
-            t.Add("lowBoundary", (decimal d, long precision) => BoundaryDecimal(d, precision, high: false), doNullProp: false);
-            t.Add("lowBoundary", (decimal d) => BoundaryDecimal(d, null, high: false), doNullProp: false);
-            t.Add("lowBoundary", (P.Any a, long precision) => LowBoundary(a, precision), doNullProp: false);
-            t.Add("lowBoundary", (P.Any a) => LowBoundary(a, null), doNullProp: false);
+            // These take the node rather than its value, since the value of a decimal with an exponent (9.5e2 gives 950)
+            // loses its precision, see boundaryInput().
+            t.Add("lowBoundary", (PocoNode f, long precision) => LowBoundary(boundaryInput(f), precision), doNullProp: true);
+            t.Add("lowBoundary", (PocoNode f) => LowBoundary(boundaryInput(f), null), doNullProp: true);
 
-            t.Add("highBoundary", (decimal d, long precision) => BoundaryDecimal(d, precision, high: true), doNullProp: false);
-            t.Add("highBoundary", (decimal d) => BoundaryDecimal(d, null, high: true), doNullProp: false);
-            t.Add("highBoundary", (P.Any a, long precision) => HighBoundary(a, precision), doNullProp: false);
-            t.Add("highBoundary", (P.Any a) => HighBoundary(a, null), doNullProp: false);
+            t.Add("highBoundary", (PocoNode f, long precision) => HighBoundary(boundaryInput(f), precision), doNullProp: true);
+            t.Add("highBoundary", (PocoNode f) => HighBoundary(boundaryInput(f), null), doNullProp: true);
 
             //https://github.com/hapifhir/org.hl7.fhir.core/blob/master/org.hl7.fhir.r5/src/main/java/org/hl7/fhir/r5/utils/FHIRPathEngine.java
             t.Add("comparable", (P.Quantity l, P.Quantity r) => Comparable(l, r), doNullProp: false);
@@ -131,12 +128,19 @@ namespace Hl7.Fhir.FhirPath
         /// <para>Zero is half a unit of its last digit away from both its boundaries, so 0.0 gives -0.05 and 0.05. Where
         /// digits are dropped, its high boundary is rounded half up and its low boundary truncated (0.lowBoundary(0) is 0),
         /// as in the reference implementation. (That implementation uses 0.5 for every zero, ignoring its digits.)</para>
+        /// <para>A decimal read from a literal with an exponent is precise to the digits of its mantissa: 9.5e2 stands for
+        /// any value from 945 up to 955, as in the reference implementation, although its value is 950 (see
+        /// <see cref="P.Decimal.PrecisionScale"/>).</para>
         /// </remarks>
         /// <returns>The boundary, or <c>null</c> (an empty result) when it does not fit in a decimal at the requested
         /// precision, such as a value above about 7.9e20 at the default precision of 8. The spec gives an empty result when
         /// the precision is beyond what the implementation supports.</returns>
         /// <exception cref="ArgumentOutOfRangeException">The precision is negative or larger than 16.</exception>
-        internal static decimal? BoundaryDecimal(decimal input, long? precision, bool high)
+        internal static decimal? BoundaryDecimal(decimal input, long? precision, bool high) =>
+            BoundaryDecimal(new P.Decimal(input), precision, high);
+
+        /// <inheritdoc cref="BoundaryDecimal(decimal, long?, bool)"/>
+        internal static decimal? BoundaryDecimal(P.Decimal input, long? precision, bool high)
         {
             var resultScale = precision ?? DEFAULT_DECIMAL_BOUNDARY_PRECISION;
             if (resultScale is < 0 or > MAX_DECIMAL_BOUNDARY_PRECISION)
@@ -145,10 +149,22 @@ namespace Hl7.Fhir.FhirPath
 
             // Split the input into its digits (as an integer) and its scale, so 1.587 becomes 1587 and 3, and 120 becomes
             // 120 and 0. Trailing zeroes count: 12.500 is 12500 and 3.
-            var bits = decimal.GetBits(input);
+            var bits = decimal.GetBits(input.Value);
             var scale = (bits[3] >> 16) & 0xFF;
-            var isNegative = input < 0;
+            var isNegative = input.Value < 0;
             var digits = (new BigInteger((uint)bits[2]) << 64) | (new BigInteger((uint)bits[1]) << 32) | (uint)bits[0];
+
+            // A decimal precise to fewer decimal places than its value shows, such as 9.5e2 (950, precise to tens), loses
+            // the digits beyond its precision, which are zeroes: 950 and 0 become 95 and -1.
+            if (input.PrecisionScale < scale)
+            {
+                var reduced = BigInteger.DivRem(digits, BigInteger.Pow(10, scale - input.PrecisionScale), out var remainder);
+                if (remainder.IsZero)
+                {
+                    digits = reduced;
+                    scale = input.PrecisionScale;
+                }
+            }
 
             // Work with one more decimal place, where half a unit of the last digit of the input is 5.
             var magnitude = digits * 10;
@@ -186,10 +202,27 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        internal static P.Any? LowBoundary(P.Any input, long? precision)
+        /// <summary>
+        /// The System value of the focus of lowBoundary() and highBoundary(). A decimal parsed from a literal with an
+        /// exponent keeps the precision of that literal (see <see cref="FhirDecimal.ExponentLiteral"/>).
+        /// </summary>
+        /// <exception cref="ArgumentException">The focus is a complex value that has no System value.</exception>
+        private static P.Any? boundaryInput(PocoNode focus) => focus switch
+        {
+            { Poco: FhirDecimal { ExponentLiteral: not null } fhirDecimal } => fhirDecimal.ToSystemDecimal(),
+            PrimitiveNode => SymbolTableInit.ToSystemValue(focus),
+            _ => SymbolTableInit.ToSystemValue(focus) ??
+                 throw new ArgumentException($"lowBoundary() and highBoundary() cannot be used on a {focus.Poco.TypeName}.")
+        };
+
+        internal static P.Any? LowBoundary(P.Any? input, long? precision)
         {
             return input switch
             {
+                P.Decimal dec => BoundaryDecimal(dec, precision, high: false) is { } value ? new P.Decimal(value) : null,
+                // An integer is converted to a decimal, so its boundaries are those of the decimal (1 gives 0.5 and 1.5).
+                P.Integer i => BoundaryDecimal(i.Value, precision, high: false) is { } value ? new P.Decimal(value) : null,
+                P.Long l => BoundaryDecimal(l.Value, precision, high: false) is { } value ? new P.Decimal(value) : null,
                 P.Quantity q => BoundaryQuantity(q, precision, high: false),
                 P.Date d => BoundaryDateTime(d, precision, 1, 1, 0, 0, 0, 0),
                 P.DateTime dt => BoundaryDateTime(dt, precision, 1, 1, 0, 0, 0, 0),
@@ -198,10 +231,14 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        internal static P.Any? HighBoundary(P.Any input, long? precision)
+        internal static P.Any? HighBoundary(P.Any? input, long? precision)
         {
             return input switch
             {
+                P.Decimal dec => BoundaryDecimal(dec, precision, high: true) is { } value ? new P.Decimal(value) : null,
+                // An integer is converted to a decimal, so its boundaries are those of the decimal (1 gives 0.5 and 1.5).
+                P.Integer i => BoundaryDecimal(i.Value, precision, high: true) is { } value ? new P.Decimal(value) : null,
+                P.Long l => BoundaryDecimal(l.Value, precision, high: true) is { } value ? new P.Decimal(value) : null,
                 P.Quantity q => BoundaryQuantity(q, precision, high: true),
                 P.Date d => BoundaryDateTime(d, precision, 12, 31, 23, 59, 59, 999),
                 P.DateTime dt => BoundaryDateTime(dt, precision, 12, 31, 23, 59, 59, 999),
@@ -211,7 +248,7 @@ namespace Hl7.Fhir.FhirPath
         }
 
         internal static P.Quantity? BoundaryQuantity(P.Quantity input, long? precision, bool high) =>
-            BoundaryDecimal(input.Value, precision, high) is { } value ? new(value, input.Unit, input.System) : null;
+            BoundaryDecimal(input.DecimalValue, precision, high) is { } value ? new(value, input.Unit, input.System) : null;
 
         internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
         {

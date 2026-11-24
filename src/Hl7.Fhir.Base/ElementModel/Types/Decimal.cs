@@ -34,6 +34,25 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
         _outOfRange = outOfRange;
     }
 
+    private Decimal(decimal value, int negativeScale)
+    {
+        _value = value;
+        _negativeScale = negativeScale;
+    }
+
+    // Set when the decimal was parsed from a literal whose exponent makes it precise to fewer decimal places than
+    // its value shows, which happens when that number of decimal places is below zero: 9.5e2 is precise to tens
+    // (two significant digits, so -1 decimal places), but its value 950 shows units.
+    private readonly int? _negativeScale;
+
+    /// <summary>
+    /// The number of decimal places to which this decimal is precise: 2 for 1.50, 0 for 950 and -1 for 9.5e2 (which
+    /// is precise to tens). This is the scale of <see cref="Value"/>, unless the decimal was parsed from a literal with
+    /// an exponent that leaves it precise to fewer than zero decimal places, which a .NET decimal cannot express.
+    /// </summary>
+    /// <remarks>Not meaningful for a value outside the range of a .NET decimal (see <see cref="IsOutOfRange"/>).</remarks>
+    internal int PrecisionScale => _negativeScale ?? (decimal.GetBits(_value)[3] >> 16) & 0xFF;
+
     /// <summary>
     /// The value of this decimal as a .NET <see cref="decimal"/>.
     /// </summary>
@@ -75,8 +94,28 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
                 NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign,
                 CultureInfo.InvariantCulture));
 
-        value = new Decimal(val);
+        value = succ && negativeScaleOf(representation) is { } negativeScale ? new Decimal(val, negativeScale) : new Decimal(val);
         return succ;
+    }
+
+    /// <summary>
+    /// The number of decimal places to which a literal with an exponent is precise, when that is below zero: -1 for
+    /// 9.5e2 (one decimal place in the mantissa, moved two places to the right), and null for 9.5e1 (0) or 9.5 (1).
+    /// </summary>
+    /// <remarks>The literal must already be known to parse.</remarks>
+    private static int? negativeScaleOf(string literal)
+    {
+        var e = literal.IndexOfAny(['e', 'E']);
+        if (e == -1) return null;
+
+        // An exponent that does not fit an int gives a value outside the range of a .NET decimal, which never gets here.
+        if (!int.TryParse(literal.Substring(e + 1), NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var exponent))
+            return null;
+
+        var point = literal.IndexOf('.', 0, e);
+        var fractionDigits = point == -1 ? 0 : e - point - 1;
+        var scale = (long)fractionDigits - exponent;
+        return scale < 0 ? (int)scale : null;
     }
 
     private static readonly Regex DECIMAL_LITERAL =

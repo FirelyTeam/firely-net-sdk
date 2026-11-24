@@ -688,6 +688,8 @@ public class BaseFhirJsonDeserializer
         if (existing is PrimitiveType { JsonValue: not null } && state.DuplicatePropertyDepth == 0)
             state.Errors.Add(ERR.PRIMITIVE_VALUE_SUPPLIED_TWICE(ref reader, state.Path.GetInstancePath(), propertyName));
 
+        // A decimal with an exponent (9.5e2) can be precise to fewer digits than the parsed value shows, so keep its literal.
+        var exponentLiteral = existing is FhirDecimal ? getExponentNumberLiteral(ref reader) : null;
         var primitiveValue = readPrimitiveValue(ref reader, propertyValueMapping.PrimitiveValueProperty?.ImplementingType);
 
         if (existing is PrimitiveType existingPrimitive)
@@ -695,7 +697,11 @@ public class BaseFhirJsonDeserializer
             if (Settings.PrimitiveValueConverter is not null)
                 primitiveValue = Settings.ConvertPrimitiveValue(primitiveValue, propertyValueMapping);
 
-            existingPrimitive.JsonValue ??= primitiveValue;
+            if (existingPrimitive.JsonValue is null)
+            {
+                existingPrimitive.JsonValue = primitiveValue;
+                if (exponentLiteral is not null) ((FhirDecimal)existingPrimitive).KeepParsedLiteral(exponentLiteral);
+            }
         }
         else
         {
@@ -719,6 +725,17 @@ public class BaseFhirJsonDeserializer
     }
 
 
+
+    /// <summary>
+    /// The text of the number at the reader, when it has an exponent (as in 9.5e2), otherwise null.
+    /// </summary>
+    private static string? getExponentNumberLiteral(ref Utf8JsonReader reader)
+    {
+        if (reader.TokenType != JsonTokenType.Number) return null;
+
+        var bytes = reader.HasValueSequence ? System.Buffers.BuffersExtensions.ToArray(reader.ValueSequence) : reader.ValueSpan;
+        return bytes.IndexOfAny((byte)'e', (byte)'E') == -1 ? null : System.Text.Encoding.UTF8.GetString(bytes);
+    }
 
     /// <summary>
     /// Does a best-effort parse of the data available at the reader, given the required type of the property the
