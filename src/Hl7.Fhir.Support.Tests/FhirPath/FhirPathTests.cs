@@ -216,7 +216,21 @@ namespace Hl7.Fhir.Support.Tests
             }
         }
 
+        [TestMethod]
+        [DataRow(true, null, "10:30:00.000")]
+        [DataRow(true, 6L, "10:30:00")]
+        [DataRow(false, null, "10:30:59.999")]
+        [DataRow(false, 6L, "10:30:59")]
+        public void TimeBoundaryDropsOffset(bool low, long? precision, string expected)
+        {
+            var time = Hl7.Fhir.ElementModel.Types.Time.Parse("10:30+02:00");
+            var result = low
+                ? ElementNavFhirExtensions.BoundaryTime(time, precision, 0, 0, 0)
+                : ElementNavFhirExtensions.BoundaryTime(time, precision, 59, 59, 999);
 
+            result.HasOffset.Should().BeFalse();
+            result.ToString().Should().Be(expected);
+        }
 
     }
 }

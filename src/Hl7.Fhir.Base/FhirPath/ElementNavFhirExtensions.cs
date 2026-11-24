@@ -252,9 +252,10 @@ namespace Hl7.Fhir.FhirPath
             };
 
             // A millisecond boundary is written with exactly three fraction digits (e.g. .000), so it spans exactly one millisecond.
+            // As before, the boundary of a time never carries an offset.
             return dtPrecision == P.DateTimePrecision.Fraction
-                ? P.Time.Parse(dto.ToString(time.HasOffset ? "HH:mm:ss.fffK" : "HH:mm:ss.fff", CultureInfo.InvariantCulture))
-                : P.Time.FromDateTimeOffset(dto, dtPrecision, time.HasOffset);
+                ? P.Time.Parse(dto.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture))
+                : P.Time.FromDateTimeOffset(dto, dtPrecision);
         }
 
         /// <summary>
