@@ -70,6 +70,17 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        [DataRow("(10 | 20 | 30)['1']")]
+        [DataRow("(10 | 20 | 30)[1.5]")]
+        [DataRow("(10 | 20 | 30)[(1 | 2)]")]
+        public void TestIndexerRequiresSingleInteger(string expr)
+        {
+            // The spec defines the indexer as [index : Integer]. Unlike the Java reference engine, which
+            // converts the index to a string first, a non-integer or multi-item index is an error here.
+            Assert.Throws<InvalidOperationException>(() => scalar(expr));
+        }
+
+        [TestMethod]
         public void TestGreaterThan()
         {
             isB(@"4.5 > 0");
