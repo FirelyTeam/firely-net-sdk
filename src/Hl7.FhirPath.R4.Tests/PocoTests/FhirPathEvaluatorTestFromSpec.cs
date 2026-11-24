@@ -222,6 +222,9 @@ namespace Hl7.FhirPath.R4.Tests
             "LowBoundaryDateTimeMillisecond1", "LowBoundaryDateTimeMillisecond2", "LowBoundaryTimeMillisecond",
             "HighBoundaryDateTimeMillisecond1", "HighBoundaryDateTimeMillisecond3", "testPeriodInvariantNew",
 
+            // The R4 copy expects + 0.1 's' to be ignored; the R5 suite and the Java engine add 100 ms, which we follow
+            "testPlusDate19",
+
             // Date/time arithmetic fails on partial-precision dateTimes with a timezone (e.g. @2015-02-04T10:00Z + 1 hour)
             "testPlusDate23", "testPlusDate24", "testMinus7",
 

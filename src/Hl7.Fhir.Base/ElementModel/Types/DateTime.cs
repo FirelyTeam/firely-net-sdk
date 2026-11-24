@@ -241,8 +241,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
             // NOT ignoring precision on time based stuff if there is no time component
             // if no time component, don't modify result
-            // Calendar semantics apply to seconds and above, so the decimal part of the quantity is ignored
-            // (e.g. + 0.1 's' leaves the value unchanged).
+            // Calendar semantics apply above seconds, so the decimal part of an hour or minute quantity is ignored.
+            // Seconds and milliseconds are definite durations, applied to the millisecond (e.g. + 0.1 's' adds 100 ms,
+            // + 1.5 'ms' adds 1 ms), as the Java reference engine does.
             "hour" or "hours" or "h" => dateTimeValue.Precision > DateTimePrecision.Day
                 ? dateTimeValue._value.AddHours((double)decimal.Truncate(value))
                 : dateTimeValue._value,
@@ -250,10 +251,10 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
                 ? dateTimeValue._value.AddMinutes((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             "s" or "second" or "seconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddSeconds((double)decimal.Truncate(value))
+                ? dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value * 1000))
                 : dateTimeValue._value,
             "ms" or "millisecond" or "milliseconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddMilliseconds((double)value)
+                ? dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
         };

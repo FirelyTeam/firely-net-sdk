@@ -229,7 +229,8 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("1973-12-25T00:00:00.000+10:00", 7, "days", "1974-01-01T00:00:00.000+10:00")]
         [DataRow("1973-12-25T00:00:00.000+10:00", 1, "hour", "1973-12-25T01:00:00.000+10:00")]
         [DataRow("1973-12-25T00:00:00.000+10:00", 10, "ms", "1973-12-25T00:00:00.010+10:00")]
-        [DataRow("1973-12-25T00:00:00.000+10:00", 0.1, "s", "1973-12-25T00:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 0.1, "s", "1973-12-25T00:00:00.100+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 1.5, "ms", "1973-12-25T00:00:00.001+10:00")]
         [DataRow("1973-12-25T00:00:00.000+10:00", 1.5, "hours", "1973-12-25T01:00:00.000+10:00")]
         [DataRow("1973-12-25T00:00:00.000", -1, "second", "1973-12-24T23:59:59.000")]
         [DataRow("1973-12-25T00:00:00.000Z", 1, "minute", "1973-12-25T00:01:00.000Z")]
@@ -245,10 +246,10 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void SubtractionKeepsPrecisionAndIgnoresDecimalSeconds()
+        public void SubtractionKeepsPrecisionAndAppliesDecimalSeconds()
         {
             var result = P.DateTime.Parse("1973-12-25T00:00:00.000+10:00") - new P.Quantity(1.5m, "s");
-            result.ToString().Should().Be("1973-12-24T23:59:59.000+10:00");
+            result.ToString().Should().Be("1973-12-24T23:59:58.500+10:00");
         }
 
         [TestMethod]
