@@ -244,7 +244,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             // Calendar semantics apply above seconds, so the decimal part of an hour or minute quantity is ignored.
             // Seconds and milliseconds are definite durations, applied to the millisecond (e.g. + 0.1 's' adds 100 ms,
             // + 1.5 'ms' adds 1 ms), as the Java R5 engine does. Unlike Java, which computes the fraction in double
-            // (+ 2.3 's' adds 2299 ms there), this is exact. A value with seconds precision only gets whole seconds.
+            // (+ 2.3 's' adds 2299 ms there), this is exact. A value with seconds precision only gets whole seconds, also from a ms quantity.
             "hour" or "hours" or "h" => dateTimeValue.Precision > DateTimePrecision.Day
                 ? dateTimeValue._value.AddHours((double)decimal.Truncate(value))
                 : dateTimeValue._value,
@@ -257,7 +257,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
                     : dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value * 1000))
                 : dateTimeValue._value,
             "ms" or "millisecond" or "milliseconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value))
+                ? dateTimeValue.Precision == DateTimePrecision.Second
+                    ? dateTimeValue._value.AddSeconds((double)decimal.Truncate(value / 1000))
+                    : dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
         };
@@ -278,8 +280,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     /// <summary>
     /// Formats the result of date/time arithmetic on a datetime with seconds or fraction precision, so that it keeps
-    /// the precision and offset notation of the input: the fraction keeps at least as many digits as the input had
-    /// (<c>.000</c> + 1 second gives <c>.000</c>), and gets more only when needed to keep the value (<c>.1</c> + 13 ms gives <c>.113</c>).
+    /// the precision and offset notation of the input: the fraction keeps as many digits as the input had, up to the 7 that
+    /// the value can hold (<c>.000</c> + 1 second gives <c>.000</c>), and gets more only when needed to keep the value
+    /// (<c>.1</c> + 13 ms gives <c>.113</c>).
     /// </summary>
     private static string formatWithSecondsOrFraction(DateTimeOffset dto, DateTime original, string originalRepresentation)
     {
@@ -290,16 +293,16 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         for (var t = fractionTicks; significantDigits > 0 && t % 10 == 0; t /= 10)
             significantDigits--;
 
-        // FractionDigits is only meaningful for a parsed value; other values have always been written without trailing zeros.
-        var minimumDigits = original.Precision == DateTimePrecision.Fraction && original.OriginalParsedString is not null
-            ? original.FractionDigits
-            : 0;
+        // A Fraction value keeps at least one fraction digit, so the result keeps Fraction precision. FractionDigits is only
+        // meaningful for a parsed value; other values are written without trailing zeros. The value holds at most 7 digits
+        // (one tick), so the output stops there rather than inventing digits a longer input had.
+        var minimumDigits = original.Precision != DateTimePrecision.Fraction ? 0
+            : original.OriginalParsedString is not null ? Math.Min(Math.Max(original.FractionDigits, 1), MAX_FRACTION_DIGITS)
+            : 1;
         var digits = Math.Max(minimumDigits, significantDigits);
 
-        // .NET formats at most 7 fraction digits (one tick); pad any further digits of the input with zeros.
-        var format = "yyyy-MM-dd'T'HH:mm:ss" + (digits > 0 ? "." + new string('f', Math.Min(digits, MAX_FRACTION_DIGITS)) : "");
+        var format = "yyyy-MM-dd'T'HH:mm:ss" + (digits > 0 ? "." + new string('f', digits) : "");
         var result = dto.ToString(format, CultureInfo.InvariantCulture);
-        if (digits > MAX_FRACTION_DIGITS) result += new string('0', digits - MAX_FRACTION_DIGITS);
 
         if (!original.HasOffset) return result;
 
