@@ -352,6 +352,24 @@ namespace HL7.FhirPath.Tests
                     ("'1055 SS'.matches('^[1-9][0-9]{3} ?(?!SA|SD|SS)[A-Z]{2}$')", false, false),
                     ("'1055RW'.matches('^[1-9][0-9]{3} ?(?!SA|SD|SS)[A-Z]{2}$')", true, false),
 
+                    // function matchesFull(regex : String) : Boolean
+                    ("{}.matchesFull('').empty()", true, false),
+                    ("{}.matchesFull({}).empty()", true, false),
+                    ("'abc'.matchesFull({}).empty()", true, false),
+                    ("''.matchesFull('')", true, false),
+                    ("'123'.matchesFull('[1-3]+')", true, false),
+                    ("'1234'.matchesFull('[1-3]+')", false, false),
+                    ("'x123'.matchesFull('[1-3]+')", false, false),
+                    ("'123'.matchesFull('^[1-3]+$')", true, false),
+                    ("'ab'.matchesFull('a|ab')", true, false),
+                    ("'abc\\n'.matchesFull('abc')", false, false),
+                    ("'a\\nb'.matchesFull('a.b')", true, false),
+                    ("'a)(b'.matchesFull('a)(b')", false, true),
+                    ("'abc'.matchesFull('(?x)abc # comment')", true, false),
+                    ("'abcd'.matchesFull('(?x)abc # comment')", false, false),
+                    ("'N8000123123'.matchesFull('N[0-9]{8}')", false, false),
+                    ("'N8000123123'.matchesFull('N[0-9]{10}')", true, false),
+
                     // function replaceMatches(regex : String, substitution: String) : String
                     ("{}.replaceMatches({}, {}).empty()", true, false),
                     (@"'11/30/1972'.replaceMatches('\\b(?<month>\\d{1,2})/(?<day>\\d{1,2})/(?<year>\\d{2,4})\\b','${day}-${month}-${year}') = '30-11-1972'", true, false),

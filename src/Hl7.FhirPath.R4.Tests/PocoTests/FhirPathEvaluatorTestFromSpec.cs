@@ -247,10 +247,6 @@ namespace Hl7.FhirPath.R4.Tests
             "PrecisionDecimal", "PrecisionYear", "PrecisionDateTimeMilliseconds", "PrecisionTimeMinutes",
             "PrecisionTimeMilliseconds",
 
-            // matchesFull() function is not implemented
-            "testMatchesFullWithinUrl1", "testMatchesFullWithinUrl1a", "testMatchesFullWithinUrl2", "testMatchesFullWithinUrl3",
-            "testMatchesFullWithinUrl4",
-
             // Regex semantics: matches() should use single-line mode ('.' matches newlines); replaceMatches() with an empty
             // pattern should return the input unchanged
             "testMatchesSingleLineMode1", "testReplaceMatches2",
