@@ -264,6 +264,20 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void TypeNamesOnConformanceResourcesDependOnTheInputOnly()
+        {
+            // ValueSet lives in the conformance assembly, which is shared by several releases and does not know
+            // release-specific types such as Patient.
+            var bundle = new Bundle { Type = Bundle.BundleType.Collection, Entry = { new Bundle.EntryComponent { Resource = new ValueSet() } } };
+            evaluate(bundle.ToPocoNode(), "Bundle.entry.resource.ofType(Patient)").Should().BeEmpty();
+            evaluate(new ValueSet().ToPocoNode(), "ValueSet.ofType(Patient)").Should().BeEmpty();
+            evaluate(new ValueSet().ToPocoNode(), "ValueSet.ofType(Patient1)").Should().BeEmpty();
+
+            var act = () => evaluate(new ValueSet().ToPocoNode(ModelInfo.ModelInspector), "ValueSet.ofType(Patient1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'Patient1'*");
+        }
+
+        [TestMethod]
         public void UnknownTypeNameIsReportedByTheTypeFunction()
         {
             var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();

@@ -87,13 +87,20 @@ namespace Hl7.FhirPath.Functions
         /// rather than by whichever function enumerates the result.</remarks>
         public static IEnumerable<PocoNode> OfType(this IEnumerable<PocoNode> focus, string typeName)
         {
-            var items = focus as IReadOnlyCollection<PocoNode> ?? focus.ToList();
-            var result = items.Where(item => item.Is(typeName)).ToList();
+            List<PocoNode>? result = null;
+            var sawItems = false;
 
-            if (result.Count == 0 && items.Count > 0)
-                ensureKnownType(typeName, items);
+            foreach (var item in focus)
+            {
+                sawItems = true;
+                if (item.Is(typeName)) (result ??= []).Add(item);
+            }
 
-            return result;
+            if (result is not null) return result;
+
+            // Only on a miss: the focus is a cached collection, so enumerating it again is cheap.
+            if (sawItems) ensureKnownType(typeName, focus as IReadOnlyCollection<PocoNode> ?? focus.ToList());
+            return [];
         }
 
         /// <summary>
@@ -122,22 +129,30 @@ namespace Hl7.FhirPath.Functions
         // class of their own.
         private static readonly HashSet<string> _profiledTypeNames = new(StringComparer.Ordinal) { "SimpleQuantity", "MoneyQuantity" };
 
+        // Names that are valid whatever the input: System types, profile names and types of the shared base
+        // model. This set is bounded by the (fixed) set of such names, and makes the common miss a single lookup.
+        private static readonly ConcurrentDictionary<string, bool> _alwaysKnownNames = new(StringComparer.Ordinal);
+
         // Only called when no item matched the type: when an item matched, the type obviously exists.
-        // The outcome only depends on the input (not on which models were loaded before), so it is not cached.
+        // The outcome only depends on the type name and the input, not on which models were loaded before.
         private static void ensureKnownType(string typeName, IReadOnlyCollection<PocoNode> unmatched)
         {
+            if (_alwaysKnownNames.ContainsKey(typeName)) return;
+
             var dot = typeName.IndexOf('.');
             var ns = dot < 0 ? null : typeName.Substring(0, dot);
-            var name = typeName.Substring(dot + 1);
+            var name = dot < 0 ? typeName : typeName.Substring(dot + 1);
 
             // Names in other namespaces (e.g. logical models) cannot be checked, so we accept them.
             if (ns is not (null or "System" or "FHIR")) return;
 
             // System types are fully known.
-            if (ns is null or "System" && P.Any.TryGetSystemTypeByName(name, out _)) return;
+            if (ns is null or "System" && P.Any.TryGetSystemTypeByName(name, out _)) { alwaysKnown(); return; }
             if (ns is "System") throw unknown();
 
-            if (_profiledTypeNames.Contains(name)) return;
+            // Profile names and the types of the shared base model (e.g. Quantity, Range, Resource) exist in
+            // every release. The latter are the common case in search parameters such as 'value as Range'.
+            if (_profiledTypeNames.Contains(name) || BaseInspector.FindClassMapping(name) is not null) { alwaysKnown(); return; }
 
             // FHIR types: we need the model the input belongs to.
             if (modelOf(unmatched) is { } model)
@@ -151,12 +166,13 @@ namespace Hl7.FhirPath.Functions
                 throw unknown();
             }
 
-            // The input only contains classes from the base assembly (e.g. a Bundle or literals built in code),
-            // whose model does not include the release-specific types. Only names the base model knows can be
+            // The input only contains classes from the shared base and conformance assemblies (e.g. a Bundle,
+            // a ValueSet or literals built in code), whose models do not include the release-specific types. Only names the base model knows can be
             // confirmed; for anything else we cannot tell, so we accept it.
             return;
 
             InvalidOperationException unknown() => Error.InvalidOperation($"Unknown type '{typeName}'.");
+            void alwaysKnown() => _alwaysKnownNames.TryAdd(typeName, true);
 
             // FHIRPath literals (System types) are dynamic too, but their types are known.
             static bool isUnverifiable(PocoNode node) =>
@@ -165,7 +181,7 @@ namespace Hl7.FhirPath.Functions
 
         // The model of the input: an inspector annotated on the input, or else the inspector for the first
         // release-specific model assembly the items (or their roots) come from. Returns null if the input
-        // only has classes from the base assembly.
+        // only has classes from the shared assemblies (base and conformance).
         private static ModelInspector? modelOf(IEnumerable<PocoNode> nodes)
         {
             foreach (var node in nodes)
@@ -177,11 +193,25 @@ namespace Hl7.FhirPath.Functions
 
             return null;
 
-#pragma warning disable CS0618 // ForAssembly is obsolete, but there is no other way to get the inspector for an assembly
-            static ModelInspector? releaseInspectorFor(Assembly assembly) =>
-                assembly != typeof(Base).Assembly && isModelAssembly(assembly) ? ModelInspector.ForAssembly(assembly) : null;
-#pragma warning restore CS0618
         }
+
+        private static ModelInspector BaseInspector => field ??= ModelInspector.Base;
+
+        // The inspectors of release-specific model assemblies (null for other assemblies), per assembly.
+        private static readonly ConcurrentDictionary<Assembly, ModelInspector?> _releaseInspectors = new();
+
+        // Returns the inspector for the assembly if it holds a complete FHIR release model. The base and conformance
+        // assemblies are model assemblies too, but they are shared by several releases, so their inspectors do not
+        // know the release-specific types. A model without the Patient resource is not a complete release model.
+        private static ModelInspector? releaseInspectorFor(Assembly assembly) =>
+            _releaseInspectors.GetOrAdd(assembly, static a =>
+            {
+                if (!isModelAssembly(a)) return null;
+#pragma warning disable CS0618 // ForAssembly is obsolete, but there is no other way to get the inspector for an assembly
+                var inspector = ModelInspector.ForAssembly(a);
+#pragma warning restore CS0618
+                return inspector.FindClassMapping("Patient") is not null ? inspector : null;
+            });
 
         private static readonly ConcurrentDictionary<Assembly, bool> _modelAssemblies = new();
 
