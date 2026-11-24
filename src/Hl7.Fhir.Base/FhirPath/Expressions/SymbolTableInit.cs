@@ -303,13 +303,18 @@ public static class SymbolTableInit
         {
             // Each key gets its own selector: the ordering is only evaluated by ToList() below, after this loop
             // has finished, so the lambda must not capture a variable that is changed by a later iteration.
-            Func<PocoNode, PocoNode> key = item => readElement(ctx, item, keySelector).FirstOrDefault();
+            Func<PocoNode, PocoNode> key = item => toSortKey(readElement(ctx, item, keySelector).FirstOrDefault());
             orderedResult = orderedResult is null
                 ? focus.OrderBy(key, EqualityOperators.TypedElementComparer)
                 : orderedResult.ThenBy(key, EqualityOperators.TypedElementComparer);
         }
 
         return orderedResult!.ToList();
+
+        // A key without asc/desc is not wrapped by unary.asc, so convert complex keys that can be ordered
+        // (Quantity) here as well; otherwise sort(x) would not order them while sort(x asc) does.
+        static PocoNode toSortKey(PocoNode key) =>
+            key is null or PrimitiveNode ? key : OrderedNode.FromPrimitiveNode(key);
     }
 
     private static IEnumerable<PocoNode> readElement(Closure ctx, PocoNode element, Invokee selectProp)

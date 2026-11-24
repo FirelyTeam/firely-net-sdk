@@ -292,6 +292,13 @@ namespace Hl7.FhirPath.R4.Tests
 
             result = compiler.Compile("Bundle.entry.resource.sort((value as Quantity) desc).id")(bundle.ToPocoNode(), new FhirEvaluationContext());
             result.Select(r => r.GetValue()).Should().Equal("o2", "o3", "o1");
+
+            // without a direction qualifier the key is sorted ascending, the same as asc
+            result = compiler.Compile("Bundle.entry.resource.sort(value as Quantity).id")(bundle.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("o1", "o3", "o2");
+
+            result = compiler.Compile("Bundle.entry.resource.sort((value as Quantity) asc).id")(bundle.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("o1", "o3", "o2");
         }
 
         [TestMethod]
