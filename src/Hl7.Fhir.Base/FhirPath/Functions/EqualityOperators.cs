@@ -295,8 +295,18 @@ namespace Hl7.FhirPath.Functions
                 // The functions Union /Contains/Distinct etc that use
                 // this equality should probably also be changed to use
                 // 3-valued equality.
+
+                // A FHIR Quantity with a comparator or without a value has no System.Quantity equivalent,
+                // so IsEqualTo() would throw. For de-duplication, compare such quantities structurally instead.
+                if (isUnconvertibleQuantity(x) || isUnconvertibleQuantity(y))
+                    return x.Value is null && y.Value is null && x.Children().IsEqualTo(y.Children(), compareNames: true) == true;
+
                 return x.IsEqualTo(y) == true;
             }
+
+            private static bool isUnconvertibleQuantity(ITypedElement element) =>
+                element.InstanceType == "Quantity" && element.Value is null &&
+                (!element.Children("value").Any() || element.Children("comparator").Any());
 
             public int GetHashCode(ITypedElement element)
             {

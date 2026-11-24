@@ -39,6 +39,31 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         public TestContext TestContext { get; set; }
 
         [TestMethod]
+        public void TestRepeatWithQuantitiesThatCannotBeConvertedToSystemQuantity()
+        {
+            // repeat() compares the projections of different items with each other. A FHIR Quantity
+            // with a comparator or without a value has no System.Quantity equivalent, which should
+            // not make that comparison throw.
+            var observation = new Observation
+            {
+                Component =
+                [
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 5, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 5, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 6, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { Unit = "mg/L" } },
+                ]
+            };
+
+            var result = observation.Select("Observation.component.repeat(value)").ToList();
+
+            // The two '<5 mg/L' quantities and the two value-less quantities are equal, so each is in the result once.
+            // The next round projects Quantity.value, which adds the decimals 5 and 6.
+            result.Select(r => r.TypeName).Should().Equal("Quantity", "Quantity", "Quantity", "decimal", "decimal");
+        }
+
+        [TestMethod]
         public void TestFhirPathPolymporphism()
         {
             var patient = new Patient() { Active = false };
