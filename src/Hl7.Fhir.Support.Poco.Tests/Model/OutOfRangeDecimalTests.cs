@@ -66,6 +66,7 @@ public class OutOfRangeDecimalTests
     [DataRow(".5")]
     [DataRow("1.")]
     [DataRow("1e")]
+    [DataRow("01e999999999")]   // leading zeroes are not allowed in a FHIR (or JSON) decimal
     [DataRow("abc")]
     public void RejectsMalformedLiterals(string literal) =>
         P.Decimal.TryParseExtended(literal, out _).Should().BeFalse();
@@ -190,6 +191,25 @@ public class OutOfRangeDecimalTests
     [DataRow("1e-999999999", "1e-999999999")]
     [DataRow("1e999999999", "1e999999999")]
     [DataRow("abc", "abc")]
+    [DataRow("01e999", "01e999")]
     public void ParseForStorage(string literal, object expected) =>
         P.Decimal.ParseForStorage(literal).Should().Be(expected is double d ? (decimal)d : expected);
+
+    [TestMethod]
+    public void OutOfRangeLiteralWithLeadingZeroesIsInvalidButStillSerializes()
+    {
+        const string xml = """
+            <Observation xmlns="http://hl7.org/fhir">
+              <status value="final"/>
+              <code><text value="test"/></code>
+              <valueQuantity><value value="01e999"/><unit value="kg"/></valueQuantity>
+            </Observation>
+            """;
+
+        var obs = FhirXmlDeserializer.OSTRICH.Deserialize<Observation>(xml);
+        ((Hl7.Fhir.Model.Quantity)obs.Value!).ValueElement!.HasValidValue().Should().BeFalse();
+
+        // Not a valid JSON number, so it is written as a string, as before.
+        new FhirJsonSerializer().SerializeToString(obs).Should().Contain("\"value\":\"01e999\"");
+    }
 }

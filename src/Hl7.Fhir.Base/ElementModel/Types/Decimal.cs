@@ -79,8 +79,9 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
         return succ;
     }
 
+    // The FHIR (and JSON) decimal syntax: no leading zeroes, so an out-of-range literal can be written as a JSON number.
     private static readonly Regex DECIMAL_LITERAL =
-        new(@"^(?<sign>-)?(?<int>[0-9]+)(\.(?<frac>[0-9]+))?([eE](?<exp>[+-]?[0-9]+))?\z", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+        new(@"^(?<sign>-)?(?<int>0|[1-9][0-9]*)(\.(?<frac>[0-9]+))?([eE](?<exp>[+-]?[0-9]+))?\z", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
     // System.Decimal holds values from 10^-28 up to about 7.9 x 10^28: a literal whose (normalised) exponent is within these
     // bounds either parses or is malformed. Beyond them, decimal.Parse decides whether the value fits, up to a limit.
@@ -137,7 +138,9 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// of a .NET <see cref="decimal"/>. These are returned as a <see cref="Decimal"/> for which
     /// <see cref="IsOutOfRange"/> is true, instead of failing (too large) or being rounded to 0 (too small).
     /// </summary>
-    /// <remarks>Never expands the exponent, so 1e999999999 is parsed in constant time and space.</remarks>
+    /// <remarks>Never expands the exponent, so 1e999999999 is parsed in constant time and space. Unlike
+    /// <see cref="TryParse(string, out Decimal?)"/>, the literal must follow the FHIR decimal syntax
+    /// (<c>-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?</c>), so e.g. leading zeroes are rejected.</remarks>
     internal static bool TryParseExtended(string representation, [NotNullWhen(true)] out Decimal? value)
     {
         value = null;
