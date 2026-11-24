@@ -172,5 +172,62 @@ namespace Hl7.FhirPath.R4.Tests
             evaluate(node, "Observation.value is Quantity").Should().ContainSingle().Which.GetValue().Should().Be(true);
             evaluate(node, "Observation.value is string").Should().ContainSingle().Which.GetValue().Should().Be(false);
         }
+
+        [TestMethod]
+        [DataRow("code", "string", true)]
+        [DataRow("code", "FHIR.string", true)]
+        [DataRow("code", "System.String", false)]
+        [DataRow("code", "id", false)]
+        [DataRow("id", "string", true)]
+        [DataRow("markdown", "string", true)]
+        [DataRow("url", "uri", true)]
+        [DataRow("canonical", "uri", true)]
+        [DataRow("oid", "uri", true)]
+        [DataRow("uuid", "uri", true)]
+        [DataRow("uuid", "FHIR.uri", true)]
+        [DataRow("uri", "url", false)]
+        [DataRow("uri", "string", false)]
+        [DataRow("positiveInt", "integer", true)]
+        [DataRow("unsignedInt", "integer", true)]
+        [DataRow("integer", "positiveInt", false)]
+        [DataRow("string", "code", false)]
+        public void IsFollowsPrimitiveTypeHierarchy(string primitive, string type, bool expected)
+        {
+            PrimitiveType value = primitive switch
+            {
+                "code" => new Code("male"),
+                "id" => new Id("a1"),
+                "markdown" => new Markdown("*hi*"),
+                "url" => new FhirUrl("http://example.org"),
+                "canonical" => new Canonical("http://example.org/sd"),
+                "oid" => new Oid("urn:oid:1.2.3"),
+                "uuid" => new Uuid("urn:uuid:c757873d-ec9a-4326-a141-556f43239520"),
+                "uri" => new FhirUri("http://example.org"),
+                "positiveInt" => new PositiveInt(1),
+                "unsignedInt" => new UnsignedInt(0),
+                "integer" => new Integer(1),
+                "string" => new FhirString("hi"),
+                _ => throw new System.ArgumentException(primitive)
+            };
+            var node = new Parameters { { "p", value } }.ToPocoNode();
+
+            evaluate(node, $"parameter.value.is({type})").Should().ContainSingle().Which.GetValue().Should().Be(expected);
+            evaluate(node, $"parameter.value is {type}").Should().ContainSingle().Which.GetValue().Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void AsAndOfTypeDoNotFollowPrimitiveTypeHierarchy()
+        {
+            // The official FHIRPath tests (testFHIRPathAsFunction11/16) expect as() and ofType() to match
+            // the exact primitive type only, while is() also accepts the base primitive type.
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+
+            evaluate(node, "Patient.gender.is(string)").Should().ContainSingle().Which.GetValue().Should().Be(true);
+            evaluate(node, "Patient.gender.as(string)").Should().BeEmpty();
+            evaluate(node, "Patient.gender as string").Should().BeEmpty();
+            evaluate(node, "Patient.gender.ofType(string)").Should().BeEmpty();
+            evaluate(node, "Patient.gender.as(code)").Should().ContainSingle();
+            evaluate(node, "Patient.gender.ofType(code)").Should().ContainSingle();
+        }
     }
 }

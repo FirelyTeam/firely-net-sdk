@@ -27,11 +27,53 @@ namespace Hl7.FhirPath.Functions
         // have to walk the type hierarchy on every call.
         private static readonly ConcurrentDictionary<Type, string[]> _fhirTypeNamesCache = new();
 
-        public static bool Is(this PocoNode? focus, string type)
+        // The base type of each FHIR primitive that is a specialization of another primitive, taken from
+        // the baseDefinition of the primitive's StructureDefinition (e.g. code, id and markdown are strings,
+        // url, canonical, oid and uuid are uris). The POCOs for these types do not derive from each other,
+        // so this hierarchy is not visible in the CLR class hierarchy.
+        private static readonly Dictionary<string, string> _primitiveBaseTypes = new()
+        {
+            ["code"] = "string",
+            ["id"] = "string",
+            ["markdown"] = "string",
+            ["url"] = "uri",
+            ["canonical"] = "uri",
+            ["oid"] = "uri",
+            ["uuid"] = "uri",
+            ["positiveInt"] = "integer",
+            ["unsignedInt"] = "integer",
+        };
+
+        /// <summary>
+        /// Implements the FhirPath is() function and operator: true if the focus is of the given type or
+        /// one of its subtypes, including the specializations of the FHIR primitive types (so a FHIR code
+        /// is a FHIR string).
+        /// </summary>
+        public static bool Is(this PocoNode? focus, string type) => isOfType(focus, type, includePrimitiveBaseTypes: true);
+
+        /// <summary>
+        /// Implements the FhirPath as() and ofType() functions. Unlike <see cref="Is(PocoNode?, string)"/>,
+        /// these do not treat a specialized FHIR primitive as its base primitive type: the official FHIRPath
+        /// test suite expects <c>Patient.gender.as(string)</c> and <c>Patient.gender.ofType(string)</c> to be
+        /// empty, while <c>Patient.gender.is(string)</c> is true.
+        /// </summary>
+        public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
+            => focus.Where(item => isOfType(item, typeName, includePrimitiveBaseTypes: false));
+
+        private static bool isOfType(PocoNode? focus, string type, bool includePrimitiveBaseTypes)
         {
             if (focus is null) return false;
 
-            if (Is(((ITypedElement)focus).InstanceType, type)) return true;
+            var instanceType = ((ITypedElement)focus).InstanceType;
+            if (Is(instanceType, type)) return true;
+
+            if (includePrimitiveBaseTypes && instanceType is not null)
+            {
+                for (var current = instanceType; _primitiveBaseTypes.TryGetValue(current, out var baseType); current = baseType)
+                {
+                    if (Is(baseType, type)) return true;
+                }
+            }
 
             foreach (var typeName in getFhirTypeNames(focus.Poco.GetType()))
             {
@@ -77,8 +119,5 @@ namespace Hl7.FhirPath.Functions
                 ? instanceNamespace.SequenceEqual("System") || instanceNamespace.SequenceEqual("FHIR")
                 : instanceNamespace.SequenceEqual(declaredType.AsSpan(0, declaredDot));
         }
-
-        public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
-            => focus.Where(item => item.Is(typeName));
     }
 }
