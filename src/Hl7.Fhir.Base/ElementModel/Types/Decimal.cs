@@ -99,6 +99,19 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
 
 
     /// <summary>
+    /// The maximum number of decimal places (precision) supported for a decimal, which is the maximum scale of
+    /// <see cref="decimal"/>.
+    /// </summary>
+    internal const int MAX_PRECISION = 28;
+
+    /// <summary>
+    /// Whether the given precision (number of decimal places) is within the range supported by the engine. Per the
+    /// FHIRPath specification, functions taking such a precision (like <c>round()</c>, <c>lowBoundary()</c> and
+    /// <c>highBoundary()</c>) return empty when it is negative or beyond the maximum precision of the implementation.
+    /// </summary>
+    internal static bool IsSupportedPrecision(long precision) => precision is >= 0 and <= MAX_PRECISION;
+
+    /// <summary>
     /// Calculates the scale of a decimal, which is the number of digits after the decimal separator.
     /// </summary>
     /// <param name="d"></param>

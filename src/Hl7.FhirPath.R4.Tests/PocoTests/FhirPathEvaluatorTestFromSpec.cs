@@ -212,12 +212,6 @@ namespace Hl7.FhirPath.R4.Tests
             "HighBoundaryDecimalCarry4", "HighBoundaryDecimalExponent1", "HighBoundaryDecimalExponent2",
             "HighBoundaryDecimalExponent3", "HighBoundaryDecimalExponent4", "HighBoundaryDecimalExponent5",
 
-            // Precision arguments out of range (negative, or beyond what the engine supports) should give an empty result,
-            // not an error or a clamped value. LowBoundaryDecimal3, LowBoundaryNegDecimal3, HighBoundaryDecimal3 and
-            // LowBoundaryNegDecimal5 have the same problem, but pass today only because of the empty-focus bug above
-            "LowBoundaryDecimal5", "LowBoundaryDecimal6", "HighBoundaryDecimal7", "testHugeRoundPrecision",
-            "testNegativeRoundPrecision", "testHugeQtyLowBoundaryPrecision", "testNegativeQtyHighBoundaryPrecision",
-
             // lowBoundary()/highBoundary() on dateTime/time: millisecond precision and timezone boundaries (+14:00/-12:00)
             "LowBoundaryDateTimeMillisecond1", "LowBoundaryDateTimeMillisecond2", "LowBoundaryTimeMillisecond",
             "HighBoundaryDateTimeMillisecond1", "HighBoundaryDateTimeMillisecond3", "testPeriodInvariantNew",

@@ -186,7 +186,7 @@ public static class SymbolTableInit
         t.Add("ln", (decimal f) => Math.Log((double)f), doNullProp: true);
         t.Add("log", (decimal f, decimal @base) => Math.Log((double)f, (double)@base), doNullProp: true);
         t.Add("power", (decimal f, decimal exponent) => f.Power(exponent), doNullProp: true);
-        t.Add("round", (decimal f, long precision) => Math.Round(f, (int)precision), doNullProp: true);
+        t.Add("round", (decimal f, long precision) => P.Decimal.IsSupportedPrecision(precision) ? Math.Round(f, (int)precision) : (decimal?)null, doNullProp: true);
         t.Add("round", (decimal f) => Math.Round(f), doNullProp: true);
         t.Add("sqrt", (decimal f) => f.Sqrt(), doNullProp: true);
         t.Add("truncate", (decimal f) => Math.Truncate((double)f), doNullProp: true);

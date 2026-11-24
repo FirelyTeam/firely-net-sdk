@@ -112,6 +112,7 @@ namespace Hl7.Fhir.FhirPath
         internal static decimal? AdjustBoundaryDecimal(decimal? input, long? precision, Func<decimal, decimal, decimal> op)
         {
             if (input is null) return null;
+            if (precision is { } p && !P.Decimal.IsSupportedPrecision(p)) return null;
 
             var decimalParts = input.Value.ToString(CultureInfo.InvariantCulture).Split('.');
 
@@ -125,7 +126,7 @@ namespace Hl7.Fhir.FhirPath
             if (precision is not null)
             {
                 StringBuilder precisionAsString = new("0.");
-                precisionAsString.Append('0', (int)precision);
+                precisionAsString.Append('0', (int)precision); // safe: the precision was range-checked above
                 input += decimal.Parse(precisionAsString.ToString(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
             }
 
@@ -159,13 +160,11 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        internal static P.Quantity AdjustBoundaryQuantity(P.Quantity input, long? precision, Func<decimal, decimal, decimal> op)
+        internal static P.Quantity? AdjustBoundaryQuantity(P.Quantity input, long? precision, Func<decimal, decimal, decimal> op)
         {
             var value = AdjustBoundaryDecimal(input.Value, precision, op);
 
-            return (value is null)
-                ? throw new ArgumentException($"Invalid input element: {input}")
-                : new P.Quantity(value.Value, input.Unit, input.System);
+            return value is null ? null : new P.Quantity(value.Value, input.Unit, input.System);
         }
 
         internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
