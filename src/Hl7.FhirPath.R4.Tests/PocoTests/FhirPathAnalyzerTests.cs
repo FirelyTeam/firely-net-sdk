@@ -151,6 +151,7 @@ namespace Hl7.FhirPath.R4.Tests
             invalid("Patient.children().skip(1)", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
             invalid("Patient.descendants().first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
             invalid("Patient.children()[0]", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("Patient.repeat(children()).first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
         }
 
         [TestMethod]

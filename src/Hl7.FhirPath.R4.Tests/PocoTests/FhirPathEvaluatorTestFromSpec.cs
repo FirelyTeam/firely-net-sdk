@@ -294,6 +294,20 @@ namespace Hl7.FhirPath.R4.Tests
             "testConformsTo1", "testConformsTo2", "testConformsTo3",
         ];
 
+        /// <summary>
+        /// Tests expecting a semantic error that the static analysis does not detect yet. They still pass because the
+        /// expression fails at runtime. A test that starts being detected must be removed from this list.
+        /// </summary>
+        private static readonly string[] SEMANTIC_ANALYSIS_GAPS =
+        [
+            // functions on a focus of a type they do not accept
+            "testStartsWithNonString1", "testEndsWithNonString1", "testContainsNonString1", "testHasCoding11",
+            // arithmetic on operand types that do not support it
+            "testPlus6",
+            // paths on resources()/abstract Resource
+            "testResourcesAbstract3",
+        ];
+
         [TestMethod, TestCategory("FhirPathFromSpec")]
         public void TestPublishedTests()
         {
@@ -403,10 +417,21 @@ namespace Hl7.FhirPath.R4.Tests
                 if (invalid is not ("syntax" or "semantic" or "execution" or "true"))
                     throw new ArgumentException($"unknown error type '{invalid}'");
 
-                // A semantic error should be found by static analysis, before evaluation. Some semantic errors are
-                // not (yet) detected statically, but do fail at runtime, which is accepted as well.
-                if (invalid == "semantic" && analyze(testLine, input, context, expression.Value).HasErrors)
-                    return;
+                // A semantic error must be found by static analysis, before evaluation. The few the analyzer does not
+                // (yet) detect are listed in SEMANTIC_ANALYSIS_GAPS, and must still fail at runtime.
+                if (invalid == "semantic")
+                {
+                    var name = testLine.Attribute("name")?.Value;
+                    var detected = analyze(testLine, input, context, expression.Value).HasErrors;
+                    var isGap = SEMANTIC_ANALYSIS_GAPS.Contains(name);
+
+                    if (detected && isGap)
+                        Assert.Fail($"The semantic error is now detected statically: remove '{name}' from SEMANTIC_ANALYSIS_GAPS");
+                    if (detected)
+                        return;
+                    if (!isGap)
+                        Assert.Fail("Expected the static analysis to report a semantic error, but it reported none");
+                }
 
                 if (invalid != "syntax")
                     assertNoSemanticErrors(testLine, input, context, expression.Value);

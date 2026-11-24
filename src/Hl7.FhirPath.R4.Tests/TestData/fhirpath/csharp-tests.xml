@@ -254,7 +254,7 @@
     <output type="Identifier" />
   </test>
   <test name="CSharpTest0069" inputfile="fp-test-patient.xml">
-    <expression invalid="semantic">Patient.identifier.single()</expression>
+    <expression invalid="execution">Patient.identifier.single()</expression>
   </test>
   <test name="CSharpTest0070" inputfile="fp-test-patient.xml">
     <expression>4 = 4</expression>
@@ -361,7 +361,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0096" inputfile="fp-test-patient.xml">
-    <expression invalid="semantic">Patient.identifier.use.substring(0,10)</expression>
+    <expression invalid="execution">Patient.identifier.use.substring(0,10)</expression>
   </test>
   <test name="CSharpTest0097" inputfile="fp-test-patient.xml">
     <expression>({}.substring(0)).empty()</expression>

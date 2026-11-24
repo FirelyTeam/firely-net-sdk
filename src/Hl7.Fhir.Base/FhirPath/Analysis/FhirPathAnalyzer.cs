@@ -643,7 +643,8 @@ public sealed class FhirPathAnalyzer
             if (@this.IsKnown && !TypeSet.Union(@this, inScopeQuietly(projection, @this)).Types!.SetEquals(@this.Types!))
                 @this = TypeSet.Unknown;
 
-            return visitInScope(projection, @this).AsUnordered(focus.Unordered);
+            var projected = visitInScope(projection, @this);
+            return projected.AsUnordered(focus.Unordered || projected.Unordered);
         }
 
         private TypeSet inScopeQuietly(Expression expression, TypeSet @this)
