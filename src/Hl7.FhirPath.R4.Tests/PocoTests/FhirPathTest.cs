@@ -419,6 +419,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             checkedProfiles.Clear();
             new Patient().Scalar($"{{}}.conformsTo('{myProfile}')", context).Should().BeNull();
             new Patient().Scalar($"name.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient().Scalar("conformsTo({})", context).Should().BeNull();
             Action multiple = () => new Patient { Name = [new(), new()] }.Scalar($"name.conformsTo('{myProfile}')", context);
             multiple.Should().Throw<InvalidOperationException>().WithMessage("*single item*");
             checkedProfiles.Should().BeEmpty();

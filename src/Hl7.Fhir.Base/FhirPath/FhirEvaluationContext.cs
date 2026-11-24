@@ -40,7 +40,8 @@ namespace Hl7.Fhir.FhirPath
         /// <c>|version</c>). Return whether the node conforms (typically: validating it against the profile gives no
         /// errors), and throw an exception when the profile cannot be resolved, which makes the evaluation fail.
         /// </summary>
-        /// <remarks>When this is not set, <c>conformsTo()</c> raises an error.</remarks>
+        /// <remarks>The checker is only called for a single input node: <c>conformsTo()</c> returns empty for empty input
+        /// and raises an error for more than one item. When this is not set, <c>conformsTo()</c> raises an error.</remarks>
         public Func<PocoNode, string, bool>? ProfileConformanceChecker { get; set; }
     }
 }
