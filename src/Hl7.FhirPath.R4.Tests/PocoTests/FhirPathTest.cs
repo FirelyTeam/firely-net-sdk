@@ -67,6 +67,43 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void TestEqualityOfNestedQuantitiesThatCannotBeConvertedToSystemQuantity()
+        {
+            static Observation.ComponentComponent lessThan5() => new()
+            {
+                Code = new CodeableConcept("http://loinc.org", "1234-5"),
+                Value = new Quantity { Value = 5, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" }
+            };
+
+            var bundle = new Bundle
+            {
+                Entry =
+                [
+                    new Bundle.EntryComponent { Resource = new Observation { Component = [lessThan5()] } },
+                    new Bundle.EntryComponent { Resource = new Observation { Component = [lessThan5()] } },
+                ]
+            };
+
+            // The components of both Observations are compared in the same repeat() round
+            bundle.Select("Bundle.entry.resource.ofType(Observation).repeat(component)").Should().ContainSingle();
+            bundle.Select("Bundle.entry.resource.ofType(Observation).component.distinct()").Should().ContainSingle();
+
+            var observation = new Observation
+            {
+                Component =
+                [
+                    lessThan5(),
+                    lessThan5(),
+                    new Observation.ComponentComponent { Value = new Quantity { Value = 5, Unit = "mg/L" } },
+                ]
+            };
+
+            // Quantities that can't be converted to a System.Quantity are compared structurally
+            observation.IsTrue("Observation.component[0].value = Observation.component[1].value").Should().BeTrue();
+            observation.IsTrue("Observation.component[0].value != Observation.component[2].value").Should().BeTrue();
+        }
+
+        [TestMethod]
         public void TestFhirPathPolymporphism()
         {
             var patient = new Patient() { Active = false };
