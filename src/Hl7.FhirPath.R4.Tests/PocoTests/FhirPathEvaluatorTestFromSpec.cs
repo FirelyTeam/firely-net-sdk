@@ -218,10 +218,6 @@ namespace Hl7.FhirPath.R4.Tests
             "LowBoundaryDecimal5", "LowBoundaryDecimal6", "HighBoundaryDecimal7", "testHugeRoundPrecision",
             "testNegativeRoundPrecision", "testHugeQtyLowBoundaryPrecision", "testNegativeQtyHighBoundaryPrecision",
 
-            // lowBoundary()/highBoundary() on dateTime/time: millisecond precision and timezone boundaries (+14:00/-12:00)
-            "LowBoundaryDateTimeMillisecond1", "LowBoundaryDateTimeMillisecond2", "LowBoundaryTimeMillisecond",
-            "HighBoundaryDateTimeMillisecond1", "HighBoundaryDateTimeMillisecond3", "testPeriodInvariantNew",
-
             // Date/time arithmetic drops the input's millisecond precision in the result
             "testPlusDate3", "testPlusDate4", "testPlusDate5", "testPlusDate6", "testPlusDate7", "testPlusDate8",
             "testPlusDate18", "testPlusDate19", "testPlusDate20", "testPlusDate21", "testPlusDate22",
