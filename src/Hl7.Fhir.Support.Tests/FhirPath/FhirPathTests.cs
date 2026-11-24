@@ -273,25 +273,18 @@ namespace Hl7.Fhir.Support.Tests
         [DataRow("100000000000000000000000.0.lowBoundary()")]
         [DataRow("10000000000000.0.highBoundary(16)")]
         [DataRow("100000000000000000000000.0 'kg'.highBoundary()")]
-        public void DecimalBoundaryThatDoesNotFitIsEmpty(string expression)
+        // the precision is outside what is supported (0..16)
+        [DataRow("1.587.lowBoundary(17)")]
+        [DataRow("1.587.highBoundary(28)")]
+        [DataRow("1.587.highBoundary(-1)")]
+        [DataRow("1.587 'cm'.lowBoundary(29)")]
+        public void UnsupportedDecimalBoundaryIsEmpty(string expression)
         {
             var result = _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
 
             result.Should().BeEmpty();
         }
 
-        [TestMethod]
-        [DataRow("1.587.lowBoundary(17)")]
-        [DataRow("1.587.highBoundary(-1)")]
-        [DataRow("1.587 'cm'.lowBoundary(29)")]
-        public void DecimalBoundaryWithUnsupportedPrecisionFails(string expression)
-        {
-            var evaluator = _compiler.Compile(expression);
-            var act = () => evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
-
-            // The evaluator wraps the exception thrown by the function, but keeps its message.
-            act.Should().Throw<System.Exception>().WithMessage("*precision of a decimal boundary must be between 0 and 16*");
-        }
 
 
 

@@ -132,16 +132,15 @@ namespace Hl7.Fhir.FhirPath
         /// digits are dropped, its high boundary is rounded half up and its low boundary truncated (0.lowBoundary(0) is 0),
         /// as in the reference implementation. (That implementation uses 0.5 for every zero, ignoring its digits.)</para>
         /// </remarks>
-        /// <returns>The boundary, or <c>null</c> (an empty result) when it does not fit in a decimal at the requested
-        /// precision, such as a value above about 7.9e20 at the default precision of 8. The spec gives an empty result when
-        /// the precision is beyond what the implementation supports.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">The precision is negative or larger than 16.</exception>
+        /// <returns>The boundary, or <c>null</c> (an empty result) when the precision is negative or above 16 (as in the
+        /// reference implementation), or when the result does not fit in a decimal at the requested precision, such as a
+        /// value above about 7.9e20 at the default precision of 8. The spec gives an empty result when the precision is
+        /// beyond what the implementation supports.</returns>
         internal static decimal? BoundaryDecimal(decimal input, long? precision, bool high)
         {
             var resultScale = precision ?? DEFAULT_DECIMAL_BOUNDARY_PRECISION;
-            if (resultScale is < 0 or > MAX_DECIMAL_BOUNDARY_PRECISION)
-                throw new ArgumentOutOfRangeException(nameof(precision), precision,
-                    $"The precision of a decimal boundary must be between 0 and {MAX_DECIMAL_BOUNDARY_PRECISION}.");
+            // A precision beyond what the implementation supports gives an empty result.
+            if (resultScale is < 0 or > MAX_DECIMAL_BOUNDARY_PRECISION) return null;
 
             // Split the input into its digits (as an integer) and its scale, so 1.587 becomes 1587 and 3, and 120 becomes
             // 120 and 0. Trailing zeroes count: 12.500 is 12500 and 3.
