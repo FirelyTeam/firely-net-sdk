@@ -236,7 +236,22 @@ namespace HL7.FhirPath.Tests
             // -1.convertsToInteger() parses as -(1.convertsToInteger()), and unary minus is not defined for Boolean.
             var compiled = new FhirPathCompiler().Compile("-1.convertsToInteger()");
             Action act = () => compiled([], new EvaluationContext()).ToList();
-            act.Should().Throw<Exception>();
+            act.Should().Throw<InvalidOperationException>().WithMessage("*operator '-'*");
+        }
+
+        [TestMethod]
+        public void OperatorsOnValuelessPrimitiveRoot()
+        {
+            // A primitive with only an extension has no value. Operators ignore the focus, so they still evaluate
+            // (before, the comparison returned empty because its focus was the value-less root).
+            var valueless = new FhirString();
+            valueless.Extension.Add(new Extension("http://example.org/ext", new FhirBoolean(true)));
+
+            var compiled = new FhirPathCompiler().Compile("extension.count() = 1");
+            var result = compiled([valueless.ToPocoNode()], new EvaluationContext()).ToList();
+
+            result.Should().ContainSingle();
+            result.Single().GetValue().Should().Be(true);
         }
 
         [TestMethod]
