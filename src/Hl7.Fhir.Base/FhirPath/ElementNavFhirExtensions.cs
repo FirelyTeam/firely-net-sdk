@@ -249,7 +249,7 @@ namespace Hl7.Fhir.FhirPath
         /// is configured. Otherwise (or when it returns <c>null</c>), only the canonicals of the core FHIR types are
         /// supported: the input conforms when its type is, or derives from, that type (any <c>|version</c> is ignored).
         /// Any other profile raises an error. Without an annotated <see cref="ModelInspector"/>, a tree whose root is a type
-        /// shared between FHIR releases (e.g. a Bundle) can only check the canonicals of those shared types.</remarks>
+        /// shared between FHIR releases (e.g. a Bundle), or a standalone dynamic type, can only check the canonicals of those shared types.</remarks>
         internal static bool? ConformsTo(IEnumerable<PocoNode> input, string? structure, EvaluationContext ctx)
         {
             var items = input.Take(2).ToArray();
