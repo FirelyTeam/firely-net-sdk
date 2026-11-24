@@ -140,7 +140,7 @@ namespace Hl7.Fhir.FhirPath
             return input switch
             {
                 P.Quantity q => AdjustBoundaryQuantity(q, precision, substract),
-                P.Date d => BoundaryDateTime(d, precision, 1, 1, 0, 0, 0, 0, LOW_BOUNDARY_OFFSET),
+                P.Date d => BoundaryDateTime(d, precision ?? DATE_DEFAULT_BOUNDARY_PRECISION, 1, 1, 0, 0, 0, 0, LOW_BOUNDARY_OFFSET),
                 P.DateTime dt => BoundaryDateTime(dt, precision, 1, 1, 0, 0, 0, 0, LOW_BOUNDARY_OFFSET),
                 P.Time t => BoundaryTime(t, precision, 0, 0, 0),
                 _ => null
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.FhirPath
             return input switch
             {
                 P.Quantity q => AdjustBoundaryQuantity(q, precision, add),
-                P.Date d => BoundaryDateTime(d, precision, 12, 31, 23, 59, 59, 999, HIGH_BOUNDARY_OFFSET),
+                P.Date d => BoundaryDateTime(d, precision ?? DATE_DEFAULT_BOUNDARY_PRECISION, 12, 31, 23, 59, 59, 999, HIGH_BOUNDARY_OFFSET),
                 P.DateTime dt => BoundaryDateTime(dt, precision, 12, 31, 23, 59, 59, 999, HIGH_BOUNDARY_OFFSET),
                 P.Time t => BoundaryTime(t, precision, 59, 59, 999),
                 _ => null
@@ -170,6 +170,9 @@ namespace Hl7.Fhir.FhirPath
 
         // A dateTime without a timezone could be in any timezone, so its boundaries are taken at the
         // extremes: the earliest moment is in the most eastern zone (+14:00), the latest in the most western one (-12:00).
+        // Without a precision, the boundary of a date is a date (YYYYMMDD); that of a dateTime has milliseconds.
+        private const long DATE_DEFAULT_BOUNDARY_PRECISION = 8;
+
         private static readonly TimeSpan LOW_BOUNDARY_OFFSET = TimeSpan.FromHours(14);
         private static readonly TimeSpan HIGH_BOUNDARY_OFFSET = TimeSpan.FromHours(-12);
 
@@ -203,12 +206,14 @@ namespace Hl7.Fhir.FhirPath
             }
 
             if (dtPrecision <= P.DateTimePrecision.Day)
-                return P.Date.FromDateTimeOffset(dto, dtPrecision, dt.HasOffset);
+                return P.Date.FromDateTimeOffset(dto, dtPrecision, includeOffset: false);
 
             // A boundary with a time part always has a timezone, and is written with exactly three fraction digits (e.g. .000)
             // so that it spans exactly one millisecond. Parsing the formatted value keeps both the text and that span.
-            var format = dtPrecision == P.DateTimePrecision.Fraction ? "yyyy-MM-dd'T'HH:mm:ss.fffK" : "yyyy-MM-dd'T'HH:mm:ssK";
-            return P.DateTime.Parse(dto.ToString(format, CultureInfo.InvariantCulture));
+            // An input timezone written as Z is kept as Z.
+            var format = dtPrecision == P.DateTimePrecision.Fraction ? "yyyy-MM-dd'T'HH:mm:ss.fff" : "yyyy-MM-dd'T'HH:mm:ss";
+            var zone = dt.HasOffset && dt.ToString().EndsWith("Z", StringComparison.Ordinal) ? "Z" : dto.ToString("zzz", CultureInfo.InvariantCulture);
+            return P.DateTime.Parse(dto.ToString(format, CultureInfo.InvariantCulture) + zone);
 
             DateTimeOffset boundaryDateTimeOffset(TimeSpan tz) => dt.Precision switch
             {
