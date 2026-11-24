@@ -120,6 +120,12 @@ public sealed class FhirPathAnalyzer
 
     private static AType systemType(string name) => new(name, null);
 
+    /// <summary>
+    /// The FHIR type of a class mapping, by its FHIR type name: a code with a required binding (<c>Code&lt;T&gt;</c>)
+    /// has a mapping named after its enum, but is of FHIR type <c>code</c>.
+    /// </summary>
+    private static AType fromMapping(ClassMapping mapping) => new(mapping.IsCodeOfT ? "code" : mapping.Name, mapping);
+
     internal static readonly AType SYSTEM_BOOLEAN = systemType("Boolean");
     internal static readonly AType SYSTEM_STRING = systemType("String");
     internal static readonly AType SYSTEM_INTEGER = systemType("Integer");
@@ -158,7 +164,7 @@ public sealed class FhirPathAnalyzer
 
         AType? resolveSystem(string n) => SYSTEM_TYPES.Contains(n) ? systemType(n) : null;
         // Type names are case-sensitive (the inspector's lookup is not): 'String' is not the FHIR type 'string'.
-        AType? resolveFhir(string n) => _inspector.FindClassMapping(n) is { } cm && cm.Name == n ? new AType(cm.Name, cm) : null;
+        AType? resolveFhir(string n) => _inspector.FindClassMapping(n) is { } cm && cm.Name == n ? fromMapping(cm) : null;
     }
 
     internal TypeSet ResolveTypes(IReadOnlyCollection<string>? names, string argumentName)
@@ -190,15 +196,15 @@ public sealed class FhirPathAnalyzer
         var source = type.Mapping!;
         var targetMapping = target.Mapping!;
 
-        if (source.Name == targetMapping.Name || targetMapping.NativeType.IsAssignableFrom(source.NativeType))
+        if (type.Name == target.Name || targetMapping.NativeType.IsAssignableFrom(source.NativeType))
             return true;
 
         // An item of an abstract type can be any of its subtypes, and a concrete type can have subtypes as well
         // (e.g. a Quantity can be an Age).
         if (!isConcrete(source) || source.NativeType.IsAssignableFrom(targetMapping.NativeType)) return null;
 
-        for (var name = source.Name; PRIMITIVE_BASE_TYPES.TryGetValue(name, out var baseName); name = baseName)
-            if (baseName == targetMapping.Name) return true;
+        for (var name = type.Name; PRIMITIVE_BASE_TYPES.TryGetValue(name, out var baseName); name = baseName)
+            if (baseName == target.Name) return true;
 
         return false;
     }
@@ -345,12 +351,12 @@ public sealed class FhirPathAnalyzer
             // FHIR element names never start with an uppercase letter, so this is the only thing it can select.
             if (char.IsUpper(name[0]) && analyzer.ResolveType(name) is { IsSystem: false } typeName)
             {
-                if (!focus.IsKnown) return new TypeSet([typeName]);
+                if (!focus.IsKnown) return new TypeSet([typeName], focus.Unordered);
 
                 var (matching, _) = splitOnType(focus, typeName);
                 if (focus.IsCheckable && matching.Types!.Count == 0)
                     report(FhirPathDiagnosticCode.WrongTypeName, $"The focus ({focus}) can never be of type '{name}'", expression);
-                return matching.AsUnordered(false);
+                return matching;
             }
 
             if (!focus.IsKnown) return TypeSet.Unknown.AsUnordered(focus.Unordered);
@@ -388,7 +394,7 @@ public sealed class FhirPathAnalyzer
                     found = true;
                     try
                     {
-                        result.AddRange(element.FhirTypeMappings.Select(m => new AType(m.Name, m)));
+                        result.AddRange(element.FhirTypeMappings.Select(fromMapping));
                     }
                     catch (Exception)
                     {

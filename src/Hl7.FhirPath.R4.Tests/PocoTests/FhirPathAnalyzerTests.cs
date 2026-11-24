@@ -61,6 +61,7 @@ namespace Hl7.FhirPath.R4.Tests
             invalid("Patient.name.bogus", null, FhirPathDiagnosticCode.UnknownElement);         // leading type name gives the type
             valid("Age.value", "Quantity");                                                       // Quantity has subtypes
             valid("(1 'mg').value");
+            invalid("Patient.gender.ofType(string).whatever", "Patient", FhirPathDiagnosticCode.UnknownElement);   // a code is a string
         }
 
         [TestMethod]
@@ -152,6 +153,8 @@ namespace Hl7.FhirPath.R4.Tests
             invalid("Patient.descendants().first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
             invalid("Patient.children()[0]", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
             invalid("Patient.repeat(children()).first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("Patient.children().Quantity.first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("Patient.descendants().HumanName[0]", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
         }
 
         [TestMethod]
@@ -168,6 +171,7 @@ namespace Hl7.FhirPath.R4.Tests
         [DataRow("$this is Period implies ($this is dateTime implies $this.toString().length() > 1)", "Period|Timing")]
         [DataRow("($this as dateTime).toString().length() > 1", "Period")]
         [DataRow("$this is string or $this.whatever.exists()", "code")]  // code is a string
+        [DataRow("Patient.gender.all($this is string or $this.whatever.exists())", "Patient")]  // code with a required binding
         public void TypeGuardsNarrowThis(string expression, string inputTypes) => valid(expression, inputTypes);
 
         [TestMethod]
@@ -190,6 +194,7 @@ namespace Hl7.FhirPath.R4.Tests
             analyze("Observation.effective", "Observation").ResultTypes.Should().BeEquivalentTo("dateTime", "Period", "Timing", "instant");
             analyze("Patient.name.given.count()", "Patient").ResultTypes.Should().BeEquivalentTo("System.Integer");
             analyze("Patient.contained", "Patient").ResultTypes.Should().BeEquivalentTo("Resource");
+            analyze("Patient.gender", "Patient").ResultTypes.Should().BeEquivalentTo("code");
             analyze("%unknown", "Patient").ResultTypes.Should().BeNull();
 
             var diagnostic = analyze("Patient.name.given1", "Patient").Diagnostics.Single();
