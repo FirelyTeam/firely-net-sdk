@@ -225,55 +225,109 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
 
-        if (IsDuration && otherQ.IsDuration)
-        {
-            result = doDurationComparison(otherQ, comparisonType);
-            return result is not null;
-        }
-
-        // Cannot compare quantities with different systems or units.
-        if (System != otherQ.System || Unit != otherQ.Unit)
+        if (!tryGetComparableValues(otherQ, comparisonType, out var left, out var right))
         {
             result = null;
             return false;
         }
 
-        result = decimal.Compare(Math.Round(Value, 8), Math.Round(otherQ.Value, 8)); // aligns with Decimal
+        result = decimal.Compare(Math.Round(left, 8), Math.Round(right, 8)); // aligns with Decimal
         return true;
     }
 
-    private int? doDurationComparison(Quantity other, QuantityComparison comparisonType)
+    /// <summary>
+    /// Gets the values of this and the other quantity, expressed in the same unit, so they can be compared.
+    /// </summary>
+    /// <remarks>Durations are first normalized to UCUM (taking <paramref name="comparisonType"/> into account).
+    /// Quantities with the same system and unit are then compared as-is. Otherwise, UCUM quantities are converted to
+    /// their canonical units, and can be compared if those are the same (e.g. 4 'g' and 4000 'mg').</remarks>
+    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, out decimal left, out decimal right)
     {
-        var l = normalizeToUcum(this);
-        var r = normalizeToUcum(other);
+        var l = this;
+        var r = other;
 
-        if (l.Unit != r.Unit)
-            return null;
-
-        return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
-
-        Quantity normalizeToUcum(Quantity orig)
+        if (l.IsDuration && r.IsDuration)
         {
-            // UCUM definite durations are already in their comparable form
-            if (orig.IsDefiniteDuration) return orig;
-
-            var ucumUnit = orig.Unit switch
-            {
-                "year" when comparisonType == QuantityComparison.CompareCalendarUnits => "a",
-                "year" => "year",
-                "month" when comparisonType == QuantityComparison.CompareCalendarUnits => "mo",
-                "month" => "month",
-                "week" => "wk",
-                "day" => "d",
-                "hour" => "h",
-                "minute" => "min",
-                "second" => "s",
-                "millisecond" => "ms",
-                _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
-            };
-
-            return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
+            l = normalizeDurationToUcum(l, comparisonType);
+            r = normalizeDurationToUcum(r, comparisonType);
         }
+
+        left = l.Value;
+        right = r.Value;
+
+        if (l.System == r.System && l.Unit == r.Unit) return true;
+
+        // Durations keep their own comparison rules: only identical units (after normalization) are comparable.
+        if (IsDuration && other.IsDuration) return false;
+
+        if (!l.TryCanonicalize(out var lc) || !r.TryCanonicalize(out var rc) || lc.Unit != rc.Unit)
+            return false;
+
+        left = lc.Value;
+        right = rc.Value;
+        return true;
+    }
+
+    private static Quantity normalizeDurationToUcum(Quantity orig, QuantityComparison comparisonType)
+    {
+        // UCUM definite durations are already in their comparable form
+        if (orig.IsDefiniteDuration) return orig;
+
+        var ucumUnit = orig.Unit switch
+        {
+            "year" when comparisonType == QuantityComparison.CompareCalendarUnits => "a",
+            "year" => "year",
+            "month" when comparisonType == QuantityComparison.CompareCalendarUnits => "mo",
+            "month" => "month",
+            "week" => "wk",
+            "day" => "d",
+            "hour" => "h",
+            "minute" => "min",
+            "second" => "s",
+            "millisecond" => "ms",
+            _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
+        };
+
+        return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
+    }
+
+    /// <summary>
+    /// Converts a UCUM quantity to its canonical form, expressed in UCUM base units (e.g. 4000 'mg' becomes 4 'g').
+    /// </summary>
+    /// <returns>false if this is not a UCUM quantity, or the unit is not a valid UCUM unit that can be converted.</returns>
+    internal bool TryCanonicalize([NotNullWhen(true)] out Quantity? canonical)
+    {
+        canonical = null;
+        if (System != QuantityUnitSystem.UCUM) return false;
+
+        try
+        {
+            if (!global::Fhir.Metrics.MetricServiceExtensions.TryCanonicalize(
+                    global::Fhir.Metrics.FhirMetricService.Instance.Value, (Value, Unit, UCUM), out var result)
+                || result is not { } c)
+                return false;
+
+            // The library represents a dimensionless canonical unit as an empty string, FHIRPath uses '1'.
+            canonical = new Quantity(c.Item1, string.IsNullOrEmpty(c.Item2) ? UCUM_UNIT : c.Item2, QuantityUnitSystem.UCUM);
+            return true;
+        }
+        catch (Exception)
+        {
+            // The UCUM library could not parse or convert the unit.
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Determines whether two quantities are equivalent: their values, converted to a common unit, must be
+    /// equal after rounding to the precision of the least precise of the two values (as for Decimal equivalence).
+    /// </summary>
+    private bool isEquivalentTo(Quantity other)
+    {
+        if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, out var left, out var right))
+            return false;
+
+        return new Decimal(left).Equals(new Decimal(right), Decimal.CQL_EQUIVALENCE_COMPARISON);
     }
 
     // The UCUM library probably has a more generic method for doing this.
@@ -292,7 +346,15 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
 
-    public override int GetHashCode() => (Unit, Value).GetHashCode();
+    /// <remarks>Quantities that are equal after unit conversion (e.g. 4 'g' and 4000 'mg') must have the same hash code,
+    /// so the hash code is based on the canonical form of the quantity.</remarks>
+    public override int GetHashCode()
+    {
+        var q = IsCalendarDuration ? normalizeDurationToUcum(this, CQL_EQUALS_COMPARISON) : this;
+        if (q.TryCanonicalize(out var canonical)) q = canonical;
+
+        return (q.Unit, Math.Round(q.Value, 8)).GetHashCode();
+    }
 
     public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
 
@@ -301,7 +363,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
     bool ICqlEquatable.IsEquivalentTo(Any? other) =>
-        other is not null && TryEquals(other, CQL_EQUIVALENCE_COMPARISON, out var result) && result.Value;
+        other is Quantity q && isEquivalentTo(q);
 
     int? ICqlOrderable.CompareTo(Any? other) =>
         other is not null && TryCompareTo(other, out var result)

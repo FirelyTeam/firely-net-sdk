@@ -104,15 +104,53 @@ namespace Hl7.Fhir.ElementModel.Tests
 
 
         [TestMethod]
-        public void DifferentUnitsNotSupported()
+        public void IncomparableUnitsNotSupported()
         {
             var a = new Quantity(3.14m, "kg");
-            var b = new Quantity(30.5m, "g");
+            var b = new Quantity(30.5m, "m");
             
             Func<object> func = () => a < b;
             func.Should().Throw<InvalidOperationException>();
             func = () => a == b;
             func.Should().Throw<InvalidOperationException>();
+
+            // Units that are not valid UCUM cannot be compared either
+            a.TryCompareTo(new Quantity(3.14m, "tablets"), out _).Should().BeFalse();
+            new Quantity(1m, "tablets").TryCompareTo(new Quantity(1m, "tablets"), out var same).Should().BeTrue();
+            same.Should().Be(0);
+        }
+
+        [TestMethod]
+        public void ComparesDifferentUcumUnits()
+        {
+            var kg = new Quantity(3.14m, "kg");
+
+            kg.Should().Be(new Quantity(3140m, "g"));
+            kg.Should().NotBe(new Quantity(3141m, "g"));
+            (kg > new Quantity(30.5m, "g")).Should().BeTrue();
+            (kg < new Quantity(3141m, "g")).Should().BeTrue();
+            (new Quantity(1m, "[in_i]") == new Quantity(2.54m, "cm")).Should().BeTrue();
+            (new Quantity(1m, "mg/dL") == new Quantity(10m, "mg/L")).Should().BeTrue();
+            (new Quantity(50m, "%") == new Quantity(0.5m)).Should().BeTrue();
+
+            // Equal quantities must have the same hash code, also when their units differ
+            kg.GetHashCode().Should().Be(new Quantity(3140m, "g").GetHashCode());
+            new Quantity(1m, "d").GetHashCode().Should().Be(Quantity.ForCalendarDuration(1m, "day").GetHashCode());
+        }
+
+        [TestMethod]
+        public void EquivalenceRoundsToLeastPreciseValue()
+        {
+            ICqlEquatable fourGrams = new Quantity(4m, "g");
+
+            fourGrams.IsEquivalentTo(new Quantity(4000m, "mg")).Should().BeTrue();
+            fourGrams.IsEquivalentTo(new Quantity(4040m, "mg")).Should().BeTrue();
+            fourGrams.IsEquivalentTo(new Quantity(4.4m, "g")).Should().BeTrue();
+            fourGrams.IsEquivalentTo(new Quantity(4600m, "mg")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(4.0m, "g")).IsEquivalentTo(new Quantity(4040m, "mg")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(4.01m, "g")).IsEquivalentTo(new Quantity(4040m, "mg")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1m, "cm")).IsEquivalentTo(new Quantity(1m, "mm")).Should().BeFalse();
+            fourGrams.IsEquivalentTo(new Quantity(4m, "m")).Should().BeFalse();
         }
 
         public enum Comparison
