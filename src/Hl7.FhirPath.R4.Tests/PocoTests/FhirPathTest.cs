@@ -53,14 +53,17 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                     new Observation.ComponentComponent { Value = new Quantity { Value = 6, Comparator = Quantity.QuantityComparator.LessThan, Unit = "mg/L" } },
                     new Observation.ComponentComponent { Value = new Quantity { Unit = "mg/L" } },
                     new Observation.ComponentComponent { Value = new Quantity { Unit = "mg/L" } },
+                    // A value element with only an extension (e.g. data-absent-reason) is still a quantity without a value
+                    new Observation.ComponentComponent { Value = new Quantity { ValueElement = new FhirDecimal { Extension = [new Extension("http://hl7.org/fhir/StructureDefinition/data-absent-reason", new Code("unknown"))] }, Unit = "mg/L" } },
+                    new Observation.ComponentComponent { Value = new Quantity { ValueElement = new FhirDecimal { Extension = [new Extension("http://hl7.org/fhir/StructureDefinition/data-absent-reason", new Code("unknown"))] }, Unit = "mg/L" } },
                 ]
             };
 
             var result = observation.Select("Observation.component.repeat(value)").ToList();
 
-            // The two '<5 mg/L' quantities and the two value-less quantities are equal, so each is in the result once.
-            // The next round projects Quantity.value, which adds the decimals 5 and 6.
-            result.Select(r => r.TypeName).Should().Equal("Quantity", "Quantity", "Quantity", "decimal", "decimal");
+            // Equal quantities ('<5 mg/L', value-less, extension-only value) are each in the result once.
+            // The next round projects Quantity.value, which adds the decimals 5 and 6 and the extension-only decimal.
+            result.Select(r => r.TypeName).Should().Equal("Quantity", "Quantity", "Quantity", "Quantity", "decimal", "decimal", "decimal");
         }
 
         [TestMethod]

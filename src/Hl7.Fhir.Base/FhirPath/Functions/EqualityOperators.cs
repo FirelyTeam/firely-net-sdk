@@ -304,9 +304,16 @@ namespace Hl7.FhirPath.Functions
                 return x.IsEqualTo(y) == true;
             }
 
-            private static bool isUnconvertibleQuantity(ITypedElement element) =>
-                element.InstanceType == "Quantity" && element.Value is null &&
-                (!element.Children("value").Any() || element.Children("comparator").Any());
+            private static bool isUnconvertibleQuantity(ITypedElement element)
+            {
+                if (element.InstanceType != "Quantity" || element.Value is not null) return false;
+
+                if (element is PocoNode { Poco: P.IToSystemPrimitive quantity })
+                    return !quantity.TryConvertToSystemType(out _);
+
+                return element.Children("value").FirstOrDefault()?.Value is null ||
+                       element.Children("comparator").Any(c => c.Value is not null);
+            }
 
             public int GetHashCode(ITypedElement element)
             {
