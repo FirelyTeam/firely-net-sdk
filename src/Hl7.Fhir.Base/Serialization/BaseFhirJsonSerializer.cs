@@ -318,6 +318,10 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
         // pattern-match on the raw JsonValue instead of reading the parsed Value.
         if (value is Base64Binary { JsonValue: string { Length: > 0 } text })
             tryWriteBase64(writer, text);
+        // A decimal outside the range of a .NET decimal (e.g. 1e999999999) is kept as its literal: write it as a number.
+        else if (value is FhirDecimal { JsonValue: string literal } &&
+                 ElementModel.Types.Decimal.TryParseExtended(literal, out var d) && d.IsOutOfRange)
+            writer.WriteRawValue(literal);
         else
             SerializePrimitiveValue(value.JsonValue, writer);
     }

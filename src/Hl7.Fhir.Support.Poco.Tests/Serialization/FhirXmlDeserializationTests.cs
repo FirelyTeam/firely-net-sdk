@@ -96,8 +96,11 @@ public partial class FhirXmlDeserializationTests
         DisplayName = "XmlLong2")]
     [DataRow("<foo value =\"3.14\"/>", typeof(FhirDecimal), 3.14, null, DisplayName = "XmlDecimal1")]
     [DataRow("<foo value =\"3.14e2\"/>", typeof(FhirDecimal), 3.14e2, null, DisplayName = "XmlDecimalScientific")]
-    [DataRow("<foo value =\"3.14e500\"/>", typeof(FhirDecimal), "3.14e500", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE,
-        DisplayName = "XmlDecimal2")]
+    // Outside the range of a .NET decimal: kept as the literal, but valid
+    [DataRow("<foo value =\"3.14e500\"/>", typeof(FhirDecimal), "3.14e500", null, DisplayName = "XmlDecimal2")]
+    [DataRow("<foo value =\"3.14e-500\"/>", typeof(FhirDecimal), "3.14e-500", null, DisplayName = "XmlDecimalTiny")]
+    [DataRow("<foo value =\"3.14e\"/>", typeof(FhirDecimal), "3.14e", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE,
+        DisplayName = "XmlDecimal3")]
 
     public void TryDeserializePrimitiveValue(string xmlPrimitive, Type fhirTargetType, object expectedValue,
         string expectedErrorCode)

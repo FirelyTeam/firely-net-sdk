@@ -168,4 +168,28 @@ public class OutOfRangeDecimalTests
         else
             value.Should().Be(expected);
     }
+
+    [TestMethod]
+    public void OutOfRangeLiteralsAreValidAndSerializeAsNumbers()
+    {
+        const string json = """{"resourceType":"Observation","status":"final","code":{"text":"test"},"valueQuantity":{"value":1e-999999999,"unit":"kg"}}""";
+
+        // Strict parsing accepts them: they are valid FHIR decimals.
+        var obs = new FhirJsonDeserializer().Deserialize<Observation>(json);
+        ((Hl7.Fhir.Model.Quantity)obs.Value!).ValueElement!.HasValidValue().Should().BeTrue();
+
+        new FhirJsonSerializer().SerializeToString(obs).Should().Contain("\"value\":1e-999999999");
+        new FhirXmlSerializer().SerializeToString(obs).Should().Contain("<value value=\"1e-999999999\" />");
+    }
+
+    [TestMethod]
+    [DataRow("12.5", 12.5)]
+    [DataRow("0.00", 0.0)]
+    [DataRow("-.5", -0.5)]   // lenient forms decimal.Parse accepted before are still accepted
+    [DataRow("1.e5", 100000.0)]
+    [DataRow("1e-999999999", "1e-999999999")]
+    [DataRow("1e999999999", "1e999999999")]
+    [DataRow("abc", "abc")]
+    public void ParseForStorage(string literal, object expected) =>
+        P.Decimal.ParseForStorage(literal).Should().Be(expected is double d ? (decimal)d : expected);
 }

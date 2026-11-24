@@ -472,18 +472,6 @@
       Type: CodedValidationException,
       IssueSeverity: Error,
       IssueType: Value,
-      BaseErrorMessage: string '-1.00000000000000000e245' is not the right type of literal for a decimal.,
-      Display: Invalid literal type,
-      LineNumber: 108,
-      Position: 12,
-      InstancePath: Patient.contained[11].component[2].value.value,
-      ErrorCode: PVAL123,
-      Message: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[11].component[2].value.value, line 108, position 12.
-    },
-    {
-      Type: CodedValidationException,
-      IssueSeverity: Error,
-      IssueType: Value,
       BaseErrorMessage: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri.,
       Display: Invalid literal,
       LineNumber: 116,

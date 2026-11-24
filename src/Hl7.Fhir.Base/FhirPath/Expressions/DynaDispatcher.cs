@@ -23,9 +23,13 @@ namespace Hl7.FhirPath.Expressions
         {
             _scope = scope;
             _name = name;
+            _firstOperand = FirstArithmeticOperand(name);
         }
 
         private readonly string _name;
+
+        // The index of the first argument that is checked for numbers outside the range of a .NET decimal, or -1.
+        private readonly int _firstOperand;
         private readonly SymbolTable _scope;
 
         public FocusCollection Dispatcher(Closure context, IEnumerable<Invokee> args)
@@ -43,7 +47,7 @@ namespace Hl7.FhirPath.Expressions
             if (actualArgs.Any(aa => !aa.Any())) return [];
 
             // Arithmetic on a decimal or quantity outside the range of a .NET decimal (e.g. 1e999999999) gives empty.
-            if (ARITHMETIC_FUNCTIONS.Contains(_name) && actualArgs.Any(IsOutOfRangeNumber)) return [];
+            if (_firstOperand >= 0 && actualArgs.Skip(_firstOperand).Any(IsOutOfRangeNumber)) return [];
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 
@@ -85,6 +89,15 @@ namespace Hl7.FhirPath.Expressions
             "lowBoundary", "highBoundary"
         ];
 
+        /// <summary>
+        /// For an arithmetic operator or function, the index of its first operand: operators get the focus as their first
+        /// argument, which is not an operand, while functions operate on the focus. Returns -1 for other functions.
+        /// </summary>
+        internal static int FirstArithmeticOperand(string name) =>
+            !ARITHMETIC_FUNCTIONS.Contains(name) ? -1
+            : name.StartsWith(BinaryExpression.BIN_PREFIX) || name.StartsWith(UnaryExpression.URY_PREFIX) ? 1
+            : 0;
+
         internal static bool IsOutOfRangeNumber(FocusCollection arg)
         {
             using var items = arg.GetEnumerator();
@@ -92,12 +105,16 @@ namespace Hl7.FhirPath.Expressions
             var item = items.Current;
             if (items.MoveNext()) return false;  // a collection, which the function will reject in its own way
 
+            // Out-of-range values are kept as a string literal in FHIR decimals, and as a System value in System types.
             return item switch
             {
-                PrimitiveNode { Value: P.Decimal { IsOutOfRange: true } or P.Quantity { IsOutOfRange: true } } => true,
-                { Poco: Quantity q } => FhirDecimal.TryGetSystemDecimal(q.ValueElement?.JsonValue, out var d) && d.IsOutOfRange,
+                PrimitiveNode { Primitive: FhirDecimal { JsonValue: string s } } => isOutOfRangeLiteral(s),
+                PrimitiveNode { Primitive.JsonValue: P.Decimal { IsOutOfRange: true } or P.Quantity { IsOutOfRange: true } } => true,
+                { Poco: Quantity { ValueElement.JsonValue: string s } } => isOutOfRangeLiteral(s),
                 _ => false
             };
+
+            static bool isOutOfRangeLiteral(string s) => P.Decimal.TryParseExtended(s, out var d) && d.IsOutOfRange;
         }
 
         private string noMatchError(IEnumerable<object> arguments)
