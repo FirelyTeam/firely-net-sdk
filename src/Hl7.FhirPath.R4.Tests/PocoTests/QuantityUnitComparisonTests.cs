@@ -167,6 +167,10 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval("1 hour.comparable(1 'min')").Should().BeTrue();
             eval("1 year.comparable(1 year)").Should().BeFalse();
             eval("1 'Ym'.comparable(1 'ym')").Should().BeTrue();
+
+            // An empty argument or focus is not comparable
+            eval($"{p("mg-code")}.comparable({p("does-not-exist")})").Should().BeFalse();
+            eval($"{p("does-not-exist")}.comparable(1 'g')").Should().BeFalse();
         }
 
         // Units are only converted when the FHIR system is UCUM. Codes are compared regardless of the system.

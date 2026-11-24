@@ -288,10 +288,22 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// (e.g. 'g' and 'mg') are converted to the smaller of the two units. Durations are first normalized to UCUM
     /// (taking <paramref name="comparisonType"/> into account), and calendar durations are only comparable to
     /// durations with the same unit after normalization.</remarks>
-    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering, out decimal left, out decimal right)
+    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering, out decimal left, out decimal right) =>
+        tryGetComparableValues(other, comparisonType, forOrdering, out left, out right, out _);
+
+    /// <inheritdoc cref="tryGetComparableValues(Quantity, QuantityComparison, bool, out decimal, out decimal)"/>
+    /// <param name="other">The quantity to compare with.</param>
+    /// <param name="comparisonType">How calendar durations are normalized to UCUM.</param>
+    /// <param name="forOrdering">True when ordering, see the other overload.</param>
+    /// <param name="left">The value of this quantity.</param>
+    /// <param name="right">The value of the other quantity, in the same unit as <paramref name="left"/>.</param>
+    /// <param name="converted">True when the values had different units, and one of them was converted.</param>
+    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering,
+        out decimal left, out decimal right, out bool converted)
     {
         left = Value;
         right = other.Value;
+        converted = false;
 
         // A FHIR quantity with only unit text can only be compared with a quantity with the same unit text.
         if (!HasCode || !other.HasCode)
@@ -319,6 +331,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         // Express the operand with the larger unit in the smaller unit, so no precision is lost. If that
         // does not fit in a decimal, express the other operand in the larger unit instead.
+        converted = true;
         var convertLeft = lc.Factor > rc.Factor;
         try
         {
@@ -462,35 +475,44 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     }
 
     /// <summary>
-    /// Determines whether two quantities are equivalent. Like the reference (Java) engine, UCUM quantities are converted
-    /// to their canonical units, and the values must be equal after rounding to the precision of the least precise
-    /// of the two (as for Decimal equivalence). Other quantities must have the same unit.
+    /// Determines whether two quantities are equivalent: their values must be equal after rounding to the precision of
+    /// the least precise of the two (as for Decimal equivalence), where the precision is that of the values as written.
     /// </summary>
+    /// <remarks>Quantities with the same unit are compared directly. Otherwise, UCUM quantities with the same dimension
+    /// are compared in the smaller of the two units, and the precision of the value in the larger unit becomes coarser
+    /// accordingly: 4 'g' is precise to the gram, so in milligrams it is 4000 'mg', rounded to thousands, which makes
+    /// 4 'g' ~ 4040 'mg' true, while 4000 'mg' ~ 4400 'mg' is false.</remarks>
     private bool isEquivalentTo(Quantity other)
     {
-        decimal left, right;
-
         if (HasCode != other.HasCode) return false;
 
-        if (HasCode && other.HasCode && !IsCalendarDuration && !other.IsCalendarDuration
-            && tryGetUcumConversion(this, out var lc) && tryGetUcumConversion(other, out var rc))
-        {
-            if (lc.CanonicalUnit != rc.CanonicalUnit) return false;
-
-            try
-            {
-                left = Value * lc.Factor;
-                right = other.Value * rc.Factor;
-            }
-            catch (OverflowException)
-            {
-                return false;
-            }
-        }
-        else if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, forOrdering: false, out left, out right))
+        if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, forOrdering: false, out var left, out var right, out var converted))
             return false;
 
-        return new Decimal(left).Equals(new Decimal(right), Decimal.CQL_EQUIVALENCE_COMPARISON);
+        // The same unit (possibly after normalizing durations): plain Decimal equivalence.
+        if (!converted)
+            return new Decimal(left).Equals(new Decimal(right), Decimal.CQL_EQUIVALENCE_COMPARISON);
+
+        // Different UCUM units: one value was expressed in the smaller unit of the two.
+        if (!tryGetUcumConversion(this, out var lc) || !tryGetUcumConversion(other, out var rc))
+            return false;
+
+        var leftIsCoarse = lc.Factor > rc.Factor;
+        var ratio = leftIsCoarse ? lc.Factor / rc.Factor : rc.Factor / lc.Factor;
+        var coarsePrecision = Decimal.Scale(leftIsCoarse ? Value : other.Value, ignoreTrailingZeroes: true)
+                              - (int)Math.Floor(Math.Log10((double)ratio));
+        var finePrecision = Decimal.Scale(leftIsCoarse ? other.Value : Value, ignoreTrailingZeroes: true);
+        var precision = Math.Min(coarsePrecision, finePrecision);
+
+        return roundTo(left, precision) == roundTo(right, precision);
+
+        static decimal roundTo(decimal value, int decimals)
+        {
+            if (decimals >= 0) return Math.Round(value, Math.Min(decimals, 28));
+
+            var scale = (decimal)Math.Pow(10, -decimals);
+            return Math.Round(value / scale) * scale;
+        }
     }
 
     // The UCUM library probably has a more generic method for doing this.

@@ -179,11 +179,21 @@ namespace Hl7.Fhir.ElementModel.Tests
             ((ICqlEquatable)new Quantity(1m, "cm")).IsEquivalentTo(new Quantity(1m, "mm")).Should().BeFalse();
             fourGrams.IsEquivalentTo(new Quantity(4m, "m")).Should().BeFalse();
 
-            // As in the reference engine, values are rounded in the canonical unit (here 'g'), also when the units are the same
-            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1400m, "g")).Should().BeFalse();
-            ((ICqlEquatable)new Quantity(1400m, "g")).IsEquivalentTo(new Quantity(1m, "kg")).Should().BeFalse();
-            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1.4m, "kg")).Should().BeFalse();
+            // The precision is that of the values as written: 1 'kg' is precise to the kilogram, as is 1400 'g' after rounding
+            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1400m, "g")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1400m, "g")).IsEquivalentTo(new Quantity(1m, "kg")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1m, "kg")).IsEquivalentTo(new Quantity(1.4m, "kg")).Should().BeTrue();
             ((ICqlEquatable)new Quantity(1.0m, "kg")).IsEquivalentTo(new Quantity(1000.4m, "g")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1.000m, "kg")).IsEquivalentTo(new Quantity(1000.4m, "g")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1.001m, "kg")).IsEquivalentTo(new Quantity(1000.4m, "g")).Should().BeFalse();
+
+            // Values with the same unit are not rounded in the (larger) canonical unit
+            ((ICqlEquatable)new Quantity(4000m, "mg")).IsEquivalentTo(new Quantity(4400m, "mg")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(100m, "mg")).IsEquivalentTo(new Quantity(149m, "mg")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1m, "ng")).IsEquivalentTo(new Quantity(2m, "ng")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1m, "ng")).IsEquivalentTo(new Quantity(0.001m, "ug")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1m, "[in_i]")).IsEquivalentTo(new Quantity(3m, "cm")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1.01m, "[in_i]")).IsEquivalentTo(new Quantity(2.5m, "cm")).Should().BeFalse();
         }
 
         public enum Comparison

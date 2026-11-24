@@ -238,7 +238,7 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="r"></param>
         /// <returns></returns>
         /// <remarks>Follows the reference (Java) engine: both need a unit code from the same system, see <see cref="P.Quantity.IsComparableTo"/>.</remarks>
-        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.IsComparableTo(r);
+        internal static bool Comparable(P.Quantity? l, P.Quantity? r) => l is not null && r is not null && l.IsComparableTo(r);
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 
