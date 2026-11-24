@@ -111,9 +111,10 @@ namespace Hl7.Fhir.FhirPath
         private const int DEFAULT_DECIMAL_BOUNDARY_PRECISION = 8;
 
         /// <summary>
-        /// The largest number of decimal places a <see cref="decimal"/> can hold.
+        /// The largest precision supported by lowBoundary() and highBoundary() on a decimal, as in the reference
+        /// implementation. (A <see cref="decimal"/> could hold 28 decimal places.)
         /// </summary>
-        private const int MAX_DECIMAL_SCALE = 28;
+        private const int MAX_DECIMAL_BOUNDARY_PRECISION = 16;
 
         /// <summary>
         /// Calculates the low or high boundary of a decimal, as done by lowBoundary() and highBoundary().
@@ -134,13 +135,13 @@ namespace Hl7.Fhir.FhirPath
         /// <returns>The boundary, or <c>null</c> (an empty result) when it does not fit in a decimal at the requested
         /// precision, such as a value above about 7.9e20 at the default precision of 8. The spec gives an empty result when
         /// the precision is beyond what the implementation supports.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">The precision is negative or larger than a decimal can hold.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The precision is negative or larger than 16.</exception>
         internal static decimal? BoundaryDecimal(decimal input, long? precision, bool high)
         {
             var resultScale = precision ?? DEFAULT_DECIMAL_BOUNDARY_PRECISION;
-            if (resultScale is < 0 or > MAX_DECIMAL_SCALE)
+            if (resultScale is < 0 or > MAX_DECIMAL_BOUNDARY_PRECISION)
                 throw new ArgumentOutOfRangeException(nameof(precision), precision,
-                    $"The precision of a decimal boundary must be between 0 and {MAX_DECIMAL_SCALE}.");
+                    $"The precision of a decimal boundary must be between 0 and {MAX_DECIMAL_BOUNDARY_PRECISION}.");
 
             // Split the input into its digits (as an integer) and its scale, so 1.587 becomes 1587 and 3, and 120 becomes
             // 120 and 0. Trailing zeroes count: 12.500 is 12500 and 3.

@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Support.Tests
         [DataRow("(-10).highBoundary(0)", "-9")]
         // more decimal places than the boundary
         [DataRow("1.587.lowBoundary(6)", "1.586500")]
-        [DataRow("1.587.highBoundary(28)", "1.5875000000000000000000000000")]
+        [DataRow("1.587.highBoundary(16)", "1.5875000000000000")]
         public void DecimalBoundaryHasRequestedPrecision(string expression, string expected)
         {
             var result = _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Support.Tests
         [TestMethod]
         // the result needs more digits than a decimal holds at the requested precision
         [DataRow("100000000000000000000000.0.lowBoundary()")]
-        [DataRow("7.9228162514264337593543950335.highBoundary(28)")]
+        [DataRow("10000000000000.0.highBoundary(16)")]
         [DataRow("100000000000000000000000.0 'kg'.highBoundary()")]
         public void DecimalBoundaryThatDoesNotFitIsEmpty(string expression)
         {
@@ -281,13 +281,16 @@ namespace Hl7.Fhir.Support.Tests
         }
 
         [TestMethod]
-        public void DecimalBoundaryWithUnsupportedPrecisionFails()
+        [DataRow("1.587.lowBoundary(17)")]
+        [DataRow("1.587.highBoundary(-1)")]
+        [DataRow("1.587 'cm'.lowBoundary(29)")]
+        public void DecimalBoundaryWithUnsupportedPrecisionFails(string expression)
         {
-            var evaluator = _compiler.Compile("1.587.lowBoundary(29)");
+            var evaluator = _compiler.Compile(expression);
             var act = () => evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
 
             // The evaluator wraps the exception thrown by the function, but keeps its message.
-            act.Should().Throw<System.Exception>().WithMessage("*precision of a decimal boundary must be between 0 and 28*");
+            act.Should().Throw<System.Exception>().WithMessage("*precision of a decimal boundary must be between 0 and 16*");
         }
 
 
