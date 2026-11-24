@@ -54,7 +54,9 @@ namespace Hl7.FhirPath.Expressions
         /// Converts a FHIR Quantity to a System.Quantity for comparison purposes. The unit is taken
         /// from <see cref="Quantity.Code"/>, or, when there is no code, from the human-readable
         /// <see cref="Quantity.Unit"/> text, and is '1' only when both are absent. This way a quantity
-        /// with only unit text is not mistaken for a unitless quantity.
+        /// with only unit text is not mistaken for a unitless quantity. When the quantity has a
+        /// <see cref="Quantity.System"/> other than UCUM, the unit is not treated as a UCUM unit, so it is
+        /// only comparable to quantities with the same unit from such a system, and never converted.
         /// </summary>
         internal static P.Quantity ParseQuantityForComparison(Quantity q)
         {
@@ -63,9 +65,12 @@ namespace Hl7.FhirPath.Expressions
             // ToSystemQuantity() also validates the quantity (value present, no comparator).
             var sq = q.ToSystemQuantity();
 
-            return string.IsNullOrEmpty(q.Code) && !string.IsNullOrEmpty(q.Unit)
-                ? new P.Quantity(sq.Value, q.Unit)
-                : sq;
+            var unit = string.IsNullOrEmpty(q.Code) && !string.IsNullOrEmpty(q.Unit) ? q.Unit : sq.Unit;
+            var system = string.IsNullOrEmpty(q.System) || q.System == P.Quantity.UCUM
+                ? P.QuantityUnitSystem.UCUM
+                : P.QuantityUnitSystem.Unknown;
+
+            return unit == sq.Unit && system == sq.System ? sq : new P.Quantity(sq.Value, unit, system);
         }
 
         private static Cast getImplicitCast(object f, Type to)

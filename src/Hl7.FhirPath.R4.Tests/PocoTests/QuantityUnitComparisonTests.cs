@@ -32,6 +32,10 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "milligram-text", Value = new Quantity { Value = 1, Unit = "milligram" } },
                 new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
+                new() { Name = "mg-text-dl", Value = new Quantity { Value = 1, Unit = "mg/dL" } },
+                new() { Name = "mg-snomed", Value = new Quantity { Value = 1, Unit = "mg", Code = "258684004", System = "http://snomed.info/sct" } },
+                new() { Name = "g-snomed", Value = new Quantity { Value = 1, Unit = "g", Code = "258682000", System = "http://snomed.info/sct" } },
+                new() { Name = "mg-local", Value = new Quantity { Value = 1, Code = "mg", System = "http://example.org/units" } },
             ]
         };
 
@@ -72,6 +76,43 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{p(left)} ~ {right}").Should().Be(equivalent);
             eval($"{right} = {p(left)}").Should().Be(equal);
             eval($"{right} ~ {p(left)}").Should().Be(equivalent);
+        }
+
+        [TestMethod]
+        [DataRow("mg-text < 2 'mg'", true)]
+        [DataRow("mg-text < 2000 'ug'", true)]
+        [DataRow("mg-text > 0.5 'mg'", true)]
+        [DataRow("mg-text-dl <= 10 'mg/L'", true)]
+        [DataRow("mg-text-dl < 10 'mg/L'", false)]
+        [DataRow("tablets < 2", null)]
+        [DataRow("tablets < 2 'tablets'", true)]
+        [DataRow("mg-text.comparable(1 'g')", true)]
+        [DataRow("tablets.comparable(1 'g')", false)]
+        public void OrdersFhirQuantitiesByUnitText(string expression, bool? expected)
+        {
+            var name = expression.Split(' ', '.')[0];
+            eval(p(name) + expression.Substring(name.Length)).Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void ConvertsFhirQuantityWithUnitTextToString()
+        {
+            input().Scalar($"{p("mg-text")}.toString()").Should().Be("1 'mg'");
+            input().Scalar($"{p("no-unit")}.toString()").Should().Be("1 '1'");
+        }
+
+        [TestMethod]
+        [DataRow("mg-snomed", "g-snomed", null, false)]
+        [DataRow("mg-snomed", "mg-snomed", true, true)]
+        [DataRow("mg-snomed", "mg-code", null, false)]
+        [DataRow("mg-local", "mg-code", null, false)]
+        [DataRow("mg-local", "mg-local", true, true)]
+        public void DoesNotConvertUnitsFromOtherSystems(string left, string right, bool? equal, bool equivalent)
+        {
+            eval($"{p(left)} = {p(right)}").Should().Be(equal);
+            eval($"{p(left)} ~ {p(right)}").Should().Be(equivalent);
+            eval($"{p(left)} < {p(right)}").Should().Be(equal is null ? null : false);
+            eval($"{p(left)} = 1 'mg'").Should().BeNull();
         }
 
         [TestMethod]

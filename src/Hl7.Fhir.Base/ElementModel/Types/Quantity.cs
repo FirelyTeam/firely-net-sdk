@@ -363,26 +363,6 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     }
 
     /// <summary>
-    /// Converts a UCUM quantity to its canonical form, expressed in UCUM base units (e.g. 4000 'mg' becomes 4 'g').
-    /// </summary>
-    /// <returns>false if this is not a UCUM quantity, or the unit is not a valid UCUM unit that can be converted.</returns>
-    internal bool TryCanonicalize([NotNullWhen(true)] out Quantity? canonical)
-    {
-        canonical = null;
-        if (!tryGetUcumConversion(this, out var conversion)) return false;
-
-        try
-        {
-            canonical = new Quantity(Value * conversion.Factor, conversion.CanonicalUnit, QuantityUnitSystem.UCUM);
-            return true;
-        }
-        catch (OverflowException)
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
     /// Determines whether two quantities are equivalent: their values, converted to the larger of the two units, must be
     /// equal after rounding to the precision of the least precise of the two values (as for Decimal equivalence).
     /// </summary>
