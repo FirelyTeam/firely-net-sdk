@@ -191,6 +191,9 @@ namespace Hl7.FhirPath.R4.Tests
             // suite
             "testPrecedence1", "testPrecedence2", "testMatchesEmpty", "testMatchesEmpty2", "testMatchesEmpty3",
             "HighBoundaryDecimal6", "HighBoundaryDecimal14", "LowBoundaryDecimal13", "LowBoundaryNegDecimal1",
+            // testPrecedence3 and testPrecedence4 parse correctly ('is' binds tighter than '|' and '>'), but fail on the
+            // empty focus too
+            "testPrecedence3", "testPrecedence4",
 
             // No static (semantic) type checking: invalid paths and type-guard checks are not reported as semantic errors
             "testSimpleFail", "testSimpleWithWrongContext", "testPolymorphismB", "testPolymorphismAsB",
@@ -239,9 +242,6 @@ namespace Hl7.FhirPath.R4.Tests
             // Missing execution errors: as() on multiple items, unknown type names, iif() on a collection, allTrue() on non-
             // booleans
             "testFHIRPathAsFunction21", "testFHIRPathAsFunction23", "testFHIRPathAsFunction24", "testIif10", "from-zulip-2",
-
-            // Operator precedence of 'is' relative to '|' and comparison operators
-            "testPrecedence3", "testPrecedence4",
 
             // precision() function is not implemented
             "PrecisionDecimal", "PrecisionYear", "PrecisionDateTimeMilliseconds", "PrecisionTimeMinutes",

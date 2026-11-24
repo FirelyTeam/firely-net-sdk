@@ -153,6 +153,17 @@ namespace Hl7.FhirPath.Tests
 
             AssertParser.SucceedsRoundTrip(parser, "4 is integer");
             AssertParser.SucceedsRoundTrip(parser, "8 as notoddbuteven");
+            AssertParser.SucceedsRoundTrip(parser, "8 as notoddbuteven is integer");
+        }
+
+        [TestMethod]
+        public void FhirPath_Roundtrip_TypeInUnion()
+        {
+            var parser = Grammar.Expression.End();
+
+            AssertParser.SucceedsRoundTrip(parser, "1 | 1 is Integer");
+            AssertParser.SucceedsRoundTrip(parser, "1 > 2 is Boolean");
+            AssertParser.SucceedsRoundTrip(parser, " 1  |  2 /* c */ as Integer", "1 | 2 as Integer");
         }
 
         [TestMethod]

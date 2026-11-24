@@ -250,6 +250,22 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
 
         [TestMethod]
+        public void TestTypeOperatorPrecedence()
+        {
+            // 'is' and 'as' bind tighter than '|' and the comparison operators, but looser than '+', '-' and '&'
+            fixture.IsTrue("(1 | 1 is Integer).count() = 2");
+            fixture.IsTrue("(1 | 'a' is String).count() = 2");
+            fixture.IsTrue("(1 | 1 is Integer).first() = 1");
+            fixture.IsTrue("1 as Integer > 0 and 1 as Integer <= 1");
+            fixture.IsTrue("1 + 1 is Integer");
+            fixture.IsTrue("'a' & 'b' is String");
+            fixture.IsTrue("1 as Integer is Integer");
+
+            // This is 1 > (2 is Boolean), which compares an integer to a boolean
+            Assert.Throws<InvalidOperationException>(() => fixture.PatientExample.Select("1 > 2 is Boolean").ToList());
+        }
+
+        [TestMethod]
         public void TestWhere()
         {
             fixture.IsTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");

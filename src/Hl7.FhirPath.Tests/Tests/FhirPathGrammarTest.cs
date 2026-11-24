@@ -547,6 +547,32 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_Gramm_TypeOperatorPrecedence()
+        {
+            var parser = Grammar.Expression.End();
+
+            // 'is' and 'as' bind tighter than '|' and the comparison operators...
+            AssertParser.SucceedsMatch(parser, "1 | 1 is Integer",
+                new BinaryExpression("|", new ConstantExpression(1), new BinaryExpression("is", new ConstantExpression(1), new ConstantExpression("Integer"))));
+            AssertParser.SucceedsMatch(parser, "1 > 2 is Boolean",
+                new BinaryExpression(">", new ConstantExpression(1), new BinaryExpression("is", new ConstantExpression(2), new ConstantExpression("Boolean"))));
+            AssertParser.SucceedsMatch(parser, "1 as Integer > 0",
+                new BinaryExpression(">", new BinaryExpression("as", new ConstantExpression(1), new ConstantExpression("Integer")), new ConstantExpression(0)));
+            AssertParser.SucceedsMatch(parser, "1 is Integer | 2",
+                new BinaryExpression("|", new BinaryExpression("is", new ConstantExpression(1), new ConstantExpression("Integer")), new ConstantExpression(2)));
+
+            // ...but looser than the additive operators...
+            AssertParser.SucceedsMatch(parser, "1 + 2 is Integer",
+                new BinaryExpression("is", constOp("+", 1, 2), new ConstantExpression("Integer")));
+            AssertParser.SucceedsMatch(parser, "'a' & 'b' as String",
+                new BinaryExpression("as", constOp("&", "a", "b"), new ConstantExpression("String")));
+
+            // ...and they are left-associative
+            AssertParser.SucceedsMatch(parser, "1 as Integer is Integer",
+                new BinaryExpression("is", new BinaryExpression("as", new ConstantExpression(1), new ConstantExpression("Integer")), new ConstantExpression("Integer")));
+        }
+
+        [TestMethod]
         public void FhirPath_Gramm_Bracket()
         {
             var parser = Grammar.TypeExpression.End();
