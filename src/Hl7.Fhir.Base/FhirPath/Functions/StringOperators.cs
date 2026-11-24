@@ -71,13 +71,13 @@ internal static class StringOperators
             // a trailing newline or by multi-line mode.
             try
             {
-                return Regex.IsMatch(me, @"\A(?:" + regex + @")\z", RegexOptions.Singleline);
+                return Regex.IsMatch(me, @"\A(?:" + regex + @")\z", RegexOptions.Singleline | RegexOptions.CultureInvariant);
             }
             catch (ArgumentException)
             {
                 // The expression is valid on its own, so the wrapper broke it: it ends in an (?x) '#' comment
                 // that swallowed the closing ')'. A newline ends the comment.
-                return Regex.IsMatch(me, @"\A(?:" + regex + "\n)\\z", RegexOptions.Singleline);
+                return Regex.IsMatch(me, @"\A(?:" + regex + "\n)\\z", RegexOptions.Singleline | RegexOptions.CultureInvariant);
             }
         }
 
