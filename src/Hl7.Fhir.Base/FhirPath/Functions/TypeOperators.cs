@@ -86,13 +86,14 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <remarks>The TypeInfo has a <c>namespace</c> and a <c>name</c> element. Primitive values get a
         /// SimpleTypeInfo, all other values a ClassInfo. The <c>baseType</c> and <c>element</c> parts of the
-        /// TypeInfo are not supported.</remarks>
+        /// TypeInfo are not supported. Anonymous (backbone) elements report their instance type, BackboneElement or
+        /// Element, instead of a TupleTypeInfo.</remarks>
         public static IEnumerable<PocoNode> Type(this IEnumerable<PocoNode> focus)
             => focus.Select(getTypeInfo);
 
         private static PocoNode getTypeInfo(PocoNode item)
         {
-            var instanceType = ((ITypedElement)item).InstanceType ?? item.Poco.TypeName;
+            var instanceType = ((ITypedElement)item).InstanceType!;
 
             // Same convention as Is(): an instance type without a namespace is in the FHIR namespace.
             var dot = instanceType.IndexOf('.');
