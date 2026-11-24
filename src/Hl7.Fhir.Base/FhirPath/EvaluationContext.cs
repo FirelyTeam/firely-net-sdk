@@ -69,6 +69,13 @@ public class EvaluationContext
     /// Gets or sets the tracer used for capturing debug information during evaluation
     /// </summary>
     public IDebugTracer? DebugTracer { get; set; }
+
+    /// <summary>
+    /// When set, the <c>as()</c> function raises an error if its input contains more than one item, as the
+    /// FHIRPath specification requires. This is off by default, because FHIR R4 and R4B core invariants
+    /// (such as dom-3: <c>%resource.descendants().as(canonical)</c>) use <c>as()</c> on collections.
+    /// </summary>
+    public bool StrictAsFunction { get; set; }
 }
 
 public static class EvaluationContextExtensions

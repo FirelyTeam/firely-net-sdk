@@ -41,7 +41,7 @@ namespace Hl7.FhirPath.R4.Tests
         {
             var compiled = _compiler.Compile(expression);
             // Pass the node itself (not a list wrapping it), so the evaluator can infer %resource/%rootResource from it.
-            return compiled(input is null ? [] : input, new FhirEvaluationContext()).ToList();
+            return compiled(input is null ? [] : input, new FhirEvaluationContext { StrictAsFunction = true }).ToList();
         }
 
         private static void test(IEnumerable<PocoNode> focus, string expression, IReadOnlyList<XElement> expected, bool asPredicate, bool ordered)
@@ -235,10 +235,6 @@ namespace Hl7.FhirPath.R4.Tests
 
             // is() does not follow the FHIR primitive type hierarchy (code is a string, url is a uri)
             "testFHIRPathIsFunction2", "testTypeA4",
-
-            // Missing execution errors: as() on multiple items, unknown type names, iif() on a collection, allTrue() on non-
-            // booleans
-            "testFHIRPathAsFunction21", "testFHIRPathAsFunction23", "testFHIRPathAsFunction24", "testIif10", "from-zulip-2",
 
             // Operator precedence of 'is' relative to '|' and comparison operators
             "testPrecedence3", "testPrecedence4",

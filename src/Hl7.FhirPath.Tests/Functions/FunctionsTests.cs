@@ -45,6 +45,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).allTrue()", false, false),
                     ("(false | true).allTrue()", false, false),
                     ("(false | false).allTrue()", false, false),
+                    ("(true | 'foo').allTrue()", false, true),
+                    ("(1).allTrue()", false, true),
 
                     // function anyTrue() : Boolean
                     ("{}.anyTrue()", false, false),
@@ -54,6 +56,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).anyTrue()", true, false),
                     ("(false | true).anyTrue()", true, false),
                     ("(false | false).anyTrue()", false, false),
+                    ("(true | 'foo').anyTrue()", false, true),
+                    ("(1).anyTrue()", false, true),
 
                     // function allFalse() : Boolean
                     ("{}.allFalse()", true, false),
@@ -63,6 +67,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).allFalse()", false, false),
                     ("(false | true).allFalse()", false, false),
                     ("(false | false).allFalse()", true, false),
+                    ("(true | 'foo').allFalse()", false, true),
+                    ("(1).allFalse()", false, true),
 
                     // function anyFalse() : Boolean
                     ("{}.anyFalse()", false, false),
@@ -72,6 +78,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).anyFalse()", true, false),
                     ("(false | true).anyFalse()", true, false),
                     ("(false | false).anyFalse()", true, false),
+                    ("(true | 'foo').anyFalse()", false, true),
+                    ("(1).anyFalse()", false, true),
 
                     // function subsetOf(other : collection) : Boolean
                     ("(1 | 2).subsetOf((1 | 2 | 3))", true, false),

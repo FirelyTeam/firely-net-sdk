@@ -28,8 +28,8 @@ namespace Hl7.FhirPath.R4.Tests
             Component = { new Observation.ComponentComponent { Code = new CodeableConcept("http://loinc.org", "6789-0"), Value = new FhirString("hi") } }
         };
 
-        private static PocoNode[] evaluate(PocoNode input, string expression)
-            => new FhirPathCompiler().Compile(expression)(input, new FhirEvaluationContext()).ToArray();
+        private static PocoNode[] evaluate(PocoNode input, string expression, bool strictAs = false)
+            => new FhirPathCompiler().Compile(expression)(input, new FhirEvaluationContext { StrictAsFunction = strictAs }).ToArray();
 
         [TestMethod]
         public void BinaryAsIsRegisteredOnce()
@@ -152,6 +152,54 @@ namespace Hl7.FhirPath.R4.Tests
             evaluate(node, "Observation.component.value as string").Should().ContainSingle()
                 .Which.GetValue().Should().Be("hi");
             evaluate(node, "Observation.component.value.as(string)").Should().ContainSingle();
+        }
+
+        [TestMethod]
+        public void StrictAsFunctionRequiresAtMostOneItem()
+        {
+            var node = new Patient { Name = { new HumanName { Family = "A" }, new HumanName { Family = "B" } } }.ToPocoNode();
+
+            var act = () => evaluate(node, "Patient.name.as(HumanName)", strictAs: true);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*more than one item*");
+            evaluate(node, "Patient.name[0].as(HumanName)", strictAs: true).Should().ContainSingle();
+
+            // By default as() filters collections, since FHIR R4 core invariants (dom-3) rely on that.
+            evaluate(node, "Patient.name.as(HumanName)").Should().HaveCount(2);
+
+            // The 'as' operator stays lenient, since FHIR R4 search parameters use it on collections.
+            evaluate(node, "Patient.name as HumanName").Should().HaveCount(2);
+            evaluate(node, "Patient.name.ofType(HumanName)").Should().HaveCount(2);
+        }
+
+        [TestMethod]
+        [DataRow("Patient.gender.as(string1)")]
+        [DataRow("Patient.gender.ofType(string1)")]
+        [DataRow("Patient.gender.ofType(FHIR.string1)")]
+        [DataRow("Patient.gender.ofType(System.Patient)")]
+        [DataRow("Patient.ofType(Observation1)")]
+        public void UnknownTypeNameIsAnError(string expression)
+        {
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+            var act = () => evaluate(node, expression);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+            act = () => evaluate(node, expression, strictAs: true);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+        }
+
+        [TestMethod]
+        [DataRow("Patient.gender.ofType(Observation)")] // the Poco for gender lives in the base assembly
+        [DataRow("Patient.gender.as(Observation)")]
+        [DataRow("Patient.gender.ofType(System.Integer)")]
+        [DataRow("Patient.gender.ofType(FHIR.Age)")]
+        [DataRow("Patient.gender.ofType(BackboneElement)")]
+        [DataRow("Patient.ofType(Observation)")]
+        [DataRow("Patient.ofType(Logical.Whatever)")] // types in other namespaces cannot be checked
+        [DataRow("('a' | 'b').ofType(Patient)")]
+        [DataRow("{}.ofType(string1)")] // nothing to filter
+        public void KnownTypeNameWithoutMatchIsEmpty(string expression)
+        {
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+            evaluate(node, expression).Should().BeEmpty();
         }
 
         [TestMethod]

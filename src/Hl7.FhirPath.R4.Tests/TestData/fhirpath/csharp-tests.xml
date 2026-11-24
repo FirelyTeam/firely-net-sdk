@@ -213,12 +213,12 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0059" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained[0].name.iif(exists(), 'named', 'unnamed') = 'named'</expression>
-    <output type="boolean">true</output>
+    <!-- iif() on a collection with more than one item is an error -->
+    <expression invalid="execution">Patient.contained[0].name.iif(exists(), 'named', 'unnamed') = 'named'</expression>
   </test>
   <test name="CSharpTest0060" inputfile="fp-test-patient.xml">
-    <expression>Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'</expression>
-    <output type="boolean">true</output>
+    <!-- iif() on a collection with more than one item is an error -->
+    <expression invalid="execution">Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'</expression>
   </test>
   <test name="CSharpTest0061" inputfile="fp-test-patient.xml">
     <expression>Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'</expression>
@@ -543,7 +543,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0140" inputfile="fp-test-patient.xml">
-    <expression>Patient.descendants().as(code).where(matches('i.*/gif')) in Patient.photo.children()</expression>
+    <expression>Patient.descendants().ofType(code).where(matches('i.*/gif')) in Patient.photo.children()</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0141" inputfile="fp-test-patient.xml">
