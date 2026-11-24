@@ -18,7 +18,8 @@ namespace Hl7.FhirPath.Analysis;
 /// "unknown", which never leads to an error.
 /// </summary>
 /// <remarks>Type names are FHIR type names (e.g. <c>Patient</c>, <c>Period</c>, <c>dateTime</c>), optionally
-/// qualified (<c>FHIR.Period</c>), or FHIRPath System types qualified with <c>System.</c> (e.g. <c>System.String</c>).</remarks>
+/// qualified (<c>FHIR.Period</c>), or FHIRPath System types qualified with <c>System.</c> (e.g. <c>System.String</c>).
+/// Names are case-sensitive. A name that is not a known type makes the analysis throw an <see cref="System.ArgumentException"/>.</remarks>
 public class FhirPathAnalysisContext
 {
     /// <summary>
@@ -32,7 +33,7 @@ public class FhirPathAnalysisContext
     public IReadOnlyCollection<string>? ResourceTypes { get; set; }
 
     /// <summary>
-    /// The possible types of <c>%rootResource</c>, or <c>null</c> to use <see cref="ResourceTypes"/>.
+    /// The possible types of <c>%rootResource</c>, or <c>null</c> if unknown.
     /// </summary>
     public IReadOnlyCollection<string>? RootResourceTypes { get; set; }
 

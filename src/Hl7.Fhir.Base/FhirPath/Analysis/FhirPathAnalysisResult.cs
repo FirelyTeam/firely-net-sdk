@@ -16,30 +16,49 @@ using System.Linq;
 namespace Hl7.FhirPath.Analysis;
 
 /// <summary>
-/// A semantic error found by the <see cref="FhirPathAnalyzer"/>.
+/// The kinds of semantic error the <see cref="FhirPathAnalyzer"/> reports.
 /// </summary>
-/// <param name="Code">A short, stable code for the kind of error (see the constants on this class).</param>
-/// <param name="Message">A human-readable description of the error.</param>
-/// <param name="Expression">The (sub)expression the error was found in.</param>
-public record FhirPathDiagnostic(string Code, string Message, Expression Expression)
+public enum FhirPathDiagnosticCode
 {
     /// <summary>A path refers to an element that does not exist on any of the possible types of its focus.</summary>
-    public const string UNKNOWN_ELEMENT = "unknown-element";
+    UnknownElement,
 
     /// <summary>A path uses a type-suffixed name for a choice element (e.g. <c>valueQuantity</c>).</summary>
-    public const string CHOICE_NAME = "choice-element-name";
+    ChoiceElementName,
 
     /// <summary>A path starts with a type name that the focus can never be (e.g. <c>Encounter.id</c> on a Patient).</summary>
-    public const string WRONG_TYPE_NAME = "wrong-type-name";
+    WrongTypeName,
 
     /// <summary>A function is used on a focus none of whose possible types it supports.</summary>
-    public const string INVALID_FOCUS_TYPE = "invalid-focus-type";
+    InvalidFocusType,
 
     /// <summary>An argument can never have a type the function accepts.</summary>
-    public const string INVALID_ARGUMENT_TYPE = "invalid-argument-type";
+    InvalidArgumentType,
 
     /// <summary>An order-dependent function is used on a collection that has no defined order.</summary>
-    public const string UNORDERED_COLLECTION = "unordered-collection";
+    UnorderedCollection,
+}
+
+/// <summary>
+/// A semantic error found by the <see cref="FhirPathAnalyzer"/>.
+/// </summary>
+public sealed class FhirPathDiagnostic
+{
+    internal FhirPathDiagnostic(FhirPathDiagnosticCode code, string message, Expression expression)
+    {
+        Code = code;
+        Message = message;
+        Expression = expression;
+    }
+
+    /// <summary>The kind of error.</summary>
+    public FhirPathDiagnosticCode Code { get; }
+
+    /// <summary>A human-readable description of the error.</summary>
+    public string Message { get; }
+
+    /// <summary>The (sub)expression the error was found in.</summary>
+    public Expression Expression { get; }
 
     /// <summary>
     /// The position of the (sub)expression in the source text, if known.
@@ -54,7 +73,7 @@ public record FhirPathDiagnostic(string Code, string Message, Expression Express
 /// <summary>
 /// The outcome of a static analysis of a FHIRPath expression by the <see cref="FhirPathAnalyzer"/>.
 /// </summary>
-public class FhirPathAnalysisResult
+public sealed class FhirPathAnalysisResult
 {
     internal FhirPathAnalysisResult(IReadOnlyList<FhirPathDiagnostic> diagnostics, IReadOnlyCollection<string>? resultTypes)
     {

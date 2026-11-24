@@ -37,7 +37,7 @@ namespace Hl7.FhirPath.R4.Tests
             result.Diagnostics.Should().BeEmpty($"'{expression}' on {inputTypes ?? "(unknown)"} is valid");
         }
 
-        private static void invalid(string expression, string inputTypes, string code, bool checkOrdered = false)
+        private static void invalid(string expression, string inputTypes, FhirPathDiagnosticCode code, bool checkOrdered = false)
         {
             var result = analyze(expression, inputTypes, checkOrdered);
             result.Diagnostics.Select(d => d.Code).Should().Contain(code, $"'{expression}' on {inputTypes ?? "(unknown)"} is invalid");
@@ -52,10 +52,15 @@ namespace Hl7.FhirPath.R4.Tests
             valid("Patient.name.given.extension.url", "Patient");
             valid("Patient.active.value", "Patient");
 
-            invalid("name.given1", "Patient", FhirPathDiagnostic.UNKNOWN_ELEMENT);
-            invalid("Patient.name.given1", "Patient", FhirPathDiagnostic.UNKNOWN_ELEMENT);
-            invalid("Patient.contact.nam", "Patient", FhirPathDiagnostic.UNKNOWN_ELEMENT);
-            invalid("Encounter.name", "Patient", FhirPathDiagnostic.WRONG_TYPE_NAME);
+            invalid("name.given1", "Patient", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Patient.name.given1", "Patient", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Patient.contact.nam", "Patient", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Encounter.name", "Patient", FhirPathDiagnosticCode.WrongTypeName);
+            invalid("Patient.Name.family", "Patient", FhirPathDiagnosticCode.UnknownElement);   // names are case-sensitive
+            invalid("Patient.name.Given", "Patient", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Patient.name.bogus", null, FhirPathDiagnosticCode.UnknownElement);         // leading type name gives the type
+            valid("Age.value", "Quantity");                                                       // Quantity has subtypes
+            valid("(1 'mg').value");
         }
 
         [TestMethod]
@@ -66,9 +71,9 @@ namespace Hl7.FhirPath.R4.Tests
             valid("(Observation.value as Quantity).unit", "Observation");
             valid("Observation.value.as(Quantity).unit", "Observation");
 
-            invalid("Observation.valueQuantity.unit", "Observation", FhirPathDiagnostic.CHOICE_NAME);
-            invalid("(Observation.value as Period).unit", "Observation", FhirPathDiagnostic.UNKNOWN_ELEMENT);
-            invalid("Observation.value.ofType(Period).unit", "Observation", FhirPathDiagnostic.UNKNOWN_ELEMENT);
+            invalid("Observation.valueQuantity.unit", "Observation", FhirPathDiagnosticCode.ChoiceElementName);
+            invalid("(Observation.value as Period).unit", "Observation", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Observation.value.ofType(Period).unit", "Observation", FhirPathDiagnosticCode.UnknownElement);
         }
 
         [TestMethod]
@@ -82,7 +87,7 @@ namespace Hl7.FhirPath.R4.Tests
             valid("Patient.descendants().whatever", "Patient");
             valid("Patient.unknownFunction().whatever", "Patient");
             valid("Bundle.entry.resource.ofType(Patient).name.given", "Bundle");
-            invalid("Bundle.entry.resource.ofType(Patient).name.given1", "Bundle", FhirPathDiagnostic.UNKNOWN_ELEMENT);
+            invalid("Bundle.entry.resource.ofType(Patient).name.given1", "Bundle", FhirPathDiagnosticCode.UnknownElement);
         }
 
         [TestMethod]
@@ -91,9 +96,9 @@ namespace Hl7.FhirPath.R4.Tests
             valid("Patient.name.where(given = 'x')", "Patient");
             valid("Patient.name.select(given)", "Patient");
             valid("Patient.name.all($this.given.exists())", "Patient");
-            invalid("Patient.name.where(given1 = 'x')", "Patient", FhirPathDiagnostic.UNKNOWN_ELEMENT);
-            invalid("Patient.name.exists(given1)", "Patient", FhirPathDiagnostic.UNKNOWN_ELEMENT);
-            invalid("Patient.name.select(given).nam", "Patient", FhirPathDiagnostic.UNKNOWN_ELEMENT);
+            invalid("Patient.name.where(given1 = 'x')", "Patient", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Patient.name.exists(given1)", "Patient", FhirPathDiagnosticCode.UnknownElement);
+            invalid("Patient.name.select(given).nam", "Patient", FhirPathDiagnosticCode.UnknownElement);
         }
 
         [TestMethod]
@@ -111,8 +116,8 @@ namespace Hl7.FhirPath.R4.Tests
             valid("$this.toString()", "Quantity");
             valid("$this.toString()", "dateTime|Period");   // only an error if none of the types allow it
             valid("'a'.toString()");
-            invalid("$this.toString()", "Period", FhirPathDiagnostic.INVALID_FOCUS_TYPE);
-            invalid("$this.toString()", "Period|Timing", FhirPathDiagnostic.INVALID_FOCUS_TYPE);
+            invalid("$this.toString()", "Period", FhirPathDiagnosticCode.InvalidFocusType);
+            invalid("$this.toString()", "Period|Timing", FhirPathDiagnosticCode.InvalidFocusType);
         }
 
         [TestMethod]
@@ -122,8 +127,9 @@ namespace Hl7.FhirPath.R4.Tests
             valid("iif(Patient.active, 1, 2)", "Patient");
             valid("iif({}, 1, 2)");
             valid("iif(%unknown, 1, 2)");
-            invalid("iif('not a boolean', 1, 2)", null, FhirPathDiagnostic.INVALID_ARGUMENT_TYPE);
-            invalid("iif(Patient.name, 1, 2)", "Patient", FhirPathDiagnostic.INVALID_ARGUMENT_TYPE);
+            invalid("iif('not a boolean', 1, 2)", null, FhirPathDiagnosticCode.InvalidArgumentType);
+            invalid("iif(1 | 2, 1, 2)", null, FhirPathDiagnosticCode.InvalidArgumentType);
+            valid("iif(Patient.gender, 1, 2)", "Patient");      // FHIR elements are evaluated as singletons by the engine
         }
 
         [TestMethod]
@@ -132,9 +138,11 @@ namespace Hl7.FhirPath.R4.Tests
             valid("Patient.children().skip(1)", "Patient");     // not checked by default
             valid("Patient.name.skip(1)", "Patient", checkOrdered: true);
             valid("Patient.children().where(true).count()", "Patient", checkOrdered: true);
-            invalid("Patient.children().skip(1)", "Patient", FhirPathDiagnostic.UNORDERED_COLLECTION, checkOrdered: true);
-            invalid("Patient.descendants().first()", "Patient", FhirPathDiagnostic.UNORDERED_COLLECTION, checkOrdered: true);
-            invalid("Patient.children()[0]", "Patient", FhirPathDiagnostic.UNORDERED_COLLECTION, checkOrdered: true);
+            invalid("Patient.children().name.first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("(Patient.children() | Patient.name).first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("Patient.children().skip(1)", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("Patient.descendants().first()", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
+            invalid("Patient.children()[0]", "Patient", FhirPathDiagnosticCode.UnorderedCollection, checkOrdered: true);
         }
 
         [TestMethod]
@@ -165,7 +173,7 @@ namespace Hl7.FhirPath.R4.Tests
         [DataRow("$this.start is dateTime implies $this.toString().length() > 1", "Period")]  // not a test on $this
         [DataRow("$this is dateTime implies %resource.name.where($this.toString() = 'x').exists()", "Patient")]  // new $this
         public void TypeGuardsDoNotOverNarrow(string expression, string inputTypes) =>
-            invalid(expression, inputTypes, FhirPathDiagnostic.INVALID_FOCUS_TYPE);
+            invalid(expression, inputTypes, FhirPathDiagnosticCode.InvalidFocusType);
 
         [TestMethod]
         public void ReportsResultTypesAndLocation()
@@ -179,6 +187,19 @@ namespace Hl7.FhirPath.R4.Tests
             diagnostic.Location.Should().NotBeNull();
             diagnostic.Location.LinePosition.Should().Be(14);
             diagnostic.Message.Should().Contain("given1");
+        }
+
+        [TestMethod]
+        public void ContextIsValidated()
+        {
+            var act = () => _analyzer.Analyze("name", new FhirPathAnalysisContext { InputTypes = ["Patient", "Bogus"] });
+            act.Should().Throw<System.ArgumentException>().WithMessage("*Bogus*");
+
+            // %rootResource is unknown unless given, so a contained resource's invariant does not fail on it.
+            _analyzer.Analyze("%rootResource.subject", new FhirPathAnalysisContext { ResourceTypes = ["Medication"] })
+                .Diagnostics.Should().BeEmpty();
+            _analyzer.Analyze("Patient.``", new FhirPathAnalysisContext { InputTypes = ["Patient"] })
+                .Diagnostics.Should().BeEmpty();
         }
 
         [TestMethod]

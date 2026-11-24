@@ -34,7 +34,7 @@ namespace Hl7.FhirPath.Analysis;
 /// <c>iif(A, B, ...)</c> check B assuming A is true, <c>A or B</c> and <c>iif(A, ..., B)</c> assuming A is false.</para>
 /// <para>Analysis is separate from compilation: <see cref="FhirPathCompiler.Compile(string)"/> does not run it.</para>
 /// </remarks>
-public class FhirPathAnalyzer
+public sealed class FhirPathAnalyzer
 {
     private readonly ModelInspector _inspector;
 
@@ -51,12 +51,14 @@ public class FhirPathAnalyzer
     /// Parses and analyzes an expression.
     /// </summary>
     /// <exception cref="FormatException">The expression is not syntactically valid.</exception>
+    /// <exception cref="ArgumentException">The context contains a type name that is not a known FHIR or System type.</exception>
     public FhirPathAnalysisResult Analyze(string expression, FhirPathAnalysisContext? context = null) =>
         Analyze(new FhirPathCompiler().Parse(expression), context);
 
     /// <summary>
     /// Analyzes a parsed expression.
     /// </summary>
+    /// <exception cref="ArgumentException">The context contains a type name that is not a known FHIR or System type.</exception>
     public FhirPathAnalysisResult Analyze(Expression expression, FhirPathAnalysisContext? context = null)
     {
         if (expression is null) throw new ArgumentNullException(nameof(expression));
@@ -103,7 +105,9 @@ public class FhirPathAnalyzer
         public TypeSet AsUnordered(bool unordered) => unordered == Unordered ? this : new(Types, unordered);
 
         public static TypeSet Union(TypeSet a, TypeSet b) =>
-            a.Types is null || b.Types is null ? Unknown : new(a.Types.Concat(b.Types), a.Unordered || b.Unordered);
+            a.Types is null || b.Types is null
+                ? Unknown.AsUnordered(a.Unordered || b.Unordered)
+                : new(a.Types.Concat(b.Types), a.Unordered || b.Unordered);
 
         public static TypeSet Intersect(TypeSet a, TypeSet b) =>
             a.Types is null ? b : b.Types is null ? a : new(a.Types.Where(b.Types.Contains));
@@ -141,8 +145,10 @@ public class FhirPathAnalyzer
     /// Resolves a (possibly qualified) type name: unqualified names are resolved as FHIR types first, then
     /// as System types. Returns <c>null</c> if the name is not a known type.
     /// </summary>
-    internal AType? ResolveType(string name)
+    internal AType? ResolveType(string? name)
     {
+        if (string.IsNullOrEmpty(name)) return null;
+
         if (name.StartsWith("System.", StringComparison.Ordinal))
             return resolveSystem(name.Substring("System.".Length));
         if (name.StartsWith("FHIR.", StringComparison.Ordinal))
@@ -151,15 +157,19 @@ public class FhirPathAnalyzer
         return resolveFhir(name) ?? resolveSystem(name);
 
         AType? resolveSystem(string n) => SYSTEM_TYPES.Contains(n) ? systemType(n) : null;
-        AType? resolveFhir(string n) => _inspector.FindClassMapping(n) is { } cm ? new AType(cm.Name, cm) : null;
+        // Type names are case-sensitive (the inspector's lookup is not): 'String' is not the FHIR type 'string'.
+        AType? resolveFhir(string n) => _inspector.FindClassMapping(n) is { } cm && cm.Name == n ? new AType(cm.Name, cm) : null;
     }
 
-    internal TypeSet ResolveTypes(IReadOnlyCollection<string>? names)
+    internal TypeSet ResolveTypes(IReadOnlyCollection<string>? names, string argumentName)
     {
         if (names is null) return TypeSet.Unknown;
 
-        var types = names.Select(ResolveType).ToList();
-        return types.Any(t => t is null) ? TypeSet.Unknown : new TypeSet(types!);
+        var types = new List<AType>();
+        foreach (var name in names)
+            types.Add(ResolveType(name) ?? throw new ArgumentException($"'{name}' is not a known FHIR or System type", argumentName));
+
+        return new TypeSet(types);
     }
 
     /// <summary>
@@ -180,11 +190,12 @@ public class FhirPathAnalyzer
         var source = type.Mapping!;
         var targetMapping = target.Mapping!;
 
-        // An item of an abstract type can be any of its subtypes.
-        if (!isConcrete(source)) return null;
-
         if (source.Name == targetMapping.Name || targetMapping.NativeType.IsAssignableFrom(source.NativeType))
             return true;
+
+        // An item of an abstract type can be any of its subtypes, and a concrete type can have subtypes as well
+        // (e.g. a Quantity can be an Age).
+        if (!isConcrete(source) || source.NativeType.IsAssignableFrom(targetMapping.NativeType)) return null;
 
         for (var name = source.Name; PRIMITIVE_BASE_TYPES.TryGetValue(name, out var baseName); name = baseName)
             if (baseName == targetMapping.Name) return true;
@@ -240,11 +251,20 @@ public class FhirPathAnalyzer
 
         public TypeSet Run(Expression expression)
         {
-            _this.Push(analyzer.ResolveTypes(context.InputTypes));
+            _this.Push(analyzer.ResolveTypes(context.InputTypes, nameof(context.InputTypes)));
+            // Resolve these up front, so an unknown type name is reported even if the expression does not use them.
+            _resource = analyzer.ResolveTypes(context.ResourceTypes, nameof(context.ResourceTypes));
+            _rootResource = analyzer.ResolveTypes(context.RootResourceTypes, nameof(context.RootResourceTypes));
+            foreach (var variable in context.Variables)
+                _variables[variable.Key] = analyzer.ResolveTypes(variable.Value, nameof(context.Variables));
+
             return expression.Accept(this);
         }
 
         private TypeSet This => _this.Peek();
+        private TypeSet _resource = TypeSet.Unknown;
+        private TypeSet _rootResource = TypeSet.Unknown;
+        private readonly Dictionary<string, TypeSet> _variables = [];
 
         private TypeSet inScope(TypeSet @this, Func<TypeSet> action)
         {
@@ -255,7 +275,7 @@ public class FhirPathAnalyzer
 
         private TypeSet visitInScope(Expression expression, TypeSet @this) => inScope(@this, () => expression.Accept(this));
 
-        private void report(string code, string message, Expression expression) =>
+        private void report(FhirPathDiagnosticCode code, string message, Expression expression) =>
             Diagnostics.Add(new FhirPathDiagnostic(code, message, expression));
 
         #region Visitor
@@ -292,11 +312,11 @@ public class FhirPathAnalyzer
             var name = expression.Name.TrimStart('%');
             return name switch
             {
-                "resource" => analyzer.ResolveTypes(context.ResourceTypes),
-                "rootResource" => analyzer.ResolveTypes(context.RootResourceTypes ?? context.ResourceTypes),
-                "context" => analyzer.ResolveTypes(context.InputTypes),
+                "resource" => _resource,
+                "rootResource" => _rootResource,
+                "context" => _this.Last(),
                 "ucum" or "sct" or "loinc" => new TypeSet([SYSTEM_STRING]),
-                _ => context.Variables.TryGetValue(name, out var types) ? analyzer.ResolveTypes(types) : TypeSet.Unknown
+                _ => _variables.TryGetValue(name, out var types) ? types : TypeSet.Unknown
             };
         }
 
@@ -319,16 +339,21 @@ public class FhirPathAnalyzer
 
         private TypeSet navigate(TypeSet focus, string name, Expression expression)
         {
-            if (!focus.IsKnown) return TypeSet.Unknown;
+            if (string.IsNullOrEmpty(name)) return TypeSet.Unknown;
 
             // A path step can be a type name, which selects the focus if it is of that type (e.g. "Patient.name").
+            // FHIR element names never start with an uppercase letter, so this is the only thing it can select.
             if (char.IsUpper(name[0]) && analyzer.ResolveType(name) is { IsSystem: false } typeName)
             {
+                if (!focus.IsKnown) return new TypeSet([typeName]);
+
                 var (matching, _) = splitOnType(focus, typeName);
                 if (focus.IsCheckable && matching.Types!.Count == 0)
-                    report(FhirPathDiagnostic.WRONG_TYPE_NAME, $"The focus ({focus}) can never be of type '{name}'", expression);
+                    report(FhirPathDiagnosticCode.WrongTypeName, $"The focus ({focus}) can never be of type '{name}'", expression);
                 return matching.AsUnordered(false);
             }
+
+            if (!focus.IsKnown) return TypeSet.Unknown.AsUnordered(focus.Unordered);
 
             var result = new List<AType>();
             bool unknown = false, found = false;
@@ -336,7 +361,12 @@ public class FhirPathAnalyzer
 
             foreach (var type in focus.Types!)
             {
-                if (type.IsSystem) continue;   // System types have no elements.
+                if (type.IsSystem)
+                {
+                    // System types have no elements in FHIRPath, but the engine does give e.g. a Quantity's value.
+                    unknown = true;
+                    continue;
+                }
 
                 var mapping = type.Mapping!;
                 if (!isConcrete(mapping))
@@ -352,7 +382,8 @@ public class FhirPathAnalyzer
                     continue;
                 }
 
-                if (mapping.FindMappedElementByName(name) is { } element)
+                // The inspector's lookup is case-insensitive, but FHIRPath names are not.
+                if (mapping.FindMappedElementByName(name) is { } element && element.Name == name)
                 {
                     found = true;
                     try
@@ -364,7 +395,7 @@ public class FhirPathAnalyzer
                         unknown = true;
                     }
                 }
-                else if (mapping.FindMappedElementByChoiceName(name) is not null)
+                else if (mapping.FindMappedElementByChoiceName(name) is { } choice && name.StartsWith(choice.Name, StringComparison.Ordinal) && name != choice.Name)
                 {
                     choiceName = true;
                 }
@@ -373,12 +404,12 @@ public class FhirPathAnalyzer
             if (!found && !unknown && focus.IsCheckable)
             {
                 if (choiceName)
-                    report(FhirPathDiagnostic.CHOICE_NAME, $"'{name}' is not a valid path: refer to a choice element by its name without a type suffix, and use ofType() to select a type", expression);
+                    report(FhirPathDiagnosticCode.ChoiceElementName, $"'{name}' is not a valid path: refer to a choice element by its name without a type suffix, and use ofType() to select a type", expression);
                 else
-                    report(FhirPathDiagnostic.UNKNOWN_ELEMENT, $"The element '{name}' does not exist on {focus}", expression);
+                    report(FhirPathDiagnosticCode.UnknownElement, $"The element '{name}' does not exist on {focus}", expression);
             }
 
-            return unknown ? TypeSet.Unknown : new TypeSet(result);
+            return (unknown ? TypeSet.Unknown : new TypeSet(result)).AsUnordered(focus.Unordered);
         }
 
         private TypeSet indexer(IndexerExpression expression)
@@ -392,7 +423,7 @@ public class FhirPathAnalyzer
         private void checkOrdered(TypeSet focus, string what, Expression expression)
         {
             if (context.CheckOrderedFunctions && focus.Unordered)
-                report(FhirPathDiagnostic.UNORDERED_COLLECTION, $"{what} is used on a collection that has no defined order", expression);
+                report(FhirPathDiagnosticCode.UnorderedCollection, $"{what} is used on a collection that has no defined order", expression);
         }
 
         #endregion
@@ -429,7 +460,7 @@ public class FhirPathAnalyzer
                     visitInScope(right, guard(left).whenFalse);
                     return boolean;
                 case "|":
-                    return TypeSet.Union(left.Accept(this), right.Accept(this)).AsUnordered(false);
+                    return TypeSet.Union(left.Accept(this), right.Accept(this));
             }
 
             left.Accept(this);
@@ -568,7 +599,7 @@ public class FhirPathAnalyzer
             {
                 case "toString" when arguments.Count == 0:
                     if (focus.IsCheckable && !focus.Types!.Any(isStringConvertible))
-                        report(FhirPathDiagnostic.INVALID_FOCUS_TYPE, $"toString() can only be used on primitive values, not on {focus}", expression);
+                        report(FhirPathDiagnosticCode.InvalidFocusType, $"toString() can only be used on primitive values, not on {focus}", expression);
                     return @string;
                 case "as" or "ofType" when arguments.Count == 1:
                     return splitOnType(focus, typeArgument(arguments[0])).whenTrue;
@@ -599,8 +630,10 @@ public class FhirPathAnalyzer
             return inScope(focus.AsUnordered(false), () =>
             {
                 var criterion = arguments[0].Accept(this);
-                if (criterion.IsCheckable && !criterion.Types!.Any(isBoolean))
-                    report(FhirPathDiagnostic.INVALID_ARGUMENT_TYPE, $"The criterion of iif() must be a boolean, but is {criterion}", arguments[0]);
+                // The engine evaluates a FHIR element (e.g. a code) used as a criterion by the singleton evaluation of
+                // collections, so only criteria that are System values (literals, function results) are checked.
+                if (criterion.IsCheckable && criterion.Types!.All(t => t.IsSystem) && !criterion.Types!.Any(isBoolean))
+                    report(FhirPathDiagnosticCode.InvalidArgumentType, $"The criterion of iif() must be a boolean, but is {criterion}", arguments[0]);
 
                 var (whenTrue, whenFalse) = guard(arguments[0]);
                 var result = visitInScope(arguments[1], whenTrue);

@@ -433,6 +433,7 @@ namespace Hl7.FhirPath.R4.Tests
             var analysisContext = new FhirPathAnalysisContext
             {
                 ResourceTypes = resourceType,
+                RootResourceTypes = resourceType,
                 InputTypes = testLine.Attribute("contextType")?.Value.Split('|')
                     ?? (context is null
                         ? resourceType
