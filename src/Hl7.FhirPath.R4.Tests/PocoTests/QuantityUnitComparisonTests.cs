@@ -1,0 +1,79 @@
+/*
+ * Copyright (c) 2026, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ *
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
+using FluentAssertions;
+using Hl7.Fhir.Model;
+using Hl7.FhirPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
+
+namespace Hl7.Fhir.FhirPath.R4.Tests
+{
+    /// <summary>
+    /// Equality (=) and equivalence (~) of FHIR Quantities that have unit text but no code.
+    /// See https://github.com/FirelyTeam/firely-net-sdk/issues/3692
+    /// </summary>
+    [TestClass]
+    public class QuantityUnitComparisonTests
+    {
+        private static Parameters input() => new()
+        {
+            Parameter =
+            [
+                new() { Name = "no-unit", Value = new Quantity { Value = 1 } },
+                new() { Name = "tablets", Value = new Quantity { Value = 1, Unit = "tablets" } },
+                new() { Name = "mg-text", Value = new Quantity { Value = 1, Unit = "mg" } },
+                new() { Name = "mg-code", Value = new Quantity { Value = 1, Code = "mg", System = "http://unitsofmeasure.org" } },
+                new() { Name = "milligram-text", Value = new Quantity { Value = 1, Unit = "milligram" } },
+                new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
+            ]
+        };
+
+        private static string p(string name) => $"Parameters.parameter.where(name = '{name}').value";
+
+        // null means the result is the empty collection
+        private static bool? eval(string expression) => (bool?)input().Scalar(expression);
+
+        [TestMethod]
+        [DataRow("no-unit", "no-unit", true, true)]
+        [DataRow("tablets", "tablets", true, true)]
+        [DataRow("tablets", "no-unit", null, false)]
+        [DataRow("no-unit", "tablets", null, false)]
+        [DataRow("mg-text", "mg-code", true, true)]
+        [DataRow("mg-code", "milligram-text", null, false)]
+        [DataRow("mg-code-and-text", "mg-code", true, true)]
+        [DataRow("mg-code-and-text", "milligram-text", null, false)]
+        public void ComparesFhirQuantities(string left, string right, bool? equal, bool equivalent)
+        {
+            eval($"{p(left)} = {p(right)}").Should().Be(equal);
+            eval($"{p(left)} ~ {p(right)}").Should().Be(equivalent);
+        }
+
+        [TestMethod]
+        [DataRow("tablets", "1 'tablets'", true, true)]
+        [DataRow("tablets", "1", null, false)]
+        [DataRow("tablets", "1 '1'", null, false)]
+        [DataRow("no-unit", "1", true, true)]
+        [DataRow("no-unit", "1 '1'", true, true)]
+        [DataRow("mg-text", "1 'mg'", true, true)]
+        public void ComparesFhirQuantityToSystemValue(string left, string right, bool? equal, bool equivalent)
+        {
+            eval($"{p(left)} = {right}").Should().Be(equal);
+            eval($"{p(left)} ~ {right}").Should().Be(equivalent);
+            eval($"{right} = {p(left)}").Should().Be(equal);
+            eval($"{right} ~ {p(left)}").Should().Be(equivalent);
+        }
+
+        [TestMethod]
+        public void DistinctKeepsUnitTextQuantitySeparateFromUnitless()
+        {
+            input().Select("Parameters.parameter.where(name = 'no-unit' or name = 'tablets').value.distinct()")
+                .Should().HaveCount(2);
+        }
+    }
+}

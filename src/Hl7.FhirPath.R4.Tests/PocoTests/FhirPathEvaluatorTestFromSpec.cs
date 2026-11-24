@@ -266,10 +266,6 @@ namespace Hl7.FhirPath.R4.Tests
             // Quantity multiplication and division (2.0 'cm' * 2.0 'm', 4.0 'g' / 2.0 'm')
             "testQuantity9", "testQuantity10", "testQuantity11",
 
-            // Comparing a quantity with a unit to one without a unit should give empty (=) / false (~)
-            "testQuantityUnitVsNoUnitEqual", "testQuantityNoUnitVsUnitEqual", "testQuantityUnitVsNoUnitEquivalent",
-            "testQuantityNoUnitVsUnitEquivalent",
-
             // Decimals with exponents outside the System.Decimal range (e.g. 1e999999999) are not supported
             "testLargeExponentQtyEqualOtherUnit", "testLargeExponentQtyEqualSameUnit", "testLargeExponentQtyEquivalentOtherUnit",
             "testLargeExponentQtyEquivalentSameUnit", "testLargeExponentQtyLessOtherUnit", "testLargeExponentQtyGreaterSameUnit",

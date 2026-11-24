@@ -69,17 +69,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = quantityForComparison(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = quantityForComparison(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -99,6 +91,19 @@ namespace Hl7.FhirPath.Functions
                 // Else, we're comparing a complex (without a value) to a primitive which (probably) should return false
                 return false;
             }
+        }
+
+        // Converts a FHIR Quantity to a System.Quantity for = and ~. A quantity without a code
+        // uses its unit text as the unit, so it does not compare equal to a unitless quantity.
+        private static P.Quantity? quantityForComparison(ITypedElement element)
+        {
+            var quantity = element is PocoNode { Poco: Quantity q }
+                ? q
+#pragma warning disable CS0618 // Type or member is obsolete
+                : element.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly));
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return Typecasts.ParseQuantityForComparison(quantity);
         }
 
         public static bool? IsEqualTo(P.Any? left, P.Any? right)
@@ -167,17 +172,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = quantityForComparison(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = quantityForComparison(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
