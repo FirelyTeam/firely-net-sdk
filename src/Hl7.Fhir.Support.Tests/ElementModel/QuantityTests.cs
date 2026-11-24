@@ -122,53 +122,20 @@ namespace Hl7.Fhir.ElementModel.Tests
             GreaterThan
         }
 
-        // public static IEnumerable<object?[]> ArithmeticTestdata => new[]
-        //         {
-        //             ["25 'kg'", "5 'kg'", "30 'kg'" , (object)Quantity.Add],
-        //             ["25000 'g'", "1000 'g'", "26000 'g'", (object)Quantity.Add],
-        //             ["3 '[in_i]'", "2 '[in_i]'", "5 '[in_i]'", (object)Quantity.Add],
-        //             ["4.0 'kg.m/s2'", "2.0 'kg.m/s2'", "6.0 'kg.m/s2'", (object)Quantity.Add],
-        //             ["3 'm'", "0.03 'm'", "3.03 'm'", (object)Quantity.Add],
-        //             ["3 'm'", "0 'm'","3 'm'", (object)Quantity.Add],
-        //             ["3 'm'", "-0.8 'm'", "2.2 'm'", (object)Quantity.Add],
-        //             ["3 'm'", "0 'kg'", null, (object)Quantity.Add],
-        //             ["25000 'g'", "500 'g'", "24500 'g'", (object)Quantity.Substract],
-        //             ["25000 'g'", "25001 'g'", "-1 'g'", (object)Quantity.Substract],
-        //             ["1 '[in_i]'", "2 'kg'", null, (object)Quantity.Substract],
-        //             ["25 'm'", "20 'm'", "500 '(m).(m)'", (object)Quantity.Multiply],
-        //             ["2.0 'cm'", "9 'kg'", "18 '(cm).(kg)'", (object)Quantity.Multiply],
-        //             ["14.4 'km'", "2.0 'h'", "7.2 '(km)/(h)'", (object)Quantity.Divide],
-        //             ["9 'm2'", "3 'm'", "3 '(m2)/(m)'", (object)Quantity.Divide],
-        //             ["6 'm'", "3 'm'", "2 '(m)/(m)'", (object)Quantity.Divide],
-        //             new[] { "3 'm'", "0 'cm'", null, (object)Quantity.Divide }
-        //         };
-
-
-        // [TestMethod]
-        // [DynamicData(nameof(ArithmeticTestdata))]
-        // public void ArithmeticOperationsTests(string left, string right, object result, Func<Quantity, Quantity, Result<Quantity>> operation)
-        // {
-        //     Quantity.TryParse(left, out var q1).Should().BeTrue();
-        //     Quantity.TryParse(right, out var q2).Should().BeTrue();
-        //
-        //     var opResult = operation(q1!, q2!);
-        //
-        //     if (result is string r && Quantity.TryParse(r, out var q3))
-        //     {
-        //         opResult.ValueOrDefault().Should().Be(q3);
-        //     }
-        //     else
-        //     {
-        //         opResult.Should().BeAssignableTo<IFailed>();
-        //     }
-        // }
-
         [TestMethod]
         [DataRow("2.0 'cm'", "2.0 'm'", "0.040 'm2'")]
         [DataRow("25 'm'", "20 'm'", "500 'm2'")]
         [DataRow("2.0 'cm'", "9 'kg'", "180 'g.m'")]
-        [DataRow("2 'kg'", "3 '1'", "6000 'g'")]
-        [DataRow("3 '1'", "2 'kg'", "6000 'g'")]
+        [DataRow("2 'kg'", "3 '1'", "6 'kg'")]
+        [DataRow("3 '1'", "2 'kg'", "6 'kg'")]
+        [DataRow("5 'mg'", "2 '1'", "10 'mg'")]
+        [DataRow("37 'Cel'", "2 '1'", "74 'Cel'")]
+        [DataRow("2 'kg'", "3 'm'", "6000 'g.m'")]
+        [DataRow("-2 'm'", "3 'm'", "-6 'm2'")]
+        [DataRow("3 '[in_i]'", "2 '[in_i]'", "0.00387096 'm2'")]
+        [DataRow("2 '{tbl}'", "3 '{tbl}'", "6 '1'")]
+        [DataRow("2 '[IU]'", "3 'mL'", null)]
+        [DataRow("79228162514264337593543950335 'km'", "79228162514264337593543950335 'km'", null)]
         [DataRow("3 '1'", "2 '1'", "6 '1'")]
         [DataRow("2 '{tbl}'", "3 'g'", "6 'g'")]
         [DataRow("2 'm'", "3 seconds", "6 'm.s'")]
@@ -176,6 +143,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("2 'Cel'", "3 'm'", null)]
         [DataRow("2 'tablets'", "3 'm'", null)]
         [DataRow("2 'm'", "1 year", null)]
+        [DataRow("1 year", "2 '1'", "2 year")]
         public void QuantityMultiplication(string left, string right, string? expected) =>
             checkArithmetic(left, right, expected, Quantity.TryMultiply);
 
@@ -185,7 +153,11 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("12 'cm2'", "3 'cm'", "0.04 'm'")]
         [DataRow("14.4 'km'", "2.0 'h'", "2 'm.s-1'")]
         [DataRow("2 'kg'", "4 'g'", "500 '1'")]
-        [DataRow("6 'kg'", "3 '1'", "2000 'g'")]
+        [DataRow("6 'kg'", "3 '1'", "2 'kg'")]
+        [DataRow("1 week", "1 day", "7 '1'")]
+        [DataRow("-6 'm'", "3 's'", "-2 'm.s-1'")]
+        [DataRow("2 '[IU]'", "1 'L'", null)]
+        [DataRow("2 '[iU]/mL'", "1 'L'", null)]
         [DataRow("6 '1'", "3 'g'", "2 'g-1'")]
         [DataRow("6 'm'", "3 seconds", "2 'm.s-1'")]
         [DataRow("3 'm'", "0 'cm'", null)]
@@ -211,7 +183,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                 success.Should().BeTrue();
                 var expectedQ = Quantity.Parse(expected);
                 result!.Unit.Should().Be(expectedQ.Unit);
-                result.System.Should().Be(QuantityUnitSystem.UCUM);
+                result.System.Should().Be(expectedQ.System);
                 result.Value.Should().Be(expectedQ.Value);
             }
         }

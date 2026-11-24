@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Fhir.Metrics;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -264,13 +265,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
                 "year" => "year",
                 "month" when comparisonType == QuantityComparison.CompareCalendarUnits => "mo",
                 "month" => "month",
-                "week" => "wk",
-                "day" => "d",
-                "hour" => "h",
-                "minute" => "min",
-                "second" => "s",
-                "millisecond" => "ms",
-                _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
+                _ => definiteCalendarUnitToUcum(orig.Unit)
+                     ?? throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
             };
 
             return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
@@ -309,83 +305,133 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             ? result
             : null;
 
+    // Maps the calendar durations that have a definite length to their UCUM equivalent.
+    private static string? definiteCalendarUnitToUcum(string calendarUnit) => calendarUnit switch
+    {
+        "week" => "wk",
+        "day" => "d",
+        "hour" => "h",
+        "minute" => "min",
+        "second" => "s",
+        "millisecond" => "ms",
+        _ => null
+    };
+
     /// <summary>
     /// Multiplies two quantities, as defined by the FHIRPath <c>*</c> operator.
     /// </summary>
-    /// <remarks>Both operands are converted to canonical UCUM units before multiplying, so the
-    /// result is expressed in canonical UCUM units (e.g. <c>2.0 'cm' * 2.0 'm'</c> gives <c>0.0400 'm2'</c>).
-    /// When either unit cannot be interpreted as a UCUM unit (e.g. the calendar durations 'year' and 'month'),
-    /// the multiplication is not possible and <c>false</c> is returned.</remarks>
+    /// <remarks>
+    /// <para>When one of the operands has the unity unit '1', its value just scales the other operand, which
+    /// keeps its unit (e.g. <c>5 'mg' * 2 '1'</c> gives <c>10 'mg'</c>). Otherwise, both operands are converted
+    /// to canonical UCUM units before multiplying, so the result is expressed in canonical UCUM units
+    /// (e.g. <c>2.0 'cm' * 2.0 'm'</c> gives <c>0.040000 'm2'</c>, and <c>2 'kg' * 3 'm'</c> gives <c>6000 'g.m'</c>).</para>
+    /// <para>The multiplication is not possible, and <c>false</c> is returned, when a unit cannot be converted
+    /// to canonical UCUM units. This includes non-UCUM units, the calendar durations 'year' and 'month',
+    /// units with an offset (like 'Cel'), arbitrary units (like '[IU]'), and results that do not fit in a decimal.
+    /// Annotations (like '{tbl}') carry no meaning in UCUM and are dropped from the result.</para>
+    /// </remarks>
     public static bool TryMultiply(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
         tryCalculate(left, right, multiply: true, out result);
 
     /// <summary>
     /// Divides two quantities, as defined by the FHIRPath <c>/</c> operator.
     /// </summary>
-    /// <remarks>Both operands are converted to canonical UCUM units before dividing, so the
+    /// <remarks>
+    /// <para>When the divisor has the unity unit '1', the dividend keeps its unit (e.g. <c>6 'kg' / 3 '1'</c> gives
+    /// <c>2 'kg'</c>). Otherwise, both operands are converted to canonical UCUM units before dividing, so the
     /// result is expressed in canonical UCUM units (e.g. <c>4.0 'g' / 2.0 'm'</c> gives <c>2 'g.m-1'</c>,
-    /// and <c>1.0 'm' / 1.0 'm'</c> gives <c>1 '1'</c>). Division by zero, or by a quantity whose unit cannot be
-    /// interpreted as a UCUM unit, is not possible and <c>false</c> is returned.</remarks>
+    /// and <c>1.0 'm' / 1.0 'm'</c> gives <c>1 '1'</c>).</para>
+    /// <para>Division by zero is not possible, and neither are the cases listed for
+    /// <see cref="TryMultiply(Quantity, Quantity, out Quantity?)"/>: in these cases <c>false</c> is returned.</para>
+    /// </remarks>
     public static bool TryDivide(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
         tryCalculate(left, right, multiply: false, out result);
 
     private static bool tryCalculate(Quantity left, Quantity right, bool multiply, [NotNullWhen(true)] out Quantity? result)
     {
+        if (left is null) throw new ArgumentNullException(nameof(left));
+        if (right is null) throw new ArgumentNullException(nameof(right));
+
         result = null;
 
         if (!multiply && right.Value == 0) return false;
-        if (toUcumUnit(left) is not { } leftUnit || toUcumUnit(right) is not { } rightUnit) return false;
-
-        var service = global::Fhir.Metrics.FhirMetricService.Instance.Value;
-        (decimal value, string unit, string? codesystem)? calculated;
 
         try
         {
+            // Scaling by a unity quantity keeps the unit (and system) of the other operand.
+            if (isUnity(right))
+            {
+                result = new Quantity(multiply ? left.Value * right.Value : left.Value / right.Value, left.Unit, left.System);
+                return true;
+            }
+
+            if (multiply && isUnity(left))
+            {
+                result = new Quantity(left.Value * right.Value, right.Unit, right.System);
+                return true;
+            }
+
+            if (toUcumUnit(left) is not { } leftUnit || toUcumUnit(right) is not { } rightUnit) return false;
+
             var l = (left.Value, leftUnit, UCUM);
             var r = (right.Value, rightUnit, UCUM);
+            (decimal value, string unit, string? codesystem)? calculated;
             var success = multiply
-                ? global::Fhir.Metrics.MetricServiceExtensions.TryMultiply(service, l, r, out calculated)
-                : global::Fhir.Metrics.MetricServiceExtensions.TryDivide(service, l, r, out calculated);
+                ? metricService.TryMultiply(l, r, out calculated)
+                : metricService.TryDivide(l, r, out calculated);
             if (!success || calculated is null) return false;
+
+            var (value, unit, _) = calculated.Value;
+            result = new Quantity(value, cleanupCanonicalUnit(unit), QuantityUnitSystem.UCUM);
+            return true;
         }
         catch (Exception e) when (e is ArithmeticException or ArgumentException or InvalidOperationException)
         {
+            result = null;
             return false;
         }
 
-        var (value, unit, _) = calculated.Value;
-        result = new Quantity(value, cleanupCanonicalUnit(unit), QuantityUnitSystem.UCUM);
-        return true;
+        static bool isUnity(Quantity q) => q.System == QuantityUnitSystem.UCUM && q.Unit == UCUM_UNIT;
 
-        // Returns the UCUM unit to use in the calculation, using the empty string for the
-        // unity '1' (which Fhir.Metrics does not interpret as unity).
+        // Returns the UCUM unit to use in the calculation. Fhir.Metrics does not interpret '1' as unity,
+        // so this returns the empty string for it.
         static string? toUcumUnit(Quantity q) => q.System switch
         {
-            QuantityUnitSystem.UCUM => q.Unit == UCUM_UNIT ? "" : q.Unit,
-            QuantityUnitSystem.CalendarDuration => q.Unit switch
-            {
-                // Calendar years and months have no definite UCUM equivalent.
-                "week" => "wk",
-                "day" => "d",
-                "hour" => "h",
-                "minute" => "min",
-                "second" => "s",
-                "millisecond" => "ms",
-                _ => null
-            },
+            QuantityUnitSystem.UCUM when q.Unit == UCUM_UNIT => "",
+            QuantityUnitSystem.UCUM when !containsArbitraryUnit(q.Unit) => q.Unit,
+            // Calendar years and months have no definite UCUM equivalent.
+            QuantityUnitSystem.CalendarDuration => definiteCalendarUnitToUcum(q.Unit),
             _ => null
         };
 
         // Fhir.Metrics represents unity (and units consisting only of an annotation, like '{tbl}') as a
-        // '1' factor in its canonical form (e.g. '1.g-1'). Remove those, and use '1' for a dimensionless result.
+        // '1' factor in its canonical form (e.g. '1.g-1' or '12'). Remove those, and use '1' for a dimensionless result.
         static string cleanupCanonicalUnit(string? unit)
         {
             var parts = (unit ?? "").Split('.')
-                .Where(p => p.Length > 0 && !Regex.IsMatch(p, @"^1(-?[0-9]+)?$"))
+                .Where(p => p.Length > 0 && !isUnityFactor(p))
                 .ToArray();
             return parts.Length == 0 ? UCUM_UNIT : string.Join(".", parts);
+
+            static bool isUnityFactor(string part) =>
+                part[0] == '1' && part.Skip(1).All(c => c == '-' || char.IsDigit(c));
         }
     }
+
+    private static IMetricService metricService => FhirMetricService.Instance.Value;
+
+    // UCUM arbitrary units (UCUM §4.5, "arbitrary units", marked as such in ucum-essence.xml) are not
+    // commensurable with any other unit, so they cannot be converted to canonical units.
+    private static readonly string[] ARBITRARY_UNITS =
+    [
+        "[IU]", "[iU]", "[arb'U]", "[USP'U]", "[GPL'U]", "[MPL'U]", "[APL'U]", "[beth'U]", "[anti'Xa'U]",
+        "[todd'U]", "[dye'U]", "[smgy'U]", "[bdsk'U]", "[ka'U]", "[knk'U]", "[mclg'U]", "[tb'U]",
+        "[CCID_50]", "[TCID_50]", "[EID_50]", "[PFU]", "[FFU]", "[CFU]", "[IR]", "[BAU]", "[AU]",
+        "[Amb'a'1'U]", "[PNU]", "[Lf]", "[D'ag'U]", "[FEU]", "[ELU]", "[EU]"
+    ];
+
+    private static bool containsArbitraryUnit(string unit) =>
+        unit.IndexOf('[') >= 0 && ARBITRARY_UNITS.Any(au => unit.Contains(au));
 
     public static explicit operator String(Quantity q) => RunCast<String>(q);
 

@@ -196,6 +196,32 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void TestQuantityMultiplicationAndDivision()
+        {
+            fixture.IsTrue(@"2.0 'cm' * 2.0 'm' = 0.040 'm2'");
+            fixture.IsTrue(@"1.0 'm' / 1.0 'm' = 1 '1'");
+            fixture.IsTrue(@"(2 'm' * 3 'm' / 4 'm') = 1.5 'm'");
+            fixture.IsTrue(@"(1 week / 1 day) = 7 '1'");
+
+            // Multiplying or dividing by a number scales the quantity and keeps its unit
+            fixture.IsTrue(@"2 'mg' * 3 = 6 'mg'");
+            fixture.IsTrue(@"3 * 2 'mg' = 6 'mg'");
+            fixture.IsTrue(@"2.5 'mg' * 2.0 = 5.0 'mg'");
+            fixture.IsTrue(@"6 'mg' / 3 = 2 'mg'");
+            fixture.IsTrue(@"2 year * 2 = 4 years");
+            fixture.IsTrue(@"(2 / 4 'm') = 0.5 'm-1'");
+
+            // Empty operands, division by zero and units that cannot be converted give empty
+            fixture.IsTrue(@"({} * 2 'm').empty()");
+            fixture.IsTrue(@"(2 'm' / {}).empty()");
+            fixture.IsTrue(@"(2 'm' / 0 'm').empty()");
+            fixture.IsTrue(@"(2 'm' / 0).empty()");
+            fixture.IsTrue(@"(2 'Cel' * 2 'm').empty()");
+            fixture.IsTrue(@"(2 '[IU]' / 1 'L').empty()");
+            fixture.IsTrue(@"(1 year * 2 'm').empty()");
+        }
+
+        [TestMethod]
         public void TestEquality()
         {
 
