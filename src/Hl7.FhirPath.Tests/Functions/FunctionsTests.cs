@@ -579,6 +579,16 @@ namespace HL7.FhirPath.Tests
             result.Should().ContainSingle(ite => ((string)ite.Value) == "teststring");
         }
 
+        [TestMethod]
+        public void TestFhirPathRepeatsStringLiteralOnMultipleItems()
+        {
+            var nav = ElementNode.ForPrimitive("a");
+
+            // Each input item projects to the same literal, which should be in the result only once
+            var result = nav.Select("(1 | 2 | 3).repeat('teststring')");
+            result.Should().ContainSingle(ite => ((string)ite.Value) == "teststring");
+        }
+
         public static IEnumerable<object[]> EmptyStringValueTestcases() =>
             new[]{
                 "startsWith('a')",

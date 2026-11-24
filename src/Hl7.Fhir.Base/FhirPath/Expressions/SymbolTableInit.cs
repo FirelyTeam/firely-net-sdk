@@ -492,6 +492,9 @@ public static class SymbolTableInit
         var lambda = arguments.Skip(1).First();
 
         var fullResult = new List<PocoNode>();
+        // Tracks every item already in the result, so an item is added only once,
+        // even when several items in the same round project to equal values.
+        var seen = new HashSet<PocoNode>(EqualityOperators.TypedElementEqualityComparer);
 
         while (newNodes.Any())
         {
@@ -508,10 +511,11 @@ public static class SymbolTableInit
                 newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
 
-                var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
-                var uniqueNewNodes = candidates.Except<PocoNode>(fullResult, EqualityOperators.TypedElementEqualityComparer);
-
-                newNodes.AddRange(uniqueNewNodes);
+                foreach (var candidate in lambda(newContext, InvokeeFactory.EmptyArgs))
+                {
+                    if (seen.Add(candidate))
+                        newNodes.Add(candidate);
+                }
             }
 
             fullResult.AddRange(newNodes);

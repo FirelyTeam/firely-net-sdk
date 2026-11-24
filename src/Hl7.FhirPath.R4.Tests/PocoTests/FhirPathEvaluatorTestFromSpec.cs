@@ -285,9 +285,6 @@ namespace Hl7.FhirPath.R4.Tests
             // sort() with descending (-) keys on strings
             "testSort8", "testSort10",
 
-            // repeat() with a literal argument should not repeat the same item
-            "testRepeat5",
-
             // Negative indexer (Patient.name[-1]) should give an empty result
             "testIndexer3",
 
