@@ -84,26 +84,30 @@ namespace Hl7.FhirPath.Functions
         /// <summary>
         /// Implements the FhirPath <c>type()</c> reflection function: returns a TypeInfo for each item in the focus.
         /// </summary>
-        /// <remarks>The TypeInfo has a <c>namespace</c> and a <c>name</c> element. Primitive values get a
-        /// SimpleTypeInfo, all other values a ClassInfo. The <c>baseType</c> and <c>element</c> parts of the
-        /// TypeInfo are not supported. Anonymous (backbone) elements report their instance type, BackboneElement or
-        /// Element, instead of a TupleTypeInfo.</remarks>
+        /// <remarks>
+        /// <para>The TypeInfo has a <c>namespace</c> and a <c>name</c> element. System primitives (such as
+        /// System.String) get a SimpleTypeInfo in the System namespace. All other values get a ClassInfo, including
+        /// FHIR primitives such as FHIR.boolean, which are classes with id, extension and value elements.</para>
+        /// <para>Backbone elements are named after their path, e.g. <c>Patient.contact</c>, as the Java reference
+        /// engine does. Note that <c>is</c> and <c>ofType()</c> know these as BackboneElement or Element instead.</para>
+        /// <para>The <c>baseType</c> and <c>element</c> parts of the TypeInfo are not supported.</para>
+        /// </remarks>
         public static IEnumerable<PocoNode> Type(this IEnumerable<PocoNode> focus)
             => focus.Select(getTypeInfo);
 
         private static PocoNode getTypeInfo(PocoNode item)
         {
-            var instanceType = ((ITypedElement)item).InstanceType!;
-
-            // Same convention as Is(): an instance type without a namespace is in the FHIR namespace.
-            var dot = instanceType.IndexOf('.');
-            var (ns, name) = dot < 0
-                ? ("FHIR", instanceType)
-                : (instanceType.Substring(0, dot), instanceType.Substring(dot + 1));
+            // The type name of a POCO is its FHIR type name ("boolean", "Patient", "Patient.contact"), except for the
+            // FhirPath System types, whose name is prefixed with their namespace ("System.String").
+            const string SYSTEM_PREFIX = "System.";
+            var typeName = item.Poco.TypeName;
+            var (ns, name) = typeName.StartsWith(SYSTEM_PREFIX, StringComparison.Ordinal)
+                ? ("System", typeName.Substring(SYSTEM_PREFIX.Length))
+                : ("FHIR", typeName);
 
             var typeInfo = new DynamicDataType
             {
-                DynamicTypeName = item.Poco is PrimitiveType ? "System.SimpleTypeInfo" : "System.ClassInfo"
+                DynamicTypeName = ns == "System" && item.Poco is PrimitiveType ? "System.SimpleTypeInfo" : "System.ClassInfo"
             };
             typeInfo.SetValue("namespace", new FPString(ns));
             typeInfo.SetValue("name", new FPString(name));

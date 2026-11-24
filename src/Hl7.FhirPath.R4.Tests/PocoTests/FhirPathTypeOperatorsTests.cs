@@ -25,6 +25,8 @@ namespace Hl7.FhirPath.R4.Tests
             Status = ObservationStatus.Final,
             Code = new CodeableConcept("http://loinc.org", "1234-5"),
             Value = new Quantity(5.0m, "mg"),
+            Effective = new Timing { Repeat = new Timing.RepeatComponent { Frequency = 1 } },
+            Contained = { new Patient { Contact = { new Patient.ContactComponent { Gender = AdministrativeGender.Female } } } },
             Component = { new Observation.ComponentComponent { Code = new CodeableConcept("http://loinc.org", "6789-0"), Value = new FhirString("hi") } }
         };
 
@@ -181,7 +183,13 @@ namespace Hl7.FhirPath.R4.Tests
         [DataRow("Observation", "FHIR", "Observation")]
         [DataRow("Observation.status", "FHIR", "code")]
         [DataRow("Observation.value", "FHIR", "Quantity")]
-        [DataRow("Observation.component", "FHIR", "BackboneElement")]
+        [DataRow("Observation.component", "FHIR", "Observation.component")]
+        [DataRow("Observation.component.code", "FHIR", "CodeableConcept")]
+        [DataRow("Observation.status.value", "System", "String")]
+        [DataRow("Observation.contained.contact", "FHIR", "Patient.contact")]
+        [DataRow("Observation.effective.repeat", "FHIR", "Timing.repeat")]
+        [DataRow("1.type()", "System", "SimpleTypeInfo")]
+        [DataRow("Observation.type()", "System", "ClassInfo")]
         public void TypeReturnsNamespaceAndName(string expression, string ns, string name)
         {
             var node = createObservation().ToPocoNode();
@@ -193,9 +201,16 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         [DataRow("1", "System.SimpleTypeInfo")]
         [DataRow("'a'", "System.SimpleTypeInfo")]
+        [DataRow("true", "System.SimpleTypeInfo")]
+        [DataRow("@2015-02-04T10:00:00Z", "System.SimpleTypeInfo")]
+        [DataRow("Observation.status.value", "System.SimpleTypeInfo")]
         [DataRow("4 'mg'", "System.SimpleTypeInfo")]
         [DataRow("Observation", "System.ClassInfo")]
         [DataRow("Observation.value", "System.ClassInfo")]
+        [DataRow("Observation.status", "System.ClassInfo")]
+        [DataRow("Observation.component.value", "System.ClassInfo")]
+        [DataRow("Observation.component", "System.ClassInfo")]
+        [DataRow("1.type()", "System.ClassInfo")]
         public void TypeReturnsTypeInfoKind(string expression, string kind)
         {
             var node = createObservation().ToPocoNode();
@@ -216,6 +231,7 @@ namespace Hl7.FhirPath.R4.Tests
                 .Should().Equal("Integer", "String", "CodeableConcept");
             evaluate(node, "{}.type()").Should().BeEmpty();
             evaluate(node, "Observation.subject.type()").Should().BeEmpty();
+            evaluate(node, "Observation.type().baseType").Should().BeEmpty();
         }
     }
 }
