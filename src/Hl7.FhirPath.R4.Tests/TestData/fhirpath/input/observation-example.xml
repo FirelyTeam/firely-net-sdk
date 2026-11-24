@@ -2,6 +2,13 @@
 	<id value="example"/>
 	<!--    the mandatory quality flags:    -->
 	<text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example</p><p><b>status</b>: final</p><p><b>category</b>: Vital Signs <span>(Details : {http://terminology.hl7.org/CodeSystem/observation-category code &#39;vital-signs&#39; = &#39;Vital Signs&#39;, given as &#39;Vital Signs&#39;})</span></p><p><b>code</b>: Body Weight <span>(Details : {LOINC code &#39;29463-7&#39; = &#39;Body weight&#39;, given as &#39;Body Weight&#39;}; {LOINC code &#39;3141-9&#39; = &#39;Body weight Measured&#39;, given as &#39;Body weight Measured&#39;}; {SNOMED CT code &#39;27113001&#39; = &#39;Body weight&#39;, given as &#39;Body weight&#39;}; {http://acme.org/devices/clinical-codes code &#39;body-weight&#39; = &#39;body-weight&#39;, given as &#39;Body Weight&#39;})</span></p><p><b>subject</b>: <a>Patient/example</a></p><p><b>encounter</b>: <a>Encounter/example</a></p><p><b>effective</b>: 28/03/2016</p><p><b>value</b>: 185 lbs<span> (Details: UCUM code [lb_av] = &#39;lb_av&#39;)</span></p></div></text><status value="final"/>
+	<extension url="http://example.com/fhir/StructureDefinition/patient-age">
+		<valueAge>
+			<value value="41" />
+			<system value="http://unitsofmeasure.org" />
+			<code value="a" />
+		</valueAge>
+	</extension>
 	<!--   category code is A code that classifies the general type of observation being made. This is used for searching, sorting and display purposes.  -->
 	<category>
 		<coding>

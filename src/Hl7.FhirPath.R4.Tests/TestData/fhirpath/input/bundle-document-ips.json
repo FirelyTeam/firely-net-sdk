@@ -1,0 +1,515 @@
+{
+  "resourceType": "Bundle",
+  "id": "document-ips",
+  "identifier": {
+    "system": "urn:ietf:rfc:3986",
+    "value": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a01"
+  },
+  "type": "document",
+  "timestamp": "2026-10-24T10:00:00+11:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a02",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "comp",
+        "contained": [
+          {
+            "resourceType": "MedicationStatement",
+            "id": "med2",
+            "status": "active",
+            "medicationCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "387207008",
+                  "display": "Ibuprofen"
+                }
+              ]
+            },
+            "subject": {
+              "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+            }
+          }
+        ],
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "60591-5",
+              "display": "Patient summary Document"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        },
+        "date": "2026-10-24T10:00:00+11:00",
+        "author": [
+          {
+            "display": "Dr Example"
+          }
+        ],
+        "title": "Patient Summary",
+        "section": [
+          {
+            "title": "Problems",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "11450-4",
+                  "display": "Problem list - Reported"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a04"
+              },
+              {
+                "reference": "Condition/c2"
+              },
+              {
+                "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a06"
+              },
+              {
+                "reference": "Condition/missing"
+              }
+            ]
+          },
+          {
+            "title": "Medications",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "10160-0",
+                  "display": "History of Medication use Narrative"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a07"
+              },
+              {
+                "reference": "#med2"
+              }
+            ]
+          },
+          {
+            "title": "Allergies",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "48765-2",
+                  "display": "Allergies and adverse reactions Document"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a08"
+              }
+            ]
+          },
+          {
+            "title": "Immunizations",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "11369-6",
+                  "display": "History of Immunization Narrative"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a09"
+              }
+            ]
+          },
+          {
+            "title": "Results",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "30954-2",
+                  "display": "Relevant diagnostic tests/laboratory data Narrative"
+                }
+              ]
+            },
+            "section": [
+              {
+                "title": "Vital signs",
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://loinc.org",
+                      "code": "8716-3",
+                      "display": "Vital signs"
+                    }
+                  ]
+                },
+                "entry": [
+                  {
+                    "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a10"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "p1",
+        "identifier": [
+          {
+            "system": "http://example.org/fhir/mrn",
+            "value": "MRN-1001"
+          }
+        ],
+        "name": [
+          {
+            "family": "Example",
+            "given": [
+              "Pat"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1960-05-01"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a04",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "c1",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "38341003",
+              "display": "Hypertensive disorder"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        }
+      }
+    },
+    {
+      "fullUrl": "http://example.org/fhir/Condition/c2",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "c2",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "44054006",
+              "display": "Diabetes mellitus type 2"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a05",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "c3",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "195967001",
+              "display": "Asthma"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a06",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "c4",
+        "code": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+              "code": "unknown",
+              "display": "Unknown"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a07",
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "m1",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "108774000",
+              "display": "Anastrozole"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a08",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "a1",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "764146007",
+              "display": "Penicillin"
+            }
+          ]
+        },
+        "patient": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a09",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "i1",
+        "status": "completed",
+        "vaccineCode": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "871875004",
+              "display": "Tetanus, diphtheria and pertussis vaccine"
+            }
+          ]
+        },
+        "patient": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        },
+        "occurrenceDateTime": "2024-03-01"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a10",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "o1",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8480-6",
+              "display": "Systolic blood pressure"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03"
+        },
+        "effectiveDateTime": "2026-10-20",
+        "valueQuantity": {
+          "value": 135,
+          "unit": "mmHg",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm[Hg]"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a11",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "p2",
+        "name": [
+          {
+            "family": "Other",
+            "given": [
+              "Sam"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1971-02-03"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a12",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "c5",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "230690007",
+              "display": "Cerebrovascular accident"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a11"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a13",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "o2",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body weight"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://example.org/fhir/mrn",
+            "value": "MRN-1001"
+          }
+        },
+        "effectiveDateTime": "2026-10-20",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a14",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "o3",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body height"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://example.org/fhir/mrn",
+            "value": "MRN-1001"
+          }
+        },
+        "effectiveDateTime": "2026-10-20",
+        "valueQuantity": {
+          "value": 171,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a15",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "o4",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://example.org/fhir/other-mrn",
+            "value": "MRN-1001"
+          }
+        },
+        "effectiveDateTime": "2026-10-20",
+        "valueQuantity": {
+          "value": 64,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    }
+  ]
+}

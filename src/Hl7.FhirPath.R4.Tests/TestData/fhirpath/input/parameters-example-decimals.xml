@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir">
+	<id value="example-decimals"/>
+	<!-- decimals with exponents, for the lowBoundary and highBoundary tests. The precision is in the mantissa -->
+	<parameter>
+		<name value="exponent"/>
+		<valueDecimal value="9.5e2"/>
+	</parameter>
+	<parameter>
+		<name value="negative-exponent"/>
+		<valueDecimal value="1.5e-3"/>
+	</parameter>
+	<parameter>
+		<name value="negative-value"/>
+		<valueDecimal value="-9.5e2"/>
+	</parameter>
+	<parameter>
+		<name value="upper-case-exponent"/>
+		<valueDecimal value="1.5E2"/>
+	</parameter>
+</Parameters>

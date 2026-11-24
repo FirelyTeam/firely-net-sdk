@@ -1,0 +1,42 @@
+{
+  "resourceType" : "ExplanationOfBenefit",
+  "id": "example",
+  "supportingInfo" : [
+    {
+      "sequence" : 1,
+      "category" : {
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+            "code" : "additionalbodysite"
+          }
+        ]
+      }
+    },
+    {
+      "sequence" : 2,
+      "category" : {
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+            "code" : "additionalbodysite"
+          }
+        ]
+      }
+    }
+  ],
+  "item" : [
+    {
+      "sequence" : 1,
+      "informationSequence" : [
+        2
+      ]
+    },
+    {
+      "sequence" : 2,
+      "informationSequence" : [
+        1
+      ]
+    }
+  ]
+}

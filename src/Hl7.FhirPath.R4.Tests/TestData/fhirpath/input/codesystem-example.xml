@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CodeSystem xmlns="http://hl7.org/fhir">
+  <id value="example"/> 
+  <meta> 
+    <profile value="http://hl7.org/fhir/StructureDefinition/shareablecodesystem"/> 
+  </meta> 
+  <url value="http://hl7.org/fhir/CodeSystem/example"/> 
+  <identifier> 
+    <system value="http://acme.com/identifiers/codesystems"/> 
+    <value value="internal-cholesterol-inl"/> 
+  </identifier> 
+  <version value="20160128"/> 
+  <name value="ACMECholCodesBlood"/> 
+  <title value="ACME Codes for Cholesterol in Serum/Plasma"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2016-01-28"/> 
+  <publisher value="Acme Co"/> 
+  <contact> 
+    <name value="FHIR project team"/> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://hl7.org/fhir"/> 
+    </telecom> 
+  </contact> 
+  <description value="This is an example code system that includes all the ACME codes for serum/plasma cholesterol
+   from v2.36."/> 
+  <caseSensitive value="true"/> 
+  <content value="complete"/> 
+  <filter> 
+    <code value="acme-plasma"/> 
+    <description value="An internal filter used to select codes that are only used with plasma"/> 
+    <operator value="="/> 
+    <value value="the value of this filter is either 'true' or 'false'"/> 
+  </filter> 
+  <concept> 
+    <code value="chol-mass"/> <!-- wrong! -->
+    <display value="SChol (mmol/L)"/> 
+    <definition value="Serum Cholesterol, in mmol/L"/> 
+    <designation> 
+      <use> 
+        <system value="http://acme.com/config/fhir/codesystems/internal"/> 
+        <code value="internal-label"/> 
+      </use> 
+      <value value="From ACME POC Testing"/> 
+    </designation> 
+  </concept> 
+  <concept> 
+    <code value="chol-mass"/> 
+    <display value="SChol (mg/L)"/> 
+    <definition value="Serum Cholesterol, in mg/L"/> 
+    <designation> 
+      <use> 
+        <system value="http://acme.com/config/fhir/codesystems/internal"/> 
+        <code value="internal-label"/> 
+      </use> 
+      <value value="From Paragon Labs"/> 
+    </designation> 
+  </concept> 
+  <concept> 
+    <code value="chol"/> 
+    <display value="SChol"/> 
+    <definition value="Serum Cholesterol"/> 
+    <designation> 
+      <use> 
+        <system value="http://acme.com/config/fhir/codesystems/internal"/> 
+        <code value="internal-label"/> 
+      </use> 
+      <value value="Obdurate Labs uses this with both kinds of units..."/> 
+    </designation> 
+  </concept> 
+</CodeSystem> 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir">
+	<id value="example-large-exponents"/>
+	<!-- decimals and quantities with a very large or very small exponent. Written out in full, each of these values
+	     is about a billion digits long, so an engine must never expand them to plain digits -->
+	<parameter>
+		<name value="huge-quantity"/>
+		<valueQuantity>
+			<value value="1e999999999"/>
+			<unit value="kg"/>
+			<system value="http://unitsofmeasure.org"/>
+			<code value="kg"/>
+		</valueQuantity>
+	</parameter>
+	<parameter>
+		<name value="tiny-quantity"/>
+		<valueQuantity>
+			<value value="1e-999999999"/>
+			<unit value="kg"/>
+			<system value="http://unitsofmeasure.org"/>
+			<code value="kg"/>
+		</valueQuantity>
+	</parameter>
+	<parameter>
+		<name value="huge-decimal"/>
+		<valueDecimal value="1e999999999"/>
+	</parameter>
+	<parameter>
+		<name value="tiny-decimal"/>
+		<valueDecimal value="1e-999999999"/>
+	</parameter>
+	<parameter>
+		<name value="huge-duration"/>
+		<valueQuantity>
+			<value value="1e999999999"/>
+			<unit value="days"/>
+			<system value="http://unitsofmeasure.org"/>
+			<code value="d"/>
+		</valueQuantity>
+	</parameter>
+</Parameters>

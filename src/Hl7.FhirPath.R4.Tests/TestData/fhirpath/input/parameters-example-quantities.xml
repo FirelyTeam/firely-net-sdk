@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir">
+	<id value="example-quantities"/>
+	<!-- quantities without a UCUM code, for comparing quantities by their (lack of) units -->
+	<parameter>
+		<name value="no-unit"/>
+		<valueQuantity>
+			<value value="1"/>
+		</valueQuantity>
+	</parameter>
+	<parameter>
+		<name value="no-unit-2"/>
+		<valueQuantity>
+			<value value="1"/>
+		</valueQuantity>
+	</parameter>
+	<parameter>
+		<name value="unit-text"/>
+		<valueQuantity>
+			<value value="1"/>
+			<unit value="tablets"/>
+		</valueQuantity>
+	</parameter>
+	<parameter>
+		<name value="unit-text-2"/>
+		<valueQuantity>
+			<value value="1"/>
+			<unit value="tablets"/>
+		</valueQuantity>
+	</parameter>
+</Parameters>
