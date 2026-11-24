@@ -9,6 +9,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -210,7 +211,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// -1 if this is smaller than other and +1 if this is bigger than other.</param>
     /// <param name="other"></param>
     /// <remarks>the dimensions of each quantity must be the same, but not necessarily the unit. For example, units of 'cm' and 'm' can be compared,
-    /// but units of 'cm2' and 'cm' cannot. The comparison will be made using the most granular unit of either input.
+    /// but units of 'cm2' and 'cm' cannot. Time-valued quantities are converted using the UCUM definite duration conversion factors.
     /// Quantities with invalid units cannot be compared.
     /// NOTE: in the current normative specification, there is a difference between comparing incompatible duration units (result: {})
     /// and performing the equals operator on incompatible units (result: false). This is going to be corrected
@@ -247,10 +248,38 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         var l = normalizeToUcum(this);
         var r = normalizeToUcum(other);
 
-        if (l.Unit != r.Unit)
+        if (l.Unit == r.Unit)
+            return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
+
+        // Definite durations can be converted into each other using the UCUM conversion factors.
+        if (!DEFINITE_DURATION_SECONDS.TryGetValue(l.Unit, out var lFactor) ||
+            !DEFINITE_DURATION_SECONDS.TryGetValue(r.Unit, out var rFactor))
             return null;
 
-        return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
+        // A calendar year or month (which only gets here as 'a' or 'mo' when comparing for equivalence) does not
+        // have a fixed number of days, so it is only compared with years and months, not with shorter durations.
+        if ((isCalendarYearOrMonth(this) || isCalendarYearOrMonth(other)) && !(isYearOrMonth(l) && isYearOrMonth(r)))
+            return null;
+
+        // Round the inputs as we do when the units are the same, then compare the converted values without
+        // rounding them again: rounding after the conversion would hide real differences (e.g. 1 'wk' vs 604800001 'ms').
+        var lValue = Math.Round(l.Value, 8);
+        var rValue = Math.Round(r.Value, 8);
+
+        try
+        {
+            return decimal.Compare(lValue * lFactor, rValue * rFactor);
+        }
+        catch (OverflowException)
+        {
+            // Values this large cannot be expressed in seconds; convert to the least granular unit instead.
+            return lFactor >= rFactor
+                ? decimal.Compare(lValue, rValue * (rFactor / lFactor))
+                : decimal.Compare(lValue * (lFactor / rFactor), rValue);
+        }
+
+        static bool isCalendarYearOrMonth(Quantity q) => q.IsCalendarDuration && q.Unit is "year" or "month";
+        static bool isYearOrMonth(Quantity q) => q.Unit is "a" or "mo";
 
         Quantity normalizeToUcum(Quantity orig)
         {
@@ -276,6 +305,21 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         }
     }
 
+    /// <summary>
+    /// The UCUM definite duration units, with their size in seconds.
+    /// </summary>
+    private static readonly Dictionary<string, decimal> DEFINITE_DURATION_SECONDS = new()
+    {
+        ["a"] = 31557600m, // 365.25 'd'
+        ["mo"] = 2629800m, // 1/12 'a'
+        ["wk"] = 604800m,
+        ["d"] = 86400m,
+        ["h"] = 3600m,
+        ["min"] = 60m,
+        ["s"] = 1m,
+        ["ms"] = 0.001m,
+    };
+
     // The UCUM library probably has a more generic method for doing this.
     public bool IsDefiniteDuration => Unit is "a" or "mo" or "wk" or "d" or "h" or "min" or "s" or "ms";
 
@@ -294,7 +338,17 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     public override int GetHashCode() => (Unit, Value).GetHashCode();
 
-    public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
+    /// <summary>
+    /// Returns the FHIRPath string representation of the quantity: UCUM units are quoted (<c>53 'km'</c>),
+    /// calendar duration keywords are not (<c>1 week</c>, <c>4 days</c>).
+    /// </summary>
+    public override string ToString()
+    {
+        var value = Value.ToString(CultureInfo.InvariantCulture);
+        return IsCalendarDuration && TryParseTimeUnit(Unit, out var keyword, out var isCalendarUnit) && isCalendarUnit && keyword == Unit
+            ? $"{value} {(Value == 1m ? Unit : Unit + "s")}"
+            : $"{value} '{Unit}'";
+    }
 
     bool? ICqlEquatable.IsEqualTo(Any? other) =>
         other is not null && TryEquals(other, CQL_EQUALS_COMPARISON, out var result) ? result: null;
@@ -303,8 +357,9 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     bool ICqlEquatable.IsEquivalentTo(Any? other) =>
         other is not null && TryEquals(other, CQL_EQUIVALENCE_COMPARISON, out var result) && result.Value;
 
+    // Ordering uses the same rules as equality: calendar years and months cannot be compared to the UCUM 'a' and 'mo'.
     int? ICqlOrderable.CompareTo(Any? other) =>
-        other is not null && TryCompareTo(other, out var result)
+        other is not null && TryCompareTo(other, CQL_EQUALS_COMPARISON, out var result)
             ? result
             : null;
 

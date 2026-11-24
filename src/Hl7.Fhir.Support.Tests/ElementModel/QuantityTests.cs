@@ -56,6 +56,67 @@ namespace Hl7.Fhir.ElementModel.Tests
             reject("1 'mg'\r\n");
         }
 
+        [TestMethod]
+        public void QuantityToString()
+        {
+            // UCUM units are quoted, calendar duration keywords are not (and are plural unless the value is 1)
+            new Quantity(53m, "km").ToString().Should().Be("53 'km'");
+            new Quantity(4m, "d").ToString().Should().Be("4 'd'");
+            Quantity.Parse("1 week").ToString().Should().Be("1 week");
+            Quantity.Parse("4 days").ToString().Should().Be("4 days");
+            Quantity.Parse("1 day").ToString().Should().Be("1 day");
+            Quantity.Parse("2.5 years").ToString().Should().Be("2.5 years");
+
+            // only the calendar duration keywords lose their quotes
+            new Quantity(3m, "wk", QuantityUnitSystem.CalendarDuration).ToString().Should().Be("3 'wk'");
+
+            // and they round-trip through Parse
+            Quantity.Parse(Quantity.Parse("4 days").ToString()).Should().Be(Quantity.Parse("4 days"));
+        }
+
+        [TestMethod]
+        public void CompareDurations()
+        {
+            // calendar durations from week down are equal to their UCUM counterparts, and convert into each other
+            Quantity.Parse("7 days").Should().Be(Quantity.Parse("1 week"));
+            Quantity.Parse("7 days").Should().Be(Quantity.Parse("1 'wk'"));
+            Quantity.Parse("1 week").Should().Be(Quantity.Parse("7 'd'"));
+            Quantity.Parse("1 hour").Should().Be(Quantity.Parse("3600 's'"));
+            Quantity.Parse("1500 'ms'").Should().Be(Quantity.Parse("1.5 seconds"));
+            Quantity.Parse("1 'a'").Should().Be(Quantity.Parse("365.25 'd'"));
+            Quantity.Parse("1 'a'").Should().Be(Quantity.Parse("12 'mo'"));
+
+            ((ICqlOrderable)Quantity.Parse("6 days")).CompareTo(Quantity.Parse("1 week")).Should().Be(-1);
+            ((ICqlOrderable)Quantity.Parse("8 days")).CompareTo(Quantity.Parse("1 'wk'")).Should().Be(1);
+
+            // calendar years and months are not equal to, nor ordered with, the UCUM 'a' and 'mo'...
+            Quantity.Parse("1 year").TryEquals(Quantity.Parse("1 'a'"), Quantity.CQL_EQUALS_COMPARISON, out _).Should().BeFalse();
+            ((ICqlOrderable)Quantity.Parse("1 year")).CompareTo(Quantity.Parse("1 'a'")).Should().BeNull();
+            ((ICqlOrderable)Quantity.Parse("1 year")).CompareTo(Quantity.Parse("2 months")).Should().BeNull();
+            ((ICqlOrderable)Quantity.Parse("1 month")).CompareTo(Quantity.Parse("1 'd'")).Should().BeNull();
+
+            // ... but they are equivalent
+            ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("1 'a'")).Should().BeTrue();
+            ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("12 months")).Should().BeTrue();
+
+            // a calendar year or month has no fixed number of days, so it is not equivalent to shorter durations
+            ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("365.25 days")).Should().BeFalse();
+            ((ICqlEquatable)Quantity.Parse("1 month")).IsEquivalentTo(Quantity.Parse("30.4375 'd'")).Should().BeFalse();
+
+            // converting does not hide differences below the rounding precision of the larger unit
+            Quantity.Parse("1 'wk'").Should().NotBe(Quantity.Parse("604800001 'ms'"));
+            ((ICqlOrderable)Quantity.Parse("604800001 'ms'")).CompareTo(Quantity.Parse("1 week")).Should().Be(1);
+            ((ICqlOrderable)Quantity.Parse("1 'ms'")).CompareTo(Quantity.Parse("0 'a'")).Should().Be(1);
+            Quantity.Parse("1 'd'").Should().NotBe(Quantity.Parse("0.14285714 'wk'"));
+            ((ICqlOrderable)Quantity.Parse("-8 days")).CompareTo(Quantity.Parse("-1 week")).Should().Be(-1);
+
+            // huge values do not overflow
+            var huge = Quantity.Parse("79228162514264337593543950335 'd'");
+            huge.Equals(Quantity.Parse("1 'wk'")).Should().BeFalse();
+            ((ICqlOrderable)huge).CompareTo(Quantity.Parse("1 'wk'")).Should().Be(1);
+            ((ICqlOrderable)Quantity.Parse("1 'wk'")).CompareTo(huge).Should().Be(-1);
+        }
+
         void reject(string testValue)
         {
             Assert.IsFalse(Quantity.TryParse(testValue, out _));

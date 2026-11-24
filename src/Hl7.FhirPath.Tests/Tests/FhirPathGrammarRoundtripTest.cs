@@ -30,7 +30,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsRoundTrip(parser, "/*A*/@2014-12-13T12:00:00+02:00/*B*/", "@2014-12-13T12:00:00+02:00");
             AssertParser.SucceedsRoundTrip(parser, "10 'mg'");
             AssertParser.SucceedsRoundTrip(parser, " 4 'day' ", "4 'day'");
-            AssertParser.SucceedsRoundTrip(parser, "4 days", "4 'day'");
+            AssertParser.SucceedsRoundTrip(parser, "4 days", "4 days");
         }
 
         [TestMethod]
