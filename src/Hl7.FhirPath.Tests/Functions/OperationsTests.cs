@@ -63,6 +63,13 @@ namespace HL7.FhirPath.Tests
                     ("'1 day'.toQuantity() ~ 1 'd'", true, false),
                     ("'1 second'.toQuantity() ~ 1 's'", true, false),
 
+                    ("7 days = 1 week", true, false),
+                    ("-8 days < -1 week", true, false),
+                    ("(-4 days).toString() = '-4 days'", true, false),
+                    ("(-4 days).abs().toString() = '4 days'", true, false),
+                    ("(7 days | 1 week).count() = 1", true, false),
+                    ("(1 year > 1 'a').empty()", true, false),
+
                     ("@2012 = @2012", true, false),
                     ("@2012 = @2013", false, false),
                     ("(@2012-01 = @2012).empty()", true, false),

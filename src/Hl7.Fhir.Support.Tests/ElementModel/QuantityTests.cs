@@ -115,6 +115,13 @@ namespace Hl7.Fhir.ElementModel.Tests
             huge.Equals(Quantity.Parse("1 'wk'")).Should().BeFalse();
             ((ICqlOrderable)huge).CompareTo(Quantity.Parse("1 'wk'")).Should().Be(1);
             ((ICqlOrderable)Quantity.Parse("1 'wk'")).CompareTo(huge).Should().Be(-1);
+            Quantity.Parse("3000000000000000000000 'a'").Should().Be(Quantity.Parse("1095750000000000000000000 'd'"));
+
+            // equal durations have equal hash codes
+            Quantity.Parse("7 days").GetHashCode().Should().Be(Quantity.Parse("1 week").GetHashCode());
+            Quantity.Parse("7 'd'").GetHashCode().Should().Be(Quantity.Parse("1 'wk'").GetHashCode());
+            Quantity.Parse("1 week").GetHashCode().Should().Be(Quantity.Parse("1 'wk'").GetHashCode());
+            new HashSet<Quantity> { Quantity.Parse("7 'd'") }.Should().Contain(Quantity.Parse("1 'wk'"));
         }
 
         void reject(string testValue)

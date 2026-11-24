@@ -252,8 +252,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
 
         // Definite durations can be converted into each other using the UCUM conversion factors.
-        if (!DEFINITE_DURATION_SECONDS.TryGetValue(l.Unit, out var lFactor) ||
-            !DEFINITE_DURATION_SECONDS.TryGetValue(r.Unit, out var rFactor))
+        if (!DEFINITE_DURATION_MILLISECONDS.TryGetValue(l.Unit, out var lFactor) ||
+            !DEFINITE_DURATION_MILLISECONDS.TryGetValue(r.Unit, out var rFactor))
             return null;
 
         // A calendar year or month (which only gets here as 'a' or 'mo' when comparing for equivalence) does not
@@ -263,20 +263,25 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         // Round the inputs as we do when the units are the same, then compare the converted values without
         // rounding them again: rounding after the conversion would hide real differences (e.g. 1 'wk' vs 604800001 'ms').
+        // To stay exact (and away from overflow as long as possible), cross-multiply by the factors divided by their
+        // greatest common divisor (e.g. 1461 for 'a' against 4 for 'd'), instead of converting to seconds.
         var lValue = Math.Round(l.Value, 8);
         var rValue = Math.Round(r.Value, 8);
+        var gcd = greatestCommonDivisor(lFactor, rFactor);
+        var lMultiplier = lFactor / gcd;
+        var rMultiplier = rFactor / gcd;
 
         try
         {
-            return decimal.Compare(lValue * lFactor, rValue * rFactor);
+            return decimal.Compare(lValue * lMultiplier, rValue * rMultiplier);
         }
         catch (OverflowException)
         {
-            // Values this large cannot be expressed in seconds; convert to the least granular unit instead.
-            return lFactor >= rFactor
-                ? decimal.Compare(lValue, rValue * (rFactor / lFactor))
-                : decimal.Compare(lValue * (lFactor / rFactor), rValue);
+            // Only reached for values close to decimal.MaxValue, where the inexact division is acceptable.
+            return decimal.Compare(lValue / rMultiplier, rValue / lMultiplier);
         }
+
+        static long greatestCommonDivisor(long a, long b) => b == 0 ? a : greatestCommonDivisor(b, a % b);
 
         static bool isCalendarYearOrMonth(Quantity q) => q.IsCalendarDuration && q.Unit is "year" or "month";
         static bool isYearOrMonth(Quantity q) => q.Unit is "a" or "mo";
@@ -306,18 +311,18 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     }
 
     /// <summary>
-    /// The UCUM definite duration units, with their size in seconds.
+    /// The UCUM definite duration units, with their size in milliseconds.
     /// </summary>
-    private static readonly Dictionary<string, decimal> DEFINITE_DURATION_SECONDS = new()
+    private static readonly Dictionary<string, long> DEFINITE_DURATION_MILLISECONDS = new()
     {
-        ["a"] = 31557600m, // 365.25 'd'
-        ["mo"] = 2629800m, // 1/12 'a'
-        ["wk"] = 604800m,
-        ["d"] = 86400m,
-        ["h"] = 3600m,
-        ["min"] = 60m,
-        ["s"] = 1m,
-        ["ms"] = 0.001m,
+        ["a"] = 31557600000L, // 365.25 'd'
+        ["mo"] = 2629800000L, // 1/12 'a'
+        ["wk"] = 604800000L,
+        ["d"] = 86400000L,
+        ["h"] = 3600000L,
+        ["min"] = 60000L,
+        ["s"] = 1000L,
+        ["ms"] = 1L,
     };
 
     // The UCUM library probably has a more generic method for doing this.
@@ -336,7 +341,38 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
 
-    public override int GetHashCode() => (Unit, Value).GetHashCode();
+    public override int GetHashCode()
+    {
+        // Durations that are equal in different units (7 'd' and 1 'wk', 1 week and 1 'wk') must have the same hash,
+        // so hash those on their value in milliseconds.
+        var ucumUnit = IsCalendarDuration ? calendarToUcum(Unit) : Unit;
+
+        if (ucumUnit is not null && DEFINITE_DURATION_MILLISECONDS.TryGetValue(ucumUnit, out var factor))
+        {
+            try
+            {
+                return (nameof(DEFINITE_DURATION_MILLISECONDS), Math.Round(Value, 8) * factor).GetHashCode();
+            }
+            catch (OverflowException)
+            {
+                return nameof(DEFINITE_DURATION_MILLISECONDS).GetHashCode();
+            }
+        }
+
+        return (Unit, Value).GetHashCode();
+
+        // Calendar years and months are not equal to 'a' and 'mo', so they keep their own hash.
+        static string? calendarToUcum(string unit) => unit switch
+        {
+            "week" => "wk",
+            "day" => "d",
+            "hour" => "h",
+            "minute" => "min",
+            "second" => "s",
+            "millisecond" => "ms",
+            _ => null
+        };
+    }
 
     /// <summary>
     /// Returns the FHIRPath string representation of the quantity: UCUM units are quoted (<c>53 'km'</c>),
