@@ -1,0 +1,613 @@
+/*
+ * Copyright (c) 2026, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ *
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
+#nullable enable
+
+using Hl7.Fhir.Introspection;
+using Hl7.FhirPath.Expressions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using P = Hl7.Fhir.ElementModel.Types;
+
+namespace Hl7.FhirPath.Analysis;
+
+/// <summary>
+/// Statically checks a FHIRPath expression against the FHIR model, and reports the semantic errors defined by the
+/// FHIRPath specification: paths to elements that do not exist, type-suffixed names of choice elements, type names
+/// the focus can never be, functions used on (or with arguments of) types they never accept, and (optionally)
+/// order-dependent functions used on unordered collections.
+/// </summary>
+/// <remarks>
+/// <para>The analyzer computes, for each part of the expression, the set of types its items can have. An error is
+/// reported only when that set is known and not empty, and none of its types allow the operation. Anything the
+/// analyzer cannot determine (an unknown variable, an abstract type such as <c>Resource</c>, an unknown function) is
+/// treated as "could be anything", which never leads to an error. An empty set means the code can never be reached
+/// (e.g. after <c>ofType()</c> with a type the focus cannot have), and does not lead to errors either.</para>
+/// <para>Type tests ('is' operator or <c>is()</c> function) on <c>$this</c> narrow the possible types of
+/// <c>$this</c> in the operand that the logical operator guards: <c>A implies B</c>, <c>A and B</c> and
+/// <c>iif(A, B, ...)</c> check B assuming A is true, <c>A or B</c> and <c>iif(A, ..., B)</c> assuming A is false.</para>
+/// <para>Analysis is separate from compilation: <see cref="FhirPathCompiler.Compile(string)"/> does not run it.</para>
+/// </remarks>
+public class FhirPathAnalyzer
+{
+    private readonly ModelInspector _inspector;
+
+    /// <summary>
+    /// Creates an analyzer that checks expressions against the FHIR model described by the given inspector
+    /// (e.g. <c>ModelInfo.ModelInspector</c> for a FHIR release).
+    /// </summary>
+    public FhirPathAnalyzer(ModelInspector inspector)
+    {
+        _inspector = inspector ?? throw new ArgumentNullException(nameof(inspector));
+    }
+
+    /// <summary>
+    /// Parses and analyzes an expression.
+    /// </summary>
+    /// <exception cref="FormatException">The expression is not syntactically valid.</exception>
+    public FhirPathAnalysisResult Analyze(string expression, FhirPathAnalysisContext? context = null) =>
+        Analyze(new FhirPathCompiler().Parse(expression), context);
+
+    /// <summary>
+    /// Analyzes a parsed expression.
+    /// </summary>
+    public FhirPathAnalysisResult Analyze(Expression expression, FhirPathAnalysisContext? context = null)
+    {
+        if (expression is null) throw new ArgumentNullException(nameof(expression));
+        context ??= new FhirPathAnalysisContext();
+
+        var walker = new Walker(this, context);
+        var result = walker.Run(expression);
+        return new FhirPathAnalysisResult(walker.Diagnostics, result.Types?.Select(t => t.ToString()).ToList());
+    }
+
+    #region Types
+
+    /// <summary>
+    /// A type an item can have: a FHIR type (with its class mapping) or a FHIRPath System type.
+    /// </summary>
+    internal sealed record AType(string Name, ClassMapping? Mapping)
+    {
+        public bool IsSystem => Mapping is null;
+        public override string ToString() => IsSystem ? "System." + Name : Name;
+    }
+
+    /// <summary>
+    /// The set of types the items of a collection can have (<c>null</c> if unknown), and whether the collection
+    /// has a defined order.
+    /// </summary>
+    internal sealed class TypeSet
+    {
+        public static readonly TypeSet Unknown = new(null);
+        public static readonly TypeSet Empty = new([]);
+
+        public TypeSet(IEnumerable<AType>? types, bool unordered = false)
+        {
+            Types = types is null ? null : new HashSet<AType>(types);
+            Unordered = unordered;
+        }
+
+        public HashSet<AType>? Types { get; }
+        public bool Unordered { get; }
+        public bool IsKnown => Types is not null;
+
+        /// <summary>The set is known and not empty: only then can an operation on it be an error.</summary>
+        public bool IsCheckable => Types is { Count: > 0 };
+
+        public TypeSet AsUnordered(bool unordered) => unordered == Unordered ? this : new(Types, unordered);
+
+        public static TypeSet Union(TypeSet a, TypeSet b) =>
+            a.Types is null || b.Types is null ? Unknown : new(a.Types.Concat(b.Types), a.Unordered || b.Unordered);
+
+        public static TypeSet Intersect(TypeSet a, TypeSet b) =>
+            a.Types is null ? b : b.Types is null ? a : new(a.Types.Where(b.Types.Contains));
+
+        public override string ToString() =>
+            Types is null ? "(unknown)" : Types.Count == 0 ? "(none)" : string.Join(" | ", Types.Select(t => t.ToString()).OrderBy(n => n));
+    }
+
+    private static readonly string[] SYSTEM_TYPES = ["Any", "Boolean", "String", "Integer", "Long", "Decimal", "Date", "DateTime", "Time", "Quantity"];
+
+    private static AType systemType(string name) => new(name, null);
+
+    internal static readonly AType SYSTEM_BOOLEAN = systemType("Boolean");
+    internal static readonly AType SYSTEM_STRING = systemType("String");
+    internal static readonly AType SYSTEM_INTEGER = systemType("Integer");
+
+    /// <summary>
+    /// The FHIR primitive types that are specializations of other FHIR primitive types, which the .NET
+    /// classes do not reflect in their inheritance.
+    /// </summary>
+    private static readonly Dictionary<string, string> PRIMITIVE_BASE_TYPES = new()
+    {
+        ["code"] = "string",
+        ["id"] = "string",
+        ["markdown"] = "string",
+        ["url"] = "uri",
+        ["canonical"] = "uri",
+        ["uuid"] = "uri",
+        ["oid"] = "uri",
+        ["unsignedInt"] = "integer",
+        ["positiveInt"] = "integer",
+    };
+
+    /// <summary>
+    /// Resolves a (possibly qualified) type name: unqualified names are resolved as FHIR types first, then
+    /// as System types. Returns <c>null</c> if the name is not a known type.
+    /// </summary>
+    internal AType? ResolveType(string name)
+    {
+        if (name.StartsWith("System.", StringComparison.Ordinal))
+            return resolveSystem(name.Substring("System.".Length));
+        if (name.StartsWith("FHIR.", StringComparison.Ordinal))
+            return resolveFhir(name.Substring("FHIR.".Length));
+
+        return resolveFhir(name) ?? resolveSystem(name);
+
+        AType? resolveSystem(string n) => SYSTEM_TYPES.Contains(n) ? systemType(n) : null;
+        AType? resolveFhir(string n) => _inspector.FindClassMapping(n) is { } cm ? new AType(cm.Name, cm) : null;
+    }
+
+    internal TypeSet ResolveTypes(IReadOnlyCollection<string>? names)
+    {
+        if (names is null) return TypeSet.Unknown;
+
+        var types = names.Select(ResolveType).ToList();
+        return types.Any(t => t is null) ? TypeSet.Unknown : new TypeSet(types!);
+    }
+
+    /// <summary>
+    /// Whether a FHIR type has a statically known set of elements. Abstract types (Resource, Element, DataType, ...)
+    /// stand for any of their subtypes, and dynamic (custom) types are not known statically.
+    /// </summary>
+    private static bool isConcrete(ClassMapping cm) => !cm.NativeType.IsAbstract && !cm.IsCustomMapping;
+
+    /// <summary>
+    /// Whether an item of type <paramref name="type"/> is (or may be) of type <paramref name="target"/>. Returns
+    /// <c>null</c> when this cannot be determined.
+    /// </summary>
+    private static bool? isOfType(AType type, AType target)
+    {
+        if (type.IsSystem || target.IsSystem)
+            return type.IsSystem && target.IsSystem ? type.Name == target.Name || target.Name == "Any" : null;
+
+        var source = type.Mapping!;
+        var targetMapping = target.Mapping!;
+
+        // An item of an abstract type can be any of its subtypes.
+        if (!isConcrete(source)) return null;
+
+        if (source.Name == targetMapping.Name || targetMapping.NativeType.IsAssignableFrom(source.NativeType))
+            return true;
+
+        for (var name = source.Name; PRIMITIVE_BASE_TYPES.TryGetValue(name, out var baseName); name = baseName)
+            if (baseName == targetMapping.Name) return true;
+
+        return false;
+    }
+
+    /// <summary>
+    /// Splits the types of a collection into those that are of the given type (<c>is</c> is true) and those that
+    /// are not (<c>is</c> is false). Types for which this cannot be determined are in both.
+    /// </summary>
+    private static (TypeSet whenTrue, TypeSet whenFalse) splitOnType(TypeSet types, AType? target)
+    {
+        if (types.Types is null || target is null) return (types, types);
+
+        var whenTrue = new List<AType>();
+        var whenFalse = new List<AType>();
+        foreach (var type in types.Types)
+        {
+            var isIt = isOfType(type, target);
+            if (isIt == true) whenTrue.Add(type);
+            if (isIt is null) whenTrue.Add(isSubtype(target, type) ? target : type);   // e.g. a Resource that is a Patient
+            if (isIt != true) whenFalse.Add(type);
+        }
+
+        return (new TypeSet(whenTrue, types.Unordered), new TypeSet(whenFalse, types.Unordered));
+    }
+
+    private static bool isSubtype(AType sub, AType super) =>
+        sub.Mapping is { } s && super.Mapping is { } t && t.NativeType.IsAssignableFrom(s.NativeType);
+
+    /// <summary>Whether items of this type can be converted to a string (and so support e.g. <c>toString()</c>).</summary>
+    private static bool isStringConvertible(AType type) =>
+        type.IsSystem || typeof(P.IToSystemPrimitive).IsAssignableFrom(type.Mapping!.NativeType) || !isConcrete(type.Mapping);
+
+    private static bool isBoolean(AType type) =>
+        type.IsSystem ? type.Name is "Boolean" or "Any" : type.Mapping!.Name == "boolean" || !isConcrete(type.Mapping);
+
+    #endregion
+
+    /// <summary>
+    /// Walks an expression, computing the possible types of each node and collecting diagnostics.
+    /// </summary>
+    private sealed class Walker(FhirPathAnalyzer analyzer, FhirPathAnalysisContext context) : ExpressionVisitor<TypeSet>
+    {
+        public List<FhirPathDiagnostic> Diagnostics { get; } = [];
+
+        /// <summary>
+        /// The possible types of <c>$this</c>, innermost scope on top. A new scope starts for the arguments of a
+        /// function that iterates over its focus (e.g. <c>where()</c>), and when a type guard narrows <c>$this</c>.
+        /// </summary>
+        private readonly Stack<TypeSet> _this = new();
+
+        public TypeSet Run(Expression expression)
+        {
+            _this.Push(analyzer.ResolveTypes(context.InputTypes));
+            return expression.Accept(this);
+        }
+
+        private TypeSet This => _this.Peek();
+
+        private TypeSet inScope(TypeSet @this, Func<TypeSet> action)
+        {
+            _this.Push(@this);
+            try { return action(); }
+            finally { _this.Pop(); }
+        }
+
+        private TypeSet visitInScope(Expression expression, TypeSet @this) => inScope(@this, () => expression.Accept(this));
+
+        private void report(string code, string message, Expression expression) =>
+            Diagnostics.Add(new FhirPathDiagnostic(code, message, expression));
+
+        #region Visitor
+
+        public override TypeSet VisitConstant(ConstantExpression expression)
+        {
+            if (expression is IdentifierExpression) return TypeSet.Unknown;
+
+            return expression.ExpressionType is { Namespace: "System" } ts && ts.Name != "Any" && analyzer.ResolveType("System." + ts.Name) is { } type
+                ? new TypeSet([type])
+                : TypeSet.Unknown;
+        }
+
+        public override TypeSet VisitNewNodeListInit(NewNodeListInitExpression expression)
+        {
+            var result = TypeSet.Empty;
+            foreach (var item in expression.Contents)
+                result = TypeSet.Union(result, item.Accept(this));
+            return result;
+        }
+
+        public override TypeSet VisitVariableRef(VariableRefExpression expression)
+        {
+            if (expression is AxisExpression axis)
+            {
+                return axis.AxisName switch
+                {
+                    "this" or "that" => This,
+                    "index" => new TypeSet([SYSTEM_INTEGER]),
+                    _ => TypeSet.Unknown
+                };
+            }
+
+            var name = expression.Name.TrimStart('%');
+            return name switch
+            {
+                "resource" => analyzer.ResolveTypes(context.ResourceTypes),
+                "rootResource" => analyzer.ResolveTypes(context.RootResourceTypes ?? context.ResourceTypes),
+                "context" => analyzer.ResolveTypes(context.InputTypes),
+                "ucum" or "sct" or "loinc" => new TypeSet([SYSTEM_STRING]),
+                _ => context.Variables.TryGetValue(name, out var types) ? analyzer.ResolveTypes(types) : TypeSet.Unknown
+            };
+        }
+
+        public override TypeSet VisitCustomExpression(CustomExpression expression) =>
+            expression is BracketExpression be ? be.Operand.Accept(this) : base.VisitCustomExpression(expression);
+
+        public override TypeSet VisitFunctionCall(FunctionCallExpression expression) => expression switch
+        {
+            ChildExpression ce => navigate(ce.Focus.Accept(this), ce.ChildName, ce),
+            IndexerExpression ie => indexer(ie),
+            BinaryExpression be => binary(be),
+            UnaryExpression ue => unaryOperand(ue.Operand),
+            SortDirectionExpression se => unaryOperand(se.Operand),
+            _ => function(expression)
+        };
+
+        #endregion
+
+        #region Paths
+
+        private TypeSet navigate(TypeSet focus, string name, Expression expression)
+        {
+            if (!focus.IsKnown) return TypeSet.Unknown;
+
+            // A path step can be a type name, which selects the focus if it is of that type (e.g. "Patient.name").
+            if (char.IsUpper(name[0]) && analyzer.ResolveType(name) is { IsSystem: false } typeName)
+            {
+                var (matching, _) = splitOnType(focus, typeName);
+                if (focus.IsCheckable && matching.Types!.Count == 0)
+                    report(FhirPathDiagnostic.WRONG_TYPE_NAME, $"The focus ({focus}) can never be of type '{name}'", expression);
+                return matching.AsUnordered(false);
+            }
+
+            var result = new List<AType>();
+            bool unknown = false, found = false;
+            bool choiceName = false;
+
+            foreach (var type in focus.Types!)
+            {
+                if (type.IsSystem) continue;   // System types have no elements.
+
+                var mapping = type.Mapping!;
+                if (!isConcrete(mapping))
+                {
+                    unknown = true;
+                    continue;
+                }
+
+                if (name == "value" && mapping.IsFhirPrimitive)
+                {
+                    // The value of a FHIR primitive is a System type.
+                    found = unknown = true;
+                    continue;
+                }
+
+                if (mapping.FindMappedElementByName(name) is { } element)
+                {
+                    found = true;
+                    try
+                    {
+                        result.AddRange(element.FhirTypeMappings.Select(m => new AType(m.Name, m)));
+                    }
+                    catch (Exception)
+                    {
+                        unknown = true;
+                    }
+                }
+                else if (mapping.FindMappedElementByChoiceName(name) is not null)
+                {
+                    choiceName = true;
+                }
+            }
+
+            if (!found && !unknown && focus.IsCheckable)
+            {
+                if (choiceName)
+                    report(FhirPathDiagnostic.CHOICE_NAME, $"'{name}' is not a valid path: refer to a choice element by its name without a type suffix, and use ofType() to select a type", expression);
+                else
+                    report(FhirPathDiagnostic.UNKNOWN_ELEMENT, $"The element '{name}' does not exist on {focus}", expression);
+            }
+
+            return unknown ? TypeSet.Unknown : new TypeSet(result);
+        }
+
+        private TypeSet indexer(IndexerExpression expression)
+        {
+            var focus = expression.Focus.Accept(this);
+            checkOrdered(focus, "an indexer", expression);
+            expression.Index.Accept(this);
+            return focus.AsUnordered(false);
+        }
+
+        private void checkOrdered(TypeSet focus, string what, Expression expression)
+        {
+            if (context.CheckOrderedFunctions && focus.Unordered)
+                report(FhirPathDiagnostic.UNORDERED_COLLECTION, $"{what} is used on a collection that has no defined order", expression);
+        }
+
+        #endregion
+
+        #region Operators
+
+        private TypeSet unaryOperand(Expression operand)
+        {
+            operand.Accept(this);
+            return TypeSet.Unknown;
+        }
+
+        private TypeSet binary(BinaryExpression expression)
+        {
+            var (left, right) = operands(expression);
+
+            switch (expression.Op)
+            {
+                case "is":
+                    left.Accept(this);
+                    return boolean;
+                case "as":
+                    return splitOnType(left.Accept(this), typeArgument(right)).whenTrue;
+                case "and":
+                    left.Accept(this);
+                    visitInScope(right, guard(left).whenTrue);
+                    return boolean;
+                case "implies":
+                    left.Accept(this);
+                    visitInScope(right, guard(left).whenTrue);
+                    return boolean;
+                case "or":
+                    left.Accept(this);
+                    visitInScope(right, guard(left).whenFalse);
+                    return boolean;
+                case "|":
+                    return TypeSet.Union(left.Accept(this), right.Accept(this)).AsUnordered(false);
+            }
+
+            left.Accept(this);
+            right.Accept(this);
+
+            return expression.Op switch
+            {
+                "xor" or "=" or "!=" or "~" or "!~" or "<" or ">" or "<=" or ">=" or "in" or "contains" => boolean,
+                "&" => new TypeSet([SYSTEM_STRING]),
+                _ => TypeSet.Unknown
+            };
+        }
+
+        /// <summary>
+        /// The operands of a binary operator. The parser stores them as the two arguments (the focus is <c>$that</c>),
+        /// so <see cref="BinaryExpression.Left"/> and <see cref="BinaryExpression.Right"/> cannot be used.
+        /// </summary>
+        private static (Expression left, Expression right) operands(BinaryExpression expression)
+        {
+            var arguments = expression.Arguments.ToList();
+            return arguments.Count == 2 ? (arguments[0], arguments[1]) : (expression.Focus, arguments[0]);
+        }
+
+        private static readonly TypeSet boolean = new([SYSTEM_BOOLEAN]);
+        private static readonly TypeSet @string = new([SYSTEM_STRING]);
+        private static readonly TypeSet integer = new([SYSTEM_INTEGER]);
+
+        private AType? typeArgument(Expression expression) =>
+            expression is IdentifierExpression { Value: { } name } ? analyzer.ResolveType(name) : null;
+
+        #endregion
+
+        #region Type guards
+
+        /// <summary>
+        /// The possible types of <c>$this</c> when the given condition is true, and when it is false.
+        /// </summary>
+        private (TypeSet whenTrue, TypeSet whenFalse) guard(Expression condition)
+        {
+            condition = unwrap(condition);
+
+            switch (condition)
+            {
+                case BinaryExpression { Op: "is" } be when isThis(operands(be).left):
+                    return splitOnType(This, typeArgument(operands(be).right));
+                case BinaryExpression { Op: "and" } be:
+                    {
+                        var (lt, lf) = guard(operands(be).left);
+                        var (rt, rf) = guard(operands(be).right);
+                        return (TypeSet.Intersect(lt, rt), TypeSet.Union(lf, rf));
+                    }
+                case BinaryExpression { Op: "or" } be:
+                    {
+                        var (lt, lf) = guard(operands(be).left);
+                        var (rt, rf) = guard(operands(be).right);
+                        return (TypeSet.Union(lt, rt), TypeSet.Intersect(lf, rf));
+                    }
+                case BinaryExpression:
+                    break;
+                case FunctionCallExpression { FunctionName: "is" } fe when isThis(fe.Focus) && fe.Arguments.Count() == 1:
+                    return splitOnType(This, typeArgument(fe.Arguments.Single()));
+                case FunctionCallExpression { FunctionName: "not" } fe when !fe.Arguments.Any():
+                    {
+                        var (t, f) = guard(fe.Focus);
+                        return (f, t);
+                    }
+            }
+
+            return (This, This);
+        }
+
+        private static Expression unwrap(Expression expression)
+        {
+            while (expression is BracketExpression be) expression = be.Operand;
+            return expression;
+        }
+
+        private static bool isThis(Expression expression) =>
+            unwrap(expression) is AxisExpression { AxisName: "this" or "that" };
+
+        #endregion
+
+        #region Functions
+
+        /// <summary>Functions whose arguments are evaluated for each item of the focus, with <c>$this</c> set to that item.</summary>
+        private static readonly HashSet<string> ITERATING_FUNCTIONS = ["where", "select", "all", "exists", "repeat", "repeatAll", "sort", "iif"];
+
+        /// <summary>Functions whose result depends on the order of their focus.</summary>
+        private static readonly HashSet<string> ORDERED_FUNCTIONS = ["first", "last", "tail", "skip", "take"];
+
+        private static readonly HashSet<string> BOOLEAN_FUNCTIONS =
+        [
+            "empty", "exists", "all", "allTrue", "anyTrue", "allFalse", "anyFalse", "subsetOf", "supersetOf", "isDistinct",
+            "not", "is", "hasValue", "contains", "startsWith", "endsWith", "matches", "matchesFull", "memberOf", "conformsTo",
+            "comparable", "convertsToBoolean", "convertsToInteger", "convertsToLong", "convertsToDecimal", "convertsToString",
+            "convertsToDate", "convertsToDateTime", "convertsToTime", "convertsToQuantity", "htmlChecks",
+        ];
+
+        private static readonly HashSet<string> STRING_FUNCTIONS =
+        [
+            "toString", "substring", "upper", "lower", "replace", "replaceMatches", "trim", "join", "encode", "decode",
+            "escape", "unescape", "toChars", "split",
+        ];
+
+        private static readonly HashSet<string> INTEGER_FUNCTIONS = ["count", "length", "indexOf", "lastIndexOf", "toInteger"];
+
+        /// <summary>Functions whose result holds (some of) the items of their focus.</summary>
+        private static readonly HashSet<string> FILTERING_FUNCTIONS = ["where", "first", "last", "tail", "skip", "take", "single", "distinct", "trace", "intersect", "exclude", "sort"];
+
+        private TypeSet function(FunctionCallExpression expression)
+        {
+            var name = expression.FunctionName;
+            var arguments = expression.Arguments.ToList();
+            var focus = expression.Focus.Accept(this);
+
+            if (name == "iif") return iif(focus, arguments, expression);
+
+            TypeSet lastArgument = TypeSet.Unknown;
+            if (ITERATING_FUNCTIONS.Contains(name))
+            {
+                // $this is each item of the focus.
+                foreach (var argument in arguments)
+                    lastArgument = visitInScope(argument, focus.AsUnordered(false));
+            }
+            else
+            {
+                // What $this is in other arguments is not defined consistently, so it is left unknown.
+                foreach (var argument in arguments.Where(a => a is not IdentifierExpression))
+                    lastArgument = visitInScope(argument, TypeSet.Unknown);
+            }
+
+            if (ORDERED_FUNCTIONS.Contains(name))
+                checkOrdered(focus, $"The function {name}()", expression);
+
+            switch (name)
+            {
+                case "toString" when arguments.Count == 0:
+                    if (focus.IsCheckable && !focus.Types!.Any(isStringConvertible))
+                        report(FhirPathDiagnostic.INVALID_FOCUS_TYPE, $"toString() can only be used on primitive values, not on {focus}", expression);
+                    return @string;
+                case "as" or "ofType" when arguments.Count == 1:
+                    return splitOnType(focus, typeArgument(arguments[0])).whenTrue;
+                case "select" when arguments.Count == 1:
+                    return lastArgument.AsUnordered(focus.Unordered);
+                case "children" or "descendants":
+                    return TypeSet.Unknown.AsUnordered(true);
+                case "union" or "combine" when arguments.Count == 1:
+                    return TypeSet.Union(focus, lastArgument).AsUnordered(focus.Unordered || lastArgument.Unordered);
+            }
+
+            if (BOOLEAN_FUNCTIONS.Contains(name)) return boolean;
+            if (STRING_FUNCTIONS.Contains(name)) return @string;
+            if (INTEGER_FUNCTIONS.Contains(name)) return integer;
+            if (FILTERING_FUNCTIONS.Contains(name)) return ORDERED_FUNCTIONS.Contains(name) || name == "sort" ? focus.AsUnordered(false) : focus;
+
+            return TypeSet.Unknown;
+        }
+
+        private TypeSet iif(TypeSet focus, List<Expression> arguments, FunctionCallExpression expression)
+        {
+            if (arguments.Count is < 2 or > 3)
+            {
+                foreach (var argument in arguments) visitInScope(argument, focus);
+                return TypeSet.Unknown;
+            }
+
+            return inScope(focus.AsUnordered(false), () =>
+            {
+                var criterion = arguments[0].Accept(this);
+                if (criterion.IsCheckable && !criterion.Types!.Any(isBoolean))
+                    report(FhirPathDiagnostic.INVALID_ARGUMENT_TYPE, $"The criterion of iif() must be a boolean, but is {criterion}", arguments[0]);
+
+                var (whenTrue, whenFalse) = guard(arguments[0]);
+                var result = visitInScope(arguments[1], whenTrue);
+                return arguments.Count == 3 ? TypeSet.Union(result, visitInScope(arguments[2], whenFalse)) : TypeSet.Unknown;
+            });
+        }
+
+        #endregion
+    }
+}

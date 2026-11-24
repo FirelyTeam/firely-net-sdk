@@ -136,7 +136,8 @@
     <expression>Patient.identifier.exists()</expression>
     <output type="boolean">true</output>
   </test>
-  <test name="CSharpTest0035" inputfile="fp-test-patient.xml">
+  <!-- lenient: a path to an element that does not exist is a semantic error, but evaluates to empty -->
+  <test name="CSharpTest0035" inputfile="fp-test-patient.xml" mode="lenient">
     <expression>Patient.dientifeir.exists().not()</expression>
     <output type="boolean">true</output>
   </test>
