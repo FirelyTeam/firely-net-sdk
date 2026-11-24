@@ -317,18 +317,38 @@ namespace Hl7.FhirPath.Functions
         {
             public int Compare(ITypedElement? x, ITypedElement? y)
             {
+                // A primitive or Quantity without a value (e.g. one with only an extension) counts as empty.
+                if (hasNoValue(x)) x = null;
+                if (hasNoValue(y)) y = null;
+
                 if (x is null && y is null) return 0;
-                // Empty keys sort first, also for descending keys: the conformance tests for sort(-key) rely on this.
-                if (x is null) return -1;
-                if (y is null) return 1;
-                if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
-                {
-                    if (x is OrderedNode opn && opn.Descending)
-                        return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
-                    return EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
-                }
-                return 0;
+                // An empty key is lower than all values, so it sorts first, except for a desc key, which puts it last.
+                // Only the non-empty side carries the direction.
+                if (x is null) return ensureOrderable(y!) is OrderedNode { EmptyLast: true } ? 1 : -1;
+                if (y is null) return ensureOrderable(x!) is OrderedNode { EmptyLast: true } ? -1 : 1;
+
+                var orderableX = toOrderable(x!);
+                var orderableY = toOrderable(y!);
+                // Values that cannot be compared exactly (e.g. dates with different precision, quantities with
+                // incompatible units) are treated as equal.
+                var result = EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                return x is OrderedNode { Descending: true } ? -result : result;
             }
+
+            private static bool hasNoValue(ITypedElement? value) =>
+                value is PrimitiveNode { Value: null } or PocoNode { Poco: Quantity { Value: null } };
+
+            private static ITypedElement ensureOrderable(ITypedElement value)
+            {
+                toOrderable(value);
+                return value;
+            }
+
+            // Values that have no ordering (e.g. a CodeableConcept) cannot be sorted, which the spec defines as an error.
+            private static P.Any toOrderable(ITypedElement value) =>
+                P.Any.TryConvert(value.Value, out var orderable) && orderable is P.ICqlOrderable
+                    ? orderable
+                    : throw new InvalidOperationException($"Values of type '{value.InstanceType}' cannot be sorted, as they are not an ordered type.");
         }
     }
 }

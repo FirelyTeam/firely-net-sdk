@@ -302,18 +302,81 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        public void TestFhirPathSortDescending_unorderableKeyDoesNotThrow()
+        public void TestFhirPathSortUnorderableKeyIsAnError()
         {
             var patient = new Patient() { Id = "pat1" };
-            patient.MaritalStatus = new CodeableConcept("http://example.org", "M");
+            patient.Name.Add(new HumanName() { Period = new Period() { Start = "2001" } });
+            patient.Name.Add(new HumanName());
+            patient.Name.Add(new HumanName() { Period = new Period() { Start = "2002" } });
             FhirPathCompiler compiler = new FhirPathCompiler();
 
-            var result = compiler.Compile("Patient.sort(-maritalStatus.coding).id")(patient.ToPocoNode(), new FhirEvaluationContext());
-            result.Select(r => r.GetValue()).Should().Equal("pat1");
+            // A Period has no ordering, so it cannot be used as a sort key, whatever the direction
+            foreach (var expression in new[] { "Patient.name.sort(period)", "Patient.name.sort(period asc)", "Patient.name.sort(period desc)", "Patient.name.sort(-period)" })
+            {
+                Action act = () => compiler.Compile(expression)(patient.ToPocoNode(), new FhirEvaluationContext()).ToList();
+                act.Should().Throw<InvalidOperationException>(expression).WithMessage("*cannot be sorted*");
+            }
         }
 
         [TestMethod]
-        public void TestFhirPathSortDescending_emptyKeysFirst()
+        public void TestFhirPathSortPrimitiveWithoutValueCountsAsEmpty()
+        {
+            var patient = new Patient() { Id = "pat1" };
+            patient.Name.Add(new HumanName() { ElementId = "1", Family = "Smith" });
+            var noValue = new FhirString();
+            noValue.AddExtension("http://example.org/ext", new FhirString("x"));
+            patient.Name.Add(new HumanName() { ElementId = "2", FamilyElement = noValue });
+            patient.Name.Add(new HumanName() { ElementId = "3", Family = "Pos" });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            var result = compiler.Compile("Patient.name.sort(family).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("2", "3", "1");
+            result = compiler.Compile("Patient.name.sort(family desc).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("1", "3", "2");
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortQuantitiesWithoutKey()
+        {
+            var obs = new Observation() { Id = "o1" };
+            obs.Component.Add(new Observation.ComponentComponent() { Value = new Quantity(5m, "mg") });
+            obs.Component.Add(new Observation.ComponentComponent() { Value = new Quantity(2m, "mg") });
+            obs.Component.Add(new Observation.ComponentComponent() { Value = new Quantity(3m, "mg") });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            var result = compiler.Compile("Observation.component.value.sort()")(obs.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => ((Quantity)r.Poco).Value).Should().Equal(2m, 3m, 5m);
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortUnorderableValuesAreAnError()
+        {
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            foreach (var expression in new[] { "(1 | 'a').sort()", "(true | false).sort()", "(true | false).sort($this desc)" })
+            {
+                Action act = () => compiler.Compile(expression)(null, new FhirEvaluationContext()).ToList();
+                act.Should().Throw<InvalidOperationException>(expression);
+            }
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortKeyWithMultipleValuesIsAnError()
+        {
+            var patient = new Patient() { Id = "pat1" };
+            patient.Name.Add(new HumanName() { Given = new List<string>() { "Peter", "James" } });
+            patient.Name.Add(new HumanName() { Given = new List<string>() { "Jim" } });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            foreach (var expression in new[] { "Patient.name.sort(given)", "Patient.name.sort(given desc)", "Patient.name.sort(-given)" })
+            {
+                Action act = () => compiler.Compile(expression)(patient.ToPocoNode(), new FhirEvaluationContext()).ToList();
+                act.Should().Throw<InvalidOperationException>(expression).WithMessage("*more than one value*");
+            }
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortDescending_emptyKeys()
         {
             var patient = new Patient() { Id = "pat1" };
             patient.Name.Add(new HumanName() { ElementId = "1", Family = "Smith" });
@@ -321,9 +384,16 @@ namespace Hl7.FhirPath.R4.Tests
             patient.Name.Add(new HumanName() { ElementId = "3", Family = "Pos" });
             FhirPathCompiler compiler = new FhirPathCompiler();
 
-            // Pins current behaviour, which the prototype conformance test testSort10 relies on
-            var result = compiler.Compile("Patient.name.sort(family desc).id")(patient.ToPocoNode(), new FhirEvaluationContext());
-            result.Select(r => r.GetValue()).Should().Equal("2", "1", "3");
+            // An empty key is lower than all values: first when ascending, last for desc
+            var result = compiler.Compile("Patient.name.sort(family).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("2", "3", "1");
+            result = compiler.Compile("Patient.name.sort(family asc).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("2", "3", "1");
+            result = compiler.Compile("Patient.name.sort(family desc).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("1", "3", "2");
+
+            // The '-' prefix of the prototype conformance tests (testSort10) keeps empty keys first,
+            // as negating the key and sorting ascending would
             result = compiler.Compile("Patient.name.sort(-family).id")(patient.ToPocoNode(), new FhirEvaluationContext());
             result.Select(r => r.GetValue()).Should().Equal("2", "1", "3");
         }
