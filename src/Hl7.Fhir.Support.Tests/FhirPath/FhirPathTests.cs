@@ -209,8 +209,10 @@ namespace Hl7.Fhir.Support.Tests
         [DataRow("1.highBoundary()", "1.50000000")]
         [DataRow("0.0.lowBoundary()", "-0.05000000")]
         [DataRow("0.0.highBoundary()", "0.05000000")]
-        // zero lies half a unit from both its boundaries, so both are rounded half up when digits are dropped
-        [DataRow("0.lowBoundary(0)", "-1")]
+        // zero lies half a unit from both its boundaries; when digits are dropped the high boundary is rounded half up
+        // and the low boundary truncated, as in the reference implementation
+        [DataRow("0.lowBoundary(0)", "0")]
+        [DataRow("0.lowBoundary(1)", "-0.5")]
         [DataRow("0.highBoundary(0)", "1")]
         [DataRow("0.0.lowBoundary(0)", "0")]
         [DataRow("0.0.highBoundary(1)", "0.1")]
@@ -235,6 +237,14 @@ namespace Hl7.Fhir.Support.Tests
         [DataRow("99.96.highBoundary(1)", "100.0")]
         [DataRow("9.highBoundary(0)", "10")]
         [DataRow("1.587 'cm'.highBoundary(2)", "1.59 'cm'")]
+        // examples from the FHIRPath 3.1.0 spec
+        [DataRow("1.587.highBoundary(0)", "2")]
+        [DataRow("1.lowBoundary(2)", "0.50")]
+        [DataRow("1.highBoundary(2)", "1.50")]
+        [DataRow("2.1 'cm'.lowBoundary(2)", "2.05 'cm'")]
+        [DataRow("2.1 'cm'.highBoundary(2)", "2.15 'cm'")]
+        [DataRow("(-1.587).highBoundary(6)", "-1.586500")]
+        [DataRow("(-1.587).highBoundary(0)", "-1")]
         // negative numbers mirror the boundaries of their magnitude
         [DataRow("(-1.587).lowBoundary()", "-1.58750000")]
         [DataRow("(-1.587).highBoundary()", "-1.58650000")]
@@ -260,17 +270,24 @@ namespace Hl7.Fhir.Support.Tests
 
         [TestMethod]
         // the result needs more digits than a decimal holds at the requested precision
-        [DataRow("100000000000000000000000.0.lowBoundary()", "*too large or too small for a Decimal*")]
-        [DataRow("7.9228162514264337593543950335.highBoundary(28)", "*too large or too small for a Decimal*")]
-        // the precision is outside what a decimal supports
-        [DataRow("1.587.lowBoundary(29)", "*precision of a decimal boundary must be between 0 and 28*")]
-        public void DecimalBoundaryThatDoesNotFitFails(string expression, string expectedMessage)
+        [DataRow("100000000000000000000000.0.lowBoundary()")]
+        [DataRow("7.9228162514264337593543950335.highBoundary(28)")]
+        [DataRow("100000000000000000000000.0 'kg'.highBoundary()")]
+        public void DecimalBoundaryThatDoesNotFitIsEmpty(string expression)
         {
-            var evaluator = _compiler.Compile(expression);
+            var result = _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
+
+            result.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void DecimalBoundaryWithUnsupportedPrecisionFails()
+        {
+            var evaluator = _compiler.Compile("1.587.lowBoundary(29)");
             var act = () => evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
 
             // The evaluator wraps the exception thrown by the function, but keeps its message.
-            act.Should().Throw<System.Exception>().WithMessage(expectedMessage);
+            act.Should().Throw<System.Exception>().WithMessage("*precision of a decimal boundary must be between 0 and 28*");
         }
 
 

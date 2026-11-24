@@ -127,10 +127,15 @@ namespace Hl7.Fhir.FhirPath
         /// truncated. This follows the FHIRPath conformance tests and the reference implementation:
         /// 1.587.lowBoundary(2) is 1.58, 1.587.highBoundary(2) is 1.59, 9.95.highBoundary(1) is 10.0 and
         /// 0.0034.highBoundary(1) is 0.0.</para>
+        /// <para>Zero is half a unit of its last digit away from both its boundaries, so 0.0 gives -0.05 and 0.05. Where
+        /// digits are dropped, its high boundary is rounded half up and its low boundary truncated (0.lowBoundary(0) is 0),
+        /// as in the reference implementation. (That implementation uses 0.5 for every zero, ignoring its digits.)</para>
         /// </remarks>
+        /// <returns>The boundary, or <c>null</c> (an empty result) when it does not fit in a decimal at the requested
+        /// precision, such as a value above about 7.9e20 at the default precision of 8. The spec gives an empty result when
+        /// the precision is beyond what the implementation supports.</returns>
         /// <exception cref="ArgumentOutOfRangeException">The precision is negative or larger than a decimal can hold.</exception>
-        /// <exception cref="OverflowException">The result does not fit in a decimal at the requested precision.</exception>
-        internal static decimal BoundaryDecimal(decimal input, long? precision, bool high)
+        internal static decimal? BoundaryDecimal(decimal input, long? precision, bool high)
         {
             var resultScale = precision ?? DEFAULT_DECIMAL_BOUNDARY_PRECISION;
             if (resultScale is < 0 or > MAX_DECIMAL_SCALE)
@@ -154,7 +159,9 @@ namespace Hl7.Fhir.FhirPath
             var boundary = furtherFromZero ? magnitude + 5 : magnitude - 5;
             var negativeResult = digits.IsZero ? !high : isNegative;
 
-            var result = rescale(boundary, workScale, (int)resultScale, roundHalfUp: furtherFromZero);
+            // As in the reference implementation, the low boundary of zero is truncated: 0.lowBoundary(0) is 0, not -1.
+            var roundHalfUp = digits.IsZero ? high : furtherFromZero;
+            var result = rescale(boundary, workScale, (int)resultScale, roundHalfUp);
             return toDecimal(result, (byte)resultScale, negativeResult);
 
             static BigInteger rescale(BigInteger value, int fromScale, int toScale, bool roundHalfUp)
@@ -166,9 +173,11 @@ namespace Hl7.Fhir.FhirPath
                 return roundHalfUp && remainder * 2 >= divisor ? quotient + 1 : quotient;
             }
 
-            static decimal toDecimal(BigInteger value, byte scale, bool isNegative)
+            static decimal? toDecimal(BigInteger value, byte scale, bool isNegative)
             {
-                // The explicit conversion throws an OverflowException when the digits do not fit in a decimal.
+                // A decimal holds 96 bits of digits.
+                if (value.GetByteCount(isUnsigned: true) > 12) return null;
+
                 var bits = decimal.GetBits((decimal)value);
 
                 // Never produce a negative zero: (-0.0034).lowBoundary(1) is 0.0.
@@ -200,8 +209,8 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        internal static P.Quantity BoundaryQuantity(P.Quantity input, long? precision, bool high) =>
-            new(BoundaryDecimal(input.Value, precision, high), input.Unit, input.System);
+        internal static P.Quantity? BoundaryQuantity(P.Quantity input, long? precision, bool high) =>
+            BoundaryDecimal(input.Value, precision, high) is { } value ? new(value, input.Unit, input.System) : null;
 
         internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
         {
