@@ -79,6 +79,16 @@ internal static class InvokeeFactory
     private static Predicate<FocusCollection> getPropagator(bool doNullProp) =>
         doNullProp ? PROPAGATE_EMPTY : PROPAGATE_NEVER;
 
+    /// <summary>
+    /// Operators (e.g. <c>1 + 2</c>, <c>-x</c>) are compiled to functions whose focus is <c>$that</c>, but
+    /// they do not operate on it: only their operands take part in empty propagation. Otherwise an operator
+    /// would return empty whenever the evaluation's input is empty. This also covers the sort direction markers
+    /// (<c>unary.asc</c>/<c>unary.desc</c>), which ignore their focus (<c>$this</c>) as well.
+    /// </summary>
+    internal static bool IsOperator(string functionName) =>
+        functionName.StartsWith(BinaryExpression.BIN_PREFIX, StringComparison.Ordinal) ||
+        functionName.StartsWith(UnaryExpression.URY_PREFIX, StringComparison.Ordinal);
+
     public static Invokee Wrap<R>(Func<R> func)
     {
         return (Closure ctx, IEnumerable<Invokee> _) =>
@@ -172,13 +182,13 @@ internal static class InvokeeFactory
         };
     }
 
-    public static Invokee Wrap<A, B, R>(Func<A, B, R> func, bool propNull)
+    public static Invokee Wrap<A, B, R>(Func<A, B, R> func, bool propNull, bool ignoreFocus = false)
     {
         return (Closure ctx, IEnumerable<Invokee> args) =>
         {
             var focus = args.First()(ctx, EmptyArgs);
             ctx.focus = focus;
-            if (getPropagator(propNull)(focus)) return [];
+            if (getPropagator(propNull && !ignoreFocus)(focus)) return [];
 
             if (typeof(B) != typeof(EvaluationContext))
             {
@@ -195,13 +205,13 @@ internal static class InvokeeFactory
         };
     }
 
-    public static Invokee Wrap<A, B, C, R>(Func<A, B, C, R> func, bool propNull)
+    public static Invokee Wrap<A, B, C, R>(Func<A, B, C, R> func, bool propNull, bool ignoreFocus = false)
     {
         return (Closure ctx, IEnumerable<Invokee> args) =>
         {
             var focus = args.First()(ctx, EmptyArgs);
             ctx.focus = focus;
-            if (getPropagator(propNull)(focus)) return [];
+            if (getPropagator(propNull && !ignoreFocus)(focus)) return [];
 
             var argA = args.Skip(1).First()(ctx, EmptyArgs);
             if (getPropagator(propNull)(argA)) return [];
@@ -223,13 +233,13 @@ internal static class InvokeeFactory
         };
     }
 
-    public static Invokee Wrap<A, B, C, D, R>(Func<A, B, C, D, R> func, bool propNull)
+    public static Invokee Wrap<A, B, C, D, R>(Func<A, B, C, D, R> func, bool propNull, bool ignoreFocus = false)
     {
         return (Closure ctx, IEnumerable<Invokee> args) =>
         {
             var focus = args.First()(ctx, EmptyArgs);
             ctx.focus = focus;
-            if (getPropagator(propNull)(focus)) return [];
+            if (getPropagator(propNull && !ignoreFocus)(focus)) return [];
 
             var argA = args.Skip(1).First()(ctx, EmptyArgs);
             if (getPropagator(propNull)(argA)) return [];

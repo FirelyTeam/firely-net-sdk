@@ -33,13 +33,15 @@ namespace Hl7.FhirPath.Expressions
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
             context.focus = focus;
-            if (!focus.Any()) return [];
+            // Operators ignore their focus ($that), so an empty focus must not make them return empty.
+            if (!focus.Any() && !InvokeeFactory.IsOperator(_name)) return [];
 
             actualArgs.Add(focus);
             var newCtx = context.Nest(focus);
 
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
-            if (actualArgs.Any(aa => !aa.Any())) return [];
+            // The focus (index 0) was handled above; empty operands/arguments always propagate.
+            if (actualArgs.Skip(1).Any(aa => !aa.Any())) return [];
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 

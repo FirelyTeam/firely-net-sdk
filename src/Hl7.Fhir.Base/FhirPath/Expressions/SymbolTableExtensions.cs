@@ -32,9 +32,9 @@ public static class SymbolTableExtensions
     public static void Add<A, B, R>(this SymbolTable table, string name, Func<A, B, R> func, bool doNullProp = false)
     {
         if (typeof(B) != typeof(EvaluationContext))
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
+            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp, InvokeeFactory.IsOperator(name)));
         else
-            table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
+            table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp, InvokeeFactory.IsOperator(name)));
     }
 
     public static void Add<A, B, C, R>(this SymbolTable table, string name, Func<A, B, C, R> func,
@@ -42,9 +42,9 @@ public static class SymbolTableExtensions
     {
         if (typeof(C) != typeof(EvaluationContext))
             table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)),
-                InvokeeFactory.Wrap(func, doNullProp));
+                InvokeeFactory.Wrap(func, doNullProp, InvokeeFactory.IsOperator(name)));
         else
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
+            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp, InvokeeFactory.IsOperator(name)));
     }
 
     public static void Add<A, B, C, D, R>(this SymbolTable table, string name, Func<A, B, C, D, R> func,
@@ -52,10 +52,10 @@ public static class SymbolTableExtensions
     {
         if (typeof(D) != typeof(EvaluationContext))
             table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)),
-                InvokeeFactory.Wrap(func, doNullProp));
+                InvokeeFactory.Wrap(func, doNullProp, InvokeeFactory.IsOperator(name)));
         else
             table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)),
-                InvokeeFactory.Wrap(func, doNullProp));
+                InvokeeFactory.Wrap(func, doNullProp, InvokeeFactory.IsOperator(name)));
     }
 
     public static void AddLogic(this SymbolTable table, string name, Func<Func<bool?>, Func<bool?>, bool?> func)

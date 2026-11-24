@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -204,6 +205,38 @@ namespace HL7.FhirPath.Tests
                 .Union(IsTypeOperatorTestcases())
                 .Union(AsTypeOperatorTestcases())
                 ;
+        }
+
+        [TestMethod]
+        [DataRow("1+2*3+4 = 11", true)]
+        [DataRow("-1 < 0", true)]
+        [DataRow("(-1.587).abs() = 1.587", true)]
+        [DataRow("1 != 2", true)]
+        [DataRow("1 ~ 1", true)]
+        [DataRow("{} ~ {}", true)]
+        [DataRow("'a' & {} = 'a'", true)]
+        [DataRow("(3 | 1 | 2).sort(-$this).first() = 3", true)]
+        [DataRow("({} + 1).empty()", true)]
+        [DataRow("({} = 1).empty()", true)]
+        [DataRow("(1 > {}).empty()", true)]
+        [DataRow("(-{}).empty()", true)]
+        public void OperatorsOnEmptyInput(string expression, bool expected)
+        {
+            // Operators do not operate on the input focus, so an empty input must not make them return empty.
+            var compiled = new FhirPathCompiler().Compile(expression);
+            var result = compiled([], new EvaluationContext()).ToList();
+
+            result.Should().ContainSingle(because: $"'{expression}' should not return empty on an empty input");
+            result.Single().GetValue().Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void UnaryMinusOnEmptyInputIsStillTypeChecked()
+        {
+            // -1.convertsToInteger() parses as -(1.convertsToInteger()), and unary minus is not defined for Boolean.
+            var compiled = new FhirPathCompiler().Compile("-1.convertsToInteger()");
+            Action act = () => compiled([], new EvaluationContext()).ToList();
+            act.Should().Throw<Exception>();
         }
 
         [TestMethod]

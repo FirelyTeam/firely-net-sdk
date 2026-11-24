@@ -186,12 +186,6 @@ namespace Hl7.FhirPath.R4.Tests
         /// </summary>
         private static readonly string[] IGNORE_TESTCASES =
         [
-            // Arithmetic, comparison, equality and unary minus operators return empty when the input focus is empty (tests
-            // without an input file). Fixing this can change the outcome of no-input tests in other groups, so re-run the
-            // suite
-            "testPrecedence1", "testPrecedence2", "testMatchesEmpty", "testMatchesEmpty2", "testMatchesEmpty3",
-            "HighBoundaryDecimal6", "HighBoundaryDecimal14", "LowBoundaryDecimal13", "LowBoundaryNegDecimal1",
-
             // No static (semantic) type checking: invalid paths and type-guard checks are not reported as semantic errors
             "testSimpleFail", "testSimpleWithWrongContext", "testPolymorphismB", "testPolymorphismAsB",
             "testDollarOrderNotAllowed", "testIif6", "testPolymorphicsB", "isEffectOnLogic3Base", "isGuardFnImpliesBad",
@@ -213,8 +207,8 @@ namespace Hl7.FhirPath.R4.Tests
             "HighBoundaryDecimalExponent3", "HighBoundaryDecimalExponent4", "HighBoundaryDecimalExponent5",
 
             // Precision arguments out of range (negative, or beyond what the engine supports) should give an empty result,
-            // not an error or a clamped value. LowBoundaryDecimal3, LowBoundaryNegDecimal3, HighBoundaryDecimal3 and
-            // LowBoundaryNegDecimal5 have the same problem, but pass today only because of the empty-focus bug above
+            // not an error or a clamped value
+            "LowBoundaryDecimal3", "LowBoundaryNegDecimal3", "HighBoundaryDecimal3", "LowBoundaryNegDecimal5",
             "LowBoundaryDecimal5", "LowBoundaryDecimal6", "HighBoundaryDecimal7", "testHugeRoundPrecision",
             "testNegativeRoundPrecision", "testHugeQtyLowBoundaryPrecision", "testNegativeQtyHighBoundaryPrecision",
 
