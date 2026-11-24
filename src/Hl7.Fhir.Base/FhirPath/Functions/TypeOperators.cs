@@ -80,5 +80,34 @@ namespace Hl7.FhirPath.Functions
 
         public static IEnumerable<PocoNode> FilterType(this IEnumerable<PocoNode> focus, string typeName)
             => focus.Where(item => item.Is(typeName));
+
+        /// <summary>
+        /// Implements the FhirPath <c>type()</c> reflection function: returns a TypeInfo for each item in the focus.
+        /// </summary>
+        /// <remarks>The TypeInfo has a <c>namespace</c> and a <c>name</c> element. Primitive values get a
+        /// SimpleTypeInfo, all other values a ClassInfo. The <c>baseType</c> and <c>element</c> parts of the
+        /// TypeInfo are not supported.</remarks>
+        public static IEnumerable<PocoNode> Type(this IEnumerable<PocoNode> focus)
+            => focus.Select(getTypeInfo);
+
+        private static PocoNode getTypeInfo(PocoNode item)
+        {
+            var instanceType = ((ITypedElement)item).InstanceType ?? item.Poco.TypeName;
+
+            // Same convention as Is(): an instance type without a namespace is in the FHIR namespace.
+            var dot = instanceType.IndexOf('.');
+            var (ns, name) = dot < 0
+                ? ("FHIR", instanceType)
+                : (instanceType.Substring(0, dot), instanceType.Substring(dot + 1));
+
+            var typeInfo = new DynamicDataType
+            {
+                DynamicTypeName = item.Poco is PrimitiveType ? "System.SimpleTypeInfo" : "System.ClassInfo"
+            };
+            typeInfo.SetValue("namespace", new FPString(ns));
+            typeInfo.SetValue("name", new FPString(name));
+
+            return PocoNode.Root(typeInfo);
+        }
     }
 }

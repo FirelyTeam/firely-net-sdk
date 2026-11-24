@@ -172,5 +172,33 @@ namespace Hl7.FhirPath.R4.Tests
             evaluate(node, "Observation.value is Quantity").Should().ContainSingle().Which.GetValue().Should().Be(true);
             evaluate(node, "Observation.value is string").Should().ContainSingle().Which.GetValue().Should().Be(false);
         }
+
+        [TestMethod]
+        [DataRow("1", "System", "Integer")]
+        [DataRow("'a'", "System", "String")]
+        [DataRow("@2015-02-04", "System", "Date")]
+        [DataRow("4 'mg'", "System", "Quantity")]
+        [DataRow("Observation", "FHIR", "Observation")]
+        [DataRow("Observation.status", "FHIR", "code")]
+        [DataRow("Observation.value", "FHIR", "Quantity")]
+        [DataRow("Observation.component", "FHIR", "BackboneElement")]
+        public void TypeReturnsNamespaceAndName(string expression, string ns, string name)
+        {
+            var node = createObservation().ToPocoNode();
+
+            evaluate(node, $"({expression}).type().namespace").Should().ContainSingle().Which.GetValue().Should().Be(ns);
+            evaluate(node, $"({expression}).type().name").Should().ContainSingle().Which.GetValue().Should().Be(name);
+        }
+
+        [TestMethod]
+        public void TypeIsEvaluatedPerItem()
+        {
+            var node = createObservation().ToPocoNode();
+
+            evaluate(node, "(1 | 'a' | Observation.code).type().name").Select(n => n.GetValue())
+                .Should().Equal("Integer", "String", "CodeableConcept");
+            evaluate(node, "{}.type()").Should().BeEmpty();
+            evaluate(node, "Observation.subject.type()").Should().BeEmpty();
+        }
     }
 }

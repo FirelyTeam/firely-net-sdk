@@ -229,10 +229,6 @@ namespace Hl7.FhirPath.R4.Tests
             // Date/time arithmetic fails on partial-precision dateTimes with a timezone (e.g. @2015-02-04T10:00Z + 1 hour)
             "testPlusDate23", "testPlusDate24", "testMinus7",
 
-            // type() reflection function is not implemented
-            "testType1", "testType1a", "testType2", "testType2a", "testType3", "testType4", "testType9", "testType10",
-            "testType15", "testType16", "testType20", "testType21", "testType23",
-
             // is() does not follow the FHIR primitive type hierarchy (code is a string, url is a uri)
             "testFHIRPathIsFunction2", "testTypeA4",
 
