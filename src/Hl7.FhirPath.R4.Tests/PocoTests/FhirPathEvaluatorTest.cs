@@ -202,6 +202,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             fixture.IsTrue(@"1.0 'm' / 1.0 'm' = 1 '1'");
             fixture.IsTrue(@"(2 'm' * 3 'm' / 4 'm') = 1.5 'm'");
             fixture.IsTrue(@"(1 week / 1 day) = 7 '1'");
+            fixture.IsTrue(@"60 '1/min' * 2 'min' = 120 '1'");
 
             // Multiplying or dividing by a number scales the quantity and keeps its unit
             fixture.IsTrue(@"2 'mg' * 3 = 6 'mg'");

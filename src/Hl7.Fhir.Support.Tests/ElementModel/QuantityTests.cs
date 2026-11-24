@@ -167,6 +167,62 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void QuantityDivision(string left, string right, string? expected) =>
             checkArithmetic(left, right, expected, Quantity.TryDivide);
 
+        [TestMethod]
+        [DataRow("m/")]
+        [DataRow("kg.")]
+        [DataRow("//")]
+        [DataRow("[")]
+        [DataRow("{")]
+        [DataRow("m)")]
+        [DataRow("(m")]
+        [DataRow("10*")]
+        [DataRow("m-")]
+        [DataRow("m2.3")]
+        [DataRow("")]
+        public void QuantityArithmeticWithMalformedUnitDoesNotThrow(string unit)
+        {
+            var malformed = new Quantity(2m, unit);
+            var valid = new Quantity(3m, "m");
+
+            var calculate = () =>
+            {
+                Quantity.TryMultiply(malformed, valid, out _);
+                Quantity.TryMultiply(valid, malformed, out _);
+                Quantity.TryDivide(malformed, valid, out _);
+                Quantity.TryDivide(valid, malformed, out _);
+            };
+
+            calculate.Should().NotThrow();
+        }
+
+        [TestMethod]
+        public void QuantityArithmeticWithLeadingUnityFactor()
+        {
+            // '1/min' is common in FHIR vital signs (e.g. heart rate)
+            Quantity.TryMultiply(new Quantity(60m, "1/min"), new Quantity(2m, "min"), out var result).Should().BeTrue();
+            result!.Unit.Should().Be("1");
+            Math.Round(result.Value, 8).Should().Be(120m);
+
+            Quantity.TryDivide(new Quantity(60m, "1/min"), new Quantity(2m, "1/min"), out result).Should().BeTrue();
+            result!.Unit.Should().Be("1");
+            Math.Round(result.Value, 8).Should().Be(30m);
+        }
+
+        [TestMethod]
+        public void QuantityArithmeticIsThreadSafe()
+        {
+            var results = new System.Collections.Concurrent.ConcurrentBag<string>();
+
+            System.Threading.Tasks.Parallel.For(0, 2000, i =>
+            {
+                Quantity.TryMultiply(new Quantity(2.0m, "cm"), new Quantity(2.0m, "m"), out var product).Should().BeTrue();
+                Quantity.TryDivide(new Quantity(4.0m, "g"), new Quantity(2.0m, "m"), out var quotient).Should().BeTrue();
+                results.Add($"{product} {quotient}");
+            });
+
+            System.Linq.Enumerable.Distinct(results).Should().ContainSingle().Which.Should().Be("0.040000 'm2' 2 'g.m-1'");
+        }
+
         private delegate bool QuantityOperation(Quantity left, Quantity right, out Quantity? result);
 
         private static void checkArithmetic(string left, string right, string? expected, QuantityOperation operation)
