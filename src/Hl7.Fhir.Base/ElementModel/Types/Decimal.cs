@@ -99,17 +99,32 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
 
 
     /// <summary>
-    /// The maximum number of decimal places (precision) supported for a decimal, which is the maximum scale of
+    /// The maximum precision (number of decimal places) supported by <c>round()</c>, which is the maximum scale of
     /// <see cref="decimal"/>.
     /// </summary>
-    internal const int MAX_PRECISION = 28;
+    internal const int MAX_ROUND_PRECISION = 28;
 
     /// <summary>
-    /// Whether the given precision (number of decimal places) is within the range supported by the engine. Per the
-    /// FHIRPath specification, functions taking such a precision (like <c>round()</c>, <c>lowBoundary()</c> and
-    /// <c>highBoundary()</c>) return empty when it is negative or beyond the maximum precision of the implementation.
+    /// The maximum precision supported by <c>lowBoundary()</c> and <c>highBoundary()</c> on decimals, integers and
+    /// quantities (date/time boundaries have their own precisions). This matches the limit of the Java reference
+    /// engine (org.hl7.fhir.core), so both engines agree on which precisions give an empty result.
     /// </summary>
-    internal static bool IsSupportedPrecision(long precision) => precision is >= 0 and <= MAX_PRECISION;
+    internal const int MAX_BOUNDARY_PRECISION = 16;
+
+    /// <summary>
+    /// Whether the given precision can be used for <c>round()</c>. A negative precision, or one beyond
+    /// <see cref="MAX_ROUND_PRECISION"/>, gives an empty result, as the FHIRPath conformance tests and the Java
+    /// reference engine do.
+    /// </summary>
+    internal static bool IsSupportedRoundPrecision(long precision) => precision is >= 0 and <= MAX_ROUND_PRECISION;
+
+    /// <summary>
+    /// Whether the given precision can be used for <c>lowBoundary()</c> and <c>highBoundary()</c> on decimals,
+    /// integers and quantities. A negative precision, or one beyond <see cref="MAX_BOUNDARY_PRECISION"/>, gives an
+    /// empty result, as the FHIRPath specification ("greater than the maximum possible precision of the
+    /// implementation") and the Java reference engine do.
+    /// </summary>
+    internal static bool IsSupportedBoundaryPrecision(long precision) => precision is >= 0 and <= MAX_BOUNDARY_PRECISION;
 
     /// <summary>
     /// Calculates the scale of a decimal, which is the number of digits after the decimal separator.

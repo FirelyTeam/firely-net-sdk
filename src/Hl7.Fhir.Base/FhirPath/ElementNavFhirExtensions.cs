@@ -112,7 +112,7 @@ namespace Hl7.Fhir.FhirPath
         internal static decimal? AdjustBoundaryDecimal(decimal? input, long? precision, Func<decimal, decimal, decimal> op)
         {
             if (input is null) return null;
-            if (precision is { } p && !P.Decimal.IsSupportedPrecision(p)) return null;
+            if (precision is { } p && !P.Decimal.IsSupportedBoundaryPrecision(p)) return null;
 
             var decimalParts = input.Value.ToString(CultureInfo.InvariantCulture).Split('.');
 
