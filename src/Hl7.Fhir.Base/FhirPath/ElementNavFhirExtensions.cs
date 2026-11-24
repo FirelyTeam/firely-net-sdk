@@ -246,13 +246,13 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <remarks>Checking conformance requires validation, which is done by the
         /// <see cref="FhirEvaluationContext.ProfileConformanceChecker"/>. When none is configured, an error is raised.
-        /// Empty input gives an empty result, and input with more than one item raises an error.</remarks>
+        /// As in the current FHIR specification, the result is empty when the input is not a single item or the structure
+        /// is empty. A profile that cannot be resolved raises an error (thrown by the checker), as the FHIRPath conformance
+        /// tests require.</remarks>
         internal static bool? ConformsTo(IEnumerable<PocoNode> input, string? structure, EvaluationContext ctx)
         {
             var items = input.Take(2).ToArray();
-            if (items.Length == 0 || structure is null) return null;
-            if (items.Length > 1)
-                throw new InvalidOperationException("The 'conformsTo' function can only be called on a single item, but the input contains more than one.");
+            if (items.Length != 1 || string.IsNullOrEmpty(structure)) return null;
 
             var checker = (ctx as FhirEvaluationContext)?.ProfileConformanceChecker
                 ?? throw new InvalidOperationException($"The 'conformsTo' function cannot be executed because the {nameof(FhirEvaluationContext)} does not include a {nameof(FhirEvaluationContext.ProfileConformanceChecker)}.");

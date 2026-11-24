@@ -415,13 +415,13 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Action unknown = () => new Patient().Scalar("conformsTo('http://example.org/StructureDefinition/other')", context);
             unknown.Should().Throw<InvalidOperationException>().WithMessage("*Unknown profile*");
 
-            // The checker is not called for empty input (empty result) or for multiple items (an error).
+            // The result is empty, and the checker is not called, when the input is not a single item or the structure is empty.
             checkedProfiles.Clear();
             new Patient().Scalar($"{{}}.conformsTo('{myProfile}')", context).Should().BeNull();
             new Patient().Scalar($"name.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient { Name = [new(), new()] }.Scalar($"name.conformsTo('{myProfile}')", context).Should().BeNull();
             new Patient().Scalar("conformsTo({})", context).Should().BeNull();
-            Action multiple = () => new Patient { Name = [new(), new()] }.Scalar($"name.conformsTo('{myProfile}')", context);
-            multiple.Should().Throw<InvalidOperationException>().WithMessage("*single item*");
+            new Patient().Scalar("conformsTo('')", context).Should().BeNull();
             checkedProfiles.Should().BeEmpty();
         }
 
