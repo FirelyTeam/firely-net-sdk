@@ -360,7 +360,7 @@ namespace HL7.FhirPath.Tests
                     (@"'11/30/1972'.replaceMatches('\\b(?<month>\\d{1,2})/(?<day>\\d{1,2})/(?<year>\\d{2,4})\\b','${day}-${month}-${year}') = '30-11-1972'", true, false),
                     ("'abc'.replaceMatches('', 'x') = 'abc'", true, false), // empty regex returns the input unchanged
                     ("''.replaceMatches('', 'x') = ''", true, false),
-                    ("'A\\nB'.replaceMatches('A.B', 'x') = 'x'", true, false), // single-line mode: '.' matches newlines
+                    ("'A\\nB'.replaceMatches('A.B', 'x') = 'A\\nB'", true, false), // no single-line mode, as in the Java reference engine
 
                     // function length() : Integer
                     ("{}.length().empty()", true, false),
