@@ -151,8 +151,8 @@ namespace Hl7.FhirPath.Functions
                 throw unknown();
             }
 
-            // The input only contains classes from the base assembly (e.g. a Bundle or literals built in code),
-            // whose model does not include the release-specific types. Only names the base model knows can be
+            // The input only contains classes from the base or conformance assembly (e.g. a Bundle or literals built
+            // in code), whose model does not include the release-specific types. Only names the base model knows can be
             // confirmed; for anything else we cannot tell, so we accept it.
             return;
 
@@ -165,7 +165,7 @@ namespace Hl7.FhirPath.Functions
 
         // The model of the input: an inspector annotated on the input, or else the inspector for the first
         // release-specific model assembly the items (or their roots) come from. Returns null if the input
-        // only has classes from the base assembly.
+        // only has classes from the base or conformance assembly.
         private static ModelInspector? modelOf(IEnumerable<PocoNode> nodes)
         {
             foreach (var node in nodes)
@@ -179,9 +179,14 @@ namespace Hl7.FhirPath.Functions
 
 #pragma warning disable CS0618 // ForAssembly is obsolete, but there is no other way to get the inspector for an assembly
             static ModelInspector? releaseInspectorFor(Assembly assembly) =>
-                assembly != typeof(Base).Assembly && isModelAssembly(assembly) ? ModelInspector.ForAssembly(assembly) : null;
+                !isSharedModelAssembly(assembly) && isModelAssembly(assembly) ? ModelInspector.ForAssembly(assembly) : null;
 #pragma warning restore CS0618
         }
+
+        // The base assembly and the conformance assembly (shared by R4, R4B, R5 and R6) are used by more than one
+        // release, so their classes cannot tell which release-specific model the data belongs to.
+        private static bool isSharedModelAssembly(Assembly assembly) =>
+            assembly == typeof(Base).Assembly || assembly.GetName().Name == "Hl7.Fhir.Conformance";
 
         private static readonly ConcurrentDictionary<Assembly, bool> _modelAssemblies = new();
 
