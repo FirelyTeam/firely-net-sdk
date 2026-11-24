@@ -341,7 +341,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// <c>2 'kg'</c>). Otherwise, both operands are converted to canonical UCUM units before dividing, so the
     /// result is expressed in canonical UCUM units (e.g. <c>4.0 'g' / 2.0 'm'</c> gives <c>2 'g.m-1'</c>,
     /// and <c>1.0 'm' / 1.0 'm'</c> gives <c>1 '1'</c>).</para>
-    /// <para>Division by zero is not possible, and neither are the cases listed for
+    /// <para>A unity dividend (e.g. <c>2 '1' / 4 'm'</c>) gives the inverse unit (<c>0.5 'm-1'</c>), so it needs a divisor
+    /// that can be converted to canonical UCUM units. Division by zero is not possible, and neither are the cases listed for
     /// <see cref="TryMultiply(Quantity, Quantity, out Quantity?)"/>: in these cases <c>false</c> is returned.</para>
     /// </remarks>
     public static bool TryDivide(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
