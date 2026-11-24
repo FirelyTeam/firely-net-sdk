@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 
 using Hl7.FhirPath;
 using System;
@@ -74,6 +74,7 @@ public record PrimitiveNode(PrimitiveType Primitive, PocoNode? Parent, int? Inde
         ElementModel.Types.Date d => new FPDate(d),
         ElementModel.Types.Time t => new FPTime(t),
         decimal dec => new FPDecimal(dec),
+        ElementModel.Types.Decimal dec => new FPDecimal(dec),
         float f => new FPDecimal((decimal)f),
         double d => new FPDecimal((decimal)d),
         bool b => new FPBoolean(b),

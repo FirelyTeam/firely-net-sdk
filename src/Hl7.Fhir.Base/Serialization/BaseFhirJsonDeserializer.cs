@@ -760,7 +760,14 @@ public class BaseFhirJsonDeserializer
 
         // Decimal and integer are the only two types in FHIR where we are using Json native numbers
         if (implementingTypeHint == typeof(decimal) && reader.TryGetDecimal(out decimal dec))
-            return dec;
+        {
+            // A value too small for a .NET decimal (e.g. 1e-999999999) is read as 0: keep the literal instead,
+            // as happens below for a value too large for a .NET decimal.
+            if (dec != 0m) return dec;
+
+            var raw = System.Text.Encoding.UTF8.GetString(reader.HasValueSequence ? System.Buffers.BuffersExtensions.ToArray(reader.ValueSequence) : reader.ValueSpan.ToArray());
+            return ElementModel.Types.Decimal.TryParseExtended(raw, out var parsed) && parsed.IsOutOfRange ? raw : dec;
+        }
         if (implementingTypeHint == typeof(int) && reader.TryGetInt32(out int i32))
             return i32;
 

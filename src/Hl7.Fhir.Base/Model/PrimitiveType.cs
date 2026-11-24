@@ -91,6 +91,8 @@ public partial class PrimitiveType : P.IToSystemPrimitive
                 PositiveInt pint => pint.Value,
                 UnsignedInt unsint => unsint.Value,
                 Base64Binary { JsonValue: { } b64 } => b64,
+                // A decimal outside the range of a .NET decimal is kept as a string literal.
+                FhirDecimal { JsonValue: string s } when P.Decimal.TryParseExtended(s, out var d) && d.IsOutOfRange => d,
                 { } prim => prim.JsonValue
             };
         }
