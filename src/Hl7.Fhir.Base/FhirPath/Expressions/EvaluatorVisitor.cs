@@ -126,6 +126,18 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
+        /// <summary>
+        /// Wraps an arithmetic function so it returns empty when given a decimal or quantity outside the range of a .NET
+        /// decimal (e.g. 1e999999999). Each argument is still evaluated only once.
+        /// </summary>
+        private static Invokee emptyForOutOfRangeNumbers(Invokee func) => (Closure ctx, IEnumerable<Invokee> args) =>
+        {
+            var evaluated = args.Select(a => a(ctx, InvokeeFactory.EmptyArgs).ToList()).ToList();
+            return evaluated.Any(DynaDispatcher.IsOutOfRangeNumber)
+                ? []
+                : func(ctx, evaluated.Select(e => InvokeeFactory.Return(e)).ToList());
+        };
+
         private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)
         {
             // For now, we don't have the types or the parameters statically, so we just match on name
@@ -147,7 +159,8 @@ namespace Hl7.FhirPath.Expressions
                 if (func == null)
                     throw Error.Argument("Function '{0}' is not called with the right number or type of parameters".FormatWith(name));
 
-                return func;
+                // The dispatcher does this check for functions with several candidates.
+                return DynaDispatcher.ARITHMETIC_FUNCTIONS.Contains(name) ? emptyForOutOfRangeNumbers(func) : func;
             }
             else
             {

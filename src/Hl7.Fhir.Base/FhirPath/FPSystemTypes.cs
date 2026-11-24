@@ -1,4 +1,4 @@
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath;
@@ -65,6 +65,13 @@ internal class FPDecimal : CqlPrimitive
     {
         DynamicTypeName = "System.Decimal";
         JsonValue = value;
+    }
+
+    // A decimal outside the range of a .NET decimal is kept as a P.Decimal, like FPQuantity keeps a P.Quantity.
+    public FPDecimal(P.Decimal value)
+    {
+        DynamicTypeName = "System.Decimal";
+        JsonValue = value.IsOutOfRange ? value : value.Value;
     }
 }
 

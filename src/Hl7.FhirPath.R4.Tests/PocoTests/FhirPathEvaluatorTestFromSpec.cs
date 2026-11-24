@@ -270,15 +270,6 @@ namespace Hl7.FhirPath.R4.Tests
             "testQuantityUnitVsNoUnitEqual", "testQuantityNoUnitVsUnitEqual", "testQuantityUnitVsNoUnitEquivalent",
             "testQuantityNoUnitVsUnitEquivalent",
 
-            // Decimals with exponents outside the System.Decimal range (e.g. 1e999999999) are not supported
-            "testLargeExponentQtyEqualOtherUnit", "testLargeExponentQtyEqualSameUnit", "testLargeExponentQtyEquivalentOtherUnit",
-            "testLargeExponentQtyEquivalentSameUnit", "testLargeExponentQtyLessOtherUnit", "testLargeExponentQtyGreaterSameUnit",
-            "testLargeExponentQtyToString", "testLargeExponentQtyTimes", "testLargeExponentQtyDivide",
-            "testLargeExponentQtyLowBoundary", "testLargeExponentQtyEqualOtherUnitElement", "testLargeExponentQtyToStringElement",
-            "testSmallExponentQtyToString", "testLargeExponentDecPlus", "testLargeExponentDecMinus", "testLargeExponentDecTimes",
-            "testLargeExponentDecDivide", "testLargeExponentDecDiv", "testLargeExponentDecMod", "testLargeExponentDecRound",
-            "testLargeExponentDecGreater", "testSmallExponentDecPlus", "testLargeExponentDateAdd",
-
             // Time literals with a timezone (@T14:34:28Z) should be an execution error, not a syntax error
             "testLiteralTimeUTC", "testLiteralTimeTimezoneOffset",
 

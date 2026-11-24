@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using P = Hl7.Fhir.ElementModel.Types;
 using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.Model.PocoNode>;
 
 namespace Hl7.FhirPath.Expressions
@@ -41,6 +42,9 @@ namespace Hl7.FhirPath.Expressions
             actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
             if (actualArgs.Any(aa => !aa.Any())) return [];
 
+            // Arithmetic on a decimal or quantity outside the range of a .NET decimal (e.g. 1e999999999) gives empty.
+            if (ARITHMETIC_FUNCTIONS.Contains(_name) && actualArgs.Any(IsOutOfRangeNumber)) return [];
+
             var entry = _scope.DynamicGet(_name, actualArgs);
 
             if (entry != null)
@@ -68,6 +72,32 @@ namespace Hl7.FhirPath.Expressions
                 //TODO: Make error reporting better
                 throw Error.Argument(noMatchError(actualArgs));
             }
+        }
+
+        /// <summary>
+        /// The operators and functions that do arithmetic. Given a decimal or quantity outside the range of a .NET decimal
+        /// (e.g. 1e999999999), they return empty.
+        /// </summary>
+        internal static readonly HashSet<string> ARITHMETIC_FUNCTIONS =
+        [
+            "unary.-", "unary.+", "binary.*", "binary./", "binary.+", "binary.-", "binary.div", "binary.mod",
+            "abs", "ceiling", "exp", "floor", "ln", "log", "power", "round", "sqrt", "truncate",
+            "lowBoundary", "highBoundary"
+        ];
+
+        internal static bool IsOutOfRangeNumber(FocusCollection arg)
+        {
+            using var items = arg.GetEnumerator();
+            if (!items.MoveNext()) return false;
+            var item = items.Current;
+            if (items.MoveNext()) return false;  // a collection, which the function will reject in its own way
+
+            return item switch
+            {
+                PrimitiveNode { Value: P.Decimal { IsOutOfRange: true } or P.Quantity { IsOutOfRange: true } } => true,
+                { Poco: Quantity q } => FhirDecimal.TryGetSystemDecimal(q.ValueElement?.JsonValue, out var d) && d.IsOutOfRange,
+                _ => false
+            };
         }
 
         private string noMatchError(IEnumerable<object> arguments)

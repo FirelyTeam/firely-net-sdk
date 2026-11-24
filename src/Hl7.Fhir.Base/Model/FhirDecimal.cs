@@ -33,6 +33,7 @@
 using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
@@ -59,5 +60,21 @@ public partial class FhirDecimal
         (P.Decimal?)TryConvertToSystemTypeInternal() ?? throw new InvalidOperationException("Value is null.");
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
-        Value is not null ? new P.Decimal(Value.Value) : null;
+        TryGetSystemDecimal(JsonValue, out var result) ? result : Value is not null ? new P.Decimal(Value.Value) : null;
+
+    /// <summary>
+    /// Gets the System decimal for the JsonValue of a decimal, including a literal that is outside the
+    /// range of a .NET decimal (which the parsers keep as a string), see <see cref="P.Decimal.IsOutOfRange"/>.
+    /// </summary>
+    internal static bool TryGetSystemDecimal(object? jsonValue, [NotNullWhen(true)] out P.Decimal? result)
+    {
+        result = jsonValue switch
+        {
+            decimal d => new P.Decimal(d),
+            string s when P.Decimal.TryParseExtended(s, out var parsed) && parsed.IsOutOfRange => parsed,
+            _ => null
+        };
+
+        return result is not null;
+    }
 }

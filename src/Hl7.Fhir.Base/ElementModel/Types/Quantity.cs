@@ -15,16 +15,43 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
-public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
-    : Any, IComparable, ICqlEquatable, ICqlOrderable
+public class Quantity : Any, IComparable, ICqlEquatable, ICqlOrderable
 {
     public const string UCUM = "http://unitsofmeasure.org";
     public const string UCUM_UNIT = "1";
 
-    public decimal Value { get; } = value;
-    public string Unit { get; } = unit ?? UCUM_UNIT;
+    private readonly Decimal _value;
 
-    public QuantityUnitSystem System { get; } = system;
+    public Quantity(decimal value, string? unit, QuantityUnitSystem system)
+        : this(new Decimal(value), unit, system)
+    {
+        // nothing
+    }
+
+    internal Quantity(Decimal value, string? unit, QuantityUnitSystem system)
+    {
+        _value = value ?? throw new ArgumentNullException(nameof(value));
+        Unit = unit ?? UCUM_UNIT;
+        System = system;
+    }
+
+    /// <summary>
+    /// The value of this quantity as a .NET <see cref="decimal"/>.
+    /// </summary>
+    /// <exception cref="OverflowException">The value is too large for a <see cref="decimal"/>
+    /// (see <see cref="IsOutOfRange"/>).</exception>
+    public decimal Value => _value.Value;
+
+    /// <summary>
+    /// True when the value is outside the range of a .NET <see cref="decimal"/>, see <see cref="Decimal.IsOutOfRange"/>.
+    /// </summary>
+    public bool IsOutOfRange => _value.IsOutOfRange;
+
+    internal Decimal DecimalValue => _value;
+
+    public string Unit { get; }
+
+    public QuantityUnitSystem System { get; }
 
     public Quantity(decimal value, string? unit = UCUM_UNIT)
         : this(value, unit, QuantityUnitSystem.UCUM)
@@ -238,7 +265,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             return false;
         }
 
-        result = decimal.Compare(Math.Round(Value, 8), Math.Round(otherQ.Value, 8)); // aligns with Decimal
+        result = _value.CompareTo(otherQ._value); // aligns with Decimal
         return true;
     }
 
@@ -250,7 +277,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         if (l.Unit != r.Unit)
             return null;
 
-        return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
+        return l._value.CompareTo(r._value); // aligns with Decimal
 
         Quantity normalizeToUcum(Quantity orig)
         {
@@ -272,7 +299,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
                 _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
             };
 
-            return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
+            return new Quantity(orig._value, ucumUnit, QuantityUnitSystem.UCUM);
         }
     }
 
@@ -292,9 +319,10 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
 
-    public override int GetHashCode() => (Unit, Value).GetHashCode();
+    public override int GetHashCode() => (Unit, _value).GetHashCode();
 
-    public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
+    public override string ToString() =>
+        $"{(IsOutOfRange ? _value.ToString() : Value.ToString(CultureInfo.InvariantCulture))} '{Unit}'";
 
     bool? ICqlEquatable.IsEqualTo(Any? other) =>
         other is not null && TryEquals(other, CQL_EQUALS_COMPARISON, out var result) ? result: null;

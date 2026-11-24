@@ -52,13 +52,18 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
 
     private (P.Quantity? v, Exception? e) tryConvertToSystemTypeInternal()
     {
-        if (Value is null)
+        // A value outside the range of a .NET decimal is kept as a string, which the Value getter rejects.
+        var value = FhirDecimal.TryGetSystemDecimal(ValueElement?.JsonValue, out var systemValue)
+            ? systemValue
+            : Value is { } v ? new P.Decimal(v) : null;
+
+        if (value is null)
             return (null, new InvalidOperationException("Cannot convert a Quantity without a value to a FhirPath Quantity."));
 
         if (Comparator is not null)
             return (null, new InvalidOperationException("Cannot convert a Quantity with a comparator to a FhirPath Quantity."));
 
-        return (new P.Quantity(Value.Value, Code), null);
+        return (new P.Quantity(value, Code, P.QuantityUnitSystem.UCUM), null);
     }
 
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
