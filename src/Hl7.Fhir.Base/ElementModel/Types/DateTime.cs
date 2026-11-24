@@ -243,7 +243,8 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             // if no time component, don't modify result
             // Calendar semantics apply above seconds, so the decimal part of an hour or minute quantity is ignored.
             // Seconds and milliseconds are definite durations, applied to the millisecond (e.g. + 0.1 's' adds 100 ms,
-            // + 1.5 'ms' adds 1 ms), as the Java reference engine does.
+            // + 1.5 'ms' adds 1 ms), as the Java R5 engine does. Unlike Java, which computes the fraction in double
+            // (+ 2.3 's' adds 2299 ms there), this is exact. A value with seconds precision only gets whole seconds.
             "hour" or "hours" or "h" => dateTimeValue.Precision > DateTimePrecision.Day
                 ? dateTimeValue._value.AddHours((double)decimal.Truncate(value))
                 : dateTimeValue._value,
@@ -251,7 +252,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
                 ? dateTimeValue._value.AddMinutes((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             "s" or "second" or "seconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value * 1000))
+                ? dateTimeValue.Precision == DateTimePrecision.Second
+                    ? dateTimeValue._value.AddSeconds((double)decimal.Truncate(value))
+                    : dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value * 1000))
                 : dateTimeValue._value,
             "ms" or "millisecond" or "milliseconds" => dateTimeValue.Precision > DateTimePrecision.Day
                 ? dateTimeValue._value.AddMilliseconds((double)decimal.Truncate(value))
