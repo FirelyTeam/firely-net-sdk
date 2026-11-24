@@ -99,9 +99,11 @@ namespace Hl7.Fhir.ElementModel.Tests
             ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("1 'a'")).Should().BeTrue();
             ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("12 months")).Should().BeTrue();
 
-            // a calendar year or month has no fixed number of days, so it is not equivalent to shorter durations
-            ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("365.25 days")).Should().BeFalse();
-            ((ICqlEquatable)Quantity.Parse("1 month")).IsEquivalentTo(Quantity.Parse("30.4375 'd'")).Should().BeFalse();
+            // for equivalence, a calendar year or month converts like 'a' or 'mo' (as in the Java reference engine)
+            ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("365.25 days")).Should().BeTrue();
+            ((ICqlEquatable)Quantity.Parse("1 month")).IsEquivalentTo(Quantity.Parse("30.4375 'd'")).Should().BeTrue();
+            ((ICqlEquatable)Quantity.Parse("1 year")).IsEquivalentTo(Quantity.Parse("1 day")).Should().BeFalse();
+            ((ICqlEquatable)Quantity.Parse("1 month")).IsEquivalentTo(Quantity.Parse("1 day")).Should().BeFalse();
 
             // converting does not hide differences below the rounding precision of the larger unit
             Quantity.Parse("1 'wk'").Should().NotBe(Quantity.Parse("604800001 'ms'"));
@@ -122,6 +124,18 @@ namespace Hl7.Fhir.ElementModel.Tests
             Quantity.Parse("7 'd'").GetHashCode().Should().Be(Quantity.Parse("1 'wk'").GetHashCode());
             Quantity.Parse("1 week").GetHashCode().Should().Be(Quantity.Parse("1 'wk'").GetHashCode());
             new HashSet<Quantity> { Quantity.Parse("7 'd'") }.Should().Contain(Quantity.Parse("1 'wk'"));
+            Quantity.Parse("3000000000000000000000 'a'").GetHashCode().Should().Be(Quantity.Parse("1095750000000000000000000 'd'").GetHashCode());
+            Quantity.Parse("1.000000001 'kg'").GetHashCode().Should().Be(Quantity.Parse("1 'kg'").GetHashCode());
+            Quantity.Parse("-1 'wk'").GetHashCode().Should().Be(Quantity.Parse("-7 days").GetHashCode());
+            Quantity.Parse("0 'wk'").GetHashCode().Should().Be(Quantity.Parse("0.00 'ms'").GetHashCode());
+            Quantity.ForCalendarDuration(1m, "wk").GetHashCode().Should().Be(new Quantity(7m, "d").GetHashCode());
+
+            // values whose product in milliseconds needs more than 28 digits are still compared exactly
+            var precise = Quantity.Parse("1234567890123456789.12345678 'd'");
+            precise.Should().Be(Quantity.Parse("1234567890123456789.12345678 day"));
+            // (exactly 106666665706666666580266.665792 's', which has too many digits for a decimal)
+            ((ICqlOrderable)precise).CompareTo(Quantity.Parse("106666665706666666580266.6658 's'")).Should().Be(-1);
+            ((ICqlOrderable)precise).CompareTo(Quantity.Parse("106666665706666666580266.6657 's'")).Should().Be(1);
         }
 
         void reject(string testValue)

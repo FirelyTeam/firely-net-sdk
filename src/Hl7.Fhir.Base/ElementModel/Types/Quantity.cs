@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.ElementModel.Types;
@@ -256,35 +257,11 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             !DEFINITE_DURATION_MILLISECONDS.TryGetValue(r.Unit, out var rFactor))
             return null;
 
-        // A calendar year or month (which only gets here as 'a' or 'mo' when comparing for equivalence) does not
-        // have a fixed number of days, so it is only compared with years and months, not with shorter durations.
-        if ((isCalendarYearOrMonth(this) || isCalendarYearOrMonth(other)) && !(isYearOrMonth(l) && isYearOrMonth(r)))
-            return null;
-
-        // Round the inputs as we do when the units are the same, then compare the converted values without
-        // rounding them again: rounding after the conversion would hide real differences (e.g. 1 'wk' vs 604800001 'ms').
-        // To stay exact (and away from overflow as long as possible), cross-multiply by the factors divided by their
-        // greatest common divisor (e.g. 1461 for 'a' against 4 for 'd'), instead of converting to seconds.
-        var lValue = Math.Round(l.Value, 8);
-        var rValue = Math.Round(r.Value, 8);
-        var gcd = greatestCommonDivisor(lFactor, rFactor);
-        var lMultiplier = lFactor / gcd;
-        var rMultiplier = rFactor / gcd;
-
-        try
-        {
-            return decimal.Compare(lValue * lMultiplier, rValue * rMultiplier);
-        }
-        catch (OverflowException)
-        {
-            // Only reached for values close to decimal.MaxValue, where the inexact division is acceptable.
-            return decimal.Compare(lValue / rMultiplier, rValue / lMultiplier);
-        }
-
-        static long greatestCommonDivisor(long a, long b) => b == 0 ? a : greatestCommonDivisor(b, a % b);
-
-        static bool isCalendarYearOrMonth(Quantity q) => q.IsCalendarDuration && q.Unit is "year" or "month";
-        static bool isYearOrMonth(Quantity q) => q.Unit is "a" or "mo";
+        // Note that a calendar year or month only gets here (as 'a' or 'mo') when comparing for equivalence, and is then
+        // converted like the UCUM unit, as the Java reference engine does (1 year ~ 365.25 days, but not ~ 1 day).
+        // Round the inputs as we do when the units are the same, then compare the values in milliseconds, exactly:
+        // rounding after the conversion would hide real differences (e.g. 1 'wk' vs 604800001 'ms').
+        return toExactMilliseconds(l.Value, lFactor).CompareTo(toExactMilliseconds(r.Value, rFactor));
 
         Quantity normalizeToUcum(Quantity orig)
         {
@@ -308,6 +285,44 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
             return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
         }
+    }
+
+    /// <summary>
+    /// The value (rounded to 8 decimals, as in all quantity comparisons) times <paramref name="factor"/>, as an exact
+    /// fraction (numerator, power of ten of the denominator) in lowest terms, so equal values give equal results.
+    /// This avoids the rounding and overflow of decimal multiplication for very large or very precise values.
+    /// </summary>
+    private static ExactDecimal toExactMilliseconds(decimal value, long factor)
+    {
+        var rounded = Math.Round(value, 8);
+        var bits = decimal.GetBits(rounded);
+        var numerator = (((BigInteger)(uint)bits[2] << 64) | ((BigInteger)(uint)bits[1] << 32) | (uint)bits[0]) * factor;
+        if (bits[3] < 0) numerator = -numerator;
+        var scale = (bits[3] >> 16) & 0xFF;
+
+        while (scale > 0 && numerator % 10 == 0)
+        {
+            numerator /= 10;
+            scale--;
+        }
+
+        return new ExactDecimal(numerator, scale);
+    }
+
+    private readonly struct ExactDecimal(BigInteger numerator, int scale) : IComparable<ExactDecimal>
+    {
+        // In lowest terms, so equal values have equal numerators and scales (and hence hashes).
+        public BigInteger Numerator { get; } = numerator;
+        public int Scale { get; } = scale;
+
+        public int CompareTo(ExactDecimal other)
+        {
+            var common = Math.Max(Scale, other.Scale);
+            return (Numerator * BigInteger.Pow(10, common - Scale))
+                .CompareTo(other.Numerator * BigInteger.Pow(10, common - other.Scale));
+        }
+
+        public override int GetHashCode() => (Numerator, Scale).GetHashCode();
     }
 
     /// <summary>
@@ -335,8 +350,9 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// <summary>
     /// Compares two quantities according to CQL ordering rules.
     /// </summary>
-    /// <remarks>By default, calendar units (except year and month) are considered comparable to
-    /// definite time units (execpt y and mo). Use the <see cref="TryCompareTo(Hl7.Fhir.ElementModel.Types.Any?,Hl7.Fhir.ElementModel.Types.QuantityComparison,out int?)"/> overload
+    /// <remarks>This uses the equivalence rules, where calendar years and months are compared as the UCUM 'a' and 'mo'
+    /// (so 1 year compares equal to 365.25 days). The FHIRPath ordering operators use the equality rules instead, where calendar
+    /// years and months can only be compared with years and months, respectively. Use the <see cref="TryCompareTo(Hl7.Fhir.ElementModel.Types.Any?,Hl7.Fhir.ElementModel.Types.QuantityComparison,out int?)"/> overload
     /// to specify comparison behaviour for date comparisons.</remarks>
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
@@ -344,22 +360,12 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public override int GetHashCode()
     {
         // Durations that are equal in different units (7 'd' and 1 'wk', 1 week and 1 'wk') must have the same hash,
-        // so hash those on their value in milliseconds.
-        var ucumUnit = IsCalendarDuration ? calendarToUcum(Unit) : Unit;
+        // so hash those on their exact value in milliseconds, as used by the comparison.
+        var ucumUnit = IsCalendarDuration ? calendarToUcum(Unit) ?? Unit : Unit;
 
-        if (ucumUnit is not null && DEFINITE_DURATION_MILLISECONDS.TryGetValue(ucumUnit, out var factor))
-        {
-            try
-            {
-                return (nameof(DEFINITE_DURATION_MILLISECONDS), Math.Round(Value, 8) * factor).GetHashCode();
-            }
-            catch (OverflowException)
-            {
-                return nameof(DEFINITE_DURATION_MILLISECONDS).GetHashCode();
-            }
-        }
-
-        return (Unit, Value).GetHashCode();
+        return ucumUnit is not null && DEFINITE_DURATION_MILLISECONDS.TryGetValue(ucumUnit, out var factor)
+            ? (nameof(DEFINITE_DURATION_MILLISECONDS), toExactMilliseconds(Value, factor)).GetHashCode()
+            : (Unit, Math.Round(Value, 8)).GetHashCode(); // decimal hashes ignore trailing zeros, like the comparison
 
         // Calendar years and months are not equal to 'a' and 'mo', so they keep their own hash.
         static string? calendarToUcum(string unit) => unit switch

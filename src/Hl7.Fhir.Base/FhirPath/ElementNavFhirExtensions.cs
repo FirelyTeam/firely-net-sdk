@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -237,7 +237,8 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="l"></param>
         /// <param name="r"></param>
         /// <returns></returns>
-        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, out _);
+        // Uses the equality rules, like the ordering operators: a calendar year or month is not comparable to 'a', 'mo' or days.
+        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, P.Quantity.CQL_EQUALS_COMPARISON, out _);
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 
