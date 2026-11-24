@@ -57,6 +57,19 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void TestIndexer()
+        {
+            isB(@"(10 | 20 | 30)[0] = 10");
+            isB(@"(10 | 20 | 30)[2] = 30");
+            isB(@"(10 | 20 | 30)[3].empty()");
+            isB(@"(10 | 20 | 30)[-1].empty()");
+            isB(@"(10 | 20 | 30)[-3].empty()");
+            isB(@"(10 | 20 | 30)['2147483648'.toLong()].empty()");
+            isB(@"(10 | 20 | 30)['-4294967295'.toLong()].empty()");
+            isB(@"{}[0].empty()");
+        }
+
+        [TestMethod]
         public void TestGreaterThan()
         {
             isB(@"4.5 > 0");
