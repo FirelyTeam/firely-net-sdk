@@ -77,7 +77,7 @@ public static class SymbolTableInit
         t.Add("unary.-", (object f, int a) => -a, doNullProp: true);
         t.Add("unary.-", (object f, long a) => -a, doNullProp: true);
         t.Add("unary.-", (object f, decimal a) => -a, doNullProp: true);
-        t.Add("unary.-", (object f, P.Quantity a) => new P.Quantity(-a.Value, a.Unit, a.System), doNullProp: true);
+        t.Add("unary.-", (object f, P.Quantity a) => a.WithValue(-a.Value), doNullProp: true);
         t.Add("unary.+", (object f, int a) => a, doNullProp: true);
         t.Add("unary.+", (object f, long a) => a, doNullProp: true);
         t.Add("unary.+", (object f, decimal a) => a, doNullProp: true);
@@ -183,7 +183,7 @@ public static class SymbolTableInit
 
         // Math functions
         t.Add("abs", (decimal f) => Math.Abs(f), doNullProp: true);
-        t.Add("abs", (P.Quantity f) => new P.Quantity(Math.Abs(f.Value), f.Unit, f.System), doNullProp: true);
+        t.Add("abs", (P.Quantity f) => f.WithValue(Math.Abs(f.Value)), doNullProp: true);
         t.Add("ceiling", (decimal f) => Math.Ceiling(f), doNullProp: true);
         t.Add("exp", (decimal f) => Math.Exp((double)f), doNullProp: true);
         t.Add("floor", (decimal f) => Math.Floor(f), doNullProp: true);

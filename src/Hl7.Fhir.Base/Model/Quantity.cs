@@ -64,9 +64,23 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
         var (v, e) = tryConvertToSystemTypeInternal();
-        result = v;
+        result = v is not null ? withFhirPathUnitInfo(v) : null;
         return e is null;
     }
+
+    /// <summary>
+    /// Converts this Quantity to a <see cref="P.Quantity" /> for use in FHIRPath, which (like the reference engine)
+    /// also needs the unit text and whether the code is a UCUM code to order and convert quantities.
+    /// </summary>
+    internal P.Quantity ToFhirPathQuantity() => withFhirPathUnitInfo(ToSystemQuantity());
+
+    private P.Quantity withFhirPathUnitInfo(P.Quantity q) =>
+        new(q.Value, q.Unit, q.System)
+        {
+            UnitText = Unit,
+            HasCode = !string.IsNullOrEmpty(Code) || string.IsNullOrEmpty(Unit),
+            UnitSystem = string.IsNullOrEmpty(Code) ? null : System,
+        };
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
     public IReadOnlyCollection<Coding> ToCodings() => [new(System, Code)];

@@ -69,17 +69,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = quantityForComparison(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = quantityForComparison(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -115,6 +107,46 @@ namespace Hl7.FhirPath.Functions
             tryCoerce(ref left, ref right);
 
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
+        }
+
+        // Converts a FHIR Quantity to a System.Quantity for = and ~, following the reference (Java) engine:
+        // a quantity that has unit text but no code is only comparable to another such quantity with the
+        // same unit text, so comparing it with a coded quantity, a quantity literal or a unitless quantity
+        // gives empty (=) / false (~).
+        private static P.Quantity? quantityForComparison(ITypedElement element)
+        {
+            var quantity = element is PocoNode { Poco: Quantity q }
+                ? q
+#pragma warning disable CS0618 // Type or member is obsolete
+                : element.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly));
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (quantity is null) return null;
+
+            // ToSystemQuantity() also validates the quantity (value present, no comparator).
+            var systemQuantity = quantity.ToSystemQuantity();
+
+            if (!string.IsNullOrEmpty(quantity.Code) || string.IsNullOrEmpty(quantity.Unit))
+                return quantity.ToFhirPathQuantity();
+
+            // As in the Java engine, the unit text year(s)/month(s) without a code is the calendar duration
+            // (the same as the FHIRPath literal 1 year), which is equivalent to the UCUM 'a' / 'mo'.
+            if (quantity.System is null or P.Quantity.UCUM)
+            {
+                var calendarUnit = quantity.Unit switch
+                {
+                    "year" or "years" => "year",
+                    "month" or "months" => "month",
+                    _ => null
+                };
+
+                if (calendarUnit is not null)
+                    return P.Quantity.ForCalendarDuration(systemQuantity.Value, calendarUnit);
+            }
+
+            // The quantity remembers that it has unit text but no code, so it only equals another such quantity
+            // with the same unit text (see P.Quantity.TryEquals).
+            return quantity.ToFhirPathQuantity();
         }
 
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
@@ -167,17 +199,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = left is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                l = quantityForComparison(left);
             if (right.InstanceType == "Quantity" && r == null)
-                r = right is PocoNode node 
-                    ? Typecasts.ParseQuantity(node) 
-#pragma warning disable CS0618 // Type or member is obsolete
-                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
-#pragma warning restore CS0618 // Type or member is obsolete
+                r = quantityForComparison(right);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -300,6 +324,15 @@ namespace Hl7.FhirPath.Functions
 
             public int GetHashCode(ITypedElement element)
             {
+                // Quantities that are equal under FHIRPath rules can differ structurally (e.g. unit text
+                // vs. code, or a different system), so they cannot be hashed on their children. Hash
+                // them all alike and let Equals() decide. Quantities that cannot be converted (no value, or a
+                // comparator) keep the structural hash, so they are not compared to every other quantity.
+                // Quantity literals (System.Quantity) share the bucket, since they can equal a FHIR Quantity.
+                if (element.Value is P.Quantity ||
+                    (element.InstanceType == "Quantity" && element.Value is null && isComparableQuantity(element)))
+                    return QUANTITY_HASH;
+
                 var result = element.Value != null ? element.Value.GetHashCode() : 0;
 
                 if (element is ITypedElement element1)
@@ -311,6 +344,13 @@ namespace Hl7.FhirPath.Functions
 
                 return result;
             }
+
+            private static readonly int QUANTITY_HASH = "Quantity".GetHashCode();
+
+            // A value element can be present with only extensions (e.g. data-absent-reason), so check its value.
+            private static bool isComparableQuantity(ITypedElement element) =>
+                element.Children("value").FirstOrDefault()?.Value is not null &&
+                !element.Children("comparator").Any();
         }
 
         private class ValueProviderComparer : IComparer<ITypedElement?>
