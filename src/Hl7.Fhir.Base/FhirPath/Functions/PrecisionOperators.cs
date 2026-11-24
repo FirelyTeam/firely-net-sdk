@@ -16,10 +16,14 @@ namespace Hl7.FhirPath.Functions
     /// <summary>
     /// Implementation of the FHIRPath <c>precision()</c> function, see https://hl7.org/fhirpath/#precision--integer.
     /// </summary>
-    /// <remarks>FHIRPath dates and times are precise to the millisecond at most, so any fractional seconds count
-    /// as the 3 digits of milliseconds, whatever the number of fraction digits written in the input.</remarks>
+    /// <remarks>Fractional seconds count as the number of fraction digits written in the input, so <c>@T10:30:00.0</c>
+    /// gives 7 and <c>@T10:30:00.000</c> gives 9. This matches the HL7 Java engine for times and for dateTimes in data;
+    /// for dateTime literals the Java engine pads the fraction to at least 3 digits. A value that was not parsed from
+    /// text, such as the result of <c>now()</c> or of date arithmetic, counts as having millisecond (3 digit) precision.</remarks>
     internal static class PrecisionOperators
     {
+        private const int MILLISECOND_DIGITS = 3;
+
         /// <summary>
         /// The number of digits after the decimal point, so <c>1.58700.precision()</c> is 5.
         /// </summary>
@@ -36,19 +40,22 @@ namespace Hl7.FhirPath.Functions
 
         /// <summary>
         /// The number of digits in the dateTime, ignoring the timezone, so 4 (year), 6 (month), 8 (day),
-        /// 10 (hour), 12 (minute), 14 (second) or 17 (millisecond).
+        /// 10 (hour), 12 (minute), 14 (second), or 14 plus the number of fraction digits (17 for milliseconds).
         /// </summary>
-        public static int Precision(this P.DateTime focus) => dateTimeDigits(focus.Precision);
+        public static int Precision(this P.DateTime focus) => focus.Precision == P.DateTimePrecision.Fraction
+            ? 14 + (focus.ParsedFractionDigits ?? MILLISECOND_DIGITS)
+            : dateTimeDigits(focus.Precision);
 
         /// <summary>
-        /// The number of digits in the time, ignoring the timezone, so 2 (hour), 4 (minute), 6 (second) or 9 (millisecond).
+        /// The number of digits in the time, ignoring the timezone, so 2 (hour), 4 (minute), 6 (second),
+        /// or 6 plus the number of fraction digits (9 for milliseconds).
         /// </summary>
         public static int Precision(this P.Time focus) => focus.Precision switch
         {
             P.DateTimePrecision.Hour => 2,
             P.DateTimePrecision.Minute => 4,
             P.DateTimePrecision.Second => 6,
-            P.DateTimePrecision.Fraction => 9,
+            P.DateTimePrecision.Fraction => 6 + (focus.ParsedFractionDigits ?? MILLISECOND_DIGITS),
             _ => throw new ArgumentException($"Unexpected Time precision {focus.Precision}")
         };
 
@@ -60,7 +67,6 @@ namespace Hl7.FhirPath.Functions
             P.DateTimePrecision.Hour => 10,
             P.DateTimePrecision.Minute => 12,
             P.DateTimePrecision.Second => 14,
-            P.DateTimePrecision.Fraction => 17,
             _ => throw new ArgumentException($"Unexpected DateTime precision {precision}")
         };
     }

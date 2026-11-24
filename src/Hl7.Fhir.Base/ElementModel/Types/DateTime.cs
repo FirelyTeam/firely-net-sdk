@@ -102,6 +102,12 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     private int FractionDigits { get; init; } = 7;
 
     /// <summary>
+    /// The number of fraction digits as written in the parsed value, or <c>null</c> if this datetime was not created by Parse()
+    /// (or is the result of date arithmetic, whose fraction digits do not reflect those of the input).
+    /// </summary>
+    internal int? ParsedFractionDigits { get; private init; }
+
+    /// <summary>
     /// Gets the range covered by this datetime at its precision. Fails when the datetime has no offset.
     /// </summary>
     public bool TryGetRange([NotNullWhen(true)] out DateTimeRange? range)
@@ -191,7 +197,8 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         value = new DateTime(parsedValue, prec, offset.Success)
         {
             OriginalParsedString = representation,
-            FractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0
+            FractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0,
+            ParsedFractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0
         };
 
         return success;
@@ -274,7 +281,14 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             }
         }
 
-        return Parse(resultRepresentation);
+        // The result is formatted with "FFFFFFF", which trims trailing zeros, so its fraction digits are not those of
+        // the input and must not count as written ones (e.g. for precision()).
+        var result = Parse(resultRepresentation);
+        return new DateTime(result._value, result.Precision, result.HasOffset)
+        {
+            OriginalParsedString = result.OriginalParsedString,
+            FractionDigits = result.FractionDigits
+        };
     }
 
     /// <summary>
