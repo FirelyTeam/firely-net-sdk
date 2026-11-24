@@ -81,5 +81,16 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{p("no-unit")} contains {p("tablets")}").Should().BeFalse();
             eval($"{p("tablets")} in {p("tablets")}").Should().BeTrue();
         }
+
+        [TestMethod]
+        public void SetFunctionsTreatEqualQuantitiesAsOne()
+        {
+            var q = "Parameters.parameter.where(name = 'mg-text' or name = 'mg-code').value";
+            input().Select($"{q}.distinct()").Should().HaveCount(1);
+            input().Select($"{p("mg-text")} | {p("mg-code")}").Should().HaveCount(1);
+            input().Select($"{p("mg-text")}.intersect({p("mg-code")})").Should().HaveCount(1);
+            input().Select($"{p("mg-text")}.exclude({p("mg-code")})").Should().BeEmpty();
+            input().Select($"{p("tablets")} | {p("no-unit")}").Should().HaveCount(2);
+        }
     }
 }

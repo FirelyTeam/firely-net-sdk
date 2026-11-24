@@ -297,6 +297,12 @@ namespace Hl7.FhirPath.Functions
 
             public int GetHashCode(ITypedElement element)
             {
+                // Quantities that are equal under FHIRPath rules can differ structurally (e.g. unit text
+                // vs. code, or a different system), so they cannot be hashed on their children. Hash
+                // them all alike and let Equals() decide.
+                if (element.InstanceType == "Quantity" && element.Value is null)
+                    return element.InstanceType.GetHashCode();
+
                 var result = element.Value != null ? element.Value.GetHashCode() : 0;
 
                 if (element is ITypedElement element1)
