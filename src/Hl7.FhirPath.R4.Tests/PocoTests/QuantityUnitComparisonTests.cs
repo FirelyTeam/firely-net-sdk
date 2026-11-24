@@ -30,6 +30,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "mg-text", Value = new Quantity { Value = 1, Unit = "mg" } },
                 new() { Name = "mg-code", Value = new Quantity { Value = 1, Code = "mg", System = "http://unitsofmeasure.org" } },
                 new() { Name = "milligram-text", Value = new Quantity { Value = 1, Unit = "milligram" } },
+                new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
             ]
         };
@@ -48,10 +49,14 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [DataRow("mg-code", "milligram-text", null, false)]
         [DataRow("mg-code-and-text", "mg-code", true, true)]
         [DataRow("mg-code-and-text", "milligram-text", null, false)]
+        [DataRow("empty-code", "tablets", true, true)]
+        [DataRow("empty-code", "no-unit", null, false)]
         public void ComparesFhirQuantities(string left, string right, bool? equal, bool equivalent)
         {
             eval($"{p(left)} = {p(right)}").Should().Be(equal);
             eval($"{p(left)} ~ {p(right)}").Should().Be(equivalent);
+            eval($"{p(left)} != {p(right)}").Should().Be(!equal);
+            eval($"{p(left)} !~ {p(right)}").Should().Be(!equivalent);
         }
 
         [TestMethod]
@@ -70,10 +75,11 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        public void DistinctKeepsUnitTextQuantitySeparateFromUnitless()
+        public void MembershipDoesNotMatchUnitTextQuantityToUnitless()
         {
-            input().Select("Parameters.parameter.where(name = 'no-unit' or name = 'tablets').value.distinct()")
-                .Should().HaveCount(2);
+            eval($"{p("tablets")} in {p("no-unit")}").Should().BeFalse();
+            eval($"{p("no-unit")} contains {p("tablets")}").Should().BeFalse();
+            eval($"{p("tablets")} in {p("tablets")}").Should().BeTrue();
         }
     }
 }

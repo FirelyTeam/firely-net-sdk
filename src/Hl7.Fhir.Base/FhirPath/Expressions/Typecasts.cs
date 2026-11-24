@@ -64,7 +64,7 @@ namespace Hl7.FhirPath.Expressions
             var sq = q.ToSystemQuantity();
 
             return string.IsNullOrEmpty(q.Code) && !string.IsNullOrEmpty(q.Unit)
-                ? new P.Quantity(sq.Value, q.Unit, sq.System)
+                ? new P.Quantity(sq.Value, q.Unit)
                 : sq;
         }
 

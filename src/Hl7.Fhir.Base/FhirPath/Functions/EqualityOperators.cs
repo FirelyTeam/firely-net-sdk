@@ -93,19 +93,6 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-        // Converts a FHIR Quantity to a System.Quantity for = and ~. A quantity without a code
-        // uses its unit text as the unit, so it does not compare equal to a unitless quantity.
-        private static P.Quantity? quantityForComparison(ITypedElement element)
-        {
-            var quantity = element is PocoNode { Poco: Quantity q }
-                ? q
-#pragma warning disable CS0618 // Type or member is obsolete
-                : element.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly));
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            return Typecasts.ParseQuantityForComparison(quantity);
-        }
-
         public static bool? IsEqualTo(P.Any? left, P.Any? right)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
@@ -120,6 +107,19 @@ namespace Hl7.FhirPath.Functions
             tryCoerce(ref left, ref right);
 
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
+        }
+
+        // Converts a FHIR Quantity to a System.Quantity for = and ~. A quantity without a code
+        // uses its unit text as the unit, so it does not compare equal to a unitless quantity.
+        private static P.Quantity? quantityForComparison(ITypedElement element)
+        {
+            var quantity = element is PocoNode { Poco: Quantity q }
+                ? q
+#pragma warning disable CS0618 // Type or member is obsolete
+                : element.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly));
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return Typecasts.ParseQuantityForComparison(quantity);
         }
 
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
