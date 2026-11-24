@@ -194,6 +194,15 @@ namespace Hl7.Fhir.ElementModel.Tests
             ((ICqlEquatable)new Quantity(1m, "ng")).IsEquivalentTo(new Quantity(0.001m, "ug")).Should().BeTrue();
             ((ICqlEquatable)new Quantity(1m, "[in_i]")).IsEquivalentTo(new Quantity(3m, "cm")).Should().BeTrue();
             ((ICqlEquatable)new Quantity(1.01m, "[in_i]")).IsEquivalentTo(new Quantity(2.5m, "cm")).Should().BeFalse();
+
+            // Ratios that are not a power of ten: rounded in the unit of the least precise value
+            ((ICqlEquatable)new Quantity(1m, "d")).IsEquivalentTo(new Quantity(15m, "h")).Should().BeTrue();   // 0.625 d
+            ((ICqlEquatable)new Quantity(1m, "d")).IsEquivalentTo(new Quantity(30m, "h")).Should().BeTrue();   // 1.25 d
+            ((ICqlEquatable)new Quantity(1m, "d")).IsEquivalentTo(new Quantity(40m, "h")).Should().BeFalse();  // 1.67 d
+            ((ICqlEquatable)new Quantity(1m, "[lb_av]")).IsEquivalentTo(new Quantity(14m, "[oz_av]")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1m, "[lb_av]")).IsEquivalentTo(new Quantity(25m, "[oz_av]")).Should().BeFalse();
+            ((ICqlEquatable)new Quantity(1.0625m, "[lb_av]")).IsEquivalentTo(new Quantity(17m, "[oz_av]")).Should().BeTrue();
+            ((ICqlEquatable)new Quantity(1.0625m, "[lb_av]")).IsEquivalentTo(new Quantity(18m, "[oz_av]")).Should().BeFalse();
         }
 
         public enum Comparison

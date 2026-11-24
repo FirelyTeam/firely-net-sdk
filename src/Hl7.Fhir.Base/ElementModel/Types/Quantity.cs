@@ -479,9 +479,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// the least precise of the two (as for Decimal equivalence), where the precision is that of the values as written.
     /// </summary>
     /// <remarks>Quantities with the same unit are compared directly. Otherwise, UCUM quantities with the same dimension
-    /// are compared in the smaller of the two units, and the precision of the value in the larger unit becomes coarser
-    /// accordingly: 4 'g' is precise to the gram, so in milligrams it is 4000 'mg', rounded to thousands, which makes
-    /// 4 'g' ~ 4040 'mg' true, while 4000 'mg' ~ 4400 'mg' is false.</remarks>
+    /// are compared in the unit of the least precise value, rounded to its precision: 4 'g' is precise to the gram, so
+    /// 4 'g' ~ 4040 'mg' is true (4.04 g rounds to 4 g), while 4 'g' ~ 4600 'mg' is false.</remarks>
     private bool isEquivalentTo(Quantity other)
     {
         if (HasCode != other.HasCode) return false;
@@ -498,20 +497,31 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             return false;
 
         var leftIsCoarse = lc.Factor > rc.Factor;
+        var (coarse, fine) = leftIsCoarse ? (Value, other.Value) : (other.Value, Value);
         var ratio = leftIsCoarse ? lc.Factor / rc.Factor : rc.Factor / lc.Factor;
-        var coarsePrecision = Decimal.Scale(leftIsCoarse ? Value : other.Value, ignoreTrailingZeroes: true)
-                              - (int)Math.Floor(Math.Log10((double)ratio));
-        var finePrecision = Decimal.Scale(leftIsCoarse ? other.Value : Value, ignoreTrailingZeroes: true);
-        var precision = Math.Min(coarsePrecision, finePrecision);
+        var coarseScale = Decimal.Scale(coarse, ignoreTrailingZeroes: true);
+        var fineScale = Decimal.Scale(fine, ignoreTrailingZeroes: true);
 
-        return roundTo(left, precision) == roundTo(right, precision);
-
-        static decimal roundTo(decimal value, int decimals)
+        try
         {
-            if (decimals >= 0) return Math.Round(value, Math.Min(decimals, 28));
+            // Round in the unit of the least precise value, to the precision of that value. The step of the
+            // coarse value (expressed in the fine unit) is ratio / 10^coarseScale, that of the fine value 1 / 10^fineScale.
+            var coarseIsLessPrecise = ratio * pow10(fineScale) >= pow10(coarseScale);
 
-            var scale = (decimal)Math.Pow(10, -decimals);
-            return Math.Round(value / scale) * scale;
+            return coarseIsLessPrecise
+                ? Math.Round(coarse, coarseScale) == Math.Round(fine / ratio, coarseScale)
+                : Math.Round(coarse * ratio, fineScale) == Math.Round(fine, fineScale);
+        }
+        catch (OverflowException)
+        {
+            return false;
+        }
+
+        static decimal pow10(int exponent)
+        {
+            var result = 1m;
+            for (var i = 0; i < exponent; i++) result *= 10;
+            return result;
         }
     }
 
