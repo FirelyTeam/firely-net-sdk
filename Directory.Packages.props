@@ -14,7 +14,7 @@
 		<PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
 		<PackageVersion Include="FluentAssertions" Version="7.2.2" />
 		<PackageVersion Include="NSubstitute" Version="6.2.0" />
-		<PackageVersion Include="Verify.MSTest" Version="33.5.0" />
+		<PackageVersion Include="Verify.MSTest" Version="33.7.2" />
 	</ItemGroup>
 
 	<!-- Main Dependencies (all frameworks) -->
