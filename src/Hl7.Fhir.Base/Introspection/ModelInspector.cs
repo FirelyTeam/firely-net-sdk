@@ -35,13 +35,6 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     private static readonly ConcurrentDictionary<Assembly, FhirModelAssemblyAttribute?> _assemblyAttributeCache = new();
 
     /// <summary>
-    /// Returns true if any of the inspectors created so far by <see cref="ForAssembly(Assembly)"/> knows
-    /// a FHIR type by the given name (case-insensitive).
-    /// </summary>
-    internal static bool AnyInspectorKnowsType(string fhirTypeName) =>
-        _inspectedAssemblies.Values.Any(i => i.FindClassMapping(fhirTypeName) is not null);
-
-    /// <summary>
     /// Removes all known mappings from the inspector.
     /// </summary>
     public static void Clear()

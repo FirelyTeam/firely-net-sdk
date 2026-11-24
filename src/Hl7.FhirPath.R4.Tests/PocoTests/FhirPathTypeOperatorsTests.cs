@@ -222,6 +222,27 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void TypeNamesOnBaseOnlyInputDependOnTheInputOnly()
+        {
+            // A Bundle and its entries built in code only have classes from the base assembly, which does not
+            // know the release-specific types, so we cannot tell whether a FHIR name is valid and accept it.
+            var bundle = new Bundle { Type = Bundle.BundleType.Collection };
+            evaluate(bundle.ToPocoNode(), "Bundle.ofType(Patient)").Should().BeEmpty();
+            evaluate(bundle.ToPocoNode(), "Bundle.ofType(string1)").Should().BeEmpty();
+            evaluate(bundle.ToPocoNode(), "('a' | 'b').ofType(Patient)").Should().BeEmpty();
+
+            // An inspector on the input tells us the model, though.
+            var inspector = ModelInfo.ModelInspector;
+            evaluate(bundle.ToPocoNode(inspector), "Bundle.ofType(Patient)").Should().BeEmpty();
+            var act = () => evaluate(bundle.ToPocoNode(inspector), "Bundle.ofType(string1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'string1'*");
+
+            // As does data from a release-specific assembly anywhere in the input.
+            act = () => evaluate(new Patient().ToPocoNode(), "('a' | %context).ofType(string1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'string1'*");
+        }
+
+        [TestMethod]
         public void UnknownTypeNameIsReportedByTheTypeFunction()
         {
             var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();

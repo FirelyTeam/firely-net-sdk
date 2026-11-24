@@ -118,22 +118,14 @@ namespace Hl7.FhirPath.Functions
             return [];
         }
 
-        // FHIR type names that were verified to exist. Only these are cached: model assemblies can be loaded
-        // later, an unknown name raises an error anyway, and names we cannot verify (other namespaces, data
-        // of dynamic types) are not cached so user-supplied expressions cannot grow this without bound.
-        private static readonly ConcurrentDictionary<string, bool> _knownTypeNames = new(StringComparer.Ordinal);
-
         // Names of the core FHIR profiles on datatypes, which may be used as type names, but do not have a
         // class of their own.
         private static readonly HashSet<string> _profiledTypeNames = new(StringComparer.Ordinal) { "SimpleQuantity", "MoneyQuantity" };
 
         // Only called when no item matched the type: when an item matched, the type obviously exists.
-        // Note that the result is not specific to a FHIR release: a name is accepted if any loaded model knows
-        // it, which errs on the side of leniency.
-        private static void ensureKnownType(string typeName, IEnumerable<PocoNode> unmatched)
+        // The outcome only depends on the input (not on which models were loaded before), so it is not cached.
+        private static void ensureKnownType(string typeName, IReadOnlyCollection<PocoNode> unmatched)
         {
-            if (_knownTypeNames.ContainsKey(typeName)) return;
-
             var dot = typeName.IndexOf('.');
             var ns = dot < 0 ? null : typeName.Substring(0, dot);
             var name = typeName.Substring(dot + 1);
@@ -141,43 +133,53 @@ namespace Hl7.FhirPath.Functions
             // Names in other namespaces (e.g. logical models) cannot be checked, so we accept them.
             if (ns is not (null or "System" or "FHIR")) return;
 
-            if (isKnownType(ns, name, unmatched))
+            // System types are fully known.
+            if (ns is null or "System" && P.Any.TryGetSystemTypeByName(name, out _)) return;
+            if (ns is "System") throw unknown();
+
+            if (_profiledTypeNames.Contains(name)) return;
+
+            // FHIR types: we need the model the input belongs to.
+            if (modelOf(unmatched) is { } model)
             {
-                _knownTypeNames.TryAdd(typeName, true);
-                return;
+                if (model.FindClassMapping(name) is not null) return;
+
+                // Data of dynamic or custom types (e.g. logical models such as CDA) has types no inspector knows,
+                // so we cannot tell whether the name is valid.
+                if (unmatched.Any(n => isUnverifiable(n) || isUnverifiable(rootOf(n)))) return;
+
+                throw unknown();
             }
 
-            // Data of dynamic or custom types (e.g. logical models such as CDA) has types no inspector knows,
-            // so we cannot tell whether the name is valid.
-            if (ns is not "System" && unmatched.Any(n => isUnverifiable(n) || isUnverifiable(rootOf(n)))) return;
+            // The input only contains classes from the base assembly (e.g. a Bundle or literals built in code),
+            // whose model does not include the release-specific types. Only names the base model knows can be
+            // confirmed; for anything else we cannot tell, so we accept it.
+            return;
 
-            throw Error.InvalidOperation($"Unknown type '{typeName}'.");
+            InvalidOperationException unknown() => Error.InvalidOperation($"Unknown type '{typeName}'.");
 
+            // FHIRPath literals (System types) are dynamic too, but their types are known.
             static bool isUnverifiable(PocoNode node) =>
-                node.Poco is IDynamicType || !isModelAssembly(node.Poco.GetType().Assembly);
+                node.Poco is IDynamicType and not CqlPrimitive || !isModelAssembly(node.Poco.GetType().Assembly);
         }
 
-        private static bool isKnownType(string? ns, string name, IEnumerable<PocoNode> unmatched)
+        // The model of the input: an inspector annotated on the input, or else the inspector for the first
+        // release-specific model assembly the items (or their roots) come from. Returns null if the input
+        // only has classes from the base assembly.
+        private static ModelInspector? modelOf(IEnumerable<PocoNode> nodes)
         {
-            if (ns is null or "System" && P.Any.TryGetSystemTypeByName(name, out _)) return true;
-            if (ns is "System") return false;
+            foreach (var node in nodes)
+            {
+                if (node.FindInspector() is { } annotated) return annotated;
+                if (releaseInspectorFor(node.Poco.GetType().Assembly) is { } own) return own;
+                if (releaseInspectorFor(rootOf(node).Poco.GetType().Assembly) is { } root) return root;
+            }
 
-            if (_profiledTypeNames.Contains(name)) return true;
-
-            // FHIR types: ask the inspectors that belong to the input (the annotated one, and the ones for the
-            // assemblies of the first item and its root), then any inspector created so far. Note that
-            // Bundle, Parameters and the primitives live in the base assembly, so the item's own assembly
-            // is not enough.
-            var first = unmatched.First();
-            if (first.FindInspector()?.FindClassMapping(name) is not null) return true;
-            if (inspectorFor(first.Poco.GetType().Assembly)?.FindClassMapping(name) is not null) return true;
-            if (inspectorFor(rootOf(first).Poco.GetType().Assembly)?.FindClassMapping(name) is not null) return true;
-
-            return ModelInspector.AnyInspectorKnowsType(name);
+            return null;
 
 #pragma warning disable CS0618 // ForAssembly is obsolete, but there is no other way to get the inspector for an assembly
-            static ModelInspector? inspectorFor(Assembly assembly) =>
-                isModelAssembly(assembly) ? ModelInspector.ForAssembly(assembly) : null;
+            static ModelInspector? releaseInspectorFor(Assembly assembly) =>
+                assembly != typeof(Base).Assembly && isModelAssembly(assembly) ? ModelInspector.ForAssembly(assembly) : null;
 #pragma warning restore CS0618
         }
 
