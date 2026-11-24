@@ -164,6 +164,59 @@ namespace Hl7.Fhir.ElementModel.Tests
         // }
 
         [TestMethod]
+        [DataRow("2.0 'cm'", "2.0 'm'", "0.040 'm2'")]
+        [DataRow("25 'm'", "20 'm'", "500 'm2'")]
+        [DataRow("2.0 'cm'", "9 'kg'", "180 'g.m'")]
+        [DataRow("2 'kg'", "3 '1'", "6000 'g'")]
+        [DataRow("3 '1'", "2 'kg'", "6000 'g'")]
+        [DataRow("3 '1'", "2 '1'", "6 '1'")]
+        [DataRow("2 '{tbl}'", "3 'g'", "6 'g'")]
+        [DataRow("2 'm'", "3 seconds", "6 'm.s'")]
+        [DataRow("2 'm'", "0 'm'", "0 'm2'")]
+        [DataRow("2 'Cel'", "3 'm'", null)]
+        [DataRow("2 'tablets'", "3 'm'", null)]
+        [DataRow("2 'm'", "1 year", null)]
+        public void QuantityMultiplication(string left, string right, string? expected) =>
+            checkArithmetic(left, right, expected, Quantity.TryMultiply);
+
+        [TestMethod]
+        [DataRow("4.0 'g'", "2.0 'm'", "2 'g.m-1'")]
+        [DataRow("1.0 'm'", "1.0 'm'", "1 '1'")]
+        [DataRow("12 'cm2'", "3 'cm'", "0.04 'm'")]
+        [DataRow("14.4 'km'", "2.0 'h'", "2 'm.s-1'")]
+        [DataRow("2 'kg'", "4 'g'", "500 '1'")]
+        [DataRow("6 'kg'", "3 '1'", "2000 'g'")]
+        [DataRow("6 '1'", "3 'g'", "2 'g-1'")]
+        [DataRow("6 'm'", "3 seconds", "2 'm.s-1'")]
+        [DataRow("3 'm'", "0 'cm'", null)]
+        [DataRow("3 'm'", "0 '1'", null)]
+        [DataRow("3 'tablets'", "1 'm'", null)]
+        [DataRow("3 'm'", "1 month", null)]
+        public void QuantityDivision(string left, string right, string? expected) =>
+            checkArithmetic(left, right, expected, Quantity.TryDivide);
+
+        private delegate bool QuantityOperation(Quantity left, Quantity right, out Quantity? result);
+
+        private static void checkArithmetic(string left, string right, string? expected, QuantityOperation operation)
+        {
+            var success = operation(Quantity.Parse(left), Quantity.Parse(right), out var result);
+
+            if (expected is null)
+            {
+                success.Should().BeFalse();
+                result.Should().BeNull();
+            }
+            else
+            {
+                success.Should().BeTrue();
+                var expectedQ = Quantity.Parse(expected);
+                result!.Unit.Should().Be(expectedQ.Unit);
+                result.System.Should().Be(QuantityUnitSystem.UCUM);
+                result.Value.Should().Be(expectedQ.Value);
+            }
+        }
+
+        [TestMethod]
         public void IsNullWhenInvalid()
         {
             Quantity.TryParse("hi", out var parsed).Should().BeFalse();

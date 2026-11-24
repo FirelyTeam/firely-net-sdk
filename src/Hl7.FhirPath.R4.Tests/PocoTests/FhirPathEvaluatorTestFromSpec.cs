@@ -263,8 +263,8 @@ namespace Hl7.FhirPath.R4.Tests
             "testQuantity5", "testQuantity6", "testQuantity7", "testQuantity8", "testGreaterThan28",
             "testQuantityLiteralWeekToString",
 
-            // Quantity multiplication and division (2.0 'cm' * 2.0 'm', 4.0 'g' / 2.0 'm')
-            "testQuantity9", "testQuantity10", "testQuantity11",
+            // Quantity division gives 2 'g.m-1', which only equals 2 'g/m' once equality converts UCUM units
+            "testQuantity10",
 
             // Comparing a quantity with a unit to one without a unit should give empty (=) / false (~)
             "testQuantityUnitVsNoUnitEqual", "testQuantityNoUnitVsUnitEqual", "testQuantityUnitVsNoUnitEquivalent",

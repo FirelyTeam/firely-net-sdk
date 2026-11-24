@@ -86,10 +86,10 @@ public static class SymbolTableInit
         t.Add("binary.*", (object f, int a, int b) => a * b, doNullProp: true);
         t.Add("binary.*", (object f, long a, long b) => a * b, doNullProp: true);
         t.Add("binary.*", (object f, decimal a, decimal b) => a * b, doNullProp: true);
-        // t.Add("binary.*", (object f, P.Quantity a, P.Quantity b) => a * b, doNullProp: true);
+        t.Add("binary.*", (object f, P.Quantity a, P.Quantity b) => P.Quantity.TryMultiply(a, b, out var result) ? result : null, doNullProp: true);
 
         t.Add("binary./", (object f, decimal a, decimal b) => b != 0 ? a / b : (decimal?)null, doNullProp: true);
-        // t.Add("binary./", (object f, P.Quantity a, P.Quantity b) => a / b, doNullProp: true);
+        t.Add("binary./", (object f, P.Quantity a, P.Quantity b) => P.Quantity.TryDivide(a, b, out var result) ? result : null, doNullProp: true);
 
         t.Add("binary.+", (object f, int a, int b) => a + b, doNullProp: true);
         t.Add("binary.+", (object f, long a, long b) => a + b, doNullProp: true);

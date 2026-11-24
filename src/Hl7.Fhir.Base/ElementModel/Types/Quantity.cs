@@ -11,6 +11,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.ElementModel.Types;
@@ -307,6 +308,84 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         other is not null && TryCompareTo(other, out var result)
             ? result
             : null;
+
+    /// <summary>
+    /// Multiplies two quantities, as defined by the FHIRPath <c>*</c> operator.
+    /// </summary>
+    /// <remarks>Both operands are converted to canonical UCUM units before multiplying, so the
+    /// result is expressed in canonical UCUM units (e.g. <c>2.0 'cm' * 2.0 'm'</c> gives <c>0.0400 'm2'</c>).
+    /// When either unit cannot be interpreted as a UCUM unit (e.g. the calendar durations 'year' and 'month'),
+    /// the multiplication is not possible and <c>false</c> is returned.</remarks>
+    public static bool TryMultiply(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
+        tryCalculate(left, right, multiply: true, out result);
+
+    /// <summary>
+    /// Divides two quantities, as defined by the FHIRPath <c>/</c> operator.
+    /// </summary>
+    /// <remarks>Both operands are converted to canonical UCUM units before dividing, so the
+    /// result is expressed in canonical UCUM units (e.g. <c>4.0 'g' / 2.0 'm'</c> gives <c>2 'g.m-1'</c>,
+    /// and <c>1.0 'm' / 1.0 'm'</c> gives <c>1 '1'</c>). Division by zero, or by a quantity whose unit cannot be
+    /// interpreted as a UCUM unit, is not possible and <c>false</c> is returned.</remarks>
+    public static bool TryDivide(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
+        tryCalculate(left, right, multiply: false, out result);
+
+    private static bool tryCalculate(Quantity left, Quantity right, bool multiply, [NotNullWhen(true)] out Quantity? result)
+    {
+        result = null;
+
+        if (!multiply && right.Value == 0) return false;
+        if (toUcumUnit(left) is not { } leftUnit || toUcumUnit(right) is not { } rightUnit) return false;
+
+        var service = global::Fhir.Metrics.FhirMetricService.Instance.Value;
+        (decimal value, string unit, string? codesystem)? calculated;
+
+        try
+        {
+            var l = (left.Value, leftUnit, UCUM);
+            var r = (right.Value, rightUnit, UCUM);
+            var success = multiply
+                ? global::Fhir.Metrics.MetricServiceExtensions.TryMultiply(service, l, r, out calculated)
+                : global::Fhir.Metrics.MetricServiceExtensions.TryDivide(service, l, r, out calculated);
+            if (!success || calculated is null) return false;
+        }
+        catch (Exception e) when (e is ArithmeticException or ArgumentException or InvalidOperationException)
+        {
+            return false;
+        }
+
+        var (value, unit, _) = calculated.Value;
+        result = new Quantity(value, cleanupCanonicalUnit(unit), QuantityUnitSystem.UCUM);
+        return true;
+
+        // Returns the UCUM unit to use in the calculation, using the empty string for the
+        // unity '1' (which Fhir.Metrics does not interpret as unity).
+        static string? toUcumUnit(Quantity q) => q.System switch
+        {
+            QuantityUnitSystem.UCUM => q.Unit == UCUM_UNIT ? "" : q.Unit,
+            QuantityUnitSystem.CalendarDuration => q.Unit switch
+            {
+                // Calendar years and months have no definite UCUM equivalent.
+                "week" => "wk",
+                "day" => "d",
+                "hour" => "h",
+                "minute" => "min",
+                "second" => "s",
+                "millisecond" => "ms",
+                _ => null
+            },
+            _ => null
+        };
+
+        // Fhir.Metrics represents unity (and units consisting only of an annotation, like '{tbl}') as a
+        // '1' factor in its canonical form (e.g. '1.g-1'). Remove those, and use '1' for a dimensionless result.
+        static string cleanupCanonicalUnit(string? unit)
+        {
+            var parts = (unit ?? "").Split('.')
+                .Where(p => p.Length > 0 && !Regex.IsMatch(p, @"^1(-?[0-9]+)?$"))
+                .ToArray();
+            return parts.Length == 0 ? UCUM_UNIT : string.Join(".", parts);
+        }
+    }
 
     public static explicit operator String(Quantity q) => RunCast<String>(q);
 
