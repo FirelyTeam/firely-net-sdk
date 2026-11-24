@@ -294,9 +294,6 @@ namespace Hl7.FhirPath.R4.Tests
             // all() returns empty instead of false when a criterion is empty (e.g. comparing dateTimes of different
             // precision)
             "testPeriodInvariantOld",
-
-            // conformsTo() is not implemented (needs profile resolution / validation)
-            "testConformsTo1", "testConformsTo2", "testConformsTo3",
         ];
 
         [TestMethod, TestCategory("FhirPathFromSpec")]

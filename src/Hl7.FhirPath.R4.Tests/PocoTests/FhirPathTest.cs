@@ -383,6 +383,67 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        [DynamicData(nameof(ConformsToTestData))]
+        public void ConformsToCoreTypeTests(Base poco, string expression, bool? expectedResult)
+        {
+            var result = poco.Scalar(expression, new FhirEvaluationContext());
+
+            result.Should().Be(expectedResult);
+        }
+
+        public static IEnumerable<object[]> ConformsToTestData()
+        {
+            var patient = new Patient { Name = [new HumanName { Family = "Doe" }] };
+
+            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", true];
+            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Patient|4.0.1')", true];
+            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/DomainResource')", true];
+            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Resource')", true];
+            yield return [patient, "conformsTo('http://hl7.org/fhir/StructureDefinition/Observation')", false];
+            yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/HumanName')", true];
+            yield return [patient, "name.conformsTo('http://hl7.org/fhir/StructureDefinition/Address')", false];
+            yield return [patient, "telecom.conformsTo('http://hl7.org/fhir/StructureDefinition/ContactPoint')", null];
+        }
+
+        [TestMethod]
+        public void ConformsToErrors()
+        {
+            var patient = new Patient { Name = [new HumanName { Family = "Doe" }, new HumanName { Family = "Roe" }] };
+            var context = new FhirEvaluationContext();
+
+            Action unknownProfile = () => patient.Scalar("conformsTo('http://example.org/StructureDefinition/my-patient')", context);
+            unknownProfile.Should().Throw<InvalidOperationException>().WithMessage("*cannot resolve profile*");
+
+            Action multipleItems = () => patient.Scalar("name.conformsTo('http://hl7.org/fhir/StructureDefinition/HumanName')", context);
+            multipleItems.Should().Throw<InvalidOperationException>().WithMessage("*single item*");
+        }
+
+        [TestMethod]
+        public void ConformsToUsesProfileConformanceChecker()
+        {
+            const string myProfile = "http://example.org/StructureDefinition/my-patient";
+            var patient = new Patient { Active = true };
+            var checkedProfiles = new List<string>();
+
+            var context = new FhirEvaluationContext
+            {
+                ProfileConformanceChecker = (node, profile) =>
+                {
+                    checkedProfiles.Add(profile);
+                    return profile == myProfile ? ((Patient)node.Poco).Active == true : null;
+                }
+            };
+
+            patient.Scalar($"conformsTo('{myProfile}')", context).Should().Be(true);
+            // The checker returns null for a profile it does not know, so the core-type fallback is used.
+            patient.Scalar("conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", context).Should().Be(true);
+            Action unknown = () => patient.Scalar("conformsTo('http://example.org/StructureDefinition/other')", context);
+            unknown.Should().Throw<InvalidOperationException>();
+
+            checkedProfiles.Should().Equal(myProfile, "http://hl7.org/fhir/StructureDefinition/Patient", "http://example.org/StructureDefinition/other");
+        }
+
+        [TestMethod]
         public void MemberOfTestsWithoutTerminologyService()
         {
             var context = new FhirEvaluationContext();

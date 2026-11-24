@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
@@ -44,6 +45,7 @@ namespace Hl7.Fhir.FhirPath
             t.Add("resolve", (IEnumerable<PocoNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)).OfType<PocoNode>(), doNullProp: false);
 
             t.Add("memberOf", (PocoNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
+            t.Add("conformsTo", (IEnumerable<PocoNode> input, string structure, EvaluationContext ctx) => ConformsTo(input, structure, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
@@ -238,6 +240,36 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="r"></param>
         /// <returns></returns>
         internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, out _);
+
+        /// <summary>
+        /// Implements the FHIRPath <c>conformsTo()</c> function: whether the single input element conforms to the
+        /// profile with the given canonical url.
+        /// </summary>
+        /// <remarks>The profile is checked by <see cref="FhirEvaluationContext.ProfileConformanceChecker"/> when one
+        /// is configured. Otherwise (or when it returns <c>null</c>), only the canonicals of the core FHIR types are
+        /// supported: the input conforms when its type is, or derives from, that type. Any other profile raises an error.</remarks>
+        internal static bool? ConformsTo(IEnumerable<PocoNode> input, string? structure, EvaluationContext ctx)
+        {
+            var items = input.Take(2).ToArray();
+            if (items.Length == 0 || structure is null) return null;
+            if (items.Length > 1)
+                throw new InvalidOperationException("The 'conformsTo' function can only be called on a single item, but the input contains more than one.");
+
+            var node = items[0];
+
+            if (ctx is FhirEvaluationContext { ProfileConformanceChecker: { } checker } && checker(node, structure) is { } result)
+                return result;
+
+            var canonical = structure.Split('|')[0];
+#pragma warning disable CS0618 // Type or member is obsolete
+            var inspector = node.Poco is { } poco ? node.FindInspector() ?? ModelInspector.ForType(poco.GetType()) : null;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return inspector?.FindClassMappingByCanonical(canonical) is { } mapping
+                ? mapping.NativeType.IsAssignableFrom(node.Poco!.GetType())
+                : throw new InvalidOperationException($"The 'conformsTo' function cannot resolve profile '{structure}'. " +
+                    $"Only the core FHIR types can be checked, unless a {nameof(FhirEvaluationContext.ProfileConformanceChecker)} is set on the {nameof(FhirEvaluationContext)}.");
+        }
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 
