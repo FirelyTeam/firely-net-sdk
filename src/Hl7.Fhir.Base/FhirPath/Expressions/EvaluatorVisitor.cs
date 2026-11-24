@@ -61,7 +61,10 @@ namespace Hl7.FhirPath.Expressions
         {
             var focus = expression.Focus.ToEvaluator(Symbols, _injectDebugHook);
             var arguments = new List<Invokee>() { focus };
-            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(Symbols, _injectDebugHook)));
+            var argumentExpressions = expression.FunctionName == "sort"
+                ? expression.Arguments.Select(toSortKeySelector)
+                : expression.Arguments;
+            arguments.AddRange(argumentExpressions.Select(arg => arg.ToEvaluator(Symbols, _injectDebugHook)));
 
             // We have no real type information, so just pass object as the type
             var types = new List<Type>() { typeof(object) }; //   for the focus;
@@ -72,6 +75,19 @@ namespace Hl7.FhirPath.Expressions
 
             return WrapForDebugTracer(InvokeeFactory.Invoke(expression.FunctionName, arguments, boundFunction), expression);
         }
+
+        /// <summary>
+        /// A sort() key selector prefixed with a unary minus (e.g. <c>sort(-family)</c>) sorts that key in descending
+        /// order, like the <c>desc</c> qualifier. Negating the key value would only work for numbers and quantities.
+        /// This '-' prefix comes from the prototype sort() tests in the FHIRPath conformance suite (testSort8,
+        /// testSort10); the specification itself only defines <c>asc</c>/<c>desc</c>. Those tests expect empty keys to
+        /// sort first, which is what <c>desc</c> does today (see EqualityOperators.ValueProviderComparer). Only a
+        /// minus at the top of the key selector is rewritten; e.g. <c>sort((-x))</c> still negates the value.
+        /// </summary>
+        private static FP.Expression toSortKeySelector(FP.Expression argument) =>
+            argument is FP.UnaryExpression { Op: "-" } minus
+                ? new FP.SortDirectionExpression("desc", minus.Arguments.Single(), minus.Location)
+                : argument;
 
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {

@@ -318,6 +318,7 @@ namespace Hl7.FhirPath.Functions
             public int Compare(ITypedElement? x, ITypedElement? y)
             {
                 if (x is null && y is null) return 0;
+                // Empty keys sort first, also for descending keys: the conformance tests for sort(-key) rely on this.
                 if (x is null) return -1;
                 if (y is null) return 1;
                 if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))

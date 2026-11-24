@@ -298,19 +298,18 @@ public static class SymbolTableInit
             return CachedEnumerable.Create(focus.OrderBy(item => item, EqualityOperators.TypedElementComparer));
         }
 
-        var keySelector = lambda.First();
-        IOrderedEnumerable<PocoNode> orderedResult = focus.OrderBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
-        lambda = lambda.Skip(1);
-        while (lambda.Any())
+        IOrderedEnumerable<PocoNode> orderedResult = null;
+        foreach (var keySelector in lambda)
         {
-            keySelector = lambda.First();
-            orderedResult = orderedResult.ThenBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
-
-            // move onto the next item
-            lambda = lambda.Skip(1);
+            // Each key gets its own selector: the ordering is only evaluated by ToList() below, after this loop
+            // has finished, so the lambda must not capture a variable that is changed by a later iteration.
+            Func<PocoNode, PocoNode> key = item => readElement(ctx, item, keySelector).FirstOrDefault();
+            orderedResult = orderedResult is null
+                ? focus.OrderBy(key, EqualityOperators.TypedElementComparer)
+                : orderedResult.ThenBy(key, EqualityOperators.TypedElementComparer);
         }
 
-        return orderedResult.ToList();
+        return orderedResult!.ToList();
     }
 
     private static IEnumerable<PocoNode> readElement(Closure ctx, PocoNode element, Invokee selectProp)

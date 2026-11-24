@@ -246,5 +246,89 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.AreEqual("2", result.ElementAt(1).GetValue());
             Assert.AreEqual("1", result.ElementAt(2).GetValue());
         }
+
+        [TestMethod]
+        public void TestFhirPathSortDescendingMinus_alpha()
+        {
+            FhirPathCompiler compiler = new FhirPathCompiler();
+            var expr = compiler.Compile("('a'|'c'|'b').sort(-$this)");
+            var result = expr(null, new FhirEvaluationContext());
+
+            result.Select(r => r.GetValue()).Should().Equal("c", "b", "a");
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortDescendingMinus_multipleKeys()
+        {
+            var patient = new Patient() { Id = "pat1" };
+            patient.Name.Add(new HumanName() { ElementId = "1", Family = "Smith", Given = new List<string>() { "Peter", "James" } });
+            patient.Name.Add(new HumanName() { ElementId = "3", Family = "Pos", Given = new List<string>() { "Belinda" } });
+            patient.Name.Add(new HumanName() { ElementId = "2", Family = "Pos", Given = new List<string>() { "Brian", "R" } });
+            patient.Name.Add(new HumanName() { ElementId = "4", Given = new List<string>() { "Jim" } });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            // descending on family (empty first, like the conformance tests expect), then ascending on given
+            var result = compiler.Compile("Patient.name.sort(-family, given.first()).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("4", "1", "3", "2");
+
+            // descending on both
+            result = compiler.Compile("Patient.name.sort(-family, -given.first()).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("4", "1", "2", "3");
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortDescendingMinus_quantity()
+        {
+            var obs1 = new Observation() { Id = "o1", Value = new Quantity(2m, "mg") };
+            var obs2 = new Observation() { Id = "o2", Value = new Quantity(5m, "mg") };
+            var obs3 = new Observation() { Id = "o3", Value = new Quantity(3m, "mg") };
+            var bundle = new Bundle();
+            foreach (var o in new[] { obs1, obs2, obs3 })
+                bundle.Entry.Add(new Bundle.EntryComponent() { Resource = o });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            var result = compiler.Compile("Bundle.entry.resource.sort(-(value as Quantity)).id")(bundle.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("o2", "o3", "o1");
+
+            result = compiler.Compile("Bundle.entry.resource.sort((value as Quantity) desc).id")(bundle.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("o2", "o3", "o1");
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortDescending_unorderableKeyDoesNotThrow()
+        {
+            var patient = new Patient() { Id = "pat1" };
+            patient.MaritalStatus = new CodeableConcept("http://example.org", "M");
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            var result = compiler.Compile("Patient.sort(-maritalStatus.coding).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("pat1");
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortDescending_emptyKeysFirst()
+        {
+            var patient = new Patient() { Id = "pat1" };
+            patient.Name.Add(new HumanName() { ElementId = "1", Family = "Smith" });
+            patient.Name.Add(new HumanName() { ElementId = "2" });
+            patient.Name.Add(new HumanName() { ElementId = "3", Family = "Pos" });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            // Pins current behaviour, which the prototype conformance test testSort10 relies on
+            var result = compiler.Compile("Patient.name.sort(family desc).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("2", "1", "3");
+            result = compiler.Compile("Patient.name.sort(-family).id")(patient.ToPocoNode(), new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal("2", "1", "3");
+        }
+
+        [TestMethod]
+        public void TestFhirPathMinusOutsideSortKeyIsStillNegation()
+        {
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            // only a key selector that starts with '-' means descending, a nested '-' still negates the value
+            var result = compiler.Compile("(1|2|3).sort(0 + -$this)")(null, new FhirEvaluationContext());
+            result.Select(r => r.GetValue()).Should().Equal(3, 2, 1);
+        }
     }
 }
