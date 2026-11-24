@@ -186,6 +186,12 @@ namespace Hl7.Fhir.Support.Tests
                     ("@9999.highBoundary(8) = @9999-12-31", true),
                     ("@0001-01-01.lowBoundary(17).toString() = '0001-01-01T00:00:00.000+00:00'", true),
                     ("@0001.lowBoundary(4) = @0001", true),
+                    ("@9999-12-31T13:00.highBoundary().toString() = '9999-12-31T23:59:59.999+00:00'", true), // clamped to the latest instant
+                    ("@9999-12-31T13:00-05:00 <= @9999-12-31T13:00.highBoundary()", true),
+                    ("@0001-01-01T05:00.lowBoundary().toString() = '0001-01-01T00:00:00.000+00:00'", true), // clamped to the earliest instant
+                    ("@0001-01-01T05:00:00.000+05:00 >= @0001-01-01T05:00.lowBoundary()", true),
+                    ("@9999-12-31T18:59-05:00.lowBoundary(8) = @9999-12-31", true), // a date result ignores the input's offset
+                    ("@9999-12-31T18:59-05:00.highBoundary().toString() = '9999-12-31T18:59:59.999-05:00'", true),
                     ("@0001-01-01.lowBoundary(17) < @9999-12-31.highBoundary(17)", true),
                     ("@T10:30.highBoundary(9) = @T10:30:59.999", true),
                     ("@T10:30.highBoundary() = @T10:30:59.999", true),

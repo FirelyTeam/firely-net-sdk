@@ -188,11 +188,10 @@ namespace Hl7.Fhir.FhirPath
                 _ => throw new ArgumentException($"Unsupported DateTime precision for boundary operation: {precision}")
             };
 
-            // The +14:00/-12:00 offset only matters when the result has a time part (a date result carries no offset). At the edges of
-            // the representable range (e.g. 9999-12-31 at -12:00) that offset would put the instant beyond year 9999 or before year 1;
-            // there UTC is used instead, which gives the latest/earliest instant that can be represented.
-            TimeSpan offset = dt.HasOffset ? dt.Offset!.Value
-                : dtPrecision <= P.DateTimePrecision.Day ? TimeSpan.Zero
+            // A date result carries no offset, so it is built without one. A result with a time part keeps the input's offset,
+            // or gets +14:00/-12:00 when the input has none.
+            TimeSpan offset = dtPrecision <= P.DateTimePrecision.Day ? TimeSpan.Zero
+                : dt.HasOffset ? dt.Offset!.Value
                 : boundaryOffset;
 
             DateTimeOffset dto;
@@ -200,9 +199,13 @@ namespace Hl7.Fhir.FhirPath
             {
                 dto = boundaryDateTimeOffset(offset);
             }
-            catch (ArgumentOutOfRangeException) when (!dt.HasOffset && offset != TimeSpan.Zero)
+            catch (ArgumentOutOfRangeException)
             {
-                dto = boundaryDateTimeOffset(TimeSpan.Zero);
+                // At the edges of the representable range (e.g. 9999-12-31T13:00 at -12:00) the boundary lies beyond year 9999
+                // or before year 1. It is clamped to the latest/earliest instant that can be represented.
+                dto = boundaryOffset < TimeSpan.Zero
+                    ? new DateTimeOffset(9999, 12, 31, 23, 59, 59, 999, TimeSpan.Zero)
+                    : new DateTimeOffset(1, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
             }
 
             if (dtPrecision <= P.DateTimePrecision.Day)
