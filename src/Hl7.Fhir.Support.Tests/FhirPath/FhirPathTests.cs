@@ -258,6 +258,19 @@ namespace Hl7.Fhir.Support.Tests
             ElementModel.Types.Any.Convert(((ITypedElement)result[0]).Value).ToString().Should().Be(expected);
         }
 
+        [TestMethod]
+        // the result needs more digits than a decimal holds at the requested precision
+        [DataRow("100000000000000000000000.lowBoundary()")]
+        [DataRow("7.9228162514264337593543950335.highBoundary(28)")]
+        // the precision is outside what a decimal supports
+        [DataRow("1.587.lowBoundary(29)")]
+        public void DecimalBoundaryThatDoesNotFitFails(string expression)
+        {
+            var act = () => _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
+
+            act.Should().Throw<System.Exception>();
+        }
+
 
 
     }
