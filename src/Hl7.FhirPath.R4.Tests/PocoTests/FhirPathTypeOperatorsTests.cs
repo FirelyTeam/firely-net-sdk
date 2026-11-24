@@ -206,6 +206,27 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        [DataRow("Bundle.ofType(Patient)")]
+        [DataRow("Bundle.ofType(Patient1)")]
+        [DataRow("Bundle.entry.ofType(Patient1)")]
+        [DataRow("('a' | 'b').ofType(Patient)")]
+        [DataRow("('a' | 'b').ofType(Patient1)")]
+        [DataRow("('a' | 'b').as(Patient1)")]
+        public void UnknownTypeNameOnBaseModelDataIsNotAnError(string expression)
+        {
+            // Without an inspector annotation, data that only uses classes from the base assembly cannot tell which
+            // FHIR release it belongs to, so the name cannot be verified. The result must not depend on which
+            // model inspectors happen to exist in the process.
+            var node = new Bundle { Type = Bundle.BundleType.Collection, Entry = { new Bundle.EntryComponent() } }.ToPocoNode();
+
+            evaluate(node, expression).Should().BeEmpty();
+
+            // System types are fully known, though.
+            var act = () => evaluate(node, "('a' | 'b').ofType(System.Bogus)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+        }
+
+        [TestMethod]
         public void BooleanFunctionsOnBooleanWithoutValue()
         {
             var active = new FhirBoolean(null);
