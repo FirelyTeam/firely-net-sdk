@@ -11,6 +11,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -284,6 +285,13 @@ namespace Hl7.FhirPath.Functions
         public static readonly IEqualityComparer<ITypedElement> TypedElementEqualityComparer = new ValueProviderEqualityComparer();
         public static readonly IComparer<ITypedElement?> TypedElementComparer = new ValueProviderComparer();
 
+        /// <summary>
+        /// The comparer used by the FHIRPath sort() function. Unlike <see cref="TypedElementComparer"/>, it follows
+        /// the sort() rules of the FHIRPath specification: empty keys are lower than all values (but go last for a
+        /// <c>desc</c> key), and values that have no ordering are an error.
+        /// </summary>
+        internal static readonly IComparer<ITypedElement?> SortKeyComparer = new SortComparer();
+
         private class ValueProviderEqualityComparer : IEqualityComparer<ITypedElement>
         {
             public bool Equals(ITypedElement? x, ITypedElement? y)
@@ -317,6 +325,23 @@ namespace Hl7.FhirPath.Functions
         {
             public int Compare(ITypedElement? x, ITypedElement? y)
             {
+                if (x is null && y is null) return 0;
+                if (x is null) return -1;
+                if (y is null) return 1;
+                if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
+                {
+                    if (x is OrderedNode opn && opn.Descending)
+                        return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                    return EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;
+                }
+                return 0;
+            }
+        }
+
+        private class SortComparer : IComparer<ITypedElement?>
+        {
+            public int Compare(ITypedElement? x, ITypedElement? y)
+            {
                 // A primitive or Quantity without a value (e.g. one with only an extension) counts as empty.
                 if (hasNoValue(x)) x = null;
                 if (hasNoValue(y)) y = null;
@@ -345,10 +370,13 @@ namespace Hl7.FhirPath.Functions
             }
 
             // Values that have no ordering (e.g. a CodeableConcept) cannot be sorted, which the spec defines as an error.
-            private static P.Any toOrderable(ITypedElement value) =>
-                P.Any.TryConvert(value.Value, out var orderable) && orderable is P.ICqlOrderable
-                    ? orderable
-                    : throw new InvalidOperationException($"Values of type '{value.InstanceType}' cannot be sorted, as they are not an ordered type.");
+            private static P.Any toOrderable(ITypedElement value) => value switch
+            {
+                _ when P.Any.TryConvert(value.Value, out var orderable) && orderable is P.ICqlOrderable => orderable,
+                PocoNode { Poco: Quantity { Comparator: { } comparator } } => throw new InvalidOperationException(
+                    $"A Quantity with a comparator ('{comparator.GetLiteral()}') cannot be sorted, as it has no exact value."),
+                _ => throw new InvalidOperationException($"Values of type '{value.InstanceType}' cannot be sorted, as they are not an ordered type.")
+            };
         }
     }
 }

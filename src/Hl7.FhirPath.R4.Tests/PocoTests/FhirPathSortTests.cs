@@ -16,6 +16,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.FhirPath.Expressions;
+using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -346,6 +347,30 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = compiler.Compile("Observation.component.value.sort()")(obs.ToPocoNode(), new FhirEvaluationContext());
             result.Select(r => ((Quantity)r.Poco).Value).Should().Equal(2m, 3m, 5m);
+        }
+
+        [TestMethod]
+        public void TestFhirPathSortQuantityWithComparatorIsAnError()
+        {
+            var obs = new Observation() { Id = "o1" };
+            obs.Component.Add(new Observation.ComponentComponent() { Value = new Quantity(5m, "mg") });
+            obs.Component.Add(new Observation.ComponentComponent() { Value = new Quantity(0.5m, "mg") { Comparator = Quantity.QuantityComparator.LessThan } });
+            FhirPathCompiler compiler = new FhirPathCompiler();
+
+            foreach (var expression in new[] { "Observation.component.value.sort()", "Observation.component.sort(value as Quantity)", "Observation.component.sort((value as Quantity) desc)" })
+            {
+                Action act = () => compiler.Compile(expression)(obs.ToPocoNode(), new FhirEvaluationContext()).ToList();
+                act.Should().Throw<InvalidOperationException>(expression).WithMessage("*comparator ('<')*");
+            }
+        }
+
+        [TestMethod]
+        public void TestPublicTypedElementComparerIsStillLenient()
+        {
+            // The strict rules only apply to sort(); the public comparer keeps its contract
+            var period = new Period().ToPocoNode();
+            EqualityOperators.TypedElementComparer.Compare(period, new FhirBoolean(true).ToPocoNode()).Should().Be(0);
+            EqualityOperators.TypedElementComparer.Compare(null, period).Should().Be(-1);
         }
 
         [TestMethod]

@@ -296,7 +296,7 @@ public static class SymbolTableInit
         {
             // Just sort using the native element comparer
             // System.Linq.Enumerable.Order;
-            return toSortedList(focus.OrderBy(toSortKey, EqualityOperators.TypedElementComparer));
+            return toSortedList(focus.OrderBy(toSortKey, EqualityOperators.SortKeyComparer));
         }
 
         IOrderedEnumerable<PocoNode> orderedResult = null;
@@ -306,8 +306,8 @@ public static class SymbolTableInit
             // has finished, so the lambda must not capture a variable that is changed by a later iteration.
             Func<PocoNode, PocoNode> key = item => toSortKey(readSortKey(ctx, item, keySelector));
             orderedResult = orderedResult is null
-                ? focus.OrderBy(key, EqualityOperators.TypedElementComparer)
-                : orderedResult.ThenBy(key, EqualityOperators.TypedElementComparer);
+                ? focus.OrderBy(key, EqualityOperators.SortKeyComparer)
+                : orderedResult.ThenBy(key, EqualityOperators.SortKeyComparer);
         }
 
         return toSortedList(orderedResult!);
