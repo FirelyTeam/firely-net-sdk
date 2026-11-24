@@ -244,13 +244,13 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             // Calendar semantics apply to seconds and above, so the decimal part of the quantity is ignored
             // (e.g. + 0.1 's' leaves the value unchanged).
             "hour" or "hours" or "h" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddHours((int)value)
+                ? dateTimeValue._value.AddHours((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             "minute" or "minutes" or "min" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddMinutes((int)value)
+                ? dateTimeValue._value.AddMinutes((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             "s" or "second" or "seconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddSeconds((int)value)
+                ? dateTimeValue._value.AddSeconds((double)decimal.Truncate(value))
                 : dateTimeValue._value,
             "ms" or "millisecond" or "milliseconds" => dateTimeValue.Precision > DateTimePrecision.Day
                 ? dateTimeValue._value.AddMilliseconds((double)value)
@@ -292,8 +292,10 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             : 0;
         var digits = Math.Max(minimumDigits, significantDigits);
 
-        var format = "yyyy-MM-dd'T'HH:mm:ss" + (digits > 0 ? "." + new string('f', digits) : "");
+        // .NET formats at most 7 fraction digits (one tick); pad any further digits of the input with zeros.
+        var format = "yyyy-MM-dd'T'HH:mm:ss" + (digits > 0 ? "." + new string('f', Math.Min(digits, MAX_FRACTION_DIGITS)) : "");
         var result = dto.ToString(format, CultureInfo.InvariantCulture);
+        if (digits > MAX_FRACTION_DIGITS) result += new string('0', digits - MAX_FRACTION_DIGITS);
 
         if (!original.HasOffset) return result;
 

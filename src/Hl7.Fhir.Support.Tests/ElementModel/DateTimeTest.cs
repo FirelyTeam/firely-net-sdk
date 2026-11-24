@@ -236,10 +236,28 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("1973-12-25T00:00:00.1", 13, "ms", "1973-12-25T00:00:00.113")]
         [DataRow("1973-12-25T00:00:00Z", 1, "s", "1973-12-25T00:00:01Z")]
         [DataRow("1973-12-25T00:00:00+01:00", 10, "ms", "1973-12-25T00:00:00.01+01:00")]
+        [DataRow("1973-12-25T00:00:00.123456789+10:00", 1, "s", "1973-12-25T00:00:01.123456800+10:00")]
+        [DataRow("2000-01-01T00:00:00Z", 3000000000, "s", "2095-01-24T05:20:00Z")]
+        [DataRow("1973-12-25T00:00:00.999Z", 1, "ms", "1973-12-25T00:00:01.000Z")]
         public void ArithmeticKeepsPrecisionAndOffset(string input, double value, string unit, string expected)
         {
             var result = P.DateTime.Parse(input) + new P.Quantity((decimal)value, unit);
             result.ToString().Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void SubtractionKeepsPrecisionAndIgnoresDecimalSeconds()
+        {
+            var result = P.DateTime.Parse("1973-12-25T00:00:00.000+10:00") - new P.Quantity(1.5m, "s");
+            result.ToString().Should().Be("1973-12-24T23:59:59.000+10:00");
+        }
+
+        [TestMethod]
+        public void ArithmeticOnConstructedValueOmitsTrailingZeros()
+        {
+            var dto = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 500, TimeSpan.Zero);
+            var result = P.DateTime.FromDateTimeOffset(dto) + new P.Quantity(1m, "s");
+            result.ToString().Should().Be("2001-04-06T13:01:03.5+00:00");
         }
 
         [TestMethod]
