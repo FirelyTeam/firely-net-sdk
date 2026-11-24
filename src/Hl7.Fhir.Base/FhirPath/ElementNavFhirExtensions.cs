@@ -18,9 +18,8 @@ using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
+using System.Numerics;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.FhirPath
@@ -52,17 +51,14 @@ namespace Hl7.Fhir.FhirPath
             t.Add("htmlchecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
             t.Add("htmlChecks", (IEnumerable<PocoNode> f) => f.HtmlChecks(), doNullProp: false);
 
-            t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
-            t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
-            t.Add("lowBoundary", (int i, long precision) => i, doNullProp: false);
-            t.Add("lowBoundary", (int i) => i, doNullProp: false);
+            // An integer input is converted to a decimal, so its boundaries are those of the decimal (1 gives 0.5 and 1.5).
+            t.Add("lowBoundary", (decimal d, long precision) => BoundaryDecimal(d, precision, high: false), doNullProp: false);
+            t.Add("lowBoundary", (decimal d) => BoundaryDecimal(d, null, high: false), doNullProp: false);
             t.Add("lowBoundary", (P.Any a, long precision) => LowBoundary(a, precision), doNullProp: false);
             t.Add("lowBoundary", (P.Any a) => LowBoundary(a, null), doNullProp: false);
 
-            t.Add("highBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, add), doNullProp: false);
-            t.Add("highBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, add), doNullProp: false);
-            t.Add("highBoundary", (int i, long precision) => i, doNullProp: false);
-            t.Add("highBoundary", (int i) => i, doNullProp: false);
+            t.Add("highBoundary", (decimal d, long precision) => BoundaryDecimal(d, precision, high: true), doNullProp: false);
+            t.Add("highBoundary", (decimal d) => BoundaryDecimal(d, null, high: true), doNullProp: false);
             t.Add("highBoundary", (P.Any a, long precision) => HighBoundary(a, precision), doNullProp: false);
             t.Add("highBoundary", (P.Any a) => HighBoundary(a, null), doNullProp: false);
 
@@ -109,37 +105,82 @@ namespace Hl7.Fhir.FhirPath
             return results.Select(r => r.Poco);
         }
 
-        internal static decimal? AdjustBoundaryDecimal(decimal? input, long? precision, Func<decimal, decimal, decimal> op)
+        /// <summary>
+        /// The default number of decimal places of the result of lowBoundary() and highBoundary() on a decimal.
+        /// </summary>
+        private const int DEFAULT_DECIMAL_BOUNDARY_PRECISION = 8;
+
+        /// <summary>
+        /// The largest number of decimal places a <see cref="decimal"/> can hold.
+        /// </summary>
+        private const int MAX_DECIMAL_SCALE = 28;
+
+        /// <summary>
+        /// Calculates the low or high boundary of a decimal, as done by lowBoundary() and highBoundary().
+        /// </summary>
+        /// <remarks>
+        /// <para>The precision of the input is given by its digits: 1.587 stands for any value from 1.5865 up to 1.5875, so
+        /// half a unit of the last digit is subtracted (low) or added (high). An integer like 120 has the boundaries 119.5 and
+        /// 120.5. For a negative number the boundaries mirror those of its magnitude: the low boundary of -1.587 is -1.5875.</para>
+        /// <para>The result has exactly <paramref name="precision"/> decimal places (default 8). Where that drops digits, the
+        /// magnitude of the boundary that lies further from zero is rounded half up, and the one closer to zero is
+        /// truncated. This follows the FHIRPath conformance tests and the reference implementation:
+        /// 1.587.lowBoundary(2) is 1.58, 1.587.highBoundary(2) is 1.59, 9.95.highBoundary(1) is 10.0 and
+        /// 0.0034.highBoundary(1) is 0.0.</para>
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">The precision is negative or larger than a decimal can hold.</exception>
+        /// <exception cref="OverflowException">The result does not fit in a decimal at the requested precision.</exception>
+        internal static decimal BoundaryDecimal(decimal input, long? precision, bool high)
         {
-            if (input is null) return null;
+            var resultScale = precision ?? DEFAULT_DECIMAL_BOUNDARY_PRECISION;
+            if (resultScale is < 0 or > MAX_DECIMAL_SCALE)
+                throw new ArgumentOutOfRangeException(nameof(precision), precision,
+                    $"The precision of a decimal boundary must be between 0 and {MAX_DECIMAL_SCALE}.");
 
-            var decimalParts = input.Value.ToString(CultureInfo.InvariantCulture).Split('.');
+            // Split the input into its digits (as an integer) and its scale, so 1.587 becomes 1587 and 3, and 120 becomes
+            // 120 and 0. Trailing zeroes count: 12.500 is 12500 and 3.
+            var bits = decimal.GetBits(input);
+            var scale = (bits[3] >> 16) & 0xFF;
+            var isNegative = input < 0;
+            var digits = (new BigInteger((uint)bits[2]) << 64) | (new BigInteger((uint)bits[1]) << 32) | (uint)bits[0];
 
-            // how many digits after the decimal point?
-            var fractionalDigits = decimalParts.Length > 1 ? decimalParts.Last().Length : 0;
+            // Work with one more decimal place, where half a unit of the last digit of the input is 5.
+            var magnitude = digits * 10;
+            var workScale = scale + 1;
 
-            decimal adjustment = 5 * (decimal)Math.Pow(10, -(fractionalDigits + 1)); // 0.5, 0.05, 0.005, etc
+            // The boundary that lies further from zero is the high boundary of a positive number and the low boundary of a
+            // negative one. Zero has no "closer to zero" side: both its boundaries lie half a unit away from it.
+            var furtherFromZero = digits.IsZero || high != isNegative;
+            var boundary = furtherFromZero ? magnitude + 5 : magnitude - 5;
+            var negativeResult = digits.IsZero ? !high : isNegative;
 
-            input = op(input.Value, adjustment);
+            var result = rescale(boundary, workScale, (int)resultScale, roundHalfUp: furtherFromZero);
+            return toDecimal(result, (byte)resultScale, negativeResult);
 
-            if (precision is not null)
+            static BigInteger rescale(BigInteger value, int fromScale, int toScale, bool roundHalfUp)
             {
-                StringBuilder precisionAsString = new("0.");
-                precisionAsString.Append('0', (int)precision);
-                input += decimal.Parse(precisionAsString.ToString(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+                if (toScale >= fromScale) return value * BigInteger.Pow(10, toScale - fromScale);
+
+                var divisor = BigInteger.Pow(10, fromScale - toScale);
+                var quotient = BigInteger.DivRem(value, divisor, out var remainder);
+                return roundHalfUp && remainder * 2 >= divisor ? quotient + 1 : quotient;
             }
 
-            return input;
-        }
+            static decimal toDecimal(BigInteger value, byte scale, bool isNegative)
+            {
+                // The explicit conversion throws an OverflowException when the digits do not fit in a decimal.
+                var bits = decimal.GetBits((decimal)value);
 
-        private static decimal substract(decimal operand1, decimal operand2) => operand1 - operand2;
-        private static decimal add(decimal operand1, decimal operand2) => operand1 + operand2;
+                // Never produce a negative zero: (-0.0034).lowBoundary(1) is 0.0.
+                return new decimal(bits[0], bits[1], bits[2], isNegative && !value.IsZero, scale);
+            }
+        }
 
         internal static P.Any? LowBoundary(P.Any input, long? precision)
         {
             return input switch
             {
-                P.Quantity q => AdjustBoundaryQuantity(q, precision, substract),
+                P.Quantity q => BoundaryQuantity(q, precision, high: false),
                 P.Date d => BoundaryDateTime(d, precision, 1, 1, 0, 0, 0, 0),
                 P.DateTime dt => BoundaryDateTime(dt, precision, 1, 1, 0, 0, 0, 0),
                 P.Time t => BoundaryTime(t, precision, 0, 0, 0),
@@ -151,7 +192,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return input switch
             {
-                P.Quantity q => AdjustBoundaryQuantity(q, precision, add),
+                P.Quantity q => BoundaryQuantity(q, precision, high: true),
                 P.Date d => BoundaryDateTime(d, precision, 12, 31, 23, 59, 59, 999),
                 P.DateTime dt => BoundaryDateTime(dt, precision, 12, 31, 23, 59, 59, 999),
                 P.Time t => BoundaryTime(t, precision, 59, 59, 999),
@@ -159,14 +200,8 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        internal static P.Quantity AdjustBoundaryQuantity(P.Quantity input, long? precision, Func<decimal, decimal, decimal> op)
-        {
-            var value = AdjustBoundaryDecimal(input.Value, precision, op);
-
-            return (value is null)
-                ? throw new ArgumentException($"Invalid input element: {input}")
-                : new P.Quantity(value.Value, input.Unit, input.System);
-        }
+        internal static P.Quantity BoundaryQuantity(P.Quantity input, long? precision, bool high) =>
+            new(BoundaryDecimal(input.Value, precision, high), input.Unit, input.System);
 
         internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
         {
