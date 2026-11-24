@@ -41,7 +41,7 @@ namespace Hl7.FhirPath.R4.Tests
         {
             var compiled = _compiler.Compile(expression);
             // Pass the node itself (not a list wrapping it), so the evaluator can infer %resource/%rootResource from it.
-            return compiled(input is null ? [] : input, new FhirEvaluationContext { StrictAsFunction = true }).ToList();
+            return compiled(input is null ? [] : input, new FhirEvaluationContext { EnforceAsSingletonRule = true }).ToList();
         }
 
         private static void test(IEnumerable<PocoNode> focus, string expression, IReadOnlyList<XElement> expected, bool asPredicate, bool ordered)

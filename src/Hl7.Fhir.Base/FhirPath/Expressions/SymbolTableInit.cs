@@ -36,10 +36,10 @@ public static class SymbolTableInit
         t.Add("trace", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx)
             => f.Trace(name, ctx));
 
-        t.Add("allTrue", (IEnumerable<PocoNode> f) => booleanValues(f, "allTrue").All(b => b is true));
-        t.Add("anyTrue", (IEnumerable<PocoNode> f) => booleanValues(f, "anyTrue").Any(b => b is true));
-        t.Add("allFalse", (IEnumerable<PocoNode> f) => booleanValues(f, "allFalse").All(b => b is false));
-        t.Add("anyFalse", (IEnumerable<PocoNode> f) => booleanValues(f, "anyFalse").Any(b => b is false));
+        t.Add("allTrue", (IEnumerable<PocoNode> f) => f.All(e => booleanValue(e, "allTrue") is true));
+        t.Add("anyTrue", (IEnumerable<PocoNode> f) => f.Any(e => booleanValue(e, "anyTrue") is true));
+        t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => booleanValue(e, "allFalse") is false));
+        t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => booleanValue(e, "anyFalse") is false));
         t.Add("combine", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.Concat(r));
         t.Add("binary.|", (object _, IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
         t.Add("union", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
@@ -193,7 +193,7 @@ public static class SymbolTableInit
 
         // The next two functions existed pre-normative, so we have kept them.
         t.Add("is", (PocoNode f, string name) => f.Is(name), doNullProp: true);
-        t.Add("as", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx) => f.AsType(name, ctx?.StrictAsFunction == true), doNullProp: true);
+        t.Add("as", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx) => f.AsType(name, ctx?.EnforceAsSingletonRule == true), doNullProp: true);
 
         t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.OfType(name), doNullProp: true);
         t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
@@ -201,7 +201,7 @@ public static class SymbolTableInit
         // Kept for backwards compatibility, but no longer part of the spec.
         // Note: register this only once. A second entry with the same signature makes the compiler
         // resolve every 'as' through the (much slower) dynamic dispatcher instead of binding it directly.
-        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
+        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name, EvaluationContext ctx) => left.AsType(name, ctx?.EnforceAsSingletonRule == true), doNullProp: true);
 
         t.Add("extension", (IEnumerable<PocoNode> f, string url) => f.Extension(url), doNullProp: true);
 
@@ -409,15 +409,15 @@ public static class SymbolTableInit
 
     // allTrue(), anyTrue(), allFalse() and anyFalse() take a collection of Booleans: any other item is an error.
     // A FHIR boolean without a value (e.g. one with only extensions) is not true or false.
-    // All items are checked before the result is computed, so an invalid item is an error even when it
-    // would not change the result.
-    private static List<bool?> booleanValues(IEnumerable<PocoNode> focus, string function) =>
-        focus.Select(node => node.GetValue() switch
-        {
-            bool b => (bool?)b,
-            null when node.Poco is FhirBoolean => null,
-            _ => throw Error.InvalidOperation($"{function}() can only be used on a collection of Booleans, but the input contains an item of type '{((ITypedElement)node).InstanceType}'.")
-        }).ToList();
+    // allTrue(), anyTrue(), allFalse() and anyFalse() take a collection of Booleans: any other item is an error.
+    // Like the HL7 Java engine, evaluation stops as soon as the result is known, so items after that point
+    // are not checked. A FHIR boolean without a value (e.g. one with only extensions) is not true or false.
+    private static bool? booleanValue(PocoNode node, string function) => node.GetValue() switch
+    {
+        bool b => b,
+        null when node.Poco is FhirBoolean => null,
+        _ => throw Error.InvalidOperation($"{function}() can only be used on a collection of Booleans, but the input contains an item of type '{((ITypedElement)node).InstanceType}'.")
+    };
 
     private static IEnumerable<PocoNode> runIif(Closure ctx, IEnumerable<Invokee> arguments)
     {

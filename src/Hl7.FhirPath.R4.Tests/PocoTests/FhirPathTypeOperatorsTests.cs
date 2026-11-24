@@ -29,7 +29,7 @@ namespace Hl7.FhirPath.R4.Tests
         };
 
         private static PocoNode[] evaluate(PocoNode input, string expression, bool strictAs = false)
-            => new FhirPathCompiler().Compile(expression)(input, new FhirEvaluationContext { StrictAsFunction = strictAs }).ToArray();
+            => new FhirPathCompiler().Compile(expression)(input, new FhirEvaluationContext { EnforceAsSingletonRule = strictAs }).ToArray();
 
         [TestMethod]
         public void BinaryAsIsRegisteredOnce()
@@ -155,7 +155,7 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        public void StrictAsFunctionRequiresAtMostOneItem()
+        public void EnforceAsSingletonRuleRequiresAtMostOneItem()
         {
             var node = new Patient { Name = { new HumanName { Family = "A" }, new HumanName { Family = "B" } } }.ToPocoNode();
 
@@ -166,13 +166,17 @@ namespace Hl7.FhirPath.R4.Tests
             // By default as() filters collections, since FHIR R4 core invariants (dom-3) rely on that.
             evaluate(node, "Patient.name.as(HumanName)").Should().HaveCount(2);
 
-            // The 'as' operator stays lenient, since FHIR R4 search parameters use it on collections.
+            act = () => evaluate(node, "Patient.name as HumanName", strictAs: true);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*more than one item*");
+
+            // By default, the 'as' operator works on collections too, since FHIR R4 search parameters rely on that.
             evaluate(node, "Patient.name as HumanName").Should().HaveCount(2);
             evaluate(node, "Patient.name.ofType(HumanName)").Should().HaveCount(2);
         }
 
         [TestMethod]
         [DataRow("Patient.gender.as(string1)")]
+        [DataRow("Patient.gender as string1")]
         [DataRow("Patient.gender.ofType(string1)")]
         [DataRow("Patient.gender.ofType(FHIR.string1)")]
         [DataRow("Patient.gender.ofType(System.Patient)")]
@@ -187,7 +191,51 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void UnknownTypeNameOnDynamicDataIsNotAnError()
+        {
+            // Logical models (e.g. CDA) have types no inspector knows about, so we cannot tell whether a name is valid.
+            var node = new DynamicResource { DynamicTypeName = "MyLogical" }.ToPocoNode();
+
+            evaluate(node, "ofType(MyLogical)").Should().ContainSingle();
+            evaluate(node, "ofType(OtherLogical)").Should().BeEmpty();
+            evaluate(node, "as(OtherLogical)", strictAs: true).Should().BeEmpty();
+
+            // System types are fully known, though.
+            var act = () => evaluate(node, "ofType(System.Bogus)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+        }
+
+        [TestMethod]
+        public void BooleanFunctionsOnBooleanWithoutValue()
+        {
+            var active = new FhirBoolean(null);
+            active.AddExtension("http://example.org/ext", new FhirString("x"));
+            var node = new Patient { ActiveElement = active }.ToPocoNode();
+
+            evaluate(node, "Patient.active.allTrue()").Single().GetValue().Should().Be(false);
+            evaluate(node, "Patient.active.anyTrue()").Single().GetValue().Should().Be(false);
+            evaluate(node, "Patient.active.allFalse()").Single().GetValue().Should().Be(false);
+            evaluate(node, "Patient.active.anyFalse()").Single().GetValue().Should().Be(false);
+
+            var act = () => evaluate(node, "Patient.active.extension.allTrue()");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*collection of Booleans*");
+        }
+
+        [TestMethod]
+        public void UnknownTypeNameIsReportedByTheTypeFunction()
+        {
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+            var act = () => evaluate(node, "Patient.gender.ofType(bogus).exists()");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*'ofType'*Unknown type 'bogus'*");
+        }
+
+        [TestMethod]
         [DataRow("Patient.gender.ofType(Observation)")] // the Poco for gender lives in the base assembly
+        [DataRow("Patient.gender.ofType(SimpleQuantity)")] // a profile on a core datatype
+        [DataRow("Patient.gender.ofType(MoneyQuantity)")]
+        [DataRow("Patient.gender.as(DateTime)")] // capitalized FHIR names, as used by STU3 search parameters
+        [DataRow("Patient.gender.as(Uri)")]
+        [DataRow("Patient.gender.as(Date)")]
         [DataRow("Patient.gender.as(Observation)")]
         [DataRow("Patient.gender.ofType(System.Integer)")]
         [DataRow("Patient.gender.ofType(FHIR.Age)")]
