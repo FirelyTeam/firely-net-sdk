@@ -563,18 +563,18 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// Multiplies two quantities, as defined by the FHIRPath <c>*</c> operator.
     /// </summary>
     /// <remarks>
-    /// <para>When one of the operands has the unity unit '1', its value just scales the other operand, which
-    /// keeps its unit (e.g. <c>5 'mg' * 2 '1'</c> gives <c>10 'mg'</c>). Otherwise, both operands are converted
-    /// to canonical UCUM units before multiplying, so the result is expressed in canonical UCUM units
-    /// (e.g. <c>2.0 'cm' * 2.0 'm'</c> gives <c>0.040000 'm2'</c>, and <c>2 'kg' * 3 'm'</c> gives <c>6000 'g.m'</c>).</para>
-    /// <para>The multiplication is not possible, and <c>false</c> is returned, when a unit cannot be converted
-    /// to canonical UCUM units. This includes non-UCUM units, the calendar durations 'year' and 'month',
-    /// units with an offset or other special units (like 'Cel' or '[pH]'), arbitrary units (like '[IU]'), malformed
-    /// units (like 'm/'), units that Fhir.Metrics cannot parse (like units with parentheses, e.g. 'mg/(kg.d)'), and results
-    /// that do not fit in a decimal. Annotations (like '{tbl}') carry no meaning in UCUM and are dropped from the result.</para>
-    /// <para>Conversions use the UCUM definitions embedded in Fhir.Metrics, so results may carry tiny rounding noise
-    /// (e.g. <c>60 '1/min' * 2 'min'</c> gives <c>120.00000000000024 '1'</c>) and use the older value of the Avogadro
-    /// constant for 'mol'. Quantity equality rounds to 8 decimals, which hides the noise.</para>
+    /// <para>As in the examples of the FHIRPath specification, the result has the product of the units of the operands,
+    /// combining the exponents of identical unit atoms, without converting them: <c>12 'cm' * 3 'cm'</c> gives
+    /// <c>36 'cm2'</c>, <c>3 'cm' * 12 'cm2'</c> gives <c>36 'cm3'</c> and <c>2.0 'cm' * 2.0 'm'</c> gives <c>4.00 'cm.m'</c>.
+    /// The value is therefore exact, and comparisons convert the units where needed (<c>4.00 'cm.m' = 0.04 'm2'</c>).
+    /// A numeric factor in a unit is applied to the value (<c>60 '1/min' * 2 'min'</c> gives <c>120 '1'</c>).
+    /// When one of the operands has the unity unit '1', its value just scales the other operand, which keeps its unit
+    /// (e.g. <c>5 'mg' * 2 '1'</c> gives <c>10 'mg'</c>).</para>
+    /// <para>The multiplication is not possible, and <c>false</c> is returned, when a unit is not a UCUM unit that can be
+    /// converted. This includes non-UCUM units, the calendar durations 'year' and 'month', units with an offset or other
+    /// special units (like 'Cel' or '[pH]'), arbitrary units (like '[IU]'), malformed units (like 'm/'), units with
+    /// parentheses (e.g. 'mg/(kg.d)'), and results that do not fit in a decimal. Annotations (like '{tbl}') carry no
+    /// meaning in UCUM and are dropped from the result.</para>
     /// </remarks>
     public static bool TryMultiply(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
         tryCalculate(left, right, multiply: true, out result);
@@ -583,12 +583,12 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// Divides two quantities, as defined by the FHIRPath <c>/</c> operator.
     /// </summary>
     /// <remarks>
-    /// <para>When the divisor has the unity unit '1', the dividend keeps its unit (e.g. <c>6 'kg' / 3 '1'</c> gives
-    /// <c>2 'kg'</c>). Otherwise, both operands are converted to canonical UCUM units before dividing, so the
-    /// result is expressed in canonical UCUM units (e.g. <c>4.0 'g' / 2.0 'm'</c> gives <c>2 'g.m-1'</c>,
-    /// and <c>1.0 'm' / 1.0 'm'</c> gives <c>1 '1'</c>).</para>
-    /// <para>A unity dividend (e.g. <c>2 '1' / 4 'm'</c>) gives the inverse unit (<c>0.5 'm-1'</c>), so it needs a divisor
-    /// that can be converted to canonical UCUM units. Division by zero is not possible, and neither are the cases listed for
+    /// <para>As in the examples of the FHIRPath specification, the result has the quotient of the units of the operands,
+    /// combining the exponents of identical unit atoms, without converting them: <c>12 'cm2' / 3 'cm'</c> gives
+    /// <c>4 'cm'</c>, <c>4.0 'g' / 2.0 'm'</c> gives <c>2 'g/m'</c> and <c>1.0 'm' / 1.0 'm'</c> gives <c>1 '1'</c>.
+    /// When the divisor has the unity unit '1', the dividend keeps its unit (e.g. <c>6 'kg' / 3 '1'</c> gives <c>2 'kg'</c>),
+    /// and a unity dividend gives the inverse unit (e.g. <c>2 '1' / 4 'm'</c> gives <c>0.5 'm-1'</c>).</para>
+    /// <para>Division by zero is not possible, and neither are the cases listed for
     /// <see cref="TryMultiply(Quantity, Quantity, out Quantity?)"/>: in these cases <c>false</c> is returned.</para>
     /// </remarks>
     public static bool TryDivide(Quantity left, Quantity right, [NotNullWhen(true)] out Quantity? result) =>
@@ -620,22 +620,23 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
             if (toUcumUnit(left) is not { } leftUnit || toUcumUnit(right) is not { } rightUnit) return false;
 
-            var l = (left.Value, leftUnit, UCUM);
-            var r = (right.Value, rightUnit, UCUM);
-            (decimal value, string unit, string? codesystem)? calculated;
-            var success = multiply
-                ? metricService.TryMultiply(l, r, out calculated)
-                : metricService.TryDivide(l, r, out calculated);
-            if (!success || calculated is null) return false;
+            // Like the examples in the FHIRPath specification (12 'cm' * 3 'cm' gives 36 'cm2'), the result keeps the units of
+            // the operands instead of converting them, so the value is exact and stays in the scale of the operands.
+            // (Converting to canonical units would give values like 1E-7 '1' for 0.1 'mg' / 1 'kg', which lose their
+            // precision when compared.) Comparisons convert units where needed.
+            if (!UcumUnitTerm.TryParse(leftUnit, out var leftTerm) || !UcumUnitTerm.TryParse(rightUnit, out var rightTerm)) return false;
 
-            var (value, unit, _) = calculated.Value;
-            result = new Quantity(value, cleanupCanonicalUnit(unit), QuantityUnitSystem.UCUM);
+            var term = multiply ? leftTerm.Multiply(rightTerm) : leftTerm.Divide(rightTerm);
+            var unit = term.ToString();
+            if (unit != UCUM_UNIT && !tryGetUcumConversion(unit, out _)) return false;
+
+            var value = (multiply ? left.Value * right.Value : left.Value / right.Value) * term.Factor;
+            result = new Quantity(value, unit, QuantityUnitSystem.UCUM);
             return true;
         }
         catch (Exception)
         {
-            // As for comparisons, the UCUM library throws a variety of exceptions for units it cannot parse or
-            // convert, and for results that do not fit in a decimal. These calculations are not possible.
+            // Results that do not fit in a decimal (or units the UCUM library cannot handle) make the calculation impossible.
             result = null;
             return false;
         }
@@ -646,33 +647,143 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         // is a UCUM unit. A FHIR Quantity with only unit text, a code from another system or no system is not.
         static bool isUcumCode(Quantity q) => q.System == QuantityUnitSystem.UCUM && q.HasCode && q.UnitSystem == UCUM;
 
-        // Returns the UCUM unit to use in the calculation. Fhir.Metrics does not interpret '1' as unity,
-        // so this returns the empty string for it.
-        static string? toUcumUnit(Quantity q) => q.System switch
+        // Returns the UCUM unit of the quantity, but only if it is a well-formed UCUM unit on a ratio scale, which the
+        // UCUM library can convert (this excludes e.g. 'Cel' and '[pH]'), and not an arbitrary unit (like '[IU]').
+        static string? toUcumUnit(Quantity q)
         {
-            QuantityUnitSystem.UCUM when !isUcumCode(q) => null,
-            QuantityUnitSystem.UCUM when q.Unit == UCUM_UNIT => "",
-            QuantityUnitSystem.UCUM when isWellFormedUcumUnit(q.Unit) && !containsArbitraryUnit(q.Unit) => q.Unit,
-            // Calendar years and months have no definite UCUM equivalent.
-            QuantityUnitSystem.CalendarDuration => definiteCalendarUnitToUcum(q.Unit),
-            _ => null
-        };
+            var unit = q.System switch
+            {
+                QuantityUnitSystem.UCUM when !isUcumCode(q) => null,
+                QuantityUnitSystem.UCUM => q.Unit,
+                // Calendar years and months have no definite UCUM equivalent.
+                QuantityUnitSystem.CalendarDuration => definiteCalendarUnitToUcum(q.Unit),
+                _ => null
+            };
 
-        // Fhir.Metrics represents unity (and units consisting only of an annotation, like '{tbl}') as a
-        // '1' factor in its canonical form (e.g. '1.g-1' or '12'). Remove those, and use '1' for a dimensionless result.
-        static string cleanupCanonicalUnit(string? unit)
-        {
-            var parts = (unit ?? "").Split('.')
-                .Where(p => p.Length > 0 && !isUnityFactor(p))
-                .ToArray();
-            return parts.Length == 0 ? UCUM_UNIT : string.Join(".", parts);
+            if (unit is null || unit == UCUM_UNIT) return unit;
 
-            static bool isUnityFactor(string part) =>
-                part[0] == '1' && part.Skip(1).All(c => c == '-' || char.IsDigit(c));
+            return isWellFormedUcumUnit(unit) && !containsArbitraryUnit(unit) && tryGetUcumConversion(unit, out _)
+                ? unit
+                : null;
         }
     }
 
-    private static IMetricService metricService => FhirMetricService.Instance.Value;
+    /// <summary>
+    /// A UCUM unit as a numeric factor and a product of unit atoms raised to an exponent
+    /// (e.g. 'kg.m/s2' is kg^1 * m^1 * s^-2), so units can be multiplied and divided without converting them.
+    /// </summary>
+    private sealed class UcumUnitTerm
+    {
+        // An atom ends with a character that is not a digit or a sign (UCUM atoms never end in a digit,
+        // e.g. '10*' or '[in_i]'), optionally followed by its exponent.
+        private static readonly Regex COMPONENT_REGEX =
+            new(@"^(?<atom>.*[^0-9+\-])(?<exp>[+\-]?[0-9]+)?$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+
+        private static readonly Regex ANNOTATION_REGEX = new(@"\{[^{}]*\}", RegexOptions.Compiled);
+
+        private UcumUnitTerm(decimal factor, List<(string Atom, int Exponent)> atoms)
+        {
+            Factor = factor;
+            Atoms = atoms;
+        }
+
+        /// <summary>
+        /// A numeric factor in the unit, such as the 100 in 'mg/100.mL' or the 1 in '1/min'.
+        /// </summary>
+        public decimal Factor { get; }
+
+        public List<(string Atom, int Exponent)> Atoms { get; }
+
+        /// <summary>
+        /// Parses a UCUM unit consisting of components separated by '.' and '/'. Units with parentheses are not supported.
+        /// </summary>
+        public static bool TryParse(string unit, [NotNullWhen(true)] out UcumUnitTerm? term)
+        {
+            term = null;
+            var factor = 1m;
+            var atoms = new List<(string Atom, int Exponent)>();
+
+            if (unit != UCUM_UNIT)
+            {
+                // Annotations carry no meaning in UCUM.
+                unit = ANNOTATION_REGEX.Replace(unit, "");
+                if (unit.IndexOfAny(['(', ')', '{', '}']) >= 0) return false;
+
+                var divide = false;
+                var start = 0;
+                for (var i = 0; i <= unit.Length; i++)
+                {
+                    if (i < unit.Length && unit[i] is not ('.' or '/')) continue;
+
+                    var component = unit.Substring(start, i - start);
+                    if (component.Length > 0 && component.All(char.IsDigit))
+                    {
+                        var number = decimal.Parse(component, NumberStyles.None, CultureInfo.InvariantCulture);
+                        if (number == 0) return false;
+                        factor = divide ? factor / number : factor * number;
+                    }
+                    else if (component.Length > 0)
+                    {
+                        var match = COMPONENT_REGEX.Match(component);
+                        if (!match.Success) return false;
+
+                        var exponent = match.Groups["exp"].Success
+                            ? int.Parse(match.Groups["exp"].Value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
+                            : 1;
+                        add(atoms, match.Groups["atom"].Value, divide ? -exponent : exponent);
+                    }
+
+                    if (i < unit.Length) divide = unit[i] == '/';
+                    start = i + 1;
+                }
+            }
+
+            term = new UcumUnitTerm(factor, atoms.Where(a => a.Exponent != 0).ToList());
+            return true;
+        }
+
+        public UcumUnitTerm Multiply(UcumUnitTerm other) => combine(other, 1);
+
+        public UcumUnitTerm Divide(UcumUnitTerm other) => combine(other, -1);
+
+        private UcumUnitTerm combine(UcumUnitTerm other, int sign)
+        {
+            var atoms = new List<(string Atom, int Exponent)>(Atoms);
+            foreach (var (atom, exponent) in other.Atoms)
+                add(atoms, atom, sign * exponent);
+
+            var factor = sign > 0 ? Factor * other.Factor : Factor / other.Factor;
+            return new UcumUnitTerm(factor, atoms.Where(a => a.Exponent != 0).ToList());
+        }
+
+        private static void add(List<(string Atom, int Exponent)> atoms, string atom, int exponent)
+        {
+            var index = atoms.FindIndex(a => a.Atom == atom);
+            if (index >= 0)
+                atoms[index] = (atom, checked(atoms[index].Exponent + exponent));
+            else
+                atoms.Add((atom, exponent));
+        }
+
+        /// <summary>
+        /// Renders the unit without its factor, e.g. 'cm2', 'g/m', 'kg.m/s2', 'm-1' or '1'.
+        /// </summary>
+        public override string ToString()
+        {
+            var positive = Atoms.Where(a => a.Exponent > 0).ToList();
+            var negative = Atoms.Where(a => a.Exponent < 0).ToList();
+
+            if (positive.Count == 0 && negative.Count == 0) return UCUM_UNIT;
+            if (positive.Count == 0)
+                return string.Join(".", negative.Select(a => a.Atom + a.Exponent.ToString(CultureInfo.InvariantCulture)));
+
+            return string.Join(".", positive.Select(a => render(a.Atom, a.Exponent))) +
+                   string.Concat(negative.Select(a => "/" + render(a.Atom, -a.Exponent)));
+
+            static string render(string atom, int exponent) =>
+                exponent == 1 ? atom : atom + exponent.ToString(CultureInfo.InvariantCulture);
+        }
+    }
 
     // UCUM arbitrary units (UCUM §4.5, marked isArbitrary="yes" in ucum-essence.xml) are not commensurable with
     // any other unit, so they cannot be converted to canonical units. The list is read from the ucum-essence.xml that

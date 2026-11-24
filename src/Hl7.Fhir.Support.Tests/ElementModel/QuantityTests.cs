@@ -205,20 +205,25 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        [DataRow("2.0 'cm'", "2.0 'm'", "0.040 'm2'")]
+        [DataRow("2.0 'cm'", "2.0 'm'", "4.00 'cm.m'")]
         [DataRow("25 'm'", "20 'm'", "500 'm2'")]
-        [DataRow("2.0 'cm'", "9 'kg'", "180 'g.m'")]
+        [DataRow("2.0 'cm'", "9 'kg'", "18 'cm.kg'")]
         [DataRow("2 'kg'", "3 '1'", "6 'kg'")]
         [DataRow("3 '1'", "2 'kg'", "6 'kg'")]
         [DataRow("5 'mg'", "2 '1'", "10 'mg'")]
         [DataRow("37 'Cel'", "2 '1'", "74 'Cel'")]
-        [DataRow("2 'kg'", "3 'm'", "6000 'g.m'")]
+        [DataRow("2 'kg'", "3 'm'", "6 'kg.m'")]
         [DataRow("-2 'm'", "3 'm'", "-6 'm2'")]
-        [DataRow("3 '[in_i]'", "2 '[in_i]'", "0.00387096 'm2'")]
+        [DataRow("3 '[in_i]'", "2 '[in_i]'", "6 '[in_i]2'")]
         [DataRow("2 '{tbl}'", "3 '{tbl}'", "6 '1'")]
         [DataRow("2 '[IU]'", "3 'mL'", null)]
         [DataRow("79228162514264337593543950335 'km'", "79228162514264337593543950335 'km'", null)]
         [DataRow("3 '1'", "2 '1'", "6 '1'")]
+        [DataRow("60 '1/min'", "2 'min'", "120 '1'")]
+        [DataRow("3 'cm'", "12 'cm2'", "36 'cm3'")]
+        [DataRow("2 'kg.m/s2'", "3 's2'", "6 'kg.m'")]
+        [DataRow("2 'mg{total}'", "3 'kg'", "6 'mg.kg'")]
+        [DataRow("2 'm'", "3 'mg/(kg.d)'", null)]
         [DataRow("2 '{tbl}'", "3 'g'", "6 'g'")]
         [DataRow("2 'm'", "3 seconds", "6 'm.s'")]
         [DataRow("2 'm'", "0 'm'", "0 'm2'")]
@@ -230,18 +235,18 @@ namespace Hl7.Fhir.ElementModel.Tests
             checkArithmetic(left, right, expected, Quantity.TryMultiply);
 
         [TestMethod]
-        [DataRow("4.0 'g'", "2.0 'm'", "2 'g.m-1'")]
+        [DataRow("4.0 'g'", "2.0 'm'", "2 'g/m'")]
         [DataRow("1.0 'm'", "1.0 'm'", "1 '1'")]
-        [DataRow("12 'cm2'", "3 'cm'", "0.04 'm'")]
-        [DataRow("14.4 'km'", "2.0 'h'", "2 'm.s-1'")]
-        [DataRow("2 'kg'", "4 'g'", "500 '1'")]
+        [DataRow("12 'cm2'", "3 'cm'", "4 'cm'")]
+        [DataRow("14.4 'km'", "2.0 'h'", "7.2 'km/h'")]
+        [DataRow("2 'kg'", "4 'g'", "0.5 'kg/g'")]
         [DataRow("6 'kg'", "3 '1'", "2 'kg'")]
-        [DataRow("1 week", "1 day", "7 '1'")]
-        [DataRow("-6 'm'", "3 's'", "-2 'm.s-1'")]
+        [DataRow("1 week", "1 day", "1 'wk/d'")]
+        [DataRow("-6 'm'", "3 's'", "-2 'm/s'")]
         [DataRow("2 '[IU]'", "1 'L'", null)]
         [DataRow("2 '[iU]/mL'", "1 'L'", null)]
         [DataRow("6 '1'", "3 'g'", "2 'g-1'")]
-        [DataRow("6 'm'", "3 seconds", "2 'm.s-1'")]
+        [DataRow("6 'm'", "3 seconds", "2 'm/s'")]
         [DataRow("3 'm'", "0 'cm'", null)]
         [DataRow("3 'm'", "0 '1'", null)]
         [DataRow("3 'tablets'", "1 'm'", null)]
@@ -317,7 +322,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                 results.Add($"{product} {quotient}");
             });
 
-            System.Linq.Enumerable.Distinct(results).Should().ContainSingle().Which.Should().Be("0.040000 'm2' 2 'g.m-1'");
+            System.Linq.Enumerable.Distinct(results).Should().ContainSingle().Which.Should().Be("4.00 'cm.m' 2 'g/m'");
         }
 
         private delegate bool QuantityOperation(Quantity left, Quantity right, out Quantity? result);

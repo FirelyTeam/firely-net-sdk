@@ -202,6 +202,17 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             fixture.IsTrue(@"1.0 'm' / 1.0 'm' = 1 '1'");
             fixture.IsTrue(@"(2 'm' * 3 'm' / 4 'm') = 1.5 'm'");
             fixture.IsTrue(@"(1 week / 1 day) = 7 '1'");
+
+            // As in the spec, results keep the units of the operands (so the value stays exact and in the scale of the operands)
+            fixture.IsTrue(@"12 'cm' * 3 'cm' = 36 'cm2'");
+            fixture.IsTrue(@"3 'cm' * 12 'cm2' = 36 'cm3'");
+            fixture.IsTrue(@"12 'cm2' / 3 'cm' = 4.0 'cm'");
+            fixture.IsTrue(@"(12 'cm' * 3 'cm').toString() = '36 \'cm2\''");
+            fixture.IsTrue(@"(4.0 'g' / 2.0 'm').toString() = '2 \'g/m\''");
+            fixture.IsTrue(@"(2.0 'cm' * 2.0 'm').toString() = '4.00 \'cm.m\''");
+            fixture.IsTrue(@"(0.104 'mg' / 1 'kg') > (0.1 'mg' / 1 'kg')");
+            fixture.IsTrue(@"(0.104 'mg' / 1 'kg') != (0.1 'mg' / 1 'kg')");
+            fixture.IsTrue(@"(60 '1/min' * 2 'min').toString() = '120 \'1\''");
             fixture.IsTrue(@"60 '1/min' * 2 'min' = 120 '1'");
 
             // Multiplying or dividing by a number scales the quantity and keeps its unit
