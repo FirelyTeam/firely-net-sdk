@@ -222,10 +222,6 @@ namespace Hl7.FhirPath.R4.Tests
             "LowBoundaryDateTimeMillisecond1", "LowBoundaryDateTimeMillisecond2", "LowBoundaryTimeMillisecond",
             "HighBoundaryDateTimeMillisecond1", "HighBoundaryDateTimeMillisecond3", "testPeriodInvariantNew",
 
-            // Date/time arithmetic drops the input's millisecond precision in the result
-            "testPlusDate3", "testPlusDate4", "testPlusDate5", "testPlusDate6", "testPlusDate7", "testPlusDate8",
-            "testPlusDate18", "testPlusDate19", "testPlusDate20", "testPlusDate21", "testPlusDate22",
-
             // Date/time arithmetic fails on partial-precision dateTimes with a timezone (e.g. @2015-02-04T10:00Z + 1 hour)
             "testPlusDate23", "testPlusDate24", "testMinus7",
 

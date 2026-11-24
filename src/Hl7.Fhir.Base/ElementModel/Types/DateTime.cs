@@ -241,14 +241,16 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
             // NOT ignoring precision on time based stuff if there is no time component
             // if no time component, don't modify result
+            // Calendar semantics apply to seconds and above, so the decimal part of the quantity is ignored
+            // (e.g. + 0.1 's' leaves the value unchanged).
             "hour" or "hours" or "h" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddHours((double)value)
+                ? dateTimeValue._value.AddHours((int)value)
                 : dateTimeValue._value,
             "minute" or "minutes" or "min" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddMinutes((double)value)
+                ? dateTimeValue._value.AddMinutes((int)value)
                 : dateTimeValue._value,
             "s" or "second" or "seconds" => dateTimeValue.Precision > DateTimePrecision.Day
-                ? dateTimeValue._value.AddSeconds((double)value)
+                ? dateTimeValue._value.AddSeconds((int)value)
                 : dateTimeValue._value,
             "ms" or "millisecond" or "milliseconds" => dateTimeValue.Precision > DateTimePrecision.Day
                 ? dateTimeValue._value.AddMilliseconds((double)value)
@@ -256,25 +258,49 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
         };
 
-        var resultRepresentation = dto.ToString(FMT_FULL, CultureInfo.InvariantCulture);
         var originalRepresentation = dateTimeValue.ToString();
 
+        if (dateTimeValue.Precision >= DateTimePrecision.Second)
+            return Parse(formatWithSecondsOrFraction(dto, dateTimeValue, originalRepresentation));
+
+        var resultRepresentation = dto.ToString(FMT_FULL, CultureInfo.InvariantCulture);
+
+        // need to trim appropriately.
         if (resultRepresentation.Length > originalRepresentation.Length)
-        {
-            // need to trim appropriately.
-            if (dateTimeValue.Precision <= DateTimePrecision.Minute)
-                resultRepresentation = resultRepresentation.Substring(0, originalRepresentation.Length);
-            else
-            {
-                if (!dateTimeValue.HasOffset)
-                {
-                    // trim the offset from it
-                    resultRepresentation = dto.ToString("yyyy-MM-dd'T'HH:mm:ss.FFFFFFF");
-                }
-            }
-        }
+            resultRepresentation = resultRepresentation.Substring(0, originalRepresentation.Length);
 
         return Parse(resultRepresentation);
+    }
+
+    /// <summary>
+    /// Formats the result of date/time arithmetic on a datetime with seconds or fraction precision, so that it keeps
+    /// the precision and offset notation of the input: the fraction keeps at least as many digits as the input had
+    /// (<c>.000</c> + 1 second gives <c>.000</c>), and gets more only when needed to keep the value (<c>.1</c> + 13 ms gives <c>.113</c>).
+    /// </summary>
+    private static string formatWithSecondsOrFraction(DateTimeOffset dto, DateTime original, string originalRepresentation)
+    {
+        const int MAX_FRACTION_DIGITS = 7;
+
+        var fractionTicks = dto.Ticks % TimeSpan.TicksPerSecond;
+        var significantDigits = MAX_FRACTION_DIGITS;
+        for (var t = fractionTicks; significantDigits > 0 && t % 10 == 0; t /= 10)
+            significantDigits--;
+
+        // FractionDigits is only meaningful for a parsed value; other values have always been written without trailing zeros.
+        var minimumDigits = original.Precision == DateTimePrecision.Fraction && original.OriginalParsedString is not null
+            ? original.FractionDigits
+            : 0;
+        var digits = Math.Max(minimumDigits, significantDigits);
+
+        var format = "yyyy-MM-dd'T'HH:mm:ss" + (digits > 0 ? "." + new string('f', digits) : "");
+        var result = dto.ToString(format, CultureInfo.InvariantCulture);
+
+        if (!original.HasOffset) return result;
+
+        // Keep the 'Z' notation when the input used it, instead of writing "+00:00".
+        return originalRepresentation.EndsWith("Z", System.StringComparison.Ordinal) && dto.Offset == TimeSpan.Zero
+            ? result + "Z"
+            : result + dto.ToString("zzz", CultureInfo.InvariantCulture);
     }
 
     /// <summary>

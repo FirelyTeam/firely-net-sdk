@@ -226,6 +226,23 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 7, "days", "1974-01-01T00:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 1, "hour", "1973-12-25T01:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 10, "ms", "1973-12-25T00:00:00.010+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 0.1, "s", "1973-12-25T00:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 1.5, "hours", "1973-12-25T01:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000", -1, "second", "1973-12-24T23:59:59.000")]
+        [DataRow("1973-12-25T00:00:00.000Z", 1, "minute", "1973-12-25T00:01:00.000Z")]
+        [DataRow("1973-12-25T00:00:00.1", 13, "ms", "1973-12-25T00:00:00.113")]
+        [DataRow("1973-12-25T00:00:00Z", 1, "s", "1973-12-25T00:00:01Z")]
+        [DataRow("1973-12-25T00:00:00+01:00", 10, "ms", "1973-12-25T00:00:00.01+01:00")]
+        public void ArithmeticKeepsPrecisionAndOffset(string input, double value, string unit, string expected)
+        {
+            var result = P.DateTime.Parse(input) + new P.Quantity((decimal)value, unit);
+            result.ToString().Should().Be(expected);
+        }
+
+        [TestMethod]
         public void IsNullWhenInvalid()
         {
             P.DateTime.TryParse("hi", out var parsed).Should().BeFalse();
