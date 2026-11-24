@@ -251,10 +251,6 @@ namespace Hl7.FhirPath.R4.Tests
             "testMatchesFullWithinUrl1", "testMatchesFullWithinUrl1a", "testMatchesFullWithinUrl2", "testMatchesFullWithinUrl3",
             "testMatchesFullWithinUrl4",
 
-            // Regex semantics: matches() should use single-line mode ('.' matches newlines); replaceMatches() with an empty
-            // pattern should return the input unchanged
-            "testMatchesSingleLineMode1", "testReplaceMatches2",
-
             // Quantity comparison/equality does not convert between UCUM units (e.g. 4 'g' = 4000 'mg')
             "testQuantity1", "testQuantity2", "testQuantity3", "testQuantity4", "testNEquality24", "testLessThan31",
             "testLessThan33", "testLessOrEqual29", "testLessOrEqual30", "testGreaterThan30", "Comparable1",

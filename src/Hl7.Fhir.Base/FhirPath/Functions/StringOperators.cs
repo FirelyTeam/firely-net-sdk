@@ -56,6 +56,21 @@ internal static class StringOperators
                 return me.Replace(find, replace);
         }
 
+        /// <summary>
+        /// FHIRPath regular expressions use 'single line' mode, so '.' also matches newlines, and
+        /// should behave the same regardless of the culture of the environment.
+        /// </summary>
+        private const RegexOptions FP_REGEX_OPTIONS = RegexOptions.Singleline | RegexOptions.CultureInvariant;
+
+        public static bool FpMatches(this string me, string regex) =>
+            Regex.IsMatch(me, regex, FP_REGEX_OPTIONS);
+
+        public static string FpReplaceMatches(this string me, string regex, string substitution) =>
+            // An empty regex would match between every character. The specification does not
+            // cover this case; the official conformance tests (testReplaceMatches2) expect the
+            // input to be returned unchanged.
+            regex == String.Empty ? me : Regex.Replace(me, regex, substitution, FP_REGEX_OPTIONS);
+
         public static IEnumerable<PocoNode> FpSplit(this string me, string seperator)
         {
             var results = me.Split(new[] { seperator }, StringSplitOptions.None).ToArray<object>();

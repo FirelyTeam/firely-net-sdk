@@ -351,10 +351,16 @@ namespace HL7.FhirPath.Tests
                     ("'1055 RW'.matches('^[1-9][0-9]{3} ?(?!SA|SD|SS)[A-Z]{2}$')", true, false),
                     ("'1055 SS'.matches('^[1-9][0-9]{3} ?(?!SA|SD|SS)[A-Z]{2}$')", false, false),
                     ("'1055RW'.matches('^[1-9][0-9]{3} ?(?!SA|SD|SS)[A-Z]{2}$')", true, false),
+                    ("'A\\nB'.matches('A.*B')", true, false), // single-line mode: '.' matches newlines
+                    ("'A\\nB'.matches('^B')", false, false), // not multi-line: '^' only matches at the start
+                    ("'A\\nB'.matches('^A.B$')", true, false),
 
                     // function replaceMatches(regex : String, substitution: String) : String
                     ("{}.replaceMatches({}, {}).empty()", true, false),
                     (@"'11/30/1972'.replaceMatches('\\b(?<month>\\d{1,2})/(?<day>\\d{1,2})/(?<year>\\d{2,4})\\b','${day}-${month}-${year}') = '30-11-1972'", true, false),
+                    ("'abc'.replaceMatches('', 'x') = 'abc'", true, false), // empty regex returns the input unchanged
+                    ("''.replaceMatches('', 'x') = ''", true, false),
+                    ("'A\\nB'.replaceMatches('A.B', 'x') = 'x'", true, false), // single-line mode: '.' matches newlines
 
                     // function length() : Integer
                     ("{}.length().empty()", true, false),

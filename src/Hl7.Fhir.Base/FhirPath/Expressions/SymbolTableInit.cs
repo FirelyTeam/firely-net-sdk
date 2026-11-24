@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using P = Hl7.Fhir.ElementModel.Types;
 using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
 
@@ -163,10 +162,10 @@ public static class SymbolTableInit
             InvokeeFactory.WrapWithPropNullForFocus((string f, int a, int? b) => f.FpSubstring(a, b)));
         t.Add("startsWith", (string f, string fragment) => f.StartsWith(fragment), doNullProp: true);
         t.Add("endsWith", (string f, string fragment) => f.EndsWith(fragment), doNullProp: true);
-        t.Add("matches", (string f, string regex) => Regex.IsMatch(f, regex), doNullProp: true);
+        t.Add("matches", (string f, string regex) => f.FpMatches(regex), doNullProp: true);
         t.Add("indexOf", (string f, string fragment) => f.FpIndexOf(fragment), doNullProp: true);
         t.Add("contains", (string f, string fragment) => f.Contains(fragment), doNullProp: true);
-        t.Add("replaceMatches", (string f, string regex, string subst) => Regex.Replace(f, regex, subst), doNullProp: true);
+        t.Add("replaceMatches", (string f, string regex, string subst) => f.FpReplaceMatches(regex, subst), doNullProp: true);
         t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
         t.Add("length", (string f) => f.Length, doNullProp: true);
         t.Add("split", (string f, string seperator) => f.FpSplit(seperator), doNullProp: true);
