@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2015, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -135,7 +135,12 @@ public static class SymbolTableInit
         t.Add("convertsToInteger", (PocoNode f) => ToSystemValue(f)?.ConvertsToInteger() ?? false, doNullProp: true);
         t.Add("toLong", (PocoNode f) => ToSystemValue(f)?.ToLong(), doNullProp: true);
         t.Add("convertsToLong", (PocoNode f) => ToSystemValue(f)?.ConvertsToLong() ?? false, doNullProp: true);
-        t.Add("toDecimal", (PocoNode f) => ToSystemValue(f)?.ToDecimal(), doNullProp: true);
+        // A decimal outside the range of a .NET decimal is returned as is.
+        t.Add("toDecimal", (PocoNode f) => ToSystemValue(f) switch
+        {
+            P.Decimal { IsOutOfRange: true } d => d,
+            var v => (object)v?.ToDecimal()
+        }, doNullProp: true);
         t.Add("convertsToDecimal", (PocoNode f) => ToSystemValue(f)?.ConvertsToDecimal() ?? false, doNullProp: true);
         t.Add("toQuantity", (PocoNode f) => ToSystemValue(f)?.ToQuantity(), doNullProp: true);
         t.Add("convertsToQuantity", (PocoNode f) => ToSystemValue(f)?.ConvertsToQuantity() ?? false, doNullProp: true);

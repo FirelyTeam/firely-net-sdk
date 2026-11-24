@@ -638,8 +638,7 @@ public class BaseFhirXmlDeserializer
         {
             // A value outside the range of a .NET decimal (e.g. 1e999999999 or 1e-999999999) is kept as a string,
             // rather than failing or being rounded to 0.
-            return ElementModel.Types.Decimal.TryParseExtended(trimmedValue, out var parsed) && !parsed.IsOutOfRange
-                ? parsed.Value : trimmedValue;
+            return ElementModel.Types.Decimal.ParseForStorage(trimmedValue);
         }
 
         // Keep it unparsed, as a string.

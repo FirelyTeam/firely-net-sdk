@@ -71,7 +71,7 @@ internal class FPDecimal : CqlPrimitive
     public FPDecimal(P.Decimal value)
     {
         DynamicTypeName = "System.Decimal";
-        JsonValue = value.IsOutOfRange ? value : value.Value;
+        JsonValue = value.IsOutOfRange ? (object)value : value.Value;
     }
 }
 

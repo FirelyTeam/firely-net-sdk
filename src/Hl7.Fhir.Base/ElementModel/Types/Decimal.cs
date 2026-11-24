@@ -125,13 +125,57 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
     }
 
     private static readonly Regex DECIMAL_LITERAL =
-        new(@"^(?<sign>-)?(?<int>[0-9]+)(\.(?<frac>[0-9]+))?([eE](?<exp>[+-]?[0-9]+))?$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+        new(@"^(?<sign>-)?(?<int>[0-9]+)(\.(?<frac>[0-9]+))?([eE](?<exp>[+-]?[0-9]+))?\z", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
     // System.Decimal holds values from 10^-28 up to about 7.9 x 10^28: a literal whose (normalised) exponent is within these
     // bounds either parses or is malformed. Beyond them, decimal.Parse decides whether the value fits, up to a limit.
     private const long MAX_EXPONENT = 27;
     private const long MIN_EXPONENT = -27;
     private const long PARSE_EXPONENT_LIMIT = 40;
+
+    /// <summary>
+    /// Parses a decimal literal for storage in a FHIR decimal: as a .NET <see cref="decimal"/> when it fits, and otherwise
+    /// returns the literal itself (also for a malformed literal). Unlike <see cref="TryParse(string, out Decimal?)"/>,
+    /// a value too small for a .NET decimal (e.g. 1e-999999999) is not rounded to 0.
+    /// </summary>
+    internal static object ParseForStorage(string literal)
+    {
+        // The common case first: a literal that decimal.Parse handles, and that is not a non-zero value rounded to 0.
+        var parsedOk = TryParse(literal, out var parsed);
+        if (parsedOk && (parsed!.Value != 0m || !HasNonZeroMantissaDigit(literal)))
+            return parsed.Value;
+
+        if (TryParseExtended(literal, out var extended) && extended.IsOutOfRange)
+            return literal;
+
+        return parsedOk ? parsed!.Value : literal;
+    }
+
+    /// <summary>
+    /// True when the digits of a number literal (before any exponent) contain a digit other than 0.
+    /// </summary>
+    internal static bool HasNonZeroMantissaDigit(ReadOnlySpan<char> literal)
+    {
+        foreach (var c in literal)
+        {
+            if (c is 'e' or 'E') return false;
+            if (c is >= '1' and <= '9') return true;
+        }
+
+        return false;
+    }
+
+    /// <inheritdoc cref="HasNonZeroMantissaDigit(ReadOnlySpan{char})"/>
+    internal static bool HasNonZeroMantissaDigit(ReadOnlySpan<byte> utf8Literal)
+    {
+        foreach (var c in utf8Literal)
+        {
+            if (c is (byte)'e' or (byte)'E') return false;
+            if (c is >= (byte)'1' and <= (byte)'9') return true;
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// Parses a decimal like <see cref="TryParse(string, out Decimal?)"/>, but also accepts values outside the range

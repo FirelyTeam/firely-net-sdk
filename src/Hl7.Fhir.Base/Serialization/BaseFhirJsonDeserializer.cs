@@ -782,7 +782,12 @@ public class BaseFhirJsonDeserializer
             // as happens below for a value too large for a .NET decimal.
             if (dec != 0m) return dec;
 
-            var raw = System.Text.Encoding.UTF8.GetString(reader.HasValueSequence ? System.Buffers.BuffersExtensions.ToArray(reader.ValueSequence) : reader.ValueSpan.ToArray());
+            ReadOnlySpan<byte> span = reader.HasValueSequence
+                ? System.Buffers.BuffersExtensions.ToArray(reader.ValueSequence)
+                : reader.ValueSpan;
+            if (!ElementModel.Types.Decimal.HasNonZeroMantissaDigit(span)) return dec;
+
+            var raw = System.Text.Encoding.UTF8.GetString(span.ToArray());
             return ElementModel.Types.Decimal.TryParseExtended(raw, out var parsed) && parsed.IsOutOfRange ? raw : dec;
         }
         if (implementingTypeHint == typeof(int) && reader.TryGetInt32(out int i32))

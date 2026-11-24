@@ -63,8 +63,8 @@ namespace Hl7.FhirPath.Functions
 
             if (compareNames && (left.Name != right.Name)) return false;
 
-            var l = left.Value;
-            var r = right.Value;
+            var l = engineValue(left);
+            var r = engineValue(right);
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
@@ -100,6 +100,10 @@ namespace Hl7.FhirPath.Functions
                 return false;
             }
         }
+
+        // A PrimitiveNode gives the engine a System decimal for a decimal outside the range of a .NET decimal.
+        private static object? engineValue(ITypedElement element) =>
+            element is PrimitiveNode pn ? pn.Value : element.Value;
 
         public static bool? IsEqualTo(P.Any? left, P.Any? right)
         {
@@ -161,8 +165,8 @@ namespace Hl7.FhirPath.Functions
 
             if (compareNames && !namesAreEquivalent(left, right)) return false;
 
-            var l = left.Value;
-            var r = right.Value;
+            var l = engineValue(left);
+            var r = engineValue(right);
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
@@ -320,7 +324,7 @@ namespace Hl7.FhirPath.Functions
                 if (x is null && y is null) return 0;
                 if (x is null) return -1;
                 if (y is null) return 1;
-                if (P.Any.TryConvert(x.Value, out var orderableX) && P.Any.TryConvert(y.Value, out var orderableY))
+                if (P.Any.TryConvert(engineValue(x), out var orderableX) && P.Any.TryConvert(engineValue(y), out var orderableY))
                 {
                     if (x is OrderedNode opn && opn.Descending)
                         return -EqualityOperators.CompareTo(orderableX, orderableY) ?? 0;

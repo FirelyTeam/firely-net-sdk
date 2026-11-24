@@ -48,6 +48,8 @@ public partial class FhirDecimal
         JsonValue switch
         {
             null or decimal => null,
+            // A valid decimal outside the range of a .NET decimal (e.g. 1e999999999) is kept as a string.
+            string s when P.Decimal.TryParseExtended(s, out var d) && d.IsOutOfRange => null,
             _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
         };
 
