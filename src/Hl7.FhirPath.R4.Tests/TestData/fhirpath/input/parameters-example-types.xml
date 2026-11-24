@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir" xmlns:f="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../src-generated/schemas/fhir-single.xsd">
+	<id value="example-types"/>
+	<parameter>
+		<name value="string"/>
+		<valueString value="string"/>
+	</parameter>
+	<parameter>
+		<name value="integer"/>
+		<valueInteger value="1"/>
+	</parameter>
+	<parameter>
+		<name value="uuid"/>
+		<valueUuid value="urn:uuid:79a14950-442c-11ed-b878-0242ac120002"/>
+	</parameter>
+	<parameter>
+		<name value="decimal"/>
+		<valueDecimal value="1.0"/>
+	</parameter>
+</Parameters>

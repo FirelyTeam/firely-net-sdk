@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir">
+	<id value="example-quantity-unit-text"/>
+	<!-- the same unit as text only, and as a UCUM code with the same text -->
+	<parameter>
+		<name value="unit-text"/>
+		<valueQuantity>
+			<value value="1"/>
+			<unit value="mg/dL"/>
+		</valueQuantity>
+	</parameter>
+	<parameter>
+		<name value="ucum-code"/>
+		<valueQuantity>
+			<value value="2"/>
+			<unit value="mg/dL"/>
+			<system value="http://unitsofmeasure.org"/>
+			<code value="mg/dL"/>
+		</valueQuantity>
+	</parameter>
+</Parameters>
