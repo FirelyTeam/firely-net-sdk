@@ -632,8 +632,10 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
             result = new Quantity(value, cleanupCanonicalUnit(unit), QuantityUnitSystem.UCUM);
             return true;
         }
-        catch (Exception e) when (e is ArithmeticException or ArgumentException or InvalidOperationException)
+        catch (Exception)
         {
+            // As for comparisons, the UCUM library throws a variety of exceptions for units it cannot parse or
+            // convert, and for results that do not fit in a decimal. These calculations are not possible.
             result = null;
             return false;
         }

@@ -211,6 +211,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             fixture.IsTrue(@"6 'mg' / 3 = 2 'mg'");
             fixture.IsTrue(@"2 year * 2 = 4 years");
             fixture.IsTrue(@"(2 / 4 'm') = 0.5 'm-1'");
+            fixture.IsTrue(@"2.toLong() * 3 'mg' = 6 'mg'");
+            fixture.IsTrue(@"6 'mg' / 3.toLong() = 2 'mg'");
 
             // Empty operands, division by zero and units that cannot be converted give empty
             fixture.IsTrue(@"({} * 2 'm').empty()");
