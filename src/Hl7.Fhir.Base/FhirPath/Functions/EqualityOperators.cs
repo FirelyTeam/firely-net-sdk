@@ -109,8 +109,11 @@ namespace Hl7.FhirPath.Functions
             return left is P.ICqlEquatable cqle ? cqle.IsEqualTo(right) : null;
         }
 
-        // Converts a FHIR Quantity to a System.Quantity for = and ~. A quantity without a code
-        // uses its unit text as the unit, so it does not compare equal to a unitless quantity.
+        // Converts a FHIR Quantity to a System.Quantity for = and ~, following the reference (Java) engine:
+        // a quantity that has unit text but no code is only comparable to another such quantity with the
+        // same unit text. Its unit is given a prefix that no UCUM code or FHIRPath unit can have, so it never
+        // matches a coded quantity, a quantity literal or a unitless quantity, and those comparisons give
+        // empty (=) / false (~). The prefixed unit is internal to this comparison and never surfaces.
         private static P.Quantity? quantityForComparison(ITypedElement element)
         {
             var quantity = element is PocoNode { Poco: Quantity q }
@@ -119,8 +122,17 @@ namespace Hl7.FhirPath.Functions
                 : element.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly));
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            return Typecasts.ParseQuantityForComparison(quantity);
+            if (quantity is null) return null;
+
+            // ToSystemQuantity() also validates the quantity (value present, no comparator).
+            var systemQuantity = quantity.ToSystemQuantity();
+
+            return string.IsNullOrEmpty(quantity.Code) && !string.IsNullOrEmpty(quantity.Unit)
+                ? new P.Quantity(systemQuantity.Value, UNIT_TEXT_ONLY_PREFIX + quantity.Unit)
+                : systemQuantity;
         }
+
+        private const string UNIT_TEXT_ONLY_PREFIX = "\u0000unit-text:";
 
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {

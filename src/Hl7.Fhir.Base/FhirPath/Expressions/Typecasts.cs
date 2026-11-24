@@ -50,24 +50,6 @@ namespace Hl7.FhirPath.Expressions
             return (qe.Poco as Quantity)?.ToSystemQuantity();
         }
 
-        /// <summary>
-        /// Converts a FHIR Quantity to a System.Quantity for comparison purposes. The unit is taken
-        /// from <see cref="Quantity.Code"/>, or, when there is no code, from the human-readable
-        /// <see cref="Quantity.Unit"/> text, and is '1' only when both are absent. This way a quantity
-        /// with only unit text is not mistaken for a unitless quantity.
-        /// </summary>
-        internal static P.Quantity ParseQuantityForComparison(Quantity q)
-        {
-            if (q is null) return null;
-
-            // ToSystemQuantity() also validates the quantity (value present, no comparator).
-            var sq = q.ToSystemQuantity();
-
-            return string.IsNullOrEmpty(q.Code) && !string.IsNullOrEmpty(q.Unit)
-                ? new P.Quantity(sq.Value, q.Unit)
-                : sq;
-        }
-
         private static Cast getImplicitCast(object f, Type to)
         {
             var from = f.GetType();
