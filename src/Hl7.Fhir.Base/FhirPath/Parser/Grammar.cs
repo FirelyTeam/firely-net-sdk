@@ -62,7 +62,7 @@ namespace Hl7.FhirPath.Parser
             Lexer.String.Select(v => new ConstantExpression(v, TypeSpecifier.String)).Positioned()
                 .Or(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeSpecifier.DateTime)).Positioned())
                 .Or(Lexer.Date.Select(v => new ConstantExpression(v, TypeSpecifier.Date)).Positioned())
-                .Or(Lexer.TimeWithOffset.Select(v => new ConstantExpression(v, TypeSpecifier.Time)).Positioned())
+                .Or(Lexer.TimeWithOffset.Select(v => new ConstantExpression(v, TypeSpecifier.Time) { IsTimeLiteralWithOffset = true }).Positioned())
                 .Or(Lexer.Time.Select(v => new ConstantExpression(v, TypeSpecifier.Time)).Positioned())
                 .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeSpecifier.Boolean)).Positioned())
                 .Or(Quantity.Positioned())

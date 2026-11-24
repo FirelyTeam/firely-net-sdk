@@ -76,6 +76,10 @@ namespace Hl7.FhirPath.Tests
                 Assert.ThrowsExactly<InvalidOperationException>(() => evaluator.Scalar(null!, new EvaluationContext()), expr);
             }
 
+            // Only a literal read by the parser is rejected: a Time constant with an offset built in code still evaluates
+            var built = new Expressions.ConstantExpression(P.Time.Parse("10:00Z"), Hl7.Fhir.Language.TypeSpecifier.Time);
+            Assert.AreEqual(P.Time.Parse("10:00Z"), new FhirPathCompiler().Compile(built).Scalar(null!, new EvaluationContext()));
+
             // A time followed by arithmetic is not mistaken for a timezone offset
             foreach (var expr in new[] { "@T10:00+5", "@T10:00-05" })
             {
