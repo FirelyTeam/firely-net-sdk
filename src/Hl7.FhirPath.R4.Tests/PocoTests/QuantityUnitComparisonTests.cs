@@ -16,6 +16,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 {
     /// <summary>
     /// Equality (=) and equivalence (~) of FHIR Quantities that have unit text but no code.
+    /// Follows the reference (Java) engine: such a quantity only compares to another one with the same unit text.
     /// See https://github.com/FirelyTeam/firely-net-sdk/issues/3692
     /// </summary>
     [TestClass]
@@ -30,6 +31,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 new() { Name = "mg-text", Value = new Quantity { Value = 1, Unit = "mg" } },
                 new() { Name = "mg-code", Value = new Quantity { Value = 1, Code = "mg", System = "http://unitsofmeasure.org" } },
                 new() { Name = "milligram-text", Value = new Quantity { Value = 1, Unit = "milligram" } },
+                new() { Name = "d-text", Value = new Quantity { Value = 1, Unit = "d" } },
                 new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
                 new() { Name = "mg-text-dl", Value = new Quantity { Value = 1, Unit = "mg/dL" } },
@@ -49,7 +51,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [DataRow("tablets", "tablets", true, true)]
         [DataRow("tablets", "no-unit", null, false)]
         [DataRow("no-unit", "tablets", null, false)]
-        [DataRow("mg-text", "mg-code", true, true)]
+        [DataRow("mg-text", "mg-code", null, false)]
+        [DataRow("mg-text", "mg-code-and-text", null, false)]
         [DataRow("mg-code", "milligram-text", null, false)]
         [DataRow("mg-code-and-text", "mg-code", true, true)]
         [DataRow("mg-code-and-text", "milligram-text", null, false)]
@@ -64,12 +67,15 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
-        [DataRow("tablets", "1 'tablets'", true, true)]
+        [DataRow("tablets", "1 'tablets'", null, false)]
         [DataRow("tablets", "1", null, false)]
         [DataRow("tablets", "1 '1'", null, false)]
         [DataRow("no-unit", "1", true, true)]
         [DataRow("no-unit", "1 '1'", true, true)]
-        [DataRow("mg-text", "1 'mg'", true, true)]
+        [DataRow("mg-text", "1 'mg'", null, false)]
+        [DataRow("d-text", "1 day", null, false)]
+        [DataRow("d-text", "1 'd'", null, false)]
+        [DataRow("mg-code", "1 'mg'", true, true)]
         public void ComparesFhirQuantityToSystemValue(string left, string right, bool? equal, bool equivalent)
         {
             eval($"{p(left)} = {right}").Should().Be(equal);
@@ -121,6 +127,19 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{p("tablets")} in {p("no-unit")}").Should().BeFalse();
             eval($"{p("no-unit")} contains {p("tablets")}").Should().BeFalse();
             eval($"{p("tablets")} in {p("tablets")}").Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void SetFunctionsTreatEqualQuantitiesAsOne()
+        {
+            // structurally different (unit text present on one side only), but equal by code
+            var q = "Parameters.parameter.where(name = 'mg-code-and-text' or name = 'mg-code').value";
+            input().Select($"{q}.distinct()").Should().HaveCount(1);
+            input().Select($"{p("mg-code-and-text")} | {p("mg-code")}").Should().HaveCount(1);
+            input().Select($"{p("mg-code-and-text")}.intersect({p("mg-code")})").Should().HaveCount(1);
+            input().Select($"{p("mg-code-and-text")}.exclude({p("mg-code")})").Should().BeEmpty();
+            input().Select($"{p("mg-text")} | {p("mg-code")}").Should().HaveCount(2);
+            input().Select($"{p("tablets")} | {p("no-unit")}").Should().HaveCount(2);
         }
     }
 }
