@@ -9,6 +9,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -225,7 +226,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
 
-        if (!tryGetComparableValues(otherQ, comparisonType, out var left, out var right))
+        if (!tryGetComparableValues(otherQ, comparisonType, toCoarsestUnit: false, out var left, out var right))
         {
             result = null;
             return false;
@@ -238,10 +239,18 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// <summary>
     /// Gets the values of this and the other quantity, expressed in the same unit, so they can be compared.
     /// </summary>
+    /// <param name="other">The quantity to compare with.</param>
+    /// <param name="comparisonType">How calendar durations are normalized to UCUM.</param>
+    /// <param name="toCoarsestUnit">When the units differ, convert to the larger unit of the two (used for equivalence,
+    /// where the values are rounded to the least precise operand) instead of the smaller unit (which keeps the most precision).</param>
+    /// <param name="left">The value of this quantity.</param>
+    /// <param name="right">The value of the other quantity, in the same unit as <paramref name="left"/>.</param>
     /// <remarks>Durations are first normalized to UCUM (taking <paramref name="comparisonType"/> into account).
-    /// Quantities with the same system and unit are then compared as-is. Otherwise, UCUM quantities are converted to
-    /// their canonical units, and can be compared if those are the same (e.g. 4 'g' and 4000 'mg').</remarks>
-    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, out decimal left, out decimal right)
+    /// Quantities with the same system and unit are then compared as-is. Otherwise, UCUM quantities whose units have the same
+    /// canonical form (e.g. 'g' and 'mg') are converted to a common unit. Calendar durations are only comparable to
+    /// durations with the same unit after normalization.</remarks>
+    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool toCoarsestUnit,
+        out decimal left, out decimal right)
     {
         var l = this;
         var r = other;
@@ -257,15 +266,26 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         if (l.System == r.System && l.Unit == r.Unit) return true;
 
-        // Durations keep their own comparison rules: only identical units (after normalization) are comparable.
-        if (IsDuration && other.IsDuration) return false;
+        // Comparing calendar durations with UCUM durations follows its own rules, see normalizeDurationToUcum().
+        if (IsCalendarDuration || other.IsCalendarDuration) return false;
 
-        if (!l.TryCanonicalize(out var lc) || !r.TryCanonicalize(out var rc) || lc.Unit != rc.Unit)
+        if (!tryGetUcumConversion(l, out var lc) || !tryGetUcumConversion(r, out var rc) || lc.CanonicalUnit != rc.CanonicalUnit)
             return false;
 
-        left = lc.Value;
-        right = rc.Value;
-        return true;
+        try
+        {
+            // Express the operand with the smaller (or, for toCoarsestUnit, larger) unit in the unit of the other operand.
+            if ((lc.Factor < rc.Factor) == toCoarsestUnit)
+                left = l.Value * lc.Factor / rc.Factor;
+            else
+                right = r.Value * rc.Factor / lc.Factor;
+
+            return true;
+        }
+        catch (OverflowException)
+        {
+            return false;
+        }
     }
 
     private static Quantity normalizeDurationToUcum(Quantity orig, QuantityComparison comparisonType)
@@ -291,6 +311,57 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
         return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
     }
 
+    private sealed record UcumConversion(decimal Factor, string CanonicalUnit);
+
+    // Converting a unit with the UCUM library is relatively expensive, so the conversion of each unit is cached
+    // (including units that cannot be converted).
+    private static readonly ConcurrentDictionary<string, UcumConversion?> UCUM_CONVERSIONS = new();
+
+    private const int MAX_CACHED_UCUM_CONVERSIONS = 10_000;
+
+    /// <summary>
+    /// Gets the factor to convert a UCUM unit to its canonical unit (e.g. 0.001 to convert 'mg' to 'g').
+    /// </summary>
+    private static bool tryGetUcumConversion(Quantity q, [NotNullWhen(true)] out UcumConversion? conversion)
+    {
+        conversion = null;
+        if (q.System != QuantityUnitSystem.UCUM) return false;
+
+        if (!UCUM_CONVERSIONS.TryGetValue(q.Unit, out conversion))
+        {
+            conversion = getUcumConversion(q.Unit);
+
+            // Units can come from data, so don't let the cache grow without bounds.
+            if (UCUM_CONVERSIONS.Count < MAX_CACHED_UCUM_CONVERSIONS)
+                UCUM_CONVERSIONS.TryAdd(q.Unit, conversion);
+        }
+
+        return conversion is not null;
+
+        static UcumConversion? getUcumConversion(string unit)
+        {
+            try
+            {
+                // Units that do not convert linearly (like 'Cel') cannot be canonicalized by the library, so
+                // converting 1 unit gives the factor for any value.
+                if (global::Fhir.Metrics.MetricServiceExtensions.TryCanonicalize(
+                        global::Fhir.Metrics.FhirMetricService.Instance.Value, (1m, unit, UCUM), out var result)
+                    && result is { } c && c.Item1 != 0)
+                {
+                    // The library represents a dimensionless canonical unit as an empty string, FHIRPath uses '1'.
+                    return new UcumConversion(c.Item1, string.IsNullOrEmpty(c.Item2) ? UCUM_UNIT : c.Item2);
+                }
+            }
+            catch (Exception)
+            {
+                // The UCUM library throws a variety of exceptions for units it cannot parse or convert. Such units
+                // are treated as not convertible.
+            }
+
+            return null;
+        }
+    }
+
     /// <summary>
     /// Converts a UCUM quantity to its canonical form, expressed in UCUM base units (e.g. 4000 'mg' becomes 4 'g').
     /// </summary>
@@ -298,33 +369,26 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     internal bool TryCanonicalize([NotNullWhen(true)] out Quantity? canonical)
     {
         canonical = null;
-        if (System != QuantityUnitSystem.UCUM) return false;
+        if (!tryGetUcumConversion(this, out var conversion)) return false;
 
         try
         {
-            if (!global::Fhir.Metrics.MetricServiceExtensions.TryCanonicalize(
-                    global::Fhir.Metrics.FhirMetricService.Instance.Value, (Value, Unit, UCUM), out var result)
-                || result is not { } c)
-                return false;
-
-            // The library represents a dimensionless canonical unit as an empty string, FHIRPath uses '1'.
-            canonical = new Quantity(c.Item1, string.IsNullOrEmpty(c.Item2) ? UCUM_UNIT : c.Item2, QuantityUnitSystem.UCUM);
+            canonical = new Quantity(Value * conversion.Factor, conversion.CanonicalUnit, QuantityUnitSystem.UCUM);
             return true;
         }
-        catch (Exception)
+        catch (OverflowException)
         {
-            // The UCUM library could not parse or convert the unit.
             return false;
         }
     }
 
     /// <summary>
-    /// Determines whether two quantities are equivalent: their values, converted to a common unit, must be
+    /// Determines whether two quantities are equivalent: their values, converted to the larger of the two units, must be
     /// equal after rounding to the precision of the least precise of the two values (as for Decimal equivalence).
     /// </summary>
     private bool isEquivalentTo(Quantity other)
     {
-        if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, out var left, out var right))
+        if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, toCoarsestUnit: true, out var left, out var right))
             return false;
 
         return new Decimal(left).Equals(new Decimal(right), Decimal.CQL_EQUIVALENCE_COMPARISON);
@@ -346,14 +410,28 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
 
-    /// <remarks>Quantities that are equal after unit conversion (e.g. 4 'g' and 4000 'mg') must have the same hash code,
-    /// so the hash code is based on the canonical form of the quantity.</remarks>
+    /// <remarks>Quantities in different units can be equal (e.g. 4 'g' and 4000 'mg'), and equality rounds the values,
+    /// so the hash code is based on the dimension (canonical unit) of the quantity only.</remarks>
     public override int GetHashCode()
     {
-        var q = IsCalendarDuration ? normalizeDurationToUcum(this, CQL_EQUALS_COMPARISON) : this;
-        if (q.TryCanonicalize(out var canonical)) q = canonical;
+        var q = this;
 
-        return (q.Unit, Math.Round(q.Value, 8)).GetHashCode();
+        // Calendar durations can be equal to UCUM durations (e.g. 1 day and 1 'd').
+        if (IsCalendarDuration)
+        {
+            try
+            {
+                q = normalizeDurationToUcum(this, CQL_EQUALS_COMPARISON);
+            }
+            catch (InvalidOperationException)
+            {
+                return Unit.GetHashCode();
+            }
+        }
+
+        return tryGetUcumConversion(q, out var conversion)
+            ? conversion.CanonicalUnit.GetHashCode()
+            : q.Unit.GetHashCode();
     }
 
     public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";

@@ -67,9 +67,7 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
     bool P.IToSystemPrimitive.TryConvertToSystemType([NotNullWhen(true)] out P.Any? result)
     {
         var (v, e) = tryConvertToSystemTypeInternal();
-        result = v is not null && string.IsNullOrEmpty(Code) && !string.IsNullOrEmpty(Unit)
-            ? new P.Quantity(v.Value, Unit)
-            : v;
+        result = v is not null ? Hl7.FhirPath.Expressions.Typecasts.ParseQuantityForComparison(this) : null;
         return e is null;
     }
 

@@ -176,6 +176,8 @@ namespace Hl7.Fhir.Support.Tests
                     ("1 'cm'.comparable(1 '[in_i]')", true),
                     ("1 'cm'.comparable(1 'kg')", false),
                     ("1 'cm'.comparable(1 '[s]')", false),
+                    ("1 'h'.comparable(60 'min')", true),
+                    ("1 'ng' < 0.002 'ug'", true),
                     ("1 week.comparable(1 'wk')", true),
                     ("1 'cm'.comparable(1 's')", false),
                 }.Select(t => new object[] { t.expression, t.expected });
