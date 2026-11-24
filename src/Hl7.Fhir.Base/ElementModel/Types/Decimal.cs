@@ -34,6 +34,8 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
         _outOfRange = outOfRange;
     }
 
+    internal static readonly char[] EXPONENT_MARKERS = ['e', 'E'];
+
     private Decimal(decimal value, int negativeScale)
     {
         _value = value;
@@ -94,7 +96,7 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
                 NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign,
                 CultureInfo.InvariantCulture));
 
-        value = succ && negativeScaleOf(representation) is { } negativeScale ? new Decimal(val, negativeScale) : new Decimal(val);
+        value = succ && NegativeScaleOf(representation) is { } negativeScale ? new Decimal(val, negativeScale) : new Decimal(val);
         return succ;
     }
 
@@ -102,13 +104,17 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// The number of decimal places to which a literal with an exponent is precise, when that is below zero: -1 for
     /// 9.5e2 (one decimal place in the mantissa, moved two places to the right), and null for 9.5e1 (0) or 9.5 (1).
     /// </summary>
-    /// <remarks>The literal must already be known to parse.</remarks>
-    private static int? negativeScaleOf(string literal)
+    /// <remarks>The literal must already be known to parse. Zero has no precision to keep: as in the reference
+    /// implementation, its boundaries ignore the exponent (0e2 is like 0).</remarks>
+    internal static int? NegativeScaleOf(string literal)
     {
-        var e = literal.IndexOfAny(['e', 'E']);
+        var e = literal.IndexOfAny(EXPONENT_MARKERS);
         if (e == -1) return null;
 
-        // An exponent that does not fit an int gives a value outside the range of a .NET decimal, which never gets here.
+        // The digits of the mantissa are all zeroes: zero, whatever its exponent (which may not even fit an int).
+        if (literal.Take(e).All(c => c is '0' or '.' or '-')) return null;
+
+        // Any other exponent that does not fit an int gives a value outside the range of a .NET decimal, so never gets here.
         if (!int.TryParse(literal.Substring(e + 1), NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var exponent))
             return null;
 

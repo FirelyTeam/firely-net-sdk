@@ -87,8 +87,9 @@ public partial class FhirDecimal
     /// </summary>
     internal void KeepParsedLiteral(string literal)
     {
-        if (JsonValue is decimal value && literal.IndexOfAny(['e', 'E']) != -1 &&
-            P.Decimal.TryParse(literal, out var parsed) && parsed.Value == value && parsed.PrecisionScale < 0)
+        // Most literals have no exponent: check that cheaply before parsing.
+        if (JsonValue is decimal value && P.Decimal.NegativeScaleOf(literal) is not null &&
+            P.Decimal.TryParse(literal, out var parsed) && parsed.Value == value)
             ExponentLiteral = literal;
     }
 

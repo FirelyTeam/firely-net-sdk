@@ -204,7 +204,9 @@ namespace Hl7.Fhir.FhirPath
 
         /// <summary>
         /// The System value of the focus of lowBoundary() and highBoundary(). A decimal parsed from a literal with an
-        /// exponent keeps the precision of that literal (see <see cref="FhirDecimal.ExponentLiteral"/>).
+        /// exponent keeps the precision of that literal (see <see cref="FhirDecimal.ExponentLiteral"/>). That precision
+        /// lives on the FhirDecimal, so it reaches the boundary functions through navigation and functions that return
+        /// the same node (first(), iif()), but not through functions that build a new value, such as toDecimal().
         /// </summary>
         /// <exception cref="ArgumentException">The focus is a complex value that has no System value.</exception>
         private static P.Any? boundaryInput(PocoNode focus) => focus switch

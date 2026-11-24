@@ -29,7 +29,12 @@ internal partial class NewPocoBuilder
                 : convertSourceNodeValue(text, classMapping);
 
             if (newInstance is PrimitiveType pt)
+            {
                 pt.JsonValue = objectValue;
+
+                // A decimal with an exponent (9.5e2) can be precise to fewer digits than the parsed value shows.
+                if (pt is FhirDecimal fhirDecimal) fhirDecimal.KeepParsedLiteral(text);
+            }
             else
                 raiseFormatError($"{node.Name} is a primitive with value '{text}', but the target POCO is a {newInstance.GetType()}, " +
                                  $"which is not FHIR primitive.", node.Location);
