@@ -168,11 +168,11 @@ namespace Hl7.Fhir.FhirPath
                 : new P.Quantity(value.Value, input.Unit, input.System);
         }
 
-        // A dateTime without a timezone could be in any timezone, so its boundaries are taken at the
-        // extremes: the earliest moment is in the most eastern zone (+14:00), the latest in the most western one (-12:00).
         // Without a precision, the boundary of a date is a date (YYYYMMDD); that of a dateTime has milliseconds.
         private const long DATE_DEFAULT_BOUNDARY_PRECISION = 8;
 
+        // A dateTime without a timezone could be in any timezone, so its boundaries are taken at the
+        // extremes: the earliest moment is in the most eastern zone (+14:00), the latest in the most western one (-12:00).
         private static readonly TimeSpan LOW_BOUNDARY_OFFSET = TimeSpan.FromHours(14);
         private static readonly TimeSpan HIGH_BOUNDARY_OFFSET = TimeSpan.FromHours(-12);
 
@@ -188,11 +188,11 @@ namespace Hl7.Fhir.FhirPath
                 _ => throw new ArgumentException($"Unsupported DateTime precision for boundary operation: {precision}")
             };
 
-            // A dateTime with only an hour is not valid in FHIR, which requires at least minutes, so it is read as
-            // hh:00 (e.g. @2014-01-01T08 is 08:00) and its boundaries are those of that minute.
             // An input timezone written as Z is kept as Z.
             var zulu = dt.HasOffset && dt.ToString().EndsWith("Z", StringComparison.Ordinal);
 
+            // A dateTime with only an hour is not valid in FHIR, which requires at least minutes, so it is read as
+            // hh:00 (e.g. @2014-01-01T08 is 08:00) and its boundaries are those of that minute.
             if (dt.Precision == P.DateTimePrecision.Hour)
                 dt = P.DateTime.FromDateTimeOffset(dt.ToDateTimeOffset(TimeSpan.Zero), P.DateTimePrecision.Minute, dt.HasOffset);
 
