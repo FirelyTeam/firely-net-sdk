@@ -199,6 +199,40 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void BetweenKeepsThePrecisionOfEachSide()
+        {
+            var end = P.DateTime.Parse("2024-12-31T23:59:59.999Z").GetRange(TimeZoneInfo.Utc);
+            var byYear = P.DateTimeRange.Between(P.Date.Parse("2024").GetRange(TimeZoneInfo.Utc), end);
+            var byDay = P.DateTimeRange.Between(P.Date.Parse("2024-01-01").GetRange(TimeZoneInfo.Utc), end);
+
+            byYear.StartPrecision.Should().Be(P.DateTimePrecision.Year);
+            byYear.EndPrecision.Should().Be(P.DateTimePrecision.Fraction);
+            byYear.Precision.Should().Be(P.DateTimePrecision.Year);
+
+            byDay.StartPrecision.Should().Be(P.DateTimePrecision.Day);
+            byDay.EndPrecision.Should().Be(P.DateTimePrecision.Fraction);
+            byDay.Precision.Should().Be(P.DateTimePrecision.Day);
+        }
+
+        [TestMethod]
+        public void BetweenLeavesThePrecisionOfAMissingSideNull()
+        {
+            var input = P.DateTimeRange.Between(
+                P.Date.Parse("2024").GetRange(TimeZoneInfo.Utc),
+                P.DateTime.Parse("2024-12-31T23:59:59.999Z").GetRange(TimeZoneInfo.Utc));
+
+            var openEnd = P.DateTimeRange.Between(input, null);
+            openEnd.StartPrecision.Should().Be(P.DateTimePrecision.Year);
+            openEnd.EndPrecision.Should().BeNull();
+            openEnd.Precision.Should().Be(P.DateTimePrecision.Year);
+
+            var openStart = P.DateTimeRange.Between(null, input);
+            openStart.StartPrecision.Should().BeNull();
+            openStart.EndPrecision.Should().Be(P.DateTimePrecision.Fraction);
+            openStart.Precision.Should().Be(P.DateTimePrecision.Fraction);
+        }
+
+        [TestMethod]
         public void BetweenHandlesOpenSides()
         {
             var day = P.Date.Parse("2026-03-15").GetRange(TimeZoneInfo.Utc);
