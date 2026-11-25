@@ -208,26 +208,26 @@ namespace HL7.FhirPath.Tests
         }
 
         [TestMethod]
-        [DataRow("1+2*3+4 = 11", true)]
-        [DataRow("-1 < 0", true)]
-        [DataRow("(-1.587).abs() = 1.587", true)]
-        [DataRow("1 != 2", true)]
-        [DataRow("1 ~ 1", true)]
-        [DataRow("{} ~ {}", true)]
-        [DataRow("'a' & {} = 'a'", true)]
-        [DataRow("(3 | 1 | 2).sort(-$this).first() = 3", true)]
-        [DataRow("({} + 1).empty()", true)]
-        [DataRow("({} = 1).empty()", true)]
-        [DataRow("(1 > {}).empty()", true)]
-        [DataRow("(-{}).empty()", true)]
-        public void OperatorsOnEmptyInput(string expression, bool expected)
+        [DataRow("1+2*3+4 = 11")]
+        [DataRow("-1 < 0")]
+        [DataRow("(-1.587).abs() = 1.587")]
+        [DataRow("1 != 2")]
+        [DataRow("1 ~ 1")]
+        [DataRow("{} ~ {}")]
+        [DataRow("'a' & {} = 'a'")]
+        [DataRow("(3 | 1 | 2).sort(-$this).first() = 3")]
+        [DataRow("({} + 1).empty()")]
+        [DataRow("({} = 1).empty()")]
+        [DataRow("(1 > {}).empty()")]
+        [DataRow("(-{}).empty()")]
+        public void OperatorsOnEmptyInput(string expression)
         {
             // Operators do not operate on the input focus, so an empty input must not make them return empty.
             var compiled = new FhirPathCompiler().Compile(expression);
             var result = compiled([], new EvaluationContext()).ToList();
 
             result.Should().ContainSingle(because: $"'{expression}' should not return empty on an empty input");
-            result.Single().GetValue().Should().Be(expected);
+            result.Single().GetValue().Should().Be(true);
         }
 
         [TestMethod]
