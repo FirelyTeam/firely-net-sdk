@@ -140,8 +140,8 @@ namespace Hl7.Fhir.FhirPath
             return input switch
             {
                 P.Quantity q => AdjustBoundaryQuantity(q, precision, substract),
-                P.Date d => BoundaryDateTime(d, precision ?? DATE_DEFAULT_BOUNDARY_PRECISION, 1, 1, 0, 0, 0, 0, LOW_BOUNDARY_OFFSET),
-                P.DateTime dt => BoundaryDateTime(dt, precision, 1, 1, 0, 0, 0, 0, LOW_BOUNDARY_OFFSET),
+                P.Date d => BoundaryDateTime(d, precision ?? DATE_DEFAULT_BOUNDARY_PRECISION, high: false),
+                P.DateTime dt => BoundaryDateTime(dt, precision, high: false),
                 P.Time t => BoundaryTime(t, precision, 0, 0, 0),
                 _ => null
             };
@@ -152,8 +152,8 @@ namespace Hl7.Fhir.FhirPath
             return input switch
             {
                 P.Quantity q => AdjustBoundaryQuantity(q, precision, add),
-                P.Date d => BoundaryDateTime(d, precision ?? DATE_DEFAULT_BOUNDARY_PRECISION, 12, 31, 23, 59, 59, 999, HIGH_BOUNDARY_OFFSET),
-                P.DateTime dt => BoundaryDateTime(dt, precision, 12, 31, 23, 59, 59, 999, HIGH_BOUNDARY_OFFSET),
+                P.Date d => BoundaryDateTime(d, precision ?? DATE_DEFAULT_BOUNDARY_PRECISION, high: true),
+                P.DateTime dt => BoundaryDateTime(dt, precision, high: true),
                 P.Time t => BoundaryTime(t, precision, 59, 59, 999),
                 _ => null
             };
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.FhirPath
         private static readonly TimeSpan LOW_BOUNDARY_OFFSET = TimeSpan.FromHours(14);
         private static readonly TimeSpan HIGH_BOUNDARY_OFFSET = TimeSpan.FromHours(-12);
 
-        internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds, TimeSpan boundaryOffset)
+        internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, bool high)
         {
             P.DateTimePrecision dtPrecision = precision switch
             {
@@ -188,49 +188,48 @@ namespace Hl7.Fhir.FhirPath
                 _ => throw new ArgumentException($"Unsupported DateTime precision for boundary operation: {precision}")
             };
 
-            // A date result carries no offset, so it is built without one. A result with a time part keeps the input's offset,
-            // or gets +14:00/-12:00 when the input has none.
-            TimeSpan offset = dtPrecision <= P.DateTimePrecision.Day ? TimeSpan.Zero
-                : dt.HasOffset ? dt.Offset!.Value
-                : boundaryOffset;
+            // A dateTime with only an hour is not valid in FHIR, which requires at least minutes, so it is read as
+            // hh:00 (e.g. @2014-01-01T08 is 08:00) and its boundaries are those of that minute.
+            // An input timezone written as Z is kept as Z.
+            var zulu = dt.HasOffset && dt.ToString().EndsWith("Z", StringComparison.Ordinal);
 
-            DateTimeOffset dto;
-            try
-            {
-                dto = boundaryDateTimeOffset(offset);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // At the edges of the representable range (e.g. 9999-12-31T13:00 at -12:00) the boundary lies beyond year 9999
-                // or before year 1. It is clamped to the latest/earliest instant that can be represented.
-                dto = boundaryOffset < TimeSpan.Zero
-                    ? new DateTimeOffset(9999, 12, 31, 23, 59, 59, 999, TimeSpan.Zero)
-                    : new DateTimeOffset(1, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
-            }
+            if (dt.Precision == P.DateTimePrecision.Hour)
+                dt = P.DateTime.FromDateTimeOffset(dt.ToDateTimeOffset(TimeSpan.Zero), P.DateTimePrecision.Minute, dt.HasOffset);
+
+            // The boundaries are the first and the last instant of the range the value covers. A value without a timezone
+            // could be in any timezone, so its range is taken at the extremes: the earliest moment is in the most eastern
+            // zone (+14:00), the latest in the most western one (-12:00). A date result carries no offset, so the zone
+            // does not matter there. The range keeps the input's own offset, and its fraction digits: the high boundary
+            // of .5 is .599.
+            var assumedOffset = dtPrecision <= P.DateTimePrecision.Day ? TimeSpan.Zero
+                : high ? HIGH_BOUNDARY_OFFSET : LOW_BOUNDARY_OFFSET;
+            var range = dt.GetRange(assumedOffset);
+
+            // A bound beyond what DateTimeOffset can represent (e.g. the end of 9999-12-31T13:00 at -12:00) leaves that
+            // side of the range unbounded. The boundary is then the latest/earliest instant the input's offset can express
+            // (its wall clock cannot pass 9999-12-31T23:59:59.9999999 or precede 0001-01-01T00:00), or, without an
+            // offset, the latest/earliest representable instant in UTC.
+            var instant = high ? range.LastInstant ?? latest() : range.Start ?? earliest();
 
             if (dtPrecision <= P.DateTimePrecision.Day)
-                return P.Date.FromDateTimeOffset(dto, dtPrecision, includeOffset: false);
+                return P.Date.FromDateTimeOffset(instant, dtPrecision, includeOffset: false);
 
             // A boundary with a time part always has a timezone, and is written with exactly three fraction digits (e.g. .000)
-            // so that it spans exactly one millisecond. Parsing the formatted value keeps both the text and that span.
-            // An input timezone written as Z is kept as Z.
+            // so that it spans exactly one millisecond; finer digits are truncated. Parsing the formatted value keeps both
+            // the text and that span.
             var format = dtPrecision == P.DateTimePrecision.Fraction ? "yyyy-MM-dd'T'HH:mm:ss.fff" : "yyyy-MM-dd'T'HH:mm:ss";
-            var zone = dt.HasOffset && dt.ToString().EndsWith("Z", StringComparison.Ordinal) ? "Z" : dto.ToString("zzz", CultureInfo.InvariantCulture);
-            return P.DateTime.Parse(dto.ToString(format, CultureInfo.InvariantCulture) + zone);
+            var zone = zulu ? "Z" : instant.ToString("zzz", CultureInfo.InvariantCulture);
+            return P.DateTime.Parse(instant.ToString(format, CultureInfo.InvariantCulture) + zone);
 
-            DateTimeOffset boundaryDateTimeOffset(TimeSpan tz) => dt.Precision switch
-            {
-                P.DateTimePrecision.Year => new(dt.Years!.Value, months, days, hours, minutes, seconds, milliseconds, tz),
-                P.DateTimePrecision.Month => new(dt.Years!.Value, dt.Months!.Value, days == 1 ? days : DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), hours, minutes, seconds, milliseconds, tz),
-                P.DateTimePrecision.Day => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, hours, minutes, seconds, milliseconds, tz),
-                // A dateTime with only an hour is not valid in FHIR, which requires at least minutes, so it is read as
-                // hh:00 (e.g. @2014-01-01T08 is 08:00) and its boundaries are those of that minute.
-                P.DateTimePrecision.Hour => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, 0, seconds, milliseconds, tz),
-                P.DateTimePrecision.Minute => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, dt.Minutes!.Value, seconds, milliseconds, tz),
-                P.DateTimePrecision.Second => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, dt.Minutes!.Value, dt.Seconds!.Value, milliseconds, tz),
-                P.DateTimePrecision.Fraction => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, dt.Minutes!.Value, dt.Seconds!.Value, dt.Millis!.Value, tz),
-                _ => throw new ArgumentException("Unexpected DateTime precision found")
-            };
+            DateTimeOffset latest() =>
+                !dt.HasOffset ? DateTimeOffset.MaxValue
+                : dt.Offset!.Value >= TimeSpan.Zero ? new DateTimeOffset(System.DateTime.MaxValue, dt.Offset.Value)
+                : DateTimeOffset.MaxValue.ToOffset(dt.Offset.Value);
+
+            DateTimeOffset earliest() =>
+                !dt.HasOffset ? DateTimeOffset.MinValue
+                : dt.Offset!.Value <= TimeSpan.Zero ? new DateTimeOffset(System.DateTime.MinValue, dt.Offset.Value)
+                : DateTimeOffset.MinValue.ToOffset(dt.Offset.Value);
         }
 
         internal static P.Time BoundaryTime(P.Time time, long? precision, int minutes, int seconds, int milliseconds)

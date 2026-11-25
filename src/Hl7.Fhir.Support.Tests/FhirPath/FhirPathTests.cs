@@ -169,6 +169,13 @@ namespace Hl7.Fhir.Support.Tests
                     ("'string'.highBoundary() = 'string'", false),
                     ("1.587 'cm'.highBoundary(8) = 1.58750000 'cm'", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
+                    ("@2014-01-01T08:05:30.5Z.highBoundary().toString() = '2014-01-01T08:05:30.599Z'", true), // .5 spans 100 ms
+                    ("@2014-01-01T08:05:30.5Z.lowBoundary().toString() = '2014-01-01T08:05:30.500Z'", true),
+                    ("@2014-01-01T08Z.highBoundary().toString() = '2014-01-01T08:00:59.999Z'", true),
+                    ("@2014-01-01T08+05:00.lowBoundary().toString() = '2014-01-01T08:00:00.000+05:00'", true),
+                    ("@2014-01-01T08:05:30.12345Z.highBoundary().toString() = '2014-01-01T08:05:30.123Z'", true), // truncated to ms
+                    ("@2014-01-01T08:05:30.12345Z.lowBoundary().toString() = '2014-01-01T08:05:30.123Z'", true),
+                    ("@2014-01-01T08:05:30.5.highBoundary().toString() = '2014-01-01T08:05:30.599-12:00'", true),
                     ("@2014-01-01T08:05Z.highBoundary(6).toString() = '2014-01'", true),
                     ("@2014.highBoundary(8) = @2014-12-31", true),
                     ("@2014-03.highBoundary(8) = @2014-03-31", true),
@@ -186,6 +193,8 @@ namespace Hl7.Fhir.Support.Tests
                     ("@9999.highBoundary(8) = @9999-12-31", true),
                     ("@0001-01-01.lowBoundary(17).toString() = '0001-01-01T00:00:00.000+00:00'", true),
                     ("@0001.lowBoundary(4) = @0001", true),
+                    ("@9999-12-31T23:59+05:00.highBoundary().toString() = '9999-12-31T23:59:59.999+05:00'", true), // the latest wall clock at +05:00
+                    ("@0001-01-01T00:00-05:00.lowBoundary().toString() = '0001-01-01T00:00:00.000-05:00'", true),
                     ("@9999-12-31T13:00.highBoundary().toString() = '9999-12-31T23:59:59.999+00:00'", true), // clamped to the latest instant
                     ("@9999-12-31T13:00-05:00 <= @9999-12-31T13:00.highBoundary()", true),
                     ("@0001-01-01T05:00.lowBoundary().toString() = '0001-01-01T00:00:00.000+00:00'", true), // clamped to the earliest instant
