@@ -770,8 +770,8 @@ public class BaseFhirJsonDeserializer
                 : reader.ValueSpan;
             if (!ElementModel.Types.Decimal.HasNonZeroMantissaDigit(span)) return dec;
 
-            var raw = System.Text.Encoding.UTF8.GetString(span.ToArray());
-            return ElementModel.Types.Decimal.TryParseExtended(raw, out var parsed) && parsed.IsOutOfRange ? raw : dec;
+            var raw = System.Text.Encoding.UTF8.GetString(span);
+            return ElementModel.Types.Decimal.IsOutOfRangeLiteral(raw) ? raw : dec;
         }
         if (implementingTypeHint == typeof(int) && reader.TryGetInt32(out int i32))
             return i32;

@@ -10,7 +10,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.ElementModel.Types;
@@ -46,8 +45,6 @@ public class Quantity : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// True when the value is outside the range of a .NET <see cref="decimal"/>, see <see cref="Decimal.IsOutOfRange"/>.
     /// </summary>
     public bool IsOutOfRange => _value.IsOutOfRange;
-
-    internal Decimal DecimalValue => _value;
 
     public string Unit { get; }
 
@@ -321,8 +318,7 @@ public class Quantity : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     public override int GetHashCode() => (Unit, _value).GetHashCode();
 
-    public override string ToString() =>
-        $"{(IsOutOfRange ? _value.ToString() : Value.ToString(CultureInfo.InvariantCulture))} '{Unit}'";
+    public override string ToString() => $"{_value} '{Unit}'";
 
     bool? ICqlEquatable.IsEqualTo(Any? other) =>
         other is not null && TryEquals(other, CQL_EQUALS_COMPARISON, out var result) ? result: null;

@@ -108,13 +108,11 @@ namespace Hl7.FhirPath.Expressions
             // Out-of-range values are kept as a string literal in FHIR decimals, and as a System value in System types.
             return item switch
             {
-                PrimitiveNode { Primitive: FhirDecimal { JsonValue: string s } } => isOutOfRangeLiteral(s),
+                PrimitiveNode { Primitive: FhirDecimal { JsonValue: string s } } => P.Decimal.IsOutOfRangeLiteral(s),
                 PrimitiveNode { Primitive.JsonValue: P.Decimal { IsOutOfRange: true } or P.Quantity { IsOutOfRange: true } } => true,
-                { Poco: Quantity { ValueElement.JsonValue: string s } } => isOutOfRangeLiteral(s),
+                { Poco: Quantity { ValueElement.JsonValue: string s } } => P.Decimal.IsOutOfRangeLiteral(s),
                 _ => false
             };
-
-            static bool isOutOfRangeLiteral(string s) => P.Decimal.TryParseExtended(s, out var d) && d.IsOutOfRange;
         }
 
         private string noMatchError(IEnumerable<object> arguments)

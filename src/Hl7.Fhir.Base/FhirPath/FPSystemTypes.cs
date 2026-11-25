@@ -1,4 +1,4 @@
-﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Model;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath;

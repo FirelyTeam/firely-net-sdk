@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using Hl7.FhirPath;
 using System;

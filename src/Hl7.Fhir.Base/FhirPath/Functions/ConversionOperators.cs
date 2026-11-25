@@ -63,7 +63,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToDecimal(this Any focus) => focus is Decimal { IsOutOfRange: true } || ToDecimal(focus) is not null;
+        public static bool ConvertsToDecimal(this Any focus) => focus.TryConvertTo<Decimal>(out _);
 
 
         /// <summary>

@@ -101,11 +101,18 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
         if (parsedOk && (parsed!.Value != 0m || !HasNonZeroMantissaDigit(literal)))
             return parsed.Value;
 
-        if (TryParseExtended(literal, out var extended) && extended.IsOutOfRange)
+        if (IsOutOfRangeLiteral(literal))
             return literal;
 
         return parsedOk ? parsed!.Value : literal;
     }
+
+    /// <summary>
+    /// True when the literal is a valid FHIR decimal whose value is outside the range of a .NET <see cref="decimal"/>,
+    /// see <see cref="TryParseExtended"/> and <see cref="IsOutOfRange"/>.
+    /// </summary>
+    internal static bool IsOutOfRangeLiteral(string literal) =>
+        TryParseExtended(literal, out var parsed) && parsed.IsOutOfRange;
 
     /// <summary>
     /// True when the digits of a number literal (before any exponent) contain a digit other than 0.
@@ -224,7 +231,7 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
         if (IsOutOfRange || otherD.IsOutOfRange)
             return comparisonType switch
             {
-                DecimalComparison.Strict => Equals(_outOfRange, otherD._outOfRange) && _value == otherD._value,
+                DecimalComparison.Strict => Equals(_outOfRange, otherD._outOfRange),
                 // Values below the step size of 10^-8 compare as 0, see eq() below.
                 _ => compareRounded(this, otherD) == 0,
             };
@@ -382,7 +389,7 @@ public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
 
         public override string ToString() =>
             (Negative ? "-" : "") + Digits.Substring(0, 1) + (Digits.Length > 1 ? "." + Digits.Substring(1) : "") +
-            "E" + (Exponent >= 0 ? "+" : "-") + Exponent.ToString(CultureInfo.InvariantCulture).TrimStart('-');
+            "E" + (Exponent >= 0 ? "+" : "") + Exponent.ToString(CultureInfo.InvariantCulture);
     }
 
     bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null ? Equals(other, CQL_EQUALS_COMPARISON) : null;
