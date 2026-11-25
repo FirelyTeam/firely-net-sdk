@@ -125,7 +125,7 @@ public static class SymbolTableInit
         t.Add("last", (IEnumerable<PocoNode> f) => f.Last(), doNullProp: true);
         t.Add("tail", (IEnumerable<PocoNode> f) => f.Tail(), doNullProp: true);
         t.Add("take", (IEnumerable<PocoNode> f, long a) => f.Take((int)a), doNullProp: true);
-        t.Add("builtin.item", (IEnumerable<PocoNode> f, long a) => f.Item((int)a), doNullProp: true);
+        t.Add("builtin.item", (IEnumerable<PocoNode> f, long a) => a is < 0 or > int.MaxValue ? [] : f.Item((int)a), doNullProp: true);
 
         // The conversion functions accept an item of any type. An item without a System type equivalent, such as
         // a complex type or a resource, does not convert: toX() returns empty and convertsToX() returns false.
