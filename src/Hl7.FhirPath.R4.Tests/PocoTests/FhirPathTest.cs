@@ -16,6 +16,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -380,6 +381,61 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
             // memberOf with unknown valueset
             yield return new object[] { new Code("85353-1"), "memberOf('http://example.com/ValueSet/unknown')", null };
+        }
+
+        [TestMethod]
+        public void ConformsToWithoutProfileConformanceChecker()
+        {
+            Action action = () => new Patient().Scalar("conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')", new FhirEvaluationContext());
+
+            action.Should().Throw<InvalidOperationException>().WithMessage("*ProfileConformanceChecker*");
+        }
+
+        [TestMethod]
+        public void ConformsToUsesProfileConformanceChecker()
+        {
+            const string myProfile = "http://example.org/StructureDefinition/my-patient";
+            var checkedProfiles = new List<string>();
+
+            var context = new FhirEvaluationContext
+            {
+                ProfileConformanceChecker = (node, profile) =>
+                {
+                    checkedProfiles.Add(profile);
+                    return profile.StartsWith(myProfile)
+                        ? ((Patient)node.Poco).Active == true
+                        : throw new InvalidOperationException($"Unknown profile '{profile}'");
+                }
+            };
+
+            new Patient { Active = true }.Scalar($"conformsTo('{myProfile}')", context).Should().Be(true);
+            new Patient { Active = false }.Scalar($"conformsTo('{myProfile}|1.0.0')", context).Should().Be(false);
+            checkedProfiles.Should().Equal(myProfile, $"{myProfile}|1.0.0");
+
+            // Exceptions from the checker (e.g. for an unknown profile) surface as an evaluation error.
+            Action unknown = () => new Patient().Scalar("conformsTo('http://example.org/StructureDefinition/other')", context);
+            unknown.Should().Throw<InvalidOperationException>().WithMessage("*Unknown profile*");
+
+            // The result is empty, and the checker is not called, when the input is not a single item or the structure is empty.
+            checkedProfiles.Clear();
+            new Patient().Scalar($"{{}}.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient().Scalar($"name.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient { Name = [new(), new()] }.Scalar($"name.conformsTo('{myProfile}')", context).Should().BeNull();
+            new Patient().Scalar("conformsTo({})", context).Should().BeNull();
+            new Patient().Scalar("conformsTo('')", context).Should().BeNull();
+            checkedProfiles.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void ConformsToKeepsAHostRegistration()
+        {
+            // A host that registered its own conformsTo() before the SDK supported it keeps it.
+            var symbols = new SymbolTable().AddStandardFP();
+            symbols.Add("conformsTo", (IEnumerable<PocoNode> focus, string profile, EvaluationContext ctx) => profile == "host", doNullProp: false);
+            symbols.AddFhirExtensions();
+            var compiler = new FhirPathCompiler(symbols);
+
+            compiler.Compile("conformsTo('host')").IsTrue(new Patient().ToPocoNode(), new FhirEvaluationContext()).Should().BeTrue();
         }
 
         [TestMethod]

@@ -44,6 +44,9 @@ namespace Hl7.Fhir.FhirPath
             t.Add("resolve", (IEnumerable<PocoNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)).OfType<PocoNode>(), doNullProp: false);
 
             t.Add("memberOf", (PocoNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
+            // Hosts may have registered their own conformsTo() before the SDK supported it: keep one that is already there.
+            if (!t.ContainsFunction("conformsTo"))
+                t.Add("conformsTo", (IEnumerable<PocoNode> input, string structure, EvaluationContext ctx) => ConformsTo(input, structure, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
@@ -238,6 +241,26 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="r"></param>
         /// <returns></returns>
         internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, out _);
+
+        /// <summary>
+        /// Implements the FHIRPath <c>conformsTo()</c> function: whether the single input element conforms to the
+        /// profile with the given canonical url.
+        /// </summary>
+        /// <remarks>Checking conformance requires validation, which is done by the
+        /// <see cref="FhirEvaluationContext.ProfileConformanceChecker"/>. When none is configured, an error is raised.
+        /// As in the current FHIR specification, the result is empty when the input is not a single item or the structure
+        /// is empty. A profile that cannot be resolved raises an error (thrown by the checker), as the FHIRPath conformance
+        /// tests require.</remarks>
+        internal static bool? ConformsTo(IEnumerable<PocoNode> input, string? structure, EvaluationContext ctx)
+        {
+            var items = input.Take(2).ToArray();
+            if (items.Length != 1 || string.IsNullOrEmpty(structure)) return null;
+
+            var checker = (ctx as FhirEvaluationContext)?.ProfileConformanceChecker
+                ?? throw new InvalidOperationException($"The 'conformsTo' function cannot be executed because the {nameof(FhirEvaluationContext)} does not include a {nameof(FhirEvaluationContext.ProfileConformanceChecker)}.");
+
+            return checker(items[0], structure);
+        }
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 

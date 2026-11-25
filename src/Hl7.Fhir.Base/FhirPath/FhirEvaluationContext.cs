@@ -33,6 +33,16 @@ namespace Hl7.Fhir.FhirPath
             get { return _elementResolver; }
             set { _elementResolver = value; }
         }
+
+        /// <summary>
+        /// Checks whether a node conforms to the profile with the given canonical url, used by the FHIRPath
+        /// <c>conformsTo()</c> function. The canonical is passed as written in the expression (including any
+        /// <c>|version</c>). Return whether the node conforms (typically: validating it against the profile gives no
+        /// errors), and throw an exception when the profile cannot be resolved, which makes the evaluation fail.
+        /// </summary>
+        /// <remarks>The checker is only called for a single input node and a non-empty canonical: otherwise
+        /// <c>conformsTo()</c> returns empty. When this is not set, <c>conformsTo()</c> raises an error.</remarks>
+        public Func<PocoNode, string, bool>? ProfileConformanceChecker { get; set; }
     }
 }
 

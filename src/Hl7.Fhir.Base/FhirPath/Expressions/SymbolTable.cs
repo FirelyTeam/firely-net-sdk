@@ -50,6 +50,11 @@ public class SymbolTable
         return cnt;
     }
 
+    /// <summary>
+    /// Whether a function with the given name has been added to this symbol table or its parent scope, with any signature.
+    /// </summary>
+    internal bool ContainsFunction(string name) => _entries.Any(e => e.Signature.Name == name) || Parent?.ContainsFunction(name) == true;
+
     internal Invokee? First() => _entries.Any() ? _entries.First().Body : (Parent?.First());
 
     /// <summary>

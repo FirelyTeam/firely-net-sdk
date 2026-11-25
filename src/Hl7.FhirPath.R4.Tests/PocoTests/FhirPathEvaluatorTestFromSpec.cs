@@ -41,8 +41,15 @@ namespace Hl7.FhirPath.R4.Tests
         {
             var compiled = _compiler.Compile(expression);
             // Pass the node itself (not a list wrapping it), so the evaluator can infer %resource/%rootResource from it.
-            return compiled(input is null ? [] : input, new FhirEvaluationContext()).ToList();
+            return compiled(input is null ? [] : input, new FhirEvaluationContext { ProfileConformanceChecker = conformsToCoreType }).ToList();
         }
+
+        // conformsTo() needs a validator. Like the reference implementation's test harness, use a stub: it only
+        // knows the core FHIR types, and a node conforms when its type is (or derives from) the given type.
+        private static bool conformsToCoreType(PocoNode node, string url) =>
+            ModelInfo.ModelInspector.FindClassMappingByCanonical(url) is { } mapping
+                ? mapping.NativeType.IsAssignableFrom(node.Poco.GetType())
+                : throw new InvalidOperationException($"Unknown profile '{url}'");
 
         private static void test(IEnumerable<PocoNode> focus, string expression, IReadOnlyList<XElement> expected, bool asPredicate, bool ordered)
         {
@@ -291,9 +298,6 @@ namespace Hl7.FhirPath.R4.Tests
             // all() returns empty instead of false when a criterion is empty (e.g. comparing dateTimes of different
             // precision)
             "testPeriodInvariantOld",
-
-            // conformsTo() is not implemented (needs profile resolution / validation)
-            "testConformsTo1", "testConformsTo2", "testConformsTo3",
         ];
 
         [TestMethod, TestCategory("FhirPathFromSpec")]
