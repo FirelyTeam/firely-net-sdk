@@ -284,9 +284,6 @@ namespace Hl7.FhirPath.R4.Tests
             // repeat() with a literal argument should not repeat the same item
             "testRepeat5",
 
-            // Negative indexer (Patient.name[-1]) should give an empty result
-            "testIndexer3",
-
             // all() returns empty instead of false when a criterion is empty (e.g. comparing dateTimes of different
             // precision)
             "testPeriodInvariantOld",
