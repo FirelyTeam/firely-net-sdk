@@ -288,9 +288,6 @@ namespace Hl7.FhirPath.R4.Tests
             // repeat() with a literal argument should not repeat the same item
             "testRepeat5",
 
-            // Negative indexer (Patient.name[-1]) should give an empty result
-            "testIndexer3",
-
             // conformsTo() is not implemented (needs profile resolution / validation)
             "testConformsTo1", "testConformsTo2", "testConformsTo3",
         ];
