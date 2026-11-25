@@ -238,6 +238,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(3L, values.Item(2).Single().GetValue());
             Assert.AreEqual(1L, values.First().GetValue());
             Assert.IsFalse(values.Item(100).Any());
+            Assert.IsFalse(values.Item(-1).Any());
         }
 
     }

@@ -41,8 +41,12 @@ namespace Hl7.FhirPath.Functions
         public static IEnumerable<PocoNode> DistinctUnion(this IEnumerable<PocoNode> a, IEnumerable<PocoNode> b)
             => a.Union<PocoNode>(b, EqualityOperators.TypedElementEqualityComparer);
 
+        /// <summary>
+        /// Returns the item at the given (0-based) index, or an empty collection when the index
+        /// is out of range (including negative indices).
+        /// </summary>
         public static IEnumerable<PocoNode> Item(this IEnumerable<PocoNode> focus, int index)
-            => focus.Skip(index).Take(1);
+            => index < 0 ? [] : focus.Skip(index).Take(1);
 
         public static PocoNode Last(this IEnumerable<PocoNode> focus)
             => focus.Reverse().First();
