@@ -748,7 +748,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
                 }
             }
 
-            term = new UcumUnitTerm(factor, atoms.Where(a => a.Exponent != 0).ToList());
+            atoms.RemoveAll(a => a.Exponent == 0);
+            term = new UcumUnitTerm(factor, atoms);
             return true;
         }
 
@@ -763,7 +764,8 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
                 add(atoms, atom, sign * exponent);
 
             var factor = sign > 0 ? Factor * other.Factor : Factor / other.Factor;
-            return new UcumUnitTerm(factor, atoms.Where(a => a.Exponent != 0).ToList());
+            atoms.RemoveAll(a => a.Exponent == 0);
+            return new UcumUnitTerm(factor, atoms);
         }
 
         private static void add(List<(string Atom, int Exponent)> atoms, string atom, int exponent)
