@@ -432,8 +432,7 @@ namespace Hl7.FhirPath.R4.Tests
                     if (!isGap)
                         Assert.Fail("Expected the static analysis to report a semantic error, but it reported none");
                 }
-
-                if (invalid != "syntax")
+                else if (invalid != "syntax")
                     assertNoSemanticErrors(testLine, input, context, expression.Value);
 
                 testInvalid(focus, invalid, expression.Value);

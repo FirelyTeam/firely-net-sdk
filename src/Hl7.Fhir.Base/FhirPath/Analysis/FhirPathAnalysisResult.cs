@@ -11,7 +11,6 @@
 using Hl7.Fhir.Language.Debugging;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.FhirPath.Analysis;
 
@@ -89,7 +88,7 @@ public sealed class FhirPathAnalysisResult
     /// <summary>
     /// Whether any semantic errors were found.
     /// </summary>
-    public bool HasErrors => Diagnostics.Any();
+    public bool HasErrors => Diagnostics.Count > 0;
 
     /// <summary>
     /// The possible types of the items in the result of the expression, or <c>null</c> if they could not be determined.

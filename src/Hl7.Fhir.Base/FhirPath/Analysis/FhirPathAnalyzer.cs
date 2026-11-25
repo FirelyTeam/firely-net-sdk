@@ -310,7 +310,7 @@ public sealed class FhirPathAnalyzer
                 return axis.AxisName switch
                 {
                     "this" or "that" => This,
-                    "index" => new TypeSet([SYSTEM_INTEGER]),
+                    "index" => integer,
                     _ => TypeSet.Unknown
                 };
             }
@@ -321,7 +321,7 @@ public sealed class FhirPathAnalyzer
                 "resource" => _resource,
                 "rootResource" => _rootResource,
                 "context" => _this.Last(),
-                "ucum" or "sct" or "loinc" => new TypeSet([SYSTEM_STRING]),
+                "ucum" or "sct" or "loinc" => @string,
                 _ => _variables.TryGetValue(name, out var types) ? types : TypeSet.Unknown
             };
         }
@@ -453,11 +453,7 @@ public sealed class FhirPathAnalyzer
                     return boolean;
                 case "as":
                     return splitOnType(left.Accept(this), typeArgument(right)).whenTrue;
-                case "and":
-                    left.Accept(this);
-                    visitInScope(right, guard(left).whenTrue);
-                    return boolean;
-                case "implies":
+                case "and" or "implies":
                     left.Accept(this);
                     visitInScope(right, guard(left).whenTrue);
                     return boolean;
@@ -475,7 +471,7 @@ public sealed class FhirPathAnalyzer
             return expression.Op switch
             {
                 "xor" or "=" or "!=" or "~" or "!~" or "<" or ">" or "<=" or ">=" or "in" or "contains" => boolean,
-                "&" => new TypeSet([SYSTEM_STRING]),
+                "&" => @string,
                 _ => TypeSet.Unknown
             };
         }
@@ -616,7 +612,7 @@ public sealed class FhirPathAnalyzer
                 case "children" or "descendants":
                     return TypeSet.Unknown.AsUnordered(true);
                 case "union" or "combine" when arguments.Count == 1:
-                    return TypeSet.Union(focus, lastArgument).AsUnordered(focus.Unordered || lastArgument.Unordered);
+                    return TypeSet.Union(focus, lastArgument);
             }
 
             if (BOOLEAN_FUNCTIONS.Contains(name)) return boolean;
@@ -637,17 +633,18 @@ public sealed class FhirPathAnalyzer
             const int MAX_ROUNDS = 20;
             var @this = focus.AsUnordered(false);
 
-            for (var round = 0; round < MAX_ROUNDS && @this.IsKnown; round++)
+            var settled = false;
+
+            // One more pass than MAX_ROUNDS, to see whether the types of the last round have settled.
+            for (var round = 0; round <= MAX_ROUNDS && @this.IsKnown && !settled; round++)
             {
-                var result = inScopeQuietly(projection, @this);
-                var grown = TypeSet.Union(@this, result).AsUnordered(false);
-                if (grown.IsKnown && grown.Types!.SetEquals(@this.Types!)) break;
+                var grown = TypeSet.Union(@this, inScopeQuietly(projection, @this)).AsUnordered(false);
+                settled = grown.IsKnown && grown.Types!.SetEquals(@this.Types!);
                 @this = grown;
             }
 
             // If the types did not settle, $this is left unknown, which never leads to errors.
-            if (@this.IsKnown && !TypeSet.Union(@this, inScopeQuietly(projection, @this)).Types!.SetEquals(@this.Types!))
-                @this = TypeSet.Unknown;
+            if (!settled) @this = TypeSet.Unknown;
 
             var projected = visitInScope(projection, @this);
             return projected.AsUnordered(focus.Unordered || projected.Unordered);
