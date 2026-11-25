@@ -66,7 +66,9 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [DataRow("mg-code-and-text", "milligram-text", null, false)]
         [DataRow("tablets", "tablets-2", false, false)]
         [DataRow("tablets", "capsules", null, false)]
-        [DataRow("year-text", "years-text", true, true)]
+        [DataRow("year-text", "years-text", null, true)] // = compares code-less unit text exactly, as in Java
+        [DataRow("years-text", "years-text", true, true)]
+        [DataRow("years-text", "a-code", null, true)]
         [DataRow("year-text", "a-code", null, true)]
         [DataRow("empty-code", "tablets", true, true)]
         [DataRow("empty-code", "no-unit", null, false)]
@@ -88,6 +90,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         [DataRow("d-text", "1 day", null, false)]
         [DataRow("d-text", "1 'd'", null, false)]
         [DataRow("year-text", "1 year", true, true)]
+        [DataRow("years-text", "1 year", null, true)]
         [DataRow("year-text", "1 'a'", null, true)]
         [DataRow("year-text", "1 month", null, false)]
         [DataRow("mg-code", "1 'mg'", true, true)]

@@ -69,9 +69,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = quantityForComparison(left);
+                l = quantityForComparison(left, equivalence: false);
             if (right.InstanceType == "Quantity" && r == null)
-                r = quantityForComparison(right);
+                r = quantityForComparison(right, equivalence: false);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -114,7 +114,7 @@ namespace Hl7.FhirPath.Functions
         // same unit text. Its unit is given a prefix that no UCUM code or FHIRPath unit can have, so it never
         // matches a coded quantity, a quantity literal or a unitless quantity, and those comparisons give
         // empty (=) / false (~). The prefixed unit is internal to this comparison and never surfaces.
-        private static P.Quantity? quantityForComparison(ITypedElement element)
+        private static P.Quantity? quantityForComparison(ITypedElement element, bool equivalence)
         {
             var quantity = element is PocoNode { Poco: Quantity q }
                 ? q
@@ -130,14 +130,17 @@ namespace Hl7.FhirPath.Functions
             if (!string.IsNullOrEmpty(quantity.Code) || string.IsNullOrEmpty(quantity.Unit))
                 return systemQuantity;
 
-            // As in the Java engine, the unit text year(s)/month(s) without a code is the calendar duration
-            // (the same as the FHIRPath literal 1 year), which is equivalent to the UCUM 'a' / 'mo'.
+            // As in the Java engine: for =, code-less unit text is compared exactly, and only the singular
+            // year/month matches the calendar duration literal (1 year); for ~, the text year(s)/month(s) is
+            // the calendar duration, which is equivalent to the UCUM 'a' / 'mo' (calendarDurationAsUcum).
             if (quantity.System is null or P.Quantity.UCUM)
             {
                 var calendarUnit = quantity.Unit switch
                 {
-                    "year" or "years" => "year",
-                    "month" or "months" => "month",
+                    "year" => "year",
+                    "month" => "month",
+                    "years" when equivalence => "year",
+                    "months" when equivalence => "month",
                     _ => null
                 };
 
@@ -200,9 +203,9 @@ namespace Hl7.FhirPath.Functions
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
             if (left.InstanceType == "Quantity" && l == null)
-                l = quantityForComparison(left);
+                l = quantityForComparison(left, equivalence: true);
             if (right.InstanceType == "Quantity" && r == null)
-                r = quantityForComparison(right);
+                r = quantityForComparison(right, equivalence: true);
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
