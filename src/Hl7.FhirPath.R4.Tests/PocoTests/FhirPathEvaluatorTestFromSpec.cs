@@ -53,7 +53,7 @@ namespace Hl7.FhirPath.R4.Tests
             if (asPredicate)
             {
                 // As in the reference implementation, an empty result counts as false.
-                var b = actual.BooleanEval();
+                var b = actual.LenientBooleanEval();
                 actual = [ElementNode.ForPrimitive(b is not null && b.Value).ToPocoNode()];
             }
 
