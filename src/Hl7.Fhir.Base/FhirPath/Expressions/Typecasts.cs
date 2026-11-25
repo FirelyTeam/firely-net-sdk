@@ -47,7 +47,7 @@ namespace Hl7.FhirPath.Expressions
 
         internal static P.Quantity ParseQuantity(PocoNode qe)
         {
-            return (qe.Poco as Quantity)?.ToSystemQuantity();
+            return (qe.Poco as Quantity)?.ToFhirPathQuantity();
         }
 
         private static Cast getImplicitCast(object f, Type to)

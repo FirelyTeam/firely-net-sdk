@@ -46,6 +46,14 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
                 } },
                 new() { Name = "empty-code", Value = new Quantity { Value = 1, Unit = "tablets", Code = "" } },
                 new() { Name = "mg-code-and-text", Value = new Quantity { Value = 1, Unit = "milligram", Code = "mg", System = "http://unitsofmeasure.org" } },
+                new() { Name = "mg-text-dl", Value = new Quantity { Value = 1, Unit = "mg/dL" } },
+                new() { Name = "mg-dl-code-and-text", Value = new Quantity { Value = 2, Unit = "mg/dL", Code = "mg/dL", System = "http://unitsofmeasure.org" } },
+                new() { Name = "mg-snomed", Value = new Quantity { Value = 1, Unit = "mg", Code = "258684004", System = "http://snomed.info/sct" } },
+                new() { Name = "g-snomed", Value = new Quantity { Value = 1, Unit = "g", Code = "258682000", System = "http://snomed.info/sct" } },
+                new() { Name = "mg-local", Value = new Quantity { Value = 1, Code = "mg", System = "http://example.org/units" } },
+                new() { Name = "mg-no-system", Value = new Quantity { Value = 1, Code = "mg" } },
+                new() { Name = "days-text", Value = new Quantity { Value = 1, Unit = "days" } },
+                new() { Name = "day-text", Value = new Quantity { Value = 1, Unit = "day" } },
             ]
         };
 
@@ -98,6 +106,127 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             eval($"{right} = {p(left)}").Should().Be(equal);
             eval($"{right} ~ {p(left)}").Should().Be(equivalent);
         }
+
+        // Ordering follows the reference (Java) engine: a quantity without a code is only ordered against
+        // a quantity with the same unit text, and its unit text is never converted as a UCUM unit.
+        [TestMethod]
+        [DataRow("mg-text-dl < mg-dl-code-and-text", true)]
+        [DataRow("mg-dl-code-and-text > mg-text-dl", true)]
+        [DataRow("mg-text-dl >= mg-dl-code-and-text", false)]
+        [DataRow("tablets <= tablets", true)]
+        [DataRow("tablets < tablets", false)]
+        [DataRow("mg-text < mg-code", null)]
+        [DataRow("mg-text < 2 'mg'", null)]
+        [DataRow("mg-text < 2000 'ug'", null)]
+        [DataRow("tablets < 2", null)]
+        [DataRow("tablets < no-unit", null)]
+        [DataRow("no-unit < 2", true)]
+        [DataRow("mg-code < 2000 'ug'", true)]
+        [DataRow("mg-code > 999 'ug'", true)]
+        [DataRow("days-text < 2 days", true)]
+        [DataRow("days-text <= 1 day", true)]
+        [DataRow("days-text < 2 'd'", null)]
+        [DataRow("no-unit < 200 '%'", null)]
+        [DataRow("(-tablets) < 5", null)]
+        [DataRow("tablets.abs() < 5", null)]
+        [DataRow("tablets.lowBoundary() < 2", null)]
+        [DataRow("mg-local.abs() < 2000 'ug'", null)]
+        [DataRow("(-mg-code) < 2000 'ug'", true)]
+        public void OrdersFhirQuantities(string expression, bool? expected)
+        {
+            eval(expand(expression)).Should().Be(expected);
+        }
+
+        // A quantity keeps its unit information through abs(), unary minus and the boundary functions, so equality
+        // gives the same result as without them
+        [TestMethod]
+        [DataRow("mg-text-dl", "mg-dl-code-and-text", null, false)]
+        [DataRow("mg-text-dl", "mg-text-dl", true, true)]
+        [DataRow("tablets", "no-unit", null, false)]
+        [DataRow("mg-code", "mg-code", true, true)]
+        public void EqualityAfterAbs(string left, string right, bool? equal, bool equivalent)
+        {
+            eval($"{p(left)}.abs() = {p(right)}").Should().Be(equal);
+            eval($"{p(left)}.abs() ~ {p(right)}").Should().Be(equivalent);
+            eval($"{p(right)} = {p(left)}.abs()").Should().Be(equal);
+            eval($"{p(right)} ~ {p(left)}.abs()").Should().Be(equivalent);
+        }
+
+        [TestMethod]
+        public void ComparableNeedsCodes()
+        {
+            eval($"{p("mg-code")}.comparable(1 'g')").Should().BeTrue();
+            eval($"{p("mg-code")}.comparable(1 'm')").Should().BeFalse();
+            eval($"{p("mg-text")}.comparable(1 'g')").Should().BeFalse();
+            eval($"{p("tablets")}.comparable({p("tablets")})").Should().BeFalse();
+            eval($"{p("no-unit")}.comparable({p("no-unit")})").Should().BeFalse();
+            eval($"{p("mg-local")}.comparable({p("mg-code")})").Should().BeFalse();
+            eval($"{p("mg-local")}.comparable({p("mg-local")})").Should().BeTrue();
+            eval($"{p("mg-no-system")}.comparable({p("mg-no-system")})").Should().BeFalse();
+            eval($"(-{p("mg-local")}).comparable(1 'g')").Should().BeFalse();
+            eval("1 hour.comparable(1 'min')").Should().BeTrue();
+            eval("1 year.comparable(1 year)").Should().BeFalse();
+            eval("1 'Ym'.comparable(1 'ym')").Should().BeTrue();
+
+            // An empty argument or focus is not comparable
+            eval($"{p("mg-code")}.comparable({p("does-not-exist")})").Should().BeFalse();
+            eval($"{p("does-not-exist")}.comparable(1 'g')").Should().BeFalse();
+        }
+
+        // Units are only converted when the FHIR system is UCUM. Codes are compared regardless of the system.
+        [TestMethod]
+        [DataRow("mg-snomed", "g-snomed", null, false)]
+        [DataRow("mg-snomed", "mg-snomed", true, true)]
+        [DataRow("mg-snomed", "mg-code", null, false)]
+        [DataRow("mg-local", "mg-code", true, true)]
+        [DataRow("mg-local", "mg-local", true, true)]
+        public void DoesNotConvertUnitsFromOtherSystems(string left, string right, bool? equal, bool equivalent)
+        {
+            eval($"{p(left)} = {p(right)}").Should().Be(equal);
+            eval($"{p(left)} ~ {p(right)}").Should().Be(equivalent);
+            eval($"{p(left)} < {p(right)}").Should().Be(equal is null ? null : false);
+        }
+
+        [TestMethod]
+        public void ConvertsOnlyUcumCodes()
+        {
+            eval($"{p("mg-code")} = 1000 'ug'").Should().BeTrue();
+            eval($"{p("mg-local")} = 1000 'ug'").Should().BeNull();
+            eval($"{p("mg-local")} ~ 1000 'ug'").Should().BeFalse();
+            eval($"{p("mg-local")} < 2000 'ug'").Should().BeNull();
+        }
+
+        // As in the reference engine, the plural and singular calendar words are the same unit text only when ordering
+        [TestMethod]
+        public void PluralCalendarUnitTextOnlyMatchesWhenOrdering()
+        {
+            eval($"{p("days-text")} <= {p("day-text")}").Should().BeTrue();
+            eval($"{p("days-text")} < {p("day-text")}").Should().BeFalse();
+            eval($"{p("days-text")} = {p("day-text")}").Should().BeNull();
+            eval($"{p("days-text")} ~ {p("day-text")}").Should().BeFalse();
+            eval($"{p("days-text")}.abs() = {p("day-text")}").Should().BeNull();
+            input().Scalar($"({p("days-text")} | {p("day-text")}).count()").Should().Be(2);
+        }
+
+        [TestMethod]
+        public void UnionAndDistinctUseFhirPathEquality()
+        {
+            input().Scalar($"({p("mg-code")} | 1000 'ug').count()").Should().Be(1);
+            input().Scalar("(4 'g' | 4000 'mg' | 4 'kg').count()").Should().Be(2);
+        }
+
+        private static readonly string[] NAMES = input().Parameter.Select(pc => pc.Name).OrderByDescending(n => n.Length).ToArray();
+
+        // Replaces the parameter names in an expression with the path to their value
+        private static string expand(string expression) =>
+            string.Join(" ", expression.Split(' ').Select(token =>
+            {
+                var prefix = new string(token.TakeWhile(c => c is '(' or '-').ToArray());
+                var rest = token.Substring(prefix.Length);
+                return NAMES.FirstOrDefault(n => rest == n || rest.StartsWith(n + ".") || rest.StartsWith(n + ")")) is { } name
+                    ? prefix + p(name) + rest.Substring(name.Length)
+                    : token;
+            }));
 
         [TestMethod]
         public void MembershipDoesNotMatchUnitTextQuantityToUnitless()

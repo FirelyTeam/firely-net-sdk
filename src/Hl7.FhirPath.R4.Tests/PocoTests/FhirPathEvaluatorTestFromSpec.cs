@@ -255,10 +255,6 @@ namespace Hl7.FhirPath.R4.Tests
             // pattern should return the input unchanged
             "testMatchesSingleLineMode1", "testReplaceMatches2",
 
-            // Quantity comparison/equality does not convert between UCUM units (e.g. 4 'g' = 4000 'mg')
-            "testQuantity1", "testQuantity2", "testQuantity3", "testQuantity4", "testNEquality24", "testLessThan31",
-            "testLessThan33", "testLessOrEqual29", "testLessOrEqual30", "testGreaterThan30", "Comparable1",
-
             // Calendar duration quantities vs UCUM: 7 days = 1 week, 1 year > 1 'a', and toString() of calendar quantities
             "testQuantity5", "testQuantity6", "testQuantity7", "testQuantity8", "testGreaterThan28",
             "testQuantityLiteralWeekToString",

@@ -9,6 +9,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -26,6 +27,29 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     public QuantityUnitSystem System { get; } = system;
 
+    /// <summary>
+    /// The human-readable unit text of a FHIR Quantity this quantity was converted from (null for literals).
+    /// </summary>
+    /// <remarks>Like the reference (Java) engine, a FHIR Quantity without a code is ordered by its unit text.</remarks>
+    internal string? UnitText { get; init; }
+
+    /// <summary>
+    /// False when this quantity was converted from a FHIR Quantity that has unit text, but no code.
+    /// </summary>
+    internal bool HasCode { get; init; } = true;
+
+    /// <summary>
+    /// The system of the unit code: UCUM for quantity literals, or the system of the FHIR Quantity this quantity was
+    /// converted from (null when that has no code). As in the reference (Java) engine, only UCUM codes are converted.
+    /// </summary>
+    internal string? UnitSystem { get; init; } = UCUM;
+
+    /// <summary>
+    /// Creates a copy of this quantity with another value.
+    /// </summary>
+    internal Quantity WithValue(decimal value) =>
+        new(value, Unit, System) { UnitText = UnitText, HasCode = HasCode, UnitSystem = UnitSystem };
+
     public Quantity(decimal value, string? unit = UCUM_UNIT)
         : this(value, unit, QuantityUnitSystem.UCUM)
     {
@@ -42,6 +66,11 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     {
         return calendarUnit is not null
             ? new Quantity(value, calendarUnit, QuantityUnitSystem.CalendarDuration)
+            {
+                // As in the reference engine: the unit text is the calendar word, and year and month have no UCUM code.
+                UnitText = calendarUnit,
+                UnitSystem = calendarUnit is "year" or "month" ? null : UCUM
+            }
             : throw new ArgumentNullException(nameof(calendarUnit));
     }
 
@@ -178,9 +207,14 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// calendar durations and definite quantity durations above seconds is determined by the <paramref name="comparisonType"/></remarks>
     public bool TryEquals(Any other, QuantityComparison comparisonType, [NotNullWhen(true)] out bool? result)
     {
-        result = other is Quantity
-            ? TryCompareTo(other, comparisonType, out var comparison) ? comparison == 0 : null
-            : false;
+        result = other switch
+        {
+            // As in the reference engine, a FHIR Quantity without a code only equals another one without a code
+            // (with the same unit text); only ordering also matches it to a coded quantity with that unit text.
+            Quantity q when HasCode != q.HasCode => null,
+            Quantity q => tryCompare(q, comparisonType, forOrdering: false, out var comparison) ? comparison == 0 : null,
+            _ => false
+        };
 
         return result is not null;
     }
@@ -225,54 +259,260 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
         if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
 
-        if (IsDuration && otherQ.IsDuration)
-        {
-            result = doDurationComparison(otherQ, comparisonType);
-            return result is not null;
-        }
+        return tryCompare(otherQ, comparisonType, forOrdering: true, out result);
+    }
 
-        // Cannot compare quantities with different systems or units.
-        if (System != otherQ.System || Unit != otherQ.Unit)
+    private bool tryCompare(Quantity other, QuantityComparison comparisonType, bool forOrdering, [NotNullWhen(true)] out int? result)
+    {
+        if (!tryGetComparableValues(other, comparisonType, forOrdering, out var left, out var right, out _))
         {
             result = null;
             return false;
         }
 
-        result = decimal.Compare(Math.Round(Value, 8), Math.Round(otherQ.Value, 8)); // aligns with Decimal
+        result = decimal.Compare(Math.Round(left, 8), Math.Round(right, 8)); // aligns with Decimal
         return true;
     }
 
-    private int? doDurationComparison(Quantity other, QuantityComparison comparisonType)
+    /// <summary>
+    /// Gets the values of this and the other quantity, expressed in the same unit, so they can be compared.
+    /// </summary>
+    /// <param name="other">The quantity to compare with.</param>
+    /// <param name="comparisonType">How calendar durations are normalized to UCUM.</param>
+    /// <param name="forOrdering">True when ordering (rather than testing equality), where plural calendar words in the
+    /// unit text of a quantity without a code match the singular ones.</param>
+    /// <param name="left">The value of this quantity.</param>
+    /// <param name="right">The value of the other quantity, in the same unit as <paramref name="left"/>.</param>
+    /// <remarks>This follows the reference (Java) engine: quantities with the same unit are compared as-is, where a
+    /// FHIR Quantity without a code is matched on its unit text. Otherwise, UCUM quantities with the same canonical unit
+    /// (e.g. 'g' and 'mg') are converted to the smaller of the two units. Durations are first normalized to UCUM
+    /// (taking <paramref name="comparisonType"/> into account), and calendar durations are only comparable to
+    /// durations with the same unit after normalization.</remarks>
+    /// <param name="converted">True when the values had different units, and one of them was converted.</param>
+    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering,
+        out decimal left, out decimal right, out bool converted)
     {
-        var l = normalizeToUcum(this);
-        var r = normalizeToUcum(other);
+        left = Value;
+        right = other.Value;
+        converted = false;
 
-        if (l.Unit != r.Unit)
-            return null;
+        // A FHIR quantity with only unit text can only be compared with a quantity with the same unit text.
+        if (!HasCode || !other.HasCode)
+            // As in the reference engine, plural calendar words only match the singular ones when ordering.
+            return forOrdering
+                ? calendarWordToSingular(UnitText) == calendarWordToSingular(other.UnitText)
+                : UnitText == other.UnitText;
 
-        return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
+        var l = this;
+        var r = other;
 
-        Quantity normalizeToUcum(Quantity orig)
+        if (l.IsDuration && r.IsDuration)
         {
-            // UCUM definite durations are already in their comparable form
-            if (orig.IsDefiniteDuration) return orig;
+            l = normalizeDurationToUcum(l, comparisonType);
+            r = normalizeDurationToUcum(r, comparisonType);
+        }
 
-            var ucumUnit = orig.Unit switch
+        if (l.System == r.System && l.Unit == r.Unit) return true;
+
+        // Comparing calendar durations with UCUM durations follows its own rules, see normalizeDurationToUcum().
+        if (IsCalendarDuration || other.IsCalendarDuration) return false;
+
+        if (!tryGetUcumConversion(l, out var lc) || !tryGetUcumConversion(r, out var rc) || lc.CanonicalUnit != rc.CanonicalUnit)
+            return false;
+
+        // Express the operand with the larger unit in the smaller unit, so no precision is lost. If that
+        // does not fit in a decimal, express the other operand in the larger unit instead.
+        converted = true;
+        var convertLeft = lc.Factor > rc.Factor;
+        try
+        {
+            if (convertLeft) left = l.Value * lc.Factor / rc.Factor;
+            else right = r.Value * rc.Factor / lc.Factor;
+        }
+        catch (OverflowException)
+        {
+            try
             {
-                "year" when comparisonType == QuantityComparison.CompareCalendarUnits => "a",
-                "year" => "year",
-                "month" when comparisonType == QuantityComparison.CompareCalendarUnits => "mo",
-                "month" => "month",
-                "week" => "wk",
-                "day" => "d",
-                "hour" => "h",
-                "minute" => "min",
-                "second" => "s",
-                "millisecond" => "ms",
-                _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
-            };
+                if (convertLeft) right = r.Value * rc.Factor / lc.Factor;
+                else left = l.Value * lc.Factor / rc.Factor;
+            }
+            catch (OverflowException)
+            {
+                return false;
+            }
+        }
 
-            return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
+        return true;
+    }
+
+    // Like the reference engine, the plural calendar words are the same unit text as the singular ones.
+    private static string? calendarWordToSingular(string? unitText) =>
+        unitText is "years" or "months" or "weeks" or "days" or "hours" or "minutes" or "seconds" or "milliseconds"
+            ? unitText.Substring(0, unitText.Length - 1)
+            : unitText;
+
+    /// <summary>
+    /// Determines whether the units of two quantities are comparable, following the reference (Java) engine's comparable():
+    /// both need a unit code from the same system, and the codes must be the same, or UCUM codes of the same dimension.
+    /// </summary>
+    internal bool IsComparableTo(Quantity other)
+    {
+        var (ls, lu) = unitCode(this);
+        var (rs, ru) = unitCode(other);
+
+        if (ls is null || rs is null || ls != rs) return false;
+        if (lu == ru) return true;
+
+        return ls == UCUM && tryGetUcumConversion(lu, out var lc) && tryGetUcumConversion(ru, out var rc)
+               && lc.CanonicalUnit == rc.CanonicalUnit;
+
+        static (string? system, string unit) unitCode(Quantity q)
+        {
+            if (!q.HasCode) return (null, q.Unit);
+
+            if (q.IsCalendarDuration)
+            {
+                try
+                {
+                    var normalized = normalizeDurationToUcum(q, QuantityComparison.None);
+                    return (normalized.IsDefiniteDuration ? UCUM : null, normalized.Unit);
+                }
+                catch (InvalidOperationException)
+                {
+                    return (null, q.Unit);
+                }
+            }
+
+            return (q.UnitSystem, q.Unit);
+        }
+    }
+
+    private static Quantity normalizeDurationToUcum(Quantity orig, QuantityComparison comparisonType)
+    {
+        // UCUM definite durations are already in their comparable form
+        if (orig.IsDefiniteDuration) return orig;
+
+        var ucumUnit = orig.Unit switch
+        {
+            "year" when comparisonType == QuantityComparison.CompareCalendarUnits => "a",
+            "year" => "year",
+            "month" when comparisonType == QuantityComparison.CompareCalendarUnits => "mo",
+            "month" => "month",
+            "week" => "wk",
+            "day" => "d",
+            "hour" => "h",
+            "minute" => "min",
+            "second" => "s",
+            "millisecond" => "ms",
+            _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
+        };
+
+        return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
+    }
+
+    private sealed record UcumConversion(decimal Factor, string CanonicalUnit);
+
+    // Converting a unit with the UCUM library is relatively expensive, so the conversion of each unit is cached
+    // (including units that cannot be converted).
+    private static readonly ConcurrentDictionary<string, UcumConversion?> UCUM_CONVERSIONS = new();
+
+    private const int MAX_CACHED_UCUM_CONVERSIONS = 10_000;
+
+    /// <summary>
+    /// Gets the factor to convert the UCUM unit of a quantity to its canonical unit (e.g. 0.001 to convert 'mg' to 'g').
+    /// </summary>
+    private static bool tryGetUcumConversion(Quantity q, [NotNullWhen(true)] out UcumConversion? conversion)
+    {
+        conversion = null;
+        return q.System == QuantityUnitSystem.UCUM && q.UnitSystem == UCUM && q.HasCode
+               && tryGetUcumConversion(q.Unit, out conversion);
+    }
+
+    private static bool tryGetUcumConversion(string unit, [NotNullWhen(true)] out UcumConversion? conversion)
+    {
+        if (!UCUM_CONVERSIONS.TryGetValue(unit, out conversion))
+        {
+            conversion = getUcumConversion(unit);
+
+            // Units can come from data, so don't let the cache grow without bounds.
+            if (UCUM_CONVERSIONS.Count >= MAX_CACHED_UCUM_CONVERSIONS) UCUM_CONVERSIONS.Clear();
+            UCUM_CONVERSIONS.TryAdd(unit, conversion);
+        }
+
+        return conversion is not null;
+
+        static UcumConversion? getUcumConversion(string unit)
+        {
+            try
+            {
+                // Units that do not convert linearly (like 'Cel') cannot be canonicalized by the library, so
+                // converting 1 unit gives the factor for any value.
+                if (global::Fhir.Metrics.MetricServiceExtensions.TryCanonicalize(
+                        global::Fhir.Metrics.FhirMetricService.Instance.Value, (1m, unit, UCUM), out var result)
+                    && result is { } c && c.Item1 != 0)
+                {
+                    // The library represents a dimensionless canonical unit as an empty string, FHIRPath uses '1'.
+                    return new UcumConversion(c.Item1, string.IsNullOrEmpty(c.Item2) ? UCUM_UNIT : c.Item2);
+                }
+            }
+            catch (Exception)
+            {
+                // The UCUM library throws a variety of exceptions for units it cannot parse or convert. Such units
+                // are treated as not convertible.
+            }
+
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Determines whether two quantities are equivalent: their values must be equal after rounding to the precision of
+    /// the least precise of the two (as for Decimal equivalence), where the precision is that of the values as written.
+    /// </summary>
+    /// <remarks>Quantities with the same unit are compared directly. Otherwise, UCUM quantities with the same dimension
+    /// are compared in the unit of the least precise value, rounded to its precision: 4 'g' is precise to the gram, so
+    /// 4 'g' ~ 4040 'mg' is true (4.04 g rounds to 4 g), while 4 'g' ~ 4600 'mg' is false.</remarks>
+    private bool isEquivalentTo(Quantity other)
+    {
+        if (HasCode != other.HasCode) return false;
+
+        if (!tryGetComparableValues(other, CQL_EQUIVALENCE_COMPARISON, forOrdering: false, out var left, out var right, out var converted))
+            return false;
+
+        // The same unit (possibly after normalizing durations): plain Decimal equivalence.
+        if (!converted)
+            return new Decimal(left).Equals(new Decimal(right), Decimal.CQL_EQUIVALENCE_COMPARISON);
+
+        // Different UCUM units: one value was expressed in the smaller unit of the two.
+        if (!tryGetUcumConversion(this, out var lc) || !tryGetUcumConversion(other, out var rc))
+            return false;
+
+        var leftIsCoarse = lc.Factor > rc.Factor;
+        var (coarse, fine) = leftIsCoarse ? (Value, other.Value) : (other.Value, Value);
+        var ratio = leftIsCoarse ? lc.Factor / rc.Factor : rc.Factor / lc.Factor;
+        var coarseScale = Decimal.Scale(coarse, ignoreTrailingZeroes: true);
+        var fineScale = Decimal.Scale(fine, ignoreTrailingZeroes: true);
+
+        try
+        {
+            // Round in the unit of the least precise value, to the precision of that value. The step of the
+            // coarse value (expressed in the fine unit) is ratio / 10^coarseScale, that of the fine value 1 / 10^fineScale.
+            var coarseIsLessPrecise = ratio * pow10(fineScale) >= pow10(coarseScale);
+
+            return coarseIsLessPrecise
+                ? Math.Round(coarse, coarseScale) == Math.Round(fine / ratio, coarseScale)
+                : Math.Round(coarse * ratio, fineScale) == Math.Round(fine, fineScale);
+        }
+        catch (OverflowException)
+        {
+            return false;
+        }
+
+        static decimal pow10(int exponent)
+        {
+            var result = 1m;
+            for (var i = 0; i < exponent; i++) result *= 10;
+            return result;
         }
     }
 
@@ -292,7 +532,9 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     public bool TryCompareTo(Any other, [NotNullWhen(true)] out int? result) =>
         TryCompareTo(other, CQL_EQUIVALENCE_COMPARISON, out result);
 
-    public override int GetHashCode() => (Unit, Value).GetHashCode();
+    /// <remarks>Quantities with different units can be equal (e.g. 4 'g' and 4000 'mg', or a FHIR Quantity with only
+    /// unit text and one with a code), and equality rounds the values, so all quantities have the same hash code.</remarks>
+    public override int GetHashCode() => nameof(Quantity).GetHashCode();
 
     public override string ToString() => $"{Value.ToString(CultureInfo.InvariantCulture)} '{Unit}'";
 
@@ -301,7 +543,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     // Note that, in contrast to equals, this will return false if operators cannot be compared (as described by the spec)
     bool ICqlEquatable.IsEquivalentTo(Any? other) =>
-        other is not null && TryEquals(other, CQL_EQUIVALENCE_COMPARISON, out var result) && result.Value;
+        other is Quantity q && isEquivalentTo(q);
 
     int? ICqlOrderable.CompareTo(Any? other) =>
         other is not null && TryCompareTo(other, out var result)

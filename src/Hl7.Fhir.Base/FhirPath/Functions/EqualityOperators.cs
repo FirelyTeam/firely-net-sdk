@@ -111,9 +111,8 @@ namespace Hl7.FhirPath.Functions
 
         // Converts a FHIR Quantity to a System.Quantity for = and ~, following the reference (Java) engine:
         // a quantity that has unit text but no code is only comparable to another such quantity with the
-        // same unit text. Its unit is given a prefix that no UCUM code or FHIRPath unit can have, so it never
-        // matches a coded quantity, a quantity literal or a unitless quantity, and those comparisons give
-        // empty (=) / false (~). The prefixed unit is internal to this comparison and never surfaces.
+        // same unit text, so comparing it with a coded quantity, a quantity literal or a unitless quantity
+        // gives empty (=) / false (~).
         private static P.Quantity? quantityForComparison(ITypedElement element)
         {
             var quantity = element is PocoNode { Poco: Quantity q }
@@ -124,15 +123,14 @@ namespace Hl7.FhirPath.Functions
 
             if (quantity is null) return null;
 
-            // ToSystemQuantity() also validates the quantity (value present, no comparator).
-            var systemQuantity = quantity.ToSystemQuantity();
-
-            if (!string.IsNullOrEmpty(quantity.Code) || string.IsNullOrEmpty(quantity.Unit))
-                return systemQuantity;
+            // ToFhirPathQuantity() also validates the quantity (value present, no comparator). The result remembers
+            // whether it has unit text but no code, in which case it only equals another such quantity with the
+            // same unit text (see P.Quantity.TryEquals).
+            var fhirPathQuantity = quantity.ToFhirPathQuantity();
 
             // As in the Java engine, the unit text year(s)/month(s) without a code is the calendar duration
             // (the same as the FHIRPath literal 1 year), which is equivalent to the UCUM 'a' / 'mo'.
-            if (quantity.System is null or P.Quantity.UCUM)
+            if (!fhirPathQuantity.HasCode && quantity.System is null or P.Quantity.UCUM)
             {
                 var calendarUnit = quantity.Unit switch
                 {
@@ -142,13 +140,11 @@ namespace Hl7.FhirPath.Functions
                 };
 
                 if (calendarUnit is not null)
-                    return P.Quantity.ForCalendarDuration(systemQuantity.Value, calendarUnit);
+                    return P.Quantity.ForCalendarDuration(fhirPathQuantity.Value, calendarUnit);
             }
 
-            return new P.Quantity(systemQuantity.Value, UNIT_TEXT_ONLY_PREFIX + quantity.Unit);
+            return fhirPathQuantity;
         }
-
-        private const string UNIT_TEXT_ONLY_PREFIX = "\u0000unit-text:";
 
         private static bool tryCoerce(ref P.Any left, ref P.Any right)
         {

@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.FhirPath
 
             return (value is null)
                 ? throw new ArgumentException($"Invalid input element: {input}")
-                : new P.Quantity(value.Value, input.Unit, input.System);
+                : input.WithValue(value.Value);
         }
 
         internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
@@ -237,7 +237,8 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="l"></param>
         /// <param name="r"></param>
         /// <returns></returns>
-        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r, out _);
+        /// <remarks>Follows the reference (Java) engine: both need a unit code from the same system, see <see cref="P.Quantity.IsComparableTo"/>.</remarks>
+        internal static bool Comparable(P.Quantity? l, P.Quantity? r) => l is not null && r is not null && l.IsComparableTo(r);
 
         /// <summary>
         /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 
