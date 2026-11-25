@@ -99,7 +99,7 @@ namespace Hl7.FhirPath.Functions
             if (result is not null) return result;
 
             // Only on a miss: the focus is a cached collection, so enumerating it again is cheap.
-            if (sawItems) ensureKnownType(typeName, focus as IReadOnlyCollection<PocoNode> ?? focus.ToList());
+            if (sawItems) ensureKnownType(typeName, focus);
             return [];
         }
 
@@ -135,7 +135,7 @@ namespace Hl7.FhirPath.Functions
 
         // Only called when no item matched the type: when an item matched, the type obviously exists.
         // The outcome only depends on the type name and the input, not on which models were loaded before.
-        private static void ensureKnownType(string typeName, IReadOnlyCollection<PocoNode> unmatched)
+        private static void ensureKnownType(string typeName, IEnumerable<PocoNode> unmatched)
         {
             if (_alwaysKnownNames.ContainsKey(typeName)) return;
 
@@ -192,7 +192,6 @@ namespace Hl7.FhirPath.Functions
             }
 
             return null;
-
         }
 
         private static ModelInspector BaseInspector => field ??= ModelInspector.Base;
