@@ -277,13 +277,6 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             }
         }
 
-        // Keep a 'Z' offset as written, like the Java reference engine does, instead of
-        // turning it into the equivalent '+00:00' that the formatting above produces.
-        if (dateTimeValue.HasOffset && dto.Offset == TimeSpan.Zero
-            && originalRepresentation.EndsWith("Z", System.StringComparison.Ordinal)
-            && resultRepresentation.EndsWith("+00:00", System.StringComparison.Ordinal))
-            resultRepresentation = resultRepresentation.Substring(0, resultRepresentation.Length - "+00:00".Length) + "Z";
-
         return Parse(resultRepresentation);
     }
 
