@@ -267,7 +267,7 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     private bool tryCompare(Quantity other, QuantityComparison comparisonType, bool forOrdering, [NotNullWhen(true)] out int? result)
     {
-        if (!tryGetComparableValues(other, comparisonType, forOrdering, out var left, out var right))
+        if (!tryGetComparableValues(other, comparisonType, forOrdering, out var left, out var right, out _))
         {
             result = null;
             return false;
@@ -291,15 +291,6 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     /// (e.g. 'g' and 'mg') are converted to the smaller of the two units. Durations are first normalized to UCUM
     /// (taking <paramref name="comparisonType"/> into account), and calendar durations are only comparable to
     /// durations with the same unit after normalization.</remarks>
-    private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering, out decimal left, out decimal right) =>
-        tryGetComparableValues(other, comparisonType, forOrdering, out left, out right, out _);
-
-    /// <inheritdoc cref="tryGetComparableValues(Quantity, QuantityComparison, bool, out decimal, out decimal)"/>
-    /// <param name="other">The quantity to compare with.</param>
-    /// <param name="comparisonType">How calendar durations are normalized to UCUM.</param>
-    /// <param name="forOrdering">True when ordering, see the other overload.</param>
-    /// <param name="left">The value of this quantity.</param>
-    /// <param name="right">The value of the other quantity, in the same unit as <paramref name="left"/>.</param>
     /// <param name="converted">True when the values had different units, and one of them was converted.</param>
     private bool tryGetComparableValues(Quantity other, QuantityComparison comparisonType, bool forOrdering,
         out decimal left, out decimal right, out bool converted)
