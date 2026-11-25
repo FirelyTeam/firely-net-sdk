@@ -196,6 +196,7 @@ public static class SymbolTableInit
         t.Add("as", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
 
         t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
+        t.Add("type", (IEnumerable<PocoNode> f) => f.Type(), doNullProp: true);
         t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
 
         // Kept for backwards compatibility, but no longer part of the spec.
