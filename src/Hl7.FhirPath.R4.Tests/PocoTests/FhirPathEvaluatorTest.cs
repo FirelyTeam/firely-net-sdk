@@ -196,6 +196,85 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         }
 
         [TestMethod]
+        public void TestQuantityMultiplicationAndDivision()
+        {
+            fixture.IsTrue(@"2.0 'cm' * 2.0 'm' = 0.040 'm2'");
+            fixture.IsTrue(@"1.0 'm' / 1.0 'm' = 1 '1'");
+            fixture.IsTrue(@"(2 'm' * 3 'm' / 4 'm') = 1.5 'm'");
+            fixture.IsTrue(@"(1 week / 1 day) = 7 '1'");
+
+            // As in the spec, results keep the units of the operands (so the value stays exact and in the scale of the operands)
+            fixture.IsTrue(@"12 'cm' * 3 'cm' = 36 'cm2'");
+            fixture.IsTrue(@"3 'cm' * 12 'cm2' = 36 'cm3'");
+            fixture.IsTrue(@"12 'cm2' / 3 'cm' = 4.0 'cm'");
+            fixture.IsTrue(@"(12 'cm' * 3 'cm').toString() = '36 \'cm2\''");
+            fixture.IsTrue(@"(4.0 'g' / 2.0 'm').toString() = '2 \'g/m\''");
+            fixture.IsTrue(@"(2.0 'cm' * 2.0 'm').toString() = '4.00 \'cm.m\''");
+            fixture.IsTrue(@"(0.104 'mg' / 1 'kg') > (0.1 'mg' / 1 'kg')");
+            fixture.IsTrue(@"(0.104 'mg' / 1 'kg') != (0.1 'mg' / 1 'kg')");
+            fixture.IsTrue(@"(60 '1/min' * 2 'min').toString() = '120 \'1\''");
+            fixture.IsTrue(@"60 '1/min' * 2 'min' = 120 '1'");
+
+            // Multiplying or dividing by a number scales the quantity and keeps its unit
+            fixture.IsTrue(@"2 'mg' * 3 = 6 'mg'");
+            fixture.IsTrue(@"3 * 2 'mg' = 6 'mg'");
+            fixture.IsTrue(@"2.5 'mg' * 2.0 = 5.0 'mg'");
+            fixture.IsTrue(@"6 'mg' / 3 = 2 'mg'");
+            fixture.IsTrue(@"2 year * 2 = 4 years");
+            fixture.IsTrue(@"(2 / 4 'm') = 0.5 'm-1'");
+            fixture.IsTrue(@"2.toLong() * 3 'mg' = 6 'mg'");
+            fixture.IsTrue(@"6 'mg' / 3.toLong() = 2 'mg'");
+
+            // Empty operands, division by zero and units that cannot be converted give empty
+            fixture.IsTrue(@"({} * 2 'm').empty()");
+            fixture.IsTrue(@"(2 'm' / {}).empty()");
+            fixture.IsTrue(@"(2 'm' / 0 'm').empty()");
+            fixture.IsTrue(@"(2 'm' / 0).empty()");
+            fixture.IsTrue(@"(2 'Cel' * 2 'm').empty()");
+            fixture.IsTrue(@"(2 '[IU]' / 1 'L').empty()");
+            fixture.IsTrue(@"(1 year * 2 'm').empty()");
+        }
+
+        [TestMethod]
+        public void TestQuantityArithmeticOnFhirQuantities()
+        {
+            var ucum = new Observation { Value = new Quantity { Value = 5, Code = "mg", System = "http://unitsofmeasure.org", Unit = "milligram" } };
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value * 2 'mg') = 10 'mg2'", true));
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value * 2) = 10 'mg'", true));
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value / 5 'mg') = 1 '1'", true));
+            Assert.IsTrue(fixture.IsBoolean(ucum, "(Observation.value / 5 'g') = 0.001 '1'", true));
+
+            // As in comparisons (and the Java engine), only a code with the UCUM system is a UCUM unit. A unit given
+            // only as text, or a code from another (or no) system, cannot be combined with a UCUM unit: the result is empty
+            var textOnly = new Observation { Value = new Quantity { Value = 5, Unit = "tablets" } };
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value * 2 'mg').empty()", true));
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(2 'mg' / Observation.value).empty()", true));
+
+            var otherSystem = new Observation { Value = new Quantity { Value = 5, Code = "258684004", System = "http://snomed.info/sct" } };
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "(Observation.value * 2 'mg').empty()", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "(Observation.value / 1 'mg').empty()", true));
+
+            var noSystem = new Observation { Value = new Quantity { Value = 5, Code = "mg" } };
+            Assert.IsTrue(fixture.IsBoolean(noSystem, "(Observation.value * 2 'mg').empty()", true));
+
+            var ucumSystemTextOnly = new Observation { Value = new Quantity { Value = 5, Unit = "mg", System = "http://unitsofmeasure.org" } };
+            Assert.IsTrue(fixture.IsBoolean(ucumSystemTextOnly, "(Observation.value * 2 'mg').empty()", true));
+
+            // Scaling by a number keeps the quantity as it is, also through unary minus and abs(), so it still
+            // equals (and cannot be combined with) the same kind of quantity
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value * 2) > Observation.value", true));
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(2 * Observation.value) > Observation.value", true));
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value * 1) = Observation.value", true));
+            Assert.IsTrue(fixture.IsBoolean(textOnly, "(Observation.value / 2) < Observation.value", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "(Observation.value * 1) = Observation.value", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "Observation.value.abs() = Observation.value", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystem, "-Observation.value < Observation.value", true));
+            var otherSystemDays = new Observation { Value = new Quantity { Value = 5, Code = "d", System = "http://example.org/units" } };
+            Assert.IsTrue(fixture.IsBoolean(otherSystemDays, "((-Observation.value) * 2 'mg').empty()", true));
+            Assert.IsTrue(fixture.IsBoolean(otherSystemDays, "(Observation.value.abs() * 2 'mg').empty()", true));
+        }
+
+        [TestMethod]
         public void TestEquality()
         {
 

@@ -259,9 +259,6 @@ namespace Hl7.FhirPath.R4.Tests
             "testQuantity5", "testQuantity6", "testQuantity7", "testQuantity8", "testGreaterThan28",
             "testQuantityLiteralWeekToString",
 
-            // Quantity multiplication and division (2.0 'cm' * 2.0 'm', 4.0 'g' / 2.0 'm')
-            "testQuantity9", "testQuantity10", "testQuantity11",
-
             // Decimals with exponents outside the System.Decimal range (e.g. 1e999999999) are not supported
             "testLargeExponentQtyEqualOtherUnit", "testLargeExponentQtyEqualSameUnit", "testLargeExponentQtyEquivalentOtherUnit",
             "testLargeExponentQtyEquivalentSameUnit", "testLargeExponentQtyLessOtherUnit", "testLargeExponentQtyGreaterSameUnit",

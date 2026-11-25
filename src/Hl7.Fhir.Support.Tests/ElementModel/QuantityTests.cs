@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.ElementModel.Tests
 {
@@ -212,46 +213,147 @@ namespace Hl7.Fhir.ElementModel.Tests
             GreaterThan
         }
 
-        // public static IEnumerable<object?[]> ArithmeticTestdata => new[]
-        //         {
-        //             ["25 'kg'", "5 'kg'", "30 'kg'" , (object)Quantity.Add],
-        //             ["25000 'g'", "1000 'g'", "26000 'g'", (object)Quantity.Add],
-        //             ["3 '[in_i]'", "2 '[in_i]'", "5 '[in_i]'", (object)Quantity.Add],
-        //             ["4.0 'kg.m/s2'", "2.0 'kg.m/s2'", "6.0 'kg.m/s2'", (object)Quantity.Add],
-        //             ["3 'm'", "0.03 'm'", "3.03 'm'", (object)Quantity.Add],
-        //             ["3 'm'", "0 'm'","3 'm'", (object)Quantity.Add],
-        //             ["3 'm'", "-0.8 'm'", "2.2 'm'", (object)Quantity.Add],
-        //             ["3 'm'", "0 'kg'", null, (object)Quantity.Add],
-        //             ["25000 'g'", "500 'g'", "24500 'g'", (object)Quantity.Substract],
-        //             ["25000 'g'", "25001 'g'", "-1 'g'", (object)Quantity.Substract],
-        //             ["1 '[in_i]'", "2 'kg'", null, (object)Quantity.Substract],
-        //             ["25 'm'", "20 'm'", "500 '(m).(m)'", (object)Quantity.Multiply],
-        //             ["2.0 'cm'", "9 'kg'", "18 '(cm).(kg)'", (object)Quantity.Multiply],
-        //             ["14.4 'km'", "2.0 'h'", "7.2 '(km)/(h)'", (object)Quantity.Divide],
-        //             ["9 'm2'", "3 'm'", "3 '(m2)/(m)'", (object)Quantity.Divide],
-        //             ["6 'm'", "3 'm'", "2 '(m)/(m)'", (object)Quantity.Divide],
-        //             new[] { "3 'm'", "0 'cm'", null, (object)Quantity.Divide }
-        //         };
+        [TestMethod]
+        [DataRow("2.0 'cm'", "2.0 'm'", "4.00 'cm.m'")]
+        [DataRow("25 'm'", "20 'm'", "500 'm2'")]
+        [DataRow("2.0 'cm'", "9 'kg'", "18 'cm.kg'")]
+        [DataRow("2 'kg'", "3 '1'", "6 'kg'")]
+        [DataRow("3 '1'", "2 'kg'", "6 'kg'")]
+        [DataRow("5 'mg'", "2 '1'", "10 'mg'")]
+        [DataRow("37 'Cel'", "2 '1'", "74 'Cel'")]
+        [DataRow("2 'kg'", "3 'm'", "6 'kg.m'")]
+        [DataRow("-2 'm'", "3 'm'", "-6 'm2'")]
+        [DataRow("3 '[in_i]'", "2 '[in_i]'", "6 '[in_i]2'")]
+        [DataRow("2 '{tbl}'", "3 '{tbl}'", "6 '1'")]
+        [DataRow("2 '[IU]'", "3 'mL'", null)]
+        [DataRow("79228162514264337593543950335 'km'", "79228162514264337593543950335 'km'", null)]
+        [DataRow("3 '1'", "2 '1'", "6 '1'")]
+        [DataRow("60 '1/min'", "2 'min'", "120 '1'")]
+        [DataRow("3 'cm'", "12 'cm2'", "36 'cm3'")]
+        [DataRow("2 'kg.m/s2'", "3 's2'", "6 'kg.m'")]
+        [DataRow("2 'mg{total}'", "3 'kg'", "6 'mg.kg'")]
+        [DataRow("2 'm'", "3 'mg/(kg.d)'", null)]
+        [DataRow("2 '{tbl}'", "3 'g'", "6 'g'")]
+        [DataRow("2 'm'", "3 seconds", "6 'm.s'")]
+        [DataRow("2 'm'", "0 'm'", "0 'm2'")]
+        [DataRow("2 'Cel'", "3 'm'", null)]
+        [DataRow("2 'tablets'", "3 'm'", null)]
+        [DataRow("2 'm'", "1 year", null)]
+        [DataRow("1 year", "2 '1'", "2 year")]
+        public void QuantityMultiplication(string left, string right, string? expected) =>
+            checkArithmetic(left, right, expected, Quantity.TryMultiply);
 
+        [TestMethod]
+        [DataRow("4.0 'g'", "2.0 'm'", "2 'g/m'")]
+        [DataRow("1.0 'm'", "1.0 'm'", "1 '1'")]
+        [DataRow("12 'cm2'", "3 'cm'", "4 'cm'")]
+        [DataRow("14.4 'km'", "2.0 'h'", "7.2 'km/h'")]
+        [DataRow("2 'kg'", "4 'g'", "0.5 'kg/g'")]
+        [DataRow("6 'kg'", "3 '1'", "2 'kg'")]
+        [DataRow("1 week", "1 day", "1 'wk/d'")]
+        [DataRow("-6 'm'", "3 's'", "-2 'm/s'")]
+        [DataRow("2 '[IU]'", "1 'L'", null)]
+        [DataRow("2 '[iU]/mL'", "1 'L'", null)]
+        [DataRow("6 '1'", "3 'g'", "2 'g-1'")]
+        [DataRow("6 'm'", "3 seconds", "2 'm/s'")]
+        [DataRow("3 'm'", "0 'cm'", null)]
+        [DataRow("3 'm'", "0 '1'", null)]
+        [DataRow("3 'tablets'", "1 'm'", null)]
+        [DataRow("3 'm'", "1 month", null)]
+        public void QuantityDivision(string left, string right, string? expected) =>
+            checkArithmetic(left, right, expected, Quantity.TryDivide);
 
-        // [TestMethod]
-        // [DynamicData(nameof(ArithmeticTestdata))]
-        // public void ArithmeticOperationsTests(string left, string right, object result, Func<Quantity, Quantity, Result<Quantity>> operation)
-        // {
-        //     Quantity.TryParse(left, out var q1).Should().BeTrue();
-        //     Quantity.TryParse(right, out var q2).Should().BeTrue();
-        //
-        //     var opResult = operation(q1!, q2!);
-        //
-        //     if (result is string r && Quantity.TryParse(r, out var q3))
-        //     {
-        //         opResult.ValueOrDefault().Should().Be(q3);
-        //     }
-        //     else
-        //     {
-        //         opResult.Should().BeAssignableTo<IFailed>();
-        //     }
-        // }
+        [TestMethod]
+        [DataRow("m/")]
+        [DataRow("kg.")]
+        [DataRow("//")]
+        [DataRow("[")]
+        [DataRow("{")]
+        [DataRow("m)")]
+        [DataRow("(m")]
+        [DataRow("m-")]
+        [DataRow("m2.3")]
+        [DataRow("")]
+        public void QuantityArithmeticWithMalformedUnitIsNotPossible(string unit)
+        {
+            var malformed = new Quantity(2m, unit);
+            var valid = new Quantity(3m, "m");
+
+            Quantity.TryMultiply(malformed, valid, out var result).Should().BeFalse();
+            result.Should().BeNull();
+            Quantity.TryMultiply(valid, malformed, out result).Should().BeFalse();
+            result.Should().BeNull();
+            Quantity.TryDivide(malformed, valid, out result).Should().BeFalse();
+            result.Should().BeNull();
+            Quantity.TryDivide(valid, malformed, out result).Should().BeFalse();
+            result.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void ArbitraryUnitsAreReadFromUcumEssence()
+        {
+            // The embedded ucum-essence.xml must be found, and the fallback list must match it.
+            var fromEssence = Quantity.ReadArbitraryUnits();
+            fromEssence.Should().NotBeNull();
+            fromEssence.Should().BeEquivalentTo(Quantity.ARBITRARY_UNITS_FALLBACK);
+            Quantity.ArbitraryUnits.Should().BeEquivalentTo(fromEssence);
+
+            // Every arbitrary unit (also with a prefix) makes multiplication and division with another unit impossible
+            foreach (var unit in fromEssence!.Concat(["k[IU]", "[IU]/mL", "[hp_X]"]))
+            {
+                Quantity.TryMultiply(new Quantity(2m, unit), new Quantity(3m, "s"), out _).Should().BeFalse(unit);
+                Quantity.TryDivide(new Quantity(2m, "s"), new Quantity(3m, unit), out _).Should().BeFalse(unit);
+            }
+        }
+
+        [TestMethod]
+        public void QuantityArithmeticWithLeadingUnityFactor()
+        {
+            // '1/min' is common in FHIR vital signs (e.g. heart rate)
+            Quantity.TryMultiply(new Quantity(60m, "1/min"), new Quantity(2m, "min"), out var result).Should().BeTrue();
+            result!.Unit.Should().Be("1");
+            Math.Round(result.Value, 8).Should().Be(120m);
+
+            Quantity.TryDivide(new Quantity(60m, "1/min"), new Quantity(2m, "1/min"), out result).Should().BeTrue();
+            result!.Unit.Should().Be("1");
+            Math.Round(result.Value, 8).Should().Be(30m);
+        }
+
+        [TestMethod]
+        public void QuantityArithmeticIsThreadSafe()
+        {
+            var results = new System.Collections.Concurrent.ConcurrentBag<string>();
+
+            System.Threading.Tasks.Parallel.For(0, 2000, i =>
+            {
+                Quantity.TryMultiply(new Quantity(2.0m, "cm"), new Quantity(2.0m, "m"), out var product).Should().BeTrue();
+                Quantity.TryDivide(new Quantity(4.0m, "g"), new Quantity(2.0m, "m"), out var quotient).Should().BeTrue();
+                results.Add($"{product} {quotient}");
+            });
+
+            System.Linq.Enumerable.Distinct(results).Should().ContainSingle().Which.Should().Be("4.00 'cm.m' 2 'g/m'");
+        }
+
+        private delegate bool QuantityOperation(Quantity left, Quantity right, out Quantity? result);
+
+        private static void checkArithmetic(string left, string right, string? expected, QuantityOperation operation)
+        {
+            var success = operation(Quantity.Parse(left), Quantity.Parse(right), out var result);
+
+            if (expected is null)
+            {
+                success.Should().BeFalse();
+                result.Should().BeNull();
+            }
+            else
+            {
+                success.Should().BeTrue();
+                var expectedQ = Quantity.Parse(expected);
+                result!.Unit.Should().Be(expectedQ.Unit);
+                result.System.Should().Be(expectedQ.System);
+                result.Value.Should().Be(expectedQ.Value);
+            }
+        }
 
         [TestMethod]
         public void IsNullWhenInvalid()
