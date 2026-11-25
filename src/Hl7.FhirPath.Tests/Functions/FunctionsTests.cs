@@ -456,47 +456,54 @@ namespace HL7.FhirPath.Tests
 
                     // function precision() : Integer
                     ("{}.precision().empty()", true, false),
+
+                    // decimals: the number of digits after the decimal point
                     ("1.58700.precision() = 5", true, false),
                     ("1.0.precision() = 1", true, false),
                     ("(-0.010).precision() = 3", true, false),
+                    ("'1.500'.toDecimal().precision() = 3", true, false),
+                    ("(1.0 + 2.00).precision() = 2", true, false),
+                    ("1.50.round(1).precision() = 1", true, false),
+                    ("1.precision() = 0", true, false), // integers convert implicitly to decimal
+                    ("'1'.toLong().precision() = 0", true, false), // as do longs
+
+                    // dates and dateTimes: the number of digits, ignoring the timezone
                     ("@2014.precision() = 4", true, false),
                     ("@2014-01.precision() = 6", true, false),
                     ("@2014-01-05.precision() = 8", true, false),
+                    ("@2014T.precision() = 4", true, false),
                     ("@2014-01-05T10.precision() = 10", true, false),
+                    ("@2014-01-05T10Z.precision() = 10", true, false),
                     ("@2014-01-05T10:30.precision() = 12", true, false),
                     ("@2014-01-05T10:30:00.precision() = 14", true, false),
+                    ("@2014-01-05T10:30:00Z.precision() = 14", true, false),
                     ("@2014-01-05T10:30:00.000.precision() = 17", true, false),
                     ("@2014-01-05T10:30:00.000+02:00.precision() = 17", true, false),
+                    ("@2014-01-05T10:30:00.0.precision() = 15", true, false), // fraction digits count as written
+                    ("@2014-01-05T10:30:00.0+02:00.precision() = 15", true, false),
+                    ("@2014-01-05T10:30:00.12345.precision() = 19", true, false),
+                    ("'2014-01-05T10:30:00.0'.toDateTime().precision() = 15", true, false),
+
+                    // times
                     ("@T10.precision() = 2", true, false),
                     ("@T10:30.precision() = 4", true, false),
                     ("@T10:30:00.precision() = 6", true, false),
                     ("@T10:30:00.000.precision() = 9", true, false),
-                    ("1.precision() = 0", true, false), // integers convert implicitly to decimal
-                    ("'1'.toLong().precision() = 0", true, false), // as do longs
-                    ("(1.0 + 2.00).precision() = 2", true, false),
-                    ("'1.500'.toDecimal().precision() = 3", true, false),
-                    ("@2014-01-05T10:30:00Z.precision() = 14", true, false),
-                    ("@2014-01-05T10:30:00.0.precision() = 15", true, false), // fraction digits count as written
-                    ("@2014-01-05T10:30:00.12345.precision() = 19", true, false),
                     ("@T10:30:00.0.precision() = 7", true, false),
                     ("@T10:30:00.12345.precision() = 11", true, false),
-                    ("@2014-01-05T10:30:00.0+02:00.precision() = 15", true, false),
-                    ("@2014-01-05T10:30:00.000-05:00.precision() = 17", true, false),
-                    ("@2014T.precision() = 4", true, false),
-                    ("@2014-01-05T10Z.precision() = 10", true, false),
-                    ("'2014-01-05T10:30:00.0'.toDateTime().precision() = 15", true, false),
                     ("'10:30:00.10'.toTime().precision() = 8", true, false),
-                    ("(@2014-01-05T10:30:00.120 + 1 second).precision() = 17", true, false), // arithmetic results count as milliseconds
-                    ("(now() + 1 second).precision() = 17", true, false),
-                    ("(1.5 * 2.0).precision() = 2", true, false),
-                    ("1.50.round(1).precision() = 1", true, false),
-                    ("true.precision()", true, true), // should throw an error
-                    ("(1 'mg').precision()", true, true), // should throw an error
+
+                    // values not parsed from text count as milliseconds
                     ("today().precision() = 8", true, false),
                     ("now().precision() = 17", true, false),
                     ("timeOfDay().precision() = 9", true, false),
-                    ("(1.0 | 2.0).precision()", true, true), // should throw an error
-                    ("'a'.precision()", true, true) // should throw an error
+                    ("(@2014-01-05T10:30:00.120 + 1 second).precision() = 17", true, false),
+
+                    // errors: multiple items or unsupported types
+                    ("(1.0 | 2.0).precision()", true, true),
+                    ("'a'.precision()", true, true),
+                    ("true.precision()", true, true),
+                    ("(1 'mg').precision()", true, true)
                 }.Select(t => new object[] { t.expression, t.expected, t.invalid });
 
         public static IEnumerable<object[]> UtilityFunctionTestcases() =>

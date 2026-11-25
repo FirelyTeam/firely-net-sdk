@@ -27,7 +27,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     public static DateTime Parse(string representation) =>
         TryParse(representation, out var result) ? result : throw new FormatException($"String '{representation}' was not recognized as a valid datetime.");
 
-    public static bool TryParse(string representation, [NotNullWhen(true)] out DateTime? value) => tryParse(representation, out value);
+    public static bool TryParse(string representation, [NotNullWhen(true)] out DateTime? value) => tryParse(representation, fractionIsAsWritten: true, out value);
 
     public static string FormatDateTimeOffset(DateTimeOffset dto) => dto.ToString(FMT_FULL, CultureInfo.InvariantCulture);
 
@@ -96,8 +96,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     /// <summary>
     /// The number of fraction digits in the parsed value, which sets the width of a <see cref="DateTimePrecision.Fraction"/> range:
-    /// <c>.000</c> spans 1 ms. It is set only by Parse(); a datetime built any other way (FromDateTimeOffset(), Now(),
-    /// a cast, or arithmetic) gets 7, so the same instant obtained that way spans a single tick of 100 ns.
+    /// <c>.000</c> spans 1 ms. It is set by Parse() (and so by date arithmetic, whose result is parsed back with trailing
+    /// zeros trimmed); a datetime built any other way (FromDateTimeOffset(), Now(), or a cast) gets 7, so the same instant
+    /// obtained that way spans a single tick of 100 ns.
     /// </summary>
     private int FractionDigits { get; init; } = 7;
 
@@ -105,7 +106,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// The number of fraction digits as written in the parsed value, or <c>null</c> if this datetime was not created by Parse()
     /// (or is the result of date arithmetic, whose fraction digits do not reflect those of the input).
     /// </summary>
-    internal int? ParsedFractionDigits { get; private init; }
+    internal int? ParsedFractionDigits => FractionIsAsWritten ? FractionDigits : null;
+
+    private bool FractionIsAsWritten { get; init; }
 
     /// <summary>
     /// Gets the range covered by this datetime at its precision. Fails when the datetime has no offset.
@@ -155,7 +158,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         new("^" + DATETIMEFORMAT + @"\z",
             RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-    private static bool tryParse(string representation, out DateTime? value)
+    private static bool tryParse(string representation, bool fractionIsAsWritten, out DateTime? value)
     {
         if (representation is null) throw new ArgumentNullException(nameof(representation));
 
@@ -198,7 +201,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         {
             OriginalParsedString = representation,
             FractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0,
-            ParsedFractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0
+            FractionIsAsWritten = fractionIsAsWritten
         };
 
         return success;
@@ -283,12 +286,9 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
         // The result is formatted with "FFFFFFF", which trims trailing zeros, so its fraction digits are not those of
         // the input and must not count as written ones (e.g. for precision()).
-        var result = Parse(resultRepresentation);
-        return new DateTime(result._value, result.Precision, result.HasOffset)
-        {
-            OriginalParsedString = result.OriginalParsedString,
-            FractionDigits = result.FractionDigits
-        };
+        return tryParse(resultRepresentation, fractionIsAsWritten: false, out var result)
+            ? result!
+            : throw new FormatException($"String '{resultRepresentation}' was not recognized as a valid datetime.");
     }
 
     /// <summary>
