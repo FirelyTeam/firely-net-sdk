@@ -294,8 +294,7 @@ public static class SymbolTableInit
         var lambda = arguments.Skip(1);
         if (!lambda.Any())
         {
-            // Just sort using the native element comparer
-            // System.Linq.Enumerable.Order;
+            // Without a key selector, the items themselves are the sort keys
             return toSortedList(focus.OrderBy(toSortKey, EqualityOperators.SortKeyComparer));
         }
 
@@ -340,10 +339,14 @@ public static class SymbolTableInit
 
     private static PocoNode singleSortKey(IEnumerable<PocoNode> key)
     {
-        var values = key.Take(2).ToList();
-        if (values.Count > 1)
+        // Runs for every item and key, so read at most two values without copying them into a list.
+        using var values = key.GetEnumerator();
+        if (!values.MoveNext()) return null;
+
+        var value = values.Current;
+        if (values.MoveNext())
             throw new InvalidOperationException("A sort() key selector returned more than one value for an item.");
-        return values.FirstOrDefault();
+        return value;
     }
 
     /// <summary>
