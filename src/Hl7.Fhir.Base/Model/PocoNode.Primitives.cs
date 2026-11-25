@@ -65,7 +65,16 @@ public partial record PocoNode
 public record PrimitiveNode(PrimitiveType Primitive, PocoNode? Parent, int? Index, string? Name = null) : PocoNode(Primitive, Parent, Index, Name)
 {
     protected override object? ValueInternal => Primitive.ToITypedElementValue();
-    internal object? Value => ValueInternal;
+
+    /// <summary>
+    /// The value as seen by the FHIRPath engine. This is the ITypedElement.Value, except that a decimal outside
+    /// the range of a .NET decimal (kept as a string literal by the parsers) is a <see cref="ElementModel.Types.Decimal"/> for
+    /// which <see cref="ElementModel.Types.Decimal.IsOutOfRange"/> is true.
+    /// </summary>
+    internal object? Value =>
+        Primitive is FhirDecimal { JsonValue: string } fd && FhirDecimal.TryGetSystemDecimal(fd.JsonValue, out var d)
+            ? d
+            : ValueInternal;
     
     internal static PrimitiveType InferFromValue(object value) => value switch
     {
@@ -74,6 +83,7 @@ public record PrimitiveNode(PrimitiveType Primitive, PocoNode? Parent, int? Inde
         ElementModel.Types.Date d => new FPDate(d),
         ElementModel.Types.Time t => new FPTime(t),
         decimal dec => new FPDecimal(dec),
+        ElementModel.Types.Decimal dec => new FPDecimal(dec),
         float f => new FPDecimal((decimal)f),
         double d => new FPDecimal((decimal)d),
         bool b => new FPBoolean(b),

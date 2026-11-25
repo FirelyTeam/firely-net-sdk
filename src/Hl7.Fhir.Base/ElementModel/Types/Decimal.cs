@@ -12,13 +12,47 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Hl7.Fhir.ElementModel.Types;
 
-public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlOrderable
+public class Decimal : Any, IComparable, ICqlEquatable, ICqlOrderable
 {
-    public decimal Value { get; } = value;
+    private readonly decimal _value;
+
+    // Set when the value is outside the range of System.Decimal (e.g. 1e999999999 or 1e-999999999).
+    private readonly OutOfRangeValue? _outOfRange;
+
+    public Decimal(decimal value = 0)
+    {
+        _value = value;
+    }
+
+    private Decimal(OutOfRangeValue outOfRange)
+    {
+        _outOfRange = outOfRange;
+    }
+
+    /// <summary>
+    /// The value of this decimal as a .NET <see cref="decimal"/>.
+    /// </summary>
+    /// <exception cref="OverflowException">The value is too large for a <see cref="decimal"/>
+    /// (see <see cref="IsOutOfRange"/>).</exception>
+    /// <remarks>A value too small for a <see cref="decimal"/> (e.g. 1e-999999999) is returned as 0.</remarks>
+    public decimal Value => _outOfRange switch
+    {
+        null => _value,
+        { IsHuge: true } => throw new OverflowException($"The decimal {this} is outside the range of a .NET decimal."),
+        _ => 0m
+    };
+
+    /// <summary>
+    /// True when the value is outside the range of a .NET <see cref="decimal"/>, either because
+    /// its magnitude is too large (e.g. 1e999999999) or too small (e.g. 1e-999999999). Such values can be
+    /// compared and converted to a string, but not used in arithmetic.
+    /// </summary>
+    public bool IsOutOfRange => _outOfRange is not null;
 
     // private static readonly string[] FORBIDDEN_DECIMAL_PREFIXES = new[] { "+", ".", "00" };
     // [20190819] EK Consolidated this syntax with CQL and FhirPath, which will allow leading zeroes
@@ -45,6 +79,135 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
         return succ;
     }
 
+    // The FHIR (and JSON) decimal syntax: no leading zeroes, so an out-of-range literal can be written as a JSON number.
+    private static readonly Regex DECIMAL_LITERAL =
+        new(@"^(?<sign>-)?(?<int>0|[1-9][0-9]*)(\.(?<frac>[0-9]+))?([eE](?<exp>[+-]?[0-9]+))?\z", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+
+    // System.Decimal holds values from 10^-28 up to about 7.9 x 10^28: a literal whose (normalised) exponent is within these
+    // bounds either parses or is malformed. Beyond them, decimal.Parse decides whether the value fits, up to a limit.
+    private const long MAX_EXPONENT = 27;
+    private const long MIN_EXPONENT = -27;
+    private const long PARSE_EXPONENT_LIMIT = 40;
+
+    /// <summary>
+    /// Parses a decimal literal for storage in a FHIR decimal: as a .NET <see cref="decimal"/> when it fits, and otherwise
+    /// returns the literal itself (also for a malformed literal). Unlike <see cref="TryParse(string, out Decimal?)"/>,
+    /// a value too small for a .NET decimal (e.g. 1e-999999999) is not rounded to 0.
+    /// </summary>
+    internal static object ParseForStorage(string literal)
+    {
+        // The common case first: a literal that decimal.Parse handles, and that is not a non-zero value rounded to 0.
+        var parsedOk = TryParse(literal, out var parsed);
+        if (parsedOk && (parsed!.Value != 0m || !HasNonZeroMantissaDigit(literal)))
+            return parsed.Value;
+
+        if (IsOutOfRangeLiteral(literal))
+            return literal;
+
+        return parsedOk ? parsed!.Value : literal;
+    }
+
+    /// <summary>
+    /// True when the literal is a valid FHIR decimal whose value is outside the range of a .NET <see cref="decimal"/>,
+    /// see <see cref="TryParseExtended"/> and <see cref="IsOutOfRange"/>.
+    /// </summary>
+    internal static bool IsOutOfRangeLiteral(string literal) =>
+        TryParseExtended(literal, out var parsed) && parsed.IsOutOfRange;
+
+    /// <summary>
+    /// True when the digits of a number literal (before any exponent) contain a digit other than 0.
+    /// </summary>
+    internal static bool HasNonZeroMantissaDigit(ReadOnlySpan<char> literal)
+    {
+        foreach (var c in literal)
+        {
+            if (c is 'e' or 'E') return false;
+            if (c is >= '1' and <= '9') return true;
+        }
+
+        return false;
+    }
+
+    /// <inheritdoc cref="HasNonZeroMantissaDigit(ReadOnlySpan{char})"/>
+    internal static bool HasNonZeroMantissaDigit(ReadOnlySpan<byte> utf8Literal)
+    {
+        foreach (var c in utf8Literal)
+        {
+            if (c is (byte)'e' or (byte)'E') return false;
+            if (c is >= (byte)'1' and <= (byte)'9') return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Parses a decimal like <see cref="TryParse(string, out Decimal?)"/>, but also accepts values outside the range
+    /// of a .NET <see cref="decimal"/>. These are returned as a <see cref="Decimal"/> for which
+    /// <see cref="IsOutOfRange"/> is true, instead of failing (too large) or being rounded to 0 (too small).
+    /// </summary>
+    /// <remarks>Never expands the exponent, so 1e999999999 is parsed in constant time and space. Unlike
+    /// <see cref="TryParse(string, out Decimal?)"/>, the literal must follow the FHIR decimal syntax
+    /// (<c>-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?</c>), so e.g. leading zeroes are rejected.</remarks>
+    internal static bool TryParseExtended(string representation, [NotNullWhen(true)] out Decimal? value)
+    {
+        value = null;
+        if (representation is null) return false;
+
+        var match = DECIMAL_LITERAL.Match(representation);
+        if (!match.Success) return false;
+
+        var intPart = match.Groups["int"].Value;
+        var fracPart = match.Groups["frac"].Value;
+        var expGroup = match.Groups["exp"];
+
+        long exponent = 0;
+        if (expGroup.Success && !long.TryParse(expGroup.Value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out exponent))
+            return false;
+
+        // Normalise to d.ddd x 10^exponent, with no leading or trailing zeroes in the digits.
+        var allDigits = intPart + fracPart;
+        var firstNonZero = 0;
+        while (firstNonZero < allDigits.Length && allDigits[firstNonZero] == '0') firstNonZero++;
+
+        if (firstNonZero == allDigits.Length)
+        {
+            // The value is zero, whatever its exponent. Keep its scale (e.g. 0.00) when decimal.Parse can handle it.
+            value = exponent is > -PARSE_EXPONENT_LIMIT and < PARSE_EXPONENT_LIMIT && TryParse(representation, out var zero)
+                ? zero
+                : new Decimal(0m);
+            return true;
+        }
+
+        long normalizedExponent;
+        try
+        {
+            normalizedExponent = checked(exponent + intPart.Length - 1 - firstNonZero);
+        }
+        catch (OverflowException)
+        {
+            return false;
+        }
+
+        // Only call decimal.Parse when the exponent is small: it does not cope well with huge exponents.
+        if (normalizedExponent is > -PARSE_EXPONENT_LIMIT and < PARSE_EXPONENT_LIMIT)
+        {
+            // A literal that decimal.Parse turns into 0 underflowed (the digits are not all zero, see above).
+            var parsedOk = TryParse(representation, out var parsed);
+            if (parsedOk && parsed!.Value != 0m)
+            {
+                value = parsed;
+                return true;
+            }
+
+            // Within the range of System.Decimal, a failure means a malformed literal rather than an overflow.
+            if (normalizedExponent is >= MIN_EXPONENT and <= MAX_EXPONENT && !parsedOk)
+                return false;
+        }
+
+        var digits = allDigits.Substring(firstNonZero).TrimEnd('0');
+        value = new Decimal(new OutOfRangeValue(match.Groups["sign"].Success, digits, normalizedExponent));
+        return true;
+    }
 
     /// <summary>
     /// Determines if two decimals are equal according to CQL equality rules.
@@ -64,6 +227,14 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
     public bool Equals(Any other, DecimalComparison comparisonType)
     {
         if (!(other is Decimal otherD)) return false;
+
+        if (IsOutOfRange || otherD.IsOutOfRange)
+            return comparisonType switch
+            {
+                DecimalComparison.Strict => Equals(_outOfRange, otherD._outOfRange),
+                // Values below the step size of 10^-8 compare as 0, see eq() below.
+                _ => compareRounded(this, otherD) == 0,
+            };
 
         return comparisonType switch
         {
@@ -132,9 +303,27 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
             // The comparison rules for decimals are underdocumented - assume normal dotnet
             // comparison, which disregards trailing zeroes (= equality comparison according
             // to CQL).
-            Decimal d => decimal.Compare(Math.Round(Value, 8), Math.Round(d.Value, 8)),
+            Decimal d => compareRounded(this, d),
 
             _ => throw NotSameTypeComparison(this, obj)
+        };
+    }
+
+    /// <summary>
+    /// Compares two decimals after rounding them to 8 decimal places (the step size of FHIRPath decimals). A value too
+    /// small for System.Decimal therefore compares as 0, and a value too large is beyond every System.Decimal.
+    /// </summary>
+    private static int compareRounded(Decimal a, Decimal b)
+    {
+        var aHuge = a._outOfRange is { IsHuge: true } ? a._outOfRange : null;
+        var bHuge = b._outOfRange is { IsHuge: true } ? b._outOfRange : null;
+
+        return (aHuge, bHuge) switch
+        {
+            (null, null) => decimal.Compare(Math.Round(a.Value, 8), Math.Round(b.Value, 8)),
+            ({ } x, null) => x.Negative ? -1 : 1,
+            (null, { } y) => y.Negative ? 1 : -1,
+            ({ } x, { } y) => x.CompareTo(y)
         };
     }
 
@@ -144,8 +333,10 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
     public static bool operator >=(Decimal a, Decimal b) => a.CompareTo(b) >= 0;
 
 
-    public override int GetHashCode() => Value.GetHashCode();
-    public override string ToString() => XmlConvert.ToString(Value);
+    public override int GetHashCode() => _outOfRange is { IsHuge: true } huge ? huge.GetHashCode() : Value.GetHashCode();
+
+    /// <remarks>A value outside the range of System.Decimal is written in scientific notation, e.g. 1E+999999999.</remarks>
+    public override string ToString() => _outOfRange?.ToString() ?? XmlConvert.ToString(_value);
 
     public static implicit operator decimal(Decimal d) => d.Value;
     public static explicit operator Decimal(decimal d) => new(d);
@@ -160,9 +351,9 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
         if (to == typeof(Decimal))
             result = this;
         else if (to == typeof(Quantity))
-            result = new Quantity(Value, Quantity.UCUM_UNIT);
+            result = new Quantity(this, Quantity.UCUM_UNIT, QuantityUnitSystem.UCUM);
         else if (to == typeof(Boolean))
-            result = Value switch
+            result = IsOutOfRange ? null : Value switch
             {
                 1 => Boolean.True,
                 0 => Boolean.False,
@@ -172,6 +363,33 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
             result = new String(ToString());
 
         return result is not null;
+    }
+
+    /// <summary>
+    /// A value outside the range of System.Decimal: sign x d.ddd x 10^exponent, where <see cref="Digits"/>
+    /// holds the digits without leading or trailing zeroes.
+    /// </summary>
+    private sealed record OutOfRangeValue(bool Negative, string Digits, long Exponent) : IComparable<OutOfRangeValue>
+    {
+        // Too large values have a positive exponent, too small values a negative one.
+        public bool IsHuge => Exponent >= 0;
+
+        public int CompareTo(OutOfRangeValue? other)
+        {
+            if (other is null) return 1;
+            if (Negative != other.Negative) return Negative ? -1 : 1;
+
+            // Both have the same sign: compare the magnitudes, then flip for negative values.
+            var magnitude = Exponent != other.Exponent
+                ? Exponent.CompareTo(other.Exponent)
+                : Math.Sign(string.CompareOrdinal(Digits, other.Digits));
+
+            return Negative ? -magnitude : magnitude;
+        }
+
+        public override string ToString() =>
+            (Negative ? "-" : "") + Digits.Substring(0, 1) + (Digits.Length > 1 ? "." + Digits.Substring(1) : "") +
+            "E" + (Exponent >= 0 ? "+" : "") + Exponent.ToString(CultureInfo.InvariantCulture);
     }
 
     bool? ICqlEquatable.IsEqualTo(Any? other) => other is not null ? Equals(other, CQL_EQUALS_COMPARISON) : null;

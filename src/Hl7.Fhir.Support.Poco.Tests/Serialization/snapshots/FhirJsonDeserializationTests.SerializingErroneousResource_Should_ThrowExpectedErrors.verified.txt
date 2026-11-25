@@ -443,19 +443,6 @@
       Message: string '1.00000000000000000e-24' is not the right type of literal for a decimal. At Patient.contained[14].component[5].value.value, line 172, position 47.
     },
     {
-      Type: CodedValidationException,
-      MemberName: ValueElement,
-      IssueSeverity: Error,
-      IssueType: Value,
-      BaseErrorMessage: string '-1.00000000000000000e245' is not the right type of literal for a decimal.,
-      Display: Invalid literal type,
-      LineNumber: 181,
-      Position: 48,
-      InstancePath: Patient.contained[14].component[6].value.value,
-      ErrorCode: PVAL123,
-      Message: string '-1.00000000000000000e245' is not the right type of literal for a decimal. At Patient.contained[14].component[6].value.value, line 181, position 48.
-    },
-    {
       Type: FhirJsonException,
       IssueType: Structure,
       BaseErrorMessage: Encountered duplicate property 'given'.,
@@ -1115,7 +1102,7 @@
             "text": "Component"
           },
           "valueQuantity": {
-            "value": "-1.00000000000000000e245",
+            "value": -1.00000000000000000e245,
             "unit": "g"
           }
         }

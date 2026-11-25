@@ -126,6 +126,37 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
+        /// <summary>
+        /// Wraps an arithmetic function so it returns empty when given a decimal or quantity outside the range of a .NET
+        /// decimal (e.g. 1e999999999). Arguments are evaluated in order, each at most once, up to the first empty one.
+        /// </summary>
+        private static Invokee emptyForOutOfRangeNumbers(Invokee func, int firstOperand) => (Closure ctx, IEnumerable<Invokee> args) =>
+        {
+            var argList = args.ToList();
+            var passedOn = new List<Invokee>(argList.Count);
+
+            for (var i = 0; i < argList.Count; i++)
+            {
+                var value = argList[i](ctx, InvokeeFactory.EmptyArgs).ToList();
+                passedOn.Add(InvokeeFactory.Return(value));
+
+                if (value.Count == 0)
+                {
+                    // Leave null propagation to the function itself, without evaluating the remaining arguments here.
+                    passedOn.AddRange(argList.Skip(i + 1));
+                    break;
+                }
+
+                if (i >= firstOperand && DynaDispatcher.IsOutOfRangeNumber(value))
+                {
+                    ctx.focus = i == 0 ? value : ctx.GetThis();
+                    return [];
+                }
+            }
+
+            return func(ctx, passedOn);
+        };
+
         private static Invokee resolve(SymbolTable scope, string name, IEnumerable<Type> argumentTypes)
         {
             // For now, we don't have the types or the parameters statically, so we just match on name
@@ -147,7 +178,9 @@ namespace Hl7.FhirPath.Expressions
                 if (func == null)
                     throw Error.Argument("Function '{0}' is not called with the right number or type of parameters".FormatWith(name));
 
-                return func;
+                // The dispatcher does this check for functions with several candidates.
+                var firstOperand = DynaDispatcher.FirstArithmeticOperand(name);
+                return firstOperand >= 0 ? emptyForOutOfRangeNumbers(func, firstOperand) : func;
             }
             else
             {

@@ -66,6 +66,13 @@ internal class FPDecimal : CqlPrimitive
         DynamicTypeName = "System.Decimal";
         JsonValue = value;
     }
+
+    // A decimal outside the range of a .NET decimal is kept as a P.Decimal, like FPQuantity keeps a P.Quantity.
+    public FPDecimal(P.Decimal value)
+    {
+        DynamicTypeName = "System.Decimal";
+        JsonValue = value.IsOutOfRange ? (object)value : value.Value;
+    }
 }
 
 internal class FPString : CqlPrimitive

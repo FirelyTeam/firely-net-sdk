@@ -53,15 +53,17 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
+        /// <remarks>Returns null for a decimal outside the range of a .NET decimal (see <see cref="Decimal.IsOutOfRange"/>),
+        /// as it cannot be represented as a <see cref="decimal"/>.</remarks>
         public static decimal? ToDecimal(this Any focus) =>
-            focus.TryConvertTo<Decimal>(out var result) ? result.Value : null;
+            focus.TryConvertTo<Decimal>(out var result) && !result.IsOutOfRange ? result.Value : null;
 
         /// <summary>
         /// FhirPath convertsToDecimal() function.
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool ConvertsToDecimal(this Any focus) => ToDecimal(focus) is not null;
+        public static bool ConvertsToDecimal(this Any focus) => focus.TryConvertTo<Decimal>(out _);
 
 
         /// <summary>
