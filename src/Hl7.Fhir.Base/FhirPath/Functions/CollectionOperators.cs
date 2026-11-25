@@ -26,19 +26,7 @@ namespace Hl7.FhirPath.Functions
         /// <returns><c>null</c> for an empty collection, the value of a single boolean, or <c>true</c> for
         /// any other single item.</returns>
         /// <exception cref="InvalidOperationException">The collection has more than one item.</exception>
-        public static bool? BooleanEval(this IEnumerable<PocoNode> focus)
-        {
-            // Only look at the first two items: we only need to know whether there is more than one.
-            var items = focus.Take(2).ToArray();
-
-            return items.Length switch
-            {
-                0 => null,
-                1 => items[0] is PrimitiveNode { Value: bool boolean } ? boolean : true,
-                _ => throw Error.InvalidOperation(
-                    "Unable to evaluate as a boolean: the collection has more than one item, where a single boolean was expected."),
-            };
-        }
+        public static bool? BooleanEval(this IEnumerable<PocoNode> focus) => booleanEval(focus, lenient: false);
 
         /// <summary>
         /// Converts the final result of an expression to a boolean, the way the public helpers
@@ -48,15 +36,21 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <returns><c>null</c> for an empty collection, the value of a single boolean, or <c>true</c>
         /// otherwise.</returns>
-        public static bool? LenientBooleanEval(this IEnumerable<PocoNode> focus)
+        public static bool? LenientBooleanEval(this IEnumerable<PocoNode> focus) => booleanEval(focus, lenient: true);
+
+        private static bool? booleanEval(IEnumerable<PocoNode> focus, bool lenient)
         {
+            // Only look at the first two items: we only need to know whether there is more than one.
             var items = focus.Take(2).ToArray();
 
             return items.Length switch
             {
                 0 => null,
                 1 => items[0] is PrimitiveNode { Value: bool boolean } ? boolean : true,
-                _ => true,
+                _ => lenient
+                    ? true
+                    : throw Error.InvalidOperation(
+                        "Unable to evaluate as a boolean: the collection has more than one item, where a single boolean was expected."),
             };
         }
 

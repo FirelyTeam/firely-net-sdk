@@ -53,13 +53,7 @@ namespace Hl7.FhirPath.Functions
         // Version of XOr for lazily evaluated operands. xor can never short-cut on a known left operand, and
         // even with an empty left operand the right operand is still evaluated, so that an invalid right
         // operand (e.g. a collection with more than one item) raises an error, as in the Java reference engine.
-        public static bool? XOr(this Func<bool?> left, Func<bool?> right)
-        {
-            var l = left();
-            var r = right();
-
-            return l.XOr(r);
-        }
+        public static bool? XOr(this Func<bool?> left, Func<bool?> right) => left().XOr(right());
 
         // Version of XOr that does direct evaluation using 3V boolean logic
         public static bool? XOr(this bool? left, bool? right)
