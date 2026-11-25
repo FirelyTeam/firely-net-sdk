@@ -147,7 +147,7 @@ namespace Hl7.Fhir.FhirPath
             var bits = decimal.GetBits(input);
             var scale = (bits[3] >> 16) & 0xFF;
             var isNegative = input < 0;
-            var digits = (new BigInteger((uint)bits[2]) << 64) | (new BigInteger((uint)bits[1]) << 32) | (uint)bits[0];
+            var digits = new BigInteger(new decimal(bits[0], bits[1], bits[2], isNegative: false, scale: 0));
 
             // Work with one more decimal place, where half a unit of the last digit of the input is 5.
             var magnitude = digits * 10;
