@@ -264,10 +264,10 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
             _ => throw new ArgumentException($"'{unit}' is not a valid time-valued unit", nameof(unit)),
         };
 
-        var originalRepresentation = dateTimeValue.ToString();
-
         if (dateTimeValue.Precision >= DateTimePrecision.Second)
-            return Parse(formatWithSecondsOrFraction(dto, dateTimeValue, originalRepresentation));
+            return Parse(formatWithSecondsOrFraction(dto, dateTimeValue));
+
+        var originalRepresentation = dateTimeValue.ToString();
 
         var resultRepresentation = dto.ToString(FMT_FULL, CultureInfo.InvariantCulture);
 
@@ -280,11 +280,11 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     /// <summary>
     /// Formats the result of date/time arithmetic on a datetime with seconds or fraction precision, so that it keeps
-    /// the precision and offset notation of the input: the fraction keeps as many digits as the input had, up to the 7 that
+    /// the precision and offset of the input: the fraction keeps as many digits as the input had, up to the 7 that
     /// the value can hold (<c>.000</c> + 1 second gives <c>.000</c>), and gets more only when needed to keep the value
     /// (<c>.1</c> + 13 ms gives <c>.113</c>).
     /// </summary>
-    private static string formatWithSecondsOrFraction(DateTimeOffset dto, DateTime original, string originalRepresentation)
+    private static string formatWithSecondsOrFraction(DateTimeOffset dto, DateTime original)
     {
         const int MAX_FRACTION_DIGITS = 7;
 
@@ -304,12 +304,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         var format = "yyyy-MM-dd'T'HH:mm:ss" + (digits > 0 ? "." + new string('f', digits) : "");
         var result = dto.ToString(format, CultureInfo.InvariantCulture);
 
-        if (!original.HasOffset) return result;
-
-        // Keep the 'Z' notation when the input used it, instead of writing "+00:00".
-        return originalRepresentation.EndsWith("Z", System.StringComparison.Ordinal) && dto.Offset == TimeSpan.Zero
-            ? result + "Z"
-            : result + dto.ToString("zzz", CultureInfo.InvariantCulture);
+        return original.HasOffset ? result + dto.ToString("zzz", CultureInfo.InvariantCulture) : result;
     }
 
     /// <summary>
