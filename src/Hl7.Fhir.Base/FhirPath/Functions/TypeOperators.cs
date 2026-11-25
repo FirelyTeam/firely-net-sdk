@@ -33,15 +33,15 @@ namespace Hl7.FhirPath.Functions
         // so this hierarchy is not visible in the CLR class hierarchy.
         private static readonly Dictionary<string, string> _primitiveBaseTypes = new()
         {
-            ["code"] = "string",
-            ["id"] = "string",
-            ["markdown"] = "string",
-            ["url"] = "uri",
-            ["canonical"] = "uri",
-            ["oid"] = "uri",
-            ["uuid"] = "uri",
-            ["positiveInt"] = "integer",
-            ["unsignedInt"] = "integer",
+            [FhirTypeNames.CODE] = FhirTypeNames.STRING,
+            [FhirTypeNames.ID] = FhirTypeNames.STRING,
+            [FhirTypeNames.MARKDOWN] = FhirTypeNames.STRING,
+            [FhirTypeNames.URL] = FhirTypeNames.URI,
+            [FhirTypeNames.CANONICAL] = FhirTypeNames.URI,
+            [FhirTypeNames.OID] = FhirTypeNames.URI,
+            [FhirTypeNames.UUID] = FhirTypeNames.URI,
+            [FhirTypeNames.POSITIVE_INT] = FhirTypeNames.INTEGER,
+            [FhirTypeNames.UNSIGNED_INT] = FhirTypeNames.INTEGER,
         };
 
         /// <summary>
