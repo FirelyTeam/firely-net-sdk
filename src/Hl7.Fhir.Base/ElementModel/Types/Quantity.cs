@@ -246,83 +246,65 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
 
     private int? doDurationComparison(Quantity other, QuantityComparison comparisonType)
     {
-        var l = normalizeToUcum(this);
-        var r = normalizeToUcum(other);
+        var lUnit = toUcumUnit(this);
+        var rUnit = toUcumUnit(other);
 
-        if (l.Unit == r.Unit)
-            return decimal.Compare(Math.Round(l.Value, 8), Math.Round(r.Value, 8)); // aligns with Decimal
+        if (lUnit == rUnit)
+            return decimal.Compare(Math.Round(Value, 8), Math.Round(other.Value, 8)); // aligns with Decimal
 
         // Definite durations can be converted into each other using the UCUM conversion factors.
-        if (!DEFINITE_DURATION_MILLISECONDS.TryGetValue(l.Unit, out var lFactor) ||
-            !DEFINITE_DURATION_MILLISECONDS.TryGetValue(r.Unit, out var rFactor))
+        if (!DEFINITE_DURATION_MILLISECONDS.TryGetValue(lUnit, out var lFactor) ||
+            !DEFINITE_DURATION_MILLISECONDS.TryGetValue(rUnit, out var rFactor))
             return null;
 
         // Note that a calendar year or month only gets here (as 'a' or 'mo') when comparing for equivalence, and is then
         // converted like the UCUM unit, as the Java reference engine does (1 year ~ 365.25 days, but not ~ 1 day).
         // Round the inputs as we do when the units are the same, then compare the values in milliseconds, exactly:
         // rounding after the conversion would hide real differences (e.g. 1 'wk' vs 604800001 'ms').
-        return toExactMilliseconds(l.Value, lFactor).CompareTo(toExactMilliseconds(r.Value, rFactor));
+        return toExactMilliseconds(Value, lFactor).CompareTo(toExactMilliseconds(other.Value, rFactor));
 
-        Quantity normalizeToUcum(Quantity orig)
+        string toUcumUnit(Quantity orig)
         {
             // UCUM definite durations are already in their comparable form
-            if (orig.IsDefiniteDuration) return orig;
+            if (orig.IsDefiniteDuration) return orig.Unit;
 
-            var ucumUnit = orig.Unit switch
+            return orig.Unit switch
             {
-                "year" when comparisonType == QuantityComparison.CompareCalendarUnits => "a",
-                "year" => "year",
-                "month" when comparisonType == QuantityComparison.CompareCalendarUnits => "mo",
-                "month" => "month",
-                "week" => "wk",
-                "day" => "d",
-                "hour" => "h",
-                "minute" => "min",
-                "second" => "s",
-                "millisecond" => "ms",
-                _ => throw new InvalidOperationException($"Unit '{orig.Unit}' is not a known calendar duration.")
+                "year" => comparisonType == QuantityComparison.CompareCalendarUnits ? "a" : "year",
+                "month" => comparisonType == QuantityComparison.CompareCalendarUnits ? "mo" : "month",
+                var keyword => calendarToUcum(keyword)
+                               ?? throw new InvalidOperationException($"Unit '{keyword}' is not a known calendar duration.")
             };
-
-            return new Quantity(orig.Value, ucumUnit, QuantityUnitSystem.UCUM);
         }
     }
 
     /// <summary>
-    /// The value (rounded to 8 decimals, as in all quantity comparisons) times <paramref name="factor"/>, as an exact
-    /// fraction (numerator, power of ten of the denominator) in lowest terms, so equal values give equal results.
+    /// The UCUM unit that a calendar duration keyword is equal to. Calendar years and months have none: they are
+    /// not equal to 'a' and 'mo'.
+    /// </summary>
+    private static string? calendarToUcum(string unit) => unit switch
+    {
+        "week" => "wk",
+        "day" => "d",
+        "hour" => "h",
+        "minute" => "min",
+        "second" => "s",
+        "millisecond" => "ms",
+        _ => null
+    };
+
+    /// <summary>
+    /// The value (rounded to 8 decimals, as in all quantity comparisons) times <paramref name="factor"/>, exactly,
+    /// as a whole number of 10^-8 milliseconds, so equal durations give equal results.
     /// This avoids the rounding and overflow of decimal multiplication for very large or very precise values.
     /// </summary>
-    private static ExactDecimal toExactMilliseconds(decimal value, long factor)
+    private static BigInteger toExactMilliseconds(decimal value, long factor)
     {
         var rounded = Math.Round(value, 8);
-        var bits = decimal.GetBits(rounded);
-        var numerator = (((BigInteger)(uint)bits[2] << 64) | ((BigInteger)(uint)bits[1] << 32) | (uint)bits[0]) * factor;
-        if (bits[3] < 0) numerator = -numerator;
-        var scale = (bits[3] >> 16) & 0xFF;
+        var whole = decimal.Truncate(rounded);
+        var fraction = (rounded - whole) * 100_000_000m; // a whole number, since there are at most 8 decimals
 
-        while (scale > 0 && numerator % 10 == 0)
-        {
-            numerator /= 10;
-            scale--;
-        }
-
-        return new ExactDecimal(numerator, scale);
-    }
-
-    private readonly struct ExactDecimal(BigInteger numerator, int scale) : IComparable<ExactDecimal>
-    {
-        // In lowest terms, so equal values have equal numerators and scales (and hence hashes).
-        public BigInteger Numerator { get; } = numerator;
-        public int Scale { get; } = scale;
-
-        public int CompareTo(ExactDecimal other)
-        {
-            var common = Math.Max(Scale, other.Scale);
-            return (Numerator * BigInteger.Pow(10, common - Scale))
-                .CompareTo(other.Numerator * BigInteger.Pow(10, common - other.Scale));
-        }
-
-        public override int GetHashCode() => (Numerator, Scale).GetHashCode();
+        return (new BigInteger(whole) * 100_000_000 + new BigInteger(fraction)) * factor;
     }
 
     /// <summary>
@@ -361,23 +343,12 @@ public class Quantity(decimal value, string? unit, QuantityUnitSystem system)
     {
         // Durations that are equal in different units (7 'd' and 1 'wk', 1 week and 1 'wk') must have the same hash,
         // so hash those on their exact value in milliseconds, as used by the comparison.
+        // Calendar years and months are not equal to 'a' and 'mo', so they keep their own hash.
         var ucumUnit = IsCalendarDuration ? calendarToUcum(Unit) ?? Unit : Unit;
 
-        return ucumUnit is not null && DEFINITE_DURATION_MILLISECONDS.TryGetValue(ucumUnit, out var factor)
+        return DEFINITE_DURATION_MILLISECONDS.TryGetValue(ucumUnit, out var factor)
             ? (nameof(DEFINITE_DURATION_MILLISECONDS), toExactMilliseconds(Value, factor)).GetHashCode()
             : (Unit, Math.Round(Value, 8)).GetHashCode(); // decimal hashes ignore trailing zeros, like the comparison
-
-        // Calendar years and months are not equal to 'a' and 'mo', so they keep their own hash.
-        static string? calendarToUcum(string unit) => unit switch
-        {
-            "week" => "wk",
-            "day" => "d",
-            "hour" => "h",
-            "minute" => "min",
-            "second" => "s",
-            "millisecond" => "ms",
-            _ => null
-        };
     }
 
     /// <summary>
