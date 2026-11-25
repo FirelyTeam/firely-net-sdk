@@ -109,6 +109,22 @@ namespace HL7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void LenientHelpersStillEvaluateEveryItem()
+        {
+            // The third item's criteria is a collection with more than one item, which is an error. The lenient
+            // helpers must still evaluate it, rather than stop after two items of the lazy where() result.
+            var compiled = COMPILER.Compile("(1 | 2 | 3).where(iif($this = 3, (true | false), true))");
+            var ctx = new EvaluationContext();
+
+            Action predicate = () => compiled.Predicate(DUMMY, ctx);
+            Action isTrue = () => compiled.IsTrue(DUMMY, ctx);
+            Action isBoolean = () => compiled.IsBoolean(true, DUMMY, ctx);
+            predicate.Should().Throw<InvalidOperationException>();
+            isTrue.Should().Throw<InvalidOperationException>();
+            isBoolean.Should().Throw<InvalidOperationException>();
+        }
+
+        [TestMethod]
         public void BooleanEvalFollowsSingletonEvaluation()
         {
             Array.Empty<PocoNode>().BooleanEval().Should().BeNull();

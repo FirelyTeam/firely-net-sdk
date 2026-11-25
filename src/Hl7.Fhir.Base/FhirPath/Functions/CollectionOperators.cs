@@ -40,8 +40,10 @@ namespace Hl7.FhirPath.Functions
 
         private static bool? booleanEval(IEnumerable<PocoNode> focus, bool lenient)
         {
-            // Only look at the first two items: we only need to know whether there is more than one.
-            var items = focus.Take(2).ToArray();
+            // Strict: the first two items are enough to know whether there is more than one. Lenient: read every
+            // item, so that an error raised while evaluating a later item of a lazy result (e.g. the criteria of a
+            // where()) is still reported, as before and as in the Java reference engine.
+            var items = lenient ? focus.ToArray() : focus.Take(2).ToArray();
 
             return items.Length switch
             {
