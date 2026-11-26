@@ -56,6 +56,23 @@ internal static class StringOperators
                 return me.Replace(find, replace);
         }
 
+        /// <summary>
+        /// The FHIRPath specification requires matches() to use 'single line' mode, so '.' also
+        /// matches newlines, and to behave the same regardless of the culture of the environment.
+        /// </summary>
+        public static bool FpMatches(this string me, string regex) =>
+            Regex.IsMatch(me, regex, RegexOptions.Singleline | RegexOptions.CultureInvariant);
+
+        /// <summary>
+        /// The specification does not require 'single line' mode for replaceMatches(), and the
+        /// HL7 Java reference engine does not use it, so '.' does not match newlines here.
+        /// </summary>
+        public static string FpReplaceMatches(this string me, string regex, string substitution) =>
+            // An empty regex would match between every character. The specification does not
+            // cover this case; the official conformance tests (testReplaceMatches2) and the Java
+            // reference engine return the input unchanged.
+            regex == String.Empty ? me : Regex.Replace(me, regex, substitution, RegexOptions.CultureInvariant);
+
         public static IEnumerable<PocoNode> FpSplit(this string me, string seperator)
         {
             var results = me.Split(new[] { seperator }, StringSplitOptions.None).ToArray<object>();
