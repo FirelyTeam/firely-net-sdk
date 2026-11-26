@@ -120,11 +120,11 @@ public static class SymbolTableInit
         t.Add("binary.>=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, ">="), doNullProp: true);
 
         t.Add("single", (IEnumerable<PocoNode> f) => f.Single(), doNullProp: true);
-        t.Add("skip", (IEnumerable<PocoNode> f, long a) => f.Skip((int)a), doNullProp: true);
+        t.Add("skip", (IEnumerable<PocoNode> f, long a) => f.Skip((int)Math.Clamp(a, int.MinValue, int.MaxValue)), doNullProp: true);
         t.Add("first", (IEnumerable<PocoNode> f) => f.First(), doNullProp: true);
         t.Add("last", (IEnumerable<PocoNode> f) => f.Last(), doNullProp: true);
         t.Add("tail", (IEnumerable<PocoNode> f) => f.Tail(), doNullProp: true);
-        t.Add("take", (IEnumerable<PocoNode> f, long a) => f.Take((int)a), doNullProp: true);
+        t.Add("take", (IEnumerable<PocoNode> f, long a) => f.Take((int)Math.Clamp(a, int.MinValue, int.MaxValue)), doNullProp: true);
         t.Add("builtin.item", (IEnumerable<PocoNode> f, long a) => a is < 0 or > int.MaxValue ? [] : f.Item((int)a), doNullProp: true);
 
         // The conversion functions accept an item of any type. An item without a System type equivalent, such as

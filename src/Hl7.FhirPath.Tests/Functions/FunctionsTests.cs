@@ -191,6 +191,8 @@ namespace HL7.FhirPath.Tests
                     ("(1 | 2 | 3).skip(3).empty()", true, false),
                     ("(1 | 2 | 3).skip(0) = (1 | 2 | 3)", true, false),
                     ("(1 | 2 | 3).skip(-1) = (1 | 2 | 3)", true, false),
+                    ("(10 | 20 | 30).skip('4294967297'.toLong()).empty()", true, false),
+                    ("(10 | 20 | 30).skip('-4294967295'.toLong()) = (10 | 20 | 30)", true, false),
 
                     // function take(num : Integer) : collection
                     ("{}.take(1).empty()", true, false),
@@ -203,6 +205,8 @@ namespace HL7.FhirPath.Tests
                     ("(1 | 2).take(3) = (1 | 2)", true, false),
                     ("(1 | 2).take(2) = (1 | 2)", true, false),
                     ("(1 | 2 | 3).take(2) = (1 | 2)", true, false),
+                    ("(10 | 20 | 30).take('4294967297'.toLong()) = (10 | 20 | 30)", true, false),
+                    ("(10 | 20 | 30).take('-4294967295'.toLong()).empty()", true, false),
 
                     // function intersect(other: collection) : collection
                     ("{}.intersect(1 | 2).empty()", true, false),
