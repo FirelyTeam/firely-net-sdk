@@ -36,10 +36,10 @@ public static class SymbolTableInit
         t.Add("trace", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx)
             => f.Trace(name, ctx));
 
-        t.Add("allTrue", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is true));
-        t.Add("anyTrue", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is true));
-        t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is false));
-        t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is false));
+        t.Add("allTrue", (IEnumerable<PocoNode> f) => f.All(e => booleanValue(e, "allTrue") is true));
+        t.Add("anyTrue", (IEnumerable<PocoNode> f) => f.Any(e => booleanValue(e, "anyTrue") is true));
+        t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => booleanValue(e, "allFalse") is false));
+        t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => booleanValue(e, "anyFalse") is false));
         t.Add("combine", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.Concat(r));
         t.Add("binary.|", (object _, IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
         t.Add("union", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
@@ -193,15 +193,15 @@ public static class SymbolTableInit
 
         // The next two functions existed pre-normative, so we have kept them.
         t.Add("is", (PocoNode f, string name) => f.Is(name), doNullProp: true);
-        t.Add("as", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
+        t.Add("as", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx) => f.AsType(name, ctx?.EnforceAsSingletonRule == true), doNullProp: true);
 
-        t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
+        t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.OfType(name), doNullProp: true);
         t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
 
         // Kept for backwards compatibility, but no longer part of the spec.
         // Note: register this only once. A second entry with the same signature makes the compiler
         // resolve every 'as' through the (much slower) dynamic dispatcher instead of binding it directly.
-        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
+        t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name, EvaluationContext ctx) => left.AsType(name, ctx?.EnforceAsSingletonRule == true), doNullProp: true);
 
         t.Add("extension", (IEnumerable<PocoNode> f, string url) => f.Extension(url), doNullProp: true);
 
@@ -407,11 +407,23 @@ public static class SymbolTableInit
         return focus;
     }
 
+    // allTrue(), anyTrue(), allFalse() and anyFalse() take a collection of Booleans: any other item is an error.
+    // Like the HL7 Java engine, evaluation stops as soon as the result is known, so items after that point
+    // are not checked. A FHIR boolean without a value (e.g. one with only extensions) is not true or false.
+    private static bool? booleanValue(PocoNode node, string function) => node.GetValue() switch
+    {
+        bool b => b,
+        null when node.Poco is FhirBoolean => null,
+        _ => throw Error.InvalidOperation($"{function}() can only be used on a collection of Booleans, but the input contains an item of type '{((ITypedElement)node).InstanceType}'.")
+    };
+
     private static IEnumerable<PocoNode> runIif(Closure ctx, IEnumerable<Invokee> arguments)
     {
         // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
         // note: short-circuit behavior is expected in this function
         var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+        if (focus.Skip(1).Any())
+            throw Error.InvalidOperation("The input collection of iif() contains more than one item.");
         ctx.focus = focus;
 
         var newContext = ctx.Nest(focus);

@@ -69,6 +69,14 @@ public class EvaluationContext
     /// Gets or sets the tracer used for capturing debug information during evaluation
     /// </summary>
     public IDebugTracer? DebugTracer { get; set; }
+
+    /// <summary>
+    /// When set, the <c>as()</c> function and the <c>as</c> operator raise an error if their input contains
+    /// more than one item, as the FHIRPath specification requires. This is off by default, because FHIR R4
+    /// and R4B core invariants and search parameters (such as dom-3: <c>%resource.descendants().as(canonical)</c>)
+    /// use <c>as</c> on collections. The HL7 Java engine likewise only enforces this rule for R5 and later.
+    /// </summary>
+    public bool EnforceAsSingletonRule { get; set; }
 }
 
 public static class EvaluationContextExtensions

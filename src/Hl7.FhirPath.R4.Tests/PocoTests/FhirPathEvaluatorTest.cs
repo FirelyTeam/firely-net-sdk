@@ -183,8 +183,9 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var res = fixture.TestInput.Scalar("Patient.contained[0].name[0].given[0].iif(true, single())");
             res.Should().BeOfType<string>().Subject.Should().Be("Eve");
-            res = fixture.TestInput.Scalar("Patient.contained[0].name.iif(use = 'official', 'given', given.join(''))"); // comparison between collection and string
-            res.Should().BeOfType<string>().Subject.Should().Be("EveEveline");
+            // iif() on a collection with more than one item is an error
+            var act = () => fixture.TestInput.Scalar("Patient.contained[0].name.iif(use = 'official', 'given', given.join(''))");
+            act.Should().Throw<InvalidOperationException>().WithMessage("*more than one item*");
         }
 
         [TestMethod]

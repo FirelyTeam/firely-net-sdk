@@ -45,6 +45,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).allTrue()", false, false),
                     ("(false | true).allTrue()", false, false),
                     ("(false | false).allTrue()", false, false),
+                    ("(true | 'foo').allTrue()", false, true),
+                    ("(1).allTrue()", false, true),
 
                     // function anyTrue() : Boolean
                     ("{}.anyTrue()", false, false),
@@ -54,6 +56,9 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).anyTrue()", true, false),
                     ("(false | true).anyTrue()", true, false),
                     ("(false | false).anyTrue()", false, false),
+                    ("(false | 'foo').anyTrue()", false, true),
+                    ("(true | 'foo').anyTrue()", true, false), // like the Java engine, stops once the result is known
+                    ("(1).anyTrue()", false, true),
 
                     // function allFalse() : Boolean
                     ("{}.allFalse()", true, false),
@@ -63,6 +68,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).allFalse()", false, false),
                     ("(false | true).allFalse()", false, false),
                     ("(false | false).allFalse()", true, false),
+                    ("(false | 'foo').allFalse()", false, true),
+                    ("(1).allFalse()", false, true),
 
                     // function anyFalse() : Boolean
                     ("{}.anyFalse()", false, false),
@@ -72,6 +79,8 @@ namespace HL7.FhirPath.Tests
                     ("(true | false).anyFalse()", true, false),
                     ("(false | true).anyFalse()", true, false),
                     ("(false | false).anyFalse()", true, false),
+                    ("(true | 'foo').anyFalse()", false, true),
+                    ("(1).anyFalse()", false, true),
 
                     // function subsetOf(other : collection) : Boolean
                     ("(1 | 2).subsetOf((1 | 2 | 3))", true, false),
@@ -259,6 +268,8 @@ namespace HL7.FhirPath.Tests
                     ("iif({}, true, false)", false, false),
                     ("iif({}, true).empty()", true, false),
                     ("iif(1 | 2 | 3, true, false)", false, true),
+                    ("(1 | 2).iif(true, true, false)", false, true), // more than one item in the input
+                    ("(1 | 2).combine(iif(true, 3)).count() = 3", true, false), // as an argument, iif() has a single focus
                     ("iif(false, true).empty()", true, false),
                     ("iif({ }, true, false)", false, false),
                     ("iif(true, true, false)", true, false),

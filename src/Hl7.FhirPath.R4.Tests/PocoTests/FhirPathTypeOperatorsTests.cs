@@ -28,8 +28,8 @@ namespace Hl7.FhirPath.R4.Tests
             Component = { new Observation.ComponentComponent { Code = new CodeableConcept("http://loinc.org", "6789-0"), Value = new FhirString("hi") } }
         };
 
-        private static PocoNode[] evaluate(PocoNode input, string expression)
-            => new FhirPathCompiler().Compile(expression)(input, new FhirEvaluationContext()).ToArray();
+        private static PocoNode[] evaluate(PocoNode input, string expression, bool strictAs = false)
+            => new FhirPathCompiler().Compile(expression)(input, new FhirEvaluationContext { EnforceAsSingletonRule = strictAs }).ToArray();
 
         [TestMethod]
         public void BinaryAsIsRegisteredOnce()
@@ -152,6 +152,188 @@ namespace Hl7.FhirPath.R4.Tests
             evaluate(node, "Observation.component.value as string").Should().ContainSingle()
                 .Which.GetValue().Should().Be("hi");
             evaluate(node, "Observation.component.value.as(string)").Should().ContainSingle();
+        }
+
+        [TestMethod]
+        public void EnforceAsSingletonRuleRequiresAtMostOneItem()
+        {
+            var node = new Patient { Name = { new HumanName { Family = "A" }, new HumanName { Family = "B" } } }.ToPocoNode();
+
+            var act = () => evaluate(node, "Patient.name.as(HumanName)", strictAs: true);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*more than one item*");
+            evaluate(node, "Patient.name[0].as(HumanName)", strictAs: true).Should().ContainSingle();
+
+            // By default as() filters collections, since FHIR R4 core invariants (dom-3) rely on that.
+            evaluate(node, "Patient.name.as(HumanName)").Should().HaveCount(2);
+
+            act = () => evaluate(node, "Patient.name as HumanName", strictAs: true);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*more than one item*");
+
+            // By default, the 'as' operator works on collections too, since FHIR R4 search parameters rely on that.
+            evaluate(node, "Patient.name as HumanName").Should().HaveCount(2);
+            evaluate(node, "Patient.name.ofType(HumanName)").Should().HaveCount(2);
+        }
+
+        [TestMethod]
+        [DataRow("Patient.gender.as(string1)")]
+        [DataRow("Patient.gender as string1")]
+        [DataRow("Patient.gender.ofType(string1)")]
+        [DataRow("Patient.gender.ofType(FHIR.string1)")]
+        [DataRow("Patient.gender.ofType(System.Patient)")]
+        [DataRow("Patient.ofType(Observation1)")]
+        public void UnknownTypeNameIsAnError(string expression)
+        {
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+            var act = () => evaluate(node, expression);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+            act = () => evaluate(node, expression, strictAs: true);
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+        }
+
+        [TestMethod]
+        public void UnknownTypeNameOnDynamicDataIsNotAnError()
+        {
+            // Logical models (e.g. CDA) have types no inspector knows about, so we cannot tell whether a name is valid.
+            var node = new DynamicResource { DynamicTypeName = "MyLogical" }.ToPocoNode();
+
+            evaluate(node, "ofType(MyLogical)").Should().ContainSingle();
+            evaluate(node, "ofType(OtherLogical)").Should().BeEmpty();
+            evaluate(node, "as(OtherLogical)", strictAs: true).Should().BeEmpty();
+
+            // System types are fully known, though.
+            var act = () => evaluate(node, "ofType(System.Bogus)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+        }
+
+        [TestMethod]
+        [DataRow("Bundle.ofType(Patient)")]
+        [DataRow("Bundle.ofType(Patient1)")]
+        [DataRow("Bundle.entry.ofType(Patient1)")]
+        [DataRow("('a' | 'b').ofType(Patient)")]
+        [DataRow("('a' | 'b').ofType(Patient1)")]
+        [DataRow("('a' | 'b').as(Patient1)")]
+        public void UnknownTypeNameOnBaseModelDataIsNotAnError(string expression)
+        {
+            // Without an inspector annotation, data that only uses classes from the base assembly cannot tell which
+            // FHIR release it belongs to, so the name cannot be verified. The result must not depend on which
+            // model inspectors happen to exist in the process.
+            var node = new Bundle { Type = Bundle.BundleType.Collection, Entry = { new Bundle.EntryComponent() } }.ToPocoNode();
+
+            evaluate(node, expression).Should().BeEmpty();
+
+            // System types are fully known, though.
+            var act = () => evaluate(node, "('a' | 'b').ofType(System.Bogus)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type*");
+        }
+
+        [TestMethod]
+        [DataRow("Bundle.entry.resource.ofType(Patient)")]
+        [DataRow("Bundle.entry.resource.ofType(Patient1)")]
+        [DataRow("Bundle.entry.resource.as(Patient)")]
+        [DataRow("Bundle.entry.resource as Patient")]
+        public void UnknownTypeNameOnConformanceModelDataIsNotAnError(string expression)
+        {
+            // The conformance assembly is shared by R4, R4B, R5 and R6, so like the base assembly it cannot tell
+            // which release the data belongs to.
+            var node = new Bundle
+            {
+                Type = Bundle.BundleType.Collection,
+                Entry = { new Bundle.EntryComponent { Resource = new ValueSet { Id = "vs1" } } }
+            }.ToPocoNode();
+
+            evaluate(node, expression).Should().BeEmpty();
+            evaluate(node, expression, strictAs: true).Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void UnknownTypeNameOnConformanceResourceInReleaseResourceIsAnError()
+        {
+            // A conformance resource contained in a release-specific resource gets the model of its root.
+            var patient = new Patient { Contained = { new ValueSet { Id = "vs1" } } };
+
+            evaluate(patient.ToPocoNode(), "Patient.contained.ofType(Observation)").Should().BeEmpty();
+            var act = () => evaluate(patient.ToPocoNode(), "Patient.contained.ofType(Patient1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'Patient1'*");
+        }
+
+        [TestMethod]
+        public void BooleanFunctionsOnBooleanWithoutValue()
+        {
+            var active = new FhirBoolean(null);
+            active.AddExtension("http://example.org/ext", new FhirString("x"));
+            var node = new Patient { ActiveElement = active }.ToPocoNode();
+
+            evaluate(node, "Patient.active.allTrue()").Single().GetValue().Should().Be(false);
+            evaluate(node, "Patient.active.anyTrue()").Single().GetValue().Should().Be(false);
+            evaluate(node, "Patient.active.allFalse()").Single().GetValue().Should().Be(false);
+            evaluate(node, "Patient.active.anyFalse()").Single().GetValue().Should().Be(false);
+
+            var act = () => evaluate(node, "Patient.active.extension.allTrue()");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*collection of Booleans*");
+        }
+
+        [TestMethod]
+        public void TypeNamesOnBaseOnlyInputDependOnTheInputOnly()
+        {
+            // A Bundle and its entries built in code only have classes from the base assembly, which does not
+            // know the release-specific types, so we cannot tell whether a FHIR name is valid and accept it.
+            var bundle = new Bundle { Type = Bundle.BundleType.Collection };
+            evaluate(bundle.ToPocoNode(), "Bundle.ofType(Patient)").Should().BeEmpty();
+            evaluate(bundle.ToPocoNode(), "Bundle.ofType(string1)").Should().BeEmpty();
+            evaluate(bundle.ToPocoNode(), "('a' | 'b').ofType(Patient)").Should().BeEmpty();
+
+            // An inspector on the input tells us the model, though.
+            var inspector = ModelInfo.ModelInspector;
+            evaluate(bundle.ToPocoNode(inspector), "Bundle.ofType(Patient)").Should().BeEmpty();
+            var act = () => evaluate(bundle.ToPocoNode(inspector), "Bundle.ofType(string1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'string1'*");
+
+            // As does data from a release-specific assembly anywhere in the input.
+            act = () => evaluate(new Patient().ToPocoNode(), "('a' | %context).ofType(string1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'string1'*");
+        }
+
+        [TestMethod]
+        public void TypeNamesOnConformanceResourcesDependOnTheInputOnly()
+        {
+            // ValueSet lives in the conformance assembly, which is shared by several releases and does not know
+            // release-specific types such as Patient.
+            var bundle = new Bundle { Type = Bundle.BundleType.Collection, Entry = { new Bundle.EntryComponent { Resource = new ValueSet() } } };
+            evaluate(bundle.ToPocoNode(), "Bundle.entry.resource.ofType(Patient)").Should().BeEmpty();
+            evaluate(new ValueSet().ToPocoNode(), "ValueSet.ofType(Patient)").Should().BeEmpty();
+            evaluate(new ValueSet().ToPocoNode(), "ValueSet.ofType(Patient1)").Should().BeEmpty();
+
+            var act = () => evaluate(new ValueSet().ToPocoNode(ModelInfo.ModelInspector), "ValueSet.ofType(Patient1)");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*Unknown type 'Patient1'*");
+        }
+
+        [TestMethod]
+        public void UnknownTypeNameIsReportedByTheTypeFunction()
+        {
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+            var act = () => evaluate(node, "Patient.gender.ofType(bogus).exists()");
+            act.Should().Throw<System.InvalidOperationException>().WithMessage("*'ofType'*Unknown type 'bogus'*");
+        }
+
+        [TestMethod]
+        [DataRow("Patient.gender.ofType(Observation)")] // the Poco for gender lives in the base assembly
+        [DataRow("Patient.gender.ofType(SimpleQuantity)")] // a profile on a core datatype
+        [DataRow("Patient.gender.ofType(MoneyQuantity)")]
+        [DataRow("Patient.gender.as(DateTime)")] // capitalized FHIR names, as used by STU3 search parameters
+        [DataRow("Patient.gender.as(Uri)")]
+        [DataRow("Patient.gender.as(Date)")]
+        [DataRow("Patient.gender.as(Observation)")]
+        [DataRow("Patient.gender.ofType(System.Integer)")]
+        [DataRow("Patient.gender.ofType(FHIR.Age)")]
+        [DataRow("Patient.gender.ofType(BackboneElement)")]
+        [DataRow("Patient.ofType(Observation)")]
+        [DataRow("Patient.ofType(Logical.Whatever)")] // types in other namespaces cannot be checked
+        [DataRow("('a' | 'b').ofType(Patient)")]
+        [DataRow("{}.ofType(string1)")] // nothing to filter
+        public void KnownTypeNameWithoutMatchIsEmpty(string expression)
+        {
+            var node = new Patient { Gender = AdministrativeGender.Male }.ToPocoNode();
+            evaluate(node, expression).Should().BeEmpty();
         }
 
         [TestMethod]
