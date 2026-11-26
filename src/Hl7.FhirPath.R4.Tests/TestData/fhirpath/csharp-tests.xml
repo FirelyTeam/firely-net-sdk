@@ -487,7 +487,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0127" inputfile="fp-test-patient.xml">
-    <expression>Patient.identifier.skip(1).all({}).empty()</expression>
+    <expression>Patient.identifier.skip(1).all({}) = false</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0128" inputfile="fp-test-patient.xml">

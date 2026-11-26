@@ -288,10 +288,6 @@ namespace Hl7.FhirPath.R4.Tests
             // repeat() with a literal argument should not repeat the same item
             "testRepeat5",
 
-            // all() returns empty instead of false when a criterion is empty (e.g. comparing dateTimes of different
-            // precision)
-            "testPeriodInvariantOld",
-
             // conformsTo() is not implemented (needs profile resolution / validation)
             "testConformsTo1", "testConformsTo2", "testConformsTo3",
         ];

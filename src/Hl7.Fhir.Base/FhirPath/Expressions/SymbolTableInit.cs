@@ -536,9 +536,10 @@ public static class SymbolTableInit
             newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
             index++;
 
+            // Per the spec, all() is true only if the criteria evaluates to true for every element;
+            // otherwise (false or empty) the result is false.
             var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-            if (result == null) return [];
-            if (result == false) return PocoNode.ForPrimitive<FhirBoolean>(false);
+            if (result != true) return PocoNode.ForPrimitive<FhirBoolean>(false);
         }
 
         return PocoNode.ForPrimitive<FhirBoolean>(true);
