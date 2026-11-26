@@ -226,8 +226,9 @@ public static class SymbolTableInit
         t.Add(new UnknownArgCountCallSignature("coalesce", typeof(IEnumerable<PocoNode>)), runCoalesce);
         t.Add(new UnknownArgCountCallSignature("sort", typeof(IEnumerable<PocoNode>)), runSort);
         // these unary operators just inject an ordering node that includes which direction the sort if processing
-        t.Add("unary.asc", (object f, PocoNode a) => OrderedNode.FromPrimitiveNode(a), doNullProp: true);
-        t.Add("unary.desc", (object f, PocoNode a) => OrderedNode.FromPrimitiveNode(a, true), doNullProp: true);
+        t.Add("unary.asc", (object f, IEnumerable<PocoNode> a) => toDirectedSortKey(a, descending: false, emptyLast: false));
+        t.Add("unary.desc", (object f, IEnumerable<PocoNode> a) => toDirectedSortKey(a, descending: true, emptyLast: true));
+        t.Add("unary." + OrderedNode.MINUS_DIRECTION, (object f, IEnumerable<PocoNode> a) => toDirectedSortKey(a, descending: true, emptyLast: false));
 
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
         t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
@@ -293,25 +294,66 @@ public static class SymbolTableInit
         var lambda = arguments.Skip(1);
         if (!lambda.Any())
         {
-            // Just sort using the native element comparer
-            // System.Linq.Enumerable.Order;
-            return CachedEnumerable.Create(focus.OrderBy(item => item, EqualityOperators.TypedElementComparer));
+            // Without a key selector, the items themselves are the sort keys
+            return toSortedList(focus.OrderBy(toSortKey, EqualityOperators.SortKeyComparer));
         }
 
-        var keySelector = lambda.First();
-        IOrderedEnumerable<PocoNode> orderedResult = focus.OrderBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
-        lambda = lambda.Skip(1);
-        while (lambda.Any())
+        IOrderedEnumerable<PocoNode> orderedResult = null;
+        foreach (var keySelector in lambda)
         {
-            keySelector = lambda.First();
-            orderedResult = orderedResult.ThenBy(item => readElement(ctx, item, keySelector).FirstOrDefault(), EqualityOperators.TypedElementComparer);
-
-            // move onto the next item
-            lambda = lambda.Skip(1);
+            // Each key gets its own selector: the ordering is only evaluated by ToList() below, after this loop
+            // has finished, so the lambda must not capture a variable that is changed by a later iteration.
+            Func<PocoNode, PocoNode> key = item => toSortKey(readSortKey(ctx, item, keySelector));
+            orderedResult = orderedResult is null
+                ? focus.OrderBy(key, EqualityOperators.SortKeyComparer)
+                : orderedResult.ThenBy(key, EqualityOperators.SortKeyComparer);
         }
 
-        return orderedResult.ToList();
+        return toSortedList(orderedResult!);
+
+        // A key without asc/desc is not wrapped by unary.asc, so convert complex keys that can be ordered
+        // (Quantity) here as well; otherwise sort(x) would not order them while sort(x asc) does.
+        static PocoNode toSortKey(PocoNode key) =>
+            key is null or PrimitiveNode ? key : OrderedNode.FromPrimitiveNode(key);
     }
+
+    private static List<PocoNode> toSortedList(IOrderedEnumerable<PocoNode> ordered)
+    {
+        try
+        {
+            return ordered.ToList();
+        }
+        catch (InvalidOperationException e) when (e.InnerException is not null)
+        {
+            // The sort wraps errors from the comparer and key selectors in a generic "Failed to compare" error
+            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Evaluates a sort() key selector for an item. The key must be a single value (or empty).
+    /// </summary>
+    private static PocoNode readSortKey(Closure ctx, PocoNode element, Invokee keySelector) =>
+        singleSortKey(readElement(ctx, element, keySelector));
+
+    private static PocoNode singleSortKey(IEnumerable<PocoNode> key)
+    {
+        // Runs for every item and key, so read at most two values without copying them into a list.
+        using var values = key.GetEnumerator();
+        if (!values.MoveNext()) return null;
+
+        var value = values.Current;
+        if (values.MoveNext())
+            throw new InvalidOperationException("A sort() key selector returned more than one value for an item.");
+        return value;
+    }
+
+    /// <summary>
+    /// The implementation of the asc/desc qualifiers (and the '-' prefix) of a sort() key.
+    /// </summary>
+    private static IEnumerable<PocoNode> toDirectedSortKey(IEnumerable<PocoNode> key, bool descending, bool emptyLast) =>
+        singleSortKey(key) is { } value ? [OrderedNode.FromPrimitiveNode(value, descending, emptyLast)] : [];
 
     private static IEnumerable<PocoNode> readElement(Closure ctx, PocoNode element, Invokee selectProp)
     {
