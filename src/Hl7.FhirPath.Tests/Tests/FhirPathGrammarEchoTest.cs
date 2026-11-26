@@ -194,6 +194,17 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsEcho(parser, "8 as notoddbuteven ");
             AssertParser.SucceedsEcho(parser, "8  as notoddbuteven ");
             AssertParser.SucceedsEcho(parser, "/*A*/ 8 /*B*/ as /*C*/ notoddbuteven /*D*/");
+            AssertParser.SucceedsEcho(parser, "8 as notoddbuteven is  integer");
+        }
+
+        [TestMethod]
+        public void FhirPath_Echo_TypeInUnion()
+        {
+            var parser = Grammar.Expression.End();
+
+            AssertParser.SucceedsEcho(parser, "/*A*/ 8 /*B*/ as /*C*/ notoddbuteven /*D*/ is /*E*/ X /*F*/ | /*G*/ 3 /*H*/");
+            AssertParser.SucceedsEcho(parser, "a | b is X // c\n | d");
+            AssertParser.SucceedsEcho(parser, "a as Quantity  > 5 'mg'");
         }
 
         [TestMethod]

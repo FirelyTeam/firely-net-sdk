@@ -187,10 +187,10 @@ namespace Hl7.FhirPath.Parser
         // | expression '[' expression ']'                             #indexerExpression
         // | ('+' | '-') expression                                    #polarityExpression
         // | expression('*' | '/' | 'div' | 'mod') expression         #multiplicativeExpression
-        // | expression('+' | '-' ) expression                        #additiveExpression
+        // | expression('+' | '-' | '&') expression                  #additiveExpression
+        // | expression('is' | 'as') typeSpecifier                    #typeExpression
         // | expression '|' expression                                 #unionExpression
         // | expression('<=' | '<' | '>' | '>=') expression           #inequalityExpression
-        // | expression('is' | 'as') typeSpecifier                    #typeExpression
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
         // | expression('in' | 'contains') expression                 #membershipExpression
         // | expression 'and' expression                               #andExpression
@@ -269,39 +269,45 @@ namespace Hl7.FhirPath.Parser
                                     WhitespaceOrComments().Then(ws => Lexer.MulOperator.Select(v => new SubToken(v)).Positioned()),
                                     PolarityExpression);
 
-        // | expression('+' | '-' ) expression                        #additiveExpression
+        // | expression('+' | '-' | '&') expression                  #additiveExpression
         public static readonly Parser<Expression> AddExpression = BinaryExpression(
                                     Lexer.AddOperator.Select(v => new SubToken(v)).Positioned(),
                                     MulExpression);
 
+        // | expression ('is' | 'as') typeSpecifier                    #typeExpression
+        // The type operators bind tighter than union and the comparison operators, so
+        // `1 | 1 is Integer` is `1 | (1 is Integer)`. The rule is left-recursive, so
+        // `a as X is Y` is `(a as X) is Y`.
+        public static readonly Parser<Expression> TypeExpression =
+            AddExpression.Then(typeOperatorChain);
+
+        private static Parser<Expression> typeOperatorChain(Expression operand) =>
+            (
+                from wsLeading in WhitespaceOrComments()
+                from isas in Lexer.TypeOperator.Select(v => new SubToken(v).WithLeadingWS(wsLeading)).Positioned()
+                from wsLeadingTypeSpec in WhitespaceOrComments()
+                from tp in TypeSpec.Select(v => new IdentifierExpression(v).WithLeadingWS(wsLeadingTypeSpec)).Positioned()
+                from wsTrailing in WhitespaceOrComments()
+                select (Expression)new BinaryExpression(isas, operand, tp).WithTrailingWS(wsTrailing)
+                    .UsePositionFrom(isas.Location)
+            )
+            .Then(typeOperatorChain)
+            .Or(Parse.Return(operand));
+
         // | expression '|' expression                                 #unionExpression
         public static readonly Parser<Expression> UnionExpression = BinaryExpression(
                                     Lexer.UnionOperator.Select(v => new SubToken(v)).Positioned(),
-                                    AddExpression);
+                                    TypeExpression);
 
         // | expression('<=' | '<' | '>' | '>=') expression           #inequalityExpression
         public static readonly Parser<Expression> InEqExpression = BinaryExpression(
                                     Lexer.InEqOperator.Select(v => new SubToken(v)).Positioned(),
                                     UnionExpression);
 
-        // | expression ('is' | 'as') typeSpecifier                    #typeExpression
-        public static readonly Parser<Expression> TypeExpression =
-            InEqExpression.Then(
-                    ineq => (
-                        from wsLeading in WhitespaceOrComments()
-                        from isas in Lexer.TypeOperator.Select(v => new SubToken(v).WithLeadingWS(wsLeading)).Positioned()
-                        from wsLeadingTypeSpec in WhitespaceOrComments()
-                        from tp in TypeSpec.Select(v => new IdentifierExpression(v).WithLeadingWS(wsLeadingTypeSpec)).Positioned()
-                        from wsTrailing in WhitespaceOrComments()
-                        select new BinaryExpression(isas, ineq, tp).WithTrailingWS(wsTrailing)
-                        .UsePositionFrom(isas.Location)
-                    )
-                    .Or(Parse.Return(ineq)));
-
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
         public static readonly Parser<Expression> EqExpression = BinaryExpression(
                                     Lexer.EqOperator.Select(v => new SubToken(v)).Positioned(),
-                                    TypeExpression);
+                                    InEqExpression);
 
         // | expression('in' | 'contains') expression                 #membershipExpression
         public static readonly Parser<Expression> MembershipExpression = BinaryExpression(
