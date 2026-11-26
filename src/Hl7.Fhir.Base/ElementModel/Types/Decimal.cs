@@ -107,6 +107,13 @@ public class Decimal(decimal value = 0) : Any, IComparable, ICqlEquatable, ICqlO
     /// <returns></returns>
     public static int Scale(decimal d, bool ignoreTrailingZeroes)
     {
+        if (!ignoreTrailingZeroes)
+#if NET
+            return d.Scale;
+#else
+            return (decimal.GetBits(d)[3] >> 16) & 0xFF;
+#endif
+
         var sr = d.ToString(CultureInfo.InvariantCulture);
         var pointPos = sr.IndexOf('.');
         if (pointPos == -1) return 0;

@@ -191,6 +191,11 @@ public static class SymbolTableInit
         t.Add("sqrt", (decimal f) => f.Sqrt(), doNullProp: true);
         t.Add("truncate", (decimal f) => Math.Truncate((double)f), doNullProp: true);
 
+        t.Add("precision", (decimal f) => f.PrecisionDigits(), doNullProp: true);
+        t.Add("precision", (P.Date f) => f.PrecisionDigits(), doNullProp: true);
+        t.Add("precision", (P.DateTime f) => f.PrecisionDigits(), doNullProp: true);
+        t.Add("precision", (P.Time f) => f.PrecisionDigits(), doNullProp: true);
+
         // The next two functions existed pre-normative, so we have kept them.
         t.Add("is", (PocoNode f, string name) => f.Is(name), doNullProp: true);
         t.Add("as", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);

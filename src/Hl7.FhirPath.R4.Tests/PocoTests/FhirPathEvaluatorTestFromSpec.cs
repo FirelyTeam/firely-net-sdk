@@ -243,10 +243,6 @@ namespace Hl7.FhirPath.R4.Tests
             // Operator precedence of 'is' relative to '|' and comparison operators
             "testPrecedence3", "testPrecedence4",
 
-            // precision() function is not implemented
-            "PrecisionDecimal", "PrecisionYear", "PrecisionDateTimeMilliseconds", "PrecisionTimeMinutes",
-            "PrecisionTimeMilliseconds",
-
             // matchesFull() function is not implemented
             "testMatchesFullWithinUrl1", "testMatchesFullWithinUrl1a", "testMatchesFullWithinUrl2", "testMatchesFullWithinUrl3",
             "testMatchesFullWithinUrl4",

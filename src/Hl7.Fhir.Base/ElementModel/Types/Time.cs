@@ -57,6 +57,12 @@ public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable
     public bool HasOffset { get; }
 
     private string? _originalParsedString;
+
+    /// <summary>
+    /// The number of fraction digits as written in the parsed value, or <c>null</c> if this time was not created by Parse().
+    /// </summary>
+    internal int? ParsedFractionDigits { get; private init; }
+
     private readonly DateTimeOffset _value;
 
     /// <summary>
@@ -132,7 +138,8 @@ public class Time : Any, IComparable, ICqlEquatable, ICqlOrderable
         var success = DateTimeOffset.TryParse(parseableDt, out var parsedValue);
         value = new Time(parsedValue, prec, offset.Success)
         {
-            _originalParsedString = representation
+            _originalParsedString = representation,
+            ParsedFractionDigits = fracg.Success ? fracg.Value.Length - 1 : 0
         };
 
         return success;
