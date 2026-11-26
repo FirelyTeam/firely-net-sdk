@@ -123,6 +123,24 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void FhirPath_Lex_TimeWithOffset()
+        {
+            var parser = Lexer.TimeWithOffset.End();
+
+            accept("@T12:34:34+02:30");
+            accept("@T12:34:00Z");
+            accept("@T12:34:34.345-05:00");
+            accept("@T12Z");
+
+            reject("@T12:34:34");
+            reject("2001-01-01T12:34:34+02:30");
+            reject("@2001-01-01T12:34:34+02:30");
+
+            void accept(string s) => AssertParser.SucceedsMatch(parser, s, P.Time.Parse(s.Substring(2)));
+            void reject(string s) => AssertParser.FailsMatch(parser, s);
+        }
+
+        [TestMethod]
         public void FhirPath_Lex_Date()
         {
             var parser = Lexer.Date.End();

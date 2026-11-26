@@ -238,6 +238,12 @@ namespace Hl7.FhirPath.Expressions
         public object Value { get; private set; }
 
         /// <summary>
+        /// True if the parser read this constant from a time literal with a timezone offset (e.g. <c>@T14:34:28Z</c>).
+        /// FHIRPath times have no timezone, so evaluating such a literal is an execution error.
+        /// </summary>
+        internal bool IsTimeLiteralWithOffset { get; set; }
+
+        /// <summary>
         /// If this is a quantity type, then this is the unit of the quantity as parsed
         /// </summary>
         public SubToken Unit { get; private set; }

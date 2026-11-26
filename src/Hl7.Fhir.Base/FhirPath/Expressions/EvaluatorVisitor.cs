@@ -54,6 +54,14 @@ namespace Hl7.FhirPath.Expressions
 
         public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
+            // FHIRPath times have no timezone. The parser accepts a time literal with an offset so that,
+            // as the FHIRPath conformance tests require, it is reported as an execution error.
+            if (expression.IsTimeLiteralWithOffset)
+            {
+                return WrapForDebugTracer((_, _) =>
+                    throw new InvalidOperationException($"Time literal '@T{expression.Value}' is invalid: a time cannot have a timezone offset."), expression);
+            }
+
             return WrapForDebugTracer(InvokeeFactory.Return(PocoNode.ForAnyPrimitive(expression.Value)), expression);
         }
 

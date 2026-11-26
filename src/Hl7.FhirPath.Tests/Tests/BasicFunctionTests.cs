@@ -91,6 +91,29 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void TestTimeLiteralWithOffsetIsExecutionError()
+        {
+            foreach (var expr in new[] { "@T14:34:28Z", "@T14:34:28+10:00.is(Time)", "@T10-05:00" })
+            {
+                // The literal parses and compiles, but evaluating it is an error, since FHIRPath times have no timezone
+                var evaluator = new FhirPathCompiler().Compile(expr, true);
+                Assert.ThrowsExactly<InvalidOperationException>(() => evaluator.Scalar(null!, new EvaluationContext()), expr);
+            }
+
+            // Only a literal read by the parser is rejected: a Time constant with an offset built in code still evaluates
+            var built = new Expressions.ConstantExpression(P.Time.Parse("10:00Z"), Hl7.Fhir.Language.TypeSpecifier.Time);
+            Assert.AreEqual(P.Time.Parse("10:00Z"), new FhirPathCompiler().Compile(built).Scalar(null!, new EvaluationContext()));
+
+            // A time followed by arithmetic is not mistaken for a timezone offset
+            foreach (var expr in new[] { "@T10:00+5", "@T10:00-05" })
+            {
+                var parsed = new FhirPathCompiler().Parse(expr) as Expressions.BinaryExpression;
+                Assert.IsNotNull(parsed, expr);
+                Assert.IsInstanceOfType(((Expressions.ConstantExpression)parsed.Arguments.First()).Value, typeof(P.Time), expr);
+            }
+        }
+
+        [TestMethod]
         public void TestMath()
         {
             isB(@"-4.5 + 4.5 = 0");

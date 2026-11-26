@@ -121,7 +121,7 @@ namespace Hl7.FhirPath.Parser
                         )
                     ) 
                     | T
-                ) (Z|((\+|-)[0-9][0-9]:[0-9][0-9]))?",
+                ) " + TIMEZONEOFFSET + "?",
                 RegexOptions.IgnorePatternWhitespace);
 
         public static readonly Parser<P.DateTime> DateTime =
@@ -142,6 +142,9 @@ namespace Hl7.FhirPath.Parser
             return result;
         }
 
+        // Timezone offset of a DATETIME literal
+        private const string TIMEZONEOFFSET = @"(Z|((\+|-)[0-9][0-9]:[0-9][0-9]))";
+
         // fragment TIMEFORMAT
         //      : [0-9] [0-9] (':'[0-9] [0-9] (':'[0-9] [0-9] ('.'[0-9]+)?)?)?
         //      ;
@@ -155,6 +158,15 @@ namespace Hl7.FhirPath.Parser
 
         public static readonly Parser<P.Time> Time =
             Parse.Regex(TimeRegEx).Select(s => P.Time.Parse(s.Substring(2)));
+
+        // A time literal followed by a timezone offset is not valid FHIRPath, but the conformance tests expect
+        // this to be reported as an execution error rather than a syntax error. This rule recognizes such a
+        // literal, so the grammar can turn it into an expression that fails when evaluated.
+        internal static readonly Regex TimeWithOffsetRegEx =
+            new Regex("@T" + TIMEFORMAT + TIMEZONEOFFSET, RegexOptions.IgnorePatternWhitespace);
+
+        internal static readonly Parser<P.Time> TimeWithOffset =
+            Parse.Regex(TimeWithOffsetRegEx).Select(s => P.Time.Parse(s.Substring(2)));
 
         // NUMBER
         //   : [0-9]+('.' [0-9]+)?
