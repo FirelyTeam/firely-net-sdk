@@ -434,7 +434,11 @@ namespace HL7.FhirPath.Tests
                     ("1.5.round(0) = 2", true, false),
                     ("1.5.round() = 2", true, false),
                     ("3.14159.round(3) = 3.142", true, false),
-                    ("1.0.round(-1)", true, true), // should throw an error
+                    ("1.0.round(-1).empty()", true, false), // a negative precision gives empty
+                    ("12.round(-1).empty()", true, false),
+                    ("1.5.round(28) = 1.5", true, false),
+                    ("1.5.round(29).empty()", true, false), // beyond the maximum precision gives empty
+                    ("1.5.round(2000000000).empty()", true, false),
                     ("(1 | 2).round(2)", true, true), // should throw an error
                     ("'a'.round(2)", true, true), // should throw an error
 
