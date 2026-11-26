@@ -137,11 +137,18 @@ namespace Hl7.Fhir.Support.Tests
                     ("'string'.lowBoundary() = 'string'", false),
                     ("1.587 'cm'.lowBoundary(8) = 1.58650000 'cm'", true),
                     ("@2014.lowBoundary(6) = @2014-01", true),
-                    ("@2014.lowBoundary() = @2014-01-01T00:00:00.000", true),
+                    ("@2014.lowBoundary() = @2014-01-01", true),
+                    ("@2014.lowBoundary(17) = @2014-01-01T00:00:00.000+14:00", true),
                     ("@2014.lowBoundary(8) = @2014-01-01", true),
                     ("@2014-02.lowBoundary(8) = @2014-02-01", true),
-                    ("@2014-01-01T08.lowBoundary(17) = @2014-01-01T08:00:00.000", true),
+                    ("@2014-01-01T08:05+08:00.lowBoundary(8).toString() = '2014-01-01'", true), // a date carries no offset
+                    ("@2014-01-01T10:00Z.lowBoundary(8) = @2014-01-01", true),
+                    ("@2014-01-01T08.lowBoundary(17) = @2014-01-01T08:00:00.000+14:00", true),
+                    ("@2014-01-01T08.lowBoundary(17).toString() = '2014-01-01T08:00:00.000+14:00'", true),
+                    ("@2014-01-01T08:05+08:00.lowBoundary(17).toString() = '2014-01-01T08:05:00.000+08:00'", true),
+                    ("@2014-01-01T08:05:30Z.lowBoundary(14).toString() = '2014-01-01T08:05:30Z'", true),
                     ("@T10:30.lowBoundary(9) = @T10:30:00.000", true),
+                    ("@T10:30.lowBoundary(9).toString() = '10:30:00.000'", true),
                     ("@T10:30:00.000.lowBoundary() = @T10:30:00.000", true),
                     ("@T10:30.lowBoundary() = @T10:30:00", true),
                 }.Select(t => new object[] { t.expression, t.expected });
@@ -162,10 +169,39 @@ namespace Hl7.Fhir.Support.Tests
                     ("'string'.highBoundary() = 'string'", false),
                     ("1.587 'cm'.highBoundary(8) = 1.58750000 'cm'", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
+                    ("@2014-01-01T08:05:30.5Z.highBoundary().toString() = '2014-01-01T08:05:30.599Z'", true), // .5 spans 100 ms
+                    ("@2014-01-01T08:05:30.5Z.lowBoundary().toString() = '2014-01-01T08:05:30.500Z'", true),
+                    ("@2014-01-01T08Z.highBoundary().toString() = '2014-01-01T08:00:59.999Z'", true),
+                    ("@2014-01-01T08+05:00.lowBoundary().toString() = '2014-01-01T08:00:00.000+05:00'", true),
+                    ("@2014-01-01T08:05:30.12345Z.highBoundary().toString() = '2014-01-01T08:05:30.123Z'", true), // truncated to ms
+                    ("@2014-01-01T08:05:30.12345Z.lowBoundary().toString() = '2014-01-01T08:05:30.123Z'", true),
+                    ("@2014-01-01T08:05:30.5.highBoundary().toString() = '2014-01-01T08:05:30.599-12:00'", true),
+                    ("@2014-01-01T08:05Z.highBoundary(6).toString() = '2014-01'", true),
                     ("@2014.highBoundary(8) = @2014-12-31", true),
                     ("@2014-03.highBoundary(8) = @2014-03-31", true),
                     ("@2014-02.highBoundary(8) = @2014-02-28", true),
                     ("@2020-02.highBoundary(8) = @2020-02-29", true), // leap year
+                    ("@2014.highBoundary() = @2014-12-31", true),
+                    ("@2014.highBoundary(17) = @2014-12-31T23:59:59.999-12:00", true),
+                    ("@2014-01-01T08:05:30+00:00.highBoundary().toString() = '2014-01-01T08:05:30.999+00:00'", true),
+                    ("@2014-01-01T08.highBoundary(17).toString() = '2014-01-01T08:00:59.999-12:00'", true),
+                    ("@2014-01-01T08:05-05:00.highBoundary(17).toString() = '2014-01-01T08:05:59.999-05:00'", true),
+                    ("@2014-01-01T08:05Z.highBoundary(14).toString() = '2014-01-01T08:05:59Z'", true),
+                    ("@2014-01-01.lowBoundary(17) < @2014-01-01T10:10:10Z.highBoundary()", true),
+                    // At the edges of the representable range the +14:00/-12:00 offset does not fit, so UTC is used
+                    ("@9999-12-31.highBoundary(17).toString() = '9999-12-31T23:59:59.999+00:00'", true),
+                    ("@9999.highBoundary(8) = @9999-12-31", true),
+                    ("@0001-01-01.lowBoundary(17).toString() = '0001-01-01T00:00:00.000+00:00'", true),
+                    ("@0001.lowBoundary(4) = @0001", true),
+                    ("@9999-12-31T23:59+05:00.highBoundary().toString() = '9999-12-31T23:59:59.999+05:00'", true), // the latest wall clock at +05:00
+                    ("@0001-01-01T00:00-05:00.lowBoundary().toString() = '0001-01-01T00:00:00.000-05:00'", true),
+                    ("@9999-12-31T13:00.highBoundary().toString() = '9999-12-31T23:59:59.999+00:00'", true), // clamped to the latest instant
+                    ("@9999-12-31T13:00-05:00 <= @9999-12-31T13:00.highBoundary()", true),
+                    ("@0001-01-01T05:00.lowBoundary().toString() = '0001-01-01T00:00:00.000+00:00'", true), // clamped to the earliest instant
+                    ("@0001-01-01T05:00:00.000+05:00 >= @0001-01-01T05:00.lowBoundary()", true),
+                    ("@9999-12-31T18:59-05:00.lowBoundary(8) = @9999-12-31", true), // a date result ignores the input's offset
+                    ("@9999-12-31T18:59-05:00.highBoundary().toString() = '9999-12-31T18:59:59.999-05:00'", true),
+                    ("@0001-01-01.lowBoundary(17) < @9999-12-31.highBoundary(17)", true),
                     ("@T10:30.highBoundary(9) = @T10:30:59.999", true),
                     ("@T10:30.highBoundary() = @T10:30:59.999", true),
                 }.Select(t => new object[] { t.expression, t.expected });
@@ -201,7 +237,21 @@ namespace Hl7.Fhir.Support.Tests
             }
         }
 
+        [TestMethod]
+        [DataRow(true, null, "10:30:00.000")]
+        [DataRow(true, 6L, "10:30:00")]
+        [DataRow(false, null, "10:30:59.999")]
+        [DataRow(false, 6L, "10:30:59")]
+        public void TimeBoundaryDropsOffset(bool low, long? precision, string expected)
+        {
+            var time = Hl7.Fhir.ElementModel.Types.Time.Parse("10:30+02:00");
+            var result = low
+                ? ElementNavFhirExtensions.BoundaryTime(time, precision, 0, 0, 0)
+                : ElementNavFhirExtensions.BoundaryTime(time, precision, 59, 59, 999);
 
+            result.HasOffset.Should().BeFalse();
+            result.ToString().Should().Be(expected);
+        }
 
     }
 }
