@@ -32,12 +32,43 @@ namespace Hl7.Fhir.ElementModel.Types;
 public sealed class DateTimeRange : IEquatable<DateTimeRange>
 {
     internal DateTimeRange(string? originalValue, DateTimePrecision precision, DateTimeOffset? start, DateTimeOffset? end)
+        : this(originalValue, precision, precision, precision, start, end)
+    {
+    }
+
+    /// <summary>
+    /// Creates a range whose sides have their own precision. A <c>null</c> precision marks a side that was not given;
+    /// <see cref="Precision"/> is the coarser of the two, or the one that is given.
+    /// </summary>
+    /// <exception cref="ArgumentException">Both precisions are <c>null</c>.</exception>
+    internal DateTimeRange(string? originalValue, DateTimePrecision? startPrecision, DateTimePrecision? endPrecision,
+        DateTimeOffset? start, DateTimeOffset? end)
+        : this(originalValue, coarser(startPrecision, endPrecision)
+            ?? throw new ArgumentException("At least one of the start and end precision must be given."),
+            startPrecision, endPrecision, start, end)
+    {
+    }
+
+    private DateTimeRange(string? originalValue, DateTimePrecision precision, DateTimePrecision? startPrecision,
+        DateTimePrecision? endPrecision, DateTimeOffset? start, DateTimeOffset? end)
     {
         OriginalValue = originalValue;
         Precision = precision;
+        StartPrecision = startPrecision;
+        EndPrecision = endPrecision;
         Interval = Interval<DateTimeOffset>.Create(start is not null, start.GetValueOrDefault(), true,
             end is not null, end.GetValueOrDefault(), false);
     }
+
+    /// <summary>
+    /// The coarser of two precisions, the one that is given when the other is <c>null</c>, or <c>null</c> when both are.
+    /// </summary>
+    private static DateTimePrecision? coarser(DateTimePrecision? left, DateTimePrecision? right) =>
+        (left, right) switch
+        {
+            ({ } l, { } r) => l < r ? l : r,
+            _ => left ?? right
+        };
 
     /// <summary>
     /// Creates the range of instants from <paramref name="start"/> (inclusive) to <paramref name="end"/> (exclusive).
@@ -66,10 +97,39 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
     public string? OriginalValue { get; }
 
     /// <summary>
-    /// The precision of the value, the coarser of both precisions for a range created by <see cref="Between"/>, or
-    /// the precision given to <see cref="DateTimeRange(DateTimePrecision, DateTimeOffset?, DateTimeOffset?)"/>.
+    /// The precision of the value, or the precision given to
+    /// <see cref="DateTimeRange(DateTimePrecision, DateTimeOffset?, DateTimeOffset?)"/>. For a range created by
+    /// <see cref="Between"/> it is the coarser of <see cref="StartPrecision"/> and <see cref="EndPrecision"/>, or the
+    /// one that is not <c>null</c>.
     /// </summary>
+    /// <remarks>
+    /// When <see cref="Between"/> leaves both sides without a precision, which happens only when its single argument
+    /// is itself a range without a precision on the side that is used, this is the precision of that argument.
+    /// </remarks>
     public DateTimePrecision Precision { get; }
+
+    /// <summary>
+    /// The precision of the start of the range. Equal to <see cref="Precision"/>, except for a range created by
+    /// <see cref="Between"/>: there it is the <see cref="StartPrecision"/> of the start argument, or <c>null</c> when
+    /// no start was given.
+    /// </summary>
+    /// <remarks>
+    /// <c>null</c> means that no start was given, not that the range is unbounded below: a start that falls outside
+    /// what <see cref="DateTimeOffset"/> can represent leaves <see cref="Start"/> <c>null</c> but keeps its precision.
+    /// </remarks>
+    public DateTimePrecision? StartPrecision { get; }
+
+    /// <summary>
+    /// The precision of the end of the range. Equal to <see cref="Precision"/>, except for a range created by
+    /// <see cref="Between"/>: there it is the <see cref="EndPrecision"/> of the end argument, or <c>null</c> when
+    /// no end was given.
+    /// </summary>
+    /// <remarks>
+    /// <c>null</c> means that no end was given, not that the range is unbounded above: an end that falls outside
+    /// what <see cref="DateTimeOffset"/> can represent, such as the end of <c>9999-12-31</c>, leaves <see cref="End"/>
+    /// <c>null</c> but keeps its precision.
+    /// </remarks>
+    public DateTimePrecision? EndPrecision { get; }
 
     /// <summary>
     /// The instants covered, as an interval closed below and open above.
@@ -137,9 +197,14 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
     /// <summary>
     /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
-    /// <paramref name="end"/>, with the coarser of both precisions. A <c>null</c> argument leaves that side unbounded.
+    /// <paramref name="end"/>. A <c>null</c> argument leaves that side unbounded.
     /// Use <see cref="TryBetween"/> where the bounds come from input that may be reversed.
     /// </summary>
+    /// <remarks>
+    /// Each side keeps its own precision: <see cref="StartPrecision"/> is that of <paramref name="start"/> and
+    /// <see cref="EndPrecision"/> that of <paramref name="end"/>, each <c>null</c> when that argument is <c>null</c>.
+    /// <see cref="Precision"/> is the coarser of the two, or the one that is not <c>null</c>.
+    /// </remarks>
     /// <exception cref="ArgumentException">Both arguments are <c>null</c>, or the end lies at or before the start.</exception>
     public static DateTimeRange Between(DateTimeRange? start, DateTimeRange? end)
     {
@@ -153,8 +218,9 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
     /// <summary>
     /// Creates a range from the lower bound of <paramref name="start"/> to the upper bound of
-    /// <paramref name="end"/>, with the coarser of both precisions, as <see cref="Between"/> does. Fails instead of
-    /// throwing when both arguments are <c>null</c> or the end lies at or before the start.
+    /// <paramref name="end"/>, as <see cref="Between"/> does, with the same <see cref="StartPrecision"/>,
+    /// <see cref="EndPrecision"/> and <see cref="Precision"/>. Fails instead of throwing when both arguments are
+    /// <c>null</c> or the end lies at or before the start.
     /// </summary>
     /// <returns><c>true</c> when <paramref name="range"/> was created.</returns>
     public static bool TryBetween(DateTimeRange? start, DateTimeRange? end, [NotNullWhen(true)] out DateTimeRange? range)
@@ -176,16 +242,18 @@ public sealed class DateTimeRange : IEquatable<DateTimeRange>
 
     private static DateTimeRange between(DateTimeRange? start, DateTimeRange? end)
     {
-        var precision = (start, end) switch
-        {
-            ({ } s, { } e) => s.Precision < e.Precision ? s.Precision : e.Precision,
-            ({ } s, null) => s.Precision,
-            (null, { } e) => e.Precision,
-            _ => throw new InvalidOperationException()
-        };
+        // Each side keeps the precision of the bound it takes; the side of an argument that is not used does not count.
+        var startPrecision = start?.StartPrecision;
+        var endPrecision = end?.EndPrecision;
 
         // A range built from two values has no single lexical value of its own.
-        return new DateTimeRange(null, precision, start?.Start, end?.End);
+        if (startPrecision is not null || endPrecision is not null)
+            return new DateTimeRange(null, startPrecision, endPrecision, start?.Start, end?.End);
+
+        // Neither side has a precision: the single argument is itself a range that was given no bound on the side
+        // used here, such as Between(Between(null, x), null). The range keeps that argument's precision.
+        var precision = coarser(start?.Precision, end?.Precision) ?? throw new InvalidOperationException();
+        return new DateTimeRange(null, precision, null, null, start?.Start, end?.End);
     }
 
     public bool Equals(DateTimeRange? other) =>
