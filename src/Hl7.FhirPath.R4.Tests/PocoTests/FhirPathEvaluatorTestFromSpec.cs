@@ -191,6 +191,10 @@ namespace Hl7.FhirPath.R4.Tests
             // suite
             "testPrecedence1", "testPrecedence2", "testMatchesEmpty", "testMatchesEmpty2", "testMatchesEmpty3",
             "HighBoundaryDecimal6", "HighBoundaryDecimal14", "LowBoundaryDecimal13", "LowBoundaryNegDecimal1",
+            // These boundary tests also negate a literal without an input file; the boundary itself is right
+            "LowBoundaryNegDecimalDefault", "LowBoundaryNegDecimal2", "LowBoundaryNegDecimal4", "LowBoundaryDecimalCarry1",
+            "LowBoundaryDecimalCarry2", "LowBoundaryDecimalCarry3", "HighBoundaryDecimal4", "HighBoundaryDecimal5",
+            "HighBoundaryDecimal16",
 
             // No static (semantic) type checking: invalid paths and type-guard checks are not reported as semantic errors
             "testSimpleFail", "testSimpleWithWrongContext", "testPolymorphismB", "testPolymorphismAsB",
@@ -199,24 +203,18 @@ namespace Hl7.FhirPath.R4.Tests
             "isGuardOrOtherImpliesNoParensBad", "isGuardOrInnerImpliesBad", "isGuardAndBad", "isGuardOrBad", "isGuardXorBad",
             "isGuardNotImpliesBad", "isGuardIifBad", "isGuardSupertypeBad", "isGuardOtherExpressionBad",
 
-            // lowBoundary()/highBoundary() on decimals: precision argument, result precision, negative numbers and
-            // carry/borrow
-            "LowBoundaryDecimalDefault", "LowBoundaryDecimal2", "LowBoundaryDecimal4", "LowBoundaryNegDecimalDefault",
-            "LowBoundaryNegDecimal2", "LowBoundaryNegDecimal4", "LowBoundaryDecimal7", "LowBoundaryDecimal8",
-            "LowBoundaryDecimal10", "LowBoundaryDecimal14", "LowBoundaryDecimal15", "LowBoundaryDecimalCarry1",
-            "LowBoundaryDecimalCarry2", "LowBoundaryDecimalCarry3", "LowBoundaryDecimalBorrow1", "LowBoundaryDecimalExponent1",
-            "LowBoundaryDecimalExponent2", "LowBoundaryDecimalExponent3", "LowBoundaryDecimalExponent4",
-            "HighBoundaryDecimalDefault", "HighBoundaryDecimal1", "HighBoundaryDecimal4", "HighBoundaryDecimal5",
-            "HighBoundaryDecimal8", "HighBoundaryDecimal9", "HighBoundaryDecimal11", "HighBoundaryDecimal15",
-            "HighBoundaryDecimal16", "HighBoundaryDecimalCarry1", "HighBoundaryDecimalCarry2", "HighBoundaryDecimalCarry3",
-            "HighBoundaryDecimalCarry4", "HighBoundaryDecimalExponent1", "HighBoundaryDecimalExponent2",
-            "HighBoundaryDecimalExponent3", "HighBoundaryDecimalExponent4", "HighBoundaryDecimalExponent5",
+            // (-0.0034).lowBoundary(1) is expected to be -0.0, a negative zero, which System.Decimal does not print
+            "LowBoundaryDecimal15",
 
-            // Precision arguments out of range (negative, or beyond what the engine supports) should give an empty result,
-            // not an error or a clamped value. LowBoundaryDecimal3, LowBoundaryNegDecimal3, HighBoundaryDecimal3 and
-            // LowBoundaryNegDecimal5 have the same problem, but pass today only because of the empty-focus bug above
-            "LowBoundaryDecimal5", "LowBoundaryDecimal6", "HighBoundaryDecimal7", "testHugeRoundPrecision",
-            "testNegativeRoundPrecision", "testHugeQtyLowBoundaryPrecision", "testNegativeQtyHighBoundaryPrecision",
+            // Decimals with an exponent lose their significance when parsed: 9.5e2 becomes 950 rather than a value with
+            // two significant digits, so its boundaries come out as 949.5/950.5 instead of 945/955
+            "LowBoundaryDecimalExponent1", "LowBoundaryDecimalExponent3", "LowBoundaryDecimalExponent4",
+            "HighBoundaryDecimalExponent1", "HighBoundaryDecimalExponent2", "HighBoundaryDecimalExponent4",
+            "HighBoundaryDecimalExponent5",
+
+            // round() with a precision out of range (negative, or beyond what the engine supports) should give an empty
+            // result, not an error
+            "testHugeRoundPrecision", "testNegativeRoundPrecision",
 
             // lowBoundary()/highBoundary() on dateTime/time: millisecond precision and timezone boundaries (+14:00/-12:00)
             "LowBoundaryDateTimeMillisecond1", "LowBoundaryDateTimeMillisecond2", "LowBoundaryTimeMillisecond",

@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Support.Tests
                     ("2400.lowBoundary(8)  = 2399.50000", true),
                     ("2.25.lowBoundary(8)  = 2.24500000", true),
                     ("2.2500.lowBoundary(8)= 2.24995000", true),
-                    ("12.lowBoundary() = 12", true),
+                    ("12.lowBoundary() = 11.5", true),
                     ("'string'.lowBoundary() = 'string'", false),
                     ("1.587 'cm'.lowBoundary(8) = 1.58650000 'cm'", true),
                     ("@2014.lowBoundary(6) = @2014-01", true),
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Support.Tests
                     ("2400.highBoundary(8)  = 2400.50000", true),
                     ("2.25.highBoundary(8)  = 2.2550000", true),
                     ("2.2500.highBoundary(8)= 2.25005000", true),
-                    ("12.highBoundary() = 12", true),
+                    ("12.highBoundary() = 12.5", true),
                     ("'string'.highBoundary() = 'string'", false),
                     ("1.587 'cm'.highBoundary(8) = 1.58750000 'cm'", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
@@ -201,7 +201,90 @@ namespace Hl7.Fhir.Support.Tests
             }
         }
 
+        [TestMethod]
+        // default precision is 8
+        [DataRow("1.587.lowBoundary()", "1.58650000")]
+        [DataRow("1.587.highBoundary()", "1.58750000")]
+        [DataRow("1.lowBoundary()", "0.50000000")]
+        [DataRow("1.highBoundary()", "1.50000000")]
+        [DataRow("0.0.lowBoundary()", "-0.05000000")]
+        [DataRow("0.0.highBoundary()", "0.05000000")]
+        // zero lies half a unit from both its boundaries; when digits are dropped the high boundary is rounded half up
+        // and the low boundary truncated, as in the reference implementation
+        [DataRow("0.lowBoundary(0)", "0")]
+        [DataRow("0.lowBoundary(1)", "-0.5")]
+        [DataRow("0.highBoundary(0)", "1")]
+        [DataRow("0.0.lowBoundary(0)", "0")]
+        [DataRow("0.0.highBoundary(1)", "0.1")]
+        [DataRow("(-0.0034).lowBoundary(1)", "0.0")]
+        [DataRow("1.587 'cm'.lowBoundary()", "1.58650000 'cm'")]
+        // fewer decimal places than the boundary: the low boundary of a positive number is truncated,
+        // the high boundary is rounded half up (with carry)
+        [DataRow("1.587.lowBoundary(2)", "1.58")]
+        [DataRow("1.587.highBoundary(2)", "1.59")]
+        [DataRow("1.587.lowBoundary(0)", "1")]
+        [DataRow("1.lowBoundary(0)", "0")]
+        [DataRow("1.highBoundary(0)", "2")]
+        [DataRow("10.lowBoundary(0)", "9")]
+        [DataRow("100.lowBoundary(2)", "99.50")]
+        [DataRow("120.highBoundary(2)", "120.50")]
+        [DataRow("12.500.lowBoundary(4)", "12.4995")]
+        [DataRow("12.500.highBoundary(4)", "12.5005")]
+        [DataRow("0.0034.lowBoundary(1)", "0.0")]
+        [DataRow("0.0034.highBoundary(1)", "0.0")]
+        [DataRow("9.95.highBoundary(1)", "10.0")]
+        [DataRow("0.996.highBoundary(1)", "1.0")]
+        [DataRow("99.96.highBoundary(1)", "100.0")]
+        [DataRow("9.highBoundary(0)", "10")]
+        [DataRow("1.587 'cm'.highBoundary(2)", "1.59 'cm'")]
+        // examples from the FHIRPath 3.1.0 spec
+        [DataRow("1.587.highBoundary(0)", "2")]
+        [DataRow("1.lowBoundary(2)", "0.50")]
+        [DataRow("1.highBoundary(2)", "1.50")]
+        [DataRow("2.1 'cm'.lowBoundary(2)", "2.05 'cm'")]
+        [DataRow("2.1 'cm'.highBoundary(2)", "2.15 'cm'")]
+        [DataRow("(-1.587).highBoundary(6)", "-1.586500")]
+        [DataRow("(-1.587).highBoundary(0)", "-1")]
+        // negative numbers mirror the boundaries of their magnitude
+        [DataRow("(-1.587).lowBoundary()", "-1.58750000")]
+        [DataRow("(-1.587).highBoundary()", "-1.58650000")]
+        [DataRow("(-1.587).lowBoundary(2)", "-1.59")]
+        [DataRow("(-1.587).highBoundary(2)", "-1.58")]
+        [DataRow("(-1.587).lowBoundary(0)", "-2")]
+        [DataRow("(-1.587).lowBoundary(6)", "-1.587500")]
+        [DataRow("(-120).lowBoundary(2)", "-120.50")]
+        [DataRow("(-9.96).lowBoundary(1)", "-10.0")]
+        [DataRow("(-99.96).lowBoundary(1)", "-100.0")]
+        [DataRow("(-9).lowBoundary(0)", "-10")]
+        [DataRow("(-10).highBoundary(0)", "-9")]
+        // more decimal places than the boundary
+        [DataRow("1.587.lowBoundary(6)", "1.586500")]
+        [DataRow("1.587.highBoundary(16)", "1.5875000000000000")]
+        public void DecimalBoundaryHasRequestedPrecision(string expression, string expected)
+        {
+            var result = _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext()).ToList();
 
+            result.Should().ContainSingle();
+            ElementModel.Types.Any.Convert(((ITypedElement)result[0]).Value).ToString().Should().Be(expected);
+        }
 
+        [TestMethod]
+        // the result needs more digits than a decimal holds at the requested precision
+        [DataRow("100000000000000000000000.0.lowBoundary()")]
+        [DataRow("10000000000000.0.highBoundary(16)")]
+        [DataRow("100000000000000000000000.0 'kg'.highBoundary()")]
+        // the precision is outside what is supported (0..16)
+        [DataRow("1.587.lowBoundary(17)")]
+        [DataRow("1.587.highBoundary(28)")]
+        [DataRow("1.587.highBoundary(-1)")]
+        [DataRow("1.587 'cm'.lowBoundary(29)")]
+        [DataRow("1.lowBoundary(17)")]
+        [DataRow("1.5 'kg'.highBoundary(-1)")]
+        public void UnsupportedDecimalBoundaryIsEmpty(string expression)
+        {
+            var result = _compiler.Compile(expression)(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
+
+            result.Should().BeEmpty();
+        }
     }
 }
