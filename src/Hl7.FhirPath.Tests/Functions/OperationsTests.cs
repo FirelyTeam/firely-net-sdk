@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -204,6 +205,53 @@ namespace HL7.FhirPath.Tests
                 .Union(IsTypeOperatorTestcases())
                 .Union(AsTypeOperatorTestcases())
                 ;
+        }
+
+        [TestMethod]
+        [DataRow("1+2*3+4 = 11")]
+        [DataRow("-1 < 0")]
+        [DataRow("(-1.587).abs() = 1.587")]
+        [DataRow("1 != 2")]
+        [DataRow("1 ~ 1")]
+        [DataRow("{} ~ {}")]
+        [DataRow("'a' & {} = 'a'")]
+        [DataRow("(3 | 1 | 2).sort(-$this).first() = 3")]
+        [DataRow("({} + 1).empty()")]
+        [DataRow("({} = 1).empty()")]
+        [DataRow("(1 > {}).empty()")]
+        [DataRow("(-{}).empty()")]
+        public void OperatorsOnEmptyInput(string expression)
+        {
+            // Operators do not operate on the input focus, so an empty input must not make them return empty.
+            var compiled = new FhirPathCompiler().Compile(expression);
+            var result = compiled([], new EvaluationContext()).ToList();
+
+            result.Should().ContainSingle(because: $"'{expression}' should not return empty on an empty input");
+            result.Single().GetValue().Should().Be(true);
+        }
+
+        [TestMethod]
+        public void UnaryMinusOnEmptyInputIsStillTypeChecked()
+        {
+            // -1.convertsToInteger() parses as -(1.convertsToInteger()), and unary minus is not defined for Boolean.
+            var compiled = new FhirPathCompiler().Compile("-1.convertsToInteger()");
+            Action act = () => compiled([], new EvaluationContext()).ToList();
+            act.Should().Throw<InvalidOperationException>().WithMessage("*operator '-'*");
+        }
+
+        [TestMethod]
+        public void OperatorsOnValuelessPrimitiveRoot()
+        {
+            // A primitive with only an extension has no value. Operators ignore the focus, so they still evaluate
+            // (before, the comparison returned empty because its focus was the value-less root).
+            var valueless = new FhirString();
+            valueless.Extension.Add(new Extension("http://example.org/ext", new FhirBoolean(true)));
+
+            var compiled = new FhirPathCompiler().Compile("extension.count() = 1");
+            var result = compiled([valueless.ToPocoNode()], new EvaluationContext()).ToList();
+
+            result.Should().ContainSingle();
+            result.Single().GetValue().Should().Be(true);
         }
 
         [TestMethod]
