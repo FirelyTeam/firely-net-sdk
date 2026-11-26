@@ -10,6 +10,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.FhirPath.Analysis;
 using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,6 +31,7 @@ namespace Hl7.FhirPath.R4.Tests
     public class FhirPathTests
     {
         private static readonly FhirPathCompiler _compiler = createCompiler();
+        private static readonly FhirPathAnalyzer _analyzer = new(ModelInfo.ModelInspector);
 
         private static FhirPathCompiler createCompiler()
         {
@@ -192,13 +194,6 @@ namespace Hl7.FhirPath.R4.Tests
             "testPrecedence1", "testPrecedence2", "testMatchesEmpty", "testMatchesEmpty2", "testMatchesEmpty3",
             "HighBoundaryDecimal6", "HighBoundaryDecimal14", "LowBoundaryDecimal13", "LowBoundaryNegDecimal1",
 
-            // No static (semantic) type checking: invalid paths and type-guard checks are not reported as semantic errors
-            "testSimpleFail", "testSimpleWithWrongContext", "testPolymorphismB", "testPolymorphismAsB",
-            "testDollarOrderNotAllowed", "testIif6", "testPolymorphicsB", "isEffectOnLogic3Base", "isGuardFnImpliesBad",
-            "isGuardImpliesBad", "isGuardOrTypesImpliesBad", "isGuardOrFnTypesImpliesBad", "isGuardOrOtherImpliesBad",
-            "isGuardOrOtherImpliesNoParensBad", "isGuardOrInnerImpliesBad", "isGuardAndBad", "isGuardOrBad", "isGuardXorBad",
-            "isGuardNotImpliesBad", "isGuardIifBad", "isGuardSupertypeBad", "isGuardOtherExpressionBad",
-
             // lowBoundary()/highBoundary() on decimals: precision argument, result precision, negative numbers and
             // carry/borrow
             "LowBoundaryDecimalDefault", "LowBoundaryDecimal2", "LowBoundaryDecimal4", "LowBoundaryNegDecimalDefault",
@@ -294,6 +289,20 @@ namespace Hl7.FhirPath.R4.Tests
 
             // conformsTo() is not implemented (needs profile resolution / validation)
             "testConformsTo1", "testConformsTo2", "testConformsTo3",
+        ];
+
+        /// <summary>
+        /// Tests expecting a semantic error that the static analysis does not detect yet. They still pass because the
+        /// expression fails at runtime. A test that starts being detected must be removed from this list.
+        /// </summary>
+        private static readonly string[] SEMANTIC_ANALYSIS_GAPS =
+        [
+            // functions on a focus of a type they do not accept
+            "testStartsWithNonString1", "testEndsWithNonString1", "testContainsNonString1", "testHasCoding11",
+            // arithmetic on operand types that do not support it
+            "testPlus6",
+            // paths on resources()/abstract Resource
+            "testResourcesAbstract3",
         ];
 
         [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -405,13 +414,68 @@ namespace Hl7.FhirPath.R4.Tests
                 if (invalid is not ("syntax" or "semantic" or "execution" or "true"))
                     throw new ArgumentException($"unknown error type '{invalid}'");
 
+                // A semantic error must be found by static analysis, before evaluation. The few the analyzer does not
+                // (yet) detect are listed in SEMANTIC_ANALYSIS_GAPS, and must still fail at runtime.
+                if (invalid == "semantic")
+                {
+                    var name = testLine.Attribute("name")?.Value;
+                    var detected = analyze(testLine, input, context, expression.Value).HasErrors;
+                    var isGap = SEMANTIC_ANALYSIS_GAPS.Contains(name);
+
+                    if (detected && isGap)
+                        Assert.Fail($"The semantic error is now detected statically: remove '{name}' from SEMANTIC_ANALYSIS_GAPS");
+                    if (detected)
+                        return;
+                    if (!isGap)
+                        Assert.Fail("Expected the static analysis to report a semantic error, but it reported none");
+                }
+                else if (invalid != "syntax")
+                    assertNoSemanticErrors(testLine, input, context, expression.Value);
+
                 testInvalid(focus, invalid, expression.Value);
             }
             else
             {
+                assertNoSemanticErrors(testLine, input, context, expression.Value);
+
                 // Still need to check the types (and values)
                 test(focus, expression.Value, output, isPredicate, isOrdered);
             }
+        }
+
+        /// <summary>
+        /// Statically analyzes the test expression. The type of the focus is given by the test's 'contextType' attribute
+        /// (alternatives separated by '|'), or else is the result type of its 'context' expression, or else the type of
+        /// the input resource.
+        /// </summary>
+        private static FhirPathAnalysisResult analyze(XElement testLine, PocoNode input, string context, string expression)
+        {
+            IReadOnlyCollection<string> resourceType = input is null ? null : [((ITypedElement)input).InstanceType];
+            var analysisContext = new FhirPathAnalysisContext
+            {
+                ResourceTypes = resourceType,
+                RootResourceTypes = resourceType,
+                InputTypes = testLine.Attribute("contextType")?.Value.Split('|')
+                    ?? (context is null
+                        ? resourceType
+                        : _analyzer.Analyze(context, new FhirPathAnalysisContext { InputTypes = resourceType, ResourceTypes = resourceType }).ResultTypes),
+                CheckOrderedFunctions = testLine.Attribute("checkOrderedFunctions")?.Value == "true",
+            };
+
+            return _analyzer.Analyze(expression, analysisContext);
+        }
+
+        /// <summary>
+        /// Valid expressions (and those that only fail at runtime) should not have semantic errors.
+        /// </summary>
+        private static void assertNoSemanticErrors(XElement testLine, PocoNode input, string context, string expression)
+        {
+            // In lenient mode, the expression is evaluated without static checks.
+            if (testLine.Attribute("mode")?.Value == "lenient") return;
+
+            var result = analyze(testLine, input, context, expression);
+            if (result.HasErrors)
+                Assert.Fail($"Unexpected semantic error(s): {string.Join("; ", result.Diagnostics)}");
         }
 
         private void testBoolean(Model.Resource resource, Model.Base focus, String focusType, String expression, Boolean value)
