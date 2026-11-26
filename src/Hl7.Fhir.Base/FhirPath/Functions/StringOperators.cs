@@ -56,6 +56,31 @@ internal static class StringOperators
                 return me.Replace(find, replace);
         }
 
+        /// <summary>
+        /// Implements the FHIRPath <c>matchesFull()</c> function: returns true when the whole input string matches
+        /// the regular expression, as if it were anchored with <c>^</c> and <c>$</c>. The expression is evaluated
+        /// in single-line mode, so <c>.</c> also matches newlines.
+        /// </summary>
+        public static bool FpMatchesFull(this string me, string regex)
+        {
+            // Validate the expression on its own first, so wrapping it in a group below cannot turn an invalid
+            // expression (e.g. one with an unbalanced ')') into a valid one. The static call uses the Regex cache.
+            _ = Regex.IsMatch(string.Empty, regex);
+
+            // \A and \z anchor to the very start and end of the input; unlike ^ and $ they are not affected by
+            // a trailing newline or by multi-line mode.
+            try
+            {
+                return Regex.IsMatch(me, @"\A(?:" + regex + @")\z", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+            }
+            catch (ArgumentException)
+            {
+                // The expression is valid on its own, so the wrapper broke it: it ends in an (?x) '#' comment
+                // that swallowed the closing ')'. A newline ends the comment.
+                return Regex.IsMatch(me, @"\A(?:" + regex + "\n)\\z", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+            }
+        }
+
         public static IEnumerable<PocoNode> FpSplit(this string me, string seperator)
         {
             var results = me.Split(new[] { seperator }, StringSplitOptions.None).ToArray<object>();
