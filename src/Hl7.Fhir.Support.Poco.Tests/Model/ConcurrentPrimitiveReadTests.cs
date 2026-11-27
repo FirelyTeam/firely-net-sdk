@@ -121,8 +121,32 @@ public class ConcurrentPrimitiveReadTests
             binary => binary.Value is { } bytes && bytes.AsSpan().SequenceEqual(expected) && (string?)binary.JsonValue == "SGkg dGhlcmUh");
     }
 
+    [TestMethod]
+    public void Base64BinaryValueOnSomeThreadsAndJsonValueOnOthers()
+    {
+        byte[] expected = [.. "Hi there!"u8];
+
+        // Threads that only read Value and threads that only read JsonValue keep moving the data in opposite
+        // directions, and each of them must find it.
+        readOnAllThreads(
+            () => new Base64Binary { JsonValue = "SGkgdGhlcmUh" },
+            (binary, thread) => thread % 2 == 0
+                ? binary.Value is { } bytes && bytes.AsSpan().SequenceEqual(expected)
+                : (string?)binary.JsonValue == "SGkgdGhlcmUh" && binary.HasValidValue());
+    }
+
+    [TestMethod]
+    public void Base64BinaryWithoutValue() =>
+        readOnAllThreads(
+            () => new Base64Binary(),
+            binary => binary.Value is null && binary.JsonValue is null && binary.HasValidValue());
+
     // Lets every thread read each of the instances once, and expects every read to be correct.
-    private static void readOnAllThreads<T>(Func<T> create, Func<T, bool> readsCorrectly, int instanceCount = INSTANCES)
+    private static void readOnAllThreads<T>(Func<T> create, Func<T, bool> readsCorrectly, int instanceCount = INSTANCES) =>
+        readOnAllThreads(create, (instance, _) => readsCorrectly(instance), instanceCount);
+
+    // The same, for a read that depends on the number of the thread (0 to THREADS - 1).
+    private static void readOnAllThreads<T>(Func<T> create, Func<T, int, bool> readsCorrectly, int instanceCount = INSTANCES)
     {
         long incorrect = 0;
         var exceptions = new ConcurrentDictionary<string, int>();
@@ -132,7 +156,7 @@ public class ConcurrentPrimitiveReadTests
             var instances = Enumerable.Range(0, instanceCount).Select(_ => create()).ToArray();
 
             using var start = new Barrier(THREADS);
-            var threads = Enumerable.Range(0, THREADS).Select(_ => new Thread(() =>
+            var threads = Enumerable.Range(0, THREADS).Select(thread => new Thread(() =>
             {
                 start.SignalAndWait();
 
@@ -140,7 +164,7 @@ public class ConcurrentPrimitiveReadTests
                 {
                     try
                     {
-                        if (!readsCorrectly(instance)) Interlocked.Increment(ref incorrect);
+                        if (!readsCorrectly(instance, thread)) Interlocked.Increment(ref incorrect);
                     }
                     catch (Exception exception)
                     {

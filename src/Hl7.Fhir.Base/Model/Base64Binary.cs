@@ -62,12 +62,8 @@ public partial class Base64Binary
 
         set
         {
-            lock (this)
-            {
-                _parsedValue = value;
-                base.JsonValue = null;
-            }
-
+            _parsedValue = value;
+            base.JsonValue = null;
             OnPropertyChanged("Value");
         }
     }
@@ -76,14 +72,19 @@ public partial class Base64Binary
     {
         get
         {
-            lock (this)
+            // Without bytes there is nothing to convert, and the literal is the value. This is the state after
+            // deserialization, and it needs no lock (see the comment on _parsedValue).
+            if (_parsedValue is null && base.JsonValue is { } literal)
+                return literal;
+
+            lock (valueLock)
             {
                 // A non-canonical literal is retained next to the parsed bytes (see getParsedValue). Callers can
                 // modify the array returned by Value in place, so only keep the literal while it still decodes to
                 // the cached bytes; otherwise the bytes win and the literal is regenerated from them.
-                if (_parsedValue is not null && (base.JsonValue is null || !retainedLiteralMatchesBytes()))
+                if (_parsedValue is { } parsed && (base.JsonValue is null || !retainedLiteralMatchesBytes(parsed)))
                 {
-                    base.JsonValue = Convert.ToBase64String(_parsedValue);
+                    base.JsonValue = Convert.ToBase64String(parsed);
                     _parsedValue = null;    // Clear the parsed value to free up memory
                 }
 
@@ -92,16 +93,34 @@ public partial class Base64Binary
         }
         set
         {
-            lock (this)
-            {
-                base.JsonValue = value;
-                _parsedValue = null;
-            }
+            base.JsonValue = value;
+            _parsedValue = null;
         }
     }
 
+    // Reading Value moves the data from the literal to the bytes, and reading JsonValue moves it back, so that only
+    // one of the two is kept in memory. Each move changes two fields. Several threads may read the same instance at
+    // the same time, so:
+    // - the moves are made under a lock, which makes each of them one step for the other readers under the lock;
+    // - a read outside the lock only ever returns data that it has seen itself: Value returns bytes that it found,
+    //   and JsonValue returns a literal that it found after it found no bytes. Anything else goes to the lock.
+    //   That covers the two common reads, Value when the bytes are there and JsonValue when only the literal is.
+    //   An instance without a value does take the lock, because "no bytes and no literal" is also what a reader
+    //   can see while two moves pass by;
+    // - the bytes are volatile, and the move back to the literal writes the literal before it clears the bytes. On
+    //   every platform (ARM64 included) a reader that finds the bytes cleared therefore finds that literal, or a
+    //   newer state.
+    // The setters take no lock, as before: changing a value while other threads read it is up to the caller.
     [NonSerialized]  // To prevent binary serialization from serializing this field
-    private byte[]? _parsedValue = null;
+    private volatile byte[]? _parsedValue = null;
+
+    // The lock is a private object and never the instance itself, which other code can lock too (SetAnnotation does).
+    // It is created when the first move needs it, so an instance that is only deserialized and serialized has none.
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private object? _valueLock;
+
+    private object valueLock =>
+        _valueLock ?? Interlocked.CompareExchange(ref _valueLock, new object(), null) ?? _valueLock!;
 
     /// <summary>
     /// Validates the JsonValue and updates the internal cached byte[] Value, releasing
@@ -112,22 +131,16 @@ public partial class Base64Binary
         getParsedValue(context, out _);
 
     // Gets the cached bytes, parsing the JsonValue first when it has not been parsed yet.
-    //
-    // Reading Value moves the data from the literal to the bytes and reading JsonValue moves it back, so that only
-    // one of the two is kept in memory. Each move changes two fields, and several threads may read the same instance
-    // at the same time, so the two fields are only changed together, under a lock. The lock is deliberately the
-    // instance itself: that costs no memory per instance. SetAnnotation locks the instance too, but never while
-    // it reads these fields, and nothing that calls out to other code runs inside the lock here.
     private COVE? getParsedValue(PocoValidationContext? context, out byte[]? parsed)
     {
         // Bytes that were there at any moment are the value, also when a concurrent read of JsonValue
         // releases them right after, so this needs no lock.
-        parsed = Volatile.Read(ref _parsedValue);
+        parsed = _parsedValue;
         if (parsed is not null) return null;
 
         object? jsonValue;
 
-        lock (this)
+        lock (valueLock)
         {
             parsed = _parsedValue;
             if (parsed is not null) return null;
@@ -137,14 +150,14 @@ public partial class Base64Binary
 
             if (jsonValue is string unparsed && (parsed = doParse(unparsed)) is not null)
             {
-                Volatile.Write(ref _parsedValue, parsed);
-
                 // Clear the string value to free up memory if we have successfully parsed the value,
                 // but only if the string can be regenerated exactly from the bytes. The decoder is lenient
                 // (e.g. it ignores whitespace), so a non-canonical literal must be kept as-is: validating
                 // should never rewrite the data of the user.
-                if (string.Equals(Convert.ToBase64String(parsed), unparsed, System.StringComparison.Ordinal))
-                    base.JsonValue = null;
+                var releaseLiteral = string.Equals(Convert.ToBase64String(parsed), unparsed, System.StringComparison.Ordinal);
+
+                _parsedValue = parsed;
+                if (releaseLiteral) base.JsonValue = null;
 
                 return null;
             }
@@ -156,16 +169,20 @@ public partial class Base64Binary
             : COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
     }
 
-    // Value validates through ValidateObjectValue, as it always did, so that a stricter override in a subclass
-    // still applies to it.
+    // Value validates through ValidateObjectValue, as it always did, so that an override in a subclass decides
+    // whether the value is valid. The bytes are then fetched separately, because a concurrent read of JsonValue
+    // may have released them again in the meantime.
     private COVE? validateAndGetParsedValue(out byte[]? parsed)
     {
         parsed = null;
-        return ValidateObjectValue(null) ?? getParsedValue(null, out parsed);
+        if (ValidateObjectValue(null) is { } error) return error;
+
+        _ = getParsedValue(null, out parsed);
+        return null;
     }
 
-    private bool retainedLiteralMatchesBytes() =>
-        base.JsonValue is string literal && doParse(literal) is { } decoded && decoded.AsSpan().SequenceEqual(_parsedValue);
+    private bool retainedLiteralMatchesBytes(byte[] parsed) =>
+        base.JsonValue is string literal && doParse(literal) is { } decoded && decoded.AsSpan().SequenceEqual(parsed);
 
     private static byte[]? doParse(string literal)
     {

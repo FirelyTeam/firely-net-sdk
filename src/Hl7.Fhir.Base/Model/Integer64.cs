@@ -69,8 +69,13 @@ public partial class Integer64
     }
 
     // The cached value is a value and a flag instead of one nullable field, because several threads may read the
-    // same instance at the same time and a nullable value is not written in one step. The value is written before
-    // the flag, and only the setters clear the flag, so a reader that sees the flag also sees the value.
+    // same instance at the same time and a nullable value is not written in one step.
+    // - The value is written before the flag and read after it, and the flag is volatile. On every platform
+    //   (ARM64 included) a reader that sees the flag therefore also sees the value that was written before it.
+    // - Readers only ever set the flag; only the setters clear it.
+    // - A 32-bit process writes the 64-bit value in two steps. That is harmless here: threads that parse the same
+    //   literal at the same time write the same bits, and no reader looks at the value before one of those writes
+    //   is complete (the flag follows it), so any mix of their halves is the value.
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private long _parsedValue;
 

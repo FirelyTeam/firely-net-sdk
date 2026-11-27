@@ -33,7 +33,6 @@ using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using P = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
@@ -70,16 +69,21 @@ public partial class Date
     /// </summary>
     public static Date UtcToday() => FromDateTimeOffset(DateTimeOffset.UtcNow);
 
-    [NonSerialized] // To prevent binary serialization from serializing this field
-    private P.Date? _parsedValue = null;
+    // Several threads may read the same instance at the same time, and the first of them to need the parsed value
+    // stores it here. The field is volatile, so that on every platform (ARM64 included) a thread that reads the
+    // reference also sees the object it points to completely built. The .NET runtime already ensures that for an
+    // object that does not change after it is built; volatile makes it independent of that.
+    // A reference is always written in one step, so it is never seen half-written, in a 32-bit process either.
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private volatile P.Date? _parsedValue = null;
 
     /// <summary>
     /// Validates the JsonValue and updates the internal cached Date value.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        // Several threads may read the same instance at the same time, so this reads each field once and only
-        // ever stores a successfully parsed value: a reader never sees the cached value go back to null.
+        // This reads each field once and only ever stores a successfully parsed value, so a reader on another
+        // thread never sees the cached value go back to null. Two threads may both parse; they store equal values.
         if (_parsedValue is not null) return null;
 
         var jsonValue = base.JsonValue;
@@ -91,8 +95,7 @@ public partial class Date
         var parsed = doParse(unparsed);
         if (parsed is null) return COVE.LITERAL_INVALID(context, jsonValue, this.TypeName);
 
-        // The write publishes the parsed object, so that a plain read of the field on another thread gets it complete.
-        Volatile.Write(ref _parsedValue, parsed);
+        _parsedValue = parsed;
         return null;
     }
 
