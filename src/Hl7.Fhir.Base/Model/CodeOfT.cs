@@ -62,14 +62,25 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         Value = value;
     }
 
+    // The cached value is a value and a flag instead of one nullable field, because several threads may read the
+    // same instance at the same time and a nullable value is not written in one step.
+    // - The value is written before the flag and read after it, and the flag is volatile. On every platform
+    //   (ARM64 included) a reader that sees the flag therefore also sees the value that was written before it.
+    // - Readers only ever set the flag; only the setters clear it.
+    // - An enum can be 64 bits wide, and a 32-bit process writes that in two steps. That is harmless here: threads that
+    //   parse the same literal at the same time write the same bits, and no reader looks at the value before one of
+    //   those writes is complete (the flag follows it), so any mix of their halves is the value.
     [NonSerialized] // To prevent binary serialization from serializing this field
-    private T? _parsedValue = null;
+    private T _parsedValue;
+
+    [NonSerialized] // To prevent binary serialization from serializing this field
+    private volatile bool _hasParsedValue;
 
     public override object? JsonValue
     {
         get
         {
-            if (_parsedValue is not null && base.JsonValue is null)
+            if (_hasParsedValue && base.JsonValue is null)
                 base.JsonValue = _parsedValue.GetLiteral();
 
             return base.JsonValue;
@@ -77,7 +88,7 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         set
         {
             base.JsonValue = value;
-            _parsedValue = null;
+            _hasParsedValue = false;
         }
     }
 
@@ -92,12 +103,13 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
             if (ValidateObjectValue(null) is { } error)
                 throw error;
 
-            return _parsedValue;
+            return _hasParsedValue ? _parsedValue : null;
         }
 
         set
         {
-            _parsedValue = value;
+            _parsedValue = value.GetValueOrDefault();
+            _hasParsedValue = value.HasValue;
             base.JsonValue = null;
             OnPropertyChanged("Value");
         }
@@ -108,18 +120,25 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.JsonValue is null) return null;
+        // This reads each field once and only ever stores a successfully parsed value: a reader on another
+        // thread never sees the cached value go away.
+        if (_hasParsedValue) return null;
 
-        _parsedValue = null;
+        var jsonValue = base.JsonValue;
+        if (jsonValue is null) return null;
 
-        if (base.JsonValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
+        if (jsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
 
         if(string.IsNullOrWhiteSpace(unparsed))
             return COVE.LITERAL_INVALID(context, unparsed,  this.TypeName);
 
-        _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.INVALID_CODED_VALUE(context, unparsed, EnumUtility.GetName<T>()) : null;
+        if (doParse(unparsed) is not { } parsed)
+            return COVE.INVALID_CODED_VALUE(context, unparsed, EnumUtility.GetName<T>());
+
+        _parsedValue = parsed;
+        _hasParsedValue = true;
+        return null;
     }
 
     private static T? doParse(string literal) =>  EnumUtility.ParseLiteral<T>(literal);

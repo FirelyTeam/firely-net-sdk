@@ -81,23 +81,34 @@ public partial class Instant
     /// <returns></returns>
     public static Instant Now() => new(DateTimeOffset.Now);
 
+    // Several threads may read the same instance at the same time, and the first of them to need the parsed value
+    // stores it here. The field is volatile, so that on every platform (ARM64 included) a thread that reads the
+    // reference also sees the object it points to completely built. The .NET runtime already ensures that for an
+    // object that does not change after it is built; volatile makes it independent of that.
+    // A reference is always written in one step, so it is never seen half-written, in a 32-bit process either.
     [NonSerialized]  // To prevent binary serialization from serializing this field
-    private P.DateTime? _parsedValue = null;
+    private volatile P.DateTime? _parsedValue = null;
 
     /// <summary>
     /// Validates the JsonValue and updates the internal cached CQL DateTime value.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.JsonValue is null) return null;
+        // This reads each field once and only ever stores a successfully parsed value, so a reader on another
+        // thread never sees the cached value go back to null. Two threads may both parse; they store equal values.
+        if (_parsedValue is not null) return null;
 
-        _parsedValue = null;
+        var jsonValue = base.JsonValue;
+        if (jsonValue is null) return null;
 
-        if (base.JsonValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
+        if (jsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
 
-        _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
+        var parsed = doParse(unparsed);
+        if (parsed is null) return COVE.LITERAL_INVALID(context, jsonValue, this.TypeName);
+
+        _parsedValue = parsed;
+        return null;
     }
 
     private static P.DateTime? doParse(string literal) =>
@@ -112,8 +123,8 @@ public partial class Instant
     {
         get
         {
-            if (_parsedValue is not null && base.JsonValue is null)
-                base.JsonValue = _parsedValue.ToString();
+            if (_parsedValue is { } parsed && base.JsonValue is null)
+                base.JsonValue = parsed.ToString();
 
             return base.JsonValue;
         }
@@ -130,14 +141,8 @@ public partial class Instant
     /// <returns>true if the Instant contains a valid date/time string, false otherwise.</returns>
     public bool TryToSystemDateTime([NotNullWhen(true)] out P.DateTime? dateTime)
     {
-        if (ValidateObjectValue(null) is not null || _parsedValue is null)
-        {
-            dateTime = null;
-            return false;
-        }
-
-        dateTime = _parsedValue;
-        return true;
+        dateTime = ValidateObjectValue(null) is null ? _parsedValue : null;
+        return dateTime is not null;
     }
 
 /// <summary>
@@ -150,10 +155,7 @@ public partial class Instant
         if (ValidateObjectValue(null) is { } error)
             throw error;
 
-        if (_parsedValue is null)
-            throw new InvalidOperationException("Value is null.");
-
-        return _parsedValue;
+        return _parsedValue ?? throw new InvalidOperationException("Value is null.");
     }
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDateTime(out var date) ? date : null;

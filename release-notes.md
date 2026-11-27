@@ -51,3 +51,6 @@ changes.
   reports the new non-fatal `JSON136`. Property-level validation errors are now reported at the element itself. See issue
   [#3655](https://github.com/FirelyTeam/firely-net-sdk/issues/3655).
 - Building a POCO from an `ISourceNode` (`ToPoco()`) stored a `base64Binary` value as a decoded `byte[]` in `JsonValue` instead of keeping the base64 text, so validation reported an incorrect literal type (e.g. on `Binary.data`), and an invalid base64 literal threw a `FormatException` instead of being reported by validation. The literal is now kept as-is. This was broken since 6.2.1.
+- Reading a `Code<T>`, `FhirDateTime`, `Date`, `Time`, `Instant`, `Integer64` or `Base64Binary` on several threads at once,
+  while its `JsonValue` has not been parsed yet (as after deserializing without validation), no longer returns `null` or `false`,
+  or throws, for a valid value. See issue [#3688](https://github.com/FirelyTeam/firely-net-sdk/issues/3688).
