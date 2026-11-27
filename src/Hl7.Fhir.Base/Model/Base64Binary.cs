@@ -104,9 +104,10 @@ public partial class Base64Binary
     // - the moves are made under a lock, which makes each of them one step for the other readers under the lock;
     // - a read outside the lock only ever returns data that it has seen itself: Value returns bytes that it found,
     //   and JsonValue returns a literal that it found after it found no bytes. Anything else goes to the lock.
-    //   That covers the two common reads, Value when the bytes are there and JsonValue when only the literal is.
-    //   An instance without a value does take the lock, because "no bytes and no literal" is also what a reader
-    //   can see while two moves pass by;
+    //   That covers the two common reads, Value when the bytes are there and JsonValue when only the literal is;
+    // - an instance without a value takes the lock once per read (twice for Value in a subclass). "No bytes and no
+    //   literal" is also what a reader outside the lock can see while two moves pass by, so only under the lock
+    //   does it mean that there is no value;
     // - the bytes are volatile, and the move back to the literal writes the literal before it clears the bytes. On
     //   every platform (ARM64 included) a reader that finds the bytes cleared therefore finds that literal, or a
     //   newer state.
@@ -115,12 +116,12 @@ public partial class Base64Binary
     private volatile byte[]? _parsedValue = null;
 
     // The lock is a private object and never the instance itself, which other code can lock too (SetAnnotation does).
-    // It is created when the first move needs it, so an instance that is only deserialized and serialized has none.
+    // It is created by the first read that cannot be answered outside the lock, so an instance that only has its
+    // literal read, as between deserialization and serialization without validation, has none.
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private object? _valueLock;
 
-    private object valueLock =>
-        _valueLock ?? Interlocked.CompareExchange(ref _valueLock, new object(), null) ?? _valueLock!;
+    private object valueLock => LazyInitializer.EnsureInitialized(ref _valueLock, static () => new object())!;
 
     /// <summary>
     /// Validates the JsonValue and updates the internal cached byte[] Value, releasing
@@ -169,11 +170,15 @@ public partial class Base64Binary
             : COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
     }
 
-    // Value validates through ValidateObjectValue, as it always did, so that an override in a subclass decides
-    // whether the value is valid. The bytes are then fetched separately, because a concurrent read of JsonValue
-    // may have released them again in the meantime.
+    // Gets the bytes for Value, or the reason why there are none.
     private COVE? validateAndGetParsedValue(out byte[]? parsed)
     {
+        // Without a subclass, ValidateObjectValue is getParsedValue, and one call both validates and gets the bytes.
+        if (GetType() == typeof(Base64Binary)) return getParsedValue(null, out parsed);
+
+        // Value validates through ValidateObjectValue, as it always did, so that an override in a subclass decides
+        // whether the value is valid. The bytes are then fetched separately, because a concurrent read of JsonValue
+        // may have released them again in the meantime.
         parsed = null;
         if (ValidateObjectValue(null) is { } error) return error;
 
