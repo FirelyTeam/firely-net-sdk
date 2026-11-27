@@ -56,34 +56,48 @@ public partial class Integer64
             if (ValidateObjectValue(null) is {} error)
                 throw error;
 
-            return _parsedValue;
+            return _hasParsedValue ? _parsedValue : null;
         }
 
         set
         {
-            _parsedValue = value;
+            _parsedValue = value.GetValueOrDefault();
+            _hasParsedValue = value.HasValue;
             base.JsonValue = null;
             OnPropertyChanged("Value");
         }
     }
 
+    // The cached value is a value and a flag instead of one nullable field, because several threads may read the
+    // same instance at the same time and a nullable value is not written in one step. The value is written before
+    // the flag, and only the setters clear the flag, so a reader that sees the flag also sees the value.
     [NonSerialized]  // To prevent binary serialization from serializing this field
-    private long? _parsedValue = null;
+    private long _parsedValue;
+
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private volatile bool _hasParsedValue;
 
     /// <summary>
     /// Validates the JsonValue and updates the internal cached long value.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.JsonValue is null) return null;
+        // This reads each field once and only ever stores a successfully parsed value: a reader on another
+        // thread never sees the cached value go away.
+        if (_hasParsedValue) return null;
 
-        _parsedValue = null;
+        var jsonValue = base.JsonValue;
+        if (jsonValue is null) return null;
 
-        if (base.JsonValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
+        if (jsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
 
-        _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
+        if (doParse(unparsed) is not { } parsed)
+            return COVE.LITERAL_INVALID(context, jsonValue, this.TypeName);
+
+        _parsedValue = parsed;
+        _hasParsedValue = true;
+        return null;
     }
 
     private static long? doParse(string literal) =>
@@ -98,15 +112,15 @@ public partial class Integer64
     {
         get
         {
-            if (_parsedValue is not null && base.JsonValue is null)
-                base.JsonValue = XmlConvert.ToString(_parsedValue.Value);
+            if (_hasParsedValue && base.JsonValue is null)
+                base.JsonValue = XmlConvert.ToString(_parsedValue);
 
             return base.JsonValue;
         }
         set
         {
             base.JsonValue = value;
-            _parsedValue = null;
+            _hasParsedValue = false;
         }
     }
 
@@ -118,14 +132,8 @@ public partial class Integer64
     /// <returns>true if the Integer64 contains a valid date/time string, false otherwise.</returns>
     public bool TryToSystemLong([NotNullWhen(true)] out P.Long? longValue)
     {
-        if (ValidateObjectValue(null) is not null || _parsedValue is null)
-        {
-            longValue = null;
-            return false;
-        }
-
-        longValue = new P.Long(_parsedValue.Value);
-        return true;
+        longValue = ValidateObjectValue(null) is null && _hasParsedValue ? new P.Long(_parsedValue) : null;
+        return longValue is not null;
     }
 
     /// <summary>
@@ -138,10 +146,10 @@ public partial class Integer64
         if (ValidateObjectValue(null) is { } error)
             throw error;
 
-        if (_parsedValue is null)
+        if (!_hasParsedValue)
             throw new InvalidOperationException("Value is null.");
 
-        return new P.Long(_parsedValue.Value);
+        return new P.Long(_parsedValue);
     }
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemLong(out var longValue) ? longValue : null;

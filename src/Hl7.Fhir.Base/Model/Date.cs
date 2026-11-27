@@ -33,6 +33,7 @@ using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using P = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
@@ -77,15 +78,22 @@ public partial class Date
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.JsonValue is null) return null;
+        // Several threads may read the same instance at the same time, so this reads each field once and only
+        // ever stores a successfully parsed value: a reader never sees the cached value go back to null.
+        if (_parsedValue is not null) return null;
 
-        _parsedValue = null;
+        var jsonValue = base.JsonValue;
+        if (jsonValue is null) return null;
 
-        if (base.JsonValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
+        if (jsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
 
-        _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
+        var parsed = doParse(unparsed);
+        if (parsed is null) return COVE.LITERAL_INVALID(context, jsonValue, this.TypeName);
+
+        // The write publishes the parsed object, so that a plain read of the field on another thread gets it complete.
+        Volatile.Write(ref _parsedValue, parsed);
+        return null;
     }
 
     private static P.Date? doParse(string value) =>
@@ -102,14 +110,8 @@ public partial class Date
     /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
     public bool TryToSystemDate([NotNullWhen(true)] out P.Date? date)
     {
-        if (ValidateObjectValue(null) is not null || _parsedValue is null)
-        {
-            date = null;
-            return false;
-        }
-
-        date = _parsedValue;
-        return true;
+        date = ValidateObjectValue(null) is null ? _parsedValue : null;
+        return date is not null;
     }
 
     /// <summary>
@@ -122,10 +124,7 @@ public partial class Date
         if (ValidateObjectValue(null) is {} error)
             throw error;
 
-        if(_parsedValue is null)
-            throw new InvalidOperationException("Value is null");
-
-        return _parsedValue;
+        return _parsedValue ?? throw new InvalidOperationException("Value is null");
     }
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDate(out var date) ? date : null;

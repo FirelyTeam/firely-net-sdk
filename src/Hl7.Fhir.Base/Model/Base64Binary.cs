@@ -35,6 +35,7 @@ using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using System.Threading;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
 using P=Hl7.Fhir.ElementModel.Types;
 
@@ -53,16 +54,20 @@ public partial class Base64Binary
     {
         get
         {
-            if (ValidateObjectValue(null) is {} error)
+            if (validateAndGetParsedValue(out var parsed) is {} error)
                 throw error;
 
-            return _parsedValue;
+            return parsed;
         }
 
         set
         {
-            _parsedValue = value;
-            base.JsonValue = null;
+            lock (this)
+            {
+                _parsedValue = value;
+                base.JsonValue = null;
+            }
+
             OnPropertyChanged("Value");
         }
     }
@@ -71,21 +76,27 @@ public partial class Base64Binary
     {
         get
         {
-            // A non-canonical literal is retained next to the parsed bytes (see ValidateObjectValue). Callers can
-            // modify the array returned by Value in place, so only keep the literal while it still decodes to
-            // the cached bytes; otherwise the bytes win and the literal is regenerated from them.
-            if (_parsedValue is not null && (base.JsonValue is null || !retainedLiteralMatchesBytes()))
+            lock (this)
             {
-                base.JsonValue = Convert.ToBase64String(_parsedValue);
-                _parsedValue = null;    // Clear the parsed value to free up memory
-            }
+                // A non-canonical literal is retained next to the parsed bytes (see getParsedValue). Callers can
+                // modify the array returned by Value in place, so only keep the literal while it still decodes to
+                // the cached bytes; otherwise the bytes win and the literal is regenerated from them.
+                if (_parsedValue is not null && (base.JsonValue is null || !retainedLiteralMatchesBytes()))
+                {
+                    base.JsonValue = Convert.ToBase64String(_parsedValue);
+                    _parsedValue = null;    // Clear the parsed value to free up memory
+                }
 
-            return base.JsonValue;
+                return base.JsonValue;
+            }
         }
         set
         {
-            base.JsonValue = value;
-            _parsedValue = null;
+            lock (this)
+            {
+                base.JsonValue = value;
+                _parsedValue = null;
+            }
         }
     }
 
@@ -97,24 +108,60 @@ public partial class Base64Binary
     /// the data in JsonValue to save memory if it is exactly the canonical base64 encoding
     /// of the parsed bytes.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
+        getParsedValue(context, out _);
+
+    // Gets the cached bytes, parsing the JsonValue first when it has not been parsed yet.
+    //
+    // Reading Value moves the data from the literal to the bytes and reading JsonValue moves it back, so that only
+    // one of the two is kept in memory. Each move changes two fields, and several threads may read the same instance
+    // at the same time, so the two fields are only changed together, under a lock. The lock is deliberately the
+    // instance itself: that costs no memory per instance. SetAnnotation locks the instance too, but never while
+    // it reads these fields, and nothing that calls out to other code runs inside the lock here.
+    private COVE? getParsedValue(PocoValidationContext? context, out byte[]? parsed)
     {
-        if (_parsedValue is not null || base.JsonValue is null) return null;
-        _parsedValue = null;
+        // Bytes that were there at any moment are the value, also when a concurrent read of JsonValue
+        // releases them right after, so this needs no lock.
+        parsed = Volatile.Read(ref _parsedValue);
+        if (parsed is not null) return null;
 
-        if (base.JsonValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName);
+        object? jsonValue;
 
-        _parsedValue = doParse(unparsed);
+        lock (this)
+        {
+            parsed = _parsedValue;
+            if (parsed is not null) return null;
 
-        // Clear the string value to free up memory if we have successfully parsed the value,
-        // but only if the string can be regenerated exactly from the bytes. The decoder is lenient
-        // (e.g. it ignores whitespace), so a non-canonical literal must be kept as-is: validating
-        // should never rewrite the data of the user.
-        if (_parsedValue is not null && string.Equals(Convert.ToBase64String(_parsedValue), unparsed, System.StringComparison.Ordinal))
-            base.JsonValue = null;
+            jsonValue = base.JsonValue;
+            if (jsonValue is null) return null;
 
-        return _parsedValue is null ? COVE.INVALID_BASE64_VALUE(context, unparsed) : null;
+            if (jsonValue is string unparsed && (parsed = doParse(unparsed)) is not null)
+            {
+                Volatile.Write(ref _parsedValue, parsed);
+
+                // Clear the string value to free up memory if we have successfully parsed the value,
+                // but only if the string can be regenerated exactly from the bytes. The decoder is lenient
+                // (e.g. it ignores whitespace), so a non-canonical literal must be kept as-is: validating
+                // should never rewrite the data of the user.
+                if (string.Equals(Convert.ToBase64String(parsed), unparsed, System.StringComparison.Ordinal))
+                    base.JsonValue = null;
+
+                return null;
+            }
+        }
+
+        // The error is built outside the lock, because that calls out to the validation context.
+        return jsonValue is string invalid
+            ? COVE.INVALID_BASE64_VALUE(context, invalid)
+            : COVE.INCORRECT_LITERAL_VALUE_TYPE(context, jsonValue, this.TypeName);
+    }
+
+    // Value validates through ValidateObjectValue, as it always did, so that a stricter override in a subclass
+    // still applies to it.
+    private COVE? validateAndGetParsedValue(out byte[]? parsed)
+    {
+        parsed = null;
+        return ValidateObjectValue(null) ?? getParsedValue(null, out parsed);
     }
 
     private bool retainedLiteralMatchesBytes() =>
