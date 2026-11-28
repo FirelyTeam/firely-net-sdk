@@ -226,6 +226,62 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 7, "days", "1974-01-01T00:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 1, "hour", "1973-12-25T01:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 10, "ms", "1973-12-25T00:00:00.010+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 0.1, "s", "1973-12-25T00:00:00.100+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 1.5, "ms", "1973-12-25T00:00:00.001+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 2.3, "s", "1973-12-25T00:00:02.300+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", -1.5, "s", "1973-12-24T23:59:58.500+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", -0.0019, "s", "1973-12-24T23:59:59.999+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", -1.9, "ms", "1973-12-24T23:59:59.999+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", -1.9, "hours", "1973-12-24T23:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00+10:00", 0.5, "s", "1973-12-25T00:00:00+10:00")]
+        [DataRow("1973-12-25T00:00:00+10:00", 1.5, "s", "1973-12-25T00:00:01+10:00")]
+        [DataRow("1973-12-25T00:00:00+10:00", 500, "ms", "1973-12-25T00:00:00+10:00")]
+        [DataRow("1973-12-25T00:00:00+10:00", 1500, "ms", "1973-12-25T00:00:01+10:00")]
+        [DataRow("1973-12-25T00:00:00.000+10:00", 1.5, "hours", "1973-12-25T01:00:00.000+10:00")]
+        [DataRow("1973-12-25T00:00:00.000", -1, "second", "1973-12-24T23:59:59.000")]
+        [DataRow("1973-12-25T00:00:00.000Z", 1, "minute", "1973-12-25T00:01:00.000+00:00")]
+        [DataRow("1973-12-25T00:00:00.1", 13, "ms", "1973-12-25T00:00:00.113")]
+        [DataRow("2015-02-04T10:00:00.5", 500, "ms", "2015-02-04T10:00:01.0")]
+        [DataRow("2015-02-04T10:00:00.1234567", 876, "ms", "2015-02-04T10:00:00.9994567")]
+        [DataRow("1973-12-25T00:00:00Z", 1, "s", "1973-12-25T00:00:01+00:00")]
+        [DataRow("1973-12-25T00:00:00.123456789+10:00", 1, "s", "1973-12-25T00:00:01.1234568+10:00")]
+        [DataRow("2000-01-01T00:00:00Z", 3000000000, "s", "2095-01-24T05:20:00+00:00")]
+        [DataRow("1973-12-25T00:00:00.999Z", 1, "ms", "1973-12-25T00:00:01.000+00:00")]
+        public void ArithmeticKeepsPrecisionAndOffset(string input, double value, string unit, string expected)
+        {
+            var result = P.DateTime.Parse(input) + new P.Quantity((decimal)value, unit);
+            result.ToString().Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void SubtractionKeepsPrecisionAndAppliesDecimalSeconds()
+        {
+            var result = P.DateTime.Parse("1973-12-25T00:00:00.000+10:00") - new P.Quantity(1.5m, "s");
+            result.ToString().Should().Be("1973-12-24T23:59:58.500+10:00");
+        }
+
+        [TestMethod]
+        public void ArithmeticOnConstructedValueOmitsTrailingZeros()
+        {
+            var dto = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 500, TimeSpan.Zero);
+            var result = P.DateTime.FromDateTimeOffset(dto) + new P.Quantity(1m, "s");
+            result.ToString().Should().Be("2001-04-06T13:01:03.5+00:00");
+        }
+
+        [TestMethod]
+        public void ChainedArithmeticOnConstructedValueKeepsFractionPrecision()
+        {
+            var dto = new DateTimeOffset(2013, 4, 3, 15, 30, 10, TimeSpan.FromHours(1));
+            var intermediate = P.DateTime.FromDateTimeOffset(dto) + new P.Quantity(1m, "hour");
+            intermediate.ToString().Should().Be("2013-04-03T16:30:10.0+01:00");
+            var result = intermediate + new P.Quantity(0.5m, "s");
+            result.ToString().Should().Be("2013-04-03T16:30:10.5+01:00");
+        }
+
+        [TestMethod]
         public void IsNullWhenInvalid()
         {
             P.DateTime.TryParse("hi", out var parsed).Should().BeFalse();
