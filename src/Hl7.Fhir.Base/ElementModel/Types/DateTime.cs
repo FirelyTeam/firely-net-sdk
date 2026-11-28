@@ -263,7 +263,10 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
         {
             // need to trim appropriately.
             if (dateTimeValue.Precision <= DateTimePrecision.Minute)
-                resultRepresentation = resultRepresentation.Substring(0, originalRepresentation.Length);
+                // Format at the input's precision (and offset, if any). Cutting the full representation
+                // to the length of the input does not work when the input has an offset, since the
+                // offset then sits where the full representation has the seconds.
+                resultRepresentation = ToStringWithPrecision(dto, dateTimeValue.Precision, dateTimeValue.HasOffset);
             else
             {
                 if (!dateTimeValue.HasOffset)
